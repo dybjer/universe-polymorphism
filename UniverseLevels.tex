@@ -158,7 +158,7 @@ Martin-Löf \cite{martinlof:hannover} changed the judgment structure and added t
 Martin-Löf \cite{martinlof:bibliopolis} gave an alternative formulation of the first universe $\UU_0$ \`a la Tarski with decoding $\T_0$.
 Palmgren \cite{palmgren:phd} then formulated rules for an infinite external sequence of universes $\UU_n$ \`a la Tarski with decodings $\T_n$. In fact, Palmgren discussed two alternative versions of the rules for an external sequence of universes \`a la Tarski. 
 
-The first version is entitled "universes as full reflection" and was only outlined for the first and the second universe. In this version there is a cumulativity map $\T_0^1 : \UU_0 \to \UU_1$ which is defined by recursion on the way the elements of $\UU_0$ are defined. For example, assume that $\pi_0$ and $\pi_1$ are the functions which represent the closure under $\Pi$ of $\U_0$ and $\U_1$, respectively . Then one of the defining equations of $\T_0^1$ is
+The first version is entitled "universes as full reflection" and was only outlined for the first and the second universe. We will give a full presentation of this theory in Section ?. In this version there is a cumulativity map $\T_0^1 : \UU_0 \to \UU_1$ which is defined by recursion on the way the elements of $\UU_0$ are defined. For example, assume that $\pi_0$ and $\pi_1$ are the functions which represent the closure under $\Pi$ of $\U_0$ and $\U_1$, respectively . Then one of the defining equations of $\T_0^1$ is
 $$
 \T_0^1\, (\pi_0\,a\, b) = \pi_1\,(\T_0^1\,a)\,(\lambda x.\T_0^1\,(b\,x))
 $$
@@ -338,7 +338,9 @@ with the conversion rule $\JJ(a,d)~a~(\refl~a) = d$.
 We will now present a complete set of rules for "universes as full reflections". We first present a version without cumulativity.
 $$
 \UU_n~\type~~~~~~
-\frac{A:\UU_{n}}{\\T_{n}(A)~\type}~~~~~~
+\frac{A:\UU_{n}}{\\T_{n}(A)~\type}
+$$
+$$
 \frac{A:\UU_{n}~~~~~~B:\\T_{n}(A)\rightarrow \UU_{m}}
      {\Pi^{n,m} A B:\UU_{n\vee m}}~~~~~~~~~
 \frac{A:\UU_{n}~~~~~~B:\\T_{n}(A)\rightarrow \UU_{m}}
@@ -350,6 +352,7 @@ $$
 \\T_{n\vee m}~(\Pi^{n,m} A B) = \Pi (x:\\T_{n}(A)) \\T_{m}(B~x)~~~~~~~
 \\T_{n\vee m}~(\Sigma^{n,m} A B) = \Sigma (x:\\T_{n}(A)) \\T_{m}(B~x)~~~~~~~
 $$
+Note that $\U_n, \T_n$ is a separate inductive-recursive definition.
 
 We also have $${\UU^{n}}:\UU_{n + 1}$$ with
 $$T_{n + 1}({\UU^{n}}) = \UU_{n}$$.
