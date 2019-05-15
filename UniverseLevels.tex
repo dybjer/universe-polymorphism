@@ -585,6 +585,60 @@ In all three cases, $\rho'$ assigns a lower value than $\rho$ to exactly one var
 and keeps the same value as $\rho$ for all other variables.
 \end{enumerate}
 
+\begin{proof}
+1. By induction on the size of $l$ and $m$ in $l=m$. If both are variables, then we can
+eliminate one of them and leave out the constraint. In case $l\vee m=\alpha$
+is not of the right form, replace by $\lambda\vee\mu=\alpha$,
+$l=\lambda$, $m=\mu$ ($\lambda,\mu$ fresh), and apply the induction hypothesis
+to the latter two. In case $l^+=\alpha$, replace by $(\lambda\vee\lambda)^+=\alpha$,
+$l=\lambda$ ($\lambda$ fresh), and apply the induction hypothesis
+to the latter. In case $l\vee m= n \vee o$, replace by $l\vee m= \lambda$
+and $n \vee o = \lambda$ ($\lambda$ fresh), and apply the induction hypothesis
+to both. All remaining cases are very similar.
+
+2. Assume now that $S$ has been reduced to the simpler form as in point 1.
+For any assignment $\rho$, define the \emph{range} of $\rho$ as the difference
+of the maximal value assigned to a variable by $\rho$ and the minimal value.
+For a subset of variables, we also speak about the range of that subset under $\rho$.
+
+Let $M$ be a model of $S$. We construct a graph depending on $M$ and $S$.
+The nodes are the variables occurring in $S$. For every constraint we have
+two edges, a red one and a green one, where the red one ensures that the
+constraint is true in $M$. 
+If the constraint is $(\alpha\vee\beta)^{(+)} = \gamma^{(+)}$
+and $M(\alpha)\geq M(\beta)$, then we add a red edge from $\alpha$
+to $\gamma$ and a green edge from $\beta$ to $\alpha$.
+A \emph{red connected component} is a subset $C$ of the nodes such that
+each two nodes in $C$ are connected by a path consisting of red edges.
+If the ranges of two red connected components do not overlap, say they have
+a gap $k$, then we can lower the values of all variables with values above 
+the gap by $k$. This new assignment $M'$ has exactly the same graph and is
+also a model of $S$. This means we can deflate $M$ into a model in which all ranges of
+red connected components overlap. The range of $M'$ is now the sum of the ranges
+of its red connected components, and this sum is at most the number of occurrences of
+$+$-symbols in $S$. A simple translation to $0$ now give the desired small model.
+
+3. Assume again that $S$ has been reduced to the simpler form as in point 1.
+Let $M$ be a model of $S$ with values at most $K_S$. Let $\rho\geq M$ (pointwise)
+and let $\rho'$ be as constructed above. In each of the three cases we
+have to prove that $\rho'\geq M$ for the only variable that is lowered. 
+We use that $\max$ is monotone in both its arguments.
+\begin{itemize}
+\item Assume  
+$(\alpha\vee\beta)^{(+)} \rho +n = \gamma^{(+)} \rho$ for $n>0$ and
+$\rho'(\gamma) = \rho(\gamma)-n$. 
+Then $\rho'(\gamma^{(+)}) = (\alpha\vee\beta)^{(+)} \rho \geq 
+\max(M(\alpha),M(\beta))(+1) = M(\gamma^{(+)})$, so we are done.
+\item Assume
+$(\alpha\vee\beta)^{(+)} \rho = \gamma^{(+)} \rho + n$ for $n>0$ and
+and $\rho'(\alpha) = \rho(\alpha)-n$ if $\rho(\alpha)\geq\rho(\beta)$.
+Should be very similar, check also the cases in which $\gamma$ is $\alpha$ or $\beta$.
+\item Assume
+$(\alpha\vee\beta)^{(+)} \rho = \gamma^{(+)} \rho + n$ for $n>0$ and
+and $\rho'(\beta) = \rho(\beta)-n$ if $\rho(\alpha)<\rho(\beta)$.
+\end{itemize}
+\end{proof}
+
 \section{A system with level constraints}
 
 We try to describe the approach in \cite{VV} using our notation.
