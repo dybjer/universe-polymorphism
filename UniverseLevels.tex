@@ -547,6 +547,44 @@ and the type theory should have enough rules to ensure
 \text{~~ (judgmentally)}.
 \]
 
+We summarize some results from \cite{BNR08} (to be checked for correct formulation).
+Let $S$ be a finite set of constraints of the form $l=m$ as in the previous section.
+More precisely, we have the following abstract syntax: 
+\[
+l,m,\ldots ::= {\alpha,\beta,\ldots} \mid {l^+} \mid {l\vee m}
+\]
+A \emph{model}, or \emph{solution} of $S$ is an assignment of natural numbers to
+the level variables occurring in $S$ such that all constraints in $S$ become true.
+
+\begin{enumerate}
+\item (Reduction to simpler form.) 
+Solving $S$ can be reduced in polynomial time to solving a set $S'$ of 
+constraints of the form $\alpha\vee\beta = \gamma$, $\alpha\vee\beta = \gamma^+$, 
+and$(\alpha\vee\beta)^+ = \gamma$.
+
+\item (Small model property.) 
+Let $K_{S'}$ be the number of occurrences of $+$-symbols in $S'$ as above.
+If there is a model of $S'$, then there is a model with values at most $K_{S'}$.
+
+\item (Don't lower below a model.) 
+Let $M$ be a model of $S'$ and $\rho$ an assigment such that $\rho\geq M$ (pointwise).
+If $\rho$ is not a model of $S'$, then we have $\rho'\geq M$ for any assigment $\rho'$
+that is obtained from $\rho$ in one of the following ways:
+\begin{itemize}
+\item Pick a constraint from $S'$ with 
+$(\alpha\vee\beta)^{(+)} \rho +n = \gamma^{(+)} \rho$ for $n>0$ and
+define $\rho'(\gamma) = \rho(\gamma)-n$.
+\item Pick a constraint from $S'$ with 
+$(\alpha\vee\beta)^{(+)} \rho = \gamma^{(+)} \rho + n$ for $n>0$ and
+and define $\rho'(\alpha) = \rho(\alpha)-n$ if $\rho(\alpha)\geq\rho(\beta)$.
+\item Pick a constraint from $S'$ with 
+$(\alpha\vee\beta)^{(+)} \rho = \gamma^{(+)} \rho + n$ for $n>0$ and
+and define $\rho'(\beta) = \rho(\beta)-n$ if $\rho(\alpha)<\rho(\beta)$.
+\end{itemize}
+In all three cases, $\rho'$ assigns a lower value than $\rho$ to exactly one variable,
+and keeps the same value as $\rho$ for all other variables.
+\end{enumerate}
+
 \section{A system with level constraints}
 
 We try to describe the approach in \cite{VV} using our notation.
@@ -610,6 +648,12 @@ this function internally, for instance  $f = \lam{\alpha}{\lambda (X:\UU_{\alpha
   \newblock{Universe polymorphic type system.}
   \newblock{Manuscript, 2014}
 
+\bibitem{BNR08}
+M.A.~Bezem, R.~Nieuwenhuis and E.~Rodr\'iguez.
+\newblock{The Max-Atom Problem and its Relevance}.
+In I.~Cervesato, H.~Veith and A.~Voronkov, editors,
+\emph{Proceedings LPAR-15}, LNAI 5330,
+pages 47--62, Springer-Verlag, Berlin, 2008.
 
 %% \bibitem{Abel}
 %% A. Abel and G. Scherer.
