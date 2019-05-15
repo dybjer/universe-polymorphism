@@ -25,7 +25,6 @@
 \newtheorem{lemma}{Lemma}[theorem]
 \newtheorem{proposition}{Proposition}[theorem]
 
-
 \usepackage{float}
 \floatstyle{boxed}
 \restylefloat{figure}
@@ -38,8 +37,6 @@
 .3ex\hbox{$\scriptscriptstyle\,\rangle\!\rangle$}}
 
 %%%%%%%%%
-
-
 \newcommand\myfrac[2]{
  \begin{array}{c}
  #1 \\
@@ -227,12 +224,12 @@ In this system we have three levels of products: $\pi\,a\,b : \UU_0$, $\Pi\,A\,B
 %There is no problem adding further constants and equations for the next-universe operator and the minimal super universe to the logical framework.
 %\begin{eqnarray*}
 %\UU_n &: &\Set\\
-%\\T_n &:& \El\,\UU_n \to \Set
+%\T_n &:& \El\,\UU_n \to \Set
 %\end{eqnarray*}
 %Closure under $\pi$ is expressed by
 %\begin{eqnarray*}
-%\pi_n &:& (X:\El\, \UU_n) \to (\El\, (\\T_n\, X) \to \El\, \UU_n) \to \El\, \UU_n \\
-%\\T_n\, (\pi X F) &=& \Pi (\\T_n\, X) (\ (x: \El\, (\\T_n\, X)) \\T_n\, (F x))
+%\pi_n &:& (X:\El\, \UU_n) \to (\El\, (\T_n\, X) \to \El\, \UU_n) \to \El\, \UU_n \\
+%\T_n\, (\pi X F) &=& \Pi (\T_n\, X) (\ (x: \El\, (\T_n\, X)) \T_n\, (F x))
 %\end{eqnarray*}
 %
 % Also we have Pi sets with a new constructor Lambda for functions
@@ -338,72 +335,103 @@ with the conversion rule $\JJ(a,d)~a~(\refl~a) = d$.
 We will now present a complete set of rules for "universes as full reflections". We first present a version without cumulativity.
 $$
 \UU_n~\type~~~~~~
-\frac{A:\UU_{n}}{\\T_{n}(A)~\type}
+\frac{A:\UU_{n}}{\T_{n}(A)~\type}
 $$
 $$
-\frac{A:\UU_{n}~~~~~~B:\\T_{n}(A)\rightarrow \UU_{m}}
+\frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{m}}
      {\Pi^{n,m} A B:\UU_{n\vee m}}~~~~~~~~~
-\frac{A:\UU_{n}~~~~~~B:\\T_{n}(A)\rightarrow \UU_{m}}
+\frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{m}}
      {\Sigma^{n,m} A B:\UU_{n\vee m}}~~~~~~~~~
 $$
 where $n$ and $m$ are external natural numbers, and $n \vee m$ is the maximum of $n$ and $m$. This means for example, that $\UU_n~\type$ is a {\em schema}, yielding one rule for each $n$.
 The conversion rules are
 $$
-\\T_{n\vee m}~(\Pi^{n,m} A B) = \Pi (x:\\T_{n}(A)) \\T_{m}(B~x)~~~~~~~
-\\T_{n\vee m}~(\Sigma^{n,m} A B) = \Sigma (x:\\T_{n}(A)) \\T_{m}(B~x)~~~~~~~
+\T_{n\vee m}~(\Pi^{n,m} A B) = \Pi (x:\T_{n}(A)) \T_{m}(B~x)~~~~~~~
+\T_{n\vee m}~(\Sigma^{n,m} A B) = \Sigma (x:\T_{n}(A)) \T_{m}(B~x)~~~~~~~
 $$
-Note that $\U_n, \T_n$ is a separate inductive-recursive definition.
-
-We also have $${\UU^{n}}:\UU_{n + 1}$$ with
-$$T_{n + 1}({\UU^{n}}) = \UU_{n}$$.
-
-For data types, we introduce $$\NN^{n}:\UU_{n}$$ with
-$$T_{n}(\NN^{n}) = \NN$$
-
-We have 
+Furthermore we have $$\NN^{n}:\UU_{n}$$
+$$\T_{n}(\NN^{n}) = \NN$$
+and 
 $$
-\frac{A:\UU_n~~~~~~a_0:\\T_n(A)~~~~~~a_1:\\T_n(A)}
+\frac{A:\UU_n~~~~~~a_0:\T_n(A)~~~~~~a_1:\T_n(A)}
 {\Id^n~A~a_0~a_1:\UU_n}
 $$ 
-with $$\\T_n(\Id^n~A~a_0~a_1) = \Id~\\T_n(A)~a_0~a_1$$
+$$\T_n(\Id^n~A~a_0~a_1) = \Id~\T_n(A)~a_0~a_1$$
+and a code for the previous universe
+$${\UU^{n}}:\UU_{n + 1}$$
+$$\T_{n + 1}({\UU^{n}}) = \UU_{n}$$
 
-\subsection*{A system with cumulativity}
+Note that $\U_p, \T_p$ is a separate inductive-recursive definition for each $p$ with one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and for $\UU^{p-1}$ provided $p \geq 1$.
+%\subsection*{Rules for cumulativity}
+%
+%With cumulativity, we introduce an operation 
+%$$
+%\frac{A:\UU_{n}}
+%{\T_{n}^{m}(A):\UU_{m}}
+%n\leqslant m
+%$$
+%We can also formulate the side condition as an equaton $m = n \vee m$.
+%We require
+%\begin{eqnarray*}
+%\T_m(\T_{n}^{m}(A)) &=& \T_{n}(A)
+%\end{eqnarray*}
+%and
+%\begin{eqnarray*}
+%T_{n}^{m}(\NN^{n}) &=& \NN^{m}
+%\end{eqnarray*}
+%
+%We add $$
+%T_{n}^m(A) = A
+%$$
+%if $n = m$
+%and $$T_{m}^n\T_{n}^m = T_n^n$$ if $n\leqslant m\leqslant n$.
+%
+%We can then simplify the product and sum rules to
+%$$
+%\frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{n}}
+%     {\Pi^{n} A B:\UU_{n}}~~~~~~~~~
+%\frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{n}}
+%     {\Sigma^{n} A B:\UU_{n}}~~~~~~~~~
+%$$
+%with conversion rules
+%$$
+%\T_{n}~(\Pi^{n} A B) = \Pi (x:\T_{n}(A)) \T_{n}(B~x)~~~~~~~
+%\T_{n}~(\Sigma^{n} A B) = \Sigma (x:\T_{n}(A)) \T_{n}(B~x)~~~~~~~
+%$$
+%and
+%$$
+%\T_{n}^{m}~(\Pi^{n} A B) = \Pi^{m} \T_{n}^{m}(A) (\lambda (x:\T_{n}(A))\T_{n}^{m}(B~x))~~~~~~
+%\T_{n}^{m}~(\Sigma^{n} A B) = \Sigma^{m} \T_{n}^{m}(A) (\lambda (x:\T_{n}(A))\T_{n}^{m}(B~x))~~~~~~
+%$$
+%
+\subsection*{Rules for cumulativity}
 
-With cumulativity, we introduce an operation 
+We define an operation which injects elements of a lower universe into a higher universe:
 $$
 \frac{A:\UU_{n}}
-{T_{n}^{m}(A):\UU_{m}}
-n\leqslant m
+{\T_{n}^{m}(A):\UU_{m}}
+n < m
 $$
-We can also formulate the side condition as an equaton $m = n \vee m$.
-
-We require
+We can also formulate the side condition as an equaton $m = n^+ \vee m$.
+We postulate the conversion (cf the discussion of Palmgren's rules for full reflection in Section ?):
 \begin{eqnarray*}
-T_m(T_{n}^{m}(A)) &=& T_{n}(A)
+\T_m(\T_{n}^{m}(A)) &=& \T_{n}(A)
 \end{eqnarray*}
-and
+and the decoding conversion\footnote{We should check our use of "conversion" vs "definitional equality" throughout the document.}
 \begin{eqnarray*}
-T_{n}^{m}(\NN^{n}) &=& \NN^{m}
+\T_{n}^{m}(\NN^{n}) &=& \NN^{m}
 \end{eqnarray*}
-
-We add $$
-T_{n}^m(A) = A
+In the presence of cumulativity we can simplify the product and sum rules to
 $$
-if $n = m$
-and $$T_{m}^n\\T_{n}^m = T_n^n$$ if $n\leqslant m\leqslant n$.
-
-We can then simplify the product and sum rules to
-
-$$
-\frac{A:\UU_{n}~~~~~~B:\\T_{n}(A)\rightarrow \UU_{n}}
+\frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{n}}
      {\Pi^{n} A B:\UU_{n}}~~~~~~~~~
-\frac{A:\UU_{n}~~~~~~B:\\T_{n}(A)\rightarrow \UU_{n}}
+\frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{n}}
      {\Sigma^{n} A B:\UU_{n}}~~~~~~~~~
 $$
 with conversion rules
 $$
-\\T_{n}~(\Pi^{n} A B) = \Pi (x:\\T_{n}(A)) \\T_{n}(B~x)~~~~~~~
-\\T_{n}~(\Sigma^{n} A B) = \Sigma (x:\\T_{n}(A)) \\T_{n}(B~x)~~~~~~~
+\T_{n}~(\Pi^{n} A B) = \Pi (x:\T_{n}(A)) \T_{n}(B~x)~~~~~~~
+\T_{n}~(\Sigma^{n} A B) = \Sigma (x:\T_{n}(A)) \T_{n}(B~x)~~~~~~~
 $$
 and
 $$
@@ -419,9 +447,9 @@ The systems in the next sections address this issue.
 \section{A type theory with universe levels and polymorphism }
 
 We introduce {\em universe level} expressions: we write $\alpha,\beta,\dots$
-the variable levels, and $l,m,\dots$ the level expressions, which are built from level variables
-by sup $l \vee m$ and next level operation $l^+$.
-They form a sup semilattice $l\vee m$
+for {\em level variables}, and $l,m,\dots$ for {\em level expressions} which are built from level variables
+by suprema $l \vee m$ and the next level operation $l^+$.
+Level expressions form a sup semilattice $l\vee m$
 with a next level operation $l^+$ such that $l \vee l^+ = l^+$
 and $(l\vee m)^+ = l^+\vee m^+$. (We don't seem to need a $0$ element.)
 %As expressed in \cite{VV}, this is essentially a tropical (max-plus)
@@ -434,6 +462,7 @@ $$
 \frac{l~\Level~~~~~m~\Level}{l\vee m~\Level}~~~~~~
 \frac{l~\Level}{l^+~\Level}~~~~~~
 $$
+We can now replace the rule schemata for externally indexed universes by corresponding rules which are internally indexed by level expressions.
 $$
 \frac{l~\Level}{\UU_{l}~\type}~~~~~~
 \frac{A:\UU_{l}}{\T_{l}(A)~\type}~~~~~~
@@ -449,25 +478,34 @@ $$
 \T_{l\vee m}~(\Pi^{l,m} A B) = \Pi (x:\T_{l}(A)) \T_{m}(B~x)~~~~~~~
 \T_{l\vee m}~(\Sigma^{l,m} A B) = \Sigma (x:\T_{l}(A)) \T_{m}(B~x)~~~~~~~
 $$
-
-\medskip
-
-We also have ${\UU^{l}}:\UU_{l^+}$ with
-$\T_{l^+}({\UU^{l}}) = \UU_{l}$.
-
-\medskip
-
-For data types, we introduce $\NN^{l}:\UU_{l}$ with the conversion rule
-$\T_{l}(\NN^{l}) = \NN$.
-
-We have $\Id^l~A~a_0~a_1:\UU_l$ for $A:\UU_l$ and $a_0:\T_l(A)$ and $a_1:\T_l(A)$
-with $\T_l(\Id^l~A~a_0~a_1) = \Id~\T_l(A)~a_0~a_1$.
-
-\medskip
-
- This seems to correspond to the rules of universe levels in Agda.
-
-\medskip
+Furthermore we have $$\NN^{l}:\UU_{l}$$
+$$\T_{l}(\NN^{l}) = \NN$$
+and 
+$$
+\frac{A:\UU_l~~~~~~a_0:\T_l(A)~~~~~~a_1:\T_l(A)}
+{\Id^l~A~a_0~a_1:\UU_l}
+$$ 
+$$\T_l(\Id^l~A~a_0~a_1) = \Id~\T_l(A)~a_0~a_1$$
+and a code for the previous universe
+$${\UU^{l}}:\UU_{l + 1}$$
+$$\T_{l + 1}({\UU^{l}}) = \UU_{l}$$
+Note that all the rules are completely analogous to the rules for externally indexed universes with external numbers replaced by internal levels.
+%
+%\medskip
+%
+%We also have ${\UU^{l}}:\UU_{l^+}$ with
+%$\T_{l^+}({\UU^{l}}) = \UU_{l}$.
+%
+%\medskip
+%
+%For data types, we introduce $\NN^{l}:\UU_{l}$ with the conversion rule
+%$\T_{l}(\NN^{l}) = \NN$.
+%
+%We have $\Id^l~A~a_0~a_1:\UU_l$ for $A:\UU_l$ and $a_0:\T_l(A)$ and $a_1:\T_l(A)$
+%with $\T_l(\Id^l~A~a_0~a_1) = \Id~\T_l(A)~a_0~a_1$.
+%
+%\medskip
+%
 
 The following rule should be admissible:
 we can derive $A = B : \UU_l$ from $\T_l(A) = \T_l(B)$.
@@ -476,51 +514,53 @@ we can derive $A = B : \UU_l$ from $\T_l(A) = \T_l(B)$.
  (Voevodsky \cite{VV} adds this as an internal rule, but then the system is not
  generalized algebraic anymore.)
 
-\medskip
-
-It should be the case that if $t:\NN$ in a context with only level variables
-then $t$ is convertible to a numeral.
-\medskip
+It should be the case that if $a :\NN$ in a context with only level variables
+then $a$ is convertible to a numeral.
 
 In such a system we can state that all universes are univalent as a type and the
 fact that if all universes are univalent then they all satisfy function extensionality.
 
+We can also add rules for cumulativity which are completely analogous to those for the internally indexed universes.
+
 \paragraph{Interpreting the level-indexed system in the system with externally indexed universes.}
 
-A judgment in the level-indexed system can be interpreted as a function which maps an assignment $\rho$ of (external) natural numbers $m_i$ to level variables $\alpha_i$ to a judgment in the system with an external sequence of universes. We simply replace each level expression in the judgment by the corresponding natural number obtained by letting $l^+\,\rho = l\,\rho+1$ and $(l \vee m)\,\rho = \max(l\,\rho,m\,\rho)$.
+A judgment in the level-indexed system can be interpreted in the the externally indexed system relative to an assignment $\rho$ of (external) natural numbers $m_i$ to level variables $\alpha_i$. We simply replace each level expression in the judgment by the corresponding natural number obtained by letting $l^+\,\rho = l\,\rho+1$ and $(l \vee m)\,\rho = \max(l\,\rho,m\,\rho)$.
 
-\subsection*{Cumulativity}
-
-We introduce an operation $\T_{l}^{m}(A):\UU_{m}$ if $A:\UU_{l}$
-and $l\leqslant m$ (i.e. $m = l\vee m$).
-
-We require $\T_{m}(\T_{l}^{m}(A)) = \T_{l}(A)$
-and $\T_{l}^{m}(\NN^{l}) = \NN^{m}$.
-
-We add $\T_{l}^m(A) = A$ if $l = m$
-and $\T_{m}^n\T_{l}^m = \T_l^n$ if $l\leqslant m\leqslant n$.
-
-We can then simplify the product and sum rules to
-
-$$
-\frac{A:\UU_{l}~~~~~~B:\T_{l}(A)\rightarrow \UU_{l}}
-     {\Pi^{l} A B:\UU_{l}}~~~~~~~~~
-\frac{A:\UU_{l}~~~~~~B:\T_{l}(A)\rightarrow \UU_{l}}
-     {\Sigma^{l} A B:\UU_{l}}~~~~~~~~~
-$$
-with conversion rules
-$$
-\T_{l}~(\Pi^{l} A B) = \Pi (x:\T_{l}(A)) \T_{l}(B~x)~~~~~~~
-\T_{l}~(\Sigma^{l} A B) = \Sigma (x:\T_{l}(A)) \T_{l}(B~x)~~~~~~~
-$$
-and
-$$
-\T_{l}^{m}~(\Pi^{l} A B) = \Pi^{m} \T_{l}^{m}(A) (\lambda (x:\T_{l}(A))\T_{l}^{m}(B~x))~~~~~~
-\T_{l}^{m}~(\Sigma^{l} A B) = \Sigma^{m} \T_{l}^{m}(A) (\lambda (x:\T_{l}(A))\T_{l}^{m}(B~x))~~~~~~
-$$
+%
+%
+%\subsection*{Cumulativity}
+%
+%We introduce an operation $\T_{l}^{m}(A):\UU_{m}$ if $A:\UU_{l}$
+%and $l\leqslant m$ (i.e. $m = l\vee m$).
+%
+%We require $\T_{m}(\T_{l}^{m}(A)) = \T_{l}(A)$
+%and $\T_{l}^{m}(\NN^{l}) = \NN^{m}$.
+%
+%We add $\T_{l}^m(A) = A$ if $l = m$
+%and $\T_{m}^n\T_{l}^m = \T_l^n$ if $l\leqslant m\leqslant n$.
+%
+%We can then simplify the product and sum rules to
+%
+%$$
+%\frac{A:\UU_{l}~~~~~~B:\T_{l}(A)\rightarrow \UU_{l}}
+%     {\Pi^{l} A B:\UU_{l}}~~~~~~~~~
+%\frac{A:\UU_{l}~~~~~~B:\T_{l}(A)\rightarrow \UU_{l}}
+%     {\Sigma^{l} A B:\UU_{l}}~~~~~~~~~
+%$$
+%with conversion rules
+%$$
+%\T_{l}~(\Pi^{l} A B) = \Pi (x:\T_{l}(A)) \T_{l}(B~x)~~~~~~~
+%\T_{l}~(\Sigma^{l} A B) = \Sigma (x:\T_{l}(A)) \T_{l}(B~x)~~~~~~~
+%$$
+%and
+%$$
+%\T_{l}^{m}~(\Pi^{l} A B) = \Pi^{m} \T_{l}^{m}(A) (\lambda (x:\T_{l}(A))\T_{l}^{m}(B~x))~~~~~~
+%\T_{l}^{m}~(\Sigma^{l} A B) = \Sigma^{m} \T_{l}^{m}(A) (\lambda (x:\T_{l}(A))\T_{l}^{m}(B~x))~~~~~~
+%$$
 
 \subsection*{Rules for level-indexed products}
 
+In Agda $\Level$ is a type, and it is thus possible to form level-indexed products of types. In our system $\Level$ is not a type, so if we want to be able to form level-indexed products we can extend the system with the following rules:
 $$
 \frac{A~\type~(\alpha~\Level)}{[\alpha]A~\type}~~~~~~~
 \frac{t:[\alpha]A~~~~~l~\Level}
@@ -533,9 +573,9 @@ with conversion rule $(\lam{\alpha}{u})~l = u(l/\alpha)$.
 In this system all functions in $[\alpha]\NN$
 should be constant. Example of use of this system? (See Martin's mail.)
 
-\paragraph{An interpretation of the system with levels into the system with a super universe?} It is not clear how to interpret the system with level-indexed products into the system with externally indexed universes. However, we can interpret it in the system with a (minimal) super universe as follows. Levels will be interpreted by internal natural numbers $n : \NN$, and level-indexed products $[\alpha]A$ will be interpreted by ordinary indexed products $\Pi_{n : \NN}A$. Level application and level abstraction will be interpreted as ordinary application and abstraction. 
+\paragraph{Interpreting the system with levels into extensional type theory with a super universe.} We can interpret the theory with rules for level-indexed products in extensional type theory with a (minimal) super universe. Levels will be interpreted by internal natural numbers $n : \NN$, and level-indexed products $[\alpha]A$ will be interpreted by ordinary indexed products $\Pi_{n : \NN}A$. Level application and level abstraction will be interpreted as ordinary application and abstraction. 
 
-A problem is that in an intensional type theory, we will not be able to justify all the lattice laws for level expressions as definitional equalities. Hence it is only an interpretation in the context of extensional type theory.
+Note that in intensional type theory, we will not be able to justify all the lattice laws for level expressions as definitional equalities. 
 
 \section{An algebra for universe levels}
 
