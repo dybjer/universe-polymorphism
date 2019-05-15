@@ -109,7 +109,7 @@
 \maketitle
 
 \begin{abstract}
-We present rules for both externally and internally indexed sequences of universes a la Tarski. The internally indexed rules introduce a notion of level similar to Agda's  notion of level for universe polymorphism. However, our levels do not form a type, as they do in Agda. We first introduce rules for "ML"-style universe polymorphism, where judgments are indexed by level variables $\alpha_1, \ldots, \alpha_n$. Then we add rules for level-indexed product types $[\alpha]A$. Moreover, we present rules for cumulativity. We survey the historical evolution of universes in type theory and discuss the relationship between the level-indexed systems and the externally indexed systems as well as with Palmgren's super universe. 
+We present rules for both externally and internally indexed sequences of universes \'a la Tarski. The internally indexed rules introduce a notion of level similar to Agda's  notion of level for universe polymorphism. However, our levels do not form a type, as they do in Agda. We first introduce rules for "ML"-style universe polymorphism, where judgments are indexed by level variables $\alpha_1, \ldots, \alpha_n$. Then we add rules for level-indexed product types $[\alpha]A$. Moreover, we present rules for cumulativity. We survey the historical evolution of universes in type theory and discuss the relationship between the level-indexed systems and the externally indexed systems as well as with Palmgren's super universe. 
 \end{abstract}
 
 \section*{Related work}
@@ -120,7 +120,7 @@ Check related work of Ali Assaf, Luo, Mendler, Voevodsky, Huet, Harper and Polla
 
 This note records discussions between the authors concerning the appropriate setting for univalent mathematics in Martin-Löf type theory. 
 
-The first published version of Martin-Löf's theory \cite{martinlof:predicative} has a countable sequence of universes
+The first published version of Martin-Löf's theory \cite{martinlof:predicative} introduces a countable sequence of universes
 $$
 \UU_0 : \UU_1 : \UU_2 : \cdots
 $$
@@ -136,7 +136,7 @@ is an equivalence. Formally, the univalence axiom is an axiom (or axiom scheme) 
 $$
 \ua_n : \UA_n
 $$ 
-be a sequence of constants expressing the instances of the univalence axiom. We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and hence $\UA_n$ is in $\UU_{n+1}$. If we have universe polymorphism expressed as quantification over universe levels, as in the Agda system, then we can express univalence of all universes as one typing:
+for $n = 0,1,\ldots$, be a sequence of constants expressing the instances of the univalence axiom. We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and hence $\UA_n$ is in $\UU_{n+1}$. If we have universe polymorphism expressed as quantification over universe levels, as in the Agda system, then we can express univalence of all universes as one typing:
 $$
 \ua : (l : \Level) \to \UA_l
 $$
@@ -144,9 +144,11 @@ in Agda's notation.
 
 In this note we shall present some extensions of type theory which are loosely based on Agda's level-mechanism. We will also present Voevodsky's system which maintains constraints between level-variables, and an algorithm for solving those constraints.
 
-\paragraph{Plan.} We begin by providing some historical background about the evolution of universes in type theory. In particular, we shall discuss Palmgren's next universe operator and super universe, and point out that the super universe makes it possible to define an internally quantified sequence of universes. We shall also discuss how the rules for universes are formalized in terms of operations and equations extending the generalised algebraic theory of categories with families. Furthermore, we discuss the role of universes in Martin-Löf's logical framework and how this differs from Agda's logical framework. In Section ? we state the rules for a basic version of Martin-Löf type theory with $\Pi, \Sigma, \NN$, and an identity type former $\Id$. We extend this theory in Section ? with a notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha$, giving rise to a theory with level polymorphism. This is a kind of "ML-polymorphism" since we only quantify over global level variables. In Section ? we further extend the theory with level-indexed products of types $[\alpha]A$. In Section ? we present Voevodsky's proposal with constraints between level variables. We also propose an algorithm for solving those constraints.
+\paragraph{Plan.} We begin by providing some historical background about the evolution of universes in type theory. In particular, we shall discuss Palmgren's next universe operator and super universe, and point out that the super universe makes it possible to define an internally quantified sequence of universes. We shall also discuss how the rules for universes are formalized in terms of operations and equations extending the generalised algebraic theory of categories with families. Furthermore, we discuss the role of universes in Martin-Löf's logical framework and how this differs from Agda's logical framework. In Section ? we state the rules for a basic version of Martin-Löf type theory with $\Pi, \Sigma, \NN$, an identity type former $\Id$, and an externally indexed sequences of universes $\U_n, \T_n$ \'a la Tarski. We then consider rules for cumulativity for these universes. In Section ? we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha$, giving rise to a theory with level polymorphism. This is a kind of "ML-polymorphism" since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$. In Section ? we present Voevodsky's proposal with constraints between level variables. We also propose an algorithm for solving those constraints.
 
-\section{External sequences of universes}
+\section{A brief history of universes in type theory}
+
+\subsection{External sequences of universes}
 
 Martin-Löf \cite{martinlof:predicative} introduced the above-mentioned version of his intuitionistic type theory with a countable sequence of universes. In this theory the only judgment is  $\Gamma \vdash a : A$. Moreover, it has an untyped notion of conversion $a\ \conv\ a'$. There is no judgment $A\ \type$; since a type is an $A : \UU_n$ for some $n$. Universes are here \`a la Russell, but not cumulative in the sense that $A : \UU_m$, then $A : \UU_n$ for $m \leq n$.\footnote{Check!}
 
@@ -167,7 +169,7 @@ However, this equation depends on $\T_0^1$ itself, the function we are in the pr
 
 Palmgren's second version of the external sequence is entitled "universes as uniform constructions". Here the map $\T_0^1 : \UU_0 \to \UU_1$ is a constructor for the second universe $\UU_1$. However, this means that we do not have full reflection: $\UU_1$ contains canonical elements which have no counterpart as canonical types.
 
-\section{Internal sequences of universes}
+\subsection{Internal sequences of universes}
 
 Palmgren \cite{palmgren:phd} went on to internalize the construction of the infinite sequence of universes  \`a la Tarski. To this end he introduced the {\em next-universe operator}, which given a family of types $U, T$, constructs a new family of types $U^+, T^+$, such that $ \UU_{n+1} = \UU_n^+$ and $\T_{n+1} = \T_n^+$.
 
@@ -182,7 +184,7 @@ such that $\Tsuper\,0$ is the empty universe and $\Tsuper\,(n + 1)$ is the next 
 
 %We remark that in type theory with Setzer's {\em Mahlo universe} we get Palmgren's super universe as a special case.
 
-\section{The generalised algebraic theory of type theory with universes}
+\subsection{The generalised algebraic theory of type theory with universes}
 
 Categories with families (cwfs) model the general rules of dependent type theory, those that deal with context formation, assumption, substitution, and general equality reasoning. In order to model the rules for type formers we need to add extra structure to the notion of cwf. Which is the extra structure needed for modelling universe hierarchies? We here remark that the notion of categories with families can be expressed as a generalized algebraic theory in Cartmell's sense, and that we require that the extra structure is expressed by adding new operations and equations to the generalized algebraic theory of cwfs.
 
@@ -197,7 +199,7 @@ For example, we have
 \T_0 &: &(\Gamma : \Ctx ; A : \Tm(\Gamma,\U_0(\Gamma)))\to \Ty(\Gamma)
 \end{eqnarray*}
 
-\section{Universes in Martin-Löf's logical framework}
+\subsection{Universes in Martin-Löf's logical framework}
 
 The rules for the various universes \`a la Tarski that we discussed above can also be formulated using Martin-Löf's logical framework. This framework has $\Pi$-types (written $(x : A)B$ by Martin-Löf and abbreviated $(A)B$ when $B$ does not depend on $x$.) and a type $\Set$ which is a "universe" with a special role. We will here use the formulation \`a la Tarski of $\Set$ with decoding $\El$, but there is also a formulation \`a la Russell which often used in practice. The formation, introduction, and elimination rules of type theory are formulated as typings of constants $c : A$, and the equality rules are formulated as equations $\Gamma \vdash a = a' : A$. The idea is that $A : \Set$ in the logical framework version represents $A$ {\em type} in the earlier formulations of type theory, and the {\em typing} $f : (x : A)B$ represents the {\em rule} that if $a : A$ then $f\,a : B$.
 
