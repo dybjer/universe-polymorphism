@@ -541,8 +541,13 @@ A problem is that in an intensional type theory, we will not be able to justify 
 
 We would need (for the Max-Atom algorithms to work):
 \[ 
-\vdash_{\cal L} l=m  \quad \quad \IFF \quad \quad \mathbb{N},\rho \models l\rho = m\rho
+\vdash_{\cal L} l=m  \quad \quad \iff \quad \quad \mathbb{N},\rho \models l\rho = m\rho
 \text{~~ for all $\rho$}
+\]
+and the type theory should have enough rules to ensure
+\[ 
+\vdash_{\cal L} l=m  \quad \quad \iff \quad \quad \vdash l=m
+\text{~~ (judgmentally)}.
 \]
 
 \section{A system with level constraints}
