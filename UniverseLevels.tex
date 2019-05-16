@@ -109,7 +109,7 @@
 \maketitle
 
 \begin{abstract}
-We present rules for both externally and internally indexed sequences of universes \'a la Tarski. The internally indexed rules introduce a notion of level similar to Agda's  notion of level for universe polymorphism. However, our levels do not form a type, as they do in Agda. We first introduce rules for "ML"-style universe polymorphism, where judgments are indexed by level variables $\alpha_1, \ldots, \alpha_n$. Then we add rules for level-indexed product types $[\alpha]A$. Moreover, we present rules for cumulativity. We survey the historical evolution of universes in type theory and discuss the relationship between the level-indexed systems and the externally indexed systems as well as with Palmgren's super universe. 
+We present rules for both externally and internally indexed sequences of universes \'a la Tarski with and without cumulativity. The internally indexed rules rely on a formal notion of universe level similar to Agda's type of universe levels. We first introduce rules for "ML"-style universe polymorphism, where judgments are indexed by level variables $\alpha_1, \ldots, \alpha_n$. Then we add rules for level-indexed product types $[\alpha]A$. We also present Voevodsky's proposal for a system with level constraints and an algorithm for solving such constraints. Furthermore, we survey the historical evolution of universes in type theory. Among other things, we discuss the relationship between the level-indexed and the externally indexed theories as well as with Palmgren's super universe. 
 \end{abstract}
 
 \section*{Related work}
@@ -124,7 +124,7 @@ The first published version of Martin-Löf's theory \cite{martinlof:predicative}
 $$
 \UU_0 : \UU_1 : \UU_2 : \cdots
 $$
-When developing mathematics inside this theory, most types will belong to $\U_0$ although a significant minority belongs to $\U_1$. Occasionally one may need a type in $\U_2$ and, in rare cases, types at even higher universe levels.\footnote{Universes become more important in a predicative framework than in an impredicative one. Thierry will write something about ths.} This suggests that it might be feasible for a users of type theory to explicitly assign universe levels to their types, and whenever necessary repeat definitions when they are needed on different levels. However, the number of copies of definitions does not only grow with the level, but also with the number of type arguments in the definition of a type former. As a consequence, Huet \cite{huet} and Harper and Pollack \cite{harperpollack} introduced {\em universe polymorphism}. However, the precise formulation and implementation of universe polymorphism has been a subject of much debate, and different proof assistants use different approaches. \footnote{de Moura said that universe level inference in Coq is more costly than type-checking.}
+When developing mathematics inside this theory, most types will belong to $\U_0$ although a significant minority belongs to $\U_1$. Occasionally one may need a type in $\U_2$ and, in rare cases, types at even higher universe levels.\footnote{Universes become more important in a predicative framework than in an impredicative one. Thierry will write something about ths.} This suggests that it might be feasible for a users of type theory to explicitly assign universe levels to their types, and whenever necessary repeat definitions when they are needed on different levels. However, the number of copies of definitions does not only grow with the level, but also with the number of type arguments in the definition of a type former. As a consequence, Huet \cite{Huet87} and Harper and Pollack \cite{HarperP91} introduced {\em universe polymorphism}. However, the precise formulation and implementation of universe polymorphism has been a subject of much debate, and different proof assistants use different approaches. \footnote{de Moura said that universe level inference in Coq is more costly than type-checking.}
 
 %\section{What is a univalent type theory?}
 
@@ -144,7 +144,7 @@ in Agda's notation.
 
 In this note we shall present some extensions of type theory which are loosely based on Agda's level-mechanism. We will also present Voevodsky's system which maintains constraints between level-variables, and an algorithm for solving those constraints.
 
-\paragraph{Plan.} We begin by providing some historical background about the evolution of universes in type theory. In particular, we shall discuss Palmgren's next universe operator and super universe, and point out that the super universe makes it possible to define an internally quantified sequence of universes. We shall also discuss how the rules for universes are formalized in terms of operations and equations extending the generalised algebraic theory of categories with families. Furthermore, we discuss the role of universes in Martin-Löf's logical framework and how this differs from Agda's logical framework. In Section ? we state the rules for a basic version of Martin-Löf type theory with $\Pi, \Sigma, \NN$, an identity type former $\Id$, and an externally indexed sequences of universes $\U_n, \T_n$ \'a la Tarski. We then consider rules for cumulativity for these universes. In Section ? we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha$, giving rise to a theory with level polymorphism. This is a kind of "ML-polymorphism" since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$. In Section ? we present Voevodsky's proposal with constraints between level variables. We also propose an algorithm for solving those constraints.
+\paragraph{Plan.} We begin by providing some historical background about the evolution of universes in type theory. In particular, we shall discuss Palmgren's next universe operator and super universe, and point out that the super universe makes it possible to define an internally quantified sequence of universes. We shall also discuss how the rules for universes are formalized in terms of operations and equations extending the generalised algebraic theory of categories with families. Furthermore, we discuss the role of universes in Martin-Löf's logical framework and how this differs from Agda's logical framework. In Section \ref{external} we state the rules for a basic version of Martin-Löf type theory with $\Pi, \Sigma, \NN$, an identity type former $\Id$, and an externally indexed sequences of universes $\U_n, \T_n$ \'a la Tarski. We then consider rules for cumulativity for these universes. In Section \ref{internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha$, giving rise to a theory with level polymorphism. This is a kind of "ML-polymorphism" since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$. In Section \ref{constraints} we present Voevodsky's proposal with constraints between level variables. We also propose an algorithm for solving those constraints.
 
 \section{A brief history of universes in type theory}
 
@@ -154,8 +154,8 @@ Martin-Löf \cite{martinlof:predicative} introduced the above-mentioned version 
 
 Martin-Löf \cite{martinlof:hannover} changed the judgment structure and added the judgment form $\Gamma \vdash A\ \type$\footnote{We should be systematic with respect to notation: shall we show all the old notations or the notations we use nowadays?} and replaced the untyped conversion judgments with typed equality judgments $\Gamma \vdash a = a' : A$ and $\Gamma \vdash A = A'$. There is still an external sequence of universes \`a la Russell. The cumulativity rule above was also added.
 
-Martin-Löf \cite{martinlof:bibliopolis} gave an alternative formulation of the first universe $\UU_0$ \`a la Tarski with decoding $\T_0$.
-Palmgren \cite{palmgren:phd} then proposed rules for an infinite external sequence of universes $\UU_n$ \`a la Tarski with decodings $\T_n$. In fact, Palmgren discussed two alternative versions of the rules for an external sequence of universes \`a la Tarski. 
+Martin-Löf \cite{martinlof:padova} gave an alternative formulation of the first universe $\UU_0$ \`a la Tarski with decoding $\T_0$.
+Palmgren \cite{palmgren:venice} then proposed rules for an infinite external sequence of universes $\UU_n$ \`a la Tarski with decodings $\T_n$. In fact, Palmgren discussed two alternative versions of the rules for an external sequence of universes \`a la Tarski. 
 
 The first version is entitled "universes as full reflection" and was only outlined for the first and the second universe. We will give a full presentation of this theory in Section ?. In this version there is a cumulativity map $\T_0^1 : \UU_0 \to \UU_1$ which is defined by recursion on the way the elements of $\UU_0$ are defined. For example, assume that $\pi_0$ and $\pi_1$ are the functions which represent the closure under $\Pi$ of $\U_0$ and $\U_1$, respectively . Then one of the defining equations of $\T_0^1$ is
 $$
@@ -165,13 +165,13 @@ However, the two sides of this equations do not have the same type, unless we st
 $$
 \T_1\, (\T_0^1\, a) = \T_0\, a
 $$
-Note however that this equation depends on $\T_0^1$ itself, the function we are in the process of defining! If we nevertheless allow the ill-typed equation above, it will follow that the second equation will be valid for all $a : \U_0$, that is, it is valid extensionally. We could even argue that we only need to know this equation for $\T_0^1\, a$, when defining $\T_0^1\, (\pi_0\,a\, b)$, so we could claim that this equation is known when it is needed. Would it be correct to say that this is a "definitional equality"? In one sense no, because $\T_1$ was already defined earlier, and we cannot stipulate its effect on $\T_0^1\, a$. On the other hand it seems that adding this equation as a judgmental equality does not destroy the decidability of the system.
+Note however that this equation depends on $\T_0^1$ itself, the function we are in the process of defining! If we nevertheless allow the ill-typed equation above, it will follow that the second equation will be valid for all $a : \U_0$, that is, it will be valid extensionally. We could even argue that we only need to know this equation for $\T_0^1\, a$, when defining $\T_0^1\, (\pi_0\,a\, b)$, so we could claim that this equation is known when it is needed. Would it be correct to say that this is a "definitional equality"? In one sense no, because $\T_1$ was already defined earlier, and we cannot stipulate its effect on $\T_0^1\, a$. On the other hand it seems that adding this equation as a judgmental equality does not destroy the decidability of the system.
 
 Palmgren's second version of the external sequence is entitled "universes as uniform constructions". Here the map $\T_0^1 : \UU_0 \to \UU_1$ is a constructor for the second universe $\UU_1$. However, this means that we do not have full reflection: $\UU_1$ contains canonical elements which have no counterpart as canonical types.
 
 \subsection{Internal sequences of universes and the super universe}
 
-Palmgren \cite{palmgren:phd} went on to internalize the construction of the infinite sequence of universes  \`a la Tarski. To this end he introduced the {\em next-universe operator}, which given a family of types $U, T$, constructs a new family of types $U^+, T^+$, such that $ \UU_{n+1} = \UU_n^+$ and $\T_{n+1} = \T_n^+$.
+Palmgren \cite{palmgren:venice} went on to internalize the construction of the infinite sequence of universes  \`a la Tarski. To this end he introduced the {\em next-universe operator}, which given a family of types $U, T$, constructs a new family of types $U^+, T^+$, such that $ \UU_{n+1} = \UU_n^+$ and $\T_{n+1} = \T_n^+$.
 
 Furthermore, Palmgren introduced a {\em super universe} (\`a la Tarski), which is a type containing a code for the first universe and is closed under the next-universe operator as well as under all the usual small type formers. In this theory we can define an internal sequence of universes $n : \NN \vdash \UA_n$, and also express univalence of this sequence as one typing:
 $$
@@ -186,7 +186,7 @@ such that $\Tsuper\,0$ is the empty universe and $\Tsuper\,(n + 1)$ is the next 
 
 \subsection{The generalised algebraic theory of type theory with universes}
 
-Models of type theory can be expressed as categories with families (cwfs) with extra structure for modelling the rules for type formers.  A key feature of cwfs is that they can be expressed as models of a generalised algebraic theory in the sense of Cartmell \cite{cartmell}, and also that the extra structure for type formers can be expressed by adding more operations and equations to the generalised algebraic theory of cwfs. When we add new rules to type theory, it is desirable that the corresponding extra structure on  models also can be expressed in terms of operations and equations to the generalised algebraic theory of cwfs. We should therefore ask ourselves which the extra structure needed for modelling universe hierarchies.
+Models of type theory can be expressed as categories with families (cwfs) with extra structure for modelling the rules for type formers.  A key feature of cwfs is that they can be expressed as models of a generalised algebraic theory in the sense of Cartmell \cite{cartmell:apal}, and also that the extra structure for type formers can be expressed by adding more operations and equations to the generalised algebraic theory of cwfs. When we add new rules to type theory, it is desirable that the corresponding extra structure on  models also can be expressed in terms of operations and equations to the generalised algebraic theory of cwfs. We should therefore ask ourselves which the extra structure needed for modelling universe hierarchies.
 
 For example, we can formulate the new operations and equations for universes that need to be added to the generalised algebraic theory of cwfs. For example, $\U_0,\T_0,\U_1, \T_1,$ and $\T_0^1$ can be added as new operations, and we can add the defining equations for $\T_0,\U_1, \T_1,\T_0^1$, including the equation
 $
@@ -201,7 +201,7 @@ For example, we have
 
 \subsection{Universes in Martin-Löf's logical framework}
 
-The rules for the various universes \`a la Tarski that we discussed above can also be formulated using Martin-Löf's logical framework \cite{martinlof}. This framework has $\Pi$-types (written $(x : A)B$ by Martin-Löf and abbreviated $(A)B$ when $B$ does not depend on $x$.) and a type $\Set$ which is a "universe" with a special role. We will here use the formulation \`a la Tarski of $\Set$ with decoding $\El$, but there is also a formulation \`a la Russell which often used in practice. The formation, introduction, and elimination rules of type theory are formulated as typings of constants $c : A$, and the equality rules are formulated as equations $\Gamma \vdash a = a' : A$. The idea is that $A : \Set$ in the logical framework version represents $A$ {\em type} in the earlier formulations of type theory, and the {\em typing} $f : (x : A)B$ represents the {\em rule} that if $a : A$ then $f\,a : B$.
+The rules for the various universes \`a la Tarski that we discussed above can also be formulated using Martin-Löf's logical framework \cite{Martinlof86,NordstromPS90}. This framework has $\Pi$-types (written $(x : A)B$ by Martin-Löf and abbreviated $(A)B$ when $B$ does not depend on $x$.) and a type $\Set$ which is a "universe" with a special role. We will here use the formulation \`a la Tarski of $\Set$ with decoding $\El$, but there is also a formulation \`a la Russell which often used in practice. The formation, introduction, and elimination rules of type theory are formulated as typings of constants $c : A$, and the equality rules are formulated as equations $\Gamma \vdash a = a' : A$. The idea is that $A : \Set$ in the logical framework version represents $A$ {\em type} in the earlier formulations of type theory, and the {\em typing} $f : (x : A)B$ represents the {\em rule} that if $a : A$ then $f\,a : B$.
 
 For example, the formation rule for $\Pi$-sets (as opposed to types) is represented by the typing
 \begin{eqnarray*}
@@ -264,7 +264,7 @@ for representing $\Pi$-types as we did in Martin-Löf's logical framework. As a 
 
 In the following section we shall give the rules for an idealized version of Agda's system of universes with level quantification. In particular, we shall not introduce a {\em type} of levels, and the kind $\Set_\omega$. 
 
-\section{A type theory with an external sequence of universes}
+\section{A type theory with an external sequence of universes}\label{external}
 
 As already mentioned the rules for the minimal super universe follows the pattern of inductive-recursive definitions, and is a natural candidate for a clean formulation of a type theory which allows quantification over countably many universe levels. However, there are at least two reasons for considering the following idealized version of a type theory with universe levels which are not types and a special notion of level quantification. The first is that it does not increase the proof theoretic strength in the way that adding a minimal super universe does. The second is that in the theory with a super universe, the level operation $l \vee m$ (the maximum of $l$ and $m$) is defined by induction on $l$ or $m$. As a consequence not all equations in level arithmetic are definitional, and this is a problem in practice when using universe polymorphism.
 
@@ -446,7 +446,7 @@ the same pattern. For instance, we have the identity function $\lambda (X:\UU_n)
 of type $\Pi (X:\UU_n)(\T_n(X)\rightarrow \T_n(X))$ that can be defined for $n = 0,1,\dots$
 The systems in the next sections address this issue.
 
-\section{A type theory with universe levels and polymorphism }
+\section{A type theory with universe levels and polymorphism }\label{internal}
 
 We introduce {\em universe level} expressions: we write $\alpha,\beta,\dots$
 for {\em level variables}, and $l,m,\dots$ for {\em level expressions} which are built from level variables
@@ -579,7 +579,7 @@ should be constant. Example of use of this system? (See Martin's mail.)
 
 Note that in intensional type theory, we will not be able to justify all the lattice laws for level expressions as definitional equalities. 
 
-\section{An algebra for universe levels}
+\section{An algebra for universe levels}\label{constraints}
 
 We would need (for the Max-Atom algorithms to work):
 \[ 
