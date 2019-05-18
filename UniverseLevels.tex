@@ -716,13 +716,59 @@ $$
 $$
 Intuitively, we can use a term of type $[\psi]A$ only if the constraint $\psi$ holds.
 
+\subsection*{Martin's example (Berry function)}
+
+Here is an example of a problem if we want typical ambiguity in the absence of cumulativity.
+
+Consider the theorem
+$$
+    (A B : ?) \to A \times B \simeq B \times A
+$$
+The most general solution is $(A : \U_l) (B : \U_m)$ for $\U_l$ and $\U_m$ arbitrary.
+
+Now  consider the theorem
+$$
+    (A B C : ?) \to A \times B \simeq C \times A \to B \times A \simeq C \times A
+$$
+If we write
+$$
+    (A : \U_l) (B : \U_m) (C : \U_n) \to A \times B \simeq C \times A \to B \times A \simeq C \times A,
+$$
+we need to solve the system of equations
+$$
+    \U_l \vee \U_n = \U_{l \vee m}
+$$
+$$
+    \U_l \vee \U_n = \U_{l \vee m}
+$$
+Hence three "maximally general" solutions are
+$$
+    (A : \U_l ) (B : \U_m ) (C : \U_{l \vee m} )
+$$
+$$
+    (A : \U_l ) (B : \U_{l \vee m }) (C : \U_m )
+$$
+$$
+    (A : \U_l \vee \U_m ) (B : \U_l) (C : \U_m )
+$$
+for $\U_l$ and $\U_m$ arbitrary.
+
 \section{Related work}
 
 Harper and Pollack \cite{HarperP91} consider the system $\CComega$, the Calculus of Constructions with an sequence of universes \`a la Russell. They consider both an externally indexed version and a version with level expressions which are either numbers or variables, and with constraints of the form $l < m$ and $l \leq m$. Chan has an algorithm for solving those constraints in $\Ordo(c,v^3)$, where $c$ is the number of constraints and $v$ is the number of level variables. They also consider the level synthesis problem in a version with an anonymous universe Type.
 
-Huet, in an unpublished manuscript \cite{Huet87}, has independently developed analgorithm for handling universes in the Calculus of Constructions. His approach is to drop the assumption that the universes form a linearly-orderedcumulative hierarchy indexed by the natural numbers, and to consider instead a family of calculi in which there is some well-founded partial orderingof universes. The input language is correspondingly restricted so that specific universes are disallowed; only the anonymous universe Type may beused. The principal advantage of this approach over the one considered hereis that the consistency checking algorithm is significantly more efficient thanChan's algorithm, reducing to an acyclicity check in a dependency graph ofuniverse levels. (cut-and-paste from Harper and Pollack)
+Huet, in an unpublished manuscript \cite{Huet87}, has independently developed an
+algorithm for handling universes in the Calculus of Constructions. His approach is to drop the assumption that the universes form a linearly-ordered
+cumulative hierarchy indexed by the natural numbers, and to consider instead a family of calculi in which there is some well-founded partial ordering
+of universes. The input language is correspondingly restricted so that specific universes are disallowed; only the anonymous universe Type may be
+used. The principal advantage of this approach over the one considered here
+is that the consistency checking algorithm is significantly more efficient than
+Chan's algorithm, reducing to an acyclicity check in a dependency graph of
+universe levels. (cut-and-paste from Harper and Pollack)
 
-Assaf \cite{Assaf14} considers an alternative version of the calculus ofconstructions where subtyping is explicit. This new system avoids problems related to coercions and dependent types by using the Tarski styleof universes and by introducing additional equations to reflect equality. In particular he adds an explicit cumulativity map $\T^0_1 : \U_0 \to \U_1$. He argues that "full reflection" is necessary to achieve the expressivity of Russell style. He introduces the explicit cumulative calculus of constructions (CC$\uparrow$) which is closely related to our system of externally indexed Tarski style universes.
+Assaf \cite{Assaf14} considers an alternative version of the calculus of
+constructions where subtyping is explicit. This new system avoids problems related to coercions and dependent types by using the Tarski style
+of universes and by introducing additional equations to reflect equality. In particular he adds an explicit cumulativity map $\T^0_1 : \U_0 \to \U_1$. He argues that "full reflection" is necessary to achieve the expressivity of Russell style. He introduces the explicit cumulative calculus of constructions (CC$\uparrow$) which is closely related to our system of externally indexed Tarski style universes.
 
 \section*{The problem of universes}
 
