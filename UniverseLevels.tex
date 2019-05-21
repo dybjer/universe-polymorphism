@@ -101,6 +101,9 @@
 
 \newcommand{\natrec}{\mathsf{natrec}}
 %\rightfooter{}
+\newcommand{\set}[1]{\{#1\}}
+
+
 
 \begin{document}
 
@@ -596,35 +599,39 @@ and the type theory should have enough rules to ensure
 
 We summarize some results from \cite{BNR08} (to be checked for correct formulation).
 Let $S$ be a finite set of constraints of the form $l=m$ as in the previous section.
-More precisely, we have the following abstract syntax: 
+The \emph{level expressions} $l,m$ have the following abstract syntax: 
 \[
 l,m,\ldots ::= {\alpha,\beta,\ldots} \mid {l^+} \mid {l\vee m}
 \]
 A \emph{model}, or \emph{solution} of $S$ is an assignment of natural numbers to
-the level variables occurring in $S$ such that all constraints in $S$ become true.
+the level variables occurring in $S$ such that all constraints in $S$ become true
+under the canonical interpretation of $\_^+$ as successor and $\vee$ as maximum.
+Entailment under the canonical interpretation will be denoted by $\models$
 
 \begin{enumerate}
 \item (Reduction to simpler form.) 
 Solving $S$ can be reduced in polynomial time to solving a set $S'$ of 
 constraints of the form $\alpha\vee\beta = \gamma$, $\alpha\vee\beta = \gamma^+$, 
-and$(\alpha\vee\beta)^+ = \gamma$.
+and $(\alpha\vee\beta)^+ = \gamma$. Such forms are called \emph{reduced forms},
+conveniently denoted by $(\alpha\vee\beta)^{(+)} = \gamma^{(+)}$.
 
 \item (Small model property.) 
-Let $K_{S'}$ be the number of occurrences of $+$-symbols in $S'$ as above.
-If there is a model of $S'$, then there is a model with values at most $K_{S'}$.
+Let $K_{S}$ be the number of occurrences of symbols $+$ in $S$.
+If there is a model of $S$, then there is a model with values at most $K_{S}$.
 
-\item (Don't lower below a model.) 
-Let $M$ be a model of $S'$ and $\rho$ an assigment such that $\rho\geq M$ (pointwise).
-If $\rho$ is not a model of $S'$, then we have $\rho'\geq M$ for any assigment $\rho'$
+\item (Don't lower below a model.)
+Assume $S$ is in reduced form.
+Let $M$ be a model of $S$ and $\rho$ an assigment such that $\rho\geq M$ (pointwise).
+If $\rho$ is not a model of $S$, then we have $\rho'\geq M$ for any assigment $\rho'$
 that is obtained from $\rho$ in one of the following ways:
 \begin{itemize}
-\item Pick a constraint from $S'$ with 
+\item Pick a constraint from $S$ with 
 $(\alpha\vee\beta)^{(+)} \rho +n = \gamma^{(+)} \rho$ for $n>0$ and
 define $\rho'(\gamma) = \rho(\gamma)-n$.
-\item Pick a constraint from $S'$ with 
+\item Pick a constraint from $S$ with 
 $(\alpha\vee\beta)^{(+)} \rho = \gamma^{(+)} \rho + n$ for $n>0$ and
 and define $\rho'(\alpha) = \rho(\alpha)-n$ if $\rho(\alpha)\geq\rho(\beta)$.
-\item Pick a constraint from $S'$ with 
+\item Pick a constraint from $S$ with 
 $(\alpha\vee\beta)^{(+)} \rho = \gamma^{(+)} \rho + n$ for $n>0$ and
 and define $\rho'(\beta) = \rho(\beta)-n$ if $\rho(\alpha)<\rho(\beta)$.
 \end{itemize}
@@ -633,7 +640,22 @@ and keeps the same value as $\rho$ for all other variables.
 \end{enumerate}
 
 \begin{proof}
-1. By induction on the size of $l$ and $m$ in $l=m$. If both are variables, then we can
+1. We first define by induction for any $l$ a variable $v(l)$ and a set $S(l)$ of 
+constraints in reduced form such that $S(l)\models l = v(l)$.
+In the base case we take $v(\alpha)=\alpha$ and $S(\alpha)$ empty, for any
+level variable $\alpha$. In one step case we take $v(l^+)$ a fresh variable,
+and $S(l^+) = S(l) \cup \set{(v(l)\vee v(l))^+ =v(l^+)}$.
+In the other step case we take $v(l\vee m)$ again a fresh variable,
+and $S(l\vee m) = S(l) \cup S(m) \cup \set{(v(l)\vee v(m)) =v(l\vee m)}$.
+By induction we get $S(l)\models l = v(l)$ plus the following two facts.
+First, $S(l)$ contains precisely as many symbols $+$ as $l$ 
+(occurrences in names of fresh variables like in $v(l^+)$ do not count).
+Secondly, every assignment of variables in $l$ can be extended to an
+assignment validating $S(l)$.
+
+
+
+By induction on the size of $l$ and $m$ in $l=m$. If both are variables, then we can
 eliminate one of them and leave out the constraint. In case $l\vee m=\alpha$
 is not of the right form, replace by $\lambda\vee\mu=\alpha$,
 $l=\lambda$, $m=\mu$ ($\lambda,\mu$ fresh), and apply the induction hypothesis
@@ -663,7 +685,7 @@ the gap by $k$. This new assignment $M'$ has exactly the same graph and is
 also a model of $S$. This means we can deflate $M$ into a model in which all ranges of
 red connected components overlap. The range of $M'$ is now the sum of the ranges
 of its red connected components, and this sum is at most the number of occurrences of
-$+$-symbols in $S$. A simple translation to $0$ now give the desired small model.
+symbols $+$ in $S$. A simple translation to $0$ now give the desired small model.
 
 3. Assume again that $S$ has been reduced to the simpler form as in point 1.
 Let $M$ be a model of $S$ with values at most $K_S$. Let $\rho\geq M$ (pointwise)
