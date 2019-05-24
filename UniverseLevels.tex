@@ -597,7 +597,11 @@ and the type theory should have enough rules to ensure
 \text{~~ (judgmentally)}.
 \]
 
-We summarize some results from \cite{BNR08} (to be checked for correct formulation).
+The goal of the following is apply the methods from \cite{BNR08} to decide
+the solvability of a finite set $S$ of universe constraints in polynomial time.
+Here polynomial means polynomial in the total number $\mu(S)$ of occurrences of
+variables and operations $\_^+$ and $\vee$ in $S$.
+
 Let $S$ be a finite set of constraints of the form $l=m$ as in the previous section.
 The \emph{level expressions} $l,m$ have the following abstract syntax: 
 \[
@@ -609,7 +613,7 @@ under the canonical interpretation of $\_^+$ as successor and $\vee$ as maximum.
 Entailment under the canonical interpretation will be denoted by $\models$
 
 \begin{enumerate}
-\item (Reduction to simpler form.) 
+\item (Transformation to reduced form.) 
 Solving $S$ can be reduced in polynomial time to solving a set $S'$ of 
 constraints of the form $\alpha\vee\beta = \gamma$, $\alpha\vee\beta = \gamma^+$, 
 and $(\alpha\vee\beta)^+ = \gamma$. Such forms are called \emph{reduced forms},
@@ -640,54 +644,65 @@ and keeps the same value as $\rho$ for all other variables.
 \end{enumerate}
 
 \begin{proof}
-1. We first define by induction for any $l$ a variable $v(l)$ and a set $S(l)$ of 
+1. 
+We first define by induction for any $l$ a variable $v(l)$ and a set $S(l)$ of 
 constraints in reduced form such that $S(l)\models l = v(l)$.
 In the base case we take $v(\alpha)=\alpha$ and $S(\alpha)$ empty, for any
 level variable $\alpha$. In one step case we take $v(l^+)$ a fresh variable,
 and $S(l^+) = S(l) \cup \set{(v(l)\vee v(l))^+ =v(l^+)}$.
 In the other step case we take $v(l\vee m)$ again a fresh variable,
 and $S(l\vee m) = S(l) \cup S(m) \cup \set{(v(l)\vee v(m)) =v(l\vee m)}$.
-By induction we get $S(l)\models l = v(l)$ plus the following two facts.
-First, $S(l)$ contains precisely as many symbols $+$ as $l$ 
-(occurrences in names of fresh variables like in $v(l^+)$ do not count).
-Secondly, every assignment of variables in $l$ can be extended to an
+By induction we get $S(l)\models l = v(l)$, plus the following two facts.
+First, $S(l)$ contains precisely as many symbols $+$ as $l$ does,
+and similarly for symbols $\vee$.
+(Occurrences of such symbols in names of fresh variables do not count.)
+Secondly, every assignment of variables occurring in $l$ can be extended to an
 assignment validating $S(l)$.
 
+Now consider a constraint $l=m$. Constraints of the form $l=l$ can
+simply be removed. If $l$ and $m$ are distinct variables,
+then we eliminate one of them by substitution. Otherwise,
+we replace $l=m$ by $S(l)\cup S(m)\cup \set{v(l)=v(m)}$.
+Doing this for all constraints in some given set $S$
+leaves us with a set of constraints that are either in
+reduced form, or of the form $v(l)=v(m)$ for distinct fresh variables.
+The latter are easily removed by elimination. Let $S'$ be the resulting set
+of constraints, which are all in reduced form. By the results on $S(l)$ 
+and $v(l)$ from the previous paragraph, the set $S$ is solvable if
+and only if $S'$ is solvable.
 
+In terms of $\mu$-value, there is a small
+difference between $S$ and $S'$ in the previous paragraph. 
+What happens during the reduction is that internal nodes
+of parse trees of level expressions get labelled with fresh variables.
+We get $\mu(S')\leq 2\mu(S)$ and the whole transformation, including the
+elimination of variables, can certainly be done in quadratic time
+(and probably better).
 
-By induction on the size of $l$ and $m$ in $l=m$. If both are variables, then we can
-eliminate one of them and leave out the constraint. In case $l\vee m=\alpha$
-is not of the right form, replace by $\lambda\vee\mu=\alpha$,
-$l=\lambda$, $m=\mu$ ($\lambda,\mu$ fresh), and apply the induction hypothesis
-to the latter two. In case $l^+=\alpha$, replace by $(\lambda\vee\lambda)^+=\alpha$,
-$l=\lambda$ ($\lambda$ fresh), and apply the induction hypothesis
-to the latter. In case $l\vee m= n \vee o$, replace by $l\vee m= \lambda$
-and $n \vee o = \lambda$ ($\lambda$ fresh), and apply the induction hypothesis
-to both. All remaining cases are very similar.
-
-2. Assume now that $S$ has been reduced to the simpler form as in point 1.
+2. 
 For any assignment $\rho$, define the \emph{range} of $\rho$ as the difference
 of the maximal value assigned to a variable by $\rho$ and the minimal value.
 For a subset of variables, we also speak about the range of that subset under $\rho$.
 
+Let $S$ be a set of constraints in reduced form.
 Let $M$ be a model of $S$. We construct a graph depending on $M$ and $S$.
 The nodes are the variables occurring in $S$. For every constraint we have
 two edges, a red one and a green one, where the red one ensures that the
 constraint is true in $M$. 
 If the constraint is $(\alpha\vee\beta)^{(+)} = \gamma^{(+)}$
 and $M(\alpha)\geq M(\beta)$, then we add a red edge from $\alpha$
-to $\gamma$ and a green edge from $\beta$ to $\alpha$.
+to $\gamma$, and a green edge from $\beta$ to $\alpha$.
 A \emph{red connected component} is a subset $C$ of the nodes such that
 each two nodes in $C$ are connected by a path consisting of red edges.
 If the ranges of two red connected components do not overlap, say they have
-a gap $k$, then we can lower the values of all variables with values above 
+a gap $k>0$, then we can lower the values of all variables with values above 
 the gap by $k$. This new assignment $M'$ has exactly the same graph and is
 also a model of $S$. This means we can deflate $M$ into a model in which all ranges of
 red connected components overlap. The range of $M'$ is now the sum of the ranges
 of its red connected components, and this sum is at most the number of occurrences of
-symbols $+$ in $S$. A simple translation to $0$ now give the desired small model.
+symbols $+$ in $S$. A simple translation to $0$ now gives the desired small model.
 
-3. Assume again that $S$ has been reduced to the simpler form as in point 1.
+3. Assume again that $S$ has been transformed to the reduced form as in point 1.
 Let $M$ be a model of $S$ with values at most $K_S$. Let $\rho\geq M$ (pointwise)
 and let $\rho'$ be as constructed above. In each of the three cases we
 have to prove that $\rho'\geq M$ for the only variable that is lowered. 
