@@ -615,9 +615,9 @@ Entailment under the canonical interpretation will be denoted by $\models$
 \begin{enumerate}
 \item (Transformation to reduced form.) 
 Solving $S$ can be reduced in polynomial time to solving a set $S'$ of 
-constraints of the form $\alpha\vee\beta = \gamma$, $\alpha\vee\beta = \gamma^+$, 
+constraints of the form $\alpha\vee\beta = \gamma^+$, $\alpha\vee\beta = \gamma$,
 and $(\alpha\vee\beta)^+ = \gamma$. Such forms are called \emph{reduced forms},
-conveniently denoted by $(\alpha\vee\beta)^{(+)} = \gamma^{(+)}$.
+conveniently denoted by $(\alpha\vee\beta)+b = \gamma$, with $b=-1,0,1$.
 
 \item (Small model property.) 
 Let $K_{S}$ be the number of occurrences of symbols $+$ in $S$.
@@ -629,15 +629,15 @@ Let $M$ be a model of $S$ and $\rho$ an assigment such that $\rho\geq M$ (pointw
 If $\rho$ is not a model of $S$, then we have $\rho'\geq M$ for any assigment $\rho'$
 that is obtained from $\rho$ in one of the following ways:
 \begin{itemize}
-\item Pick a constraint from $S$ with 
-$(\alpha\vee\beta)^{(+)} \rho +n = \gamma^{(+)} \rho$ for $n>0$ and
+\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with 
+$(\alpha\vee\beta)\rho +b+n = \gamma\rho$ for some $n>0$ and
 define $\rho'(\gamma) = \rho(\gamma)-n$.
-\item Pick a constraint from $S$ with 
-$(\alpha\vee\beta)^{(+)} \rho = \gamma^{(+)} \rho + n$ for $n>0$ and
-and define $\rho'(\alpha) = \rho(\alpha)-n$ if $\rho(\alpha)\geq\rho(\beta)$.
-\item Pick a constraint from $S$ with 
-$(\alpha\vee\beta)^{(+)} \rho = \gamma^{(+)} \rho + n$ for $n>0$ and
-and define $\rho'(\beta) = \rho(\beta)-n$ if $\rho(\alpha)<\rho(\beta)$.
+\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with 
+$(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$ and 
+define $\rho'(\alpha) = \rho(\alpha)-n$ if $\rho(\alpha)\geq\rho(\beta)$.
+\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with 
+$(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$ and
+define $\rho'(\beta) = \rho(\beta)-n$ if $\rho(\alpha)<\rho(\beta)$.
 \end{itemize}
 In all three cases, $\rho'$ assigns a lower value than $\rho$ to exactly one variable,
 and keeps the same value as $\rho$ for all other variables.
@@ -689,7 +689,7 @@ Let $M$ be a model of $S$. We construct a graph depending on $M$ and $S$.
 The nodes are the variables occurring in $S$. For every constraint we have
 two edges, a red one and a green one, where the red one ensures that the
 constraint is true in $M$. 
-If the constraint is $(\alpha\vee\beta)^{(+)} = \gamma^{(+)}$
+If the constraint is $(\alpha\vee\beta)+b = \gamma$
 and $M(\alpha)\geq M(\beta)$, then we add a red edge from $\alpha$
 to $\gamma$, and a green edge from $\beta$ to $\alpha$.
 A \emph{red connected component} is a subset $C$ of the nodes such that
@@ -700,28 +700,36 @@ the gap by $k$. This new assignment $M'$ has exactly the same graph and is
 also a model of $S$. This means we can deflate $M$ into a model in which all ranges of
 red connected components overlap. The range of $M'$ is now the sum of the ranges
 of its red connected components, and this sum is at most the number of occurrences of
-symbols $+$ in $S$. A simple translation to $0$ now gives the desired small model.
+symbols $+$ in $S$. A simple translation to $0$ finally gives the desired small model.
 
 3. Assume again that $S$ has been transformed to the reduced form as in point 1.
-Let $M$ be a model of $S$ with values at most $K_S$. Let $\rho\geq M$ (pointwise)
-and let $\rho'$ be as constructed above. In each of the three cases we
-have to prove that $\rho'\geq M$ for the only variable that is lowered. 
+Let $M$ be a model of $S$ with values at most $K_S$ as in point 2. 
+Let $\rho\geq M$ (pointwise)
+and let $\rho'$ be as in point 3 above. In each of the three cases we
+have to prove that $\rho'\geq M$ only for the variable that is lowered. 
 We use that $\max$ is monotone in both its arguments.
 \begin{itemize}
 \item Assume  
-$(\alpha\vee\beta)^{(+)} \rho +n = \gamma^{(+)} \rho$ for $n>0$ and
-$\rho'(\gamma) = \rho(\gamma)-n$. 
-Then $\rho'(\gamma^{(+)}) = (\alpha\vee\beta)^{(+)} \rho \geq 
-\max(M(\alpha),M(\beta))(+1) = M(\gamma^{(+)})$, so we are done.
+$(\alpha\vee\beta)\rho +b+n = \gamma\rho$ for some $n>0$.
+Then $\rho'(\gamma) = \rho(\gamma)-n = (\alpha\vee\beta)\rho + b \geq 
+\max(M(\alpha),M(\beta)) +b = M(\gamma)$.
 \item Assume
-$(\alpha\vee\beta)^{(+)} \rho = \gamma^{(+)} \rho + n$ for $n>0$ and
-and $\rho'(\alpha) = \rho(\alpha)-n$ if $\rho(\alpha)\geq\rho(\beta)$.
-Should be very similar, check also the cases in which $\gamma$ is $\alpha$ or $\beta$.
-\item Assume
-$(\alpha\vee\beta)^{(+)} \rho = \gamma^{(+)} \rho + n$ for $n>0$ and
-and $\rho'(\beta) = \rho(\beta)-n$ if $\rho(\alpha)<\rho(\beta)$.
+$(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$, and
+$\rho(\alpha)\geq\rho(\beta)$. 
+Then $\rho'(\alpha) = \rho(\alpha)-n = (\alpha\vee\beta)\rho -n =
+\gamma\rho - b \geq M(\gamma)-b = \max(M(\alpha),M(\beta)) \geq M(\alpha)$.
+\item Analogous to the previous case, but with $\rho(\alpha)<\rho(\beta)$
+and $\rho'(\beta)=\rho(\beta)-n$.
 \end{itemize}
+Note that the proof is correct also if two or three of $\alpha,\beta,\gamma$
+are equal.
 \end{proof}
+
+In each step from $\rho$ to $\rho'$ in point three, exactly one variable is
+lowered. This can be done at most $V K_S$ times, where $V$ is the number of variables.
+This means that in at most $V K_S$ steps we find a model if there is one.
+If $S$ has a model, iterating the procedure in point 3 will find the unique maximal
+model $M$ with values at most $K_S$. Each 
 
 \section{A system with level constraints}
 
