@@ -584,7 +584,7 @@ should be constant. Example of use of this system? (See Martin's mail.)
 
 Note that in intensional type theory, we will not be able to justify all the lattice laws for level expressions as definitional equalities. 
 
-\section{An algebra for universe levels}\label{constraints}
+\section{Solving universe constraints is polynomial}\label{sec:P-solvability}
 
 We would need (for the Max-Atom algorithms to work):
 \[ 
@@ -610,7 +610,8 @@ l,m,\ldots ::= {\alpha,\beta,\ldots} \mid {l^+} \mid {l\vee m}
 A \emph{model}, or \emph{solution} of $S$ is an assignment of natural numbers to
 the level variables occurring in $S$ such that all constraints in $S$ become true
 under the canonical interpretation of $\_^+$ as successor and $\vee$ as maximum.
-Entailment under the canonical interpretation will be denoted by $\models$
+Entailment under the canonical interpretation will be denoted by $\models$.
+We proceed by elaborating the following three points.
 
 \begin{enumerate}
 \item (Transformation to reduced form.) 
@@ -623,7 +624,7 @@ conveniently denoted by $(\alpha\vee\beta)+b = \gamma$, with $b=-1,0,1$.
 Let $K_{S}$ be the number of occurrences of symbols $+$ in $S$.
 If there is a model of $S$, then there is a model with values at most $K_{S}$.
 
-\item (Don't lower below a model.)
+\item (Stay above models.)
 Assume $S$ is in reduced form.
 Let $M$ be a model of $S$ and $\rho$ an assigment such that $\rho\geq M$ (pointwise).
 If $\rho$ is not a model of $S$, then we have $\rho'\geq M$ for any assigment $\rho'$
@@ -728,8 +729,18 @@ are equal.
 In each step from $\rho$ to $\rho'$ in point three, exactly one variable is
 lowered. This can be done at most $V K_S$ times, where $V$ is the number of variables.
 This means that in at most $V K_S$ steps we find a model if there is one.
-If $S$ has a model, iterating the procedure in point 3 will find the unique maximal
-model $M$ with values at most $K_S$. Each 
+If $S$ has a model, then starting with $\rho$ constant $K_S$
+and iterating the procedure in point 3 will find the unique maximal
+model $M$ with values at most $K_S$. Each step requires a pass through all
+all constraints to evaluate them in the current assignment.
+When properly implemented this can be done in $O(K_S)$ time.
+The whole decision procedure of first transforming to constraints in reduced
+form and then testing for solvability would take $O(V K^2_S)$ time.
+(It may be possible to do better.) We have certainly reached our goal:
+
+\begin{theorem}\label{thm:P-solvability}
+Deciding solvability of a finite set of universe constraints is polynomial.
+\end{theorem}
 
 \section{A system with level constraints}
 
