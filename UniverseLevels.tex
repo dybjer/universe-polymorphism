@@ -630,50 +630,30 @@ A \emph{model}, or \emph{solution} of $S$ is an assignment of natural numbers to
 the level variables occurring in $S$ such that all constraints in $S$ become true
 under the canonical interpretation of $\_^+$ as successor and $\vee$ as maximum.
 Entailment under the canonical interpretation will be denoted by $\models$.
-We proceed by elaborating the following three points.
 
-\begin{enumerate}
-\item (Transformation to reduced form.) 
 Solving $S$ can be reduced in polynomial time to solving a set $S'$ of 
 constraints of the form $\alpha\vee\beta = \gamma^+$, $\alpha\vee\beta = \gamma$,
 and $(\alpha\vee\beta)^+ = \gamma$. Such forms are called \emph{reduced forms},
 conveniently denoted by $(\alpha\vee\beta)+b = \gamma$, with $b=-1,0,1$.
+If $\alpha=\beta$ we simply write $\alpha+b = \gamma$.
 
-\item (Small model property.) 
-Let $K_{S}$ be the number of occurrences of symbols $+$ in $S$.
-If there is a model of $S$, then there is a model with values at most $K_{S}$.
+\begin{lemma}\label{lem:reduced-form}
+For every finite set $S$ of constraints, there is a set $S'$ of
+constraints in reduced form such that $S$ is solvable if and only if $S'$
+is solvable. Furthermore, $S'$ contains precisely as many symbols $\_^+$ as $S$ does,
+and $\mu(S')\leq 2\mu(S)$.
+\end{lemma}
 
-\item (Stay above models.)
-Assume $S$ is in reduced form.
-Let $M$ be a model of $S$ and $\rho$ an assigment such that $\rho\geq M$ (pointwise).
-If $\rho$ is not a model of $S$, then we have $\rho'\geq M$ for any assigment $\rho'$
-that is obtained from $\rho$ in one of the following ways:
-\begin{itemize}
-\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with 
-$(\alpha\vee\beta)\rho +b+n = \gamma\rho$ for some $n>0$ and
-define $\rho'(\gamma) = \rho(\gamma)-n$.
-\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with 
-$(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$ and 
-define $\rho'(\alpha) = \rho(\alpha)-n$ if $\rho(\alpha)\geq\rho(\beta)$.
-\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with 
-$(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$ and
-define $\rho'(\beta) = \rho(\beta)-n$ if $\rho(\alpha)<\rho(\beta)$.
-\end{itemize}
-In all three cases, $\rho'$ assigns a lower value than $\rho$ to exactly one variable,
-and keeps the same value as $\rho$ for all other variables.
-\end{enumerate}
-
-\begin{proof}
-1. 
-We first define by induction for any $l$ a variable $v(l)$ and a set $S(l)$ of 
-constraints in reduced form such that $S(l)\models l = v(l)$.
+\begin{proof} 
+We first define by induction for any $l$ a fresh variable $v(l)$ and 
+a set $S(l)$ of constraints in reduced form such that $S(l)\models l = v(l)$.
 In the base case we take $v(\alpha)=\alpha$ and $S(\alpha)$ empty, for any
 level variable $\alpha$. In one step case we take $v(l^+)$ a fresh variable,
-and $S(l^+) = S(l) \cup \set{(v(l)\vee v(l))^+ =v(l^+)}$.
+and $S(l^+) = S(l) \cup \set{v(l)^+ =v(l^+)}$.
 In the other step case we take $v(l\vee m)$ again a fresh variable,
 and $S(l\vee m) = S(l) \cup S(m) \cup \set{(v(l)\vee v(m)) =v(l\vee m)}$.
 By induction we get $S(l)\models l = v(l)$, plus the following two facts.
-First, $S(l)$ contains precisely as many symbols $+$ as $l$ does,
+First, $S(l)$ contains precisely as many symbols $\_^+$ as $l$ does,
 and similarly for symbols $\vee$.
 (Occurrences of such symbols in names of fresh variables do not count.)
 Secondly, every assignment of variables occurring in $l$ can be extended to an
@@ -698,35 +678,87 @@ of parse trees of level expressions get labelled with fresh variables.
 We get $\mu(S')\leq 2\mu(S)$ and the whole transformation, including the
 elimination of variables, can certainly be done in quadratic time
 (and probably better).
+\end{proof}
 
-2. 
-For any assignment $\rho$, define the \emph{range} of $\rho$ as the difference
-of the maximal value assigned to a variable by $\rho$ and the minimal value.
-For a subset of variables, we also speak about the range of that subset under $\rho$.
+We now prove a small model property.
+\begin{lemma}\label{lem:small-model}
+Let $K_{S}$ be the number of occurrences of symbols $\_^+$ in $S$.
+If there is a model of $S$, then there is a model with values at most $K_{S}$.
+\end{lemma}
 
+\begin{proof}
+%For any assignment $\rho$, define the \emph{range} of $\rho$ as the difference
+%of the maximal value assigned to a variable by $\rho$ and the minimal value.
+%For a subset of variables, we also speak about the range of that subset under $\rho$.
 Let $S$ be a set of constraints in reduced form.
-Let $M$ be a model of $S$. We construct a graph depending on $M$ and $S$.
-The nodes are the variables occurring in $S$. For every constraint we have
-two edges, a red one and a green one, where the red one ensures that the
-constraint is true in $M$. 
-If the constraint is $(\alpha\vee\beta)+b = \gamma$
-and $M(\alpha)\geq M(\beta)$, then we add a red edge from $\alpha$
-to $\gamma$, and a green edge from $\beta$ to $\alpha$.
-A \emph{red connected component} is a subset $C$ of the nodes such that
-each two nodes in $C$ are connected by a path consisting of red edges.
-If the ranges of two red connected components do not overlap, say they have
-a gap $k>0$, then we can lower the values of all variables with values above 
-the gap by $k$. This new assignment $M'$ has exactly the same graph and is
-also a model of $S$. This means we can deflate $M$ into a model in which all ranges of
-red connected components overlap. The range of $M'$ is now the sum of the ranges
-of its red connected components, and this sum is at most the number of occurrences of
-symbols $+$ in $S$. A simple translation to $0$ finally gives the desired small model.
+Let $\rho$ be an assignment for the variables occurring in $S$. 
+We construct an undirected graph depending on $M$ and $\rho$.
+The node set $V$ consists of all the variables occurring in $S$.
+For every constraint  $(\alpha\vee\beta)+b = \gamma$,
+if $\rho(\alpha)\geq \rho(\beta)$, then we add an edge between $\alpha$ and $\gamma$,
+otherwise we add an edge between $\beta$ and $\gamma$. 
+The assignment $\rho$ maps the nodes in any connected component
+\emph{surjectively} to a segment of the natural numbers, as $|b|\leq 1$.
+The length of this segment is bounded by the number of symbols $\_^+$
+in the constraints that define the connected component.
 
-3. Assume again that $S$ has been transformed to the reduced form as in point 1.
-Let $M$ be a model of $S$ with values at most $K_S$ as in point 2. 
-Let $\rho\geq M$ (pointwise)
-and let $\rho'$ be as in point 3 above. In each of the three cases we
-have to prove that $\rho'\geq M$ only for the variable that is lowered. 
+A \emph{gap} is given by two natural numbers $A<B$ such that:
+\begin{enumerate}
+\item $A=0$ or there is $\alpha\in V$ with $\rho(\alpha)=A$;
+\item there is $\beta\in V$ with $\rho(\beta)=B$;
+\item for all $\alpha\in V$ we have either $\rho(\alpha)\leq A$, or $B\leq\rho(\alpha)$;
+\item for all $\alpha,\beta\in V$, if $\rho(\alpha)\leq A$ and $B\leq\rho(\beta)$,
+then $\alpha$ and $\beta$ are not connected.
+\end{enumerate}
+
+Given a gap as above, we define an assignment $\rho'$ that closes the gap
+such that $\rho'$ is a model of $S$ whenever $\rho$ is. We define
+$\rho'(\alpha) = \rho(\alpha)$ if $\rho(\alpha)\leq A$, 
+and $\rho'(\alpha) = \rho(\alpha)+A-B$ otherwise, for every $\alpha\in V$.
+Clearly, if $\alpha$ and $\gamma$ are connected, then they are by point 4
+on the same side of the gap, and so $\rho(\alpha)-\rho'(\alpha) = \rho(\gamma)-\rho'(\gamma)$.
+Moveover, if $\rho(\alpha)\geq\rho(\beta)$, then $\rho'(\alpha)\geq \rho'(\beta)$.
+Hence $\rho'\models (\alpha\vee\beta)+b = \gamma$
+if $\rho\models (\alpha\vee\beta)+b = \gamma$. 
+So $\rho'\models S$ whenever $\rho\models S$.
+
+Iterating this procedure, starting from a model $M$ of $S$,
+we can close all gaps and end up with a model with no gaps.
+In this model the lowest value is $0$ (there is no gap $0<B$),
+and the highest value of a variable is at most $K_S$.
+The latter follows from the observation that the highest
+value is at most the sum of the lengths of the (overlapping) segments
+coming from the connected components, and this sum is bounded by $K_S$.
+\end{proof}
+
+\cref{lem:small-model} implies the decidability of solvability,
+and we will now describe an efficient search procedure finding a
+model if there exists one. We prepare by the following lemma.
+
+\begin{lemma}\label{lem:model-search}
+Assume $S$ is in reduced form.
+Let $M$ be a model of $S$ and $\rho$ an assignment such that $\rho\geq M$ (pointwise).
+If $\rho$ is not a model of $S$, then we have $\rho'\geq M$ for any assignment $\rho'$
+that is obtained from $\rho$ in one of the following ways:
+\begin{itemize}
+\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with 
+$(\alpha\vee\beta)\rho +b+n = \gamma\rho$ for some $n>0$ and
+define $\rho'(\gamma) = \rho(\gamma)-n$.
+\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with 
+$(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$ and 
+define $\rho'(\alpha) = \rho(\alpha)-n$ if $\rho(\alpha)\geq\rho(\beta)$.
+\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with 
+$(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$ and
+define $\rho'(\beta) = \rho(\beta)-n$ if $\rho(\alpha)<\rho(\beta)$.
+\end{itemize}
+In all three cases, $\rho'$ assigns a lower value than $\rho$ to exactly one variable,
+and keeps the same value as $\rho$ for all other variables.
+\end{lemma}
+
+
+\begin{proof}
+Let conditions be as above. In each of the three cases we
+have to prove that $\rho'\geq M$ for the only variable that is lowered. 
 We use that $\max$ is monotone in both its arguments.
 \begin{itemize}
 \item Assume  
@@ -745,12 +777,14 @@ Note that the proof is correct also if two or three of $\alpha,\beta,\gamma$
 are equal.
 \end{proof}
 
-In each step from $\rho$ to $\rho'$ in point three, exactly one variable is
-lowered. This can be done at most $V K_S$ times, where $V$ is the number of variables.
-This means that in at most $V K_S$ steps we find a model if there is one.
-If $S$ has a model, then starting with $\rho$ constant $K_S$
-and iterating the procedure in point 3 will find the unique maximal
-model $M$ with values at most $K_S$. Each step requires a pass through all
+Assume $S$ is in reduced form. By \cref{lem:small-model}, 
+if $S$ has a model, there is a model $M \leq K_S$.
+We start the search from the assignment $\rho$ that is constant $K_S$.
+In each step from $\rho$ to $\rho'$ in \cref{lem:model-search}, 
+exactly one variable is lowered. This can be done at most $V K_S$ times, 
+where $V$ is the number of variables. So we will actually find the unique maximal
+model $M$ with values at most $K_S$, if there is a model at all. 
+Each step requires a pass through all
 all constraints to evaluate them in the current assignment.
 When properly implemented this can be done in $O(K_S)$ time.
 The whole decision procedure of first transforming to constraints in reduced
