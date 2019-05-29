@@ -185,7 +185,7 @@ The first version is entitled "universes as full reflection" and was only outlin
 $$
 \T_0^1\, (\pi_0\,a\, b) = \pi_1\,(\T_0^1\,a)\,(\lambda x.\T_0^1\,(b\,x))
 $$
-However, the two sides of this equations do not have the same type, unless we stipulate the following judgmental equality
+However, the right hand side of this equations is ill-typed, unless we stipulate the following judgmental equality
 $$
 \T_1\, (\T_0^1\, a) = \T_0\, a
 $$
@@ -197,7 +197,7 @@ Palmgren's second version of the external sequence is entitled "universes as uni
 
 Palmgren \cite{palmgren:venice} went on to internalize the construction of the infinite sequence of universes  \`a la Tarski. To this end he introduced the {\em next-universe operator}, which given a family of types $U, T$, constructs a new family of types $U^+, T^+$, such that $ \UU_{n+1} = \UU_n^+$ and $\T_{n+1} = \T_n^+$.
 
-Furthermore, Palmgren introduced a {\em super universe} (\`a la Tarski), which is a type containing a code for the first universe and is closed under the next-universe operator as well as under all the usual small type formers. In this theory we can define an internal sequence of universes $n : \NN \vdash \UA_n$, and also express univalence of this sequence as one typing:
+Furthermore, Palmgren introduced a {\em super universe} (\`a la Tarski), which is a type containing a code for the first universe and is closed under the next-universe operator as well as under all the usual small type formers. In this theory we can define an internal sequence of universes $n : \NN \vdash \UU_n$, and also express univalence of this sequence as one typing:
 $$
 \ua : \Pi_{n : \N}\, \UA_n
 $$
@@ -286,11 +286,13 @@ However, most Agda users only make use of the built in universes $\Set_n$, and d
 \end{eqnarray*}
 for representing $\Pi$-types as we did in Martin-Löf's logical framework. As a consequence it is more appropriate to think of Agda's sequence of universes as analogous to the sequence of universes  \`a la Russell $ \UU_0 : \UU_1 : \UU_2 : \cdots$ in the early versions of Martin-Löf type theory. However, since Agda has a type $\Level$ of levels, we can define a functions $i : \N \to \Level$, and hence the family $n : \N \vdash \Set\, (i\, n)$ analogous to the family $n : \N \vdash \Tsuper\,n$ in type theory with a (minimal) super universe. However, Agda does not have a type analogous to $\Usuper$, only a "kind" $\Set_\omega$ which is not a type. See the Agda wiki for more explanation.
 
-In the following section we shall give the rules for an idealized version of Agda's system of universes with level quantification. In particular, we shall not introduce a {\em type} of levels, and the kind $\Set_\omega$. 
+In the following section we shall give the rules for a version of type theory with a system universes with level quantification. Although it is similar to Agda's system, it differs in important respects, since we shall not introduce a {\em type} of levels, and the kind $\Set_\omega$. 
 
 \section{A type theory with an external sequence of universes}\label{external}
 
-As already mentioned the rules for the minimal super universe follows the pattern of inductive-recursive definitions, and is a natural candidate for a clean formulation of a type theory which allows quantification over countably many universe levels. However, there are at least two reasons for considering the following idealized version of a type theory with universe levels which are not types and a special notion of level quantification. The first is that it does not increase the proof theoretic strength in the way that adding a minimal super universe does. The second is that in the theory with a super universe, the level operation $l \vee m$ (the maximum of $l$ and $m$) is defined by induction on $l$ or $m$. As a consequence not all equations in level arithmetic are definitional, and this is a problem in practice when using universe polymorphism.
+As already mentioned the rules for the minimal super universe follows the pattern of inductive-recursive definitions, and is a natural candidate for a clean formulation of a type theory which allows quantification over countably many universe levels. Thus the universe levels are members of the type $\N$, and the operation $l \vee m$ is the maximum operation on $\N$, which can be defined by induction on $l$ or $m$. Unfortunately, we have to make a choice between $m$ and $n$ and hence we not all equations of level arithmetic (making levels a sup-semi-lattice) will be definitional.
+
+For this reason, we will here propose an alternative formulation, where we do not have a {\em type} of levels. Instead we have new judgments $l \Level$, meaning that $l$ is a level expression, and $l = m$ meaning that $l$ and $m$ are definitionally equal levels . We have a maximum operation $\vee$ on levels such that levels become a sup-semilattice up to definitional equality. We also remark that the proof theoretic strength of this alternative system is less than the system with a minimal super universe.
 
 \subsection*{Rules for a basic type theory}
 
