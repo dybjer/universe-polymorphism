@@ -682,6 +682,7 @@ elimination of variables, can certainly be done in quadratic time
 
 We now prove a small model property.
 \begin{lemma}\label{lem:small-model}
+Let  $S$ be a finite set of constraints.
 Let $K_{S}$ be the number of occurrences of symbols $\_^+$ in $S$.
 If there is a model of $S$, then there is a model with values at most $K_{S}$.
 \end{lemma}
@@ -690,7 +691,7 @@ If there is a model of $S$, then there is a model with values at most $K_{S}$.
 %For any assignment $\rho$, define the \emph{range} of $\rho$ as the difference
 %of the maximal value assigned to a variable by $\rho$ and the minimal value.
 %For a subset of variables, we also speak about the range of that subset under $\rho$.
-Let $S$ be a set of constraints in reduced form.
+By \cref{lem:reduced-form} we may assume that $S$ is in reduced form.
 Let $\rho$ be an assignment for the variables occurring in $S$. 
 We construct an undirected graph depending on $M$ and $\rho$.
 The node set $V$ consists of all the variables occurring in $S$.
