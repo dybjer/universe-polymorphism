@@ -59,7 +59,7 @@
 \newcommand\myfrac[2]{
  \begin{array}{c}
  #1 \\
- \hline \hline 
+ \hline \hline
  #2
 \end{array}}
 
@@ -133,7 +133,7 @@
 \maketitle
 
 \begin{abstract}
-We present rules for both externally and internally indexed sequences of universes \`a la Tarski with and without cumulativity. The internally indexed rules rely on a formal notion of universe level similar to Agda's type of universe levels. We first introduce rules for "ML"-style universe polymorphism, where judgments are indexed by level variables $\alpha_1, \ldots, \alpha_n$. Then we add rules for level-indexed product types $[\alpha]A$. We also present Voevodsky's proposal for a system with level constraints and an algorithm for solving such constraints. Furthermore, we survey the historical evolution of universes in type theory. Among other things, we discuss the relationship between the level-indexed and the externally indexed theories as well as with Palmgren's super universe. 
+We present rules for both externally and internally indexed sequences of universes \`a la Tarski with and without cumulativity. The internally indexed rules rely on a formal notion of universe level similar to Agda's type of universe levels. We first introduce rules for "ML"-style universe polymorphism, where judgments are indexed by level variables $\alpha_1, \ldots, \alpha_n$. Then we add rules for level-indexed product types $[\alpha]A$. We also present Voevodsky's proposal for a system with level constraints and an algorithm for solving such constraints. Furthermore, we survey the historical evolution of universes in type theory. Among other things, we discuss the relationship between the level-indexed and the externally indexed theories as well as with Palmgren's super universe.
 \end{abstract}
 
 \section*{Related work}
@@ -142,7 +142,7 @@ Check related work of Ali Assaf, Luo, Mendler, Voevodsky, Huet, Harper and Polla
 
 \section{Introduction}
 
-This note records discussions between the authors concerning the appropriate setting for univalent mathematics in Martin-Löf type theory. 
+This note records discussions between the authors concerning the appropriate setting for univalent mathematics in Martin Löf type theory.
 
 The first published version of Martin-Löf's theory \cite{martinlof:predicative} introduces a countable sequence of universes
 $$
@@ -152,14 +152,14 @@ When developing mathematics inside this theory, most types will belong to $\UU_0
 
 %\section{What is a univalent type theory?}
 
-Universe polymorphism has also been a common topic of discussion in the context of Voevodsky's univalent foundations. The {\em univalence axiom} states that for any two types $X,Y$ the canonical map 
+Universe polymorphism has also been a common topic of discussion in the context of Voevodsky's univalent foundations. The {\em univalence axiom} states that for any two types $X,Y$ the canonical map
 $$
 \idtoeq_{X,Y} : (X=Y)\to (X\simeq Y)
 $$
-is an equivalence. Formally, the univalence axiom is an axiom (or axiom scheme) added to Martin-Löf type theory. If we work in the above-mentioned setting with a countable sequence of universes, a universe $\UU_n$ is {\em univalent} provided for all $X,Y : \UU_n$ the canonical map $\idtoeq_{X,Y}$ is an equivalence. Let $\UA_n$ be the type expressing the univalence of $\UU_n$, and 
+is an equivalence. Formally, the univalence axiom is an axiom (or axiom scheme) added to Martin-Löf type theory. If we work in the above-mentioned setting with a countable sequence of universes, a universe $\UU_n$ is {\em univalent} provided for all $X,Y : \UU_n$ the canonical map $\idtoeq_{X,Y}$ is an equivalence. Let $\UA_n$ be the type expressing the univalence of $\UU_n$, and
 $$
 \ua_n : \UA_n
-$$ 
+$$
 for $n = 0,1,\ldots$, be a sequence of constants expressing the instances of the univalence axiom. We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and hence $\UA_n$ is in $\UU_{n+1}$. If we have universe polymorphism expressed as quantification over universe levels, as in the Agda system, then we can express univalence of all universes as one typing:
 $$
 \ua : (l : \Level) \to \UA_l
@@ -179,7 +179,7 @@ Martin-Löf \cite{martinlof:predicative} introduced the above-mentioned version 
 Martin-Löf \cite{martinlof:hannover} changed the judgment structure and added the judgment form $\Gamma \vdash A\ \type$\footnote{We should be systematic with respect to notation: shall we show all the old notations or the notations we use nowadays?} and replaced the untyped conversion judgments with typed equality judgments $\Gamma \vdash a = a' : A$ and $\Gamma \vdash A = A'$. There is still an external sequence of universes \`a la Russell. The cumulativity rule above was also added.
 
 Martin-Löf \cite{martinlof:padova} gave an alternative formulation of the first universe $\UU_0$ \`a la Tarski with decoding $\T_0$.
-Palmgren \cite{palmgren:venice} then proposed rules for an infinite external sequence of universes $\UU_n$ \`a la Tarski with decodings $\T_n$. In fact, Palmgren discussed two alternative versions of the rules for an external sequence of universes \`a la Tarski. 
+Palmgren \cite{palmgren:venice} then proposed rules for an infinite external sequence of universes $\UU_n$ \`a la Tarski with decodings $\T_n$. In fact, Palmgren discussed two alternative versions of the rules for an external sequence of universes \`a la Tarski.
 
 The first version is entitled "universes as full reflection" and was only outlined for the first and the second universe. We will give a full presentation of this theory in Section ?. In this version there is a cumulativity map $\T_0^1 : \UU_0 \to \UU_1$ which is defined by recursion on the way the elements of $\UU_0$ are defined. For example, assume that $\pi_0$ and $\pi_1$ are the functions which represent the closure under $\Pi$ of $\UU_0$ and $\UU_1$, respectively . Then one of the defining equations of $\T_0^1$ is
 $$
@@ -216,7 +216,7 @@ For example, we can formulate the new operations and equations for universes tha
 $
 \T_1\, (\T_0^1\, a) = \T_0\, a
 $
-which we discussed above. 
+which we discussed above.
 For example, we have
 \begin{eqnarray*}
 \UU_0 &: &(\Gamma : \Ctx) \to \Ty(\Gamma)\\
@@ -262,7 +262,7 @@ In this system we have three levels of products: $\pi\,a\,b : \UU_0$, $\Pi\,A\,B
 
 \section{Universes in Agda}
 
-So far we have discussed the formulation of the univalence axiom in what might be called "standard" versions of Martin-Löf type theory, where the \`a la Tarski rules for universes and super universes follow the general pattern of inductive-recursive definitions in type theory. (Recall however again that the equation 
+So far we have discussed the formulation of the univalence axiom in what might be called "standard" versions of Martin-Löf type theory, where the \`a la Tarski rules for universes and super universes follow the general pattern of inductive-recursive definitions in type theory. (Recall however again that the equation
 $
 \T_0^1\, (\pi_0\,a\, b) = \pi_1\,(\T_0^1\,a)\,(\lambda x.\T_0^1\,(b\,x))
 $
@@ -273,7 +273,7 @@ The proof assistant Agda is loosely based on Martin-Löf's logical framework, bu
 \begin{itemize}
 \item It has a sequence of universes  $$\Set_0 : \Set_1 : \Set_2 : \cdots$$  \`a la Russell.
 \item It has built in dependent function types written $\Gamma \vdash (x : A)\to B : \Set_n$ for $\Gamma \vdash A : \Set_n$ and $\Gamma , x : A \vdash B : \Set_n$
-\item It has a special type $\Level$ of universe levels, which makes it possible to define {\em universe polymorphic} types and terms. 
+\item It has a special type $\Level$ of universe levels, which makes it possible to define {\em universe polymorphic} types and terms.
 \end{itemize}
 This is a logical framework in the sense that we can add new concepts by adding new constants with their types $c : A$, and also add new equations $\Gamma \vdash a = a' : A$ in the same way as in Martin-Löf's logical framework. For example, we can define universes \`a la Tarski in a similar way as we showed above for Martin-Löf's logical framework:
 \begin{eqnarray*}
@@ -286,7 +286,7 @@ However, most Agda users only make use of the built in universes $\Set_n$, and d
 \end{eqnarray*}
 for representing $\Pi$-types as we did in Martin-Löf's logical framework. As a consequence it is more appropriate to think of Agda's sequence of universes as analogous to the sequence of universes  \`a la Russell $ \UU_0 : \UU_1 : \UU_2 : \cdots$ in the early versions of Martin-Löf type theory. However, since Agda has a type $\Level$ of levels, we can define a functions $i : \N \to \Level$, and hence the family $n : \N \vdash \Set\, (i\, n)$ analogous to the family $n : \N \vdash \Tsuper\,n$ in type theory with a (minimal) super universe. However, Agda does not have a type analogous to $\Usuper$, only a "kind" $\Set_\omega$ which is not a type. See the Agda wiki for more explanation.
 
-In the following section we shall give the rules for a version of type theory with a system universes with level quantification. Although it is similar to Agda's system, it differs in important respects, since we shall not introduce a {\em type} of levels, and the kind $\Set_\omega$. 
+In the following section we shall give the rules for a version of type theory with a system universes with level quantification. Although it is similar to Agda's system, it differs in important respects, since we shall not introduce a {\em type} of levels, and the kind $\Set_\omega$.
 
 \section{A type theory with an external sequence of universes}\label{external}
 
@@ -329,7 +329,7 @@ $$
 \frac{c:\Sigma (x:A) B}{c.2:B(c.1/x)}
 $$
 
-We write $\conv$ for definitional equality (or conversion). The main conversion rules are 
+We write $\conv$ for definitional equality (or conversion). The main conversion rules are
 $$
 \frac{ a:A~~~~~~ A~ \conv~ B}{ a:B}~~~~~~~~~
 \frac{ a ~\conv~a':A~~~~~~ A  ~\conv~ B}{ a ~\conv~a':B}
@@ -379,11 +379,11 @@ $$
 $$
 Furthermore we have $$\NN^{n}:\UU_{n}$$
 $$\T_{n}(\NN^{n}) = \NN$$
-and 
+and
 $$
 \frac{A:\UU_n~~~~~~a_0:\T_n(A)~~~~~~a_1:\T_n(A)}
 {\Id^n~A~a_0~a_1:\UU_n}
-$$ 
+$$
 $$\T_n(\Id^n~A~a_0~a_1) = \Id~\T_n(A)~a_0~a_1$$
 and a code for the previous universe
 $${\UU^{n}}:\UU_{n + 1}$$
@@ -392,7 +392,7 @@ $$\T_{n + 1}({\UU^{n}}) = \UU_{n}$$
 Note that $\UU_p, \T_p$ is a separate inductive-recursive definition for each $p$ with one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and for $\UU^{p-1}$ provided $p \geq 1$.
 %\subsection*{Rules for cumulativity}
 %
-%With cumulativity, we introduce an operation 
+%With cumulativity, we introduce an operation
 %$$
 %\frac{A:\UU_{n}}
 %{\T_{n}^{m}(A):\UU_{m}}
@@ -508,11 +508,11 @@ $$
 $$
 Furthermore we have $$\NN^{l}:\UU_{l}$$
 $$\T_{l}(\NN^{l}) = \NN$$
-and 
+and
 $$
 \frac{A:\UU_l~~~~~~a_0:\T_l(A)~~~~~~a_1:\T_l(A)}
 {\Id^l~A~a_0~a_1:\UU_l}
-$$ 
+$$
 $$\T_l(\Id^l~A~a_0~a_1) = \Id~\T_l(A)~a_0~a_1$$
 and a code for the previous universe
 $${\UU^{l}}:\UU_{l + 1}$$
@@ -601,19 +601,19 @@ with conversion rule $(\lam{\alpha}{u})~l = u(l/\alpha)$.
 In this system all functions in $[\alpha]\NN$
 should be constant. Example of use of this system? (See Martin's mail.)
 
-\paragraph{Interpreting the system with levels into extensional type theory with a super universe.} We can interpret the theory with rules for level-indexed products in extensional type theory with a (minimal) super universe. Levels will be interpreted by internal natural numbers $n : \NN$, and level-indexed products $[\alpha]A$ will be interpreted by ordinary indexed products $\Pi_{n : \NN}A$. Level application and level abstraction will be interpreted as ordinary application and abstraction. 
+\paragraph{Interpreting the system with levels into extensional type theory with a super universe.} We can interpret the theory with rules for level-indexed products in extensional type theory with a (minimal) super universe. Levels will be interpreted by internal natural numbers $n : \NN$, and level-indexed products $[\alpha]A$ will be interpreted by ordinary indexed products $\Pi_{n : \NN}A$. Level application and level abstraction will be interpreted as ordinary application and abstraction.
 
-Note that in intensional type theory, we will not be able to justify all the lattice laws for level expressions as definitional equalities. 
+Note that in intensional type theory, we will not be able to justify all the lattice laws for level expressions as definitional equalities.
 
 \section{Solving universe constraints is polynomial}\label{sec:P-solvability}
 
 We would need (for the Max-Atom algorithms to work):
-\[ 
+\[
 \vdash_{\cal L} l=m  \quad \quad \iff \quad \quad \mathbb{N},\rho \models l\rho = m\rho
 \text{~~ for all $\rho$}
 \]
 and the type theory should have enough rules to ensure
-\[ 
+\[
 \vdash_{\cal L} l=m  \quad \quad \iff \quad \quad \vdash l=m
 \text{~~ (judgmentally)}.
 \]
@@ -624,7 +624,7 @@ Here polynomial means polynomial in the total number $\mu(S)$ of occurrences of
 variables and operations $\_^+$ and $\vee$ in $S$.
 
 Let $S$ be a finite set of constraints of the form $l=m$ as in the previous section.
-The \emph{level expressions} $l,m$ have the following abstract syntax: 
+The \emph{level expressions} $l,m$ have the following abstract syntax:
 \[
 l,m,\ldots ::= {\alpha,\beta,\ldots} \mid {l^+} \mid {l\vee m}
 \]
@@ -633,7 +633,7 @@ the level variables occurring in $S$ such that all constraints in $S$ become tru
 under the canonical interpretation of $\_^+$ as successor and $\vee$ as maximum.
 Entailment under the canonical interpretation will be denoted by $\models$.
 
-Solving $S$ can be reduced in polynomial time to solving a set $S'$ of 
+Solving $S$ can be reduced in polynomial time to solving a set $S'$ of
 constraints of the form $\alpha\vee\beta = \gamma^+$, $\alpha\vee\beta = \gamma$,
 and $(\alpha\vee\beta)^+ = \gamma$. Such forms are called \emph{reduced forms},
 conveniently denoted by $(\alpha\vee\beta)+b = \gamma$, with $b=-1,0,1$.
@@ -646,8 +646,8 @@ is solvable. Furthermore, $S'$ contains precisely as many symbols $\_^+$ as $S$ 
 and $\mu(S')\leq 2\mu(S)$.
 \end{lemma}
 
-\begin{proof} 
-We first define by induction for any $l$ a fresh variable $v(l)$ and 
+\begin{proof}
+We first define by induction for any $l$ a fresh variable $v(l)$ and
 a set $S(l)$ of constraints in reduced form such that $S(l)\models l = v(l)$.
 In the base case we take $v(\alpha)=\alpha$ and $S(\alpha)$ empty, for any
 level variable $\alpha$. In one step case we take $v(l^+)$ a fresh variable,
@@ -669,12 +669,12 @@ Doing this for all constraints in some given set $S$
 leaves us with a set of constraints that are either in
 reduced form, or of the form $v(l)=v(m)$ for distinct fresh variables.
 The latter are easily removed by elimination. Let $S'$ be the resulting set
-of constraints, which are all in reduced form. By the results on $S(l)$ 
+of constraints, which are all in reduced form. By the results on $S(l)$
 and $v(l)$ from the previous paragraph, the set $S$ is solvable if
 and only if $S'$ is solvable.
 
 In terms of $\mu$-value, there is a small
-difference between $S$ and $S'$ in the previous paragraph. 
+difference between $S$ and $S'$ in the previous paragraph.
 What happens during the reduction is that internal nodes
 of parse trees of level expressions get labelled with fresh variables.
 We get $\mu(S')\leq 2\mu(S)$ and the whole transformation, including the
@@ -694,12 +694,12 @@ If there is a model of $S$, then there is a model with values at most $K_{S}$.
 %of the maximal value assigned to a variable by $\rho$ and the minimal value.
 %For a subset of variables, we also speak about the range of that subset under $\rho$.
 By \cref{lem:reduced-form} we may assume that $S$ is in reduced form.
-Let $\rho$ be an assignment for the variables occurring in $S$. 
+Let $\rho$ be an assignment for the variables occurring in $S$.
 We construct an undirected graph depending on $M$ and $\rho$.
 The node set $V$ consists of all the variables occurring in $S$.
 For every constraint  $(\alpha\vee\beta)+b = \gamma$,
 if $\rho(\alpha)\geq \rho(\beta)$, then we add an edge between $\alpha$ and $\gamma$,
-otherwise we add an edge between $\beta$ and $\gamma$. 
+otherwise we add an edge between $\beta$ and $\gamma$.
 The assignment $\rho$ maps the nodes in any connected component
 \emph{surjectively} to a segment of the natural numbers, as $|b|\leq 1$.
 The length of this segment is bounded by the number of symbols $\_^+$
@@ -716,13 +716,13 @@ then $\alpha$ and $\beta$ are not connected.
 
 Given a gap as above, we define an assignment $\rho'$ that closes the gap
 such that $\rho'$ is a model of $S$ whenever $\rho$ is. We define
-$\rho'(\alpha) = \rho(\alpha)$ if $\rho(\alpha)\leq A$, 
+$\rho'(\alpha) = \rho(\alpha)$ if $\rho(\alpha)\leq A$,
 and $\rho'(\alpha) = \rho(\alpha)+A-B$ otherwise, for every $\alpha\in V$.
 Clearly, if $\alpha$ and $\gamma$ are connected, then they are by point 4
 on the same side of the gap, and so $\rho(\alpha)-\rho'(\alpha) = \rho(\gamma)-\rho'(\gamma)$.
 Moveover, if $\rho(\alpha)\geq\rho(\beta)$, then $\rho'(\alpha)\geq \rho'(\beta)$.
 Hence $\rho'\models (\alpha\vee\beta)+b = \gamma$
-if $\rho\models (\alpha\vee\beta)+b = \gamma$. 
+if $\rho\models (\alpha\vee\beta)+b = \gamma$.
 So $\rho'\models S$ whenever $\rho\models S$.
 
 Iterating this procedure, starting from a model $M$ of $S$,
@@ -744,13 +744,13 @@ Let $M$ be a model of $S$ and $\rho$ an assignment such that $\rho\geq M$ (point
 If $\rho$ is not a model of $S$, then we have $\rho'\geq M$ for any assignment $\rho'$
 that is obtained from $\rho$ in one of the following ways:
 \begin{itemize}
-\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with 
+\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with
 $(\alpha\vee\beta)\rho +b+n = \gamma\rho$ for some $n>0$ and
 define $\rho'(\gamma) = \rho(\gamma)-n$.
-\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with 
-$(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$ and 
+\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with
+$(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$ and
 define $\rho'(\alpha) = \rho(\alpha)-n$ if $\rho(\alpha)\geq\rho(\beta)$.
-\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with 
+\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with
 $(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$ and
 define $\rho'(\beta) = \rho(\beta)-n$ if $\rho(\alpha)<\rho(\beta)$.
 \end{itemize}
@@ -761,16 +761,16 @@ and keeps the same value as $\rho$ for all other variables.
 
 \begin{proof}
 Let conditions be as above. In each of the three cases we
-have to prove that $\rho'\geq M$ for the only variable that is lowered. 
+have to prove that $\rho'\geq M$ for the only variable that is lowered.
 We use that $\max$ is monotone in both its arguments.
 \begin{itemize}
-\item Assume  
+\item Assume
 $(\alpha\vee\beta)\rho +b+n = \gamma\rho$ for some $n>0$.
-Then $\rho'(\gamma) = \rho(\gamma)-n = (\alpha\vee\beta)\rho + b \geq 
+Then $\rho'(\gamma) = \rho(\gamma)-n = (\alpha\vee\beta)\rho + b \geq
 \max(M(\alpha),M(\beta)) +b = M(\gamma)$.
 \item Assume
 $(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$, and
-$\rho(\alpha)\geq\rho(\beta)$. 
+$\rho(\alpha)\geq\rho(\beta)$.
 Then $\rho'(\alpha) = \rho(\alpha)-n = (\alpha\vee\beta)\rho -n =
 \gamma\rho - b \geq M(\gamma)-b = \max(M(\alpha),M(\beta)) \geq M(\alpha)$.
 \item Analogous to the previous case, but with $\rho(\alpha)<\rho(\beta)$
@@ -780,13 +780,13 @@ Note that the proof is correct also if two or three of $\alpha,\beta,\gamma$
 are equal.
 \end{proof}
 
-Assume $S$ is in reduced form. By \cref{lem:small-model}, 
+Assume $S$ is in reduced form. By \cref{lem:small-model},
 if $S$ has a model, there is a model $M \leq K_S$.
 We start the search from the assignment $\rho$ that is constant $K_S$.
-In each step from $\rho$ to $\rho'$ in \cref{lem:model-search}, 
-exactly one variable is lowered. This can be done at most $V K_S$ times, 
+In each step from $\rho$ to $\rho'$ in \cref{lem:model-search},
+exactly one variable is lowered. This can be done at most $V K_S$ times,
 where $V$ is the number of variables. So we will actually find the unique maximal
-model $M$ with values at most $K_S$, if there is a model at all. 
+model $M$ with values at most $K_S$, if there is a model at all.
 Each step requires a pass through all
 all constraints to evaluate them in the current assignment.
 When properly implemented this can be done in $O(K_S)$ time.
@@ -828,9 +828,11 @@ $$
 $$
 Intuitively, we can use a term of type $[\psi]A$ only if the constraint $\psi$ holds.
 
-\subsection*{Martin's example (Berry function)}
+\subsection*{Martin's example (Berry-like function)}
 
 Here is an example of a problem if we want typical ambiguity in the absence of cumulativity.
+
+[[The type constructor ``$\simeq$'' should be replaced by the identity type for this to work. I am not sure which notation for the identity type we want to use to formulate this example.]]
 
 Consider the theorem
 $$
@@ -1047,6 +1049,4 @@ this function internally, for instance  $f = \lam{\alpha}{\lambda (X:\UU_{\alpha
 %\end{thebibliography}
 
 
-\end{document}     
-                                                                                  
- 
+\end{document}
