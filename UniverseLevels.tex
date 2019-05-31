@@ -725,44 +725,55 @@ If there is a model of $S$, then there is a model with values at most $K_{S}$.
 %of the maximal value assigned to a variable by $\rho$ and the minimal value.
 %For a subset of variables, we also speak about the range of that subset under $\rho$.
 By \cref{lem:reduced-form} we may assume that $S$ is in reduced form.
-Let $\rho$ be an assignment for the variables occurring in $S$.
-We construct an undirected graph depending on $M$ and $\rho$.
-The node set $V$ consists of all the variables occurring in $S$.
-For every constraint  $(\alpha\vee\beta)+b = \gamma$,
-if $\rho(\alpha)\geq \rho(\beta)$, then we add an edge between $\alpha$ and $\gamma$,
-otherwise we add an edge between $\beta$ and $\gamma$.
-The assignment $\rho$ maps the nodes in any connected component
-\emph{surjectively} to a segment of the natural numbers, as $|b|\leq 1$.
-The length of this segment is bounded by the number of symbols $\_^+$
+Let $V$ be the set of variables occurring in $S$.
+Let $\rho: V\to\NN$ be an assignment for $S$.
+We construct an undirected graph on $\NN$ depending on $M$ and $\rho$.
+For every constraint  $(\alpha\vee\beta)+b = \gamma$ in $S$,
+we add an edge between $\rho(\gamma)$ and the maximum of $\rho(\alpha)$ and $\rho(\beta)$. 
+The connected components are segments of natural numbers, since $|b|\leq 1$.
+The length of such a segment is bounded by the number of symbols $\_^+$
 in the constraints that define the connected component.
+The lengths of the segments sum up to at most $K_{S}$.
+If $\rho$ is a model and all segments overlap we are done.
+However, there may be gaps between the segments.
 
 A \emph{gap} is given by two natural numbers $A<B$ such that:
 \begin{enumerate}
+\item There is no edge between $A$ and $B$;
+\item for all $\alpha\in V$ we have either $\rho(\alpha)\leq A$, or $B\leq\rho(\alpha)$; 
 \item $A=0$ or there is $\alpha\in V$ with $\rho(\alpha)=A$;
-\item there is $\beta\in V$ with $\rho(\beta)=B$;
-\item for all $\alpha\in V$ we have either $\rho(\alpha)\leq A$, or $B\leq\rho(\alpha)$;
-\item for all $\alpha,\beta\in V$, if $\rho(\alpha)\leq A$ and $B\leq\rho(\beta)$,
-then $\alpha$ and $\beta$ are not connected.
+\item there is $\beta\in V$ with $\rho(\beta)=B$.
 \end{enumerate}
 
-Given a gap as above, we define an assignment $\rho'$ that closes the gap
+Given a gap as above, we define an assignment $\rho'$ that closes this gap
 such that $\rho'$ is a model of $S$ whenever $\rho$ is. We define
 $\rho'(\alpha) = \rho(\alpha)$ if $\rho(\alpha)\leq A$,
 and $\rho'(\alpha) = \rho(\alpha)+A-B$ otherwise, for every $\alpha\in V$.
-Clearly, if $\alpha$ and $\gamma$ are connected, then they are by point 4
-on the same side of the gap, and so $\rho(\alpha)-\rho'(\alpha) = \rho(\gamma)-\rho'(\gamma)$.
-Moveover, if $\rho(\alpha)\geq\rho(\beta)$, then $\rho'(\alpha)\geq \rho'(\beta)$.
-Hence $\rho'\models (\alpha\vee\beta)+b = \gamma$
-if $\rho\models (\alpha\vee\beta)+b = \gamma$.
-So $\rho'\models S$ whenever $\rho\models S$.
+Assume $\rho\models (\alpha\vee\beta)+b = \gamma$.
+We will prove $\rho'\models (\alpha\vee\beta)+b = \gamma$.
+Comparing $\rho(\alpha)$ and $\rho(\beta)$, we distinguish three cases: $<$, $=$, and $>$.
+If $\rho(\alpha) = \rho(\beta)$, then there is an edge between this value
+and $\rho(\gamma)$, so these two values are on the same side of the gap.
+Hence $\rho'(\alpha)-\rho(\alpha)=\rho'(\beta)-\rho(\beta)=\rho'(\gamma)-\rho(\gamma)$,
+and $\rho'\models (\alpha\vee\beta)+b = \gamma$.
+
+If $\rho(\alpha) < \rho(\beta)$, then there is an edge between $\rho(\beta)$
+and $\rho(\gamma)$, so these two values are on the same side of the gap.
+Hence $\rho'(\beta)-\rho(\beta)=\rho'(\gamma)-\rho(\gamma)$.
+If $\rho(\alpha)$ is also on the same side we are again done.
+Otherwise, the only possibility is $\rho(\alpha)\leq A$ and 
+$B\leq\rho(\beta),\rho(\gamma)$. Then $\rho'(\alpha)\leq A\leq \rho'(\beta)$
+and again we get $\rho'\models (\alpha\vee\beta)+b = \gamma$.
+
+The case $\rho(\alpha) > \rho(\beta)$ follows by symmetry.
 
 Iterating this procedure, starting from a model $M$ of $S$,
 we can close all gaps and end up with a model with no gaps.
 In this model the lowest value is $0$ (there is no gap $0<B$),
 and the highest value of a variable is at most $K_S$.
-The latter follows from the observation that the highest
-value is at most the sum of the lengths of the (overlapping) segments
-coming from the connected components, and this sum is bounded by $K_S$.
+%The latter follows from the observation that the highest
+%value is at most the sum of the lengths of the (overlapping) segments
+%coming from the connected components, and this sum is bounded by $K_S$.
 \end{proof}
 
 \cref{lem:small-model} implies the decidability of solvability,
