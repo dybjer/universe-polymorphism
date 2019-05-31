@@ -168,7 +168,7 @@ in Agda's notation.
 
 In this note we shall present some extensions of type theory which are loosely based on Agda's level-mechanism. We will also present Voevodsky's system which maintains constraints between level-variables, and an algorithm for solving those constraints.
 
-\paragraph{Plan.} We begin by providing some historical background about the evolution of universes in type theory. In particular, we shall discuss Palmgren's next universe operator and super universe, and point out that the super universe makes it possible to define an internally quantified sequence of universes. We shall also discuss how the rules for universes are formalized in terms of operations and equations extending the generalised algebraic theory of categories with families. Furthermore, we discuss the role of universes in Martin-Löf's logical framework and how this differs from Agda's logical framework. In Section \ref{external} we state the rules for a basic version of Martin-Löf type theory with $\Pi, \Sigma, \NN$, an identity type former $\Id$, and an externally indexed sequences of universes $\UU_n, \T_n$ \`a la Tarski. We then consider rules for cumulativity for these universes. In Section \ref{internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha$, giving rise to a theory with level polymorphism. This is a kind of "ML-polymorphism" since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$. In Section \ref{constraints} we present Voevodsky's proposal with constraints between level variables. We also propose an algorithm for solving those constraints.
+\paragraph{Plan.} We begin by providing some historical background about the evolution of universes in type theory. In particular, we shall discuss Palmgren's next universe operator and super universe, and point out that the super universe makes it possible to define an internally quantified sequence of universes. We shall also discuss how the rules for universes are formalized in terms of operations and equations extending the generalised algebraic theory of categories with families. Furthermore, we discuss the role of universes in Martin-Löf's logical framework and how this differs from Agda's logical framework. In Section \ref{external} we state the rules for a basic version of Martin-Löf type theory with $\Pi, \Sigma, \NN$, an identity type former $\Id$, and an externally indexed sequences of universes $\UU_n, \T_n$ \`a la Tarski. We then add cumulativity rules for these universes. In Section \ref{internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$, giving rise to a theory with level polymorphism. This is a kind of ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$. In Section \ref{constraints} we present Voevodsky's proposal with constraints between level variables. We also propose an algorithm for solving those constraints.
 
 \section{A brief history of universes in type theory}
 
@@ -605,6 +605,37 @@ should be constant. Example of use of this system? (See Martin's mail.)
 
 Note that in intensional type theory, we will not be able to justify all the lattice laws for level expressions as definitional equalities.
 
+\section{A system with level constraints}\label{constraints}
+
+We try to describe the approach in \cite{VV} using our notation.
+
+We introduce a further judgement for {\em constraints}. A constraint is
+a finite set of equations $l = m$ between given levels. Thus we have
+$$
+\frac{l_1~m_1~\dots~l_k~m_k~\Level}{l_1 = m_1,\dots,l_k = m_k~\Constraint}
+$$
+We write $l\leqslant m$ for $l\vee m = m$.
+
+We then have a new context extension $\Gamma,\psi$ if $\psi$ is a contraint in $\Gamma$.
+
+Finally we have the judgement $\psi~(\Gamma)$ which expresses that the constraint $\psi$
+holds in $\Gamma$. For instance we have $\alpha^+\leqslant\beta^+~(\alpha\leqslant\beta)$.
+
+We then have judgements of the form
+$$
+T_{\alpha^+}^{\beta}(\UU^{\alpha}):\UU_{\beta}~(\alpha~\beta~\Level,\alpha^+\leqslant\beta)
+$$
+We introduce a new product operation
+$$
+\frac{t:A~(\psi)}{t:[\psi]A}
+$$
+with the elimination rule
+$$
+\frac{t:[\psi]A~~~~~~\psi}{t:A}
+$$
+Intuitively, we can use a term of type $[\psi]A$ only if the constraint $\psi$ holds.
+
+
 \section{Solving universe constraints is polynomial}\label{sec:P-solvability}
 
 We would need (for the Max-Atom algorithms to work):
@@ -797,36 +828,6 @@ form and then testing for solvability would take $O(V K^2_S)$ time.
 \begin{theorem}\label{thm:P-solvability}
 Deciding solvability of a finite set of universe constraints is polynomial.
 \end{theorem}
-
-\section{A system with level constraints}
-
-We try to describe the approach in \cite{VV} using our notation.
-
-We introduce a further judgement for {\em constraints}. A constraint is
-a finite set of equations $l = m$ between given levels. Thus we have
-$$
-\frac{l_1~m_1~\dots~l_k~m_k~\Level}{l_1 = m_1,\dots,l_k = m_k~\Constraint}
-$$
-We write $l\leqslant m$ for $l\vee m = m$.
-
-We then have a new context extension $\Gamma,\psi$ if $\psi$ is a contraint in $\Gamma$.
-
-Finally we have the judgement $\psi~(\Gamma)$ which expresses that the constraint $\psi$
-holds in $\Gamma$. For instance we have $\alpha^+\leqslant\beta^+~(\alpha\leqslant\beta)$.
-
-We then have judgements of the form
-$$
-T_{\alpha^+}^{\beta}(\UU^{\alpha}):\UU_{\beta}~(\alpha~\beta~\Level,\alpha^+\leqslant\beta)
-$$
-We introduce a new product operation
-$$
-\frac{t:A~(\psi)}{t:[\psi]A}
-$$
-with the elimination rule
-$$
-\frac{t:[\psi]A~~~~~~\psi}{t:A}
-$$
-Intuitively, we can use a term of type $[\psi]A$ only if the constraint $\psi$ holds.
 
 \subsection*{Martin's example (Berry-like function)}
 
