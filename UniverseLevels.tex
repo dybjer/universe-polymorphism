@@ -174,14 +174,14 @@ In this note we shall present some extensions of type theory which are loosely b
 
 \subsection{External sequences of universes}
 
-Martin-Löf \cite{martinlof:predicative} introduced the above-mentioned version of his intuitionistic type theory with a countable sequence of universes. In this theory the only judgment is  $\Gamma \vdash a : A$. Moreover, it has an untyped notion of conversion $a\ \conv\ a'$. There is no judgment $A\ \type$; since a type is an $A : \UU_n$ for some $n$. Universes are here \`a la Russell, but not cumulative in the sense that $A : \UU_m$, then $A : \UU_n$ for $m \leq n$.\footnote{Check!}
+Martin-Löf \cite{martinlof:predicative} introduced the above-mentioned version of his intuitionistic type theory with an external countable sequence of universes. In this theory the only judgment is  $\Gamma \vdash a : A$. Moreover, it has an untyped notion of conversion $a\ \conv\ a'$. There is no judgment $A\ \type$; since a type is an $A : \UU_n$ for some $n$. Universes are here \`a la Russell. However, there is no rule of cumulativity ensuring that $A : \UU_m$ implies $A : \UU_n$ for $m \leq n$.
 
-Martin-Löf \cite{martinlof:hannover} changed the judgment structure and added the judgment form $\Gamma \vdash A\ \type$\footnote{We should be systematic with respect to notation: shall we show all the old notations or the notations we use nowadays?} and replaced the untyped conversion judgments with typed equality judgments $\Gamma \vdash a = a' : A$ and $\Gamma \vdash A = A'$. There is still an external sequence of universes \`a la Russell. The cumulativity rule above was also added.
+Martin-Löf \cite{martinlof:hannover} changed the judgment structure and added the judgment form $\Gamma \vdash A\ \type$\footnote{We should be systematic with respect to notation: shall we show all the old notations or the notations we use nowadays?} and replaced the untyped conversion judgments with typed equality judgments $\Gamma \vdash a = a' : A$ and $\Gamma \vdash A = A'$. There is still an external sequence of universes \`a la Russell. A cumulativity rule was also added.
 
-Martin-Löf \cite{martinlof:padova} gave an alternative formulation of the first universe $\UU_0$ \`a la Tarski with decoding $\T_0$.
-Palmgren \cite{palmgren:venice} then proposed rules for an infinite external sequence of universes $\UU_n$ \`a la Tarski with decodings $\T_n$. In fact, Palmgren discussed two alternative versions of the rules for an external sequence of universes \`a la Tarski.
+Martin-Löf \cite{martinlof:padova} gave an alternative formulation of the first universe $\UU_0$ \`a la Tarski with decoding $\T_0$ \footnote{Did he discuss two universes?}.
+Palmgren \cite{palmgren:venice} then proposed two alternatives for rules for the external sequence of universes $\UU_n$ \`a la Tarski with decodings $\T_n$. 
 
-The first version is entitled "universes as full reflection" and was only outlined for the first and the second universe. We will give a full presentation of this theory in Section ?. In this version there is a cumulativity map $\T_0^1 : \UU_0 \to \UU_1$ which is defined by recursion on the way the elements of $\UU_0$ are defined. For example, assume that $\pi_0$ and $\pi_1$ are the functions which represent the closure under $\Pi$ of $\UU_0$ and $\UU_1$, respectively . Then one of the defining equations of $\T_0^1$ is
+The first version is entitled "universes as full reflection" and was only outlined for the first and the second universe. We will give a full presentation of this theory in Section \ref{external}. In this version there is a cumulativity map $\T_0^1 : \UU_0 \to \UU_1$ which is defined by recursion on the way the elements of $\UU_0$ are defined. For example, assume that $\pi_0$ and $\pi_1$ are the functions which represent the closure under $\Pi$ of $\UU_0$ and $\UU_1$, respectively . Then one of the defining equations of $\T_0^1$ is
 $$
 \T_0^1\, (\pi_0\,a\, b) = \pi_1\,(\T_0^1\,a)\,(\lambda x.\T_0^1\,(b\,x))
 $$
@@ -225,11 +225,11 @@ For example, we have
 
 \subsection{Universes in Martin-Löf's logical framework}
 
-The rules for the various universes \`a la Tarski that we discussed above can also be formulated using Martin-Löf's logical framework \cite{Martinlof86,NordstromPS90}. This framework has $\Pi$-types (written $(x : A)B$ by Martin-Löf and abbreviated $(A)B$ when $B$ does not depend on $x$.) and a type $\Set$ which is a "universe" with a special role. We will here use the formulation \`a la Tarski of $\Set$ with decoding $\El$, but there is also a formulation \`a la Russell which often used in practice. The formation, introduction, and elimination rules of type theory are formulated as typings of constants $c : A$, and the equality rules are formulated as equations $\Gamma \vdash a = a' : A$. The idea is that $A : \Set$ in the logical framework version represents $A$ {\em type} in the earlier formulations of type theory, and the {\em typing} $f : (x : A)B$ represents the {\em rule} that if $a : A$ then $f\,a : B$.
+The rules for the various universes \`a la Tarski that we discussed above can also be formulated using Martin-Löf's logical framework \cite{Martinlof86,NordstromPS90}. This framework has $\Pi$-types (written $(x : A)B$ by Martin-Löf and abbreviated $(A)B$ when $B$ does not depend on $x$.) and a type $\Set$ which is a "universe" with a special role. We will here use the formulation \`a la Tarski of $\Set$ with decoding $\El$, but there is also a formulation \`a la Russell which often used in practice. The formation, introduction, and elimination rules of type theory are formulated as typings of constants $c : A$, and the equality rules are formulated as equations $a = a' : A$. The idea is that $A : \Set$ in the logical framework version represents $A$ {\em type} in the earlier formulations of type theory, and the {\em typing} $f : (x : A)B$ represents the {\em rule} that if $a : A$ then $f\,a : B$.
 
 For example, the formation rule for $\Pi$-sets (as opposed to types) is represented by the typing
 \begin{eqnarray*}
-\Pi &:& (X:\Set)((\El\,X)\,\Set)\,\Set
+\Pi &:& (A:\Set)((\El\,A)\,\Set)\,\Set
 \end{eqnarray*}
 and the formation rules for first universe (\`a la Tarski) are represented by the typings
 \begin{eqnarray*}
@@ -238,11 +238,11 @@ and the formation rules for first universe (\`a la Tarski) are represented by th
 \end{eqnarray*}
 The first typing represents the rule that $\UU_0$ is a type in the original version of type theory, and the second typing represents the rule that if $a : \UU_0$, then $\T_0\,a$ is a type. We also have constants for the introduction rules for $\UU_0$ and equality rules for their decodings. For example, closure under $\pi$ is expressed by
 \begin{eqnarray*}
-\pi_0 &:& (X:\El\, \UU_0)(\El\, (\T_0\, X))(\El\, \UU_0)\,\El\, \UU_0
+\pi_0 &:& (a:\El\, \UU_0)(\El\, (\T_0\, a))(\El\, \UU_0)\,\El\, \UU_0
 \end{eqnarray*}
 with decoding
 \begin{eqnarray*}
-\T_0\, (\pi_0 X F) &=& \Pi (\T_0\, X) ((x)\,\T_0\, (F x))
+\T_0\, (\pi_0\, a\, b) &=& \Pi (\T_0\, a) ((x)\,\T_0\, (b\, x))
 \end{eqnarray*}
 In this system we have three levels of products: $\pi\,a\,b : \UU_0$, $\Pi\,A\,B : \Set$ and the type $(x : A)B$.
 %
@@ -275,14 +275,14 @@ The proof assistant Agda is loosely based on Martin-Löf's logical framework, bu
 \item It has built in dependent function types written $\Gamma \vdash (x : A)\to B : \Set_n$ for $\Gamma \vdash A : \Set_n$ and $\Gamma , x : A \vdash B : \Set_n$
 \item It has a special type $\Level$ of universe levels, which makes it possible to define {\em universe polymorphic} types and terms.
 \end{itemize}
-This is a logical framework in the sense that we can add new concepts by adding new constants with their types $c : A$, and also add new equations $\Gamma \vdash a = a' : A$ in the same way as in Martin-Löf's logical framework. For example, we can define universes \`a la Tarski in a similar way as we showed above for Martin-Löf's logical framework:
+This is a logical framework in the sense that we can add new concepts by adding new constants with their types $c : A$, and also add new equations $a = a' : A$ in the same way as in Martin-Löf's logical framework. For example, we can define universes \`a la Tarski in a similar way as we showed above for Martin-Löf's logical framework:
 \begin{eqnarray*}
 \UU_n &: &\Set_n\\
 \T_n &:& \UU_n \to \Set_n
 \end{eqnarray*}
-However, most Agda users only make use of the built in universes $\Set_n$, and do not introduce such "internal" universes as $\UU_n, \T_n$. Moreover, most Agda users only make use of the built in function types $\Gamma \vdash (x : A)\to B : \Set_n$ and don't introduce "user defined data types" such as
+However, most Agda users only make use of the built in universes $\Set_n$, and do not introduce such "internal" universes as $\UU_n, \T_n$. Moreover, most Agda users only make use of the built in function types $(x : A)\to B : \Set_n$ and don't introduce "user defined data types" such as
 \begin{eqnarray*}
-\Pi_n &:& (X:\Set_n) \to (X \to \Set_n) \to \Set_n
+\Pi_n &:& (A:\Set_n) \to (A \to \Set_n) \to \Set_n
 \end{eqnarray*}
 for representing $\Pi$-types as we did in Martin-Löf's logical framework. As a consequence it is more appropriate to think of Agda's sequence of universes as analogous to the sequence of universes  \`a la Russell $ \UU_0 : \UU_1 : \UU_2 : \cdots$ in the early versions of Martin-Löf type theory. However, since Agda has a type $\Level$ of levels, we can define a functions $i : \N \to \Level$, and hence the family $n : \N \vdash \Set\, (i\, n)$ analogous to the family $n : \N \vdash \Tsuper\,n$ in type theory with a (minimal) super universe. However, Agda does not have a type analogous to $\Usuper$, only a "kind" $\Set_\omega$ which is not a type. See the Agda wiki for more explanation.
 
@@ -552,7 +552,7 @@ We can also add rules for cumulativity which are completely analogous to those f
 
 \paragraph{Interpreting the level-indexed system in the system with externally indexed universes.}
 
-A judgment in the level-indexed system can be interpreted in the the externally indexed system relative to an assignment $\rho$ of (external) natural numbers $m_i$ to level variables $\alpha_i$. We simply replace each level expression in the judgment by the corresponding natural number obtained by letting $l^+\,\rho = l\,\rho+1$ and $(l \vee m)\,\rho = \max(l\,\rho,m\,\rho)$.
+A judgment in the level-indexed system can be interpreted in the the externally indexed system relative to an assignment $\rho$ of external natural numbers to level variables. We simply replace each level expression in the judgment by the corresponding natural number obtained by letting $l^+\,\rho = l\,\rho+1$ and $(l \vee m)\,\rho = \max(l\,\rho,m\,\rho)$.
 
 %
 %
@@ -603,7 +603,7 @@ should be constant. Example of use of this system? (See Martin's mail.)
 
 \paragraph{Interpreting the system with levels into extensional type theory with a super universe.} We can interpret the theory with rules for level-indexed products in extensional type theory with a (minimal) super universe. Levels will be interpreted by internal natural numbers $n : \NN$, and level-indexed products $[\alpha]A$ will be interpreted by ordinary indexed products $\Pi_{n : \NN}A$. Level application and level abstraction will be interpreted as ordinary application and abstraction.
 
-Note that in intensional type theory, we will not be able to justify all the lattice laws for level expressions as definitional equalities.
+Note that in intensional type theory, we will not be able to justify all the laws for level expressions as definitional equalities.
 
 \section{A system with level constraints}\label{constraints}
 
