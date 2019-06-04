@@ -896,6 +896,112 @@ Assaf \cite{Assaf14} considers an alternative version of the calculus of
 constructions where subtyping is explicit. This new system avoids problems related to coercions and dependent types by using the Tarski style
 of universes and by introducing additional equations to reflect equality. In particular he adds an explicit cumulativity map $\T^0_1 : \UU_0 \to \UU_1$. He argues that "full reflection" is necessary to achieve the expressivity of Russell style. He introduces the explicit cumulative calculus of constructions (CC$\uparrow$) which is closely related to our system of externally indexed Tarski style universes.
 
+\section{Martin's examples}
+OK. Here is a story (although probably not in the format I would include 
+it in a paper).
+
+(1) With level judgments, one can work with global properties, either 
+concrete, such as
+$$
+     is-prop : (l : Level) → U l → U l
+$$
+or hypothetical, such as $((l : Level) → is-univalent U)$ in
+$$
+     ua-gives-funext : ((l : Level) → is-univalent U)
+                     → (l m : Level) → FunExt (U l) (U m))
+$$
+(2) One would hope that global univalence would give
+$$
+       (P : (l : Level) → U l → U l))
+     → (l m : Level)
+     → (X : U l)
+     → (Y : U m)
+     → X ≃ Y
+     → P X
+     → P Y
+$$
+That is, that under univalence, global properties would be invariant
+under equivalence. But they are not (although it may be possible that
+the *definable* global properties (by which I mean global properties
+in an empty context) remain invariant under equivalence). This
+possibly motivates the consideration of parametricity, or at least of
+some other condition, as "invariance under equivalence" is at the
+heart of univalent foundations. Such a condition can be syntactical,
+modifying the type theory with level judgements, or in the form of an
+axiom (like univalence is).
+
+(3) Univalence implies univalence induction, which is just like J, but
+     with $\simeq$ in place of the identity type.
+
+     To show that all equivalences satisfy a property, it is enough to
+     show that the identity equivalences satisfy the property.
+
+     Simple example: it is difficult to prove directly that
+     equivalences are half-adjoint equivalences, but it is immediate
+     that identity functions are haes. Hence all equivalences are haes.
+
+     (Replace "hae" by your favourite property of equivalences.)
+
+     However, the above is a half-truth.
+
+(3b) In my MGS lecture notes I tried to apply this to show that the
+      equivalence (under univalence)
+$$
+      Id-to-Eq X Y : Id U X Y →  Eq U X Y
+$$
+      is a hae, which in turn can be used to give a simple proof of the
+      structure identity principle (I chose to specialize this to
+      magmas for didactical purposes).
+
+      But this doesn't work, because
+
+          $Id U X Y$ lives in the sucessor universe $U'$ with $U:U'$
+          $Eq U X U$ lives in $U$.
+
+      (I got a way around this by generalizing, in two ways,
+      equivalence induction.)
+
+(3c) You may hope that with cumulativity the problem in (3c) disappears.
+
+      I conjectured that it doesn't.
+
+      Mike Shulman confirmed that the proof that $Id-to-Eq X Y$ is a hae
+      by equivalence induction doesn't type check with cumulativity and
+      typical ambiguity in Coq.
+
+      So it really doesn't.
+
+      Cumulativity doesn't solve the problem. With typical ambiguity,
+      you moreover get a "universe inconsistency" message with no
+      further explanation.
+
+I guess what I am doing above is to try to understand what happens
+when we extend the type theory with level judgments.
+
+I will report about one further example later: my student Tom de Jong
+will present some work at Types on developing the Scott model of PCF
+in a type theory with function extensionality, propositional
+extensionality and propositional truncation and universes. This was
+done in UniMath with type-in-type and on paper with
+back-of-the-envelope universe level calculations, which are not really
+discussed in the paper. We are re-formalizing this in Agda to keep
+track more precisely the universe levels. Some interesting things are
+happening. Firstly, although we haven't finished, can can already see
+that everything will just work, although the reasons turn out to be
+rather subtle. Secondly, the most natural way to do this *doesn't*
+work unless Level is a type (the reason is that terms of ground type
+have denotations in $U₀$, but terms of higher type have denotations in
+$U₁$, and so we would need the level of a universe to depend on the type
+of a PCF term. This *is* possible in Agda, because Level is a type,
+but not in our type theory, where Level is a judgement. However,
+luckly, we can in this simple example just "move up" the only thing in
+$U₀$ to $U₁$ and avoid using Level as a type. But one can imagine
+situations of languages more complex then PCF that would require a
+type Level in the meta-language to interpret them. Anyway, I will
+report back on this example, which we intend to complete to have ready
+for the Types meeting.
+
+
 \section*{The problem of universes}
 
 Some questions to be explored
@@ -915,6 +1021,7 @@ this function internally, for instance  $f = \lam{\alpha}{\lambda (X:\UU_{\alpha
 
 \bibliographystyle{plain}
 \bibliography{refs}
+
 %\thebibliography
 
 %\bibitem{VV}
