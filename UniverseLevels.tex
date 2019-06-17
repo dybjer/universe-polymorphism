@@ -609,6 +609,8 @@ Note that in intensional type theory, we will not be able to justify all the law
 
 We try to describe the approach in \cite{VV} using our notation.
 
+\subsection{Judgments and rules for constraints}
+
 We introduce a further judgement for {\em constraints}. A constraint is
 a finite set of equations $l = m$ between given levels. Thus we have
 $$
@@ -635,6 +637,15 @@ $$
 $$
 Intuitively, we can use a term of type $[\psi]A$ only if the constraint $\psi$ holds.
 
+\subsection{An algorithm for deciding the solvability of constraints}
+
+We shall now devise an algorithm for deciding whether a constraint $\psi$ is solvable, that is, whether there is an assignment (model) $\rho : \Level \to \mathbb{N}$, such that for all equations $l = m \in \psi$, we have $l\rho = m\rho$, provided we interpret $\_^+$ as the successor operation and $\vee$ as the maximum operation on $\mathbb{N}$.
+
+We will apply the methods from \cite{BNR08} which gives an algorithm with quadratic time complexity in in the total number $\mu(\psi)$ of occurrences of
+variables and operations $\_^+$ and $\vee$ in $\psi$.
+
+Solving $\psi$ can be reduced in polynomial time to solving a set $\psi'$ of
+constraints of the form $\alpha\vee\beta = \gamma^+$, $\alpha\vee\beta = \gamma$, etc.
 
 \section{Solving universe constraints is polynomial}\label{sec:P-solvability}
 
