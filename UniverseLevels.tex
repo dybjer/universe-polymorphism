@@ -599,7 +599,13 @@ $$
 $$
 with conversion rule $(\lam{\alpha}{u})~l = u(l/\alpha)$.
 
-In this system all functions in $[\alpha]\NN$
+An example which use level-indexed products is the following type which  expresses the theorem that univalence for universes of arbitrary level implies function extensionality for functions between universes of arbitrary levels.
+$$
+([\alpha]\mathsf{IsUnivalent}\, \UU_\alpha)
+\to [\beta][\gamma] \mathsf{FunExt}\, \UU_\beta\, \UU_\gamma
+$$   
+               
+We note that all functions in $[\alpha]\NN$ in our system
 should be constant. 
 
 \paragraph{Interpreting the system with levels into extensional type theory with a super universe.} We can interpret the theory with rules for level-indexed products in extensional type theory with a (minimal) super universe. Levels will be interpreted by internal natural numbers $n : \NN$, and level-indexed products $[\alpha]A$ will be interpreted by ordinary indexed products $\Pi_{n : \NN}A$. Level application and level abstraction will be interpreted as ordinary application and abstraction.
@@ -608,9 +614,45 @@ Note that in intensional type theory, we will not be able to justify all the law
 
 \section{A system with level constraints}\label{constraints}
 
-We now try to describe Voevodsky's approach \cite{VV} using our notation.
+To motivate why it may be preferable to keep constraints, rather than trying find a most general solution, consider the following type in a system without cumulativity:
 
-\subsection{Judgments and rules for constraints}
+%[[The type constructor ``$\simeq$'' should be replaced by the identity type for this to work. I am not sure which notation for the identity type we want to use to formulate this example.]]
+
+%$$
+%    (A : \UU_l) \to (B : \UU_m) \to A \times B \simeq B \times A
+%$$
+%Here we get the constraint is that $l \vee m = m \vee l$, which holds for arbitrary levels $l, m$.
+%
+%Now  consider the theorem
+$$
+    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_\gamma) \to A \times B =_\delta C \times A \to B \times A =_\epsilon C \times A
+$$
+Here $=_p$ is the identity type of level $p$, that is, if $A, B : \UU_p$, then 
+$A =_p B : \UU_{p^+}$.
+We get the constraints
+$
+    \delta = \alpha \vee \beta = \gamma \vee \alpha
+$
+and 
+$
+    \epsilon = \beta \vee \alpha = \gamma \vee \alpha.
+$
+Hence there are three maximally general solutions: $\gamma = \alpha \vee \beta$, $\beta = \gamma \vee \alpha$, and $\alpha = \beta \vee \gamma$. (Cf the Gustave function in stable domain theory.)
+%$$
+%    (A : \UU_l ) (B : \UU_m ) (C : \UU_{l \vee m} )
+%$$
+%$$
+%    (A : \UU_l ) (B : \UU_{l \vee m }) (C : \UU_m )
+%$$
+%$$
+%    (A : \UU_l \vee \UU_m ) (B : \UU_l) (C : \UU_m )
+%$$
+%for $\UU_l$ and $\UU_m$ arbitrary.
+
+
+\subsection{Rules for level constraints}
+
+We now try to describe Voevodsky's approach \cite{VV} using our notation.
 
 We introduce a further judgement for {\em constraints}. A constraint is
 a finite set of equations $l = m$ between given levels. Thus we have
@@ -852,45 +894,6 @@ form and then testing for solvability would take $O(V K^2_S)$ time.
 Deciding solvability of a finite set of universe constraints is polynomial.
 \end{theorem}
 
-\subsection*{Martin's example (Berry-like function)}
-
-Here is an example of a problem if we want typical ambiguity in the absence of cumulativity.
-
-[[The type constructor ``$\simeq$'' should be replaced by the identity type for this to work. I am not sure which notation for the identity type we want to use to formulate this example.]]
-
-Consider the theorem
-$$
-    (A B : ?) \to A \times B \simeq B \times A
-$$
-The most general solution is $(A : \UU_l) (B : \UU_m)$ for $\UU_l$ and $\UU_m$ arbitrary.
-
-Now  consider the theorem
-$$
-    (A B C : ?) \to A \times B \simeq C \times A \to B \times A \simeq C \times A
-$$
-If we write
-$$
-    (A : \UU_l) (B : \UU_m) (C : \UU_n) \to A \times B \simeq C \times A \to B \times A \simeq C \times A,
-$$
-we need to solve the system of equations
-$$
-    \UU_l \vee \UU_n = \UU_{l \vee m}
-$$
-$$
-    \UU_l \vee \UU_n = \UU_{l \vee m}
-$$
-Hence three "maximally general" solutions are
-$$
-    (A : \UU_l ) (B : \UU_m ) (C : \UU_{l \vee m} )
-$$
-$$
-    (A : \UU_l ) (B : \UU_{l \vee m }) (C : \UU_m )
-$$
-$$
-    (A : \UU_l \vee \UU_m ) (B : \UU_l) (C : \UU_m )
-$$
-for $\UU_l$ and $\UU_m$ arbitrary.
-
 \section{Related work}
 
 Harper and Pollack \cite{HarperP91} consider the system $\CComega$, the Calculus of Constructions with an sequence of universes \`a la Russell. They consider both an externally indexed version and a version with level expressions which are either numbers or variables, and with constraints of the form $l < m$ and $l \leq m$. Chan has an algorithm for solving those constraints in $\Ordo(c,v^3)$, where $c$ is the number of constraints and $v$ is the number of level variables. They also consider the level synthesis problem in a version with an anonymous universe Type.
@@ -919,7 +922,7 @@ Discussion. Should we have operation $l^-$.
 
 \section{Completeness}
 
-Completeness of system wrt algorithm. Can we derive $l = l^+$ for some $l$ whenever the algorithm fails to find a model?
+Completeness of system wrt algorithm. Can we derive $l = l^+$ for some $l$ whenever the algorithm fails to find a model? Should we have the rule $l^+ = m^+$ implies $l = m$?
 
 \section{Martin's examples}
 Example of use of level-indexed products?
