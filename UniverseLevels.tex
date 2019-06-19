@@ -121,6 +121,7 @@
 \newcommand{\natrec}{\mathsf{natrec}}
 %\rightfooter{}
 \newcommand{\set}[1]{\{#1\}}
+\newcommand{\sct}[1]{[\![#1]\!]}
 
 
 
@@ -893,6 +894,33 @@ form and then testing for solvability would take $O(V K^2_S)$ time.
 \begin{theorem}\label{thm:P-solvability}
 Deciding solvability of a finite set of universe constraints is polynomial.
 \end{theorem}
+
+\subsection{Translation to Horn clauses}
+
+There exist a well-known translation of lattice theory to Horn clauses
+that we will explore now. The translation consists of several steps.
+
+\begin{enumerate}
+\item Every level expression is equal to its so-called
+\emph{$+$-normal form} which is obtained by exhaustively using 
+$(x\vee y)^+ = x^+ \vee y^+$ until the operation $\_^+$ is only applied
+to terms without $\vee$. Let $\alpha+n$ denote $\alpha^{+\cdots+}$, the
+operation $\_^+$ applied $n$ times, for any $n\in\mathbb{N}$.
+Level expressions of the form $\alpha+n$ will be called \emph{atoms}.
+Then a $+$-normal form is just a join of finitely many such atoms.
+Level expressions in $+$-normal form will be denoted by capital letters $L,M$.
+
+\item If $L$ is a level expression in $+$-normal form and $a$ an atom,
+then we call $L\to a$ a \emph{Horn clause}. The interpretation $\sct{L\to a}_\rho$
+is that the maximum of all $a_i\rho$ for $a_i$ in $L$ is greater than or equal $a\rho$.
+
+\item Under the interpretation above, any constraint $L=M$ is
+equivalent to the set of Horn clauses consisting of $L\to b$ for any $b$ in $M$
+and $M\to a$ for any $a$ in $L$.
+
+\item TBD
+
+\end{enumerate}
 
 \section{Related work}
 
