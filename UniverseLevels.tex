@@ -620,10 +620,8 @@ Note that in intensional type theory, we will not be able to justify all the law
 
 \section{A system with level constraints}\label{constraints}
 
-To motivate why it may be preferable to keep constraints, rather than trying find a most general solution, consider the following type in a system without cumulativity:
-
+To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity:
 %[[The type constructor ``$\simeq$'' should be replaced by the identity type for this to work. I am not sure which notation for the identity type we want to use to formulate this example.]]
-
 %$$
 %    (A : \UU_l) \to (B : \UU_m) \to A \times B \simeq B \times A
 %$$
@@ -631,30 +629,42 @@ To motivate why it may be preferable to keep constraints, rather than trying fin
 %
 %Now  consider the theorem
 $$
-    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_\gamma) \to A \times B =_\delta C \times A \to B \times A =_\epsilon C \times A
+    (A : \UU_l) \to (B : \UU_m) \to (C : \UU_n) 
+    \to \Id\,\UU_{l \vee m}\, (A\times^{l \vee m} B)\,(C \times^{n \vee l} A)
+    \to \Id\,\UU_{m \vee l} \, (B\times^{m \vee l} A)\,(C \times^{n \vee l} A)
+%    \to A \times B =_\delta C \times A \to B \times A =_\epsilon C \times A
 $$
-Here $=_p$ is the identity type of level $p$, that is, if $A, B : \UU_p$, then 
-$A =_p B : \UU_{p^+}$.
-We get the constraints
+It is well-formed provided $l \vee m = n \vee l$ and $m \vee l = n \vee l$. Thus there is not one but three maximally general solutions: 
+$$
+    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_{\alpha \vee \beta}) 
+    \to \Id\,\UU_{\alpha \vee \beta}\, (A\times^{\alpha \vee \beta} B)\,(C \times^{\alpha \vee \beta} A)
+    \to \Id\,\UU_{\alpha \vee \beta}\, (B\times^{\alpha \vee \beta} A)\,(C \times^{\alpha \vee \beta} A)
+$$
+$$
+    (A : \UU_\alpha) \to (B : \UU_{\gamma \vee \alpha}) \to (C : \UU_{\gamma}) 
+    \to \Id\,\UU_{\gamma \vee \alpha}\, (A\times^{\gamma \vee \alpha} B)\,(C \times^{\gamma \vee \alpha} A)
+    \to \Id\,\UU_{\gamma \vee \alpha}\, (B\times^{\gamma \vee \alpha} A)\,(C \times^{\gamma \vee \alpha} A)
+$$
+$$
+    (A : \UU_{\beta \vee \gamma}) \to (B : \UU_{\beta}) \to (C : \UU_{\gamma}) 
+    \to \Id\,\UU_{\beta \vee \gamma}\, (A\times^{\beta \vee \gamma} B)\,(C \times^{\beta \vee \gamma} A)
+    \to \Id\,\UU_{\beta \vee \gamma}\, (B\times^{\beta \vee \gamma} A)\,(C \times^{\beta \vee \gamma} A)
+$$
+(Note the similarity with the Gustave function in stable domain theory.)
+In a system with level constraints, we could instead derive the type
+$$
+    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_\gamma) 
+    \to \Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
+    \to \Id\,\UU_{\alpha \vee \beta}\, (B\times A)\,(C \times A)
+$$
+which is valid under the constraints
 $
-    \delta = \alpha \vee \beta = \gamma \vee \alpha
+\alpha \vee \beta = \gamma \vee \alpha
 $
 and 
 $
-    \epsilon = \beta \vee \alpha = \gamma \vee \alpha.
+\beta \vee \alpha = \gamma \vee \alpha.
 $
-Hence there are three maximally general solutions: $\gamma = \alpha \vee \beta$, $\beta = \gamma \vee \alpha$, and $\alpha = \beta \vee \gamma$. (Cf the Gustave function in stable domain theory.)
-%$$
-%    (A : \UU_l ) (B : \UU_m ) (C : \UU_{l \vee m} )
-%$$
-%$$
-%    (A : \UU_l ) (B : \UU_{l \vee m }) (C : \UU_m )
-%$$
-%$$
-%    (A : \UU_l \vee \UU_m ) (B : \UU_l) (C : \UU_m )
-%$$
-%for $\UU_l$ and $\UU_m$ arbitrary.
-
 
 \subsection{Rules for level constraints}
 
