@@ -771,34 +771,36 @@ without loss of generality, as equations between variables
 can easily be eliminated by substitution.
 
 Before we continue, we will further simplify $S_+$.
-Let $G_+$ be the directed graph with a node $\delta$ for every
+Let $G_S$ be the directed graph with a node $\delta$ for every
 variable $\delta$ occurring in $S$, and edges $\delta\to\epsilon$
 for every constraint $\delta = \epsilon^+$ occurring in $S_+$.
-An \emph{undirected path} in $G_+$ is a sequence of nodes connected
+An \emph{undirected path} in $G_S$ is a sequence of nodes connected
 by edges and anti-edges.
 The \emph{algebraic length} of an undirected path is the algebraic sum 
 of the number of edges minus the number of anti-edges.
 Clearly, for $S_+$ to be solvable we must have that,
 for all nodes $\delta$ and $\delta'$,
-all undirected paths in $G_+$ from $\delta$ to $\delta'$ have the same length.
+all undirected paths in $G_S$ from $\delta$ to $\delta'$ have the same length.
 The latter condition is also sufficient for the solvability of $S_+$,
 and can be tested in quadradic time. 
 We assume from now on that $S_+$ is solvable.
 
-If two nodes of $G_+$ are connected by an undirected path,
+If two nodes of $G_S$ are connected by an undirected path,
 we define their \emph{algebraic distance} to be the algebraic length of
 the undirected path, which is well-defined for $S_+$ solvable. 
-Given a node $\delta$ of $G_+$, all nodes at the same algebraic distance $k$ from 
+Given a node $\delta$ of $G_S$, all nodes at the same algebraic distance $k$ from 
 $\delta$ have the same value in any model of $S_+$. 
 This means that the corresponding variables can be considered to be equal.
 As a consequence we can eliminate all but one of the nodes at 
 algebraic distance $k$ from $\delta$, for each $\delta$ and $k$.
-Without loss of generality we may therefore assume that $G_+$ consists 
-of a finite set of linear paths that are mutually disjoint and finite.
+Without loss of generality we may therefore assume that $G_S$ consists 
+of linear paths that are mutually disjoint.
+Models of $S^+$ are uniquely determined by the values of the
+\emph{sources}, i.e., the start nodes of these linear paths.
 
 We can now prove a so-called \emph{small model property}.
 \begin{lemma}\label{lem:small-model}
-Let  $S$ be a finite set of constraints in reduced form such that all paths in $G_+$ are linear
+Let  $S$ be a finite set of constraints in reduced form such that all paths in $G_S$ are linear
 and mutually disjoint. Let $K_{S}$ be the number of occurrences of symbols $\_^+$ in $S$.
 If there is a model of $S$, then there is a model with values at most $K_{S}$.
 \end{lemma}
@@ -820,52 +822,51 @@ and we will now describe an efficient search procedure finding a
 model if there exists one. We prepare by the following lemma.
 
 \begin{lemma}\label{lem:model-search}
-Assume $S$ is in reduced form.
-Let $M$ be a model of $S$ and $\rho$ an assignment such that $\rho\geq M$ (pointwise).
-If $\rho$ is not a model of $S$, then we have $\rho'\geq M$ for any assignment $\rho'$
-that is obtained from $\rho$ in one of the following ways:
-\begin{itemize}
-\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with
-$(\alpha\vee\beta)\rho +b+n = \gamma\rho$ for some $n>0$ and
-define $\rho'(\gamma) = \rho(\gamma)-n$.
-\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with
-$(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$ and
-define $\rho'(\alpha) = \rho(\alpha)-n$ if $\rho(\alpha)\geq\rho(\beta)$.
-\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with
-$(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$ and
-define $\rho'(\beta) = \rho(\beta)-n$ if $\rho(\alpha)<\rho(\beta)$.
-\end{itemize}
-In all three cases, $\rho'$ assigns a lower value than $\rho$ to exactly one variable,
-and keeps the same value as $\rho$ for all other variables.
+Let  $S$ be a finite set of constraints in reduced form such that all paths 
+in $G_S$ are linear and mutually disjoint.
+Let $M$ be a model of $S$ and $\rho$ a model of $S^+$ such that $\rho\geq M$ (pointwise).
+If $\rho$ is not a model of $S$, then the assignment $\rho'$ defined in 
+one of the ways below is also a model of $S^+$ and satisfies $\rho'\geq M$.
+Moreover, $\rho'(\alpha)<\rho(\alpha)$ for at least one variable.
+\begin{enumerate}
+\item Pick a constraint $\alpha\vee\beta = \gamma$ from $S$ with
+$(\alpha\vee\beta)\rho +n = \gamma\rho$ for some $n>0$, and define 
+$\rho'(\gamma') = \rho(\gamma')-n$ for any $\gamma'$ on the same path as $\gamma$ in $G_S$.
+\item Pick a constraint $\alpha\vee\beta = \gamma$ from $S$ with $\rho(\alpha)\geq\rho(\beta)$
+and $(\alpha\vee\beta)\rho = \gamma\rho +n$ for some $n>0$, and  define 
+$\rho'(\alpha') = \rho(\alpha') -n$ for any $\alpha'$ on the same path as $\alpha$ in $G_S$.
+If $\beta$ is not on the same path as $\alpha$ in $G_S$, define also
+$\rho'(\beta') = \rho(\beta') + \rho(\gamma) - \rho(\beta)$ 
+for any $\beta'$ on the same path as $\beta$ in $G_S$.
+\item Like the previous one with $\beta\vee\alpha = \gamma$.
+\end{enumerate}
 \end{lemma}
 
-
 \begin{proof}
-Let conditions be as above. In each of the three cases we
-have to prove that $\rho'\geq M$ for the only variable that is lowered.
+Let conditions be as above. We observe that we lower all variables on one or two
+paths of $G_S$, so that $\rho'$ is a model of $S^+$. In each cases we
+have to prove that $\rho'\geq M$.
 We use that $\max$ is monotone in both its arguments.
-\begin{itemize}
-\item Assume
-$(\alpha\vee\beta)\rho +b+n = \gamma\rho$ for some $n>0$.
-Then $\rho'(\gamma) = \rho(\gamma)-n = (\alpha\vee\beta)\rho + b \geq
-\max(M(\alpha),M(\beta)) +b = M(\gamma)$.
-\item Assume
-$(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$, and
-$\rho(\alpha)\geq\rho(\beta)$.
-Then $\rho'(\alpha) = \rho(\alpha)-n = (\alpha\vee\beta)\rho -n =
-\gamma\rho - b \geq M(\gamma)-b = \max(M(\alpha),M(\beta)) \geq M(\alpha)$.
-\item Analogous to the previous case, but with $\rho(\alpha)<\rho(\beta)$
-and $\rho'(\beta)=\rho(\beta)-n$.
-\end{itemize}
-Note that the proof is correct also if two or three of $\alpha,\beta,\gamma$
-are equal.
+\begin{enumerate}
+\item Since $\rho$ and $M$ are both models of $S^+$, it suffices to 
+verify that $\rho'(\gamma)\geq M(\gamma)$. We have 
+$\rho'(\gamma)= (\alpha\vee\beta)\rho \geq (\alpha\vee\beta)M = M(\gamma)$.
+\item Since $\rho$ and $M$ are both models of $S^+$, it suffices to 
+verify that $\rho'(\alpha)\geq M(\alpha)$, and similarly for $\beta$. We have
+$\rho'(\alpha)= \rho(\gamma)\geq M(\gamma) = (\alpha\vee\beta)M \geq M(\alpha)$.
+Use $\rho'(\beta)\geq\rho(\gamma)$ and $(\alpha\vee\beta)M \geq M(\beta)$
+if $\beta$ is not on the same path as $\alpha$. 
+\item Similar to the previous case.
+\end{enumerate}
 \end{proof}
 
-Assume $S$ is in reduced form. By \cref{lem:small-model},
+Assume $S$ is a finite set of constraints in reduced form such that all paths 
+in $G_S$ are linear and mutually disjoint. By \cref{lem:small-model},
 if $S$ has a model, there is a model $M \leq K_S$.
-We start the search from the assignment $\rho$ that is constant $K_S$.
+We start the search from the model $\rho$ of $S^+$ that is constant $K_S$
+on the sources of the paths of $G_S$.
 In each step from $\rho$ to $\rho'$ in \cref{lem:model-search},
-exactly one variable is lowered. This can be done at most $V K_S$ times,
+at least one variable is lowered. This can be done at most $V K_S$ times,
 where $V$ is the number of variables. So we will actually find the unique maximal
 model $M$ with values at most $K_S$, if there is a model at all.
 Each step requires a pass through all
