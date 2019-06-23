@@ -700,27 +700,8 @@ Intuitively, we can use a term of type $[\psi]A$ only if the constraint $\psi$ h
 
 We shall now devise an algorithm for deciding whether a constraint $\psi$ is solvable, that is, whether there is an assignment (model) $\rho : \Level \to \mathbb{N}$, such that for all equations $l = m \in \psi$, we have $l\rho = m\rho$, provided we interpret $\_^+$ as the successor operation and $\vee$ as the maximum operation on $\mathbb{N}$.
 
-We apply the method in \cite{BNR08} which gives an algorithm with quadratic time complexity in in the total number $\mu(\psi)$ of occurrences of
-variables and operations $\_^+$ and $\vee$ in $\psi$.
-
-Solving $\psi$ can be reduced in polynomial time to solving a set $\psi'$ of
-constraints of the form $\alpha\vee\beta = \gamma^+$, $\alpha\vee\beta = \gamma$, etc.
-
-\section{Solving universe constraints is polynomial}\label{sec:P-solvability}
-
-We would need (for the Max-Atom algorithms to work):
-\[
-\vdash_{\cal L} l=m  \quad \quad \iff \quad \quad \mathbb{N},\rho \models l\rho = m\rho
-\text{~~ for all $\rho$}
-\]
-and the type theory should have enough rules to ensure
-\[
-\vdash_{\cal L} l=m  \quad \quad \iff \quad \quad \vdash l=m
-\text{~~ (judgmentally)}.
-\]
-
 The goal of the following is apply the methods from \cite{BNR08} to decide
-the solvability of a finite set $S$ of universe constraints in polynomial time.
+the solvability of a finite set $\color{red} S\equiv\psi$ of universe constraints in polynomial time.
 Here polynomial means polynomial in the total number $\mu(S)$ of occurrences of
 variables and operations $\_^+$ and $\vee$ in $S$.
 
@@ -735,10 +716,8 @@ under the canonical interpretation of $\_^+$ as successor and $\vee$ as maximum.
 Entailment under the canonical interpretation will be denoted by $\models$.
 
 Solving $S$ can be reduced in polynomial time to solving a set $S'$ of
-constraints of the form $\alpha\vee\beta = \gamma^+$, $\alpha\vee\beta = \gamma$,
-and $(\alpha\vee\beta)^+ = \gamma$. Such forms are called \emph{reduced forms},
-conveniently denoted by $(\alpha\vee\beta)+b = \gamma$, with $b=-1,0,1$.
-If $\alpha=\beta$ we simply write $\alpha+b = \gamma$.
+constraints in one of the two forms $\alpha\vee\beta = \gamma$
+and $\delta = \epsilon^+$. Such forms are called \emph{reduced forms}.
 
 \begin{lemma}\label{lem:reduced-form}
 For every finite set $S$ of constraints, there is a set $S'$ of
@@ -782,6 +761,26 @@ We get $\mu(S')\leq 2\mu(S)$ and the whole transformation, including the
 elimination of variables, can certainly be done in quadratic time
 (and probably better).
 \end{proof}
+
+From now on we assume that constraints are in reduced form.
+Any set $S$ of such constraints can be split as $S=S_+ \cup S_\vee$,
+where $S_+$ ($S_\vee$) consists of all constraints of the form  
+$\delta = \epsilon^+$ ($\alpha\vee\beta = \gamma$) from $S$.
+
+Before we continue, we simplify $S_+$ without loss of generality.
+Let $G_+$ be the directed graph with a node $\delta$ for every
+variable $\delta$ occurring in $S$, and edges $\delta\to\epsilon$
+for every constraint $\delta = \epsilon^+$ occurring in $S\+$.
+Clearly, for $S\+$ to be consistent, for any to nodes $delta$ and $\delta'$,
+all paths in $G_+$ from $\delta$ to $\delta'$ must have the same length.
+This condition can be tested in quadradic time, and is also sufficient
+for the consistency of $S_+$.
+
+Given a node $\delta$ of $G_+$, all nodes at the same distance $k$ from 
+$\delta$ must have the same value under any assignment. Without loss
+of generality we may therefore assume that $G_+$ consists of a finite
+set of linear paths that are mutually disjoint and finite.
+
 
 We now prove a small model property.
 \begin{lemma}\label{lem:small-model}
