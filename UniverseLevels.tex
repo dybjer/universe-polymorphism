@@ -766,83 +766,53 @@ From now on we assume that constraints are in reduced form.
 Any set $S$ of such constraints can be split as $S=S_+ \cup S_\vee$,
 where $S_+$ ($S_\vee$) consists of all constraints of the form  
 $\delta = \epsilon^+$ ($\alpha\vee\beta = \gamma$) from $S$.
+In the latter constraints we assume $\alpha\neq\beta$,
+without loss of generality, as equations between variables
+can easily be eliminated by substitution.
 
-Before we continue, we simplify $S_+$ without loss of generality.
+Before we continue, we will further simplify $S_+$.
 Let $G_+$ be the directed graph with a node $\delta$ for every
 variable $\delta$ occurring in $S$, and edges $\delta\to\epsilon$
-for every constraint $\delta = \epsilon^+$ occurring in $S\+$.
-Clearly, for $S\+$ to be consistent, for any to nodes $delta$ and $\delta'$,
-all paths in $G_+$ from $\delta$ to $\delta'$ must have the same length.
-This condition can be tested in quadradic time, and is also sufficient
-for the consistency of $S_+$.
+for every constraint $\delta = \epsilon^+$ occurring in $S_+$.
+An \emph{undirected path} in $G_+$ is a sequence of nodes connected
+by edges and anti-edges.
+The \emph{algebraic length} of an undirected path is the algebraic sum 
+of the number of edges minus the number of anti-edges.
+Clearly, for $S_+$ to be solvable we must have that,
+for all nodes $\delta$ and $\delta'$,
+all undirected paths in $G_+$ from $\delta$ to $\delta'$ have the same length.
+The latter condition is also sufficient for the solvability of $S_+$,
+and can be tested in quadradic time. 
+We assume from now on that $S_+$ is solvable.
 
-Given a node $\delta$ of $G_+$, all nodes at the same distance $k$ from 
-$\delta$ must have the same value under any assignment. Without loss
-of generality we may therefore assume that $G_+$ consists of a finite
-set of linear paths that are mutually disjoint and finite.
+If two nodes of $G_+$ are connected by an undirected path,
+we define their \emph{algebraic distance} to be the algebraic length of
+the undirected path, which is well-defined for $S_+$ solvable. 
+Given a node $\delta$ of $G_+$, all nodes at the same algebraic distance $k$ from 
+$\delta$ have the same value in any model of $S_+$. 
+This means that the corresponding variables can be considered to be equal.
+As a consequence we can eliminate all but one of the nodes at 
+algebraic distance $k$ from $\delta$, for each $\delta$ and $k$.
+Without loss of generality we may therefore assume that $G_+$ consists 
+of a finite set of linear paths that are mutually disjoint and finite.
 
-
-We now prove a small model property.
+We can now prove a so-called \emph{small model property}.
 \begin{lemma}\label{lem:small-model}
-Let  $S$ be a finite set of constraints.
-Let $K_{S}$ be the number of occurrences of symbols $\_^+$ in $S$.
+Let  $S$ be a finite set of constraints in reduced form such that all paths in $G_+$ are linear
+and mutually disjoint. Let $K_{S}$ be the number of occurrences of symbols $\_^+$ in $S$.
 If there is a model of $S$, then there is a model with values at most $K_{S}$.
 \end{lemma}
 
 \begin{proof}
-%For any assignment $\rho$, define the \emph{range} of $\rho$ as the difference
-%of the maximal value assigned to a variable by $\rho$ and the minimal value.
-%For a subset of variables, we also speak about the range of that subset under $\rho$.
-By \cref{lem:reduced-form} we may assume that $S$ is in reduced form.
-Let $V$ be the set of variables occurring in $S$.
-Let $\rho: V\to\NN$ be an assignment for $S$.
-We construct an undirected graph on $\NN$ depending on $M$ and $\rho$.
-For every constraint  $(\alpha\vee\beta)+b = \gamma$ in $S$,
-we add an edge between $\rho(\gamma)$ and the maximum of $\rho(\alpha)$ and $\rho(\beta)$. 
-The connected components are segments of natural numbers, since $|b|\leq 1$.
-The length of such a segment is bounded by the number of symbols $\_^+$
-in the constraints that define the connected component.
-The lengths of the segments sum up to at most $K_{S}$.
-If $\rho$ is a model and all segments overlap we are done.
-However, there may be gaps between the segments.
-
-A \emph{gap} is given by two natural numbers $A<B$ such that:
-\begin{enumerate}
-\item There is no edge between $A$ and $B$;
-\item for all $\alpha\in V$ we have either $\rho(\alpha)\leq A$, or $B\leq\rho(\alpha)$; 
-\item $A=0$ or there is $\alpha\in V$ with $\rho(\alpha)=A$;
-\item there is $\beta\in V$ with $\rho(\beta)=B$.
-\end{enumerate}
-
-Given a gap as above, we define an assignment $\rho'$ that closes this gap
-such that $\rho'$ is a model of $S$ whenever $\rho$ is. We define
-$\rho'(\alpha) = \rho(\alpha)$ if $\rho(\alpha)\leq A$,
-and $\rho'(\alpha) = \rho(\alpha)+A-B$ otherwise, for every $\alpha\in V$.
-Assume $\rho\models (\alpha\vee\beta)+b = \gamma$.
-We will prove $\rho'\models (\alpha\vee\beta)+b = \gamma$.
-Comparing $\rho(\alpha)$ and $\rho(\beta)$, we distinguish three cases: $<$, $=$, and $>$.
-If $\rho(\alpha) = \rho(\beta)$, then there is an edge between this value
-and $\rho(\gamma)$, so these two values are on the same side of the gap.
-Hence $\rho'(\alpha)-\rho(\alpha)=\rho'(\beta)-\rho(\beta)=\rho'(\gamma)-\rho(\gamma)$,
-and $\rho'\models (\alpha\vee\beta)+b = \gamma$.
-
-If $\rho(\alpha) < \rho(\beta)$, then there is an edge between $\rho(\beta)$
-and $\rho(\gamma)$, so these two values are on the same side of the gap.
-Hence $\rho'(\beta)-\rho(\beta)=\rho'(\gamma)-\rho(\gamma)$.
-If $\rho(\alpha)$ is also on the same side we are again done.
-Otherwise, the only possibility is $\rho(\alpha)\leq A$ and 
-$B\leq\rho(\beta),\rho(\gamma)$. Then $\rho'(\alpha)\leq A\leq \rho'(\beta)$
-and again we get $\rho'\models (\alpha\vee\beta)+b = \gamma$.
-
-The case $\rho(\alpha) > \rho(\beta)$ follows by symmetry.
-
-Iterating this procedure, starting from a model $M$ of $S$,
-we can close all gaps and end up with a model with no gaps.
-In this model the lowest value is $0$ (there is no gap $0<B$),
-and the highest value of a variable is at most $K_S$.
-%The latter follows from the observation that the highest
-%value is at most the sum of the lengths of the (overlapping) segments
-%coming from the connected components, and this sum is bounded by $K_S$.
+Observe that $K_{S}$ is the sum of the lengths of the paths in $G_S$.
+Let $M$ be a model of $S$. If the interpretations of the paths $G_S$
+has a gap, say of length $k$, then we can construct an assignment $\rho$
+in which all variables with value above the gap are lowered by $k$.
+Since the order relations between variables does not change, $\rho$
+constitutes a model $M'$ with this particular gap closed.
+In this way we can close all gaps, and arrange things such that
+the lowest value of a variable is $0$. The resulting model
+has values at most $K_{S}$.
 \end{proof}
 
 \cref{lem:small-model} implies the decidability of solvability,
