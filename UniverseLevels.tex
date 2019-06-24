@@ -837,14 +837,16 @@ and $(\alpha\vee\beta)\rho = \gamma\rho +n$ for some $n>0$, and  define
 $\rho'(\alpha') = \rho(\alpha') -n$ for any $\alpha'$ on the same path as $\alpha$ in $G_S$.
 If $\beta$ is not on the same path as $\alpha$ in $G_S$, define also
 $\rho'(\beta') = \rho(\beta') + \rho(\gamma) - \rho(\beta)$ 
-for any $\beta'$ on the same path as $\beta$ in $G_S$.
+for any $\beta'$ on the same path as $\beta$ in $G_S$. Note that we have
+$\rho'(\alpha) = \rho'(\beta) = \rho(\gamma)$ if $\alpha$ and $\beta$ are
+not on the same path.
 \item Like the previous one with $\beta\vee\alpha = \gamma$.
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
 Let conditions be as above. We observe that we lower all variables on one or two
-paths of $G_S$, so that $\rho'$ is a model of $S^+$. In each cases we
+paths of $G_S$, so that $\rho'$ is a model of $S^+$. In each case we
 have to prove that $\rho'\geq M$.
 We use that $\max$ is monotone in both its arguments.
 \begin{enumerate}
@@ -854,7 +856,7 @@ $\rho'(\gamma)= (\alpha\vee\beta)\rho \geq (\alpha\vee\beta)M = M(\gamma)$.
 \item Since $\rho$ and $M$ are both models of $S^+$, it suffices to 
 verify that $\rho'(\alpha)\geq M(\alpha)$, and similarly for $\beta$. We have
 $\rho'(\alpha)= \rho(\gamma)\geq M(\gamma) = (\alpha\vee\beta)M \geq M(\alpha)$.
-Use $\rho'(\beta)\geq\rho(\gamma)$ and $(\alpha\vee\beta)M \geq M(\beta)$
+Use $\rho'(\beta) = \rho(\gamma)$ and $(\alpha\vee\beta)M \geq M(\beta)$
 if $\beta$ is not on the same path as $\alpha$. 
 \item Similar to the previous case.
 \end{enumerate}
