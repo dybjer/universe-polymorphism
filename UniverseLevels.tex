@@ -700,27 +700,8 @@ Intuitively, we can use a term of type $[\psi]A$ only if the constraint $\psi$ h
 
 We shall now devise an algorithm for deciding whether a constraint $\psi$ is solvable, that is, whether there is an assignment (model) $\rho : \Level \to \mathbb{N}$, such that for all equations $l = m \in \psi$, we have $l\rho = m\rho$, provided we interpret $\_^+$ as the successor operation and $\vee$ as the maximum operation on $\mathbb{N}$.
 
-We apply the method in \cite{BNR08} which gives an algorithm with quadratic time complexity in in the total number $\mu(\psi)$ of occurrences of
-variables and operations $\_^+$ and $\vee$ in $\psi$.
-
-Solving $\psi$ can be reduced in polynomial time to solving a set $\psi'$ of
-constraints of the form $\alpha\vee\beta = \gamma^+$, $\alpha\vee\beta = \gamma$, etc.
-
-\section{Solving universe constraints is polynomial}\label{sec:P-solvability}
-
-We would need (for the Max-Atom algorithms to work):
-\[
-\vdash_{\cal L} l=m  \quad \quad \iff \quad \quad \mathbb{N},\rho \models l\rho = m\rho
-\text{~~ for all $\rho$}
-\]
-and the type theory should have enough rules to ensure
-\[
-\vdash_{\cal L} l=m  \quad \quad \iff \quad \quad \vdash l=m
-\text{~~ (judgmentally)}.
-\]
-
 The goal of the following is apply the methods from \cite{BNR08} to decide
-the solvability of a finite set $S$ of universe constraints in polynomial time.
+the solvability of a finite set $\color{red} S\equiv\psi$ of universe constraints in polynomial time.
 Here polynomial means polynomial in the total number $\mu(S)$ of occurrences of
 variables and operations $\_^+$ and $\vee$ in $S$.
 
@@ -735,10 +716,8 @@ under the canonical interpretation of $\_^+$ as successor and $\vee$ as maximum.
 Entailment under the canonical interpretation will be denoted by $\models$.
 
 Solving $S$ can be reduced in polynomial time to solving a set $S'$ of
-constraints of the form $\alpha\vee\beta = \gamma^+$, $\alpha\vee\beta = \gamma$,
-and $(\alpha\vee\beta)^+ = \gamma$. Such forms are called \emph{reduced forms},
-conveniently denoted by $(\alpha\vee\beta)+b = \gamma$, with $b=-1,0,1$.
-If $\alpha=\beta$ we simply write $\alpha+b = \gamma$.
+constraints in one of the two forms $\alpha\vee\beta = \gamma$
+and $\delta = \epsilon^+$. Such forms are called \emph{reduced forms}.
 
 \begin{lemma}\label{lem:reduced-form}
 For every finite set $S$ of constraints, there is a set $S'$ of
@@ -783,67 +762,59 @@ elimination of variables, can certainly be done in quadratic time
 (and probably better).
 \end{proof}
 
-We now prove a small model property.
+From now on we assume that constraints are in reduced form.
+Any set $S$ of such constraints can be split as $S=S_+ \cup S_\vee$,
+where $S_+$ ($S_\vee$) consists of all constraints of the form  
+$\delta = \epsilon^+$ ($\alpha\vee\beta = \gamma$) from $S$.
+In the latter constraints we assume $\alpha\neq\beta$,
+without loss of generality, as equations between variables
+can easily be eliminated by substitution.
+
+Before we continue, we will further simplify $S_+$.
+Let $G_S$ be the directed graph with a node $\delta$ for every
+variable $\delta$ occurring in $S$, and edges $\delta\to\epsilon$
+for every constraint $\delta = \epsilon^+$ occurring in $S_+$.
+An \emph{undirected path} in $G_S$ is a sequence of nodes connected
+by edges and anti-edges.
+The \emph{algebraic length} of an undirected path is the algebraic sum 
+of the number of edges minus the number of anti-edges.
+Clearly, for $S_+$ to be solvable we must have that,
+for all nodes $\delta$ and $\delta'$,
+all undirected paths in $G_S$ from $\delta$ to $\delta'$ have the same length.
+The latter condition is also sufficient for the solvability of $S_+$,
+and can be tested in quadradic time. 
+We assume from now on that $S_+$ is solvable.
+
+If two nodes of $G_S$ are connected by an undirected path,
+we define their \emph{algebraic distance} to be the algebraic length of
+the undirected path, which is well-defined for $S_+$ solvable. 
+Given a node $\delta$ of $G_S$, all nodes at the same algebraic distance $k$ from 
+$\delta$ have the same value in any model of $S_+$. 
+This means that the corresponding variables can be considered to be equal.
+As a consequence we can eliminate all but one of the nodes at 
+algebraic distance $k$ from $\delta$, for each $\delta$ and $k$.
+Without loss of generality we may therefore assume that $G_S$ consists 
+of linear paths that are mutually disjoint.
+Models of $S^+$ are uniquely determined by the values of the
+\emph{sources}, i.e., the start nodes of these linear paths.
+
+We can now prove a so-called \emph{small model property}.
 \begin{lemma}\label{lem:small-model}
-Let  $S$ be a finite set of constraints.
-Let $K_{S}$ be the number of occurrences of symbols $\_^+$ in $S$.
+Let  $S$ be a finite set of constraints in reduced form such that all paths in $G_S$ are linear
+and mutually disjoint. Let $K_{S}$ be the number of occurrences of symbols $\_^+$ in $S$.
 If there is a model of $S$, then there is a model with values at most $K_{S}$.
 \end{lemma}
 
 \begin{proof}
-%For any assignment $\rho$, define the \emph{range} of $\rho$ as the difference
-%of the maximal value assigned to a variable by $\rho$ and the minimal value.
-%For a subset of variables, we also speak about the range of that subset under $\rho$.
-By \cref{lem:reduced-form} we may assume that $S$ is in reduced form.
-Let $V$ be the set of variables occurring in $S$.
-Let $\rho: V\to\NN$ be an assignment for $S$.
-We construct an undirected graph on $\NN$ depending on $M$ and $\rho$.
-For every constraint  $(\alpha\vee\beta)+b = \gamma$ in $S$,
-we add an edge between $\rho(\gamma)$ and the maximum of $\rho(\alpha)$ and $\rho(\beta)$. 
-The connected components are segments of natural numbers, since $|b|\leq 1$.
-The length of such a segment is bounded by the number of symbols $\_^+$
-in the constraints that define the connected component.
-The lengths of the segments sum up to at most $K_{S}$.
-If $\rho$ is a model and all segments overlap we are done.
-However, there may be gaps between the segments.
-
-A \emph{gap} is given by two natural numbers $A<B$ such that:
-\begin{enumerate}
-\item There is no edge between $A$ and $B$;
-\item for all $\alpha\in V$ we have either $\rho(\alpha)\leq A$, or $B\leq\rho(\alpha)$; 
-\item $A=0$ or there is $\alpha\in V$ with $\rho(\alpha)=A$;
-\item there is $\beta\in V$ with $\rho(\beta)=B$.
-\end{enumerate}
-
-Given a gap as above, we define an assignment $\rho'$ that closes this gap
-such that $\rho'$ is a model of $S$ whenever $\rho$ is. We define
-$\rho'(\alpha) = \rho(\alpha)$ if $\rho(\alpha)\leq A$,
-and $\rho'(\alpha) = \rho(\alpha)+A-B$ otherwise, for every $\alpha\in V$.
-Assume $\rho\models (\alpha\vee\beta)+b = \gamma$.
-We will prove $\rho'\models (\alpha\vee\beta)+b = \gamma$.
-Comparing $\rho(\alpha)$ and $\rho(\beta)$, we distinguish three cases: $<$, $=$, and $>$.
-If $\rho(\alpha) = \rho(\beta)$, then there is an edge between this value
-and $\rho(\gamma)$, so these two values are on the same side of the gap.
-Hence $\rho'(\alpha)-\rho(\alpha)=\rho'(\beta)-\rho(\beta)=\rho'(\gamma)-\rho(\gamma)$,
-and $\rho'\models (\alpha\vee\beta)+b = \gamma$.
-
-If $\rho(\alpha) < \rho(\beta)$, then there is an edge between $\rho(\beta)$
-and $\rho(\gamma)$, so these two values are on the same side of the gap.
-Hence $\rho'(\beta)-\rho(\beta)=\rho'(\gamma)-\rho(\gamma)$.
-If $\rho(\alpha)$ is also on the same side we are again done.
-Otherwise, the only possibility is $\rho(\alpha)\leq A$ and 
-$B\leq\rho(\beta),\rho(\gamma)$. Then $\rho'(\alpha)\leq A\leq \rho'(\beta)$
-and again we get $\rho'\models (\alpha\vee\beta)+b = \gamma$.
-
-The case $\rho(\alpha) > \rho(\beta)$ follows by symmetry.
-
-Iterating this procedure, starting from a model $M$ of $S$,
-we can close all gaps and end up with a model with no gaps.
-In this model the lowest value is $0$ (there is no gap $0<B$),
-and the highest value of a variable is at most $K_S$.
-%The latter follows from the observation that the highest
-%value is at most the sum of the lengths of the (overlapping) segments
-%coming from the connected components, and this sum is bounded by $K_S$.
+Observe that $K_{S}$ is the sum of the lengths of the paths in $G_S$.
+Let $M$ be a model of $S$. If the interpretations of the paths $G_S$
+has a gap, say of length $k$, then we can construct an assignment $\rho$
+in which all variables with value above the gap are lowered by $k$.
+Since the order relations between variables does not change, $\rho$
+constitutes a model $M'$ with this particular gap closed.
+In this way we can close all gaps, and arrange things such that
+the lowest value of a variable is $0$. The resulting model
+has values at most $K_{S}$.
 \end{proof}
 
 \cref{lem:small-model} implies the decidability of solvability,
@@ -851,52 +822,51 @@ and we will now describe an efficient search procedure finding a
 model if there exists one. We prepare by the following lemma.
 
 \begin{lemma}\label{lem:model-search}
-Assume $S$ is in reduced form.
-Let $M$ be a model of $S$ and $\rho$ an assignment such that $\rho\geq M$ (pointwise).
-If $\rho$ is not a model of $S$, then we have $\rho'\geq M$ for any assignment $\rho'$
-that is obtained from $\rho$ in one of the following ways:
-\begin{itemize}
-\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with
-$(\alpha\vee\beta)\rho +b+n = \gamma\rho$ for some $n>0$ and
-define $\rho'(\gamma) = \rho(\gamma)-n$.
-\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with
-$(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$ and
-define $\rho'(\alpha) = \rho(\alpha)-n$ if $\rho(\alpha)\geq\rho(\beta)$.
-\item Pick a constraint $(\alpha\vee\beta)+b = \gamma$ from $S$ with
-$(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$ and
-define $\rho'(\beta) = \rho(\beta)-n$ if $\rho(\alpha)<\rho(\beta)$.
-\end{itemize}
-In all three cases, $\rho'$ assigns a lower value than $\rho$ to exactly one variable,
-and keeps the same value as $\rho$ for all other variables.
+Let  $S$ be a finite set of constraints in reduced form such that all paths 
+in $G_S$ are linear and mutually disjoint.
+Let $M$ be a model of $S$ and $\rho$ a model of $S^+$ such that $\rho\geq M$ (pointwise).
+If $\rho$ is not a model of $S$, then the assignment $\rho'$ defined in 
+one of the ways below is also a model of $S^+$ and satisfies $\rho'\geq M$.
+Moreover, $\rho'(\alpha)<\rho(\alpha)$ for at least one variable.
+\begin{enumerate}
+\item Pick a constraint $\alpha\vee\beta = \gamma$ from $S$ with
+$(\alpha\vee\beta)\rho +n = \gamma\rho$ for some $n>0$, and define 
+$\rho'(\gamma') = \rho(\gamma')-n$ for any $\gamma'$ on the same path as $\gamma$ in $G_S$.
+\item Pick a constraint $\alpha\vee\beta = \gamma$ from $S$ with $\rho(\alpha)\geq\rho(\beta)$
+and $(\alpha\vee\beta)\rho = \gamma\rho +n$ for some $n>0$, and  define 
+$\rho'(\alpha') = \rho(\alpha') -n$ for any $\alpha'$ on the same path as $\alpha$ in $G_S$.
+If $\beta$ is not on the same path as $\alpha$ in $G_S$, define also
+$\rho'(\beta') = \rho(\beta') + \rho(\gamma) - \rho(\beta)$ 
+for any $\beta'$ on the same path as $\beta$ in $G_S$.
+\item Like the previous one with $\beta\vee\alpha = \gamma$.
+\end{enumerate}
 \end{lemma}
 
-
 \begin{proof}
-Let conditions be as above. In each of the three cases we
-have to prove that $\rho'\geq M$ for the only variable that is lowered.
+Let conditions be as above. We observe that we lower all variables on one or two
+paths of $G_S$, so that $\rho'$ is a model of $S^+$. In each cases we
+have to prove that $\rho'\geq M$.
 We use that $\max$ is monotone in both its arguments.
-\begin{itemize}
-\item Assume
-$(\alpha\vee\beta)\rho +b+n = \gamma\rho$ for some $n>0$.
-Then $\rho'(\gamma) = \rho(\gamma)-n = (\alpha\vee\beta)\rho + b \geq
-\max(M(\alpha),M(\beta)) +b = M(\gamma)$.
-\item Assume
-$(\alpha\vee\beta)\rho +b = \gamma\rho + n$ for some $n>0$, and
-$\rho(\alpha)\geq\rho(\beta)$.
-Then $\rho'(\alpha) = \rho(\alpha)-n = (\alpha\vee\beta)\rho -n =
-\gamma\rho - b \geq M(\gamma)-b = \max(M(\alpha),M(\beta)) \geq M(\alpha)$.
-\item Analogous to the previous case, but with $\rho(\alpha)<\rho(\beta)$
-and $\rho'(\beta)=\rho(\beta)-n$.
-\end{itemize}
-Note that the proof is correct also if two or three of $\alpha,\beta,\gamma$
-are equal.
+\begin{enumerate}
+\item Since $\rho$ and $M$ are both models of $S^+$, it suffices to 
+verify that $\rho'(\gamma)\geq M(\gamma)$. We have 
+$\rho'(\gamma)= (\alpha\vee\beta)\rho \geq (\alpha\vee\beta)M = M(\gamma)$.
+\item Since $\rho$ and $M$ are both models of $S^+$, it suffices to 
+verify that $\rho'(\alpha)\geq M(\alpha)$, and similarly for $\beta$. We have
+$\rho'(\alpha)= \rho(\gamma)\geq M(\gamma) = (\alpha\vee\beta)M \geq M(\alpha)$.
+Use $\rho'(\beta)\geq\rho(\gamma)$ and $(\alpha\vee\beta)M \geq M(\beta)$
+if $\beta$ is not on the same path as $\alpha$. 
+\item Similar to the previous case.
+\end{enumerate}
 \end{proof}
 
-Assume $S$ is in reduced form. By \cref{lem:small-model},
+Assume $S$ is a finite set of constraints in reduced form such that all paths 
+in $G_S$ are linear and mutually disjoint. By \cref{lem:small-model},
 if $S$ has a model, there is a model $M \leq K_S$.
-We start the search from the assignment $\rho$ that is constant $K_S$.
+We start the search from the model $\rho$ of $S^+$ that is constant $K_S$
+on the sources of the paths of $G_S$.
 In each step from $\rho$ to $\rho'$ in \cref{lem:model-search},
-exactly one variable is lowered. This can be done at most $V K_S$ times,
+at least one variable is lowered. This can be done at most $V K_S$ times,
 where $V$ is the number of variables. So we will actually find the unique maximal
 model $M$ with values at most $K_S$, if there is a model at all.
 Each step requires a pass through all
