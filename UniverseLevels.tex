@@ -710,6 +710,9 @@ The \emph{level expressions} $l,m$ have the following abstract syntax:
 \[
 l,m,\ldots ::= {\alpha,\beta,\ldots} \mid {l^+} \mid {l\vee m}
 \]
+For convenience, let $l+n$ denote $l^{+\ldots +}$, the result of iterating $n$ times
+the operation $\_^+$ on $l$.
+
 A \emph{model}, or \emph{solution} of $S$ is an assignment of natural numbers to
 the level variables occurring in $S$ such that all constraints in $S$ become true
 under the canonical interpretation of $\_^+$ as successor and $\vee$ as maximum.
@@ -795,8 +798,13 @@ As a consequence we can eliminate all but one of the nodes at
 algebraic distance $k$ from $\delta$, for each $\delta$ and $k$.
 Without loss of generality we may therefore assume that $G_S$ consists 
 of linear paths that are mutually disjoint.
-Models of $S^+$ are uniquely determined by the values of the
-\emph{sources}, i.e., the start nodes of these linear paths.
+Models of $S^+$ are uniquely determined by the values of 
+one of the nodes on each of these linear paths, for example,
+the \emph{sources}, i.e., the start nodes. In the sequel,
+the phrase `nodes $\alpha$ and $\alpha'$ are on the same path in $G_S$'
+means that, formally, there is some $n$ in $\NN$ such that
+either $\alpha=\alpha'+n$ or $\alpha+n=\alpha'$ follows from $S^+$
+in equational logic with a rule for the injectivity of the successor operation.
 
 We can now prove a so-called \emph{small model property}.
 \begin{lemma}\label{lem:small-model}
@@ -835,11 +843,12 @@ $\rho'(\gamma') = \rho(\gamma')-n$ for any $\gamma'$ on the same path as $\gamma
 \item Pick a constraint $\alpha\vee\beta = \gamma$ from $S$ with $\rho(\alpha)\geq\rho(\beta)$
 and $(\alpha\vee\beta)\rho = \gamma\rho +n$ for some $n>0$, and  define 
 $\rho'(\alpha') = \rho(\alpha') -n$ for any $\alpha'$ on the same path as $\alpha$ in $G_S$.
-If $\beta$ is not on the same path as $\alpha$ in $G_S$, define also
+If $\beta$ is not on the same path as $\alpha$ in $G_S$ and $\rho(\beta)>\rho(\gamma)$, define also
 $\rho'(\beta') = \rho(\beta') + \rho(\gamma) - \rho(\beta)$ 
 for any $\beta'$ on the same path as $\beta$ in $G_S$. Note that we have
-$\rho'(\alpha) = \rho'(\beta) = \rho(\gamma)$ if $\alpha$ and $\beta$ are
-not on the same path.
+$\rho'(\alpha) = \rho(\gamma)$. If $\alpha$ and $\beta$ are
+not on the same path and $\rho(\beta)>\rho(\gamma)$, then we also have
+$\rho'(\beta) = \rho(\gamma)$, otherwise we have $\rho'(\beta) = \rho(\beta)$.
 \item Like the previous one with $\beta\vee\alpha = \gamma$.
 \end{enumerate}
 \end{lemma}
@@ -857,7 +866,7 @@ $\rho'(\gamma)= (\alpha\vee\beta)\rho \geq (\alpha\vee\beta)M = M(\gamma)$.
 verify that $\rho'(\alpha)\geq M(\alpha)$, and similarly for $\beta$. We have
 $\rho'(\alpha)= \rho(\gamma)\geq M(\gamma) = (\alpha\vee\beta)M \geq M(\alpha)$.
 Use $\rho'(\beta) = \rho(\gamma)$ and $(\alpha\vee\beta)M \geq M(\beta)$
-if $\beta$ is not on the same path as $\alpha$. 
+if $\beta$ is not on the same path as $\alpha$ in $G_S$ and $\rho(\beta)>\rho(\gamma)$. 
 \item Similar to the previous case.
 \end{enumerate}
 \end{proof}
