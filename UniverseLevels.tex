@@ -671,18 +671,19 @@ $
 We now try to describe Voevodsky's approach \cite{VV} using our notation.
 
 We introduce a further judgement for {\em constraints}. A constraint is
-a finite set of equations $l = m$ between given levels. Thus we have
-$$
-\frac{l_1~m_1~\dots~l_k~m_k~\Level}{l_1 = m_1,\dots,l_k = m_k~\Constraint}
-$$
-We write $l\leqslant m$ for $l\vee m = m$.
+an equations $l = m$, where $l$ and $m$ are level expression.
+%Thus we have
+%$$
+%\frac{l_1~m_1~\dots~l_k~m_k~\Level}{l_1 = m_1,\dots,l_k = m_k~\Constraint}
+%$$
+We write $l\leqslant m$ for the constraint $l\vee m = m$.
 
-We then have a new context extension $\Gamma,\psi$ if $\psi$ is a constraint in $\Gamma$.
+We then have a new context extension $\Gamma,\psi$ if $\psi$ is a finite set of constraints in $\Gamma$.
 
-Finally we have the judgement $\psi~(\Gamma)$ which expresses that the constraint $\psi$
+Finally we have the judgement $\psi~(\Gamma)$ which expresses that the constraint set $\psi$
 holds in $\Gamma$. For instance we have $\alpha^+\leqslant\beta^+~(\alpha\leqslant\beta)$.
 
-We then have judgements such as
+In the system with constraints, we have judgements such as
 $$
 T_{\alpha^+}^{\beta}(\UU^{\alpha}):\UU_{\beta}~(\alpha~\beta~\Level,\alpha^+\leqslant\beta)
 $$
@@ -694,14 +695,14 @@ with the elimination rule
 $$
 \frac{t:[\psi]A~~~~~~\psi}{t:A}
 $$
-Intuitively, we can use a term of type $[\psi]A$ only if the constraint $\psi$ holds.
+Intuitively, we can use a term of type $[\psi]A$ only if the all constraints in $\psi$ hold.
 
 \subsection{An algorithm for deciding the solvability of constraints}
 
-We shall now devise an algorithm for deciding whether a constraint $\psi$ is solvable, that is, whether there is an assignment (model) $\rho : \Level \to \mathbb{N}$, such that for all equations $l = m \in \psi$, we have $l\rho = m\rho$, provided we interpret $\_^+$ as the successor operation and $\vee$ as the maximum operation on $\mathbb{N}$. Entailment under the canonical interpretation will be denoted by $\models$.
+We shall now devise an algorithm for deciding whether a finite constraint set $\psi$ is solvable, that is, whether there is an assignment (model) $\rho : \Level \to \mathbb{N}$, such that for all equations $l = m \in \psi$, we have $l\rho = m\rho$, provided we interpret $\_^+$ as the successor operation and $\vee$ as the maximum operation on $\mathbb{N}$. Entailment under the canonical interpretation will be denoted by $\models$.
 
 We will apply the methods in \cite{BNR08} to decide
-the solvability of a constraint $\psi$ in polynomial time.
+the solvability of a set of constraints $\psi$ in polynomial time.
 Here polynomial means polynomial in the number $\mu(\psi)$ of occurrences of
 variables and operations $\_^+$ and $\vee$ in  $\psi$. 
 
