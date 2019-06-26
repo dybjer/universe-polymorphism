@@ -698,131 +698,121 @@ Intuitively, we can use a term of type $[\psi]A$ only if the constraint $\psi$ h
 
 \subsection{An algorithm for deciding the solvability of constraints}
 
-We shall now devise an algorithm for deciding whether a constraint $\psi$ is solvable, that is, whether there is an assignment (model) $\rho : \Level \to \mathbb{N}$, such that for all equations $l = m \in \psi$, we have $l\rho = m\rho$, provided we interpret $\_^+$ as the successor operation and $\vee$ as the maximum operation on $\mathbb{N}$.
+We shall now devise an algorithm for deciding whether a constraint $\psi$ is solvable, that is, whether there is an assignment (model) $\rho : \Level \to \mathbb{N}$, such that for all equations $l = m \in \psi$, we have $l\rho = m\rho$, provided we interpret $\_^+$ as the successor operation and $\vee$ as the maximum operation on $\mathbb{N}$. Entailment under the canonical interpretation will be denoted by $\models$.
 
-The goal of the following is apply the methods from \cite{BNR08} to decide
-the solvability of a finite set $\color{red} S\equiv\psi$ of universe constraints in polynomial time.
-Here polynomial means polynomial in the total number $\mu(S)$ of occurrences of
-variables and operations $\_^+$ and $\vee$ in $S$.
+We will apply the methods in \cite{BNR08} to decide
+the solvability of a constraint $\psi$ in polynomial time.
+Here polynomial means polynomial in the number $\mu(\psi)$ of occurrences of
+variables and operations $\_^+$ and $\vee$ in  $\psi$. 
 
-Let $S$ be a finite set of constraints of the form $l=m$ as in the previous section.
-The \emph{level expressions} $l,m$ have the following abstract syntax:
-\[
-l,m,\ldots ::= {\alpha,\beta,\ldots} \mid {l^+} \mid {l\vee m}
-\]
-For convenience, let $l+n$ denote $l^{+\ldots +}$, the result of iterating $n$ times
-the operation $\_^+$ on $l$.
+%Let $ \psi$ be a finite set of constraints of the form $l=m$ as in the previous section.
+%The \emph{level expressions} $l,m$ have the following abstract syntax:
+%\[
+%l,m,\ldots ::= {\alpha,\beta,\ldots} \mid {l^+} \mid {l\vee m}
+%\]
 
-A \emph{model}, or \emph{solution} of $S$ is an assignment of natural numbers to
-the level variables occurring in $S$ such that all constraints in $S$ become true
-under the canonical interpretation of $\_^+$ as successor and $\vee$ as maximum.
-Entailment under the canonical interpretation will be denoted by $\models$.
-
-Solving $S$ can be reduced in polynomial time to solving a set $S'$ of
-constraints in one of the two forms $\alpha\vee\beta = \gamma$
+Solving  $\psi$ can be reduced in polynomial time to solving a set  $\psi'$ of
+equations of one of the two forms $\alpha\vee\beta = \gamma$
 and $\delta = \epsilon^+$. Such forms are called \emph{reduced forms}.
 
 \begin{lemma}\label{lem:reduced-form}
-For every finite set $S$ of constraints, there is a set $S'$ of
-constraints in reduced form such that $S$ is solvable if and only if $S'$
-is solvable. Furthermore, $S'$ contains precisely as many symbols $\_^+$ as $S$ does,
+For every finite set  $\psi$ of constraints, there is a set  $\psi'$ of
+constraints in reduced form such that  $\psi$ is solvable if and only if  $\psi'$
+is solvable. Furthermore,  $\psi'$ contains precisely as many symbols $\_^+$ as  $\psi$ does,
 and $\mu(S')\leq 2\mu(S)$.
 \end{lemma}
 
 \begin{proof}
-We first define by induction for any $l$ a fresh variable $v(l)$ and
-a set $S(l)$ of constraints in reduced form such that $S(l)\models l = v(l)$.
-In the base case we take $v(\alpha)=\alpha$ and $S(\alpha)$ empty, for any
-level variable $\alpha$. In one step case we take $v(l^+)$ a fresh variable,
-and $S(l^+) = S(l) \cup \set{v(l)^+ =v(l^+)}$.
-In the other step case we take $v(l\vee m)$ again a fresh variable,
-and $S(l\vee m) = S(l) \cup S(m) \cup \set{(v(l)\vee v(m)) =v(l\vee m)}$.
-By induction we get $S(l)\models l = v(l)$, plus the following two facts.
-First, $S(l)$ contains precisely as many symbols $\_^+$ as $l$ does,
+We first assign to each $l$ a fresh variable $v(l)$ and then, by induction on $l$,
+a set $ \psi(l)$ of constraints in reduced form such that $ \psi(l)\models l = v(l)$.
+
+In the base case of a level variable $\alpha$ we take $v(\alpha)=\alpha$ and let $ \psi(\alpha)$ be empty. In one step case we again let $v(l^+)$ a fresh variable,
+and $ \psi(l^+) =  \psi(l) \cup \set{v(l)^+ =v(l^+)}$.
+In the other step case we let again $v(l\vee m)$ be a fresh variable,
+and $ \psi(l\vee m) =  \psi(l) \cup  \psi(m) \cup \set{v(l)\vee v(m) =v(l\vee m)}$.
+By induction we get $ \psi(l)\models l = v(l)$, plus the following two facts.
+First, $ \psi(l)$ contains precisely as many symbols $\_^+$ as $l$ does,
 and similarly for symbols $\vee$.
 (Occurrences of such symbols in names of fresh variables do not count.)
 Secondly, every assignment of variables occurring in $l$ can be extended to an
-assignment validating $S(l)$.
+assignment validating $\psi(l)$.
 
 Now consider a constraint $l=m$. Constraints of the form $l=l$ can
 simply be removed. If $l$ and $m$ are distinct variables,
 then we eliminate one of them by substitution. Otherwise,
-we replace $l=m$ by $S(l)\cup S(m)\cup \set{v(l)=v(m)}$.
-Doing this for all constraints in some given set $S$
+we replace $l=m$ by $ \psi(l)\cup  \psi(m)\cup \set{v(l)=v(m)}$.
+Doing this for all constraints in  $\psi$
 leaves us with a set of constraints that are either in
 reduced form, or of the form $v(l)=v(m)$ for distinct fresh variables.
-The latter are easily removed by elimination. Let $S'$ be the resulting set
-of constraints, which are all in reduced form. By the results on $S(l)$
-and $v(l)$ from the previous paragraph, the set $S$ is solvable if
-and only if $S'$ is solvable.
+The latter are easily removed by substitution. Let  $\psi'$ be the resulting set
+of constraints, which are all in reduced form. By the results on $ \psi(l)$
+and $v(l)$ from the previous paragraph, the set  $\psi$ is solvable if
+and only if  $\psi'$ is solvable.
 
-In terms of $\mu$-value, there is a small
-difference between $S$ and $S'$ in the previous paragraph.
-What happens during the reduction is that internal nodes
-of parse trees of level expressions get labelled with fresh variables.
-We get $\mu(S')\leq 2\mu(S)$ and the whole transformation, including the
+During the reduction internal nodes in the parse trees of level expressions get labelled with fresh variables and hence the $\mu$-value increases. However,  $\mu(\psi')\leq 2\mu(\psi)$ and the whole transformation, including the
 elimination of variables, can certainly be done in quadratic time
 (and probably better).
 \end{proof}
 
 From now on we assume that constraints are in reduced form.
-Any set $S$ of such constraints can be split as $S=S_+ \cup S_\vee$,
-where $S_+$ ($S_\vee$) consists of all constraints of the form  
-$\delta = \epsilon^+$ ($\alpha\vee\beta = \gamma$) from $S$.
-In the latter constraints we assume $\alpha\neq\beta$,
-without loss of generality, as equations between variables
-can easily be eliminated by substitution.
+Any set  $\psi$ of such constraints can be split as $ \psi= \psi_+ \cup  \psi_\vee$,
+where $ \psi_+$ consists of all constraints of the form  
+$\delta = \epsilon^+$ and $ \psi_\vee$ consists of the constraints of the form $\alpha\vee\beta = \gamma$.
+In the latter constraints we assume $\alpha\neq\beta$, since constraints of the form
+$\alpha \vee \alpha = \gamma$ can be eliminated by substitution.
 
-Before we continue, we will further simplify $S_+$.
-Let $G_S$ be the directed graph with a node $\delta$ for every
-variable $\delta$ occurring in $S$, and edges $\delta\to\epsilon$
-for every constraint $\delta = \epsilon^+$ occurring in $S_+$.
-An \emph{undirected path} in $G_S$ is a sequence of nodes connected
+Before we continue, we will further simplify $ \psi_+$.
+Let $G_ \psi$ be the directed graph with a node $\delta$ for every
+variable $\delta$ occurring in  $\psi$, and edges $\delta\to\epsilon$
+for every constraint $\delta = \epsilon^+$ occurring in $ \psi_+$.
+An \emph{undirected path} in $G_ \psi$ is a sequence of nodes connected
 by edges and anti-edges.
 The \emph{algebraic length} of an undirected path is the algebraic sum 
 of the number of edges minus the number of anti-edges.
-Clearly, for $S_+$ to be solvable we must have that,
+Clearly, for $ \psi_+$ to be solvable we must have that,
 for all nodes $\delta$ and $\delta'$,
-all undirected paths in $G_S$ from $\delta$ to $\delta'$ have the same length.
-The latter condition is also sufficient for the solvability of $S_+$,
+all undirected paths in $G_ \psi$ from $\delta$ to $\delta'$ have the same length.
+The latter condition is also sufficient for the solvability of $ \psi_+$,
 and can be tested in quadradic time. 
-We assume from now on that $S_+$ is solvable.
+We assume from now on that $ \psi_+$ is solvable.
 
-If two nodes of $G_S$ are connected by an undirected path,
+If two nodes of $G_ \psi$ are connected by an undirected path,
 we define their \emph{algebraic distance} to be the algebraic length of
-the undirected path, which is well-defined for $S_+$ solvable. 
-Given a node $\delta$ of $G_S$, all nodes at the same algebraic distance $k$ from 
-$\delta$ have the same value in any model of $S_+$. 
+the undirected path, which is well-defined for $ \psi_+$ solvable. 
+Given a node $\delta$ of $G_ \psi$, all nodes at the same algebraic distance $k$ from 
+$\delta$ have the same value in any model of $ \psi_+$. 
 This means that the corresponding variables can be considered to be equal.
 As a consequence we can eliminate all but one of the nodes at 
 algebraic distance $k$ from $\delta$, for each $\delta$ and $k$.
-Without loss of generality we may therefore assume that $G_S$ consists 
+Without loss of generality we may therefore assume that $G_ \psi$ consists 
 of linear paths that are mutually disjoint.
-Models of $S^+$ are uniquely determined by the values of 
+Models of $ \psi^+$ are uniquely determined by the values of 
 one of the nodes on each of these linear paths, for example,
 the \emph{sources}, i.e., the start nodes. In the sequel,
-the phrase `nodes $\alpha$ and $\alpha'$ are on the same path in $G_S$'
+the phrase `nodes $\alpha$ and $\alpha'$ are on the same path in $G_ \psi$'
 means that, formally, there is some $n$ in $\NN$ such that
-either $\alpha=\alpha'+n$ or $\alpha+n=\alpha'$ follows from $S^+$
+either $\alpha=\alpha'+n$ or $\alpha+n=\alpha'$ follows from $ \psi^+$
 in equational logic with a rule for the injectivity of the successor operation.
+(For convenience, let $l+n$ denote $l^{+\ldots +}$, the result of iterating $n$ times
+the operation $\_^+$ on $l$.
 
 We can now prove a so-called \emph{small model property}.
 \begin{lemma}\label{lem:small-model}
-Let  $S$ be a finite set of constraints in reduced form such that all paths in $G_S$ are linear
-and mutually disjoint. Let $K_{S}$ be the number of occurrences of symbols $\_^+$ in $S$.
-If there is a model of $S$, then there is a model with values at most $K_{S}$.
+Let   $\psi$ be a finite set of constraints in reduced form such that all paths in $G_ \psi$ are linear
+and mutually disjoint. Let $K_{ \psi}$ be the number of occurrences of symbols $\_^+$ in  $\psi$.
+If there is a model of  $\psi$, then there is a model with values at most $K_{ \psi}$.
 \end{lemma}
 
 \begin{proof}
-Observe that $K_{S}$ is the sum of the lengths of the paths in $G_S$.
-Let $M$ be a model of $S$. If the interpretations of the paths $G_S$
+Observe that $K_{ \psi}$ is the sum of the lengths of the paths in $G_ \psi$.
+Let $M$ be a model of  $\psi$. If the interpretations of the paths $G_ \psi$
 has a gap, say of length $k$, then we can construct an assignment $\rho$
 in which all variables with value above the gap are lowered by $k$.
 Since the order relations between variables does not change, $\rho$
 constitutes a model $M'$ with this particular gap closed.
 In this way we can close all gaps, and arrange things such that
 the lowest value of a variable is $0$. The resulting model
-has values at most $K_{S}$.
+has values at most $K_{ \psi}$.
 \end{proof}
 
 \cref{lem:small-model} implies the decidability of solvability,
@@ -830,22 +820,22 @@ and we will now describe an efficient search procedure finding a
 model if there exists one. We prepare by the following lemma.
 
 \begin{lemma}\label{lem:model-search}
-Let  $S$ be a finite set of constraints in reduced form such that all paths 
-in $G_S$ are linear and mutually disjoint.
-Let $M$ be a model of $S$ and $\rho$ a model of $S^+$ such that $\rho\geq M$ (pointwise).
-If $\rho$ is not a model of $S$, then the assignment $\rho'$ defined in 
-one of the ways below is also a model of $S^+$ and satisfies $\rho'\geq M$.
+Let   $\psi$ be a finite set of constraints in reduced form such that all paths 
+in $G_ \psi$ are linear and mutually disjoint.
+Let $M$ be a model of  $\psi$ and $\rho$ a model of $ \psi^+$ such that $\rho\geq M$ (pointwise).
+If $\rho$ is not a model of  $\psi$, then the assignment $\rho'$ defined in 
+one of the ways below is also a model of $ \psi^+$ and satisfies $\rho'\geq M$.
 Moreover, $\rho'(\alpha)<\rho(\alpha)$ for at least one variable.
 \begin{enumerate}
-\item Pick a constraint $\alpha\vee\beta = \gamma$ from $S$ with
+\item Pick a constraint $\alpha\vee\beta = \gamma$ from  $\psi$ with
 $(\alpha\vee\beta)\rho +n = \gamma\rho$ for some $n>0$, and define 
-$\rho'(\gamma') = \rho(\gamma')-n$ for any $\gamma'$ on the same path as $\gamma$ in $G_S$.
-\item Pick a constraint $\alpha\vee\beta = \gamma$ from $S$ with $\rho(\alpha)\geq\rho(\beta)$
+$\rho'(\gamma') = \rho(\gamma')-n$ for any $\gamma'$ on the same path as $\gamma$ in $G_ \psi$.
+\item Pick a constraint $\alpha\vee\beta = \gamma$ from  $\psi$ with $\rho(\alpha)\geq\rho(\beta)$
 and $(\alpha\vee\beta)\rho = \gamma\rho +n$ for some $n>0$, and  define 
-$\rho'(\alpha') = \rho(\alpha') -n$ for any $\alpha'$ on the same path as $\alpha$ in $G_S$.
-If $\beta$ is not on the same path as $\alpha$ in $G_S$ and $\rho(\beta)>\rho(\gamma)$, define also
+$\rho'(\alpha') = \rho(\alpha') -n$ for any $\alpha'$ on the same path as $\alpha$ in $G_ \psi$.
+If $\beta$ is not on the same path as $\alpha$ in $G_ \psi$ and $\rho(\beta)>\rho(\gamma)$, define also
 $\rho'(\beta') = \rho(\beta') + \rho(\gamma) - \rho(\beta)$ 
-for any $\beta'$ on the same path as $\beta$ in $G_S$. Note that we have
+for any $\beta'$ on the same path as $\beta$ in $G_ \psi$. Note that we have
 $\rho'(\alpha) = \rho(\gamma)$. If $\alpha$ and $\beta$ are
 not on the same path and $\rho(\beta)>\rho(\gamma)$, then we also have
 $\rho'(\beta) = \rho(\gamma)$, otherwise we have $\rho'(\beta) = \rho(\beta)$.
@@ -854,69 +844,43 @@ $\rho'(\beta) = \rho(\gamma)$, otherwise we have $\rho'(\beta) = \rho(\beta)$.
 \end{lemma}
 
 \begin{proof}
-Let conditions be as above. We observe that we lower all variables on one or two
-paths of $G_S$, so that $\rho'$ is a model of $S^+$. In each case we
+Let conditions be as above. We observe that we lowered all variables on one or two
+paths of $G_ \psi$, so that $\rho'$ is a model of $ \psi^+$. In each case we
 have to prove that $\rho'\geq M$.
 We use that $\max$ is monotone in both its arguments.
 \begin{enumerate}
-\item Since $\rho$ and $M$ are both models of $S^+$, it suffices to 
+\item Since $\rho$ and $M$ are both models of $ \psi^+$, it suffices to 
 verify that $\rho'(\gamma)\geq M(\gamma)$. We have 
 $\rho'(\gamma)= (\alpha\vee\beta)\rho \geq (\alpha\vee\beta)M = M(\gamma)$.
-\item Since $\rho$ and $M$ are both models of $S^+$, it suffices to 
+\item Since $\rho$ and $M$ are both models of $ \psi^+$, it suffices to 
 verify that $\rho'(\alpha)\geq M(\alpha)$, and similarly for $\beta$. We have
 $\rho'(\alpha)= \rho(\gamma)\geq M(\gamma) = (\alpha\vee\beta)M \geq M(\alpha)$.
 Use $\rho'(\beta) = \rho(\gamma)$ and $(\alpha\vee\beta)M \geq M(\beta)$
-if $\beta$ is not on the same path as $\alpha$ in $G_S$ and $\rho(\beta)>\rho(\gamma)$. 
+if $\beta$ is not on the same path as $\alpha$ in $G_ \psi$ and $\rho(\beta)>\rho(\gamma)$. 
 \item Similar to the previous case.
 \end{enumerate}
 \end{proof}
 
-Assume $S$ is a finite set of constraints in reduced form such that all paths 
-in $G_S$ are linear and mutually disjoint. By \cref{lem:small-model},
-if $S$ has a model, there is a model $M \leq K_S$.
-We start the search from the model $\rho$ of $S^+$ that is constant $K_S$
-on the sources of the paths of $G_S$.
+Assume  $\psi$ is a finite set of constraints in reduced form such that all paths 
+in $G_ \psi$ are linear and mutually disjoint. By \cref{lem:small-model},
+if  $\psi$ has a model, there is a model $M \leq K_ \psi$.
+We start the search from the model $\rho$ of $ \psi^+$ that is constant $K_ \psi$
+on the sources of the paths of $G_ \psi$.
 In each step from $\rho$ to $\rho'$ in \cref{lem:model-search},
-at least one variable is lowered. This can be done at most $V K_S$ times,
+at least one variable is lowered. This can be done at most $V K_ \psi$ times,
 where $V$ is the number of variables. So we will actually find the unique maximal
-model $M$ with values at most $K_S$, if there is a model at all.
+model $M$ with values at most $K_ \psi$, if there is a model at all.
 Each step requires a pass through all
 all constraints to evaluate them in the current assignment.
-When properly implemented this can be done in $O(K_S)$ time.
+When properly implemented this can be done in $O(K_ \psi)$ time.
 The whole decision procedure of first transforming to constraints in reduced
-form and then testing for solvability would take $O(V K^2_S)$ time.
+form and then testing for solvability would take $O(V K^2_ \psi)$ time.
 (It may be possible to do better.) We have certainly reached our goal:
 
 \begin{theorem}\label{thm:P-solvability}
 Deciding solvability of a finite set of universe constraints is polynomial.
 \end{theorem}
 
-\subsection{Translation to Horn clauses}
-
-There exist a well-known translation of lattice theory to Horn clauses
-that we will explore now. The translation consists of several steps.
-
-\begin{enumerate}
-\item Every level expression is equal to its so-called
-\emph{$+$-normal form} which is obtained by exhaustively using 
-$(x\vee y)^+ = x^+ \vee y^+$ until the operation $\_^+$ is only applied
-to terms without $\vee$. Let $\alpha+n$ denote $\alpha^{+\cdots+}$, the
-operation $\_^+$ applied $n$ times, for any $n\in\mathbb{N}$.
-Level expressions of the form $\alpha+n$ will be called \emph{atoms}.
-Then a $+$-normal form is just a join of finitely many such atoms.
-Level expressions in $+$-normal form will be denoted by capital letters $L,M$.
-
-\item If $L$ is a level expression in $+$-normal form and $a$ an atom,
-then we call $L\to a$ a \emph{Horn clause}. The interpretation $\sct{L\to a}_\rho$
-is that the maximum of all $a_i\rho$ for $a_i$ in $L$ is greater than or equal $a\rho$.
-
-\item Under the interpretation above, any constraint $L=M$ is
-equivalent to the set of Horn clauses consisting of $L\to b$ for any $b$ in $M$
-and $M\to a$ for any $a$ in $L$.
-
-\item TBD
-
-\end{enumerate}
 
 \section{Related work}
 
@@ -935,291 +899,7 @@ Assaf \cite{Assaf14} considers an alternative version of the calculus of
 constructions where subtyping is explicit. This new system avoids problems related to coercions and dependent types by using the Tarski style
 of universes and by introducing additional equations to reflect equality. In particular he adds an explicit cumulativity map $\T^0_1 : \UU_0 \to \UU_1$. He argues that "full reflection" is necessary to achieve the expressivity of Russell style. He introduces the explicit cumulative calculus of constructions (CC$\uparrow$) which is closely related to our system of externally indexed Tarski style universes.
 
-\appendix
-\section{Related work}
-
-Check related work of Ali Assaf, Luo, Mendler, Voevodsky, Huet, Harper and Pollack, Sozeau. Blogpost of McBride.
-
-\section{Models in $\mathbb{Z}$ rather than $\mathbb{N}$?}
-
-Discussion. Should we have operation $l^-$.
-
-\section{Completeness}
-
-Completeness of system wrt algorithm. Can we derive $l = l^+$ for some $l$ whenever the algorithm fails to find a model? Should we have the rule $l^+ = m^+$ implies $l = m$?
-
-\section{Martin's examples}
-Example of use of level-indexed products?
-
-OK. Here is a story (although probably not in the format I would include 
-it in a paper).
-
-(1) With level judgments, one can work with global properties, either 
-concrete, such as
-$$
-     is-prop : (l : Level) → U l → U l
-$$
-or hypothetical, such as $((l : Level) → is-univalent U)$ in
-$$
-     ua-gives-funext : ((l : Level) → is-univalent U)
-                     → (l m : Level) → FunExt (U l) (U m))
-$$
-(2) One would hope that global univalence would give
-$$
-       (P : (l : Level) → U l → U l))
-     → (l m : Level)
-     → (X : U l)
-     → (Y : U m)
-     → X ≃ Y
-     → P X
-     → P Y
-$$
-That is, that under univalence, global properties would be invariant
-under equivalence. But they are not (although it may be possible that
-the *definable* global properties (by which I mean global properties
-in an empty context) remain invariant under equivalence). This
-possibly motivates the consideration of parametricity, or at least of
-some other condition, as "invariance under equivalence" is at the
-heart of univalent foundations. Such a condition can be syntactical,
-modifying the type theory with level judgements, or in the form of an
-axiom (like univalence is).
-
-(3) Univalence implies univalence induction, which is just like J, but
-     with $\simeq$ in place of the identity type.
-
-     To show that all equivalences satisfy a property, it is enough to
-     show that the identity equivalences satisfy the property.
-
-     Simple example: it is difficult to prove directly that
-     equivalences are half-adjoint equivalences, but it is immediate
-     that identity functions are haes. Hence all equivalences are haes.
-
-     (Replace "hae" by your favourite property of equivalences.)
-
-     However, the above is a half-truth.
-
-(3b) In my MGS lecture notes I tried to apply this to show that the
-      equivalence (under univalence)
-$$
-      Id-to-Eq X Y : Id U X Y →  Eq U X Y
-$$
-      is a hae, which in turn can be used to give a simple proof of the
-      structure identity principle (I chose to specialize this to
-      magmas for didactical purposes).
-
-      But this doesn't work, because
-
-          $Id U X Y$ lives in the sucessor universe $U'$ with $U:U'$
-          $Eq U X U$ lives in $U$.
-
-      (I got a way around this by generalizing, in two ways,
-      equivalence induction.)
-
-(3c) You may hope that with cumulativity the problem in (3c) disappears.
-
-      I conjectured that it doesn't.
-
-      Mike Shulman confirmed that the proof that $Id-to-Eq X Y$ is a hae
-      by equivalence induction doesn't type check with cumulativity and
-      typical ambiguity in Coq.
-
-      So it really doesn't.
-
-      Cumulativity doesn't solve the problem. With typical ambiguity,
-      you moreover get a "universe inconsistency" message with no
-      further explanation.
-
-I guess what I am doing above is to try to understand what happens
-when we extend the type theory with level judgments.
-
-I will report about one further example later: my student Tom de Jong
-will present some work at Types on developing the Scott model of PCF
-in a type theory with function extensionality, propositional
-extensionality and propositional truncation and universes. This was
-done in UniMath with type-in-type and on paper with
-back-of-the-envelope universe level calculations, which are not really
-discussed in the paper. We are re-formalizing this in Agda to keep
-track more precisely the universe levels. Some interesting things are
-happening. Firstly, although we haven't finished, can can already see
-that everything will just work, although the reasons turn out to be
-rather subtle. Secondly, the most natural way to do this *doesn't*
-work unless Level is a type (the reason is that terms of ground type
-have denotations in $U₀$, but terms of higher type have denotations in
-$U₁$, and so we would need the level of a universe to depend on the type
-of a PCF term. This *is* possible in Agda, because Level is a type,
-but not in our type theory, where Level is a judgement. However,
-luckly, we can in this simple example just "move up" the only thing in
-$U₀$ to $U₁$ and avoid using Level as a type. But one can imagine
-situations of languages more complex then PCF that would require a
-type Level in the meta-language to interpret them. Anyway, I will
-report back on this example, which we intend to complete to have ready
-for the Types meeting.
-
-
-\section*{The problem of universes}
-
-Some questions to be explored
-
-\medskip
-
-injective : $[\alpha](\UU_{\alpha^+}\rightarrow \UU_{\alpha^+})$ if we have only one level
-
-Super universe? Solution with a 2 level type system
-
-Constraint problems: is there a Finite number of most general solutions?
-
-E.g. system $(l\vee m) = n^+$, system $l\vee m  = l\vee n$
-
-If we have a function $f:[\alpha](\UU_{\alpha}\rightarrow \UU_{\alpha^+})$ we cannot iterate
-this function internally, for instance  $f = \lam{\alpha}{\lambda (X:\UU_{\alpha})~X\rightarrow\UU_{\alpha}}$
-
 \bibliographystyle{plain}
 \bibliography{refs}
-
-%\thebibliography
-
-%\bibitem{VV}
-%  V. Voevodsky
-%  \newblock{Universe polymorphic type system.}
-%  \newblock{Manuscript, 2014}
-%
-%\bibitem{BNR08}
-%M.A.~Bezem, R.~Nieuwenhuis and E.~Rodr\'iguez.
-%\newblock{The Max-Atom Problem and its Relevance}.
-%In I.~Cervesato, H.~Veith and A.~Voronkov, editors,
-%\emph{Proceedings LPAR-15}, LNAI 5330,
-%pages 47--62, Springer-Verlag, Berlin, 2008.
-
-%% \bibitem{Abel}
-%% A. Abel and G. Scherer.
-%% \newblock{On Irrelevance and Algorithmic Equality in Predicative Type Theory.}
-%% \newblock{In Logical Methods in Computer Science, 8(1):1-36, 2012.}
-
-%% \bibitem{Aczel}
-%% P. Aczel.
-%% \newblock{On Relating Type Theories and Set Theories.}
-%% \newblock{{\em Types for proofs and programs}, 1–18, Lecture Notes in Comput. Sci., 1657, 1999.}
-
-%% \bibitem{AK}
-%% Th. Altenkirch and A. Kaposi.
-%% \newblock{Normalisation by Evaluation for Dependent Type Theory.}
-%% \newblock{FSCD, 2016.}
-
-%% \bibitem{AHS}
-%% Th. Altenkirch, M. Hofmann and Th. Streicher.
-%% \newblock{Reduction-free normalisation for system F.}
-%% \newblock{Unpublished note, 1997.}
-
-%% \bibitem{BJ}
-%% J.-Ph. Bernardy, P. Jansson, R. Paterson.
-%% \newblock{Parametricity and dependent types.}
-%% \newblock{ ICFP 2010: 345-356.}
-
-%% \bibitem{BS}
-%% U. Berger and H. Schwichtenberg.
-%% \newblock{An inverse of the evaluation functional for typed lambda-calculus.}
-%% \newblock{Proceedings of LICS 1991.}
-
-%% \bibitem{Bickford}
-%% M. Bickford.
-%% \newblock{Formalizing Category Theory and Presheaf Models of Type Theory in Nuprl.}
-%% \newblock{Preprint, https://arxiv.org/abs/1806.06114, 2018.}
-
-%% %% \bibitem{CD}
-%% %% Th. Coquand and P. Dybjer.
-%% %% \newblock{Intuitionistic Model Constructions and Normalization Proofs.}
-%% %% \newblock{Mathematical Structures in Computer Science 7(1): 75-94 (1997).}
-
-%% \bibitem{Coq}
-%% Th. Coquand.
-%% \newblock{An algorithm for testing conversion in type theory.}
-%% \newblock{In {\em Logical frameworks}, p. 255-279, Cambridge University Press, 1991.}
-
-%% \bibitem{CCHM}
-%% C. Cohen, Th. Coquand, S. Huber, A. M\"ortberg.
-%% \newblock{Cubical type theory: a constructive interpretation of the univalence axiom.}
-%% \newblock{Proceeding of the Type Conference, 2015.}
-
-%% \bibitem{Rathjen}
-%% L. Crosilla and ML. Rathjen
-%% \newblock{Inaccessible set axioms may have little consistency strength.}
-%% \newblock{Ann. Pure Appl. Log. 115, 33–70 (2002).}
-
-%% \bibitem{Dybjer}
-%% P. Dybjer.
-%% \newblock{Internal Type Theory.}
-%% \newblock{in {\em Types for Programs and Proofs}, Springer, 1996.}
-
-%% %% \bibitem{Fiore}
-%% %% M. Fiore, G. Pltokin and D. Turi.
-%% %% \newblock{Abstract Syntax and Variable Binding.}
-%% %% \newblock{Proc.\ 14$^{\rm th}$ LICS Conf., 1999.}
-
-%% \bibitem{FLD}
-%% S. Fortune, D. Leivant, M. O'Donnell.
-%% \newblock{The Expressiveness of Simple and Second-Order Type Structures.}
-%% \newblock{Journal of the ACM, Volume 30 Issue 1, p. 151-185, 1983.}
-
-%% \bibitem{Godel}
-%% K. G\"odel.
-%% \newblock{\"Uber eine bisher noch nicht ben\"utzte Erweiterung des finiten Standpunktes.}
-%% \newblock{Dialectica, 12, pp. 280-287, 1958.}
-
-%% \bibitem{Hofmann1}
-%% M. Hofmann.
-%% \newblock{Syntax and semantics of dependent type theory.}
-%% \newblock{In {\em Semantics of Logic of Computation}, Cambridge University Press, 1997.}
-
-%% %% \bibitem{Hofmann}
-%% %% M. Hofmann.
-%% %% \newblock{Semantics analysis of higher-order syntax.}
-%% %% \newblock{Proc.\ 14$^{\rm th}$ LICS Conf., 1999.}
-
-%% \bibitem{LS}
-%% J. Lambek and P.J. Scott.
-%% \newblock{{\it Introduction to higher order categorical logic.}}
-%% \newblock{Cambridge studies in advanced mathematics 7, 1986.}
-
-
-%% \bibitem{ML72}
-%% P. Martin-L\"of.
-%% \newblock{An intuitionistic theory of types.}
-%% \newblock{Preliminary version 1972; published in {\em 25 Years of Type Theory}, 1995.}
-
-%% \bibitem{ML73}
-%% P. Martin-L\"of.
-%% \newblock{An intuitionistic theory of types: predicative part.}
-%% \newblock{Logic Colloquium '73 (Bristol, 1973), pp. 73–118.}
-
-%% \bibitem{ML74}
-%% P. Martin-L\"of.
-%% \newblock{About Models for Intuitionistic Type Theories and the Notion of Definitional Equality.}
-%% \newblock{Proceedings of the Third Scandinavian Logic Symposium, 1975, Pages 81-109.}
-
-%% \bibitem{ML79}
-%% P. Martin-L\"of.
-%% \newblock{Constructive mathematics and computer programming.}
-%% \newblock{Logic, methodology and philosophy of science, VI (Hannover, 1979),  pp. 153--175,
-%%  Stud. Logic Found. Math., 104, North-Holland, Amsterdam, 1982.}
-
-%% \bibitem{Shoenfield}
-%% J.R. Shoenfield.
-%% \newblock{{\em Mathematical Logic.}}
-%% \newblock{Addison-Wesley, 1967.}
-
-%% \bibitem{Shulman}
-%% M. Shulman.
-%% \newblock{Univalence for inverse diagrams and homotopy canonicity.}
-%% \newblock{{\em Mathematical Structures in Computer Science}, 25:05, p. 1203–1277, 2014.}
-
-%% \bibitem{Tait}
-%% W.W. Tait.
-%% \newblock{Intensional interpretations of functionals of finite type, part I.}
-%% \newblock{Journal of Symbolic Logic, 32, pp. 198-212, 1967.}
-
-
-
-%\end{thebibliography}
-
 
 \end{document}
