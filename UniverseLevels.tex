@@ -881,6 +881,8 @@ Deciding solvability of a finite set of universe constraints is polynomial.
 
 Harper and Pollack \cite{HarperP91} consider the system $\CComega$, the Calculus of Constructions with an sequence of universes \`a la Russell. They consider both an externally indexed version and a version with level expressions which are either numbers or variables, and with constraints of the form $l < m$ and $l \leq m$. Chan has an algorithm for solving those constraints in $\Ordo(c,v^3)$, where $c$ is the number of constraints and $v$ is the number of level variables. They also consider the level synthesis problem in a version with an anonymous universe Type.
 
+\begin{quotation}
+(cut-and-paste from Harper and Pollack)
 Huet, in an unpublished manuscript \cite{Huet87}, has independently developed an
 algorithm for handling universes in the Calculus of Constructions. His approach is to drop the assumption that the universes form a linearly-ordered
 cumulative hierarchy indexed by the natural numbers, and to consider instead a family of calculi in which there is some well-founded partial ordering
@@ -888,8 +890,8 @@ of universes. The input language is correspondingly restricted so that specific 
 used. The principal advantage of this approach over the one considered here
 is that the consistency checking algorithm is significantly more efficient than
 Chan's algorithm, reducing to an acyclicity check in a dependency graph of
-universe levels. (cut-and-paste from Harper and Pollack)
-
+universe levels. 
+\end{quotation}
 Assaf \cite{Assaf14} considers an alternative version of the calculus of
 constructions where subtyping is explicit. This new system avoids problems related to coercions and dependent types by using the Tarski style
 of universes and by introducing additional equations to reflect equality. In particular he adds an explicit cumulativity map $\T^0_1 : \UU_0 \to \UU_1$. He argues that "full reflection" is necessary to achieve the expressivity of Russell style. He introduces the explicit cumulative calculus of constructions (CC$\uparrow$) which is closely related to our system of externally indexed Tarski style universes.
