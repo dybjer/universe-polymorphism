@@ -699,7 +699,7 @@ Intuitively, we can use a term of type $[\psi]A$ only if the all constraints in 
 
 \subsection{An algorithm for deciding the solvability of constraints}
 
-We shall now devise an algorithm for deciding whether a finite constraint set $\psi$ is solvable, that is, whether there is an assignment (model) $\rho : \Level \to \mathbb{N}$, such that for all equations $l = m \in \psi$, we have $l\rho = m\rho$, provided we interpret $\_^+$ as the successor operation and $\vee$ as the maximum operation on $\mathbb{N}$. Entailment under the canonical interpretation will be denoted by $\models$.
+We shall now devise an algorithm for deciding whether a finite constraint set $\psi$ is solvable, that is, whether there is an assignment $\rho : \Level \to \mathbb{N}$, such that for all equations $l = m \in \psi$, we have $l\rho = m\rho$, provided we interpret $\_^+$ as the successor operation and $\vee$ as the maximum operation on $\mathbb{N}$. An assignment $M$ which satisfies all constraints in $\psi$ is called a model of $\psi$ written $M \models \psi$.
 
 We will apply the methods in \cite{BNR08} to decide
 the solvability of a set of constraints $\psi$ in polynomial time.
@@ -804,12 +804,9 @@ If there is a model of  $\psi$, then there is a model with values at most $K_{ \
 
 \begin{proof}
 Observe that $K_{ \psi}$ is the sum of the lengths of the paths in $G_ \psi$.
-Let $M$ be a model of  $\psi$. If the interpretations of the paths $G_ \psi$
-has a gap, say of length $k$, then we can construct an assignment $\rho$
-in which all variables with value above the gap are lowered by $k$.
-Since the order relations between variables does not change, $\rho$
-constitutes a model $M'$ with this particular gap closed.
-In this way we can close all gaps, and arrange things such that
+Let $M \models \psi$. If the interpretations of the paths $G_ \psi$
+has a gap, say of length $k$, then we can construct another model $M' \models \psi$
+in which all variables with value above the gap are lowered by $k$. By repeating this procedure we can close all gaps, and also arrange things such that
 the lowest value of a variable is $0$. The resulting model
 has values at most $K_{ \psi}$.
 \end{proof}
