@@ -370,7 +370,8 @@ constructors $\ZERO:\NN$ and $\SUCC:\NN\rightarrow\NN$ and elimination rules
 $$
 \frac{P~\type~(x:\NN)~~~~a:P(\ZERO/x)~~~~~g:\Pi (x:\NN)(P\rightarrow P(\SUCC~x/x))}{\natrec(a,g):\Pi (x:\NN)P}
 $$
-with conversion rules $\natrec(a,g)~\ZERO = a$ and $\natrec(a,g)~(\SUCC~x) = g~x~(\natrec(a,g)~x)$.\footnote{change to version with $\natrec(a,g,n)$?}
+with conversion rules $\natrec(a,g)~\ZERO = a$ and $\natrec(a,g)~(\SUCC~x) = g~x~(\natrec(a,g)~x)$.
+%\footnote{change to version with $\natrec(a,g,n)$?}
 
 We also have a type $\Id~A~a_0~a_1$ for $a_0:A$ and $a_1:A$ with $\refl~a:\Id~A~a~a$
 and the elimination rule
@@ -464,7 +465,8 @@ We postulate the conversion (cf the discussion of Palmgren's rules for full refl
 \begin{eqnarray*}
 \T_m(\T_{n}^{m}(A)) &=& \T_{n}(A)
 \end{eqnarray*}
-and the decoding conversion\footnote{We should check our use of "conversion" vs "definitional equality" throughout the document.}
+and the decoding conversion
+%\footnote{We should check our use of "conversion" vs "definitional equality" throughout the document.}
 \begin{eqnarray*}
 \T_{n}^{m}(\NN^{n}) &=& \NN^{m}
 \end{eqnarray*}
