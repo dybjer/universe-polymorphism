@@ -127,7 +127,7 @@
 
 \begin{document}
 
-\title{A Note on Universe Polymorphism}
+\title{A Note on Universe Levels}
 
 \author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
 \date{}
@@ -145,7 +145,9 @@ The first published version of Martin-Löf's theory \cite{martinlof:predicative}
 $$
 \UU_0 : \UU_1 : \UU_2 : \cdots
 $$
-Before the advent of univalent foundations, one expected only the first few universes to be relevant in practical formalisations. (Note however, that universes are more important in a predicative framework than in an impredicative one. Consider for example the formalisation of real numbers as Dedekind cuts, or domain elements as filters of formal neighbourhoods, which belong to $\UU_1$ since they are properties of elements in $\UU_0$.) This suggests that it might be feasible for a users of type theory to explicitly assign universe levels to their types, and whenever necessary repeat definitions when they are needed on different levels. However, the number of copies of definitions does not only grow with the level, but also with the number of type arguments in the definition of a type former. As a consequence, Huet \cite{Huet87} and Harper and Pollack \cite{HarperP91} introduced {\em universe polymorphism}. However, the precise formulation and implementation of universe polymorphism has been a subject of much debate, and different proof assistants use different approaches. This is a practical problem since universe level inference can be a costly operation, sometimes more costly than the usual type-checking.
+Before the advent of univalent foundations, one expected only the first few universes to be relevant in practical formalisations. This suggests that it might be feasible for a users of type theory to explicitly assign universe levels to their types, and whenever necessary repeat definitions when they are needed on different levels. However, the number of copies of definitions does not only grow with the level, but also with the number of type arguments in the definition of a type former. We remark that universes are more important in a predicative framework than in an impredicative one. Consider for example the formalisation of real numbers as Dedekind cuts, or domain elements as filters of formal neighbourhoods, which belong to $\UU_1$ since they are properties of elements in $\UU_0$.
+
+To deal with this duplication problem Huet \cite{Huet87} and Harper and Pollack \cite{HarperP91} introduced {\em universe polymorphism}. However, the precise formulation and implementation of universe polymorphism has been a subject of much debate, and different proof assistants use different approaches. This is a practical problem since universe level inference can be a costly operation, sometimes more costly than the usual type-checking.
 
 %\section{What is a univalent type theory?}
 
@@ -182,15 +184,17 @@ Martin-Löf \cite{martinlof:padova} gave an alternative formulation of the first
 %\footnote{Did he discuss two universes?}.
 Palmgren \cite{palmgren:venice} then proposed two alternatives for rules for the external sequence of universes $\UU_n$ \`a la Tarski with decodings $\T_n$. 
 
-The first version is entitled "universes as full reflection" and was only outlined for the first and the second universe. We will give a full presentation of this theory in Section \ref{external}. In this version there is a cumulativity map $\T_0^1 : \UU_0 \to \UU_1$ which is defined by recursion on the way the elements of $\UU_0$ are defined. For example, assume that $\pi_0$ and $\pi_1$ are the functions which represent the closure under $\Pi$ of $\UU_0$ and of $\UU_1$, respectively . Then one of the defining equations of $\T_0^1$ is
+The first version is entitled "universes as full reflection" and was only outlined for the first and the second universe. We will give a full presentation of this theory in Section \ref{external}. In this version there is a cumulativity map $\T_0^1 : \UU_0 \to \UU_1$ which is defined by recursion on the way the elements of $\UU_0$ are defined. For example, assume that $\pi_0$ and $\pi_1$ are the functions which represent the closure under $\Pi$ of $\UU_0$ and of $\UU_1$, respectively. Then one of the defining equations of $\T_0^1$ is
 $$
 \T_0^1\, (\pi_0\,a\, b) = \pi_1\,(\T_0^1\,a)\,(\lambda x.\T_0^1\,(b\,x))
 $$
 However, the right hand side of this equations is ill-typed, unless we stipulate the following judgmental equality
 $$
-\T_1\, (\T_0^1\, a) = \T_0\, a
+\T_1\, (\T_0^1\, a) = \T_0\, a\ (*)
 $$
-Note however that this equation depends on $\T_0^1$ itself, the function we are in the process of defining! If we nevertheless allow the ill-typed equation above, it will follow that the second equation will be valid for all $a : \UU_0$, that is, it will be valid extensionally. (** EXPLAIN MORE! Realizability model **) 
+Note however that this equation depends on $\T_0^1$ itself, the function we are in the process of defining! If we nevertheless allow the ill-typed equation above, it will follow that the second equation will be valid for all $a : \UU_0$, that is, it will be valid extensionally in a realizability model, for example, in the style of Allen \cite{allen}. 
+
+In such a model each type is interpreted as a partial equivalence relation (per) on a set of untyped terms (the realizers). This per represents well-typed terms up to the typed judgmental equality. Moreover, there is a per that represents well-formed types up to judgmental equality of types. The defining equations for $\T_0, \T_1,$ and $\T_0^1$ will all be valid in this model. The pers for $\UU_0$ and $\UU_1$ (together with their respective decoding maps $\T_0$ and  $\T_1$) have an informal inductive-recursive character, which will be represented as fixed points of monotone operators in set-theoretic metalanguage \cite{allen}. On this basis you can prove by induction on $\UU_0, \T_0$ that the two sides of the judgmental equality (*) are related by the per for equal well-formed types.
 
 We could even argue that we only need to know this equation for $\T_0^1\, a$, when defining $\T_0^1\, (\pi_0\,a\, b)$, so we could claim that this equation is known when it is needed. Would it be correct to say that this is a "definitional equality"? In one sense no, because $\T_1$ was already defined earlier, and we cannot stipulate its effect on $\T_0^1\, a$. On the other hand it seems that adding this equation as a judgmental equality does not destroy the decidability of the system.
 
