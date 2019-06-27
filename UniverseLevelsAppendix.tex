@@ -1,0 +1,446 @@
+\documentclass[11pt,a4paper]{article}
+%\ifx\pdfpageheight\undefined\PassOptionsToPackage{dvips}{graphicx}\else%
+%\PassOptionsToPackage{pdftex}{graphicx}
+\PassOptionsToPackage{pdftex}{color}
+%\fi
+
+%\usepackage{diagrams}
+
+%\usepackage[all]{xy}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{latexsym}
+\usepackage{amssymb,amstext,amsmath,amsthm}
+\usepackage{epsf}
+\usepackage{epsfig}
+% \usepackage{isolatin1}
+\usepackage{a4wide}
+\usepackage{verbatim}
+\usepackage{proof}
+\usepackage{latexsym}
+%\usepackage{mytheorems}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}{Lemma}[theorem]
+\newtheorem{proposition}{Proposition}[theorem]
+
+\usepackage{float}
+\floatstyle{boxed}
+\restylefloat{figure}
+
+
+%%%%%%%%%copied from SymmetryBook by Marc
+
+% hyperref should be the package loaded last
+\usepackage[backref=page,
+            colorlinks,
+            citecolor=linkcolor,
+            linkcolor=linkcolor,
+            urlcolor=linkcolor,
+            unicode,
+            pdfauthor={CAS},
+            pdftitle={Symmetry},
+            pdfsubject={Mathematics},
+            pdfkeywords={type theory, group theory, univalence axiom}]{hyperref}
+% - except for cleveref!
+\usepackage[capitalize]{cleveref}
+%\usepackage{xifthen}
+\usepackage{xcolor}
+\definecolor{linkcolor}{rgb}{0,0,0.5}
+
+%%%%%%%%%
+\def\oge{\leavevmode\raise
+.3ex\hbox{$\scriptscriptstyle\langle\!\langle\,$}}
+\def\feg{\leavevmode\raise
+.3ex\hbox{$\scriptscriptstyle\,\rangle\!\rangle$}}
+
+%%%%%%%%%
+\newcommand\myfrac[2]{
+ \begin{array}{c}
+ #1 \\
+ \hline \hline
+ #2
+\end{array}}
+
+
+\newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}}%
+\newcommand*{\Resize}[2]{\resizebox{#1}{!}{$#2$}}
+
+\newcommand{\II}{\mathbb{I}}
+\newcommand{\refl}{\mathsf{refl}}
+\newcommand{\mkbox}[1]{\ensuremath{#1}}
+
+
+\newcommand{\Id}{\mathsf{Id}}
+\newcommand{\conv}{=}
+%\newcommand{\conv}{\mathsf{conv}}
+\newcommand{\lam}[2]{{\langle}#1{\rangle}#2}
+\def\NN{\mathsf{N}}
+\def\UU{\mathsf{U}}
+\def\JJ{\mathsf{J}}
+\def\Level{\mathsf{Level}}
+%\def\Type{\hbox{\sf Type}}
+\def\ZERO{\mathsf{0}}
+\def\SUCC{\mathsf{S}}
+
+\newcommand{\type}{\mathsf{type}}
+\newcommand{\N}{\mathsf{N}}
+\newcommand{\Set}{\mathsf{Set}}
+\newcommand{\El}{\mathsf{El}}
+%\newcommand{\U}{\mathsf{U}} clashes with def's in new packages
+\newcommand{\T}{\mathsf{T}}
+\newcommand{\Usuper}{\UU_{\mathrm{super}}}
+\newcommand{\Tsuper}{\T_{\mathrm{super}}}
+%\newcommand{\conv}{\mathrm{conv}}
+\newcommand{\idtoeq}{\mathsf{idtoeq}}
+\newcommand{\isEquiv}{\mathsf{isEquiv}}
+\newcommand{\ua}{\mathsf{ua}}
+\newcommand{\UA}{\mathsf{UA}}
+%\newcommand{\Level}{\mathrm{Level}}
+\def\Constraint{\mathsf{Constraint}}
+\def\Ordo{\mathcal{O}}
+
+\def\Ctx{\mathrm{Ctx}}
+\def\Ty{\mathrm{Ty}}
+\def\Tm{\mathrm{Tm}}
+
+\def\CComega{\mathrm{CC}^\omega}
+\setlength{\oddsidemargin}{0in} % so, left margin is 1in
+\setlength{\textwidth}{6.27in} % so, right margin is 1in
+\setlength{\topmargin}{0in} % so, top margin is 1in
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{9.19in} % so, foot margin is 1.5in
+\setlength{\footskip}{.8in}
+
+% Definition of \placetitle
+% Want to do an alternative which takes arguments
+% for the names, authors etc.
+
+\newcommand{\natrec}{\mathsf{natrec}}
+%\rightfooter{}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\sct}[1]{[\![#1]\!]}
+
+
+
+\begin{document}
+
+\title{A Note on Universe Polymorphism\\
+(some unfinished ideas not included in the paper)}
+
+\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
+\date{}
+\maketitle
+
+\section{Translation to Horn clauses}
+
+There exist a well-known translation of lattice theory to Horn clauses
+that we will explore now. The translation consists of several steps.
+
+\begin{enumerate}
+\item Every level expression is equal to its so-called
+\emph{$+$-normal form} which is obtained by exhaustively using 
+$(x\vee y)^+ = x^+ \vee y^+$ until the operation $\_^+$ is only applied
+to terms without $\vee$. Let $\alpha+n$ denote $\alpha^{+\cdots+}$, the
+operation $\_^+$ applied $n$ times, for any $n\in\mathbb{N}$.
+Level expressions of the form $\alpha+n$ will be called \emph{atoms}.
+Then a $+$-normal form is just a join of finitely many such atoms.
+Level expressions in $+$-normal form will be denoted by capital letters $L,M$.
+
+\item If $L$ is a level expression in $+$-normal form and $a$ an atom,
+then we call $L\to a$ a \emph{Horn clause}. The interpretation $\sct{L\to a}_\rho$
+is that the maximum of all $a_i\rho$ for $a_i$ in $L$ is greater than or equal $a\rho$.
+
+\item Under the interpretation above, any constraint $L=M$ is
+equivalent to the set of Horn clauses consisting of $L\to b$ for any $b$ in $M$
+and $M\to a$ for any $a$ in $L$.
+
+\item TBD
+
+\end{enumerate}
+
+\section{Related work}
+
+Check related work of Ali Assaf, Luo, Mendler, Voevodsky, Huet, Harper and Pollack, Sozeau. Blogpost of McBride.
+
+\section{Models in $\mathbb{Z}$ rather than $\mathbb{N}$?}
+
+Discussion. Should we have operation $l^-$.
+
+\section{Completeness}
+
+Completeness of system wrt algorithm. Can we derive $l = l^+$ for some $l$ whenever the algorithm fails to find a model? Should we have the rule $l^+ = m^+$ implies $l = m$?
+
+\section{Martin's examples}
+Example of use of level-indexed products?
+
+OK. Here is a story (although probably not in the format I would include 
+it in a paper).
+
+(1) With level judgments, one can work with global properties, either 
+concrete, such as
+$$
+     is-prop : (l : Level) → U l → U l
+$$
+or hypothetical, such as $((l : Level) → is-univalent U)$ in
+$$
+     ua-gives-funext : ((l : Level) → is-univalent U)
+                     → (l m : Level) → FunExt (U l) (U m))
+$$
+(2) One would hope that global univalence would give
+$$
+       (P : (l : Level) → U l → U l))
+     → (l m : Level)
+     → (X : U l)
+     → (Y : U m)
+     → X ≃ Y
+     → P X
+     → P Y
+$$
+That is, that under univalence, global properties would be invariant
+under equivalence. But they are not (although it may be possible that
+the *definable* global properties (by which I mean global properties
+in an empty context) remain invariant under equivalence). This
+possibly motivates the consideration of parametricity, or at least of
+some other condition, as "invariance under equivalence" is at the
+heart of univalent foundations. Such a condition can be syntactical,
+modifying the type theory with level judgements, or in the form of an
+axiom (like univalence is).
+
+(3) Univalence implies univalence induction, which is just like J, but
+     with $\simeq$ in place of the identity type.
+
+     To show that all equivalences satisfy a property, it is enough to
+     show that the identity equivalences satisfy the property.
+
+     Simple example: it is difficult to prove directly that
+     equivalences are half-adjoint equivalences, but it is immediate
+     that identity functions are haes. Hence all equivalences are haes.
+
+     (Replace "hae" by your favourite property of equivalences.)
+
+     However, the above is a half-truth.
+
+(3b) In my MGS lecture notes I tried to apply this to show that the
+      equivalence (under univalence)
+$$
+      Id-to-Eq X Y : Id U X Y →  Eq U X Y
+$$
+      is a hae, which in turn can be used to give a simple proof of the
+      structure identity principle (I chose to specialize this to
+      magmas for didactical purposes).
+
+      But this doesn't work, because
+
+          $Id U X Y$ lives in the sucessor universe $U'$ with $U:U'$
+          $Eq U X U$ lives in $U$.
+
+      (I got a way around this by generalizing, in two ways,
+      equivalence induction.)
+
+(3c) You may hope that with cumulativity the problem in (3c) disappears.
+
+      I conjectured that it doesn't.
+
+      Mike Shulman confirmed that the proof that $Id-to-Eq X Y$ is a hae
+      by equivalence induction doesn't type check with cumulativity and
+      typical ambiguity in Coq.
+
+      So it really doesn't.
+
+      Cumulativity doesn't solve the problem. With typical ambiguity,
+      you moreover get a "universe inconsistency" message with no
+      further explanation.
+
+I guess what I am doing above is to try to understand what happens
+when we extend the type theory with level judgments.
+
+I will report about one further example later: my student Tom de Jong
+will present some work at Types on developing the Scott model of PCF
+in a type theory with function extensionality, propositional
+extensionality and propositional truncation and universes. This was
+done in UniMath with type-in-type and on paper with
+back-of-the-envelope universe level calculations, which are not really
+discussed in the paper. We are re-formalizing this in Agda to keep
+track more precisely the universe levels. Some interesting things are
+happening. Firstly, although we haven't finished, can can already see
+that everything will just work, although the reasons turn out to be
+rather subtle. Secondly, the most natural way to do this *doesn't*
+work unless Level is a type (the reason is that terms of ground type
+have denotations in $U₀$, but terms of higher type have denotations in
+$U₁$, and so we would need the level of a universe to depend on the type
+of a PCF term. This *is* possible in Agda, because Level is a type,
+but not in our type theory, where Level is a judgement. However,
+luckly, we can in this simple example just "move up" the only thing in
+$U₀$ to $U₁$ and avoid using Level as a type. But one can imagine
+situations of languages more complex then PCF that would require a
+type Level in the meta-language to interpret them. Anyway, I will
+report back on this example, which we intend to complete to have ready
+for the Types meeting.
+
+
+\section*{The problem of universes}
+
+Some questions to be explored
+
+\medskip
+
+injective : $[\alpha](\UU_{\alpha^+}\rightarrow \UU_{\alpha^+})$ if we have only one level
+
+Super universe? Solution with a 2 level type system
+
+Constraint problems: is there a Finite number of most general solutions?
+
+E.g. system $(l\vee m) = n^+$, system $l\vee m  = l\vee n$
+
+If we have a function $f:[\alpha](\UU_{\alpha}\rightarrow \UU_{\alpha^+})$ we cannot iterate
+this function internally, for instance  $f = \lam{\alpha}{\lambda (X:\UU_{\alpha})~X\rightarrow\UU_{\alpha}}$
+
+%\thebibliography
+
+%\bibitem{VV}
+%  V. Voevodsky
+%  \newblock{Universe polymorphic type system.}
+%  \newblock{Manuscript, 2014}
+%
+%\bibitem{BNR08}
+%M.A.~Bezem, R.~Nieuwenhuis and E.~Rodr\'iguez.
+%\newblock{The Max-Atom Problem and its Relevance}.
+%In I.~Cervesato, H.~Veith and A.~Voronkov, editors,
+%\emph{Proceedings LPAR-15}, LNAI 5330,
+%pages 47--62, Springer-Verlag, Berlin, 2008.
+
+%% \bibitem{Abel}
+%% A. Abel and G. Scherer.
+%% \newblock{On Irrelevance and Algorithmic Equality in Predicative Type Theory.}
+%% \newblock{In Logical Methods in Computer Science, 8(1):1-36, 2012.}
+
+%% \bibitem{Aczel}
+%% P. Aczel.
+%% \newblock{On Relating Type Theories and Set Theories.}
+%% \newblock{{\em Types for proofs and programs}, 1–18, Lecture Notes in Comput. Sci., 1657, 1999.}
+
+%% \bibitem{AK}
+%% Th. Altenkirch and A. Kaposi.
+%% \newblock{Normalisation by Evaluation for Dependent Type Theory.}
+%% \newblock{FSCD, 2016.}
+
+%% \bibitem{AHS}
+%% Th. Altenkirch, M. Hofmann and Th. Streicher.
+%% \newblock{Reduction-free normalisation for system F.}
+%% \newblock{Unpublished note, 1997.}
+
+%% \bibitem{BJ}
+%% J.-Ph. Bernardy, P. Jansson, R. Paterson.
+%% \newblock{Parametricity and dependent types.}
+%% \newblock{ ICFP 2010: 345-356.}
+
+%% \bibitem{BS}
+%% U. Berger and H. Schwichtenberg.
+%% \newblock{An inverse of the evaluation functional for typed lambda-calculus.}
+%% \newblock{Proceedings of LICS 1991.}
+
+%% \bibitem{Bickford}
+%% M. Bickford.
+%% \newblock{Formalizing Category Theory and Presheaf Models of Type Theory in Nuprl.}
+%% \newblock{Preprint, https://arxiv.org/abs/1806.06114, 2018.}
+
+%% %% \bibitem{CD}
+%% %% Th. Coquand and P. Dybjer.
+%% %% \newblock{Intuitionistic Model Constructions and Normalization Proofs.}
+%% %% \newblock{Mathematical Structures in Computer Science 7(1): 75-94 (1997).}
+
+%% \bibitem{Coq}
+%% Th. Coquand.
+%% \newblock{An algorithm for testing conversion in type theory.}
+%% \newblock{In {\em Logical frameworks}, p. 255-279, Cambridge University Press, 1991.}
+
+%% \bibitem{CCHM}
+%% C. Cohen, Th. Coquand, S. Huber, A. M\"ortberg.
+%% \newblock{Cubical type theory: a constructive interpretation of the univalence axiom.}
+%% \newblock{Proceeding of the Type Conference, 2015.}
+
+%% \bibitem{Rathjen}
+%% L. Crosilla and ML. Rathjen
+%% \newblock{Inaccessible set axioms may have little consistency strength.}
+%% \newblock{Ann. Pure Appl. Log. 115, 33–70 (2002).}
+
+%% \bibitem{Dybjer}
+%% P. Dybjer.
+%% \newblock{Internal Type Theory.}
+%% \newblock{in {\em Types for Programs and Proofs}, Springer, 1996.}
+
+%% %% \bibitem{Fiore}
+%% %% M. Fiore, G. Pltokin and D. Turi.
+%% %% \newblock{Abstract Syntax and Variable Binding.}
+%% %% \newblock{Proc.\ 14$^{\rm th}$ LICS Conf., 1999.}
+
+%% \bibitem{FLD}
+%% S. Fortune, D. Leivant, M. O'Donnell.
+%% \newblock{The Expressiveness of Simple and Second-Order Type Structures.}
+%% \newblock{Journal of the ACM, Volume 30 Issue 1, p. 151-185, 1983.}
+
+%% \bibitem{Godel}
+%% K. G\"odel.
+%% \newblock{\"Uber eine bisher noch nicht ben\"utzte Erweiterung des finiten Standpunktes.}
+%% \newblock{Dialectica, 12, pp. 280-287, 1958.}
+
+%% \bibitem{Hofmann1}
+%% M. Hofmann.
+%% \newblock{Syntax and semantics of dependent type theory.}
+%% \newblock{In {\em Semantics of Logic of Computation}, Cambridge University Press, 1997.}
+
+%% %% \bibitem{Hofmann}
+%% %% M. Hofmann.
+%% %% \newblock{Semantics analysis of higher-order syntax.}
+%% %% \newblock{Proc.\ 14$^{\rm th}$ LICS Conf., 1999.}
+
+%% \bibitem{LS}
+%% J. Lambek and P.J. Scott.
+%% \newblock{{\it Introduction to higher order categorical logic.}}
+%% \newblock{Cambridge studies in advanced mathematics 7, 1986.}
+
+
+%% \bibitem{ML72}
+%% P. Martin-L\"of.
+%% \newblock{An intuitionistic theory of types.}
+%% \newblock{Preliminary version 1972; published in {\em 25 Years of Type Theory}, 1995.}
+
+%% \bibitem{ML73}
+%% P. Martin-L\"of.
+%% \newblock{An intuitionistic theory of types: predicative part.}
+%% \newblock{Logic Colloquium '73 (Bristol, 1973), pp. 73–118.}
+
+%% \bibitem{ML74}
+%% P. Martin-L\"of.
+%% \newblock{About Models for Intuitionistic Type Theories and the Notion of Definitional Equality.}
+%% \newblock{Proceedings of the Third Scandinavian Logic Symposium, 1975, Pages 81-109.}
+
+%% \bibitem{ML79}
+%% P. Martin-L\"of.
+%% \newblock{Constructive mathematics and computer programming.}
+%% \newblock{Logic, methodology and philosophy of science, VI (Hannover, 1979),  pp. 153--175,
+%%  Stud. Logic Found. Math., 104, North-Holland, Amsterdam, 1982.}
+
+%% \bibitem{Shoenfield}
+%% J.R. Shoenfield.
+%% \newblock{{\em Mathematical Logic.}}
+%% \newblock{Addison-Wesley, 1967.}
+
+%% \bibitem{Shulman}
+%% M. Shulman.
+%% \newblock{Univalence for inverse diagrams and homotopy canonicity.}
+%% \newblock{{\em Mathematical Structures in Computer Science}, 25:05, p. 1203–1277, 2014.}
+
+%% \bibitem{Tait}
+%% W.W. Tait.
+%% \newblock{Intensional interpretations of functionals of finite type, part I.}
+%% \newblock{Journal of Symbolic Logic, 32, pp. 198-212, 1967.}
+
+
+
+%\end{thebibliography}
+
+\end{document}
+
