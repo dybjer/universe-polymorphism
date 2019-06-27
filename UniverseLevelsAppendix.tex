@@ -133,6 +133,92 @@
 \date{}
 \maketitle
 
+\section{An alternative presentation of the constraint solving algorithm}
+
+\subsection{Normalizing constraint sets}
+
+\paragraph{A normal form for level expressions.}
+By repeatedly using the law that $(l \vee m)^+ = l^+ \vee m^+$ together with associativity of $\vee$, we can turn every level expression into the form
+$$
+(\alpha_1 + n_1) \vee \cdots \vee (\alpha_N + n_N)
+$$
+where $\alpha + n$ denotes $\alpha^{+^n}$, the $+$-operation iterated $n$ times on a level variable $\alpha$. The above is an official level expression if we parse $\vee$ a left associative operation and insert parentheses accordingly.
+
+\paragraph{One-sided level constraints.}
+
+By introducing a new level variable $\alpha$, we can turn a constraint
+$l = m$ into two $l = \alpha$ and $m = \alpha$. In this way we can reduce any finite set of constraints into a finite set of constraints of the form
+$$
+(\alpha_1 + n_1) \vee \cdots \vee (\alpha_N + n_N) = \alpha
+$$
+
+\paragraph{Removing duplications of variables on the left.} 
+If two level variables $\alpha_i$ and $\alpha_j$ are the same, 
+%$where $1 \leq i, j \leq N$
+then if $n_i \leq n_j$, we remove $\alpha_i + n_i$ from the list of disjuncts, and otherwise we remove $\alpha_j + n_j$. We repeat this process until all the $\alpha_i$ are distinct. 
+
+\paragraph{Comparing $\alpha$ and $\alpha_i$.}
+If furthermore, $\alpha$ and $\alpha_i$ are the same variable, and $n_i > 0$, then the constraint is inconsistent. If $n_i = 0$, then this means that $(\alpha_1 + n_1) \vee \cdots \vee (\alpha_N + n_N) \leq \alpha$ (in the interpretation in natural numbers.)
+
+\paragraph{Removing constraints with $N = 1$.} 
+In the case of a constraint of the form
+$$
+\alpha_1 + n_1 = \alpha
+$$
+where $\alpha_1$ and $\alpha$ are different, then we can substitute $\alpha_1 + n_1$ for $\alpha$ in all constraints in the set. Note that this may cause new duplications of variables in other constraints, so we need to repeat the process of removing duplications of variables on the left as described above.
+
+If $\alpha_1$ and $\alpha$ are the same, and $n_1 = 0$, then this constraint can be removed. (If $n_1 > 0$, the constraint is inconsistent as in the previous paragraph.)
+
+\paragraph{A normal form for constraints.} By repeating the process of removing duplications and of eliminating constraints with $N = 1$ we will eventually arrive at a normal form of constraints of the form
+$$
+(\alpha_1 + n_1) \vee \cdots \vee (\alpha_N + n_N) = \alpha + n
+$$
+where $\alpha_1, \ldots, \alpha_N$ are all different level variables. 
+
+(An optimization is to furthermore ensure that at least one of $n_1, \ldots, n_N, n$ is $0$, by observing that if $m = \min(n_1, \ldots, n_N, n)$, then the above constraint is solvable iff 
+$$
+(\alpha_1 + n_1-m) \vee \cdots \vee (\alpha_N + n_N-m) = \alpha + n - m
+$$
+is solvable.)
+
+\subsection{Solving a finite set of constraints in normal form} 
+
+We can now apply a constraint solving algorithm following \cite{BNR08} as follows. 
+
+Let $k_\psi$ be the total number of $+$-signs in a finite set $\psi$ of constraints in normal form. We will find an interpretation $\rho : \Level \to \mathbb{N}$, such that for all equations $l = m \in \psi$, we have $l\rho = m\rho$, provided we interpret $\_^+$ as the successor operation and $\vee$ as the maximum operation on $\mathbb{N}$.
+
+\paragraph{Initialization.} Let $\rho\,\alpha = k_\psi$.
+
+\paragraph{Right hand side is too large.} Let 
+$$
+L = (\alpha_1 + n_1) \vee \cdots \vee (\alpha_N + n_N)
+$$
+be the left hand side of a constraint $L = \alpha + n$ which is not yet satisfied by $\rho$. 
+
+If $L\,\rho < \alpha\,\rho + n$, then lower $\rho(\alpha)$. We let 
+$$
+\rho'(\alpha) = \max(\rho(\alpha_1)+ n_1,\ldots, \rho(\alpha_N)+ n_N)
+$$
+$\rho'(\beta) = \rho(\beta)$ remains the same on all other variables $\beta$.
+
+\paragraph{Left hand side is too large.}
+If $L\,\rho > \alpha\,\rho + n$, then lower all $\rho(\alpha_i)$ such that $\rho(\alpha_i) > \rho(\alpha)$. We let 
+$$
+\rho'(\alpha_i) = \rho(\alpha_i) - m
+$$
+where
+$$ 
+m = \max(\rho(\alpha_1)+ n_1,\ldots, \rho(\alpha_N)+ n_N) - \rho(\alpha)
+$$
+$\rho'(\beta) = \rho(\beta)$ remains the same on all other variables $\beta$.
+
+\paragraph{Iteration.} Repeat this checking until all constraints are satisfied. This process terminates because of the finite model property. This states that if $\psi$ has a model $M$, that is, an interpretation
+$M : \Level \to \mathbb{N}$ which satisfies all constraints in $\psi$, then it has a model $M' : \Level \to \mathbb{N}_{k_\psi+1}$. Since $\rho \geq M'$ and each step of the interpretation ensures that if $\rho \geq M'$ then $\rho' \geq M'$, this process will eventually terminate.
+
+
+
+
+
 \section{Translation to Horn clauses}
 
 There exist a well-known translation of lattice theory to Horn clauses
