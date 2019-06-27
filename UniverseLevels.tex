@@ -134,7 +134,7 @@
 \maketitle
 
 \begin{abstract}
-We present three formal systems for a countable sequence of universes in Martin-Löf type theory. The first system has an externally indexed sequence of universes \`a la Tarski and we present the rules with and without cumulativity. The second is a system where universes are internally indexed by level expressions. These rules are reminiscent of Agda's, but we do not have a {\em type} of universe levels. Instead we add a new judgment $l\ \Level$ meaning that $l$ is a universe level, and $l = m$ meaning that $l$ and $m$ are equal universe level, where level expression are built up from variables $\alpha$ by a successor operation $l^+$ and suprema $l \vee m$. We first introduce rules for ML-style universe polymorphism, where judgments are indexed by level variables. Then we add rules for level-indexed product types $[\alpha]A$ meaning "$A$ holds for all universe levels $\alpha$". The third system is based on Voevodsky's proposal for a system with level constraints. We also propose an algorithm for solving such constraints. We also survey the evolution of rules for universes in type theory. In particular, we discuss the relationship between of our systems with Palmgren's super universe.
+We present three formal systems for a countable sequence of universes in Martin-Löf type theory. The first system has an externally indexed sequence of universes \`a la Tarski and we present the rules with and without cumulativity. The second is a system where universes are internally indexed by level expressions. These rules are reminiscent of Agda's, but we do not have a {\em type} of universe levels. Instead we add a new judgment $l\ \Level$ meaning that $l$ is a universe level, and $l = m$ meaning that $l$ and $m$ are equal universe levels, where level expressions are built up from variables $\alpha$ by a successor operation $l^+$ and suprema $l \vee m$. We first introduce rules for ML-style universe polymorphism, where judgments are indexed by level variables. Then we add rules for level-indexed product types $[\alpha]A$ meaning "$A$ is a type for all universe levels $\alpha$". The third system is based on Voevodsky's proposal for a system with level constraints. We also propose a fast algorithm for solving such constraints. We survey the evolution of rules for universes in type theory. In particular, we discuss the relationship between our systems and a system with a minimal super universe.
 \end{abstract}
 
 \section{Introduction}
@@ -164,22 +164,25 @@ $$
 $$
 in Agda's notation.
 
-In this note we shall present some extensions of type theory which are loosely based on Agda's level-mechanism. We will also present Voevodsky's system which maintains constraints between level-variables, and an algorithm for solving those constraints.
+In this note we shall present some extensions of type theory which are loosely based on Agda's level-mechanism. We will also present Voevodsky's system \cite{VV} which maintains constraints between level-variables, and an algorithm for solving those constraints.
 
-\paragraph{Plan.} We begin by providing some historical background about the evolution of universes in type theory. In particular, we shall discuss Palmgren's next universe operator and super universe, and point out that the super universe makes it possible to define an internally quantified sequence of universes. We shall also discuss how the rules for universes are formalized in terms of operations and equations extending the generalised algebraic theory of categories with families. Furthermore, we discuss the role of universes in Martin-Löf's logical framework and how this differs from Agda's logical framework. In Section \ref{external} we state the rules for a basic version of Martin-Löf type theory with $\Pi, \Sigma, \NN$, an identity type former $\Id$, and an externally indexed sequences of universes $\UU_n, \T_n$ \`a la Tarski. We then add cumulativity rules for these universes. In Section \ref{internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$, giving rise to a theory with level polymorphism. This is a kind of ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$. In Section \ref{constraints} we present Voevodsky's proposal with constraints between level variables. We also propose an algorithm for solving those constraints.
+\paragraph{Plan.} We begin by providing some historical background about the evolution of universes in type theory. In particular, we shall discuss Palmgren's next universe operator and super universe, and point out that the super universe makes it possible to define an internally quantified sequence of universes. We shall also discuss how the rules for universes are formalized in terms of operations and equations extending the generalised algebraic theory of categories with families. Furthermore, we discuss the role of universes in Martin-Löf's logical framework and how this differs from Agda's logical framework. In Section \ref{external} we state the rules for a basic version of Martin-Löf type theory with $\Pi, \Sigma, \NN$, an identity type former $\Id$, and an externally indexed sequence of universes $\UU_n, \T_n$ \`a la Tarski. We then add cumulativity rules for these universes. In Section \ref{internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$, giving rise to a theory with level polymorphism. This is a kind of ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$. In Section \ref{constraints} we present Voevodsky's proposal with constraints between level variables. We also propose a fast algorithm for solving those constraints; Voevodsky only pointed out that the solvability of the constraints is decidable, since they can be encoded in Presburger arithmetic.
 
 \section{A brief history of universes in type theory}
 
 \subsection{External sequences of universes}\label{palmgren}
 
-Martin-Löf \cite{martinlof:predicative} introduced the above-mentioned version of his intuitionistic type theory with an external countable sequence of universes. In this theory the only judgment is  $\Gamma \vdash a : A$. Moreover, it has an untyped notion of conversion $a\ \conv\ a'$. There is no judgment $A\ \type$; since a type is an $A : \UU_n$ for some $n$. Universes are here \`a la Russell. However, there is no rule of cumulativity ensuring that $A : \UU_m$ implies $A : \UU_n$ for $m \leq n$.
+Martin-Löf \cite{martinlof:predicative} introduced the above-mentioned version of his intuitionistic type theory with an external countable sequence of universes. In this theory the only judgment is  $\Gamma \vdash a : A$. Moreover, it has an untyped notion of conversion $a\ \conv\ a'$. There is no judgment $A\ \type$; since a type is an $A : \UU_n$ for some $n$. Universes are here \`a la Russell, that is, there is no notational distinction between an element $A : \UU_n$ and the type $A$. However, there is no rule of cumulativity ensuring that $A : \UU_m$ implies $A : \UU_n$ for $m \leq n$.
 
-Martin-Löf \cite{martinlof:hannover} changed the judgment structure and added the judgment form $\Gamma \vdash A\ \type$\footnote{We should be systematic with respect to notation: shall we show all the old notations or the notations we use nowadays?} and replaced the untyped conversion judgments with typed equality judgments $\Gamma \vdash a = a' : A$ and $\Gamma \vdash A = A'$. There is still an external sequence of universes \`a la Russell. A cumulativity rule was also added.
+Martin-Löf \cite{martinlof:hannover} changed the judgment structure and added the judgment form $\Gamma \vdash A\ \type$
+%\footnote{We should be systematic with respect to notation: shall we show all the old notations or the notations we use nowadays?} 
+and replaced the untyped conversion judgments with typed equality judgments $\Gamma \vdash a = a' : A$ and $\Gamma \vdash A = A'$. There is still an external sequence of universes \`a la Russell. A cumulativity rule was also added.
 
-Martin-Löf \cite{martinlof:padova} gave an alternative formulation of the first universe $\UU_0$ \`a la Tarski with decoding $\T_0$ \footnote{Did he discuss two universes?}.
+Martin-Löf \cite{martinlof:padova} gave an alternative formulation of the first universe $\UU_0$ \`a la Tarski with decoding $\T_0$, such that $\T_0(a)$ is a type if $a : \UU_0$. 
+%\footnote{Did he discuss two universes?}.
 Palmgren \cite{palmgren:venice} then proposed two alternatives for rules for the external sequence of universes $\UU_n$ \`a la Tarski with decodings $\T_n$. 
 
-The first version is entitled "universes as full reflection" and was only outlined for the first and the second universe. We will give a full presentation of this theory in Section \ref{external}. In this version there is a cumulativity map $\T_0^1 : \UU_0 \to \UU_1$ which is defined by recursion on the way the elements of $\UU_0$ are defined. For example, assume that $\pi_0$ and $\pi_1$ are the functions which represent the closure under $\Pi$ of $\UU_0$ and $\UU_1$, respectively . Then one of the defining equations of $\T_0^1$ is
+The first version is entitled "universes as full reflection" and was only outlined for the first and the second universe. We will give a full presentation of this theory in Section \ref{external}. In this version there is a cumulativity map $\T_0^1 : \UU_0 \to \UU_1$ which is defined by recursion on the way the elements of $\UU_0$ are defined. For example, assume that $\pi_0$ and $\pi_1$ are the functions which represent the closure under $\Pi$ of $\UU_0$ and of $\UU_1$, respectively . Then one of the defining equations of $\T_0^1$ is
 $$
 \T_0^1\, (\pi_0\,a\, b) = \pi_1\,(\T_0^1\,a)\,(\lambda x.\T_0^1\,(b\,x))
 $$
@@ -187,7 +190,9 @@ However, the right hand side of this equations is ill-typed, unless we stipulate
 $$
 \T_1\, (\T_0^1\, a) = \T_0\, a
 $$
-Note however that this equation depends on $\T_0^1$ itself, the function we are in the process of defining! If we nevertheless allow the ill-typed equation above, it will follow that the second equation will be valid for all $a : \UU_0$, that is, it will be valid extensionally. (** Explain more! Realizability model **) We could even argue that we only need to know this equation for $\T_0^1\, a$, when defining $\T_0^1\, (\pi_0\,a\, b)$, so we could claim that this equation is known when it is needed. Would it be correct to say that this is a "definitional equality"? In one sense no, because $\T_1$ was already defined earlier, and we cannot stipulate its effect on $\T_0^1\, a$. On the other hand it seems that adding this equation as a judgmental equality does not destroy the decidability of the system.
+Note however that this equation depends on $\T_0^1$ itself, the function we are in the process of defining! If we nevertheless allow the ill-typed equation above, it will follow that the second equation will be valid for all $a : \UU_0$, that is, it will be valid extensionally. (** EXPLAIN MORE! Realizability model **) 
+
+We could even argue that we only need to know this equation for $\T_0^1\, a$, when defining $\T_0^1\, (\pi_0\,a\, b)$, so we could claim that this equation is known when it is needed. Would it be correct to say that this is a "definitional equality"? In one sense no, because $\T_1$ was already defined earlier, and we cannot stipulate its effect on $\T_0^1\, a$. On the other hand it seems that adding this equation as a judgmental equality does not destroy the decidability of the system.
 
 Palmgren's second version of the external sequence is entitled "universes as uniform constructions". Here the map $\T_0^1 : \UU_0 \to \UU_1$ is a constructor for the second universe $\UU_1$. However, this means that we do not have full reflection: $\UU_1$ contains canonical elements which have no counterpart as canonical types.
 
@@ -202,27 +207,39 @@ $$
 using the ordinary $\Pi$-type former of type theory.
 
 In fact, we point out that the notion of "universe" is rather general - any inductive-recursive definition can be viewed as a universe closed under some given operations. Thus for univalence, it suffices to introduce a {\em minimal super universe} with $\N$ as the type of codes, and with decoding $\Tsuper$,
-such that $\Tsuper\,0$ is the empty universe and $\Tsuper\,(n + 1)$ is the next universe above $\Tsuper\,n$. (In this way the first universe $\UU_0$ is represented by the next universe above the empty universe.) Thus all we need to add to Martin-Löf type theory without universes is (i) the empty universe, (ii) the next-universe operator, (iii) the minimal super universe.
+such that $\Tsuper\,0$ is the empty universe and $\Tsuper\,(n + 1)$ is the next universe above $\Tsuper\,n$, so that the first universe $\UU_0$ is represented by $\Tsuper\,1$, the next universe above the empty universe. Thus all we need to add to Martin-Löf type theory without universes is (i) the empty universe, (ii) the next-universe operator, (iii) the minimal super universe.
 
 %We remark that in type theory with Setzer's {\em Mahlo universe} we get Palmgren's super universe as a special case.
 
 \subsection{The generalised algebraic theory of type theory with universes}
 
-Models of type theory can be expressed as categories with families (cwfs) with extra structure for modelling the rules for type formers.  A key feature of cwfs is that they can be expressed as models of a generalised algebraic theory in the sense of Cartmell \cite{cartmell:apal}, and also that the extra structure for type formers can be expressed by adding more operations and equations to the generalised algebraic theory of cwfs. When we add new rules to type theory, it is desirable that the corresponding extra structure on  models also can be expressed in terms of operations and equations to the generalised algebraic theory of cwfs. We should therefore ask ourselves which the extra structure needed for modelling universe hierarchies.
+Models of type theory can be expressed as categories with families (cwfs) with extra structure for modelling the rules for type formers.  A key feature of cwfs is that they can be expressed as models of a generalised algebraic theory in the sense of Cartmell \cite{cartmell:apal}, and also that the extra structure for type formers can be expressed by adding more operations and equations to the generalised algebraic theory of cwfs. When we add new rules to type theory, it is desirable that the corresponding extra structure on  models also can be expressed in terms of operations and equations to the generalised algebraic theory of cwfs. We should therefore ask ourselves which extra structure is needed for modelling universe hierarchies.
 
-For example, we can formulate the new operations and equations for universes that need to be added to the generalised algebraic theory of cwfs. For example, $\UU_0,\T_0,\UU_1, \T_1,$ and $\T_0^1$ can be added as new operations, and we can add the defining equations for $\T_0,\UU_1, \T_1,\T_0^1$, including the equation
+For example, we can formulate the new operations and equations for universes that need to be added to the generalised algebraic theory of cwfs. For example, $\UU_0,\T_0,\UU_1, \T_1,$ and $\T_0^1$ can be added as new operations, and we can add the defining equations for $\T_0, \T_1,\T_0^1$, including the equation
 $
 \T_1\, (\T_0^1\, a) = \T_0\, a
 $
 which we discussed above.
-For example, we have
+For example, $\Pi$-formation is written 
+\begin{eqnarray*}
+\Pi&: &(\Gamma : \Ctx) \to (A : \Ty(\Gamma; B : \Ty(\Gamma.A)) \to\Ty(\Gamma)
+\end{eqnarray*}
+where $\Gamma.A$ denotes the extension of the context $\Gamma$ with a new type $A$ depending on $\Gamma$ (using variable free notation). Moreover, the formation rules for the first universe become
 \begin{eqnarray*}
 \UU_0 &: &(\Gamma : \Ctx) \to \Ty(\Gamma)\\
-\T_0 &: &(\Gamma : \Ctx ; A : \Tm(\Gamma,\UU_0(\Gamma)))\to \Ty(\Gamma)
+\T_0 &: &(\Gamma : \Ctx ; a : \Tm(\Gamma,\UU_0(\Gamma)))\to \Ty(\Gamma)
 %\\
 %\UU_1 &: &(\Gamma : \Ctx) \to \Ty(\Gamma)\\
 %\T_1 &: &(\Gamma : \Ctx ; A : \Tm(\Gamma,\UU_1(\Gamma)))\to \Ty(\Gamma)\\
 %\T_{01} &:&(\Gamma : \Ctx) \to \UU_0(\Gamma) \to \UU_1(\Gamma)
+\end{eqnarray*}
+and its closure under $\Pi$ is represented by the following introduction rule:
+\begin{eqnarray*}
+\pi_0&: &(\Gamma : \Ctx) \to (a : \Tm(\Gamma,\UU_0(\Gamma)); b : \Tm(\Gamma.\T_0(\Gamma,a),\UU_0(\Gamma))) \to\Tm(\Gamma,\UU_0(\Gamma))
+\end{eqnarray*}
+with decoding
+\begin{eqnarray*}
+\T_0(\Gamma,\pi_0(\Gamma,a,b)) &=& \Pi(\Gamma,\T_0(\Gamma,a), \T_0(\Gamma.\T_0(\Gamma,a),b))
 \end{eqnarray*}
 
 \subsection{Universes in Martin-Löf's logical framework}
@@ -286,13 +303,13 @@ However, most Agda users only make use of the built in universes $\Set_n$, and d
 \begin{eqnarray*}
 \Pi_0 &:& (A:\Set_0) \to (A \to \Set_0) \to \Set_0
 \end{eqnarray*}
-for representing $\Pi$-types as we did in Martin-Löf's logical framework. As a consequence it is more appropriate to think of Agda's sequence of universes as analogous to the sequence of universes  \`a la Russell $ \UU_0 : \UU_1 : \UU_2 : \cdots$ in the early versions of Martin-Löf type theory. However, since Agda has a type $\Level$ of levels, we can define a functions $i : \N \to \Level$, and hence the family $n : \N \vdash \Set\, (i\, n)$ analogous to the family $n : \N \vdash \Tsuper\,n$ in type theory with a (minimal) super universe. However, Agda does not have a type analogous to $\Usuper$, only a "kind" $\Set_\omega$ which is not a type. See the Agda wiki for more explanation.
+for representing $\Pi$-types as we did in Martin-Löf's logical framework. As a consequence it is more appropriate to think of Agda's sequence of universes as analogous to the sequence of universes  \`a la Russell $ \UU_0 : \UU_1 : \UU_2 : \cdots$ in the early versions of Martin-Löf type theory. However, since Agda has a type $\Level$ of levels, we can define a function $i : \N \to \Level$, and hence the family $n : \N \vdash \Set_{i\, n}$ analogous to the family $n : \N \vdash \Tsuper\,(n + 1)$ in type theory with a minimal super universe. However, Agda does not have a type analogous to $\Usuper$, only a "kind" $\Set_\omega$ which is not a type. See the Agda wiki for more explanation.
 
-In the following section we shall give the rules for a version of type theory with a system universes with level quantification. Although it is similar to Agda's system, it differs in important respects, since we shall not introduce a {\em type} of levels, and the kind $\Set_\omega$.
+In the following section we shall give the rules for a version of type theory with a system of universes with level quantification. Although it is similar to Agda's system, it differs in important respects, since we shall neither introduce a {\em type} of levels nor a kind $\Set_\omega$.
 
 \section{A type theory with an external sequence of universes}\label{external}
 
-As already mentioned the rules for the minimal super universe follows the pattern of inductive-recursive definitions, and is a natural candidate for a clean formulation of a type theory which allows quantification over countably many universe levels. Thus the universe levels are members of the type $\N$, and the operation $l \vee m$ is the maximum operation on $\N$, which can be defined by induction on $l$ or $m$. Unfortunately, we have to make a choice between $m$ and $n$ and hence not all equations of level arithmetic (making levels a sup-semi-lattice) will be definitional.
+As already mentioned the rules for the minimal super universe follow the pattern of inductive-recursive definitions, and is a natural candidate for a clean formulation of a type theory which allows quantification over countably many universe levels. Thus the universe levels are members of the type $\N$, and the operation $l \vee m$ is the maximum operation on $\N$, which can be defined by induction on $l$ or $m$. Unfortunately, we have to make a choice between $l$ and $m$ and hence not all equations of level arithmetic (making levels a sup-semi-lattice) will be definitional.
 
 For this reason, we will here propose an alternative formulation, where we do not have a {\em type} of levels. Instead we have new judgments $l\ \Level$, meaning that $l$ is a level expression, and $l = m$ meaning that $l$ and $m$ are definitionally equal levels . We have a maximum operation $\vee$ on levels such that levels become a sup-semilattice up to definitional equality. We also remark that the proof theoretic strength of this alternative system is less than the system with a minimal super universe.
 
@@ -351,7 +368,7 @@ $$
 We can introduce data types: the type of natural numbers $\NN$ has
 constructors $\ZERO:\NN$ and $\SUCC:\NN\rightarrow\NN$ and elimination rules
 $$
-\frac{P~\type~(x:\NN)~~~~a:P(\ZERO/x)~~~~~g:\Pi (x:\NN)P\rightarrow P(\SUCC~x/x)}{\natrec(a,g):\Pi (x:\NN)P}
+\frac{P~\type~(x:\NN)~~~~a:P(\ZERO/x)~~~~~g:\Pi (x:\NN)(P\rightarrow P(\SUCC~x/x))}{\natrec(a,g):\Pi (x:\NN)P}
 $$
 with conversion rules $\natrec(a,g)~\ZERO = a$ and $\natrec(a,g)~(\SUCC~x) = g~x~(\natrec(a,g)~x)$.\footnote{change to version with $\natrec(a,g,n)$?}
 
@@ -494,8 +511,8 @@ $$
 $$
 We also have rules that judgments are invariant under level equality. For example,
 $$
-\frac{a[l] : A[l]\ \ \ l = m}
-{a[m] : A[m]}
+\frac{a(l/\alpha) : A(l/\alpha)\ \ \ l = m}
+{a(m/\alpha) : A(m/\alpha)}
 $$
 We can now replace the rule schemata for externally indexed universes by corresponding rules which are internally indexed by level expressions.
 $$
@@ -524,7 +541,7 @@ $$\T_l(\Id^l~A~a_0~a_1) = \Id~\T_l(A)~a_0~a_1$$
 and a code for the previous universe
 $${\UU^{l}}:\UU_{l + 1}$$
 $$\T_{l + 1}({\UU^{l}}) = \UU_{l}$$
-Note that all the rules are completely analogous to the rules for externally indexed universes with external numbers replaced by internal levels.
+Note that all the rules are completely analogous to the rules for externally indexed universes with external numbers replaced by internal levels. In this way we avoid having to duplicate definitions for different universe levels.
 %
 %\medskip
 %
@@ -595,7 +612,7 @@ A judgment in the level-indexed system can be interpreted in the the externally 
 
 \subsection*{Rules for level-indexed products}
 
-In Agda $\Level$ is a type, and it is thus possible to form level-indexed products of types. In our system $\Level$ is not a type, so if we want to be able to form level-indexed products we can extend the system with the following rules:
+In Agda $\Level$ is a type, and it is thus possible to form level-indexed products of types. In our system $\Level$ is not a type, but if we want to be able to form level-indexed products we can extend the system with the following rules:
 $$
 \frac{A~\type~(\alpha~\Level)}{[\alpha]A~\type}~~~~~~~
 \frac{t:[\alpha]A~~~~~l~\Level}
@@ -605,7 +622,7 @@ $$
 $$
 with conversion rule $(\lam{\alpha}{u})~l = u(l/\alpha)$.
 
-An example which use level-indexed products is the following type which  expresses the theorem that univalence for universes of arbitrary level implies function extensionality for functions between universes of arbitrary levels.
+An example that uses level-indexed products is the following type which  expresses the theorem that univalence for universes of arbitrary level implies function extensionality for functions between universes of arbitrary levels.
 $$
 ([\alpha]\mathsf{IsUnivalent}\, \UU_\alpha)
 \to [\beta][\gamma] \mathsf{FunExt}\, \UU_\beta\, \UU_\gamma
@@ -634,7 +651,7 @@ $$
     \to \Id\,\UU_{m \vee l} \, (B\times^{m \vee l} A)\,(C \times^{n \vee l} A)
 %    \to A \times B =_\delta C \times A \to B \times A =_\epsilon C \times A
 $$
-It is well-formed provided $l \vee m = n \vee l$ and $m \vee l = n \vee l$. Thus there is not one but three maximally general solutions: 
+It is well-formed provided $l \vee m = n \vee l$ and $m \vee l = n \vee l$. Thus are three maximally general solutions: 
 $$
     (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_{\alpha \vee \beta}) 
     \to \Id\,\UU_{\alpha \vee \beta}\, (A\times^{\alpha \vee \beta} B)\,(C \times^{\alpha \vee \beta} A)
@@ -720,7 +737,7 @@ and $\delta = \epsilon^+$. Such forms are called \emph{reduced forms}.
 For every finite set  $\psi$ of constraints, there is a set  $\psi'$ of
 constraints in reduced form such that  $\psi$ is solvable if and only if  $\psi'$
 is solvable. Furthermore,  $\psi'$ contains precisely as many symbols $\_^+$ as  $\psi$ does,
-and $\mu(S')\leq 2\mu(S)$.
+and $\mu(\psi')\leq 2\mu(\psi)$.
 \end{lemma}
 
 \begin{proof}
@@ -881,17 +898,19 @@ Deciding solvability of a finite set of universe constraints is polynomial.
 
 Harper and Pollack \cite{HarperP91} consider the system $\CComega$, the Calculus of Constructions with an sequence of universes \`a la Russell. They consider both an externally indexed version and a version with level expressions which are either numbers or variables, and with constraints of the form $l < m$ and $l \leq m$. Chan has an algorithm for solving those constraints in $\Ordo(c,v^3)$, where $c$ is the number of constraints and $v$ is the number of level variables. They also consider the level synthesis problem in a version with an anonymous universe Type.
 
-\begin{quotation}
-(cut-and-paste from Harper and Pollack)
-Huet, in an unpublished manuscript \cite{Huet87}, has independently developed an
-algorithm for handling universes in the Calculus of Constructions. His approach is to drop the assumption that the universes form a linearly-ordered
-cumulative hierarchy indexed by the natural numbers, and to consider instead a family of calculi in which there is some well-founded partial ordering
-of universes. The input language is correspondingly restricted so that specific universes are disallowed; only the anonymous universe Type may be
-used. The principal advantage of this approach over the one considered here
-is that the consistency checking algorithm is significantly more efficient than
-Chan's algorithm, reducing to an acyclicity check in a dependency graph of
-universe levels. 
-\end{quotation}
+Huet \cite{Huet87} develop another algorithm for universe polymorphism in the Calculus of Constructions. He drops the assumption that the universes form a linearly-ordered cumulative hierarchy indexed by the natural numbers, and on this basis develops a more efficient consistency checking algorithm than Chan's.
+%\begin{quotation}
+%(cut-and-paste from Harper and Pollack)
+%Huet, in an unpublished manuscript \cite{Huet87}, has independently developed an
+%algorithm for handling universes in the Calculus of Constructions. His approach is to drop the assumption that the universes form a linearly-ordered
+%cumulative hierarchy indexed by the natural numbers, and to consider instead a family of calculi in which there is some well-founded partial ordering
+%of universes. The input language is correspondingly restricted so that specific universes are disallowed; only the anonymous universe Type may be
+%used. The principal advantage of this approach over the one considered here
+%is that the consistency checking algorithm is significantly more efficient than
+%Chan's algorithm, reducing to an acyclicity check in a dependency graph of
+%universe levels. 
+%\end{quotation}
+
 Assaf \cite{Assaf14} considers an alternative version of the calculus of
 constructions where subtyping is explicit. This new system avoids problems related to coercions and dependent types by using the Tarski style
 of universes and by introducing additional equations to reflect equality. In particular he adds an explicit cumulativity map $\T^0_1 : \UU_0 \to \UU_1$. He argues that "full reflection" is necessary to achieve the expressivity of Russell style. He introduces the explicit cumulative calculus of constructions (CC$\uparrow$) which is closely related to our system of externally indexed Tarski style universes.
