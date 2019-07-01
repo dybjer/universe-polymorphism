@@ -194,7 +194,7 @@ $$
 $$
 Note however that this equation depends on $\T_0^1$ itself, the function we are in the process of defining! If we nevertheless allow the ill-typed equation above, it will follow that the second equation will be valid for all $a : \UU_0$, that is, it will be valid extensionally in a realizability model, for example, in the style of Allen \cite{allen}. 
 
-In such a model each type is interpreted as a partial equivalence relation (per) on a set of untyped terms (the realizers). This per represents well-typed terms up to typed judgmental equality. Moreover, there is a per that represents well-formed types up to judgmental equality of types. The defining equations for $\T_0, \T_1,$ and $\T_0^1$ will all be valid in this model. The pers for $\UU_0$ and $\UU_1$ (together with their respective decoding maps $\T_0$ and  $\T_1$) have an informal inductive-recursive character, which will be represented as fixed points of monotone operators in set-theoretic metalanguage \cite{allen}. On this basis you can prove by induction on $\UU_0, \T_0$ that the two sides of the judgmental equality (*) are related by the per for equal well-formed types, and hence that the defining equation for $\T_0^1$ is well-typed.
+In such a model each type is interpreted as a partial equivalence relation (per) on a set of untyped terms (the realizers). This per represents well-typed terms up to typed judgmental equality. Moreover, there is a per that represents well-formed types up to judgmental equality of types. The defining equations for $\T_0, \T_1,$ and $\T_0^1$ will all be valid in this model but it remains to prove that they are well-typed. The pers for $\UU_0$ and $\UU_1$ (together with their respective decoding maps $\T_0$ and  $\T_1$) have an informal inductive-recursive character, which will be represented as fixed points of monotone operators in set-theoretic metalanguage \cite{allen}. On this basis you can prove by induction on $\UU_0, \T_0$ that the two sides of the judgmental equality (*) are related by the per for equal well-formed types, and hence that the defining equation for $\T_0^1$ is well-typed.
 
 We could even argue that we only need to know this equation for $\T_0^1\, a$, when defining $\T_0^1\, (\pi_0\,a\, b)$, so we could claim that this equation is known when it is needed. Would it be correct to say that this is a "definitional equality"? In one sense no, because $\T_1$ was already defined earlier, and we cannot stipulate its effect on $\T_0^1\, a$. On the other hand it seems that adding this equation as a judgmental equality does not destroy the decidability of the system.
 
@@ -414,67 +414,32 @@ $${\UU^{n}}:\UU_{n + 1}$$
 $$\T_{n + 1}({\UU^{n}}) = \UU_{n}$$
 
 Note that $\UU_p, \T_p$ are given by separate inductive-recursive definition for each $p$. There is one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and also for $\UU^{p-1}$ provided $p \geq 1$.
-%\subsection*{Rules for cumulativity}
-%
-%With cumulativity, we introduce an operation
-%$$
-%\frac{A:\UU_{n}}
-%{\T_{n}^{m}(A):\UU_{m}}
-%n\leqslant m
-%$$
-%We can also formulate the side condition as an equaton $m = n \vee m$.
-%We require
-%\begin{eqnarray*}
-%\T_m(\T_{n}^{m}(A)) &=& \T_{n}(A)
-%\end{eqnarray*}
-%and
-%\begin{eqnarray*}
-%T_{n}^{m}(\NN^{n}) &=& \NN^{m}
-%\end{eqnarray*}
-%
-%We add $$
-%T_{n}^m(A) = A
-%$$
-%if $n = m$
-%and $$T_{m}^n\T_{n}^m = T_n^n$$ if $n\leqslant m\leqslant n$.
-%
-%We can then simplify the product and sum rules to
-%$$
-%\frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{n}}
-%     {\Pi^{n} A B:\UU_{n}}~~~~~~~~~
-%\frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{n}}
-%     {\Sigma^{n} A B:\UU_{n}}~~~~~~~~~
-%$$
-%with conversion rules
-%$$
-%\T_{n}~(\Pi^{n} A B) = \Pi (x:\T_{n}(A)) \T_{n}(B~x)~~~~~~~
-%\T_{n}~(\Sigma^{n} A B) = \Sigma (x:\T_{n}(A)) \T_{n}(B~x)~~~~~~~
-%$$
-%and
-%$$
-%\T_{n}^{m}~(\Pi^{n} A B) = \Pi^{m} \T_{n}^{m}(A) (\lambda (x:\T_{n}(A))\T_{n}^{m}(B~x))~~~~~~
-%\T_{n}^{m}~(\Sigma^{n} A B) = \Sigma^{m} \T_{n}^{m}(A) (\lambda (x:\T_{n}(A))\T_{n}^{m}(B~x))~~~~~~
-%$$
-%
-\subsection*{Rules for cumulativity}
 
-We define an operation which injects elements of a lower universe into a higher universe:
+\subsection*{Rules for cumulativity - Thierry}
+
+With cumulativity, we introduce an operation
 $$
 \frac{A:\UU_{n}}
 {\T_{n}^{m}(A):\UU_{m}}
-n < m
+n\leqslant m
 $$
-We can also formulate the side condition as an equation $m = n^+ \vee m$.
-We postulate the conversion (cf the discussion of Palmgren's rules for full reflection in Section \ref{palmgren}):
+We can also formulate the side condition as an equaton $m = n \vee m$.
+We require
 \begin{eqnarray*}
 \T_m(\T_{n}^{m}(A)) &=& \T_{n}(A)
 \end{eqnarray*}
-and the decoding conversion
-%\footnote{We should check our use of "conversion" vs "definitional equality" throughout the document.}
+and
 \begin{eqnarray*}
-\T_{n}^{m}(\NN^{n}) &=& \NN^{m}
+T_{n}^{m}(\NN^{n}) &=& \NN^{m}
 \end{eqnarray*}
-In the presence of cumulativity we can simplify the product and sum rules to
+
+We add $$
+T_{n}^m(A) = A
+$$
+if $n = m$
+and $$T_{n}^p\T_{m}^n = T_m^p$$ if $m\leqslant n\leqslant p$.
+
+We can then simplify the product and sum rules to
 $$
 \frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{n}}
      {\Pi^{n} A B:\UU_{n}}~~~~~~~~~
@@ -492,6 +457,42 @@ $$
 \T_{n}^{m}~(\Sigma^{n} A B) = \Sigma^{m} \T_{n}^{m}(A) (\lambda (x:\T_{n}(A))\T_{n}^{m}(B~x))~~~~~~
 $$
 
+%\subsection*{Rules for cumulativity}
+%
+%We define an operation which injects elements of a lower universe into a higher universe:
+%$$
+%\frac{A:\UU_{n}}
+%{\T_{n}^{m}(A):\UU_{m}}
+%n < m
+%$$
+%We can also formulate the side condition as an equation $m = n^+ \vee m$.
+%We postulate the conversion (cf the discussion of Palmgren's rules for full reflection in Section \ref{palmgren}):
+%\begin{eqnarray*}
+%\T_m(\T_{n}^{m}(A)) &=& \T_{n}(A)
+%\end{eqnarray*}
+%and the decoding conversion
+%%\footnote{We should check our use of "conversion" vs "definitional equality" throughout the document.}
+%\begin{eqnarray*}
+%\T_{n}^{m}(\NN^{n}) &=& \NN^{m}
+%\end{eqnarray*}
+%In the presence of cumulativity we can simplify the product and sum rules to
+%$$
+%\frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{n}}
+%     {\Pi^{n} A B:\UU_{n}}~~~~~~~~~
+%\frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{n}}
+%     {\Sigma^{n} A B:\UU_{n}}~~~~~~~~~
+%$$
+%with conversion rules
+%$$
+%\T_{n}~(\Pi^{n} A B) = \Pi (x:\T_{n}(A)) \T_{n}(B~x)~~~~~~~
+%\T_{n}~(\Sigma^{n} A B) = \Sigma (x:\T_{n}(A)) \T_{n}(B~x)~~~~~~~
+%$$
+%and
+%$$
+%\T_{n}^{m}~(\Pi^{n} A B) = \Pi^{m} \T_{n}^{m}(A) (\lambda (x:\T_{n}(A))\T_{n}^{m}(B~x))~~~~~~
+%\T_{n}^{m}~(\Sigma^{n} A B) = \Sigma^{m} \T_{n}^{m}(A) (\lambda (x:\T_{n}(A))\T_{n}^{m}(B~x))~~~~~~
+%$$
+%
 The problem with this approach is that we have to {\em duplicate} definitions that follow
 the same pattern. For instance, we have the identity function $\lambda (X:\UU_n)(x:\T_n(X))x$
 of type $\Pi (X:\UU_n)(\T_n(X)\rightarrow \T_n(X))$ that can be defined for $n = 0,1,\dots$
@@ -578,7 +579,37 @@ then $a$ is convertible to a numeral.
 In such a system we can state that all universes are univalent as a type and the
 fact that if all universes are univalent then they all satisfy function extensionality.
 
-We can also add rules for cumulativity which are completely analogous to those for the internally indexed universes.
+\section*{Rules for cumulativity}
+
+We introduce an operation $T_{l}^{m}(A):\UU_{m}$ if $A:\UU_{l}$
+and $l\leqslant m$ (i.e. $m = l\vee m$).
+
+We require $T_{m}(T_{l}^{m}(A)) = T_{l}(A)$
+and $T_{l}^{m}(\NN^{l}) = \NN^{m}$.
+
+We add $T_{l}^m(A) = A$ if $l = m$
+and $T_{m}^nT_{l}^m = T_l^n$ if $l\leqslant m\leqslant n$.
+
+We can then simplify the product and sum rules to
+
+$$
+\frac{A:\UU_{l}~~~~~~B:T_{l}(A)\rightarrow \UU_{l}}
+     {\Pi^{l} A B:\UU_{l}}~~~~~~~~~
+\frac{A:\UU_{l}~~~~~~B:T_{l}(A)\rightarrow \UU_{l}}
+     {\Sigma^{l} A B:\UU_{l}}~~~~~~~~~
+$$
+with conversion rules
+$$
+T_{l}~(\Pi^{l} A B) = \Pi (x:T_{l}(A)) T_{l}(B~x)~~~~~~~
+T_{l}~(\Sigma^{l} A B) = \Sigma (x:T_{l}(A)) T_{l}(B~x)~~~~~~~
+$$
+and
+$$
+T_{l}^{m}~(\Pi^{l} A B) = \Pi^{m} T_{l}^{m}(A) (\lambda (x:T_{l}(A))T_{l}^{m}(B~x))~~~~~~
+T_{l}^{m}~(\Sigma^{l} A B) = \Sigma^{m} T_{l}^{m}(A) (\lambda (x:T_{l}(A))T_{l}^{m}(B~x))~~~~~~
+$$
+
+
 
 \paragraph{Interpreting the level-indexed system in the system with externally indexed universes.}
 
