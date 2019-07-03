@@ -134,7 +134,9 @@
 \maketitle
 
 \begin{abstract}
-We present three formal systems for a countable sequence of universes in Martin-Löf type theory. The first system has an externally indexed sequence of universes \`a la Tarski and we present the rules with and without cumulativity. The second is a system where universes are internally indexed by level expressions. These rules are reminiscent of Agda's, but we do not have a {\em type} of universe levels. Instead we add a new judgment $l\ \Level$ meaning that $l$ is a universe level, and $l = m$ meaning that $l$ and $m$ are equal universe levels, where level expressions are built up from variables $\alpha$ by a successor operation $l^+$ and suprema $l \vee m$. We first introduce rules for ML-style universe polymorphism, where judgments are indexed by level variables. Then we add rules for level-indexed product types $[\alpha]A$ meaning "$A$ is a type for all universe levels $\alpha$". The third system is based on Voevodsky's proposal for a system with level constraints. We also propose a fast algorithm for solving such constraints. We survey the evolution of rules for universes in type theory. In particular, we discuss the relationship between our systems and a system with a minimal super universe.
+We present three formal systems for a countable sequence of universes in Martin-Löf type theory. The first system has an externally indexed sequence of universes \`a la Tarski and we present the rules with and without cumulativity. The second is a system where universes are internally indexed by level expressions. These rules are reminiscent of Agda's, but we do not have a {\em type} of universe levels. Instead we add a new judgment $l\ \Level$ meaning that $l$ is a universe level, and $l = m$ meaning that $l$ and $m$ are equal universe levels, where level expressions are built up from variables $\alpha$ by a successor operation $l^+$ and suprema $l \vee m$. We first introduce rules for universe polymorphism
+where judgments are indexed by level variables, cf.\ polymorphism in the functional language ML. 
+Then we add rules for level-indexed product types $[\alpha]A$ meaning "$A$ is a type for all universe levels $\alpha$". The third system is based on Voevodsky's proposal for a system with level constraints. We also propose a fast algorithm for solving such constraints. We survey the evolution of rules for universes in type theory. In particular, we discuss the relationship between our systems and a system with a minimal super universe.
 \end{abstract}
 
 \section{Introduction}
@@ -248,7 +250,7 @@ with decoding
 
 \subsection{Universes in Martin-Löf's logical framework}
 
-The rules for the various universes \`a la Tarski that we discussed above can also be formulated using Martin-Löf's logical framework \cite{Martinlof86,NordstromPS90}. This framework has $\Pi$-types (written $(x : A)B$ by Martin-Löf and abbreviated $(A)B$ when $B$ does not depend on $x$.) and a type $\Set$ which is a "universe" with a special role. We will here use the formulation \`a la Tarski of $\Set$ with decoding $\El$, but there is also a formulation \`a la Russell which often used in practice. The formation, introduction, and elimination rules of type theory are formulated as typings of constants $c : A$, and the equality rules are formulated as equations $a = a' : A$. The idea is that $A : \Set$ in the logical framework version represents $A$ {\em type} in the earlier formulations of type theory, and the {\em typing} $f : (x : A)B$ represents the {\em rule} that if $a : A$ then $f\,a : B$.
+The rules for the various universes \`a la Tarski that we discussed above can also be formulated using Martin-Löf's logical framework \cite{Martinlof86,NordstromPS90}. This framework has $\Pi$-types (written $(x : A)B$ by Martin-Löf and abbreviated $(A)B$ when $B$ does not depend on $x$.) and a type $\Set$ which is a "universe" with a special role. We will here use the formulation \`a la Tarski of $\Set$ with decoding $\El$, but there is also a formulation \`a la Russell often used in practice. The formation, introduction, and elimination rules of type theory are formulated as typings of constants $c : A$, and the equality rules are formulated as equations $a = a' : A$. The idea is that $A : \Set$ in the logical framework version represents $A$ {\em type} in the earlier formulations of type theory, and the {\em typing} $f : (x : A)B$ represents the {\em rule} that if $a : A$ then $f\,a : B$.
 
 For example, the formation rule for $\Pi$-sets (as opposed to types) is represented by the typing
 \begin{eqnarray*}
@@ -423,22 +425,15 @@ $$
 {\T_{n}^{m}(A):\UU_{m}}
 n\leqslant m
 $$
-We can also formulate the side condition as an equaton $m = n \vee m$.
-We require
-\begin{eqnarray*}
-\T_m(\T_{n}^{m}(A)) &=& \T_{n}(A)
-\end{eqnarray*}
-and
-\begin{eqnarray*}
-T_{n}^{m}(\NN^{n}) &=& \NN^{m}
-\end{eqnarray*}
-
-We add $$
-T_{n}^m(A) = A
+We can also formulate the side condition as an equation $m = n \vee m$.
+We require for all $n,m$
+\[
+\T_m(\T_{n}^{m}(A)) = \T_{n}(A) \quad\text{and}\quad T_{n}^{m}(\NN^{n}) = \NN^{m}.
+\]
+We add for all $n,m,p$ with $m\leqslant n\leqslant p$
 $$
-if $n = m$
-and $$T_{n}^p\T_{m}^n = T_m^p$$ if $m\leqslant n\leqslant p$.
-
+T_{n}^n(A) = A \quad\text{and}\quad T_{n}^p\T_{m}^n = T_m^p.
+$$
 We can then simplify the product and sum rules to
 $$
 \frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{n}}
@@ -670,7 +665,7 @@ should be constant.
 
 \paragraph{Interpreting the system with levels into extensional type theory with a super universe.} We can interpret the theory with rules for level-indexed products in extensional type theory with a (minimal) super universe. Levels will be interpreted by internal natural numbers $n : \NN$, and level-indexed products $[\alpha]A$ will be interpreted by ordinary indexed products $\Pi_{n : \NN}A$. Level application and level abstraction will be interpreted as ordinary application and abstraction.
 
-Note that in intensional type theory, we will not be able to justify all the laws for level expressions as definitional equalities.
+In intensional type theory we will not be able to justify all the laws for level expressions as definitional equalities. For example, we do not have $\max(l,m)=\max(m,l)$.
 
 \section{A system with level constraints}\label{constraints}
 
@@ -749,7 +744,7 @@ with the elimination rule
 $$
 \frac{t:[\psi]A~~~~~~\psi}{t:A}
 $$
-Intuitively, we can use a term of type $[\psi]A$ only if the all constraints in $\psi$ hold.
+Intuitively, we can use a term of type $[\psi]A$ only if all constraints in $\psi$ hold.
 
 \subsection{An algorithm for deciding the solvability of constraints}
 
