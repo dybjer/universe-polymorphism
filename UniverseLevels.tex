@@ -576,13 +576,16 @@ fact that if all universes are univalent then they all satisfy function extensio
 
 \section*{Rules for cumulativity}
 
+These rules are also analogous to the rules for externally indexed universes.
+For the sake of completeness we give them explicitly.
+
 We introduce an operation $T_{l}^{m}(A):\UU_{m}$ if $A:\UU_{l}$
-and $l\leqslant m$ (i.e. $m = l\vee m$).
+and $l\leqslant m$ (i.e., $m = l\vee m$).
 
 We require $T_{m}(T_{l}^{m}(A)) = T_{l}(A)$
 and $T_{l}^{m}(\NN^{l}) = \NN^{m}$.
 
-We add $T_{l}^m(A) = A$ if $l = m$
+We add $T_{l}^m(A) = A$ if $l = m$ THIS CANNOT BE SIMPLIFIED AS ABOVE?
 and $T_{m}^nT_{l}^m = T_l^n$ if $l\leqslant m\leqslant n$.
 
 We can then simplify the product and sum rules to
@@ -773,14 +776,14 @@ and $\mu(\psi')\leq 2\mu(\psi)$.
 \end{lemma}
 
 \begin{proof}
-We first assign to each $l$ a fresh variable $v(l)$ and then, by induction on $l$,
+We first assign to each $l$ a variable $v(l)$ and then, by induction on $l$,
 a set $ \psi(l)$ of constraints in reduced form such that $ \psi(l)\models l = v(l)$.
 
-In the base case of a level variable $\alpha$ we take $v(\alpha)=\alpha$ and let $ \psi(\alpha)$ be empty. In one step case we again let $v(l^+)$ a fresh variable,
+In the base case of a level variable $\alpha$ we take $v(\alpha)=\alpha$ and let $ \psi(\alpha)$ be empty. In one step case we let $v(l^+)$ a fresh variable,
 and $ \psi(l^+) =  \psi(l) \cup \set{v(l)^+ =v(l^+)}$.
 In the other step case we let again $v(l\vee m)$ be a fresh variable,
 and $ \psi(l\vee m) =  \psi(l) \cup  \psi(m) \cup \set{v(l)\vee v(m) =v(l\vee m)}$.
-By induction we get $ \psi(l)\models l = v(l)$, plus the following two facts.
+By induction we get $\psi(l)\models l = v(l)$, plus the following two facts.
 First, $ \psi(l)$ contains precisely as many symbols $\_^+$ as $l$ does,
 and similarly for symbols $\vee$.
 (Occurrences of such symbols in names of fresh variables do not count.)
@@ -793,10 +796,10 @@ then we eliminate one of them by substitution. Otherwise,
 we replace $l=m$ by $ \psi(l)\cup  \psi(m)\cup \set{v(l)=v(m)}$.
 Doing this for all constraints in  $\psi$
 leaves us with a set of constraints that are either in
-reduced form, or of the form $v(l)=v(m)$ for distinct fresh variables.
+reduced form, or of the form $v(l)=v(m)$ for distinct variables.
 The latter are easily removed by substitution. Let  $\psi'$ be the resulting set
-of constraints, which are all in reduced form. By the results on $ \psi(l)$
-and $v(l)$ from the previous paragraph, the set  $\psi$ is solvable if
+of constraints, which are all in reduced form. By $\psi(l)\models l = v(l)$
+for any $l$, see the previous paragraph, we get that the set $\psi$ is solvable if
 and only if  $\psi'$ is solvable.
 
 During the reduction internal nodes in the parse trees of level expressions get labelled with fresh variables and hence the $\mu$-value increases. However,  $\mu(\psi')\leq 2\mu(\psi)$ and the whole transformation, including the
@@ -805,7 +808,7 @@ elimination of variables, can certainly be done in quadratic time
 \end{proof}
 
 From now on we assume that constraints are in reduced form.
-Any set  $\psi$ of such constraints can be split as $ \psi= \psi_+ \cup  \psi_\vee$,
+Any set $\psi$ of such constraints can be split as $ \psi= \psi_+ \cup  \psi_\vee$,
 where $ \psi_+$ consists of all constraints of the form  
 $\delta = \epsilon^+$ and $ \psi_\vee$ consists of the constraints of the form $\alpha\vee\beta = \gamma$.
 In the latter constraints we assume $\alpha\neq\beta$, since constraints of the form
@@ -821,7 +824,7 @@ The \emph{algebraic length} of an undirected path is the algebraic sum
 of the number of edges minus the number of anti-edges.
 Clearly, for $ \psi_+$ to be solvable we must have that,
 for all nodes $\delta$ and $\delta'$,
-all undirected paths in $G_ \psi$ from $\delta$ to $\delta'$ have the same length.
+all undirected paths in $G_ \psi$ from $\delta$ to $\delta'$ have the same algebraic length.
 The latter condition is also sufficient for the solvability of $ \psi_+$,
 and can be tested in quadradic time. 
 We assume from now on that $ \psi_+$ is solvable.
@@ -837,8 +840,9 @@ algebraic distance $k$ from $\delta$, for each $\delta$ and $k$.
 Without loss of generality we may therefore assume that $G_ \psi$ consists 
 of linear paths that are mutually disjoint.
 Models of $ \psi^+$ are uniquely determined by the values of 
-one of the nodes on each of these linear paths, for example,
-the \emph{sources}, i.e., the start nodes. If we use the notation $l + n$ for $l^{+\ldots +}$, the result of iterating the operation $\_^+$ on $l$ $n$ times. Then
+one of the nodes on each of these linear paths, for example, the \emph{sources}, 
+i.e., the start nodes. If we use the notation $l + n$ for $l^{+\ldots +}$, 
+the result of iterating $n$ times the operation $\_^+$ on $l$. Then
 the phrase `nodes $\alpha$ and $\alpha'$ are on the same path in $G_ \psi$'
 means that, formally, there is some $n$ in $\NN$ such that
 either $\alpha=\alpha'+n$ or $\alpha+n=\alpha'$ follows from $ \psi^+$
@@ -852,12 +856,12 @@ If there is a model of  $\psi$, then there is a model with values at most $K_{ \
 \end{lemma}
 
 \begin{proof}
-Observe that $K_{ \psi}$ is the sum of the lengths of the paths in $G_ \psi$.
-Let $M \models \psi$. If the interpretations of the paths $G_ \psi$
+Observe that $K_{\psi}$ is the sum of the lengths of the paths in $G_\psi$.
+Let $M \models \psi$. If the interpretations of the paths $G_\psi$
 has a gap, say of length $k$, then we can construct another model $M' \models \psi$
 in which all variables with value above the gap are lowered by $k$. By repeating this procedure we can close all gaps, and also arrange things such that
 the lowest value of a variable is $0$. The resulting model
-has values at most $K_{ \psi}$.
+has values at most $K_{\psi}$.
 \end{proof}
 
 \cref{lem:small-model} implies the decidability of solvability.
@@ -867,23 +871,25 @@ model if there exists one. We first prove the following lemma.
 \begin{lemma}\label{lem:model-search}
 Let   $\psi$ be a finite set of constraints in reduced form such that all paths 
 in $G_ \psi$ are linear and mutually disjoint.
-Let $M$ be a model of  $\psi$ and $\rho$ a model of $ \psi^+$ such that $\rho\geq M$ (pointwise).
-If $\rho$ is not a model of  $\psi$, then the assignment $\rho'$ defined in 
-one of the ways below is also a model of $ \psi^+$ and satisfies $\rho'\geq M$.
+Let $M$ be a model of  $\psi$ and $\rho$ a model of $ \psi_+$ such that $\rho\geq M$ (pointwise).
+If $\rho$ is not a model of $\psi$, then the assignment $\rho'$ defined in 
+one of the ways below is also a model of $ \psi_+$ and satisfies $\rho'\geq M$.
 Moreover, $\rho'(\alpha)<\rho(\alpha)$ for at least one variable.
 \begin{enumerate}
 \item Pick a constraint $\alpha\vee\beta = \gamma$ from  $\psi$ with
 $(\alpha\vee\beta)\rho +n = \gamma\rho$ for some $n>0$, and define 
 $\rho'(\gamma') = \rho(\gamma')-n$ for any $\gamma'$ on the same path as $\gamma$ in $G_ \psi$.
+On all other level variables $\rho'$ takes the same value as $\rho$.
 \item Pick a constraint $\alpha\vee\beta = \gamma$ from  $\psi$ with $\rho(\alpha)\geq\rho(\beta)$
 and $(\alpha\vee\beta)\rho = \gamma\rho +n$ for some $n>0$, and  define 
 $\rho'(\alpha') = \rho(\alpha') -n$ for any $\alpha'$ on the same path as $\alpha$ in $G_ \psi$.
 If $\beta$ is not on the same path as $\alpha$ in $G_ \psi$ and $\rho(\beta)>\rho(\gamma)$, define also
 $\rho'(\beta') = \rho(\beta') + \rho(\gamma) - \rho(\beta)$ 
-for any $\beta'$ on the same path as $\beta$ in $G_ \psi$. Note that we have
-$\rho'(\alpha) = \rho(\gamma)$. If $\alpha$ and $\beta$ are
+for any $\beta'$ on the same path as $\beta$ in $G_ \psi$. 
+On all other level variables $\rho'$ takes the same value as $\rho$.
+Note that we have $\rho'(\alpha) = \rho(\gamma)$. If $\alpha$ and $\beta$ are
 not on the same path and $\rho(\beta)>\rho(\gamma)$, then we also have
-$\rho'(\beta) = \rho(\gamma)$, otherwise we have $\rho'(\beta) = \rho(\beta)$.
+$\rho'(\beta) = \rho(\gamma)$.
 \item Like the previous one with $\beta\vee\alpha = \gamma$.
 \end{enumerate}
 \end{lemma}
@@ -902,8 +908,8 @@ verify that $\rho'(\alpha)\geq M(\alpha)$, and similarly for $\beta$. We have
 $\rho'(\alpha)= \rho(\gamma)\geq M(\gamma) = (\alpha\vee\beta)M \geq M(\alpha)$.
 Use $\rho'(\beta) = \rho(\gamma)$ and $(\alpha\vee\beta)M \geq M(\beta)$
 if $\beta$ is not on the same path as $\alpha$ in $G_ \psi$ and $\rho(\beta)>\rho(\gamma)$. 
-\item Similar to the previous case.
 \end{enumerate}
+Case 3 is similar to case 2.
 \end{proof}
 
 Assume  $\psi$ is a finite set of constraints in reduced form such that all paths 
