@@ -139,7 +139,7 @@ where judgments are indexed by level variables, cf.\ polymorphism in the functio
 Then we add rules for level-indexed product types $[\alpha]A$ meaning "$A$ is a type for all universe levels $\alpha$". The third system is based on Voevodsky's proposal for a system with level constraints. We also propose a fast algorithm for solving such constraints. We survey the evolution of rules for universes in type theory. In particular, we discuss the relationship between our systems and a system with a minimal super universe.
 \end{abstract}
 
-\section{Introduction}
+\section{Introduction}\label{sec:intros}
 
 This note records discussions between the authors concerning the appropriate setting for univalent mathematics in Martin Löf type theory.
 
@@ -172,7 +172,7 @@ In this note we shall present some extensions of type theory which are loosely b
 
 \paragraph{Plan.} We begin by providing some historical background about the evolution of universes in type theory. In particular, we shall discuss Palmgren's next universe operator and super universe, and point out that the super universe makes it possible to define an internally quantified sequence of universes. We shall also discuss how the rules for universes are formalized in terms of operations and equations extending the generalised algebraic theory of categories with families. Furthermore, we discuss the role of universes in Martin-Löf's logical framework and how this differs from Agda's logical framework. In Section \ref{external} we state the rules for a basic version of Martin-Löf type theory with $\Pi, \Sigma, \NN$, an identity type former $\Id$, and an externally indexed sequence of universes $\UU_n, \T_n$ \`a la Tarski. We then add cumulativity rules for these universes. In Section \ref{internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$, giving rise to a theory with level polymorphism. This is a kind of ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$. In Section \ref{constraints} we present Voevodsky's proposal with constraints between level variables. We also propose a fast algorithm for solving those constraints; Voevodsky only pointed out that the solvability of the constraints is decidable, since they can be encoded in Presburger arithmetic.
 
-\section{A brief history of universes in type theory}
+\section{A brief history of universes in type theory}\label{sec:history}
 
 \subsection{External sequences of universes}\label{palmgren}
 
@@ -285,7 +285,7 @@ In this system we have three levels of products: $\pi\,a\,b : \UU_0$, $\Pi\,A\,B
 %
 % Also we have Pi sets with a new constructor Lambda for functions
 
-\section{Universes in Agda}
+\section{Universes in Agda}\label{sec:Agda}
 
 So far we have discussed the formulation of the univalence axiom in what might be called "standard" versions of Martin-Löf type theory, where the \`a la Tarski rules for universes and super universes follow the general pattern of inductive-recursive definitions in type theory. (Recall however again that the equation
 $
@@ -313,7 +313,7 @@ for representing $\Pi$-types as we did in Martin-Löf's logical framework. As a 
 
 In the following section we shall give the rules for a version of type theory with a system of universes with level quantification. Although it is similar to Agda's system, it differs in important respects, since we shall neither introduce a {\em type} of levels nor a kind $\Set_\omega$.
 
-\section{A type theory with an external sequence of universes}\label{external}
+\section{A type theory with an external sequence of universes}\label{sec:external}
 
 As already mentioned the rules for the minimal super universe follow the pattern of inductive-recursive definitions, and is a natural candidate for a clean formulation of a type theory which allows quantification over countably many universe levels. Thus the universe levels are members of the type $\N$, and the operation $l \vee m$ is the maximum operation on $\N$, which can be defined by induction on $l$ or $m$. Unfortunately, we have to make a choice between $l$ and $m$ and hence not all equations of level arithmetic (making levels a sup-semi-lattice) will be definitional.
 
@@ -493,7 +493,7 @@ the same pattern. For instance, we have the identity function $\lambda (X:\UU_n)
 of type $\Pi (X:\UU_n)(\T_n(X)\rightarrow \T_n(X))$ that can be defined for $n = 0,1,\dots$
 The systems in the next sections address this issue.
 
-\section{A type theory with universe levels and polymorphism }\label{internal}
+\section{A type theory with universe levels and polymorphism }\label{sec:internal}
 
 We introduce {\em universe level} expressions: we write $\alpha,\beta,\dots$
 for {\em level variables}, and $l,m,\dots$ for {\em level expressions} which are built from level variables
@@ -511,7 +511,9 @@ $$
 \frac{l~\Level~~~~~m~\Level}{l\vee m~\Level}~~~~~~
 \frac{l~\Level}{l^+~\Level}~~~~~~
 $$
-We also have rules that judgments are invariant under level equality. For example,
+We also have rules that judgments are invariant under level equality. 
+This includes equality judgments, which have been left out for simplicity.
+For example,
 $$
 \frac{a(l/\alpha) : A(l/\alpha)\ \ \ l = m}
 {a(m/\alpha) : A(m/\alpha)}
@@ -585,8 +587,12 @@ and $l\leqslant m$ (i.e., $m = l\vee m$).
 We require $T_{m}(T_{l}^{m}(A)) = T_{l}(A)$
 and $T_{l}^{m}(\NN^{l}) = \NN^{m}$.
 
-We add $T_{l}^m(A) = A$ if $l = m$ THIS CANNOT BE SIMPLIFIED AS ABOVE?
+We add $T_{l}^m(A) = A$ if $l = m$
 and $T_{m}^nT_{l}^m = T_l^n$ if $l\leqslant m\leqslant n$.
+Note that this cannot be simplified to $T_{l}^l(A) = A$
+like $T_{n}^n(A) = A$ in \cref{sec:internal}. 
+The simplified equation would not give, e.g., 
+$T_{\alpha\vee\beta}^{\beta\vee\alpha}(A) = A$.
 
 We can then simplify the product and sum rules to
 
@@ -668,9 +674,9 @@ should be constant.
 
 \paragraph{Interpreting the system with levels into extensional type theory with a super universe.} We can interpret the theory with rules for level-indexed products in extensional type theory with a (minimal) super universe. Levels will be interpreted by internal natural numbers $n : \NN$, and level-indexed products $[\alpha]A$ will be interpreted by ordinary indexed products $\Pi_{n : \NN}A$. Level application and level abstraction will be interpreted as ordinary application and abstraction.
 
-In intensional type theory we will not be able to justify all the laws for level expressions as definitional equalities. For example, we do not have $\max(l,m)=\max(m,l)$.
+In intensional type theory we will not be able to justify all the laws for level expressions as definitional equalities. For example, we do not have $\max(m,n)=\max(m,n)$ definitionally.
 
-\section{A system with level constraints}\label{constraints}
+\section{A system with level constraints}\label{sec:constraints}
 
 To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity:
 %[[The type constructor ``$\simeq$'' should be replaced by the identity type for this to work. I am not sure which notation for the identity type we want to use to formulate this example.]]
@@ -718,12 +724,13 @@ $
 \beta \vee \alpha = \gamma \vee \alpha.
 $
 
-\subsection{Rules for level constraints}
+\subsection{Rules for level constraints}\label{ssec:VVsystem}
 
 We now try to describe Voevodsky's approach \cite{VV} using our notation.
 
-We introduce a further judgement for {\em constraints}. A constraint is
-an equations $l = m$, where $l$ and $m$ are level expression.
+We view Voevodsky's system as an extension of the system in \cref{sec:internal}
+with judgments for {\em constraints}. A constraint is
+an equation $l = m$, where $l$ and $m$ are level expression.
 %Thus we have
 %$$
 %\frac{l_1~m_1~\dots~l_k~m_k~\Level}{l_1 = m_1,\dots,l_k = m_k~\Constraint}
@@ -732,10 +739,10 @@ We write $l\leqslant m$ for the constraint $l\vee m = m$.
 
 We then have a new context extension $\Gamma,\psi$ if $\psi$ is a finite set of constraints in $\Gamma$.
 
-Finally we have the judgement $\psi~(\Gamma)$ which expresses that the constraint set $\psi$
+Finally we have the judgment $\psi~(\Gamma)$ which expresses that the constraint set $\psi$
 holds in $\Gamma$. For instance we have $\alpha^+\leqslant\beta^+~(\alpha\leqslant\beta)$.
 
-In the system with constraints, we have judgements such as
+In the system with constraints, we have judgments such as
 $$
 T_{\alpha^+}^{\beta}(\UU^{\alpha}):\UU_{\beta}~(\alpha~\beta~\Level,\alpha^+\leqslant\beta)
 $$
