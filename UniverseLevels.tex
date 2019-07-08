@@ -692,22 +692,29 @@ $$
     \to \Id\,\UU_{m \vee l} \, (B\times^{m \vee l} A)\,(C \times^{n \vee l} A)
 %    \to A \times B =_\delta C \times A \to B \times A =_\epsilon C \times A
 $$
-It is well-formed provided $l \vee m = n \vee l$ and $m \vee l = n \vee l$. Thus are three maximally general solutions: 
-$$
-    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_{\alpha \vee \beta}) 
-    \to \Id\,\UU_{\alpha \vee \beta}\, (A\times^{\alpha \vee \beta} B)\,(C \times^{\alpha \vee \beta} A)
-    \to \Id\,\UU_{\alpha \vee \beta}\, (B\times^{\alpha \vee \beta} A)\,(C \times^{\alpha \vee \beta} A)
-$$
-$$
-    (A : \UU_\alpha) \to (B : \UU_{\gamma \vee \alpha}) \to (C : \UU_{\gamma}) 
-    \to \Id\,\UU_{\gamma \vee \alpha}\, (A\times^{\gamma \vee \alpha} B)\,(C \times^{\gamma \vee \alpha} A)
-    \to \Id\,\UU_{\gamma \vee \alpha}\, (B\times^{\gamma \vee \alpha} A)\,(C \times^{\gamma \vee \alpha} A)
-$$
-$$
-    (A : \UU_{\beta \vee \gamma}) \to (B : \UU_{\beta}) \to (C : \UU_{\gamma}) 
-    \to \Id\,\UU_{\beta \vee \gamma}\, (A\times^{\beta \vee \gamma} B)\,(C \times^{\beta \vee \gamma} A)
-    \to \Id\,\UU_{\beta \vee \gamma}\, (B\times^{\beta \vee \gamma} A)\,(C \times^{\beta \vee \gamma} A)
-$$
+It is well-formed provided $l \vee m = n \vee l$ and $m \vee l = n \vee l$. There are three maximally general solutions: 
+\begin{eqnarray*}
+&&l = \alpha, m = \beta, n = \alpha \vee \beta\\
+&&l = \alpha, m = \gamma \vee \alpha, n = \gamma\\
+&&l = \beta \vee \gamma, m = \beta, n = \gamma
+\end{eqnarray*}
+where $\alpha, \beta,$ and $\gamma$ are level variables.
+%
+%$$
+%    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_{\alpha \vee \beta}) 
+%    \to \Id\,\UU_{\alpha \vee \beta}\, (A\times^{\alpha \vee \beta} B)\,(C \times^{\alpha \vee \beta} A)
+%    \to \Id\,\UU_{\alpha \vee \beta}\, (B\times^{\alpha \vee \beta} A)\,(C \times^{\alpha \vee \beta} A)
+%$$
+%$$
+%    (A : \UU_\alpha) \to (B : \UU_{\gamma \vee \alpha}) \to (C : \UU_{\gamma}) 
+%    \to \Id\,\UU_{\gamma \vee \alpha}\, (A\times^{\gamma \vee \alpha} B)\,(C \times^{\gamma \vee \alpha} A)
+%    \to \Id\,\UU_{\gamma \vee \alpha}\, (B\times^{\gamma \vee \alpha} A)\,(C \times^{\gamma \vee \alpha} A)
+%$$
+%$$
+%    (A : \UU_{\beta \vee \gamma}) \to (B : \UU_{\beta}) \to (C : \UU_{\gamma}) 
+%    \to \Id\,\UU_{\beta \vee \gamma}\, (A\times^{\beta \vee \gamma} B)\,(C \times^{\beta \vee \gamma} A)
+%    \to \Id\,\UU_{\beta \vee \gamma}\, (B\times^{\beta \vee \gamma} A)\,(C \times^{\beta \vee \gamma} A)
+%$$
 (Note the similarity with the Gustave function in stable domain theory.)
 In a system with level constraints, we could instead derive the type
 $$
