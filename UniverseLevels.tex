@@ -171,11 +171,11 @@ in Agda's notation.
 
 In this note we shall present some extensions of type theory which are loosely based on Agda's level-mechanism. We will also present Voevodsky's system \cite{VV} which maintains constraints between level-variables, and an algorithm for solving those constraints.
 
-\paragraph{Plan.} We begin by providing some historical background about the evolution of universes in type theory. In particular, we shall discuss Palmgren's next universe operator and super universe, and point out that the super universe makes it possible to define an internally quantified sequence of universes. We shall also discuss how the rules for universes are formalized in terms of operations and equations extending the generalised algebraic theory of categories with families. Furthermore, we discuss the role of universes in Martin-Löf's logical framework and how this differs from Agda's logical framework. In Section \ref{external} we state the rules for a basic version of Martin-Löf type theory with $\Pi, \Sigma, \NN$, an identity type former $\Id$, and an externally indexed sequence of universes $\UU_n, \T_n$ \`a la Tarski. We then add cumulativity rules for these universes. In Section \ref{internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$, giving rise to a theory with level polymorphism. This is a kind of ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$. In Section \ref{constraints} we present Voevodsky's proposal with constraints between level variables. We also propose a fast algorithm for solving those constraints; Voevodsky only pointed out that the solvability of the constraints is decidable, since they can be encoded in Presburger arithmetic.
+\paragraph{Plan.} We begin by providing some historical background about the evolution of universes in type theory. In particular, we shall discuss Palmgren's next universe operator and super universe, and point out that the super universe makes it possible to define an internally quantified sequence of universes. We shall also discuss how the rules for universes are formalized in terms of operations and equations extending the generalised algebraic theory of categories with families. Furthermore, we discuss the role of universes in Martin-Löf's logical framework and how this differs from Agda's logical framework. In Section \ref{sec:external} we state the rules for a basic version of Martin-Löf type theory with $\Pi, \Sigma, \NN$, an identity type former $\Id$, and an externally indexed sequence of universes $\UU_n, \T_n$ \`a la Tarski. We then add cumulativity rules for these universes. In Section \ref{sec:internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$, giving rise to a theory with level polymorphism. This is a kind of ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$. In Section \ref{sec:constraints} we present Voevodsky's proposal with constraints between level variables. We also propose a fast algorithm for solving those constraints; Voevodsky only pointed out that the solvability of the constraints is decidable, since they can be encoded in Presburger arithmetic.
 
 \section{A brief history of universes in type theory}\label{sec:history}
 
-\subsection{External sequences of universes}\label{palmgren}
+\subsection{External sequences of universes}\label{sec:palmgren}
 
 Martin-Löf \cite{martinlof:predicative} introduced the above-mentioned version of his intuitionistic type theory with an external countable sequence of universes. In this theory the only judgment is  $\Gamma \vdash a : A$. Moreover, it has an untyped notion of conversion $a\ \conv\ a'$. There is no judgment $A\ \type$; since a type is an $A : \UU_n$ for some $n$. Universes are here \`a la Russell, that is, there is no notational distinction between an element $A : \UU_n$ and the type $A$. However, there is no rule of cumulativity ensuring that $A : \UU_m$ implies $A : \UU_n$ for $m \leq n$.
 
@@ -187,7 +187,7 @@ Martin-Löf \cite{martinlof:padova} gave an alternative formulation of the first
 %\footnote{Did he discuss two universes?}.
 Palmgren \cite{palmgren:venice} then proposed two alternatives for rules for the external sequence of universes $\UU_n$ \`a la Tarski with decodings $\T_n$. 
 
-The first version is entitled "universes as full reflection" and was only outlined for the first and the second universe. We will give a full presentation of this theory in Section \ref{external}. In this version there is a cumulativity map $\T_0^1 : \UU_0 \to \UU_1$ which is defined by recursion on the way the elements of $\UU_0$ are defined. For example, assume that $\pi_0$ and $\pi_1$ are the functions which represent the closure under $\Pi$ of $\UU_0$ and of $\UU_1$, respectively. Then one of the defining equations of $\T_0^1$ is
+The first version is entitled "universes as full reflection" and was only outlined for the first and the second universe. We will give a full presentation of this theory in Section \ref{sec:external}. In this version there is a cumulativity map $\T_0^1 : \UU_0 \to \UU_1$ which is defined by recursion on the way the elements of $\UU_0$ are defined. For example, assume that $\pi_0$ and $\pi_1$ are the functions which represent the closure under $\Pi$ of $\UU_0$ and of $\UU_1$, respectively. Then one of the defining equations of $\T_0^1$ is
 $$
 \T_0^1\, (\pi_0\,a\, b) = \pi_1\,(\T_0^1\,a)\,(\lambda x.\T_0^1\,(b\,x))
 $$
@@ -387,7 +387,7 @@ with the conversion rule $\JJ(a,d)~a~(\refl~a) = d$.
 
 \subsection*{Rules for an external sequence of universes}
 
-We will now present a complete set of rules for "universes as full reflections" in the style of the rules in Section \ref{palmgren}. We first present a version without cumulativity.
+We will now present a complete set of rules for "universes as full reflections" in the style of the rules in Section \ref{sec:palmgren}. We first present a version without cumulativity.
 $$
 \UU_n~\type~~~~~~
 \frac{A:\UU_{n}}{\T_{n}(A)~\type}
@@ -462,7 +462,7 @@ $$
 %n < m
 %$$
 %We can also formulate the side condition as an equation $m = n^+ \vee m$.
-%We postulate the conversion (cf the discussion of Palmgren's rules for full reflection in Section \ref{palmgren}):
+%We postulate the conversion (cf the discussion of Palmgren's rules for full reflection in Section \ref{sec:palmgren}):
 %\begin{eqnarray*}
 %\T_m(\T_{n}^{m}(A)) &=& \T_{n}(A)
 %\end{eqnarray*}
