@@ -142,7 +142,24 @@ We then extend this theory with rules for level-indexed product types $[\alpha]A
 
 \section{Introduction}\label{sec:intros}
 
-This note records discussions between the authors concerning the appropriate setting for univalent mathematics in Martin Löf type theory.
+This note records discussions between the authors concerning the appropriate setting for univalent mathematics in Martin Löf type theory. For example,  Escard\'o \cite{escardo} has shown how to develop univalent mathematics in the Agda system. However, the Agda system is not a precisely defined logical system, and we would like to present some well-defined systems in which Escard\'o's development can be carried out. We will also present a system similar to Voevodsky's universe polymorphic system \cite{VV}. In this system there are variables ranging over universe levels. algorithm for solving those constraints.
+
+
+The {\em univalence axiom} states that for any two types $X,Y$ the canonical map
+$$
+\idtoeq_{X,Y} : (X=Y)\to (X\simeq Y)
+$$
+is an equivalence. Formally, the univalence axiom is an axiom scheme which is added to Martin-Löf type theory. If we work in Martin-Löf type theory with a countable tower of universes, each type is a member of some universe $\UU_n$. Such a universe $\UU_n$ is {\em univalent} provided for all $X,Y : \UU_n$ the canonical map $\idtoeq_{X,Y}$ is an equivalence. Let $\UA_n$ be the type expressing the univalence of $\UU_n$, and
+$$
+\ua_n : \UA_n
+$$
+for $n = 0,1,\ldots$, be a sequence of constants expressing the instances of the univalence axiom. We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and hence $\UA_n$ is in $\UU_{n+1}$. If we have universe polymorphism expressed as quantification over universe levels, as in the Agda system, then we can express univalence of all universes as one typing:
+$$
+\ua : (l : \Level) \to \UA_l
+$$
+in Agda's notation.
+
+
 
 The first published version of Martin-Löf's theory \cite{martinlof:predicative} introduces a countable sequence of universes
 $$
