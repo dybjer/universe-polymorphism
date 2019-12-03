@@ -1,0 +1,198 @@
+COUNTEREXAMPLE against the completeness of Z for succ-sup-lattices.
+
+In Z we have x+1 = (x \/ y) |=_Z x+1 = y.
+
+Consider two copies of N with successor:
+
+X = x0, x1, ...
+Y = y0, y1, ...
+
+Add extra ordering relations yi < x(i+1). This is a succ-sup-lattice in which
+
+x1 = x0+1 = x0 \/ y0, but not x0+1 = y0, so we don't have x+1 = x \/ y |= x+1 = y.
+
+
+TRANSLATION of lattice constraints to Horn clauses (NB x+k "means" x <= -k in Z):
+
+* x <= x+1 leads to: x+1 -> x (we will refer to these as predecessor clauses)
+
+* +-nf's sup L >= x+k become Horn clauses L -> x+k, with L = x1+n1,...,xi+ni
+
+* closure under shifting: if L -> t then L+k -> t+k (k in Z)
+
+* monotonicity: if L' -> t and L contains L' then L -> t
+
+* cut: if L -> t and L,t -> t' then L -> t'
+
+For generating atoms from a set of atoms we only use the first three.
+Since all clauses are Horn clauses we drop "Horn".
+
+
+REFUTATION COMPLETENESS. 
+
+The argument only works in the finite case (see below). Let C be a finite
+set of constraints and S the corresponding set of clauses, including all
+predecessor clauses and closed under shifting. 
+
+The finite set of variables in C is denoted by V. 
+
+Atoms are terms x+n with x in V and n in Z. We call n the offset of the atom x+n.
+The bandwidth of a clause is the difference between the largest offset and the 
+smallest offset of atoms occurring in that clause.  
+The bandwidth of a set of clauses is the largest bandwidth of a clause in that set.
+Note that bandwidth is invariant under shifting(which is important for us),
+but not under the cut rule (not important for us). Assume S has bandwidth B.
+
+S as above defines an increasing and continuous operator H on sets of atoms 
+in the usual way: H(X) = X + all 1-step consequences of X using clauses in S. 
+H^oo(X) is the least fixed point of H starting from the set of atoms X. 
+By M_S we mean H^oo(V+0). 
+
+A variable x in V is called bounded in a set of atoms X if there exists a maximum 
+b_x to the offsets of atoms x+n occurring in X, otherwise x is called unbounded.
+X is called bounded if all x in V are bounded in X, and unbounded otherwise.
+
+There are two possibilities:
+
+1. M_S is bounded. Then we have a "solution in Z" of C given by the assignment
+         M(x) = - max { n | x+n in M_S }. 
+For example, take a constraint x\/y^+ = z from C. This constraint yields clauses
+z -> x, z-> y+1 and  x,y+1 -> z in S. The first two give M(x),M(y)+1 <= M(z), 
+the last one gives M(z) <= max(M(x),M(y)+1).  Hence M |=_Z x\/y^+ = z.
+
+2. M_S is unbounded. Let U be the subset of all x in V that are unbounded in M_S. 
+We show that H^oo(U+k) contains U+k+1, for suitable k. 
+This gives a contradition in the lattice theory. (By shifting, even U+1=U).
+
+First note that there is maximum b of all bounds b_x with x in V-U.
+Let Bb = B+b. The following definitions will be used.
+
+DEF Let X be a bounded set of atoms.
+- The set X|U consists of all atoms in X with variable in U.
+- Assuming no X|{v} is empty, define f_X(v)= max{ n | v+n in X } (the "frontier"). 
+- The set X↓ is the closure of X under the predecessor clauses.
+
+Since M_S =  H^oo(V+0) is unbounded we have K := H^k(V+0) for some k such that
+- f_K(u) > Bb for all u in U, and
+- for all y in V-U and n>0, y+n in H^oo(V+0) implies y+n in K. 
+In other words, K contains all atoms from H^oo(V+0) with variable in V-U and
+positive offsets. Moreover, for each u in U we have an atom u+n in K with n > Bb, 
+that is, at distance greater than B from atoms with variable in V-U. 
+We call such a pair (b,K) a "gap". The intuition is that, because of bandwidth B, 
+atoms "below the gap" cannot play a role in inferring new atoms "above the gap".
+
+Crucial Lemma: with K as above, l>0, u in U and n>f_K(u): 
+  if u+n in H^l(K), then u+n in H^l(K↓|U).
+
+Proof. By induction on l>0.
+
+l=1. Consider L -> u+n with u in U, n>f_K(u)>Bb and L <= K. If x+j in L, 
+then j>=n is not possible, and by bandwidth n-j <= B. Hence j>b so x in U, 
+so L <= K|U. It follows that u+n in H^1(K↓|U).
+
+l+1. Assume OK for l>0. Consider L -> u+n with u in U, n>f_K(u)>Bb and L <= H^l(K).
+If x+j in L, then j>=n is possible and then x in U as n>b. Otherwise n-j <= B,
+j>b so also x in U. It follows that all variables in L are from U.
+Consider u'+m in L. If m>f_K(u') then u'+m in H^l(K↓|U) by IH, otherwise
+u'+m in H^l(K↓|U) since u'+m in K↓|U. Hence u+n in H^(l+1)(K↓|U). QED
+
+Let max = max{ f_K(u) | u in U}. By definition of U as the variables for which we 
+have unbounded atoms, there exists an l such that u+max+1 in H^l(K) for any u in U.
+By the lemma, each such u+max+1 is in H^l(K↓|U). The latter set of atoms is a
+subset of H^l(H^oo(U+max))=H^oo(U+max). So we have U+max+1 <= H^oo(U+max).
+
+Thus we have a form of refutation completeness, classically. 
+Next: make this constructive!
+
+EXAMPLE showing that finiteness is important:
+
+v >= u, v >= u+1, v >= u+2, ... no solution, but not u+1 in H^oo(u+0)
+
+
+--------------------------------------
+
+CONSTRUCTIVE REFUTATION COMPLETENESS FOR sup-succ LATTICES
+
+We give a decision procedure which in a polynomial number of steps 
+finds either a solution, or a proof of a lattice absurdity.
+
+To simplify matters we assume S is a finite set of clauses with bandwidth 1.
+With extra variables and clauses x+1->y and y->x+1 one can reduce the general
+case (with offsets in unary notation) in linear time to bandwidth 1.
+
+NOTATION: We use U+0 --> U+1 for U+1 in H^oo(U+0)
+
+We use a "fair" way of computing lfp((V+0)↓), more restricted than usually:
+
+DEFine by induction on k in N finite sets T_k as follows.
+
+T_0 = (V+0)↓;
+
+T_{k+1} = T_k + {v+m} with m > f_T_k(v) minimal among the pairs v,m such that
+there is L -> v+m with L contained in T_k. (If more than one, 
+take v alphabetically first.) Otherwise T_{k+1} = T_k, and we have a fixed point,
+which gives a solution of the constraints.
+
+DEF Let X be a bounded set of atoms. A gap (of length 2) in X is a pair n,U with 
+non-empty U <= V such that f_X(u) >= n+2 for all u in U, 
+and f_X(v) < n for all v in V-U.
+
+NB It is possible that a gap is the pair 0,V.
+NB bandwidth<=1 excludes interaction between U and V-U at the frontier of a gap.
+
+We observe:
+
+1. For all k, if v+m in T_k, then v+l in T_k for all l<m. 
+PRF By induction on k.
+Base k=0: trivial, as T_0 = (V+0)↓.
+Step k+1: assume OK for k. Let v+m in T_{k+1}. If v+m in T_k then done by IH.
+Otherwise v+m with m>0 is generated by a clause L -> v+m with L contained in T_k.
+Consider the shifting L-1 -> v+m-1, then L-1 contained in T_k by IH.
+By minimality we must have v+m-1 in T_k, so we are done (using again IH).
+
+The latter result shows that in computing the T_k's we actually never apply a 
+clause v+1 -> v (because we start with (V+0)↓ and have assumed bandwidth 1).
+
+2. (V+0)↓ <= T_k <= T_{k+1} and union_{k in N} T_k = lfp(V) (<= is trivial, 
+>= is by fairness and point 1).
+
+3. Each step in T_0,T_1,.. increments one of the variables, if no fixed point 
+is reached. The longest one can avoid a gap is by incrementing variables
+1, 3, 5, ... , 2|V|-1, respectively. This is in total |V|^2 steps. One more step
+results in a gap (possibly 0,V).
+
+4. Let k be minimal such T_k has a gap, say n,U. If U = V, then U+0 ->> U+1
+and we are done. If U < V we also have this, but the argument is more involved.
+
+4a. Recall the gap n,U of T_k. Variables in U have max off-set >= n+2,
+and variables in V-U have off-sets < n. By bandwidth and minimality,
+for every l>k, atoms in T_l - T_k have variables in U, and the clauses
+used to extend T_k have atoms with variables from U only.
+
+4b. For every u in U there is a smallest t(u) such that u+n+2 in T_t(u).
+
+Lemma. Let u in U have minimal t-value among the variables in U.
+Then we have T_(t(u)+l)|U <= H^(l+1)((U+n+1)↓) for all l.
+Prf. By induction on l.
+Base l=0. By definition, u is the first variable that reaches off-set n+2.
+Let L -> u+n+2 be the clause used, then L can only contain atoms in (U+n+1)↓.
+Step l+1. Assume OK for k. We have T_(t(u)+l+1)|U = T_(t(u)+l)|U + {u+j},
+such that we have a clause L -> u+j with L <= T_(t(u)+l). Since j>=n+2, the
+body can only have atoms with variables in U, so L <= T_(t(u)+l)|U.
+Now we can calculate: T_(t(u)+l+1)|U = T_(t(u)+l)|U + H(T_(t(u)+l)|U) <=
+(by IH) H^(l+1)((U+n+1)↓) + H(H^(l+1)((U+n+1)↓)) <= H^(l+2)((U+n+1)↓).
+
+4c. Let u' in U have maximal t-value among the variables in U.
+By applying the lemma in 4b with l = t(u')-t(u) we get 
+U+n+2 <= H^(t(u')-t(u)+1)((U+n+1)↓). By shifting we get U+0 ->> U+1.
+
+NB t in H^k(L) implies there exists a lattice proof of sup L >= t from C.
+This can be proved by induction on k.
+
+
+
+
+
+
+
+
