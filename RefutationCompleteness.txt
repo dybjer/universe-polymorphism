@@ -1,3 +1,100 @@
+Algorithm to test if a finite set of universe-constraints has a solution in Nat.
+
+Definition. A succ-sup-prelattice is a preorder with a successor function
+and a binary sup satisfying all lattice axioms plus the following:
+
+x+1 >= y+1 iff x >= y
+x+1 >= x
+x >= x+1  is absurd
+sup(x+1,y+1) >= sup(x,y)+1 (NB the converse inequality is derivable)
+
+Equality is definable by x=y iff x>=y & y>=x.
+Then all equality axioms are derivable. This means we only need to consider >=.
+
+It is convenient to generalise sup to have any positive number of arguments.
+
+Let V be a set of variables, and C a set of constraints with variables in V.
+A V-term is a term of the form v+k with v in V and k in Nat; such k is
+called the off-set of the term. If L={t1,...,tn}, then L+k= {t1+k,...,tn+k}.
+Wlog (reason omitted) we assume that the constraints in C have the form
+
+sup(t1,...tn) >= v+1,  or sup(t1,...tn) >= v,
+
+with each tn a V-term with off-set at most 1. 
+We say such constraints have bandwidth 1.
+
+The constraints in C are translated to Horn clauses
+
+t1+k,...,tn+k -> v+k(+1) for any integer k (allowing negative off-sets).
+
+We also add Horn clauses v+k+1 -> v+k and call them predecessor clauses.
+The resulting set of clauses is denoted by S, and has some good properties:
+
+If we can infer a term t from a set of terms L using S, then we can also
+infer t+k from L+k from S, for any integer k (trivial, by shifting). 
+If, moreover, k is such that all off-sets in L+k,t+k are in Nat, then
+we can prove sup(L+k) >= t+k in lattice theory using C (proof omitted). 
+ 
+Another good property is that a finite C has a solution in Nat iff 
+a certain least fixed point of S is bounded from above. 
+In the following we make this more precise and give an algorithm. 
+
+Assume that C is finite, and represent S by its clauses ... -> v. There are
+only finitely many such clauses, and all others can be obtained by shifting.
+
+Data structures:
+
+count : Nat
+change : Bool
+frontier : V -> Int
+
+Abbreviation: f0 : V -> Int : (v:V) |-> 0, the initial frontier.
+
+Algorithm (imperative version :-):
+
+count := 0;
+change := true;
+frontier := f0;
+WHILE change & (count <= |V|(|V|-1)/2)
+DO
+  change := false;
+  FORALL (L->v) in S
+  DO
+    IF satisfied(L+frontier(v)+1, frontier)
+    THEN
+      frontier(v) +:= 1;
+      count +:= 1;
+      change := true;
+    FI
+  OD
+OD
+WHERE satisfied(X,f) := ∀ (v+x) in X (x <= f(x)) : Bool      (*)
+
+This algorithm terminates in one of the following ways.
+
+1. change = false. 
+Then we have found a solution of C in Int given by the assignment
+M(v) = -frontier(v), and by shifting we get a solution in Nat.
+
+Proof. Take a constraint sup(u+a,v+b) >= w from C. This constraint yields 
+a clause u+a,v+b -> w in S. We have to prove max(M(u)+a,M(v)+b) >= M(w).
+The shifted clause u+a-M(w)+1,v+b-M(w)+1 -> w-M(w)+1 did not lead
+to a change with the final frontier -M. This means that the lhs
+was not satisfied, that is, either a-M(w) >= -M(u), or b-M(w) >= -M(v),
+by the definition (*) above. Hence max(M(u)+a,M(v)+b) >= M(w).
+
+2. count = 1 + |V|(|V|-1)/2.
+After 1 + |V|(|V|-1)/2 many increments, there must be a gap in the frontier.
+A gap is a natural number n and a subset U of V such that frontier(u) > n
+for all u in U, and frontier(v) < n for all v in V-U. Let's consider
+the largest gap n,U. Because of bandwidth 1, all u in U have crossed the 
+gap n using clauses with all variables in U. It can be shown that 
+sup(U+n) >= sup(U+n)+1 is provable from C. 
+This is a bit tricky and must be formally verified.
+The conclusion in this case is that C has no solution in Nat. 
+
+------------------------------------------------------------------
+
 COUNTEREXAMPLE against the completeness of Z for succ-sup-lattices.
 
 In Z we have x+1 = (x \/ y) |=_Z x+1 = y.
@@ -62,7 +159,7 @@ the last one gives M(z) <= max(M(x),M(y)+1).  Hence M |=_Z x\/y^+ = z.
 
 2. M_S is unbounded. Let U be the subset of all x in V that are unbounded in M_S. 
 We show that H^oo(U+k) contains U+k+1, for suitable k. 
-This gives a contradition in the lattice theory. (By shifting, even U+1=U).
+This gives a contradiction in the lattice theory. (By shifting, even U+1=U).
 
 First note that there is maximum b of all bounds b_x with x in V-U.
 Let Bb = B+b. The following definitions will be used.
