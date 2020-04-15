@@ -59,14 +59,12 @@ WHILE change & (count <= |V|(|V|-1)/2)
 DO
   change := false;
   FORALL (L->v) in S
-  DO
     IF satisfied(L+frontier(v)+1, frontier)
     THEN
       frontier(v) +:= 1;
       count +:= 1;
       change := true;
-    FI
-  OD
+    FI;
 OD
 WHERE satisfied(X,f) := ∀ (v+x) in X (x <= f(x)) : Bool      (*)
 
@@ -87,11 +85,11 @@ by the definition (*) above. Hence max(M(u)+a,M(v)+b) >= M(w).
 After 1 + |V|(|V|-1)/2 many increments, there must be a gap in the frontier.
 A gap is a natural number n and a subset U of V such that frontier(u) > n
 for all u in U, and frontier(v) < n for all v in V-U. Let's consider
-the largest gap n,U. Because of bandwidth 1, all u in U have crossed the 
-gap n using clauses with all variables in U. It can be shown that 
-sup(U+n) >= sup(U+n)+1 is provable from C. 
+the largest gap n with smallest U. Because of bandwidth 1, all u in U have 
+"crossed the  gap n" using clauses with all variables in U. 
+It can be shown that sup(U+n) >= sup(U+n)+1 is provable from C. 
 This is a bit tricky and must be formally verified.
-The conclusion in this case is that C has no solution in Nat. 
+The conclusion in this case is that C has no solution in Nat.
 
 ------------------------------------------------------------------
 

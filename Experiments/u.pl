@@ -1,5 +1,4 @@
 % swipl, may run with other prologs as well; toy examples: ./xyz*.in
-
 % run with "test(file)." where "file" is an input file name without ".in"
 
 % vars/1 refers to the variables in the input file with clauses Sup => Var
@@ -15,7 +14,7 @@ init_frontier(N):- vars(Vars),forall(member(Var,Vars),put(Var,N)).
 satisfied(Sup,Var):- forall(member(T,Sup),
   (T=V+O -> (get(Var,N),get(V,M),+O+N < M) ;
   (T=V-O -> (get(Var,N),get(V,M),-O+N < M) ;
-  (var(T)-> (get(Var,N),get(T,M),+T+N < M))))).
+            (get(Var,N),get(T,M),   N < M)))).
 
 % test/0 sparks the depth-first search for a model, or finds a gap
 
