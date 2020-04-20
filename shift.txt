@@ -1,0 +1,221 @@
+I would like to have a result about sup semi lattice with -only- the equational rules
+
+1 + (x\/y) = (1+x) \/ (1+y)
+
+ x \/ (1+x) =    1+x
+
+
+The claim would be that
+
+(1) a finitely presented such lattice is decidable
+
+(2) we can decide and find if such a f.p. lattice contains a such that   a+1 = a
+
+This should be all that is needed to check that a finite number of constraints does not
+imply any “loop” and to decide if a constraint is a consequence of the given constraints
+
+The proofs of (1)  and (2), if I am not mistaken, are variations on Marc’s algorithm.
+
+We have a finite number of constraints   X1 -> a1, …, Xn -> an   with a gain/bandwith <= 1
+
+X -> a      X non empty finite set of terms, a term
+a term     a is of the form  x + n    n in Z, x atom
+
+
+ a+1 -> a
+ X -> a    iff    X+1 -> a+1
+
+
+We start from assigning the value 0 to all variables We proceed as in Marc’s algorithm
+
+This is like trying to enumerate all consequences of V = x1,..,xm
+
+Either 
+
+-all variables get increased by at least 1   then we have  a loop with  a = sup V   we have a = a+1
+
+-or we find a “gap”: we have g and U subset V non empty
+ all variables in U has a value > g
+ all variables in V-U  have a value < g
+ we have only consequences increasing values in U
+ then we have a loop with a = sup U
+
+-or we don’t increase the variables any more: we don’t have a loop
+
+
+Note that in the second case, for all atom x in U  we have that all x+n are consequences 
+What we can do then is to take away all variables in U from X1 -> a1,.., Xn -> an
+and we get a set of constraints that is in the third case
+
+
+ Example (Marc):   y+1 -> x,   y -> y+1,   z -> x
+
+ x, y
+ y+1
+ y+2
+ x+1
+ y+3
+ x+2
+ ...
+
+
+  Example:   x+1 -> t,    y+1 -> x,   y -> y+1
+
+ x, y, t
+ y+1
+ y+2
+ x+1
+ y+3
+ x+2
+ y+4
+ t+1
+
+
+To take a trivial example
+
+   x, z -> t+1      x, y -> x+1       x, y -> y+1
+
+we have V = x,y,z,t
+
+  t+1,   x+1,   y+1,   x+2, y+2, ....
+
+
+We get U = x,y
+
+If we take away   the variables in U we get the system       z -> t+1
+
+And the only consequences   of   z, t    are   z + n   n<=0   and t+n   n <= 1
+
+I need
+
+ -only variables in U are increased infinitely often
+ -if we take away the variables in U
+
+
+This implies that    we can decide     x1, …, xm -> a 
+V = x1,…,xm   all atoms
+a term
+
+
+
+
+It follows from this that we can decide   any        x1 + k1, .., xm + km -> a
+Let
+   k = max(k1,..,km)
+   l = min(k1,…,km)
+   Y = x1 + k1,.., xm +km
+
+We can represent geometrically all consequences of   V+k   and V+l
+and the consequences of Y are “in between” these consequences
+
+
+If we are in the first case, we can deduce a
+
+If we are in the third case a = x+l,  we enumerate
+all consequences of x1+k1,…,xm+k and it is bounded above since between consequences of V+k and V+l
+so we can decide if a is a consequence
+
+We reduce the second case to the third case by taking away all variables in U.
+
+ I use completeness
+
+
+
+And then I also think that we can decide   any   y1 + l1,…,yp+lp -> a    y1,..,yp  subset of V
+
+
+---------------------------------------
+
+
+ Some more historical remarks:
+
+ -Hertz introduced this notion of sequent X -> a.
+ This influenced Gentzen (and his first paper was exactly about this kind of sequents)
+
+ -Tarski had an equivalent more algebraic presentation in term of consequence relation
+(which is presented in Aczel’s paper)
+
+ -It might be Lorenzen who was the first to point out the connection between this kind of sequent
+calculus and meet/sup semi lattice
+
+ -when Russell introduced the “doctrine of types” in Appendix B of Principles of Mathematics
+(1903) he considers the possibility of the hierarchy of type being indexed by rational numbers!
+
+---------------------------------------
+
+ In this email, I formulate a slight generalisation of what we can do
+with Marc’s algorithm. I only state the result without tying to describe the algorithm.
+ If correct this is a purely syntactical result (no models).
+
+-----------------------
+
+ First, we recall the well-known propositional Horn clause inference
+
+ We have some atoms a, b, c, …
+
+ We have a finite set of clauses   X1 -> a1,  …, Xn -> an
+X1,…,Xn finite sets of atoms
+
+ We write X, a   for   X union {a}
+
+ The inference rules are
+
+ X ->  a         if    a in X
+ X’ -> a         if     X -> a   and X subset X’
+ X -> b         if      X -> a   and X, a -> b
+
+
+ The problem is: to decide if a clause X -> a is a consequence
+of given clauses X1-> a1,…, Xn -> an
+
+
+
+ The algorithm is as follows. We start from X, and we add
+all direct consequences: we add ai if Xi subset X and ai not in X
+We then get a bigger set X’. We add again all direct consequences
+of X’, and so on until we get a fix point X^m
+
+ We then test if a is in X^m
+ If it is, X -> a is a consequence of the given clauses
+ If it is not, X -> a is not a consequence
+ 
+
+-------------------------------------
+
+
+ What we have is a generalization of this algorithm where
+
+ -the atoms are of the form a+n   n integer
+
+ -we add two new inference  rules
+
+             X -> a   iff    X+n -> a+n   n integer
+
+             a+1 -> a
+
+
+  Here is an example:    the given set of clauses is
+
+ a, b -> a+1
+ a, b -> b+1
+
+ Then we have  a, b -> a+n   for any n
+
+ Indeed, starting from a, b  we add a+1 then b+1 then a+2, then b+2 and so on
+
+ Intuitively we have a loop (which corresponds in an inconsistency for universe
+levels)
+
+
+ Another similar example:   a, b -> c    a, c -> b+,   b, c -> a+
+ Starting from a, b, we deduce all a+n, b+n, c+n
+
+
+ In general we can decide  if we can deduce X -> a from X1-> a1,…, Xn -> an
+using these rules.
+
+ The idea is also to start from X and to try to deduce all consequences
+ The main idea is that we can recognize when there is a loop (using the notion
+of gap described in Marc’s message).
+
+
