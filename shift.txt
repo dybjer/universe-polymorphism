@@ -41,9 +41,6 @@ V |- x+1 for all x in V
 This means that we have a complete description of all consequences of V: 
 we have V |- x+ n  for all n if x in U and V |- x+ n for n <= n(x) for x in V-U
 
-COR: if U is empty, then M(x)= -n(x) is a solution in Z of the set of
-constraints sup(A) >= a, for each A -> a in the set of clauses. 
-
 PROOF of THM: by induction on |V|
 
 If V has only one variable we
@@ -98,18 +95,57 @@ QED
  The clause  x+1, y -> y+1 gets activated
  We add y to W  and we have W = V = U
 
- 
-PROOF of COR: write A -> a as X,Y+1 -> x  (+1).
 
-To prove: max(M(X),M(Y)+1) >= M(x)(+1),
-which is equivalent to min(n(X),n(Y)-1) <= n(x)   (-1).
-Case lhs = n(xi), then X+n(xi),Y+n(xi)+1 -> x+n(xi)   (+1)
-is activated, so n(x)>=n(xi)   (+1).
-Other cases are very similar.
+COR of THM:  Consider -∞,Z with Z ordered as usual and -∞ < n for all z in Z.
+Consider max as interpretation of \/, the usual +1 on Z  and  -∞+1 = -∞
+as interpretation of successor. 
+Then we have a (\/,+1) semi-lattice (since we don't require x+1 > x).
+Define M(x) = -∞ for all x in U and M(x)= -n(x) for x in V-U.
+Then M satisfies all constraints sup(A) >= a, for each A -> a in the set of clauses.
 
-QED
+PROOF: write A -> a as X,Y+1 -> z+ℓ, where ℓ=0,1 (ℓ can actually be arbitrary).
 
-More examples in the Prolog files (slightly different algorithm)
+To prove: max(M(X),M(Y)+1) >= M(z)+ℓ.
+
+If z in U this is trivial. If X and Y are subsets of U, then also z in U.
+(Proof: U |- u+1 for all u in U, so U |- u+k for all k in Z and u in U,
+so U |- z+k for all k in Z by the clause X,Y+1 -> z+ℓ, so z in U.)
+
+Hence we may assume z not in U and (X + Y) - U non-empty. Since M(u) = -∞ 
+for all u in U, we assume wlog that X and Y do not overlap with U.
+In that case we have that max(M(X),M(Y)+1) >= M(z)+ℓ
+is equivalent to min(n(X),n(Y)-1) <= n(z)-ℓ. Distinguish now two cases:
+
+- Case lhs = n(xi), then X+n(xi),Y+n(xi)+1 -> z+n(xi)+ℓ is activated,
+  so n(z) >= n(xi)+ℓ.
+- Case lhs = n(yj)-1, then X+n(yj)-1,Y+n(yj) -> z+n(yj)-1+ℓ is activated,
+  so n(z) >= n(yj)-1+ℓ.
+
+In both cases we are done. QED
+
+
+As an application of the above corollary we get a limited completeness result:
+
+For all x in V-U and k in Z:
+
+sup(V) >= x+k is provable from the lattice constraints iff V |- x+k.
+
+Proof. 
+
+"if" is easy, all steps in the proof of V |- x+k can be mimicked in lattice theory.
+
+"only if": is follows from the theorem if k <= n(x). 
+If k > n(x), then in the model of the corollary we have 
+on one hand M(x)+k = -n(x)+k > 0.
+On the other hand, max(M(V)) <= 0 since M(z) = -n(z) or -∞.
+Hence sup(V) >= x+k is false in the model and by soundness
+provability of sup(V) >= x+k in case k > n(x) is absurd.
+
+
+
+
+
+MORE EXAMPLES: in the Prolog files (slightly different algorithm)
 
 
 
