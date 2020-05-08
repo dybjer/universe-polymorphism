@@ -126,23 +126,25 @@ In both cases we are done. QED
 
 As an application of the above corollary we get a limited completeness result:
 
-For all x in V-U and k in Z:
+For all x in V and k in Z:
 
-sup(V) >= x+k is provable from the lattice constraints iff V |- x+k.
+sup(V) >= x+k is provable from the lattice constraints  iff  V |- x+k.
 
 Proof. 
 
 "if" is easy, all steps in the proof of V |- x+k can be mimicked in lattice theory.
 
-"only if": is follows from the theorem if k <= n(x). 
+For "only if", distinguish two cases:
+
+1. x in U. Recall U |- u+1 for all u in U, so U |- u+k for all k in Z.
+So, if x in U, then U |- x+k, so V |- x+k. 
+
+2. x in V-U. If k <= n(x), then V |- x+k follows from the theorem. 
 If k > n(x), then in the model of the corollary we have 
 on one hand M(x)+k = -n(x)+k > 0.
 On the other hand, max(M(V)) <= 0 since M(z) = -n(z) or -∞.
 Hence sup(V) >= x+k is false in the model and by soundness
 provability of sup(V) >= x+k in case k > n(x) is absurd.
-
-
-
 
 
 MORE EXAMPLES: in the Prolog files (slightly different algorithm)
