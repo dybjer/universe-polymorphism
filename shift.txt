@@ -58,25 +58,29 @@ If there is no such clause, we have U = empty and n(x) = 0 for all x in V
 Otherwise we let W the set of x such that we have a clause of this form of
 conclusion x+1
 
-If W = V then we have U = V
+(*) If W = V then we have U = V
 
 If |W| < |V|, by induction we compute all consequences of W+1 using only
 clauses that mention only elements in W
 we compute U and n(x) for x in W-U
 
 A clause A -> z+1 with z in V-W gets activated if we have the following
--if  x+1 is in A we have x in W and 
--if x+2 is in A we have x in U or n(x) =>2 
+-if x is in A we require nothing (since x in V), and
+-if x+1 is in A we have x in W (then V |- x+1), and 
+-if x+2 is in A we have x in U or n(x) >= 2 (then V |- x+2)
 
 If such a clause gets activated we know that we have V |- z+1
 
-If there is no clause  A -> z+1   z in V-W  which gets activated 
+If there is no clause  A -> z+1,  z in V-W, which gets activated 
 we have computed all consequences of V: we add n(z) = 0 for z in V-W
-This is because the clauses   A -> x+1   x in W  where there are some variables
-in V-W appearing in A cannot produce new consequences
+This is because the clauses   A -> x+1,   x in W, where there are some 
+variables in V-W appearing in A cannot produce new consequences
+(This is subtle: if x in U then already W |- x+k for all k (by IH). 
+If x not in U, then x+n(x)+1 requires a clause with a variable y in
+V-W, and n(y)=0. Nothing new is produced.)
 
-If there are some clauses A -> z+1 z in V-W getting activated
-we add to W all these variables and we start again
+If there are some clauses A -> z+1, z in V-W, getting activated
+we add to W all these variables and we start again at (*)
 
 At some point we find W, U subset W and n(x) = 0 for x in V-W
 or we have W = V and we have U = V.
