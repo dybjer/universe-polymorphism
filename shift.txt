@@ -2,11 +2,11 @@ Two examples (without cumulativity).
 
 1.          |- U_x : U_x     not well-typed: x = x+1 not solvable in Z
 
-2.   A: U_x |- ((U_y -> 1) -> A) = A : U_z   well/ill-typed? Analysis:
+2.   A: U_x |- Id_U_z(((U_y -> 1) -> A),A)   well/ill-typed? Analysis:
 
 ((U_y -> 1) -> A) : U_((y+1) \/ x)  and A: U_x, 
 
-so we must solve the level constraints ((y+1) \/ x) = x and z = x. 
+so we must solve the level constraints ((y+1) \/ x) = z and x = z. 
 Solution: x = z = 1, y = 0. So this example is fine.
 
 
@@ -17,13 +17,16 @@ of sup semi-lattice with two extra equational axioms for +:
 
 x \/ (x+1) =   x+1
 
+Claim: this theory is decidable and we can detect loops.
+
 Shorthand: s >= t for s \/ t = s, so the last one is x <= x+1
 
 Change of narrative: from lattices to Horn clauses (`equivalent')
 
 Example: ((y+1) \/ x) = x translates to y+1, x -> x and x -> x and x -> y+1.
-Note that only the last one is informative, indeed it expresses x >= y+1
+Note that only the last one is informative, indeed it expresses x >= y+1.
 
+Generally L -> t means that sup(L) >= t.
 
 WLOG (!) we start from a set of clauses of the form   A -> a  where all 
 atoms in A,a are of the form x or x+1, and A non empty
@@ -51,7 +54,7 @@ Assume V has more than one variable and the theorem holds for all set
 of variables < |V|
 
 We look at all clauses of the form A -> x+1 where all atoms in A are of the
-form y
+form y in V
 
 If there is no such clause, we have U = empty and n(x) = 0 for all x in V
 
@@ -65,15 +68,16 @@ clauses that mention only elements in W
 we compute U and n(x) for x in W-U
 
 A clause A -> z+1 with z in V-W gets activated if we have the following
--if x is in A we require nothing (since x in V), and
--if x+1 is in A we have x in W (then V |- x+1), and 
--if x+2 is in A we have x in U or n(x) >= 2 (then V |- x+2)
+-if x is in A we require nothing (since x in V, so V |- x), and
+-if x+1 is in A we have x in W (then W |- x+1, so V |- x+1), and 
+-if x+2 is in A we have x in U or n(x) >= 2 (then W |- x+2, so V |- x+2)
 
 If such a clause gets activated we know that we have V |- z+1
 
 If there is no clause  A -> z+1,  z in V-W, which gets activated 
-we have computed all consequences of V: we add n(z) = 0 for z in V-W
-This is because the clauses   A -> x+1,   x in W, where there are some 
+we have computed all consequences of V: we add n(z) = 0 for z in V-W,
+and we take the U for V the same as the U for W, both n(_) and U from IH.
+This is because the clauses A -> x+1, x in W, where there are some 
 variables in V-W appearing in A cannot produce new consequences
 (This is subtle: if x in U then already W |- x+k for all k (by IH). 
 If x not in U, then x+n(x)+1 requires a clause with a variable y in
@@ -82,13 +86,13 @@ V-W, and n(y)=0. Nothing new is produced.)
 If there are some clauses A -> z+1, z in V-W, getting activated
 we add to W all these variables and we start again at (*)
 
-At some point we find W, U subset W and n(x) = 0 for x in V-W
+At some point we end in the situation with no activated clauses,
 or we have W = V and we have U = V.
 
 QED
 
 
- Example:   x+1, y -> y+1       y -> z+1     z -> x+1
+ Example:   x+1 -> y       y -> z+1     z -> x+1
 
  V = x, y, z
  W = x, z
@@ -96,7 +100,7 @@ QED
  There is only one clause  z -> x+1
  The consequences of z+1, x+1  are  z+1, x+2
 
- The clause  x+1, y -> y+1 gets activated
+ The clause  x+2 -> y+1 gets activated
  We add y to W  and we have W = V = U
 
 
@@ -149,6 +153,15 @@ on one hand M(x)+k = -n(x)+k > 0.
 On the other hand, max(M(V)) <= 0 since M(z) = -n(z) or -∞.
 Hence sup(V) >= x+k is false in the model and by soundness
 provability of sup(V) >= x+k in case k > n(x) is absurd.
+
+
+Example: x \/ y >= x+1 does not prove y >= x+1.
+
+Consider x,y -> x+1 and start from y. We get nothing by y, not x+1.
+
+Countermodel x, y, x\/y take for +1 the identity function.
+
+We have sup(x,y) >= x = x+1, but not y >= x+1 = x.
 
 
 MORE EXAMPLES: in the Prolog files (slightly different algorithm)
