@@ -1,6 +1,9 @@
 % swipl, may run with other prologs as well; toy examples: ./xyz*.in
 % run with "test(file)." where "file" is an input file name without ".in"
 
+% syntax
+:-op(1199, xfx, =>).
+
 % vars/1 refers to the variables in the input file with clauses Sup => Var
 
 init_bound(N):- vars(Vars),length(Vars,M), N is M*(M-1)/2.
@@ -30,8 +33,6 @@ step(_,_):- print_model.
 
 %%%%%%%avoid reading this block with silly auxiliaries%%%%%%%
 
-% syntax
-:-op(1199, xfx, =>).
 
 % hash table
 :-dynamic frontier/2.
