@@ -80,8 +80,8 @@ and we take the U for V the same as the U for W, both n(_) and U from IH.
 This is because the clauses A -> x+1, x in W, where there are some 
 variables in V-W appearing in A cannot produce new consequences
 (This is subtle: if x in U then already W |- x+k for all k (by IH). 
-If x not in U, then x+n(x)+1 requires a clause with a variable y in
-V-W, and n(y)=0. Nothing new is produced.)
+If x in W-U, then n(x)>=1 and x+n(x)+1 requires a clause with a 
+variable y in V-W, but n(z)=0 for z in V-W. Nothing new is produced.)
 
 If there are some clauses A -> z+1, z in V-W, getting activated
 we add to W all these variables and we start again at (*)
