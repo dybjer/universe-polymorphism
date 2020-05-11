@@ -1,0 +1,7 @@
+vars([x,y,z]).
+
+% from shift.txt x+1 -> y       y -> z+1     z -> x+1
+
+[x+1] => y.
+[y-1] => z.
+[z-1] => x.
