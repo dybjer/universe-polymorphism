@@ -58,8 +58,8 @@ form y in V
 
 If there is no such clause, we have U = empty and n(x) = 0 for all x in V
 
-Otherwise we let W the set of x such that we have a clause of this form of
-conclusion x+1
+Otherwise we let W be the (non-empty) set of x such that 
+we have a clause of this form of conclusion x+1
 
 (*) If W = V then we have U = V
 
@@ -81,7 +81,7 @@ This is because the clauses A -> x+1, x in W, where there are some
 variables in V-W appearing in A cannot produce new consequences
 (This is subtle: if x in U then already W |- x+k for all k (by IH). 
 If x in W-U, then n(x)>=1 and x+n(x)+1 requires a clause with a 
-variable y in V-W, but n(z)=0 for z in V-W. Nothing new is produced.)
+variable y in V-W, but n(z)=0 for z in V-W. Recall bandwidth!)
 
 If there are some clauses A -> z+1, z in V-W, getting activated
 we add to W all these variables and we start again at (*)
@@ -103,6 +103,13 @@ QED
  The clause  x+2 -> y+1 gets activated
  We add y to W  and we have W = V = U
 
+
+ Example: x+1,y -> x+1   x,y+1 -> y+1
+
+ V = x, y
+ W empty
+
+ We put n(x) = n(y) = 0 and U is empty
 
 COR of THM:  Consider -∞,Z with Z ordered as usual and -∞ < n for all z in Z.
 Consider max as interpretation of \/, the usual +1 on Z  and  -∞+1 = -∞
