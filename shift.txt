@@ -91,8 +91,27 @@ we have V |- x+ n  for all n if x in U and V |- x+ n for n <= n(x) for x in V-U
  The clause  x+2 -> y+1 gets activated
  We add y to W  and we have W = V = U
 
+ Example:   y+1 -> x,   y -> y+1,   z -> x
+
+ We have W = y and U = W
+ The clause y+1 -> x gets activated, we add x
+ We have W = x,y and U = W
+ We have z in V-W and n(z) = 0
+
+  Example:   x+1 -> t,    y+1 -> x,   y -> y+1
+
+ We have W = y and U = W
+ The clause y+1 -> x gets activated, we add x
+ We have W = x,y and U = W 
+ The clause x+1 -> t gets activated, we add t
+ We have W = x,y,z and U = W = V
+
+
+
+
 
 PROOF of THM: by induction on |V|
+
 
 If V has only one variable we
  either have no non-trivial clause in which case U = empty and n(x) = 0 
