@@ -1,13 +1,13 @@
 Two examples (without cumulativity).
 
-1.          |- U_x : U_x     not well-typed: x = x+1 not solvable in Z
+1.          |- U_x : U_x     not well-typed: x = x+1 is a loop
 
 2.   A: U_x |- Id U_z ((U_y -> 1) -> A) A   well/ill-typed? Analysis:
 
 ((U_y -> 1) -> A) : U_((y+1) \/ x)  and A: U_x, 
 
 so we must solve the level constraints ((y+1) \/ x) = z and x = z. 
-Solution: x = z = 1, y = 0. So this example is fine.
+This does not create a loop (e.g. in Z, with x = z = 1, y = 0). So this example is fine.
 
 
  We write the type corresponding to 2 as
@@ -38,11 +38,11 @@ Solution: x = z = 1, y = 0. So this example is fine.
  a level l such that l+1 <= l
 
  In general, we must solve constraints in the theory 
-of sup semi-lattice with two extra equational axioms for +:
+of sup semi-lattice with one unary operation x+ and two extra equational axioms for +:
 
-(x\/y) + 1 = (x+1) \/ (y+1)
+(x\/y)+  = x+ \/ y+
 
-x \/ (x+1) =   x+1
+x \/ x+ =   x+
 
  Claim: this theory is decidable and we can detect loops.
 
