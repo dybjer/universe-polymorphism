@@ -25,7 +25,7 @@ Solution: x = z = 1, y = 0. So this example is fine.
  In general a constraint problem may not have a most general solution but several independent
  solution so we have to duplicate statements in an artifical way
 
- More importantly, one can argue that (1) expresses better what is going on than (2)
+ More importantly, one can argue that (1) expresses in a clearer way what is going on than (2)
 
 
 
