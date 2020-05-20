@@ -1,0 +1,214 @@
+%\documentclass[12pt,a4paper]{amsart}
+\documentclass[11pt,a4paper]{article}
+%\ifx\pdfpageheight\undefined\PassOptionsToPackage{dvips}{graphicx}\else%
+%\PassOptionsToPackage{pdftex}{graphicx}
+\PassOptionsToPackage{pdftex}{color}
+%\fi
+
+%\usepackage{diagrams}
+
+%\usepackage[all]{xy}
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{latexsym}
+\usepackage{amssymb,amstext,amsmath,amsthm}
+\usepackage{epsf}
+\usepackage{epsfig}
+% \usepackage{isolatin1}
+\usepackage{a4wide}
+\usepackage{verbatim}
+\usepackage{proof}
+\usepackage{latexsym}
+%\usepackage{mytheorems}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}{Lemma}[theorem]
+\newtheorem{proposition}{Proposition}[theorem]
+
+\usepackage{float}
+\floatstyle{boxed}
+\restylefloat{figure}
+
+
+%%%%%%%%%copied from SymmetryBook by Marc
+
+% hyperref should be the package loaded last
+\usepackage[backref=page,
+            colorlinks,
+            citecolor=linkcolor,
+            linkcolor=linkcolor,
+            urlcolor=linkcolor,
+            unicode,
+            pdfauthor={CAS},
+            pdftitle={Symmetry},
+            pdfsubject={Mathematics},
+            pdfkeywords={type theory, group theory, univalence axiom}]{hyperref}
+% - except for cleveref!
+\usepackage[capitalize]{cleveref}
+%\usepackage{xifthen}
+\usepackage{xcolor}
+\definecolor{linkcolor}{rgb}{0,0,0.5}
+
+%%%%%%%%%
+\def\oge{\leavevmode\raise
+.3ex\hbox{$\scriptscriptstyle\langle\!\langle\,$}}
+\def\feg{\leavevmode\raise
+.3ex\hbox{$\scriptscriptstyle\,\rangle\!\rangle$}}
+
+%%%%%%%%%
+\newcommand\myfrac[2]{
+ \begin{array}{c}
+ #1 \\
+ \hline \hline
+ #2
+\end{array}}
+
+
+\newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}}%
+\newcommand*{\Resize}[2]{\resizebox{#1}{!}{$#2$}}
+
+\newcommand{\II}{\mathbb{I}}
+\newcommand{\refl}{\mathsf{refl}}
+\newcommand{\mkbox}[1]{\ensuremath{#1}}
+
+
+\newcommand{\Id}{\mathsf{Id}}
+\newcommand{\conv}{=}
+%\newcommand{\conv}{\mathsf{conv}}
+\newcommand{\lam}[2]{{\langle}#1{\rangle}#2}
+\def\NN{\mathsf{N}}
+\def\UU{\mathsf{U}}
+\def\JJ{\mathsf{J}}
+\def\Level{\mathsf{Level}}
+%\def\Type{\hbox{\sf Type}}
+\def\ZERO{\mathsf{0}}
+\def\SUCC{\mathsf{S}}
+
+\newcommand{\type}{\mathsf{type}}
+\newcommand{\N}{\mathsf{N}}
+\newcommand{\Set}{\mathsf{Set}}
+\newcommand{\El}{\mathsf{El}}
+%\newcommand{\U}{\mathsf{U}} clashes with def's in new packages
+\newcommand{\T}{\mathsf{T}}
+\newcommand{\Usuper}{\UU_{\mathrm{super}}}
+\newcommand{\Tsuper}{\T_{\mathrm{super}}}
+%\newcommand{\conv}{\mathrm{conv}}
+\newcommand{\idtoeq}{\mathsf{idtoeq}}
+\newcommand{\isEquiv}{\mathsf{isEquiv}}
+\newcommand{\ua}{\mathsf{ua}}
+\newcommand{\UA}{\mathsf{UA}}
+%\newcommand{\Level}{\mathrm{Level}}
+\def\Constraint{\mathsf{Constraint}}
+\def\Ordo{\mathcal{O}}
+
+\def\Ctx{\mathrm{Ctx}}
+\def\Ty{\mathrm{Ty}}
+\def\Tm{\mathrm{Tm}}
+
+\def\CComega{\mathrm{CC}^\omega}
+\setlength{\oddsidemargin}{0in} % so, left margin is 1in
+\setlength{\textwidth}{6.27in} % so, right margin is 1in
+\setlength{\topmargin}{0in} % so, top margin is 1in
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{9.19in} % so, foot margin is 1.5in
+\setlength{\footskip}{.8in}
+
+% Definition of \placetitle
+% Want to do an alternative which takes arguments
+% for the names, authors etc.
+
+\newcommand{\natrec}{\mathsf{natrec}}
+\newcommand{\nats}{\mathbb{N}}
+%\rightfooter{}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\sct}[1]{[\![#1]\!]}
+
+
+
+\begin{document}
+
+\title{An algorithm}
+
+\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
+\date{}
+\maketitle
+
+
+
+We assume given a finite set of variables $V$. If $x$ is in $V$
+an {\em atom} is a formal sum $x+n$ with $n$ natural number. We identify
+$x$ in $V$ with the atom $x+0$. We write $a,b,\dots$ for atoms.
+If $a = x+n$ we write $a+k$ for $x+n+k$. If $A$ is a finite set of atoms $a_1,\dots,a_n$
+we write $A+k$ for $a_1+k,\dots, a_n+k$.
+
+ We add to $\nats$ a formal element $\infty$ with $n\leqslant \infty$ and $1+\infty = \infty$.
+
+ Given a function $f(z)$ in $\nats + \infty$ we let $M(V,f)$ be the set of atoms
+ $x+k$ with $k\leqslant f(z)$.
+
+ Given a set $C$ of Horn clauses $A\rightarrow a$, a {\em model} of $C$ is
+a set $M$ of atoms such that $A\subseteq M$ implies $a\in M$ for all $A\rightarrow a$
+in $C$. We write $A\vdash a$ if we can deduce $a$ from $A$ using clauses in $C$.
+The set of consequences of $A$ is the least model of $C$ containing $A$.
+
+ We consider a set $C$ of Horn clauses such that
+\begin{enumerate}
+%\item if $A\rightarrow a$ in $C$ then $A$ is non empty
+\item if $A\rightarrow y+n$ in $C$ and $x+m$ in $A$ then $n-m\leqslant 1$
+\item if $B+1\rightarrow y+n$ in $C$ and $n>1$ then $B\rightarrow y+n-1$ in $C$
+\item if $A\rightarrow a$ in $C$ then $A+1\rightarrow a+1$ in $C$
+\item given $y$ in $V$ we can list all clauses $A\rightarrow y+k$ in $C$  
+\end{enumerate}  
+
+If $W\subseteq V$ we write $C_W$ the set of Horn clauses with only variables in $W$.
+It is clear that $C_W$ satisfy the same conditions we just listed.
+
+Given such a set $C$, we claim that we can compute a function $f(z)$ for $z$ in $V$
+such that $M(V,f)$ is the set of consequences of $V$. This follows from the following lemma.
+
+
+\begin{lemma}
+  If $f(z)$ for $z$ in $W$ is such that $M(W,f)$ is the set of consequences of $W$ for $C_W$
+  and we define $g(x) = f(x)+1$ for $x\in W$ and $g(x) = 0$ for $x\in V\setminus W$
+  and there is no clause $A\rightarrow y+1$ with $A\subseteq M(V,g)$
+  and we can derive $z+1$ from $V$ for all $z$ in $W$
+  then $M(V,g)$ is the set of consequences of $V$. 
+\end{lemma}  
+ 
+\begin{proof}
+  First, we can derive $x+k$ from $V$ if $k\leqslant g(x)$: this is clear if $x$ is in $V\setminus W$
+  since then $g(x) = 0$, and if $x$ is in $W$ and $k>0$ we have $W\vdash x+k-1$ and so $W+1\vdash x+k$
+  using condition (3) and we have $V\vdash z+1$ for all $z$ in $W$, hence $V\vdash x+k$.
+
+  Second,  we show that $M(V,g)$ is a model of $C$ containing $V$. The only thing we have to show that is that
+  if $A\rightarrow z+n$ in $C$ and $z$ in $W$ then $n\leqslant g(z)$.
+
+  This is clear if $n\leqslant 1$ since $1\leqslant g(z)$.
+
+  If $n>1$ then condition (1) shows that $A = B+1$ and we have
+  $A\subseteq M(W,g)$ since $g(y) = 0$ if $y\in V\setminus W$. We then $B\vdash y+n-1$
+  by condition (2) and $n-1\leqslant f(y)$ since $M(W,f)$ is a model of $C_W$.
+  So we also have $n\leqslant f(y)+1 = g(y)$.
+\end{proof}
+
+\begin{theorem}
+We can compute $f(z)$ for $z$ in $V$ such that $V\vdash z+n$ if, and only if, $n\leqslant f(z)$.
+\end{theorem}  
+
+
+Assume that we have $f(z)<\infty$ for all $z$ in $V$. This provides a {\em finite} model $M(V,f)$
+of $C$. Using conditions (1) and (2), we see that $M(V, \lambda_z f(z) +k)$ is a (finite) model of $C$
+for any $k$. As an application we get a decision algorithm for deciding if $a$ is a consequence
+of a set $x+p(x),~x\in V$ for a given function $p(x)$ in $\nats$. Indeed we know that the set of
+consequences is a subset of $M(V, \lambda_z f(z)+k)$ for $k$ maximum of all $p(x)$ and this set
+is finite.
+
+
+
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}
