@@ -1,24 +1,27 @@
 % swipl, may run with other prologs as well; toy examples: ./xyz*.in
 % run with "test(file)." where "file" is an input file name without ".in"
 
-% vars/1 refers to the variables in the input file with clauses Sup => Var
+% finds a model in N,infty with n < infty for all n in N and infty+1 = infty
 
-init_bound(N):- vars(Vars),length(Vars,M), N is M*(M-1)/2.
+% syntax
+:-op(1199, xfx, =>).
+
+% vars/1 refers to the variables in the input file with clauses Sup => Var
 
 % get/2 and put/2 refer to the hash table frontier
 
 init_frontier(N):- vars(Vars),forall(member(Var,Vars),put(Var,N)).
 
-% activated/2 tests whether Sup => Var is enabled to increment Var 
+% activated/2 tests whether Sup => Var is enabled to increment Var to 1
 
-activated(Sup,Var):- get(Var,N), forall(member(T,Sup),
-  (T=V+O -> (get(V,M),+O+N < M) ;
-  (T=V-O -> (get(V,M),-O+N < M) ;
-            (get(T,M),   N < M)))).
+activated(Sup,Var):- forall(member(T,Sup),
+  (T=V+O -> (get(V,M),+O < M) ;
+  (T=V-O -> (get(V,M),-O < M) ;
+            (get(T,M), 0 < M)))).
 
-% test/0 sparks the depth-first search for a model, or finds a gap
 
-test :- init_bound(N),init_frontier(0),once(step(-1,N)).
+
+
 
 step(Count,N):-
   Count>=N -> print_maxgap;
@@ -30,8 +33,6 @@ step(_,_):- print_model.
 
 %%%%%%%avoid reading this block with silly auxiliaries%%%%%%%
 
-% syntax
-:-op(1199, xfx, =>).
 
 % hash table
 :-dynamic frontier/2.
