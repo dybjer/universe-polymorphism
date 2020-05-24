@@ -25,6 +25,7 @@
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}{Lemma}[theorem]
 \newtheorem{proposition}{Proposition}[theorem]
+\newtheorem{example}{Example}[theorem]
 
 \usepackage{float}
 \floatstyle{boxed}
@@ -207,6 +208,86 @@ is finite.
 
 
 
+\begin{example}~\label{exa:abcd}
+
+Clauses: $a \to b+1$, $b \to c+1$, $c \to d+1$, with
+$V = a,b,c,d$
+
+\begin{enumerate}
+\item $W = b,c,d$, 
+recursive call with $b \to c+1$, $c \to d+1$
+
+\begin{enumerate}
+\item  $W = c,d$, 
+  recursive call with $c \to d+1$
+
+\begin{enumerate}
+\item  $W = d$,
+    recursive call with empty set of clauses
+\item     return $n(d) = 0$
+\end{enumerate}
+
+\item  return $n(c) = 0$,  $n(d) = 1$
+\end{enumerate}
+
+\item return $n(b) = 0$, $n(c) = 1$, $n(d) = 2$
+
+\item no new activated clauses,
+end result $n(a) = 0$, $n(b) = 1$, $n(c) = 2$, $n(d) = 3$
+\end{enumerate}
+
+
+
+This is not so bad, all increments have to be done anyway.
+There is some space inefficiency by the stack.
+Tail recursion optimization does not seem possible.
+Immutable datastructure for $n(\_)$ gives some garbage to collect.
+
+\end{example}
+
+The following example shows exponential behaviour.
+
+
+\begin{example}
+
+Clauses: $a \to b+1$, $b \to c+1$, $c \to d+1$, $d+1 \to e$, $e+1 \to f$, $f+1 \to g$,
+with $V = a,b,c,d,e,f,g$
+
+\begin{enumerate}
+\item $W = b,c,d$, 
+follows verbatim Example~\ref{exa:abcd} with
+result $n(b) = 1$, $n(c) = 2$, $n(d) = 3$
+
+\item only $d+1 \to e$ gets activated, we infer $e+1$ (this is inefficient, we could
+infer $e+2$ and thereafter $f+1$)
+
+\item $W = b,c,d,e$,
+recursive call with $b \to c+1$, $c \to d+1$, $d+1 \to e$,
+complete recomputation of
+result $n(b) = 1$, $n(c) = 2$, $n(d) = 3$, extended with $n(e) = 2$ (highly inefficient)
+
+\item only $e+1 \to f$ gets activated, we infer f+1
+
+\item $W = b,c,d,e,f$,
+recursive call with $b \to c+1$, $c \to d+1$, $d+1 \to e$, $e+1 \to f$,
+complete recomputation of
+result $n(b) = 1$, $n(c) = 2$, $n(d) = 3$, $n(e) = 2$, extended with $n(f) = 1$
+(highly inefficient)
+
+\item no new activated clauses,
+end result $n(a) = 0$, $n(g) = 0$, $n(b) = 1$, $n(c) = 2$, $n(d) = 3$, $n(e) = 2$, $n(f) = 1$
+
+\end{enumerate}
+
+\noindent
+Here the inefficiency is in recomputing old $n(\_)$-values, so we do much
+more increments than necessary. By making the chain
+
+$$a\to b+1,~b\to c+1,~c\to d+1,~d+1 \to e,~e+1 \to f,~f+1 \to g$$
+longer we get exponential behavior, 
+given that the recursive calls are on shorter such chains.
+
+\end{example}
 
 \bibliographystyle{plain}
 \bibliography{refs}
