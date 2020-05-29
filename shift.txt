@@ -1,465 +1,123 @@
-Two examples (without cumulativity).
+New attempt at algorithm, notions as in alg.tex, but we drop
+the condition that the rules have gain <= 1 and assume instead
+that the gain is bounded by MAXGAIN.
+
+Remark. Let N+ denote N,∞. When proving from V+n()
+with n(): V -> N+, any variable v with n(v)=∞ can be
+eliminated from the clause set C: all clauses ... -> v+k
+can be left out, and all atoms v+k in ...,v+k,... -> ...
+can be deleted from the remaining clauses. 
+If we get a clause empty -> x+k, then we can infer n(x)=∞
+and continue the simplification process.
+In a proof by induction on |V| we can apply the IH
+immediately to the simplified situation.
+
+THM: For every non-empty V and every n(): V -> N+ there is a function
+
+m(V,n()): V -> N+ such that for all x in V 
+
+(*) V+n() |- x+k derivable in C_V   iff   k <= m(W,n())(x), 
 
-1.          |- U_x : U_x     not well-typed: x = x+1 is a loop
+Proof.
 
-2.   A: U_x |- Id U_z ((U_y -> 1) -> A) A   well/ill-typed? Analysis:
+Base: V = x. Either no clauses, so take m(V,n())(x)= n(x), or the 
+only (non-trivial) clause is x->x+k+1 and we take m(V,n())(x) = ∞.
 
-((U_y -> 1) -> A) : U_((y+1) \/ x)  and A: U_x, 
+Step: assume OK for smaller V. If n(v)=∞ for some v in V,
+eliminate v from C and apply the IH. Assume therefore n(_): V -> N.
+We compute first the subset W of V of variables w whose value n(w)
+can be improved in one step. For any x in V, we have the following 
+cases of possible (non-trivial) clauses, each giving a result:
 
-so we must solve the level constraints ((y+1) \/ x) = z and x = z. 
-This does not create a loop (e.g. in Z, with x = z = 1, y = 0). So this example is fine.
+1. x -> x+k, k>0, result is ∞ ; otherwise,
 
+2. A -> x+k, k>n(x), A non-empty, A activated in n(), result is k.
 
- We write the type corresponding to 2 as
+Let m(x) be the maximum of n(x) and the results for x, as obtained
+by 1,2 above, and let W be the set of all x in V such that m(x) > n(x).
 
- (1)    {x y : Level} -> [ y+1 <= x ] -> (A : U_x) -> Id U_x ((U_y -> 1) -> A) A
+If W is empty we are done since then n() itself satisfies (*).
 
-(this type should be inhabited with univalence)
+If W = V we are done since then m(W,n())(x) = ∞ satisfies (*).
 
- The difference with what is in Agda now is that we have to -solve- the constraint
- ((y+1) \/ x) = x solution  x = z \/ (y+1)   z arbitrary,  and write a type
+Otherwise, W is a non-empty strict subset of V and we can apply
+the IH to W, C_W and m() to obtain m(W,m()) satisfying (*) for
+W, C_W and m(W,m()) instead of for V, C and m(W,n()). 
+Define p(x)= n(x) for x in V-W and p(w) = m(W,m())(w).
+Again, if m(W,m())(w) = ∞ we simplify and apply the IH
+to the smaller V, C and restricted p(), keeping the work done
+in p(). Assume now p(_): V -> N.
 
- (2)    {z y : Level} -> (A : U_{z\/(y+1)}) -> Id U_{z\/(y+1)} ((U_y -> 1) -> A) A
+Clauses in C_W are true in p(), but this need not be the case
+for other clauses. There are two types of clauses in C_V - C_W :
+clauses with conclusion in V-W and clauses with conclusion
+in W but at least one atom based on V-W. We treat the latter first,
+by subsequent recursive calls with W, C_W and with different
+functions, but all with the same values n(x) for x in V-W.
+For clauses of the form X,Y -> w+k, with w in W
+and non-empty X based on V-W, and (possibly empty) Y based on W,
+we have that if X = ...,xi+li,... then k <= min(li)+MAXGAIN.
+Thus the maximal value for w one can obtain from a shift of
+X,Y -> w+k with activated X in n() is min(li)+MAXGAIN+min(n(xi)-li).
+Note that this value is the same for all activated shifts of the
+clause, even though the two minima may have different i's.
+By shifting downwards we can always get an activated shift with 
+min(li)=0, so a simpler upper bound for k is MAXGAIN+min(n(xi)).
+However, the more complicated bound can be sharper.
+Let max(w) be the maximum of all upperbounds obtained in this way.
+A simple expression for max(w) for any w in W is MAXGAIN+max(n(V-W)).
+Again, the more complicated bounds can be sharper, but need not.
+(Example: clauses a+9 -> w+2 and a,w -> w+1 and a,w+1 -> w+3,
+MAXGAIN=3. Let n(a)=9, n(w)=0, then m(w)=2 and max(w)=12, sharp!)
 
+We resume analysing the situation after the first recursive call
+with W above. There are now several possibilities, 
+followed by different actions:
 
- In general a constraint problem may not have a most general solution but several independent
- solution so we have to duplicate statements in an artifical way
+- A variable w in W can be improved by clauses as in 2 above, with
+k > p(w) and A activated in p(). Then A must contain a variable 
+in V-W. Note that p(x)=n(x) for all x in V-W.
+Like in 2 above we compute the maximal improvement and adapt 
+p() accordingly and apply the IH. This iteration of recursive calls
+can happen at most Sum_{w in W}(max(w)-p(w)) times, before a fixed 
+point p'() is reached, satisfying all clauses with conclusion in W.
 
- More importantly, one can argue that (1) expresses in a clearer way what is going on than (2)
+Interestingly, loops in C_W causing p(w)= ∞ are all found in
+the first recursive call with W. Therefore p'() : V -> N,
+and there are only two possibilities left:
 
+- all clauses are satified and we are done, m(V,n()) = p'() 
+satisfies (*).
 
+- not all clauses are satisfied, and  
+Unsatisfied clauses must have conclusion y+k with y in V-W.
+Improve maximally all such y in the way described for w in W
+in 1,2 above, add these y's to W to obtain W' and proceed
+in a similar way as after 1,2. This terminates since we exhaust V.
 
 
- When I instantiate a proof of (1) with concrete levels l and m respectively for x and y
- we will have to decide if  m+1 <= l (given other constraints)
- so: we have to decide if a constraint is a consequence of other constraint
+Example 1.
 
- Also we have to decide if a constraint is "consistent", i.e. does not imply some loops
- a level l such that l+1 <= l
+y -> x with n(x)=1, n(y)=9. n(x) can be improved to m(x)=9.
+So we have m(V,n())(x) = m(V,n())(y) = 9.
+Recursive call with W=x and empty set of clauses, nothing changes, done.
 
- In general, we must solve constraints in the theory 
-of sup semi-lattice with one unary operation x+ and two extra equational axioms for +:
+Example 2.
 
-(x\/y)+  = x+ \/ y+
+a->b+1, b->c+1, c->d+1, d+1->e, e+1->f, f+1->g, with n()= 0000000.
 
-x \/ x+ =   x+
+W=bcd, m() = 0111000 with b->c+1, c->d+1
 
- Claim: this theory is decidable and we can detect loops.
+  Recursive call with m(W,n()= 0122000 and c->d+1
 
-Shorthand: s >= t for s \/ t = s, so the last one is x <= x+1
+     Recursive call with  0123000 and empty
 
-Change of narrative: from lattices to Horn clauses (`equivalent')
+Return 0123000
 
-Example: ((y+1) \/ x) = x translates to y+1, x -> x and x -> x and x -> y+1.
-Note that only the last one is informative, indeed it expresses x >= y+1.
+W'=bcdef, 0123210 model for b->c+1, c->d+1, d+1->e, e+1->f 
 
-Generally L -> t means that sup(L) >= t.
+Return 0123210, model for all clauses
 
-WLOG (!) we start from a set of clauses of the form   A -> a  where all 
-atoms in A,a are of the form x or x+1, and A non empty
 
-We write B |- b   if we can derive b from B using the `shifted' clauses
-A +n -> a+n   and   x+n+1 -> x+n (the last one comes from x <= x+1)
-
-
-THM:   we can find U subset of V such that U |- x+1 for all x in U
-and n(x) for x in V-U such that V |- x+n iff n <= n(x) for x in V-U
-
-U may be empty  and we can have U = V in which case we have
-V |- x+1 for all x in V
-
-This means that we have a complete description of all consequences of V: 
-we have V |- x+ n  for all n if x in U and V |- x+ n for n <= n(x) for x in V-U
-
-
-
- Example: x+1,y -> x+1   x,y+1 -> y+1
-
- V = x, y
- W empty
-
- We put n(x) = n(y) = 0 and U is empty
-
- Example:   x+1 -> y       y -> z+1     z -> x+1
-
- V = x, y, z
- W = x, z
-
- There is only one clause  z -> x+1 involving only z and x
- The consequences of z+1, x+1  are  z+1, x+2
-
- The clause  x+2 -> y+1 gets activated
- We add y to W  and we have W = V = U = x,y,z
-
- Example:   y+1 -> x,   y -> y+1,   z -> x
-
- We have W = y and U = W
- The clause y+1 -> x gets activated, we add x
- We have W = x,y and U = W = x,y
- We have z in V-W and n(z) = 0
-
-  Example:   x+1 -> t,    y+1 -> x,   y -> y+1
-
- We have W = y and U = W
- The clause y+1 -> x gets activated, we add x
- We have W = x,y and U = W 
- The clause x+1 -> t gets activated, we add t
- We have W = x,y,t and U = W = V = x,y,t
-
-
-
-
-
-PROOF of THM: by induction on |V|
-
-If V has only one variable we
- either have no non-trivial clause in which case U = empty and n(x) = 0 
- or the only non-trivial clause is x -> x+1 and then U = V
-
-Assume V has more than one variable and the theorem holds for all set
-of variables < |V|
-
-We look at all clauses of the form A -> x+1 where all atoms in A are of the
-form y in V
-
-If there is no such clause, we have U = empty and n(x) = 0 for all x in V
-
-Otherwise we let W be the (non-empty) set of x such that 
-we have a clause of this form of conclusion x+1
-
-(*) If W = V then we have U = V
-
-If |W| < |V|, by induction we compute all consequences of W+1 using only
-clauses that mention only elements in W
-we compute U and n(x) for x in W-U
-
-A clause A -> z+1 with z in V-W gets activated if we have the following
--if x is in A we require nothing (since x in V, so V |- x), and
--if x+1 is in A we have x in W (then W |- x+1, so V |- x+1), and 
--if x+2 is in A we have x in U or n(x) >= 2 (then W |- x+2, so V |- x+2)
-
-If such a clause gets activated we know that we have V |- z+1
-
-If there is no clause  A -> z+1,  z in V-W, which gets activated 
-we have computed all consequences of V: we add n(z) = 0 for z in V-W,
-and we take the U for V the same as the U for W, both n(_) and U from IH.
-This is because the clauses A -> x+1, x in W, where there are some 
-variables in V-W appearing in A cannot produce new consequences
-(This is subtle: if x in U then already W |- x+k for all k (by IH). 
-If x in W-U, then n(x)>=1 and x+n(x)+1 requires a clause with a 
-variable y in V-W, but n(z)=0 for z in V-W. Recall bandwidth!)
-
-If there are some clauses A -> z+1, z in V-W, getting activated
-we add to W all these variables and we start again at (*)
-
-At some point we end in the situation with no activated clauses,
-or we have W = V and we have U = V.
-
-QED
-
-
-
- This describes completely the sup + lattice generated by the given
- constraints: in general we have A |- a iff  a <= sup A
-
- In some cases, it is enough to consider the linearly ordered model
- of integers
-
-
-
-
-COR of THM:  Consider -∞,Z with Z ordered as usual and -∞ < n for all z in Z.
-Consider max as interpretation of \/, the usual +1 on Z  and  -∞+1 = -∞
-as interpretation of successor. 
-Then we have a (\/,+1) semi-lattice (since we don't require x+1 > x).
-Define M(x) = -∞ for all x in U and M(x)= -n(x) for x in V-U.
-Then M satisfies all constraints sup(A) >= a, for each A -> a in the set of clauses.
-
-PROOF: write A -> a as X,Y+1 -> z+ℓ, where ℓ=0,1 (ℓ can actually be arbitrary).
-
-To prove: max(M(X),M(Y)+1) >= M(z)+ℓ.
-
-If z in U this is trivial. If X and Y are subsets of U, then also z in U.
-(Proof: U |- u+1 for all u in U, so U |- u+k for all k in Z and u in U,
-so U |- z+k for all k in Z by the clause X,Y+1 -> z+ℓ, so z in U.)
-
-Hence we may assume z not in U and (X + Y) - U non-empty. Since M(u) = -∞ 
-for all u in U, we assume wlog that X and Y do not overlap with U.
-In that case we have that max(M(X),M(Y)+1) >= M(z)+ℓ
-is equivalent to min(n(X),n(Y)-1) <= n(z)-ℓ. Distinguish now two cases:
-
-- Case lhs = n(xi), then X+n(xi),Y+n(xi)+1 -> z+n(xi)+ℓ is activated,
-  so n(z) >= n(xi)+ℓ.
-- Case lhs = n(yj)-1, then X+n(yj)-1,Y+n(yj) -> z+n(yj)-1+ℓ is activated,
-  so n(z) >= n(yj)-1+ℓ.
-
-In both cases we are done. QED
-
-
-As an application of the above corollary we get a limited completeness result:
-
-For all x in V and k in Z:
-
-sup(V) >= x+k is provable from the lattice constraints  iff  V |- x+k.
-
-Proof. 
-
-"if" is easy, all steps in the proof of V |- x+k can be mimicked in lattice theory.
-
-For "only if", distinguish two cases:
-
-1. x in U. Recall U |- u+1 for all u in U, so U |- u+k for all k in Z.
-So, if x in U, then U |- x+k, so V |- x+k. 
-
-2. x in V-U. If k <= n(x), then V |- x+k follows from the theorem. 
-If k > n(x), then in the model of the corollary we have 
-on one hand M(x)+k = -n(x)+k > 0.
-On the other hand, max(M(V)) <= 0 since M(z) = -n(z) or -∞.
-Hence sup(V) >= x+k is false in the model and by soundness
-provability of sup(V) >= x+k in case k > n(x) is absurd.
-
-
-Example: x \/ y >= x+1 does not prove y >= x+1.
-
-Consider x,y -> x+1 and start from y. We get nothing by y, not x+1.
-
-Countermodel x, y, x\/y take for +1 the identity function.
-
-We have sup(x,y) >= x = x+1, but not y >= x+1 = x.
-
- The syntactical or "free" model generated by x, y and x\/y = x+1 is infinite
- and another counter-model showing that we don't have y >= x+1
-
-
-
-MORE EXAMPLES: in the Prolog files (slightly different algorithm)
-
-
-
-
-
-
-
--------------------------------------------------
-
-I would like to have a result about sup semi lattice with -only- the equational rules
-
-1 + (x\/y) = (1+x) \/ (1+y)
-
- x \/ (1+x) =    1+x
-
-
-The claim would be that
-
-(1) a finitely presented such lattice is decidable
-
-(2) we can decide and find if such a f.p. lattice contains a such that   a+1 = a
-
-This should be all that is needed to check that a finite number of constraints does not
-imply any “loop” and to decide if a constraint is a consequence of the given constraints
-
-The proofs of (1)  and (2), if I am not mistaken, are variations on Marc’s algorithm.
-
-We have a finite number of constraints   X1 -> a1, …, Xn -> an   with a gain/bandwith <= 1
-
-X -> a      X non empty finite set of terms, a term
-a term     a is of the form  x + n    n in Z, x atom
-
-
- a+1 -> a
- X -> a    iff    X+1 -> a+1
-
-
-We start from assigning the value 0 to all variables We proceed as in Marc’s algorithm
-
-This is like trying to enumerate all consequences of V = x1,..,xm
-
-Either 
-
--all variables get increased by at least 1   then we have  a loop with  a = sup V   we have a = a+1
-
--or we find a “gap”: we have g and U subset V non empty
- all variables in U has a value > g
- all variables in V-U  have a value < g
- we have only consequences increasing values in U
- then we have a loop with a = sup U
-
--or we don’t increase the variables any more: we don’t have a loop
-
-
-Note that in the second case, for all atom x in U  we have that all x+n are consequences 
-What we can do then is to take away all variables in U from X1 -> a1,.., Xn -> an
-and we get a set of constraints that is in the third case
-
-
- Example (Marc):   y+1 -> x,   y -> y+1,   z -> x
-
- x, y
- y+1
- y+2
- x+1
- y+3
- x+2
- ...
-
-
-  Example:   x+1 -> t,    y+1 -> x,   y -> y+1
-
- x, y, t
- y+1
- y+2
- x+1
- y+3
- x+2
- y+4
- t+1
-
-
-To take a trivial example
-
-   x, z -> t+1      x, y -> x+1       x, y -> y+1
-
-we have V = x,y,z,t
-
-  t+1,   x+1,   y+1,   x+2, y+2, ....
-
-
-We get U = x,y
-
-If we take away   the variables in U we get the system       z -> t+1
-
-And the only consequences   of   z, t    are   z + n   n<=0   and t+n   n <= 1
-
-I need
-
- -only variables in U are increased infinitely often
- -if we take away the variables in U
-
-
-This implies that    we can decide     x1, …, xm -> a 
-V = x1,…,xm   all atoms
-a term
-
-
-
-
-It follows from this that we can decide   any        x1 + k1, .., xm + km -> a
-Let
-   k = max(k1,..,km)
-   l = min(k1,…,km)
-   Y = x1 + k1,.., xm +km
-
-We can represent geometrically all consequences of   V+k   and V+l
-and the consequences of Y are “in between” these consequences
-
-
-If we are in the first case, we can deduce a
-
-If we are in the third case a = x+l,  we enumerate
-all consequences of x1+k1,…,xm+k and it is bounded above since between consequences of V+k and V+l
-so we can decide if a is a consequence
-
-We reduce the second case to the third case by taking away all variables in U.
-
- I use completeness
-
-
-
-And then I also think that we can decide   any   y1 + l1,…,yp+lp -> a    y1,..,yp  subset of V
-
-
----------------------------------------
-
-
- Some more historical remarks:
-
- -Hertz introduced this notion of sequent X -> a.
- This influenced Gentzen (and his first paper was exactly about this kind of sequents)
-
- -Tarski had an equivalent more algebraic presentation in term of consequence relation
-(which is presented in Aczel’s paper)
-
- -It might be Lorenzen who was the first to point out the connection between this kind of sequent
-calculus and meet/sup semi lattice
-
- -when Russell introduced the “doctrine of types” in Appendix B of Principles of Mathematics
-(1903) he considers the possibility of the hierarchy of type being indexed by rational numbers!
-
----------------------------------------
-
- In this email, I formulate a slight generalisation of what we can do
-with Marc’s algorithm. I only state the result without tying to describe the algorithm.
- If correct this is a purely syntactical result (no models).
-
------------------------
-
- First, we recall the well-known propositional Horn clause inference
-
- We have some atoms a, b, c, …
-
- We have a finite set of clauses   X1 -> a1,  …, Xn -> an
-X1,…,Xn finite sets of atoms
-
- We write X, a   for   X union {a}
-
- The inference rules are
-
- X ->  a         if    a in X
- X’ -> a         if     X -> a   and X subset X’
- X -> b         if      X -> a   and X, a -> b
-
-
- The problem is: to decide if a clause X -> a is a consequence
-of given clauses X1-> a1,…, Xn -> an
-
-
-
- The algorithm is as follows. We start from X, and we add
-all direct consequences: we add ai if Xi subset X and ai not in X
-We then get a bigger set X’. We add again all direct consequences
-of X’, and so on until we get a fix point X^m
-
- We then test if a is in X^m
- If it is, X -> a is a consequence of the given clauses
- If it is not, X -> a is not a consequence
- 
-
--------------------------------------
-
-
- What we have is a generalization of this algorithm where
-
- -the atoms are of the form a+n   n integer
-
- -we add two new inference  rules
-
-             X -> a   iff    X+n -> a+n   n integer
-
-             a+1 -> a
-
-
-  Here is an example:    the given set of clauses is
-
- a, b -> a+1
- a, b -> b+1
-
- Then we have  a, b -> a+n   for any n
-
- Indeed, starting from a, b  we add a+1 then b+1 then a+2, then b+2 and so on
-
- Intuitively we have a loop (which corresponds in an inconsistency for universe
-levels)
-
-
- Another similar example:   a, b -> c    a, c -> b+,   b, c -> a+
- Starting from a, b, we deduce all a+n, b+n, c+n
-
-
- In general we can decide  if we can deduce X -> a from X1-> a1,…, Xn -> an
-using these rules.
-
- The idea is also to start from X and to try to deduce all consequences
- The main idea is that we can recognize when there is a loop (using the notion
-of gap described in Marc’s message).
 
 
