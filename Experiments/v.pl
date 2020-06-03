@@ -1,32 +1,54 @@
 % swipl, may run with other prologs as well; toy examples: ./xyz*.in
 % run with "test(file)." where "file" is an input file name without ".in"
 
-% finds a model in N,infty with n < infty for all n in N and infty+1 = infty
+% finds a model in [0..99999] assuming infty = 99999
+% code can easily be adapted to GMP and a formal +infty
 
 % syntax
 :-op(1199, xfx, =>).
 
 % vars/1 refers to the variables in the input file with clauses Sup => Var
 
-% get/2 and put/2 refer to the hash table frontier
+% get/2 and put/2 refer to the hash table frontier, STATEFUL
 
 init_frontier(N):- vars(Vars),forall(member(Var,Vars),put(Var,N)).
+init_frontier(X,N):- forall(member(Var,X),put(Var,N)).
 
-% activated/2 tests whether Sup => Var is enabled to increment Var to 1
+% activated/3 tests whether Sup => Var is on X and tries to improve Var
 
-activated(Sup,Var):- forall(member(T,Sup),
-  (T=V+O -> (get(V,M),+O < M) ;
-  (T=V-O -> (get(V,M),-O < M) ;
-            (get(T,M), 0 < M)))).
+activated(V,W,Sup,Var):- 
+  member(Var,W)->
+  based_on(V,Sup)->
+  surplus(Sup,99999,M),
+  get(Var,N),N<M,put(Var,M).
 
+based_on(X,Sup):- forall(member(T,Sup),
+  (T=V+_ -> member(V,X);
+  (T=V-_ -> member(V,X);
+            member(T,X)))).
 
+surplus([],Accumulator,Accumulator).
+surplus([T|Ts],Sold,Snew):- 
+  (T=V+O -> (get(V,N),Smid is min(Sold,N-O)) ;
+  (T=V-O -> (get(V,N),Smid is min(Sold,N+O)) ;
+            (get(T,N),Smid is min(Sold,N)))),
+  surplus(Ts,Smid,Snew).
 
+improve(V,W):- setof(Var,Sup^((Sup=>Var),activated(V,V,Sup,Var)),W).
+
+main:- vars(Vraw),sort(0,@=<,Vraw,V),main(V).
+
+main(V):- improve(V,W) -> main(V,W) ; print_model.
+
+main(V,W):-
+  V=W -> init_frontier(V,99999) ;
+  main(W), \+ improve(V,W).
 
 
 step(Count,N):-
   Count>=N -> print_maxgap;
   once(((Sup => Var),
-  (activated(Sup,Var) -> get(Var,M),put(Var,M+1),step(Count+1,N)))).
+  (true -> get(Var,M),put(Var,M+1),step(Count+1,N)))).
 
 step(_,_):- print_model.
 
