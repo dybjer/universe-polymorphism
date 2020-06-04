@@ -9,12 +9,12 @@
 
 % vars/1 refers to the variables in the input file with clauses Sup => Var
 
-% get/2 and put/2 refer to the hash table frontier, STATEFUL
+% get/2 and put/2 refer to the hash table frontier, STATEFUL !
 
 init_frontier(N):- vars(Vars),forall(member(Var,Vars),put(Var,N)).
 init_frontier(X,N):- forall(member(Var,X),put(Var,N)).
 
-% activated/3 tests whether Sup => Var is on X and tries to improve Var
+% activated/4 tries to improve Var with Sup => Var based on V,W
 
 activated(V,W,Sup,Var):- 
   member(Var,W)->
@@ -34,23 +34,17 @@ surplus([T|Ts],Sold,Snew):-
             (get(T,N),Smid is min(Sold,N)))),
   surplus(Ts,Smid,Snew).
 
-improve(V,W):- setof(Var,Sup^((Sup=>Var),activated(V,V,Sup,Var)),W).
+improve(V,W,I):- setof(Var,Sup^((Sup=>Var),activated(V,W,Sup,Var)),I).
 
-main:- vars(Vraw),sort(0,@=<,Vraw,V),main(V).
+main:- vars(Vraw),sort(0,@=<,Vraw,V),main(V),print_model(V).
 
-main(V):- improve(V,W) -> main(V,W) ; print_model.
+main(V):- improve(V,V,W) -> main(V,W) ; true.
 
 main(V,W):-
-  V=W -> init_frontier(V,99999) ;
-  main(W), \+ improve(V,W).
-
-
-step(Count,N):-
-  Count>=N -> print_maxgap;
-  once(((Sup => Var),
-  (true -> get(Var,M),put(Var,M+1),step(Count+1,N)))).
-
-step(_,_):- print_model.
+  list_to_set(W,V) -> init_frontier(V,99999) ;
+  once((repeat, main(W), \+improve(V,W,_))),
+  subtract(V,W,VminW),
+  (improve(V,VminW,I) -> union(W,I,WuI),main(V,WuI); true).
 
 
 %%%%%%%avoid reading this block with silly auxiliaries%%%%%%%
@@ -65,23 +59,16 @@ cleanup :-  retractall(frontier(_,_)).
 
 % pretty printing
 
-sort_frontier(F) :- bagof((Var,N),frontier(Var,N),Fu), sort(2,@>=,Fu,F).
+sort_frontier(F) :- bagof((Var,N),frontier(Var,N),Fu), sort(2,@=<,Fu,F).
 
-print_model :- sort_frontier([(Vm,Max)|F]),
-               bagof((Var,Val),N^(member((Var,N),[(Vm,Max)|F]),Val is Max-N),Model),
-               nl,write(model),nl,write(Model).
-
-print_maxgap :- sort_frontier([(Vm,Max)|F]), Fs=[(Vm,Max)|F],
-                bagof(N,(between(0,Max,N), \+frontier(_,N)),Gaps), 
-                reverse(Gaps,[MaxGap|_]),
-                forall((member((Var,N),Fs),N>MaxGap),(write(((Var,N))),nl)),
-                write(gap),nl,
-                forall((member((Var,N),Fs),N<MaxGap),(write(((Var,N))),nl)).
+print_model(W) :- sort_frontier(F),
+                  bagof((Var=Val),(member((Var,Val),F),member(Var,W)),Model),
+                  nl,write(model),nl,write(Model).
 
 % io
 ext(F,E,FE):- atom_concat(F,'.',F1),atom_concat(F1,E,FE).
 
-test(File):- ext(File,in,Fi),cleanup,[Fi],test,nl.
+test(File):- ext(File,in,Fi),cleanup,[Fi],init_frontier(0),main,nl.
 
 % not used yet
 %io(Dest,Mode,Name,DO):-open(Dest,Mode,_,[alias(Name)]),
