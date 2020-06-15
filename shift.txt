@@ -1,7 +1,14 @@
+TENTATIVE TITLE: Polynomial decidability of sup-lattice theory with
+successor function.
 
 New attempt at algorithm, notions as in alg.tex, but we drop
 the condition that the rules have gain <= 1 and assume instead
 that the gain is bounded by MAXGAIN.
+
+The gain of a clause x1+k1 + ... + xn+kn -> x+k is the minimum
+of {k-k1, ... , k-kn}. The gain is invariant under shifting.
+MAXGAIN is the maximum of the gains of clauses, and this number
+is finite when the clauses come from finitely many constraints. 
 
 Remark. Let N+ denote N,∞. When proving from V+n()
 with n(): V -> N+, any variable v with n(v)=∞ can be
@@ -40,13 +47,14 @@ by 1,2 above, and let W be the set of all x in V such that m(x) > n(x).
 If W is empty we are done since then n() itself satisfies (*).
 
 If W = V we are done since then m(W,n())(x) = ∞ satisfies (*).
+(Proof: if V+n() |- V+n()+1, then V+n() |- V+n()+k for all k>0.)
 
 Otherwise, W is a non-empty strict subset of V and we can apply
 the IH to W, C_W and m() to obtain m(W,m()) satisfying (*) for
 W, C_W and m(W,m()) instead of for V, C and m(W,n()). 
 Define p(x)= n(x) for x in V-W and p(w) = m(W,m())(w).
-Again, if m(W,m())(w) = ∞ we simplify and apply the IH
-to the smaller V, C and restricted p(), keeping the work done
+Again, if m(W,m())(w) = ∞ for some w in W, then we simplify and apply
+the IH to the smaller V', C' and restricted p(), keeping the work done
 in p(). Assume now p(_): V -> N.
 
 Clauses in C_W are true in p(), but this need not be the case
@@ -57,15 +65,19 @@ by subsequent recursive calls with W, C_W and with different
 functions, but all with the same values n(x) for x in V-W.
 For clauses of the form X,Y -> w+k, with w in W
 and non-empty X based on V-W, and (possibly empty) Y based on W,
-we have that if X = ...,xi+li,... then k <= min(li)+MAXGAIN.
-Thus the maximal value for w one can obtain from a shift of
-X,Y -> w+k with activated X in n() is min(li)+MAXGAIN+min(n(xi)-li).
-Note that this value is the same for all activated shifts of the
-clause, even though the two minima may have different i's.
-By shifting downwards we can always get an activated shift with 
-min(li)=0, so a simpler upper bound for k is MAXGAIN+min(n(xi)).
+we have that if X = ...,xi+li,... then k <= min(li) + MAXGAIN.
+(Proof: if Y = ...,yj+kj,... then the gain of X,Y -> w+k is 
+k-min(li,kj) <= MAXGAIN.) Given n(), we can shift up with at most
+min(n(xi)-li). Thus the maximal value for w one can obtain from a 
+shift of X,Y -> w+k with activated X in n() is 
+
+  min(li) + MAXGAIN + min(n(xi)-li).
+
+Note that the two minima may have different i's.
+A simpler upper bound for k is MAXGAIN + min(n(X)).
 However, the more complicated bound can be sharper.
-Let max(w) be the maximum of all upperbounds obtained in this way.
+(Example: x1+9,x2 -> w+1, n(x1)=n(x2)=9, MAXGAIN=1.)
+Let max(w) be the maximum of all upper bounds obtained in this way.
 A simple expression for max(w) for any w in W is MAXGAIN+max(n(V-W)).
 Again, the more complicated bounds can be sharper, but need not.
 (Example: clauses a+9 -> w+2 and a,w -> w+1 and a,w+1 -> w+3,
@@ -90,8 +102,8 @@ and there are only two possibilities left:
 - all clauses are satified and we are done, m(V,n()) = p'() 
 satisfies (*).
 
-- not all clauses are satisfied, and  
-Unsatisfied clauses must have conclusion y+k with y in V-W.
+- not all clauses are satisfied, and in this case any 
+unsatisfied clauses must have conclusion y+k with y in V-W.
 Improve maximally all such y in the way described for w in W
 in 1,2 above, add these y's to W to obtain W' and proceed
 in a similar way as after 1,2. This terminates since we exhaust V.
