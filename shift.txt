@@ -1,113 +1,134 @@
 TENTATIVE TITLE: Polynomial decidability of sup-lattice theory with
 successor function.
 
-New attempt at algorithm, notions as in alg.tex, but we drop
-the condition that the rules have gain <= 1 and assume instead
-that the gain is bounded by MAXGAIN.
+Let C be a set of clauses with variables in V. 
+C is closed under shifting upwards means that if A->a in C,
+then also A+k -> a+k in C, for all k>0. Predecessor clauses are
+clauses x+k+1 -> x+k for all x in V and k in N.
+For W subset of V, C_W is the subset of C with only variables
+in W; C->W is the subset of C of clauses with conclusion on W.
 
-The gain of a clause x1+k1 + ... + xn+kn -> x+k is the minimum
-of {k-k1, ... , k-kn}. The gain is invariant under shifting.
-MAXGAIN is the maximum of the gains of clauses, and this number
-is finite when the clauses come from finitely many constraints. 
+The gain of a clause x1+k1 + ... + xn+kn -> x+k is k minus the 
+minimum of {k1, ... ,kn}. The gain is invariant under shifting.
+MAXGAIN is the maximum of the gains of clauses, a finite number
+when the clauses come from finitely many lattice constraints. 
+A fortiori, for clauses of the form ...,xi+li,...,Y -> x+k in C,
+we have k <= min(li) + MAXGAIN.
 
-Remark. Let N+ denote N,∞. When proving from V+n()
-with n(): V -> N+, any variable v with n(v)=∞ can be
+Let N+ denote N,∞. If f,g: V -> N+ are models of C, so is min(f,g). 
+
+Lemma: Let V be a set of variables.
+Let C be a set of clauses with variables in V, 
+closed under shifting upwards,
+containing all predecessor clauses, 
+and with all gains <= MAXGAIN. 
+Let W be a strict subset of V such that 
+for any f : W -> N+ we can compute 
+the least g >= f that is a model of C_W.
+Then for any f: V -> N+ with f(V-W) subset of N we can compute
+the least h >= f that is a model of C->W.
+
+Proof: Let conditions be as stated in the lemma.
+Clearly, h coincides with f on V-W, so we focus on its values on W.
+For any f: V -> N+, let f_W be its restriction to W.
+Then we can compute the least g_f >= f_W that is a model of C_W.
+Now we look at clauses in C->W - C_W. Such clauses are of
+the form X,Y -> w+k with X non-empty and based on V-W and Y
+based on W. If X = ...,xi+li,... is activated in f, 
+then k <= min(f(xi)) + MAXGAIN <= max(f(V-W)) + MAXGAIN.
+Using that f(V-W) is a subset of N, we do induction on 
+
+M(g_f) := Sum_{w in W}  max(0, max(f(V-W)) + MAXGAIN - g_f(w)).   
+
+Base: if M(g_f)=0, then we can take h=g_f on W and we are done.
+(All clauses in C->W are satisfied in this case.)
+
+Step: let M(g_f)>0 and assume OK for all smaller values.
+If all clauses in C->W - C_W are satisfied, we are again done.
+If not, we can improve some value g_f(w) using a clause in C->W - C_W.
+Say that we can infer the value g_f(w)+k+1 for w using values of f 
+on V-W and values of g_f on W. Define f' : V -> N+ by 
+
+f'(x)=f(x) for x in V-W, 
+f'(y)= g_f(y) for y in W-w and 
+f'(w) = g_f(w)+k+1. 
+
+Then M(g_f') < M(g_f) and we can apply the IH to f'. 
+The resulting h for f' also works for f.
+QED
+
+Remark: given f: V -> N+, any variable v with f(v)=∞ can be
 eliminated from the clause set C: all clauses ... -> v+k
 can be left out, and all atoms v+k in ...,v+k,... -> ...
 can be deleted from the remaining clauses. 
-If we get a clause empty -> x+k, then we can infer n(x)=∞
+If we get a clause empty -> x+k, then we can infer f(x)=∞
 and continue the simplification process.
-In a proof by induction on |V| we can apply the IH
-immediately to the simplified situation.
+Under this simplification, MAXGAIN is respected.
+In a proof for all V by induction on |V| we can (and will) 
+apply the IH immediately to the simplified situation.
 
-THM: For every non-empty V and every n(): V -> N+ there is a function
 
-m(V,n()): V -> N+ such that for all x in V 
+THM: Let V be a non-empty set of variables.
+Let C be a set of clauses with variables in V, 
+closed under shifting upwards,
+containing all predecessor clauses, 
+and with all gains <= MAXGAIN.
+Then for any f : V -> N+ we can compute 
+the least g >= f that is a model of C. 
 
-(*) V+n() |- x+k derivable in C_V   iff   k <= m(W,n())(x), 
+Proof by induction on |V|.
 
-Proof.
+Base: V = x. Clauses in C are of the form ...,x+ki,... -> x+k.
+Such clauses are trivial if max(ki)>=k.
+If all clauses in C are trivial, take g(x) = f(x).
+Otherwise, any non-trivial clause is of the form 
+x+max(ki) -> x+max(ki)+l+1 (ignoring trivial atoms on the left). 
+Then we take g(x) = ∞ if f(x)>=max(ki) for some non-trivial
+clause, and g(x) = f(x) otherwise.
 
-Base: V = x. Either no clauses, so take m(V,n())(x)= n(x), or the 
-only (non-trivial) clause is x->x+k+1 and we take m(V,n())(x) = ∞.
+Step: Let |V|> 1 and assume OK for smaller V. 
+If f(v)=∞ for some v in V, simplify C to C' and apply the IH.
+Applying the IH is justified since C' has fewer variables,
+and satisfies all conditions (in particular wrt MAXGAIN).
+The h for C' is extended by value(s) ∞ for the eliminated 
+variable(s) to a minimal model >= f of C. 
 
-Step: assume OK for smaller V. If n(v)=∞ for some v in V,
-eliminate v from C and apply the IH. Assume therefore n(_): V -> N.
-We compute first the subset W of V of variables w whose value n(w)
-can be improved in one step. For any x in V, we have the following 
-cases of possible (non-trivial) clauses, each giving a result:
+Assume now f : V -> N.
+We compute first the subset of variables x of V whose value f(x)
+can be improved in one step. For any x in V, we look at clauses
 
-1. x -> x+k, k>0, result is ∞ ; otherwise,
+(*)  A -> x+k, A activated in f, yielding result k for x.
 
-2. A -> x+k, k>n(x), A non-empty, A activated in n(), result is k.
+Let g(x) be the maximum of f(x) and the results for x, as obtained
+above, and let W be the set of all x in V such that g(x) > f(x).
 
-Let m(x) be the maximum of n(x) and the results for x, as obtained
-by 1,2 above, and let W be the set of all x in V such that m(x) > n(x).
+If W is empty we are done since then f itself is a model of C.
 
-If W is empty we are done since then n() itself satisfies (*).
-
-If W = V we are done since then m(W,n())(x) = ∞ satisfies (*).
-(Proof: if V+n() |- V+n()+1, then V+n() |- V+n()+k for all k>0.)
+If W = V we are done since then h(x) = ∞ for all x in V is the 
+least h >= f that is a model of C. 
+(If V+f |- V+f+1, then V+f |- V+f+k for all k>0.)
 
 Otherwise, W is a non-empty strict subset of V and we can apply
-the IH to W, C_W and m() to obtain m(W,m()) satisfying (*) for
-W, C_W and m(W,m()) instead of for V, C and m(W,n()). 
-Define p(x)= n(x) for x in V-W and p(w) = m(W,m())(w).
-Again, if m(W,m())(w) = ∞ for some w in W, then we simplify and apply
-the IH to the smaller V', C' and restricted p(), keeping the work done
-in p(). Assume now p(_): V -> N.
+the IH to W, C_W and g_W to satisfy the condition of the lemma.
+Hence we get the conclusion of the lemma: since g(V-W)=f(V-W) is
+a subset of N, we can compute the least h>=g that is a model of C->W.
 
-Clauses in C_W are true in p(), but this need not be the case
-for other clauses. There are two types of clauses in C_V - C_W :
-clauses with conclusion in V-W and clauses with conclusion
-in W but at least one atom based on V-W. We treat the latter first,
-by subsequent recursive calls with W, C_W and with different
-functions, but all with the same values n(x) for x in V-W.
-For clauses of the form X,Y -> w+k, with w in W
-and non-empty X based on V-W, and (possibly empty) Y based on W,
-we have that if X = ...,xi+li,... then k <= min(li) + MAXGAIN.
-(Proof: if Y = ...,yj+kj,... then the gain of X,Y -> w+k is 
-k-min(li,kj) <= MAXGAIN.) Given n(), we can shift up with at most
-min(n(xi)-li). Thus the maximal value for w one can obtain from a 
-shift of X,Y -> w+k with activated X in n() is 
+The latter h coincides with g and f on V-W. 
+If h(w) = ∞ for some w in W, then we simplify and apply the IH 
+to the smaller V', C' and restricted h. Then we are
+done as described in the first paragraph of the step case.
 
-  min(li) + MAXGAIN + min(n(xi)-li).
+Assume now h: V -> N. There are only two possibilities left:
 
-Note that the two minima may have different i's.
-A simpler upper bound for k is MAXGAIN + min(n(X)).
-However, the more complicated bound can be sharper.
-(Example: x1+9,x2 -> w+1, n(x1)=n(x2)=9, MAXGAIN=1.)
-Let max(w) be the maximum of all upper bounds obtained in this way.
-A simple expression for max(w) for any w in W is MAXGAIN+max(n(V-W)).
-Again, the more complicated bounds can be sharper, but need not.
-(Example: clauses a+9 -> w+2 and a,w -> w+1 and a,w+1 -> w+3,
-MAXGAIN=3. Let n(a)=9, n(w)=0, then m(w)=2 and max(w)=12, sharp!)
+- all clauses in C are satified by h and we are done.
 
-We resume analysing the situation after the first recursive call
-with W above. There are now several possibilities, 
-followed by different actions:
-
-- A variable w in W can be improved by clauses as in 2 above, with
-k > p(w) and A activated in p(). Then A must contain a variable 
-in V-W. Note that p(x)=n(x) for all x in V-W.
-Like in 2 above we compute the maximal improvement and adapt 
-p() accordingly and apply the IH. This iteration of recursive calls
-can happen at most Sum_{w in W}(max(w)-p(w)) times, before a fixed 
-point p'() is reached, satisfying all clauses with conclusion in W.
-
-Interestingly, loops in C_W causing p(w)= ∞ are all found in
-the first recursive call with W. Therefore p'() : V -> N,
-and there are only two possibilities left:
-
-- all clauses are satified and we are done, m(V,n()) = p'() 
-satisfies (*).
-
-- not all clauses are satisfied, and in this case any 
+- not all clauses in C are satisfied by h, and in this case any 
 unsatisfied clauses must have conclusion y+k with y in V-W.
-Improve maximally all such y in the way described for w in W
-in 1,2 above, add these y's to W to obtain W' and proceed
-in a similar way as after 1,2. This terminates since we exhaust V.
-
+Improve maximally all such y in the way described in (*) above,
+with h instead of f (to keep all work done already).
+Add y's that can be improved to W to obtain W' and proceed
+in a similar way as after (*). This terminates since we exhaust V.
+QED
 
 Example 1.
 
