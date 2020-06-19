@@ -10,16 +10,22 @@ in W; C->W is the subset of C of clauses with conclusion on W.
 
 The gain of a clause x1+k1 + ... + xn+kn -> x+k is k minus the 
 minimum of {k1, ... ,kn}. The gain is invariant under shifting.
-MAXGAIN is the maximum of the gains of clauses, a finite number
+MAXGAIN is an upper bound of the gains of clauses, a finite number
 when the clauses come from finitely many lattice constraints. 
 A fortiori, for clauses of the form ...,xi+li,...,Y -> x+k in C,
 we have k <= min(li) + MAXGAIN.
 
-Let N+ denote N,∞. If f,g: V -> N+ are models of C, so is min(f,g). 
+Let N+ denote N,∞. If f,g: V -> N+ are models of C, so is min(f,g).
+In order to see this, recall that C consists of Horn clauses,
+whose model class is closed under intersection. Also, any set A
+of atoms has a minimal extension that is a model of C.
+We often tacitly use that all atoms that can be inferred from A
+by using C are in the minimal model of C extending A. 
+
 
 Lemma: Let V be a set of variables.
 Let C be a set of clauses with variables in V, 
-closed under shifting upwards,
+closed under shifting upwards of a finite C_l,
 containing all predecessor clauses, 
 and with all gains <= MAXGAIN. 
 Let W be a strict subset of V such that 
@@ -46,6 +52,7 @@ Base: if M(g_f)=0, then we can take h=g_f on W and we are done.
 Step: let M(g_f)>0 and assume OK for all smaller values.
 If all clauses in C->W - C_W are satisfied, we are again done.
 If not, we can improve some value g_f(w) using a clause in C->W - C_W.
+(The latter case distinction is decidable since C_l is finite.)
 Say that we can infer the value g_f(w)+k+1 for w using values of f 
 on V-W and values of g_f on W. Define f' : V -> N+ by 
 
@@ -53,8 +60,10 @@ f'(x)=f(x) for x in V-W,
 f'(y)= g_f(y) for y in W-w and 
 f'(w) = g_f(w)+k+1. 
 
-Then M(g_f') < M(g_f) and we can apply the IH to f'. 
-The resulting h for f' also works for f.
+We have g_f(w) < max(f(V-W)) + MAXGAIN, since the value of w
+could be improved, and therefore M(g_f') < M(g_f).
+So we can apply the IH to f'. 
+The resulting h for f' also works for f. 
 QED
 
 Remark: given f: V -> N+, any variable v with f(v)=∞ can be
@@ -63,35 +72,34 @@ can be left out, and all atoms v+k in ...,v+k,... -> ...
 can be deleted from the remaining clauses. 
 If we get a clause empty -> x+k, then we can infer f(x)=∞
 and continue the simplification process.
-Under this simplification, MAXGAIN is respected.
+If we exhaust V in this process, then the function that is
+constant ∞ is the least model >= f of C.
+Under this simplification, MAXGAIN does not increase.
+Also, if C is the upward closure of C_l, then C' 
+is the upward closure of some simplified subset of C_l.
 In a proof for all V by induction on |V| we can (and will) 
 apply the IH immediately to the simplified situation.
 
 
-THM: Let V be a non-empty set of variables.
+THM: Let V be a finite set of variables.
 Let C be a set of clauses with variables in V, 
-closed under shifting upwards,
+closed under shifting upwards of a finite C_l,
 containing all predecessor clauses, 
 and with all gains <= MAXGAIN.
+
 Then for any f : V -> N+ we can compute 
 the least g >= f that is a model of C. 
 
 Proof by induction on |V|.
 
-Base: V = x. Clauses in C are of the form ...,x+ki,... -> x+k.
-Such clauses are trivial if max(ki)>=k.
-If all clauses in C are trivial, take g(x) = f(x).
-Otherwise, any non-trivial clause is of the form 
-x+max(ki) -> x+max(ki)+l+1 (ignoring trivial atoms on the left). 
-Then we take g(x) = ∞ if f(x)>=max(ki) for some non-trivial
-clause, and g(x) = f(x) otherwise.
+Base: |V|=0, nothing to prove.
 
-Step: Let |V|> 1 and assume OK for smaller V. 
+Step: Let |V|> 0 and assume OK for smaller V. 
 If f(v)=∞ for some v in V, simplify C to C' and apply the IH.
 Applying the IH is justified since C' has fewer variables,
-and satisfies all conditions (in particular wrt MAXGAIN).
+and satisfies all conditions (in particular wrt MAXGAIN and C'_l).
 The h for C' is extended by value(s) ∞ for the eliminated 
-variable(s) to a minimal model >= f of C. 
+variable(s) to get a minimal model >= f of C. 
 
 Assume now f : V -> N.
 We compute first the subset of variables x of V whose value f(x)
@@ -101,6 +109,7 @@ can be improved in one step. For any x in V, we look at clauses
 
 Let g(x) be the maximum of f(x) and the results for x, as obtained
 above, and let W be the set of all x in V such that g(x) > f(x).
+(Both g(x) and W can be computed using C_l.)
 
 If W is empty we are done since then f itself is a model of C.
 
@@ -109,7 +118,8 @@ least h >= f that is a model of C.
 (If V+f |- V+f+1, then V+f |- V+f+k for all k>0.)
 
 Otherwise, W is a non-empty strict subset of V and we can apply
-the IH to W, C_W and g_W to satisfy the condition of the lemma.
+the IH to W, C_W to satisfy the condition of the lemma.
+Then we apply the conclusion of the lemma to g.
 Hence we get the conclusion of the lemma: since g(V-W)=f(V-W) is
 a subset of N, we can compute the least h>=g that is a model of C->W.
 
@@ -120,7 +130,7 @@ done as described in the first paragraph of the step case.
 
 Assume now h: V -> N. There are only two possibilities left:
 
-- all clauses in C are satified by h and we are done.
+- all clauses in C are satisfied by h and we are done.
 
 - not all clauses in C are satisfied by h, and in this case any 
 unsatisfied clauses must have conclusion y+k with y in V-W.
@@ -132,26 +142,34 @@ QED
 
 Example 1.
 
-y -> x with n(x)=1, n(y)=9. n(x) can be improved to m(x)=9.
-So we have m(V,n())(x) = m(V,n())(y) = 9.
-Recursive call with W=x and empty set of clauses, nothing changes, done.
+y -> x with f(x)=1, f(y)=9. f(x) can be improved to g(x)=9.
+So we have g(x) = g(y) = 9.
+Recursive call with W=x and empty set of clauses, 
+nothing changes, nothing can be improved, done.
 
 Example 2.
 
 a->b+1, b->c+1, c->d+1, d+1->e, e+1->f, f+1->g, with n()= 0000000.
 
-W=bcd, m() = 0111000 with b->c+1, c->d+1
+W=bcd, g = 0111000 with C_W = b->c+1, c->d+1
+  
+  Call lemma (condition satisfied by IH) conclusion with g_W = 111
 
-  Recursive call with m(W,n()= 0122000 and c->d+1
+  Lemma returns 123, model of C->W = a->b+1, b->c+1, c->d+1
 
-     Recursive call with  0123000 and empty
+W' = bcde
+ 
+   ...
 
-Return 0123000
+   Lemma returns 1232, model of C->W'
 
-W'=bcdef, 0123210 model for b->c+1, c->d+1, d+1->e, e+1->f 
+W'' = bcdef
 
-Return 0123210, model for all clauses
+   ...
 
+   Lemma returns 12321, model of C->W'', and even of C
+
+Return 0123210
 
 
 -----------------------------------------------------------
@@ -399,6 +417,24 @@ infinite: it has for elements  x+k, y+l   with the operation
  Then the f.p. lattice has elements  x, y and x+n for n>0.
  
  Thierry
+
+ 17.05.20: page 4 of https://arxiv.org/pdf/1710.08138.pdf
+
+Proof (w.i.p.)
+
+(x\/y)+ = x+ \/ y+ holds by definition of +
+
+x+ \/ x =  x+ holds by definition + and =, using predecessor clauses
+(x1+n1+1\/…\/xk+nk+1)\/(x1+n1\/…\/xk+nk) = x1+n1+1\/…\/xk+nk+1
+
+symmetry, transitivity and idempotence hold since they hold for
+"and" in the definition of =
+
+relations t=u hold by the definition of =, using the clauses
+coming from t=u
+
+...
+
 
 -----------------------------------------------------------
 
