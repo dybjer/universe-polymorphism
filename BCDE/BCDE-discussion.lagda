@@ -53,15 +53,18 @@ variable
 
 Π-preservation : (X : 𝓤 ̇ ) (A : X → 𝓥 ̇ )
                → Lift 𝓦 (Π A) ≃ (Π l ꞉ Lift 𝓣 X , Lift 𝓣 (A (lower l)))
-Π-preservation {𝓤} {𝓥} {𝓦} {𝓣} X A =
-  invertibility-gives-≃ φ (γ , η , ε)
+
+Π-preservation {𝓤} {𝓥} {𝓦} {𝓣} X A = invertibility-gives-≃ φ (γ , η , ε)
  where
   φ : Lift 𝓦 (Π A) → (Π l ꞉ Lift 𝓣 X , Lift 𝓣 (A (lower l)))
   φ f (lift x) = lift (lower f x)
+
   γ : codomain φ → domain φ
   γ g = lift (λ x → lower (g (lift x)))
+
   η : γ ∘ φ ∼ id
   η = refl
+
   ε : φ ∘ γ ∼ id
   ε = refl
 
@@ -73,6 +76,7 @@ variable
                 → is-equiv f
                 → ((x : X) → is-equiv (g x))
                 → Π A ≃ Π A'
+
 Π-preservation' fe X A X' A' f g i j = γ
  where
   a : (Π x' ꞉ X' , A' x') ≃ (Π x ꞉ X , A' (f x))
@@ -86,6 +90,7 @@ variable
 Π-Lift-preservation : global-dfunext
                     → (X : 𝓤 ̇ ) (A : X → 𝓥 ̇ )
                     → Π A ≃ (Π l ꞉ Lift 𝓦 X , A (lower l))
+
 Π-Lift-preservation {𝓤} {𝓥} {𝓦} fe X A = Π-preservation' fe X A
                                            (Lift 𝓦 X) (λ l → A (lower l))
                                            lift
@@ -97,6 +102,7 @@ variable
  where
   g : (x : X) → A x → A (lower {𝓤} {𝓦} (lift x))
   g x = id
+
   j : (x : X) → is-equiv (g x)
   j x = id-is-equiv (A x)
 
@@ -104,6 +110,7 @@ variable
 Π-preservation-again : global-dfunext
                      → (X : 𝓤 ̇ ) (A : X → 𝓥 ̇ )
                      → Lift 𝓦 (Π A) ≃ (Π l ꞉ Lift 𝓣 X , Lift 𝓣' (A (lower l)))
+
 Π-preservation-again {𝓤} {𝓥} {𝓦} {𝓣} {𝓣'} fe X A =
 
   Lift 𝓦 (Π A)                            ≃⟨ Lift-≃ (Π A)                               ⟩
@@ -118,16 +125,18 @@ We repeat the development for Σ:
 \begin{code}
 Σ-preservation : (X : 𝓤 ̇ ) (A : X → 𝓥 ̇ )
                → Lift 𝓦 (Σ A) ≃ (Σ l ꞉ Lift 𝓣 X , Lift 𝓣 (A (lower l)))
-Σ-preservation {𝓤} {𝓥} {𝓦} {𝓣} X A =
-  invertibility-gives-≃ φ (γ , η , ε)
+
+Σ-preservation {𝓤} {𝓥} {𝓦} {𝓣} X A = invertibility-gives-≃ φ (γ , η , ε)
  where
-  φ : Lift 𝓦 (Σ A)
-    → (Σ l ꞉ Lift 𝓣 X , Lift 𝓣 (A (lower l)))
+  φ : Lift 𝓦 (Σ A) → (Σ l ꞉ Lift 𝓣 X , Lift 𝓣 (A (lower l)))
   φ (lift (x , a)) = lift x , lift a
+
   γ : codomain φ → domain φ
   γ (lift x , lift a) = lift (x , a)
+
   η : γ ∘ φ ∼ id
   η = refl
+
   ε : φ ∘ γ ∼ id
   ε = refl
 
@@ -144,6 +153,7 @@ The following proofs are essentially the same as those for Π above:
                 → is-equiv f
                 → ((x : X) → is-equiv (g x))
                 → Σ A ≃ Σ A'
+
 Σ-preservation' X A X' A' f g i j = γ
  where
   a : (Σ x' ꞉ X' , A' x') ≃ (Σ x ꞉ X , A' (f x))
@@ -155,6 +165,7 @@ The following proofs are essentially the same as those for Π above:
 
 Σ-Lift-preservation : (X : 𝓤 ̇ ) (A : X → 𝓥 ̇ )
                     → Σ A ≃ (Σ l ꞉ Lift 𝓦 X , A (lower l))
+
 Σ-Lift-preservation {𝓤} {𝓥} {𝓦} X A = Σ-preservation' X A
                                          (Lift 𝓦 X) (λ l → A (lower l))
                                          lift
@@ -166,11 +177,13 @@ The following proofs are essentially the same as those for Π above:
  where
   g : (x : X) → A x → A (lower {𝓤} {𝓦} (lift x))
   g x = id
+
   j : (x : X) → is-equiv (g x)
   j x = id-is-equiv (A x)
 
 Σ-preservation-again : (X : 𝓤 ̇ ) (A : X → 𝓥 ̇ )
                      → Lift 𝓦 (Σ A) ≃ (Σ l ꞉ Lift 𝓣 X , Lift 𝓣' (A (lower l)))
+
 Σ-preservation-again {𝓤} {𝓥} {𝓦} {𝓣} {𝓣'} X A =
 
   Lift 𝓦 (Σ A)                            ≃⟨ Lift-≃ (Σ A)                         ⟩
@@ -216,7 +229,7 @@ The second universe does:
 Zero₁ : 𝓤₁ ̇
 Zero₁ = 𝓤₀ ̇ → 𝟘
 
-Zero₁-induction : (A : Zero₁ → 𝓥 ̇ ) → (x : Zero₁) → A x
+Zero₁-induction : (A : Zero₁ → 𝓥 ̇ ) (x : Zero₁) → A x
 Zero₁-induction A x = !𝟘 (A x) (x 𝟘)
 
 \end{code}
@@ -228,7 +241,7 @@ More generally, successor universes do:
 Zero⁺ : 𝓤 ⁺ ̇
 Zero⁺ {𝓤} = 𝓤 ̇ → 𝟘
 
-Zero⁺-induction : (A : Zero⁺ → 𝓥 ̇ ) → (x : Zero⁺) → A x
+Zero⁺-induction : (A : Zero⁺ → 𝓥 ̇ ) (x : Zero⁺) → A x
 Zero⁺-induction A x = 𝟘-induction (λ _ → A x) (x 𝟘)
 
 \end{code}
@@ -335,15 +348,19 @@ claim₅ e = record
 
   Up' : ∀ {𝓤} 𝓥 → 𝓤 ̇ →  𝓤 ⊔ 𝓥 ̇
   Up' 𝓥 X = X + O 𝓥
+
   up' : ∀ {𝓤} {𝓥} {X : 𝓤 ̇ } → X → Up' 𝓥 X
   up' = inl
+
   Up-induction' : ∀ {𝓤} 𝓥
                   {X : 𝓤 ̇ }
                   (A : Up' 𝓥 X → 𝓦 ̇ )
                 → ((x : X) → A (up' x))
                 → (l : Up' 𝓥 X) → A l
+
   Up-induction' {𝓤} 𝓥 A φ (inl x) = φ x
   Up-induction' {𝓤} 𝓥 A φ (inr x) = O-induction 𝓥 𝓤 (λ _ → A (inr x)) x
+
   Up-induction-identity' :
                   ∀ {𝓤} 𝓥
                   {X : 𝓤 ̇ }
@@ -351,6 +368,7 @@ claim₅ e = record
                   (φ : (x : X) → A (up' x))
                   (x : X)
                 → Up-induction' 𝓥 A φ (up' x) ≡ φ x
+
   Up-induction-identity' 𝓥 φ x = refl (φ x)
 \end{code}
 
@@ -385,6 +403,7 @@ We first derive some general consequences of the hypothesis:
                 {A : 𝓦 ̇ }
               → (X → A)
               → Up 𝓥 X → A
+
  Up-recursion 𝓥 {X} {A} = Up-induction 𝓥 (λ _ → A)
 
  Up-recursion-identity : ∀ {𝓤} 𝓥
@@ -393,6 +412,7 @@ We first derive some general consequences of the hypothesis:
                          (φ : X → A)
                          (x : X)
                        → Up-recursion 𝓥 φ (up x) ≡ φ x
+
  Up-recursion-identity 𝓥 {X} {A} = Up-induction-identity 𝓥 {X} {λ _ → A}
 
  down : ∀ {𝓤} {𝓥} {X : 𝓤 ̇ } → Up 𝓥 X → X
