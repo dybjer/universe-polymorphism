@@ -77,12 +77,12 @@ variable
                 → Π A ≃ Π A'
 Π-preservation' fe X A X' A' f g i j = γ
  where
-  a : Π A' ≃ (Π x ꞉ X , A' (f x))
+  a : (Π x' ꞉ X' , A' x') ≃ (Π x ꞉ X , A' (f x))
   a = Π-change-of-variable fe fe A' f i
 
-  γ = Π A                  ≃⟨ Π-cong fe fe (λ x → g x , j x) ⟩
-      (Π x ꞉ X , A' (f x)) ≃⟨ ≃-sym a ⟩
-      Π A'                 ■
+  γ = (Π x ꞉ X , A x)      ≃⟨ Π-cong fe fe (λ x → g x , j x) ⟩
+      (Π x ꞉ X , A' (f x)) ≃⟨ ≃-sym a                        ⟩
+      (Π x' ꞉ X' , A' x')  ■
 
 
 Π-Lift-preservation : global-dfunext
@@ -109,8 +109,8 @@ variable
                      ≃ (Π l ꞉ Lift 𝓣 X , Lift 𝓣' (A (lower l)))
 Π-preservation-again {𝓤} {𝓥} {𝓦} {𝓣} {𝓣'} fe X A =
 
-  Lift 𝓦 (Π A)                            ≃⟨ Lift-≃ (Π A) ⟩
-  Π A                                      ≃⟨ Π-Lift-preservation fe X A ⟩
+  Lift 𝓦 (Π A)                            ≃⟨ Lift-≃ (Π A)                               ⟩
+  Π A                                      ≃⟨ Π-Lift-preservation fe X A                ⟩
   (Π l ꞉ Lift 𝓣 X , A (lower l))           ≃⟨ Π-cong fe fe (λ x → ≃-Lift (A (lower x))) ⟩
   (Π l ꞉ Lift 𝓣 X , Lift 𝓣' (A (lower l))) ■
 
@@ -150,12 +150,12 @@ The following proofs are essentially the same as those for Π above:
                 → Σ A ≃ Σ A'
 Σ-preservation' X A X' A' f g i j = γ
  where
-  a : Σ A' ≃ (Σ x ꞉ X , A' (f x))
+  a : (Σ x' ꞉ X' , A' x') ≃ (Σ x ꞉ X , A' (f x))
   a = Σ-change-of-variable A' f i
 
-  γ = Σ A                  ≃⟨ Σ-cong (λ x → g x , j x) ⟩
-      (Σ x ꞉ X , A' (f x)) ≃⟨ ≃-sym a ⟩
-      Σ A'                 ■
+  γ = (Σ x ꞉ X , A x)      ≃⟨ Σ-cong (λ x → g x , j x) ⟩
+      (Σ x ꞉ X , A' (f x)) ≃⟨ ≃-sym a                  ⟩
+      (Σ x' ꞉ X' , A' x')  ■
 
 Σ-Lift-preservation : (X : 𝓤 ̇ ) (A : X → 𝓥 ̇ )
                     → Σ A ≃ (Σ l ꞉ Lift 𝓦 X , A (lower l))
@@ -178,8 +178,8 @@ The following proofs are essentially the same as those for Π above:
                ≃ (Σ l ꞉ Lift 𝓣 X , Lift 𝓣' (A (lower l)))
 Σ-preservation-again {𝓤} {𝓥} {𝓦} {𝓣} {𝓣'} X A =
 
-  Lift 𝓦 (Σ A)                            ≃⟨ Lift-≃ (Σ A) ⟩
-  Σ A                                      ≃⟨ Σ-Lift-preservation X A ⟩
+  Lift 𝓦 (Σ A)                            ≃⟨ Lift-≃ (Σ A)                         ⟩
+  Σ A                                      ≃⟨ Σ-Lift-preservation X A             ⟩
   (Σ l ꞉ Lift 𝓣 X , A (lower l))           ≃⟨ Σ-cong (λ x → ≃-Lift (A (lower x))) ⟩
   (Σ l ꞉ Lift 𝓣 X , Lift 𝓣' (A (lower l))) ■
 
