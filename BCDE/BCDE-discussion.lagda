@@ -19,7 +19,7 @@ with universe polymorphism in the sense of definability.
     our type theory.
 
 (Remark added 25th June. There is nothing special about the type
-formers being preserved by universe lifing. This is just an instance
+formers being preserved by universe lifting. This is just an instance
 of the fact that they are preserved by equivalences. However, the
 preservation of Π by Lift holds without function extensionality using
 the fact that (lift,down) form a definitional isomorphism (they
@@ -359,7 +359,7 @@ claim₅ e = record
 
 Notice that the induction identity holds definitionally.
 
-So the conclusion is that universe lifing is available if and only if
+So the conclusion is that universe lifting is available if and only if
 every universe has some type.
 
 But it doesn't seem to be possible to prove that every universe has
