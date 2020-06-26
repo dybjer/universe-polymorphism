@@ -266,15 +266,18 @@ lifting, where "up" corresponds to "lift":
 
 record universe-lifting-is-available : 𝓤ω where
  field
-  Up : ∀ {𝓤} 𝓥 → 𝓤 ̇ →  𝓤 ⊔ 𝓥 ̇
-  up : ∀ {𝓤} {𝓥} {X : 𝓤 ̇ } → X → Up 𝓥 X
-  Up-induction : ∀ {𝓤} 𝓥
+  Up : ∀ 𝓥 → 𝓤 ̇ →  𝓤 ⊔ 𝓥 ̇
+
+  up : {X : 𝓤 ̇ } → X → Up 𝓥 X
+
+  Up-induction : ∀ 𝓥
                  {X : 𝓤 ̇ }
                  (A : Up 𝓥 X → 𝓦 ̇ )
                → ((x : X) → A (up x))
                → (u : Up 𝓥 X) → A u
+
   Up-induction-identity :
-                 ∀ {𝓤} 𝓥
+                 ∀ 𝓥
                  {X : 𝓤 ̇ }
                  {A : Up 𝓥 X → 𝓦 ̇ }
                  (φ : (x : X) → A (up x))
@@ -346,23 +349,23 @@ claim₅ e = record
 
   open every-universe-has-an-empty-type a
 
-  Up' : ∀ {𝓤} 𝓥 → 𝓤 ̇ →  𝓤 ⊔ 𝓥 ̇
+  Up' : ∀ 𝓥 → 𝓤 ̇ →  𝓤 ⊔ 𝓥 ̇
   Up' 𝓥 X = X + O 𝓥
 
-  up' : ∀ {𝓤} {𝓥} {X : 𝓤 ̇ } → X → Up' 𝓥 X
+  up' : {X : 𝓤 ̇ } → X → Up' 𝓥 X
   up' = inl
 
-  Up-induction' : ∀ {𝓤} 𝓥
+  Up-induction' : ∀ 𝓥
                   {X : 𝓤 ̇ }
                   (A : Up' 𝓥 X → 𝓦 ̇ )
                 → ((x : X) → A (up' x))
                 → (l : Up' 𝓥 X) → A l
 
-  Up-induction' {𝓤} 𝓥 A φ (inl x) = φ x
-  Up-induction' {𝓤} 𝓥 A φ (inr x) = O-induction 𝓥 𝓤 (λ _ → A (inr x)) x
+  Up-induction' 𝓥 A φ (inl x) = φ x
+  Up-induction' 𝓥 A φ (inr x) = O-induction 𝓥 _ (λ _ → A (inr x)) x
 
   Up-induction-identity' :
-                  ∀ {𝓤} 𝓥
+                  ∀ 𝓥
                   {X : 𝓤 ̇ }
                   {A : Up' 𝓥 X → 𝓦 ̇ }
                   (φ : (x : X) → A (up' x))
