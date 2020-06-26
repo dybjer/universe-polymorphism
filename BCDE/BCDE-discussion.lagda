@@ -52,13 +52,11 @@ variable
  𝓤' 𝓥' 𝓦' 𝓣' : Universe
 
 Π-preservation : (X : 𝓤 ̇ ) (A : X → 𝓥 ̇ )
-                → Lift 𝓦 (Π A)
-                ≃ (Π l ꞉ Lift 𝓣 X , Lift 𝓣 (A (lower l)))
+               → Lift 𝓦 (Π A) ≃ (Π l ꞉ Lift 𝓣 X , Lift 𝓣 (A (lower l)))
 Π-preservation {𝓤} {𝓥} {𝓦} {𝓣} X A =
   invertibility-gives-≃ φ (γ , η , ε)
  where
-  φ : Lift 𝓦 (Π A)
-    → (Π l ꞉ Lift 𝓣 X , Lift 𝓣 (A (lower l)))
+  φ : Lift 𝓦 (Π A) → (Π l ꞉ Lift 𝓣 X , Lift 𝓣 (A (lower l)))
   φ f (lift x) = lift (lower f x)
   γ : codomain φ → domain φ
   γ g = lift (λ x → lower (g (lift x)))
@@ -264,7 +262,7 @@ record universe-lifting-is-available : 𝓤ω where
                  {X : 𝓤 ̇ }
                  (A : Up 𝓥 X → 𝓦 ̇ )
                → ((x : X) → A (up x))
-               → (l : Up 𝓥 X) → A l
+               → (u : Up 𝓥 X) → A u
   Up-induction-identity :
                  ∀ {𝓤} 𝓥
                  {X : 𝓤 ̇ }
@@ -364,18 +362,18 @@ Notice that the induction identity holds definitionally.
 So the conclusion is that universe lifing is available if and only if
 every universe has some type.
 
-But it doesn't seem to be possible to prove
-every-universe-has-some-type in our type theory with non-cumulative
-universe polymorphism. The most natural ways to fix this are (1)
-include an empty type in each universe or (2) add universe lifting to
-the system. The fixes (1) and (2) are equivalent in the sense that (1)
-and (2) are interdefinable.
+But it doesn't seem to be possible to prove that every universe has
+some type in our type theory with non-cumulative universe
+polymorphism. The most natural ways to fix this are (1) include an
+empty type in each universe or (2) add universe lifting to the
+system. The fixes (1) and (2) are equivalent in the sense that (1) and
+(2) are interdefinable.
 
 Can we repeat Π-preservation₂ with a hypothetical universe lifting?
 
 \begin{code}
 
-module hypothetical-universe-lifint
+module hypothetical-universe-lifting
         (α : universe-lifting-is-available)
        where
 \end{code}
