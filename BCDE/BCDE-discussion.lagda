@@ -103,8 +103,7 @@ variable
 
 Π-preservation-again : global-dfunext
                      → (X : 𝓤 ̇ ) (A : X → 𝓥 ̇ )
-                     → Lift 𝓦 (Π A)
-                     ≃ (Π l ꞉ Lift 𝓣 X , Lift 𝓣' (A (lower l)))
+                     → Lift 𝓦 (Π A) ≃ (Π l ꞉ Lift 𝓣 X , Lift 𝓣' (A (lower l)))
 Π-preservation-again {𝓤} {𝓥} {𝓦} {𝓣} {𝓣'} fe X A =
 
   Lift 𝓦 (Π A)                            ≃⟨ Lift-≃ (Π A)                               ⟩
@@ -118,8 +117,7 @@ We repeat the development for Σ:
 
 \begin{code}
 Σ-preservation : (X : 𝓤 ̇ ) (A : X → 𝓥 ̇ )
-               → Lift 𝓦 (Σ A)
-               ≃ (Σ l ꞉ Lift 𝓣 X , Lift 𝓣 (A (lower l)))
+               → Lift 𝓦 (Σ A) ≃ (Σ l ꞉ Lift 𝓣 X , Lift 𝓣 (A (lower l)))
 Σ-preservation {𝓤} {𝓥} {𝓦} {𝓣} X A =
   invertibility-gives-≃ φ (γ , η , ε)
  where
@@ -172,8 +170,7 @@ The following proofs are essentially the same as those for Π above:
   j x = id-is-equiv (A x)
 
 Σ-preservation-again : (X : 𝓤 ̇ ) (A : X → 𝓥 ̇ )
-               → Lift 𝓦 (Σ A)
-               ≃ (Σ l ꞉ Lift 𝓣 X , Lift 𝓣' (A (lower l)))
+                     → Lift 𝓦 (Σ A) ≃ (Σ l ꞉ Lift 𝓣 X , Lift 𝓣' (A (lower l)))
 Σ-preservation-again {𝓤} {𝓥} {𝓦} {𝓣} {𝓣'} X A =
 
   Lift 𝓦 (Σ A)                            ≃⟨ Lift-≃ (Σ A)                         ⟩
