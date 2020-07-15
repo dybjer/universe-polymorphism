@@ -7,13 +7,13 @@ Here we define two hierarchies of universes à la Tarski, indexed by a
 successor-sup-semilattice, one cumulative by coercion, and the other
 cumulative on the nose.
 
-The Agda type Set (or Set₀) will host all these universes à la Tarski:
+The Agda type Set (or Set₀) will host all these universes à la Tarski.
 
 \begin{code}
 
 {-# OPTIONS --without-K #-}
 
-{-# OPTIONS --no-positivity-check #-} -- See (*) below.
+{-# OPTIONS --no-positivity-check #-}
 
 module TarskiUniverseHierarchies where
 
