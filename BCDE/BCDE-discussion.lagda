@@ -211,12 +211,12 @@ module _ (𝓥 : Universe) where
  succ' : ℕ' → ℕ'
  succ' (lift n) = lift (succ n)
 
- Lifted-ℕ-induction : (A : ℕ' → 𝓤 ̇ )
-                    → A O'
-                    → ((n : ℕ') → A n → A (succ' n))
-                    → (n : ℕ') → A n
+ ℕ'-induction : (A : ℕ' → 𝓤 ̇ )
+              → A O'
+              → ((n : ℕ') → A n → A (succ' n))
+              → (n : ℕ') → A n
 
- Lifted-ℕ-induction A a₀ f = Lift-induction 𝓥 ℕ A (ℕ-induction (A ∘ lift) a₀ (λ n → f (lift n)))
+ ℕ'-induction A a₀ f = Lift-induction 𝓥 ℕ A (ℕ-induction (A ∘ lift) a₀ (λ n → f (lift n)))
 
 \end{code}
 
@@ -231,7 +231,9 @@ Zero₁ : 𝓤₁ ̇
 Zero₁ = 𝓤₀ ̇ → 𝟘
 
 Zero₁-induction : (A : Zero₁ → 𝓥 ̇ ) (x : Zero₁) → A x
-Zero₁-induction A x = !𝟘 (A x) (x 𝟘)
+Zero₁-induction A x = !𝟘 (A x) (x any-type-in-𝓤₀)
+ where
+  any-type-in-𝓤₀ = 𝟘 -- (for instance)
 
 \end{code}
 
