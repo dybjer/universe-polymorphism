@@ -87,14 +87,6 @@ Id-induction A P f a a (refl a) = f a
 
 \end{code}
 
-We will need this to compare the sets in our universe hierarchies:
-
-\begin{code}
-
-data _≡₁_ : Set → Set → Set₁ where
- refl : (A : Set) → A ≡₁ A
-
-\end{code}
 
 We define two universe hierarchies:
 
@@ -209,6 +201,10 @@ We now define U' and T' by mutual induction-recursion:
 We have the following definitional equality:
 
 \begin{code}
+
+ data _≡₁_ : Set → Set → Set₁ where
+  refl : (A : Set) → A ≡₁ A
+
 
  Lift-is-definitional-identity : (i j : L) (a : U' i)
                                → T' (i ⊔ j) (⌜Lift⌝ i j a) ≡₁ T' i a
