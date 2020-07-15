@@ -108,7 +108,7 @@ module _ (L   : Set)
 \end{code}
 
 We don't need to assume the successor-sup-semilattice equations for
-the data (O , _⊔_, _⁺) in the definitions of U and U'. Moreover,we
+the data (O , _⊔_, _⁺) in the definitions of U and U'. Moreover, we
 don't need to assume O : L for the definition of U.
 
 We now define U and T by mutual induction-recursion:
