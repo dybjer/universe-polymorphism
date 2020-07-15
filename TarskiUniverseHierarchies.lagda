@@ -63,7 +63,6 @@ data _+_ (A B : Set) : Set where
 data Σ (A : Set) (B : A → Set) : Set where
  _,_ : (a : A) → B a → Σ A B
 
-
 Σ-induction : (A : Set) (B : A → Set) (P : Σ A B → Set)
             → ((a : A) → (b : B a) → P(a , b))
             → (c : Σ A B) → P c
@@ -75,7 +74,7 @@ data W (A : Set) (B : A → Set) : Set where
 W-induction : (A : Set) (B : A → Set) (P : W A B → Set)
             → ((a : A) → (s : B a → W A B) → ((b : B a) → P(s b)) → P(sup a s))
             → (w : W A B) → P w
-W-induction A B P f (sup a s) = f a s (λ(b : B a) → W-induction A B P f (s b))
+W-induction A B P f (sup a s) = f a s (λ (b : B a) → W-induction A B P f (s b))
 
 data Id (A : Set) : A → A → Set where
  refl : (a : A) → Id A a a
