@@ -198,18 +198,6 @@ We now define U' and T' by mutual induction-recursion:
 
 \end{code}
 
-We have the following definitional equality:
-
-\begin{code}
-
- data _≡₁_ : Set → Set → Set₁ where
-  refl : (A : Set) → A ≡₁ A
-
-
- Lift-is-definitional-identity : (i j : L) (a : U' i)
-                               → T' (i ⊔ j) (⌜Lift⌝ i j a) ≡₁ T' i a
- Lift-is-definitional-identity i j a = refl (T' i a)
-
-\end{code}
+Notice that the last equation is what gives cumulativity on the nose.
 
 TODO. Write CwF definitions.
