@@ -70,7 +70,7 @@ variable
 
 Π-preservation' : global-dfunext
                 → (X : 𝓤 ̇ ) (A : X → 𝓥 ̇ )
-                  (X' : 𝓤' ̇ ) (A' : X' → 𝓦 ̇ )
+                  (X' : 𝓤' ̇ ) (A' : X' → 𝓥' ̇ )
                   (f : X → X')
                   (g : (x : X) → A x → A' (f x))
                 → is-equiv f
@@ -147,7 +147,7 @@ The following proofs are essentially the same as those for Π above:
 \begin{code}
 
 Σ-preservation' : (X : 𝓤 ̇ ) (A : X → 𝓥 ̇ )
-                  (X' : 𝓤' ̇ ) (A' : X' → 𝓦 ̇ )
+                  (X' : 𝓤' ̇ ) (A' : X' → 𝓥' ̇ )
                   (f : X → X')
                   (g : (x : X) → A x → A' (f x))
                 → is-equiv f
@@ -201,6 +201,7 @@ We do this for ℕ now:
 \begin{code}
 
 module _ (𝓥 : Universe) where
+
  ℕ' : 𝓥 ̇
  ℕ' = Lift 𝓥 ℕ
 
@@ -292,6 +293,7 @@ mutiplication is
 
  μ : ∀ {𝓤} {𝓥} {X : 𝓤 ̇ } → Up 𝓥 (Up 𝓥 X) → Up 𝓥 X
  μ {𝓤} {𝓥} {X} = Up-induction 𝓥 (λ _ → Up 𝓥 X) id
+
 \end{code}
 
 We also define:
