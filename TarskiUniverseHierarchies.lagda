@@ -200,3 +200,77 @@ We now define U' and T' by mutual induction-recursion:
 Notice that the last equation is what gives cumulativity on the nose.
 
 TODO. Write CwF definitions.
+
+Ignore the rest of this file, please.
+
+We now try to relate the models. It is here that we'll need some
+equations for L.
+
+-- \begin{code}
+
+--  _≡_ : {X : Set} → X → X → Set
+--  x ≡ y = Id _ x y
+
+--  module _ (e₀ : (i : L) → (O ⊔ i) ≡ i)
+--         where
+
+--   τ : {X : Set} (A : X → Set) {x y : X} → x ≡ y → A x → A x
+--   τ A (refl i) a = a
+
+--   f : (i : L) → U i → U' i
+--   g : (i : L) → U' i → U i
+--   φ : (i : L) (a : U i) → T i a → T' i (f i a)
+--   γ : (i : L) (a : U i) → T' i (f i a) → T i a
+--   α : (i : L) (a : U' i) → T' i a → T i (g i a)
+--   β : (i : L) (a : U' i) → T i (g i a) → T' i a
+
+--   f i (⌜ℕ₀⌝ i) = v
+--    where
+--     u : U' (O ⊔ i)
+--     u = ⌜Lift⌝ O i ⌜ℕ₀⌝
+--     v : U' i
+--     v = {!!} -- τ U' (e₀ i) u
+--   f i (⌜ℕ₁⌝ i) = {!!} -- τ U' (e₀ i) (⌜Lift⌝ O i ⌜ℕ₁⌝)
+--   f i (⌜ℕ⌝ i) = {!!} -- τ U' (e₀ i) (⌜Lift⌝ O i ⌜ℕ⌝)
+--   f .(i ⊔ j) (⌜+⌝ i j a b) = ⌜+⌝ i j (f i a) (f j b)
+--   f .(i ⊔ j) (⌜Π⌝ i j a b) = ⌜Π⌝ i j (f i a) (λ x → f j (b (γ i a x)))
+--   f .(i ⊔ j) (⌜Σ⌝ i j a b) = ⌜Σ⌝ i j (f i a) (λ x → f j (b (γ i a x)))
+--   f .(i ⊔ j) (⌜W⌝ i j a b) = ⌜W⌝ i j (f i a) (λ x → f j (b (γ i a x)))
+--   f i (⌜Id⌝ i a x y) = ⌜Id⌝ i (f i a) (φ i a x) (φ i a y)
+--   f .(i ⁺) (⌜U⌝ i) = ⌜U⌝ i
+
+--   g i ⌜ℕ₀⌝ = ⌜ℕ₀⌝ i
+--   g i ⌜ℕ₁⌝ = ⌜ℕ₁⌝ i
+--   g i ⌜ℕ⌝ = ⌜ℕ⌝ i
+--   g .(i ⊔ j) (⌜+⌝ i j a b) = ⌜+⌝ i j (g i a) (g j b)
+--   g .(i ⊔ j) (⌜Π⌝ i j a b) = ⌜Π⌝ i j (g i a) (λ x → g j (b (β i a x)))
+--   g .(i ⊔ j) (⌜Σ⌝ i j a b) = ⌜Σ⌝ i j (g i a) (λ x → g j (b (β i a x)))
+--   g .(i ⊔ j) (⌜W⌝ i j a b) = ⌜W⌝ i j (g i a) (λ x → g j (b (β i a x)))
+--   g i (⌜Id⌝ i a x y) = ⌜Id⌝ i (g i a) (α i a x) (α i a y)
+--   g .(i ⁺) (⌜U⌝ i) = ⌜U⌝ i
+--   g .(i ⊔ j) (⌜Lift⌝ i j a) = Lift i j (g i a)
+
+--   φ i (⌜ℕ₁⌝ i) x = {!!}
+--   φ i (⌜ℕ⌝ i) x = {!!}
+--   φ .(i ⊔ j) (⌜+⌝ i j a b) (inl A) = inl (φ i a A)
+--   φ .(i ⊔ j) (⌜+⌝ i j a b) (inr B) = inr (φ j b B)
+--   φ .(i ⊔ j) (⌜Π⌝ i j a b) f t = {!!}
+--    where
+--     u : {!!}
+--     u = β {!!} {!!} {!!}
+--     v : {!!}
+--     v = {!!}
+--   φ .(i ⊔ j) (⌜Σ⌝ i j a b) (x , y) = φ i a x , {!!}
+--    where
+--     u : T' j (f j (b x))
+--     u = φ j (b x) y
+--     v : T' j (f j (b (γ i a (φ i a x))))
+--     v = τ (λ - → {!T' j (f j (b -))!}) {!!} {!!}
+--   φ .(i ⊔ j) (⌜W⌝ i j a b) t = {!!}
+--   φ i (⌜Id⌝ i a x y) t = {!!}
+--   φ .(i ⁺) (⌜U⌝ i) t = {!!}
+
+--   γ = {!!}
+--   α = {!!}
+--   β = {!!}
+-- \end{code}
