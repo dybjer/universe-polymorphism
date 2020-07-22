@@ -87,7 +87,7 @@ Id-induction A P f a a (refl a) = f a
 \end{code}
 
 
-We define two universe hierarchies:
+We define two universe hierarchies,
 
  * U  (cumulative by coercion) and
 

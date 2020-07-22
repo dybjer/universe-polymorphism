@@ -97,7 +97,7 @@ infix 10 _≣_
 
 \end{code}
 
-We specify two universe hierarchies:
+We specify two universe hierarchies,
 
  * cumulative by coercion, and
 
