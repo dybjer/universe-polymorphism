@@ -1,0 +1,185 @@
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\nf}{nf}
+\DeclareMathOperator{\domain}{dom}
+\DeclareMathOperator{\codomain}{cod}
+\DeclareMathOperator{\cod}{cod}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\ctxof}{ctx-of}
+\DeclareMathOperator{\typeof}{type-of}
+\DeclareMathOperator{\fix}{fix}
+
+%\newcommand{\vdashS}{\ \vdash\ }
+\newcommand{\vdashS}{\vdash}
+\newcommand {\emptyContext}{1}
+\newcommand {\emptyContextI}{\diamond}
+\newcommand {\emptyContextS}{\textbf 1}
+\newcommand {\contextExtension}[2]{#1 \cdot #2}
+\newcommand {\contextExtensionI}[2]{#1 \cdot #2}
+\newcommand {\contextExtensionS}[2]{#1 \cdot #2}
+\newcommand {\contextExtensionC}[2]{#1 \cdot_\C #2}
+
+\newcommand {\GammaA}{\contextExtension \Gamma A}
+\newcommand {\DeltaA}{\contextExtension \Delta A}
+\newcommand {\setI}{\text{set}}
+\newcommand {\setS}{\textbf{set}}
+\newcommand {\depProd}[3]{\Pi(#1, #2, #3)}
+\newcommand {\depProdI}[2]{\Pi(#1, #2)}
+\newcommand {\depProdS}{\textbf{$\Pi$}}
+\newcommand {\el}[2]{{\tt el}(#1, #2)}
+\newcommand {\elI}[1]{{\tt el}(#1)}
+\newcommand {\elS}{\textbf{el}}
+\newcommand {\subType}[4]{{\tt subType}(#3, #4, #1, #2)}
+\newcommand {\subTypeI}[2]{\text{subType}(#1, #2)}
+\newcommand {\subTypeS}[2]{#1\{#2\}}
+\newcommand{\subTypeC}[4]{\mathrm{subType}_\C(#3, #4, #1, #2)}
+\newcommand {\q}[2]{{\tt q}_{#1, #2}}
+\newcommand {\qI}{{\tt q}}
+\newcommand {\qS}{\textbf{q}}
+\newcommand{\lambdaAbs}[4]{\lambda(#1, #2, #3, #4)}
+\newcommand{\lambdaAbsI}[1]{\lambda(#1)}
+\newcommand{\lambdaAbsS}{\textbf{$\lambda$}}
+\newcommand{\application}[5]{{\tt app}(#1, #2, #3, #4, #5)}
+\newcommand{\applicationI}[2]{\text{app}(#1, #2)}
+\newcommand{\applicationS}{\textbf{application}}
+\newcommand{\subTerm}[5]{{\tt subTerm}(#4, #5, #1,#2,#3)}
+\newcommand{\subTermI}[2]{\text{subTerm}(#1,#2)}
+\newcommand{\subTermS}[2]{#1\{#2\}}
+\newcommand{\idSub}[1]{{\tt id}(#1)}
+\newcommand{\idSubI}{{\tt id}}
+\newcommand{\idSubS}{\text{id}}
+\newcommand{\proj}[2]{{\tt p}(#1, #2)}
+\newcommand{\projI}{{\tt p}}
+\newcommand{\projS}{\textbf{p}}
+\newcommand{\comp}[5]{{\tt comp}(#1, #2, #3, #4, #5)}
+\newcommand{\compI}[2]{{\tt comp}(#1, #2)}
+\newcommand{\compS}[2]{#2 \circ #1}
+\newcommand{\emptySub}[1]{\emptySubI_{#1}}
+\newcommand{\emptySubI}{\langle\rangle}
+\newcommand{\emptySubS}{\textbf !}
+\newcommand{\extSub}[5]{\text{extension}(#1, #2, #3, #4, #5)}
+\newcommand{\extSubI}[2]{\text{extension}(#1, #2)}
+\newcommand{\extSubS}[2]{\langle #1, #2\rangle}
+\newcommand{\Ctx}{\mathrm{Ctx}}
+\newcommand{\Sub}{\mathrm{Sub}}
+\newcommand{\Ty}{\mathrm{Ty}}
+\newcommand{\Tm}{\mathrm{Tm}}
+\newcommand{\C}{{\mathcal C}}
+\newcommand{\I}{{\mathcal I}}
+\newcommand{\T}{{\mathcal T}}
+\newcommand{\Timp}{\T_{\text{imp}}}
+\newcommand{\arrow}{{\rightarrow}}
+\newcommand{\RawCtx}{{\tt Ctx}}
+\newcommand{\RawSub}{{\tt Sub}}
+\newcommand{\RawTy}{{\tt Ty}}
+\newcommand{\RawTm}{{\tt Tm}}
+
+\newcommand{\scomp}[6]{\mathrm{comp}_#1(#2, #3, #4, #5,#6)}
+
+\newcommand{\inte}[1]{\llbracket #1 \rrbracket}
+\newcommand{\intCtx}[1]{\llbracket #1 \rrbracket}
+\newcommand{\intSub}[3]{\llbracket #3 \rrbracket_{#1,#2}}
+\newcommand{\intTy}[2]{\llbracket #2 \rrbracket_#1}
+\newcommand{\intTm}[3]{\llbracket #3 \rrbracket_{#1,#2}}
+\newcommand{\ICtx}{{\I_0}}
+\newcommand{\ISub}{{\I_1}}
+\newcommand{\ITy}{{\I_2}}
+\newcommand{\ITm}{{\I_3}}
+\newcommand{\iniCtx}[1]{\overline{\llbracket #1 \rrbracket}}
+\newcommand{\iniSub}[3]{\overline{\llbracket #3 \rrbracket}_{#1,#2}}
+\newcommand{\iniTy}[2]{\overline{\llbracket #2 \rrbracket}_{#1}}
+\newcommand{\iniTm}[3]{\overline{\llbracket #3 \rrbracket}_{#1,#2}}
+
+\newcommand{\mejl}[3]{#1$\bigcirc\!\!\!\!\!\alpha\,$#2${}_{\cdot}$#3}
+
+\newcommand{\bbN}[0]{{\mathbb N}}
+\newcommand{\bbZ}[0]{{\mathbb Z}}
+\newcommand{\bbQ}[0]{{\mathbb Q}}
+\newcommand{\bbR}[0]{{\mathbb R}}
+\newcommand{\bbB}[0]{{\mathbb B}}
+\newcommand{\mU}[0]{{\mathcal U}}
+\newcommand{\mT}[0]{{\mathcal T}}
+\newcommand{\ve}[0]{{\varepsilon}}
+\newcommand{\vf}[0]{{\varphi}}
+
+\newcommand{\wellincluded}[0]{\, \Subset \,}
+
+\newcommand{\memof}[0]{\, \epsilon \,}
+\newcommand{\subseteqof}[0]{\, \dot{\subseteq} \,}
+
+\newcommand{\mono}[0]{\to/ >->/}
+\newcommand{\pto}[0]{\rightharpoondown}
+\newcommand{\wellcov}[0]{{\lll}}
+\newcommand{\waybelow}[0]{\ll}
+\newcommand{\formint}[0]{\land}
+\newcommand{\cov}[0]{{\, \lhd \,}}
+\newcommand{\kov}[0]{{\, \lessdot \,}}
+\newcommand{\kkov}[0]{{\, <: \,}}
+\newcommand{\mutcov}[0]{\sim}
+\newcommand{\balcov}[0]{\sqsubseteq}
+\newcommand{\bal}[0]{{\sf b}}
+\newcommand{\sat}[1]{{\rm Sat}(#1)}
+\newcommand{\set}[0]{{\rm Set}}
+\newcommand{\Set}[0]{{\rm Set}}
+\newcommand{\true}[0]{{\sf T}}
+\newcommand{\monus}{\stackrel{{}^{\scriptstyle .}}{\smash{-}}}
+
+\newcommand{\refl}[0]{{\rm ref}}
+
+\newcommand{\inl}[1]{{\sf inl}(#1)}
+\newcommand{\inr}[1]{{\sf inr}(#1)}
+\newcommand{\nat}[0]{{\mathbb N}}
+
+\newcommand{\nattype}[0]{{\rm N}}
+\newcommand{\bool}[0]{{\rm Bool}}
+\newcommand{\ext}[1]{\langle #1 \rangle}
+
+
+\newcommand{\bintree}[0]{{\rm T}_2}
+
+\newcommand{\sequent}[0]{\vdash}
+
+
+\renewcommand{\conv}[0]{\approx}
+\newcommand{\intimpl}[0]{\supset}
+
+\newcommand{\omitthis}[1]{}
+
+\newcommand{\changenote}[1]{}
+
+
+ \newcommand{\Id}[0]{{\rm I}}
+ 
+
+\newcommand{\longtext}[1]{}
+\newcommand{\shorttext}[1]{}
+\newcommand{\commentaway}[1]{}
+
+\newcommand{\Setoid}[0]{{\bf Setoid}}
+
+\definecolor{Red}{rgb}{1,0,0}
+\newcommand{\red}[1]{{\color{Red}#1}}
+%\newcommand{\red}[1]{}
+\renewcommand{\bar}[1]{\overline{#1}}
+
+% Definitions for todonotes
+\newcommand{\rkPierreInline}[1]{\todo[inline,color=blue!40]{Pierre --- #1}}
+\newcommand{\rkPierre}[1]{\todo[color=blue!40]{Pierre --- #1}}
+\newcommand{\rkSimonInline}[1]{\todo[inline,color=red!40]{Simon --- #1}}
+\newcommand{\rkSimon}[1]{\todo[color=red!40]{Simon --- #1}}
+\newcommand{\rkPeterInline}[1]{\todo[inline,color=green!40]{Peter --- #1}}
+\newcommand{\rkPeter}[1]{\todo[color=green!40]{Peter --- #1}}
+
+\newdir{pb}{:(1,-1)@^{|-}}
+\def\pb#1{\save[]+<16 pt,0 pt>:a(#1)\ar@{pb{}}[]\restore}
+
+\newcommand{\Fam}{\textbf{Fam}}
+\newcommand{\nilc}{1}
+\newcommand{\cext}{.}
+\newcommand{\indexed}[1]{\boldsymbol{#1}}
+\newcommand{\Cat}{\mathrm{Cat}}
+\newcommand{\op}{\text{op}}
+\newcommand{\iso}{\cong}
+\newcommand{\subst}[1]{\langle #1 \rangle}
+\newcommand{\applyopen}[2]{\{ #1 \}  #2 }
+
+
