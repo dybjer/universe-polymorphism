@@ -1,0 +1,229 @@
+\documentclass{lmcs}
+%\usepackage{etex}
+\usepackage[utf8]{inputenc}
+
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{proof}
+\usepackage{mathpartir}
+\usepackage{mathrsfs}
+\usepackage{stmaryrd}
+\usepackage{cmll}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage[all]{xy}
+\usepackage{listings}
+\usepackage{todonotes}
+\usepackage{Guyboxes}
+\input{macros}
+\input{newmacros}
+\newtheorem{theorem}{Theorem}
+\newcommand{\s}{\mathrm{s}}
+\newcommand{\Rec}{\mathrm{R}}
+\newcommand{\Ta}{\mathrm{T}}
+\newcommand{\ta}{\mathrm{t}}
+\newcommand{\Ru}{\mathcal{R}}
+\newcommand{\Nhat}{\hat{\N}}
+\newcommand{\Pihat}{\hat{\Pi}}
+\newcommand{\Tan}{\Ta_n}
+\newcommand{\Un}{\U_n}
+\newcommand{\Nhatn}{\N^n}
+\newcommand{\Pihatn}{\Pi^n}
+\newcommand{\Nn}{\Nhatn}
+\newcommand{\Pin}{\Pihatn}
+\newcommand{\TRu}{\Ta_\Ru}
+\newcommand{\URu}{\U_\Ru}
+\newcommand{\NRu}{\N_\Ru}
+\newcommand{\PiRu}{\Pi_\Ru}
+\newcommand{\TRun}{{(\Ta_\Ru)}_n}
+\newcommand{\URun}{{(\U_\Ru)}_n}
+\newcommand{\NRun}{{(\N_\Ru)}^n}
+\newcommand{\PiRun}{{(\Pi_\Ru)}^n}
+\newcommand{\TRum}{{(\Ta_\Ru)}_m}
+\newcommand{\URum}{{(\\U_\Ru)}_m}
+\newcommand{\TC}{\Ta_\C}
+\newcommand{\UC}{\U_\C}
+\newcommand{\NC}{\N_\C}
+\newcommand{\PiC}{\Pi_\C}
+\newcommand{\Level}{\mathrm{Level}}
+\def\Sort{\mathcal{S}}
+\def\Op{\mathcal{O}}
+\def\Eq{\mathcal{E}}
+
+\title{A Note on Generalized Algebraic Theories\\and Categories with Families}
+\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We give a new definition of Cartmell's notion of generalized algebraic theory based on categories with families. We also define when a category with families supports a generalized algebraic theory.
+ \end{abstract}
+
+\section{Introduction}
+
+Cartmell's definition of a generalized algebraic theory as a dependently typed generalization of many sorted algebraic theory \cite{cartmell:phd,cartmell:}. Mention his notion of contextual category. Mention Martin Hofmann's notion of category with attributes (cwa) and its relation to contextual categories. Also remark that Cartmell used the name cwa for a slightly different notion. Mention cwfs and Martin Hofmann's paper on "Syntax and Semantics of Dependent Types" which is based on cwfs. (Maybe one could actually elaborate this to a survey of Martin's contributions to the semantics of dependent type theory.) We could motivate this note by saying that it could be added to "Syntax and Semantics of Dependent Types" as yet another basic result for dependent type theory.
+
+Then discuss Cartmell's definition a bit more and his notion of "derived rule". 
+
+Discuss the notion of cwf and why initial cwfs (with extra structure) is appropriate as an "abstract syntax" for dependent type theory, abstracting away from representation detail.
+
+Also point out that the point of cwfs is to have a categorical notion of model which immediately gives rise to a generalized algebraic theory, a kind of idealized dependently typed syntax. Point out that cwfs and gats are mutually dependent of each other: To know what a cwf is we need to know what a gat is and to know what a gat is we need to know what a cwf is. Point out that cwfs appear on two levels in our account (i) the fundamental (set-theoretic) notion of cwf underlying the definition of gat (ii) the notion of "internal cwf" which is obtained by considering the models of the the gat of cwfs.
+
+\section{Generalized algebraic theories}
+
+We assume a system of general rules for the following judgment forms for dependent type theory:
+\begin{eqnarray*}
+\\&&\Gamma \vdash
+\\&&\Delta \vdash \gamma : \Gamma
+\\&&\Gamma \vdash A
+\\&&\Gamma \vdash a : A
+\\&&\Gamma = \Gamma' \vdash
+\\&&\Delta \vdash \gamma = \gamma' : \Gamma
+\\&&\Gamma \vdash A = A'
+\\&&\Gamma \vdash a = a' : A
+\end{eqnarray*}
+We shall now define what it means to be a generalized algebraic theory based on this system of rules. There are numerous proposals for such a system of rules and we could start with any one of them. However, we shall insist that the rules give rise to an initial cwf. To be specific we therefore choose the rules given by Castellan et al \cite{castellan:tlca2015}. First, grammars for raw contexts, raw substitutions, raw types, and raw terms are given. Then inference rules for the last four (equality) judgments are given together with the remark that the first four judgment are abbreviations of the reflexive instances. Finally, it is shown that these indeed form an initial object in a category of cwfs (possibly including extra structure for type formers such as $\Pi, \Sigma$) and morphisms preserving cwf-structure (and extra structure) on the nose.
+
+A generalized algebraic theory (gat)  is specified by a list of sort symbols $\Sort$, operator symbols $\Op$ and equations (between terms) $\Eq$ with type information, as follows. (Cartmell also allows equations between sort terms, but most examples do not make use of this, and we skip it for simplicity.)
+
+We typically use the symbol $\Sigma = (\Sort, \Op, \Eq)$ for a gat. We write $\vdash_\Sigma$ for derivability of valid judgments in $\Sigma$.
+
+%We begin by defining the empty generalized algebraic theory $\Sigma_\emptyset$ as the initial cwf as constructed in Castellan et al. Recall that an initial model is specified by a grammar with productions for raw contexts, raw substitutions, raw types, and raw terms and rules which inductively generate four (families of) partial equivalence relations: $\Gamma = \Gamma' \vdash$ on raw contexts, one on substitutions $\Delta \vdash \gamma = \gamma' : \Gamma$, one on raw types $\Gamma \vdash A = A'$, and one on raw terms $\Gamma \vdash a = a' : A$. 
+
+To begin with all of $\Sort, \Op,$ and $\Eq$ are empty. The empty gat is defined as the set of judgement derivable only from the general rules mentioned above. 
+
+We then specify how to add a new sort symbol, a new operator symbol, or a new equation. 
+\begin{description}
+\item[Adding a new sort symbol] 
+If $\Gamma \vdash_\Sigma$, then we can introduce a new sort symbol $F$ where its list of arguments have type $\Gamma$. We call the extended gat $\Sigma'$ which is obtained by adding the production
+%Assume we have built an initial model for $\Sigma$. Then we build the initial model for $\Sigma' = \Sigma + F$ by adding the following production to the grammar 
+$$
+A ::= F
+$$
+and rule
+\begin{mathpar}
+    \inferrule
+    {}
+    {\Gamma \vdash_{\Sigma'} F}
+  \end{mathpar}
+to the grammar and rules for $\Sigma$.
+
+\item[Adding a new operator symbol] 
+If $\Gamma \vdash_\Sigma A$, then we can introduce a new operator symbol $f$ where its list of arguments have type $\Gamma$ and its result type is $A$. 
+%Assume we have built an initial model for $\Sigma$. 
+We obtain the rules for the extended gat $\Sigma' = \Sigma + f$ by adding the following production to the grammar 
+$$
+a ::= f
+$$
+and rule
+\begin{mathpar}
+    \inferrule
+    {}
+    {\Gamma \vdash_{\Sigma'} f : A}
+\end{mathpar}
+to the grammar and rules for $\Sigma$.
+
+\item[Adding a new equation] 
+ If $\Gamma \vdash_\Sigma a, a' : A$, then we can introduce a new equation $a = a'$. 
+ %Assume we have built an initial model for $\Sigma$. 
+ We obtain the rules for $\Sigma'$ which is $\Sigma$ extended with this equation by adding the rule
+ \begin{mathpar}
+    \inferrule
+    {}
+    {\Gamma \vdash_{\Sigma'} a = a' : A}
+\end{mathpar}
+to the rules in $\Sigma$ that generate equations between terms.
+\end{description}
+
+It follows immediately that $\Gamma \vdash_\Sigma$ implies $\Gamma \vdash_{\Sigma'}$, etc.
+
+We would also like to check that sort symbols, operator symbols, and equations can be intermingled. 
+
+\section{Cwfs that support a generalized algebraic theory}
+
+Any cwf supports the empty generalized algebraic theory. The empty generalized algebraic theory is an initial cwf.
+
+Assume that we already know what it means for a cwf $\C$ to support a generalized algebraic theory $\Sigma$ and that $\Sigma$ gives rise to an initial cwf $\T_\Sigma$ supporting it. We shall now define what it means for a cwf to support $\Sigma'$, the extension of $\Sigma$ with a new sort symbol $\Gamma \vdash_{\Sigma'} F$. Then $\C$ also supports $\Sigma'$ provided there exists $F_{\C} \in \Ty_\C(\inte{\Gamma})$, where $\inte{-} : \T_\Sigma \to \C$ is the interpretation morphism from the initial cwf supporting $\Sigma$ to $\C$. Moreover, $\Sigma'$ gives rise to the initial cwf supporting it, since we can extend the definition of the interpretation map to an interpretation morphism $\inte{-}' : \T_{\Sigma'} \to \C$ by 
+$$
+\inte{F}' = F_\C
+$$
+There is more to say: e g that $F_{\T_{\Sigma'}} = F$.
+
+Similarly, if $\Sigma'$ is the extension with a new operator symbol $\Gamma \vdash_{\Sigma'} f : A$. Then a cwf $\C$ that supports $\Sigma'$ is obtained by adding the requirement that there exists $f_\C \in\Tm_\C(\inte{\Gamma},\inte{A}_{\Gamma})$.
+
+Finally, if $\Sigma'$ is the extension with a new equation $\Gamma \vdash_{\Sigma'} a = a': A$. Then a cwf $\C$ that supports $\Sigma'$ is obtained by adding the requirement that $\inte{a}_{\Gamma,A}= \inte{a'}_{\Gamma,A} \in \Tm_\C(\inte{\Gamma},\inte{A}_\Gamma)$.
+
+\begin{theorem}
+Any generalized algebraic theory $\Sigma$ gives rise to an initial cwf supporting it.
+\end{theorem}
+
+\section{A more abstract definition}
+
+We have chosen one initial cwf (the one of Castellan et al) as the empty generalized algebraic theory and then shown how to extend this to an initial cwf supporting an arbitrary gat. We could avoid the dependence on Castellan et al, by starting with an arbitrary initial cwf, and proceed as follows.
+
+\begin{description}
+\item[Adding a new sort symbol] 
+If $\Gamma$ is a context in $\T_\Sigma$, then we can freely add a new sort symbol $F \in \Ty_{\T_{\Sigma'}}(\Gamma)$ to obtain an extended gat $\Sigma'$. A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and there is $\F_\C \in \Ty_\C(\inte{\Gamma})$. $\T_{\Sigma'}$ is defined to be the intial cwf supporting it.
+\item[Adding a new operator symbol] 
+Similarly.
+%If $\Gamma \vdash_\Sigma A$, then we can introduce a new operator symbol $f$ where its list of arguments have type $\Gamma$ and its result type is $A$. 
+%%Assume we have built an initial model for $\Sigma$. 
+%We obtain the rules for the extended gat $\Sigma' = \Sigma + f$ by adding the following production to the grammar 
+%$$
+%a ::= f
+%$$
+%and rule
+%\begin{mathpar}
+%    \inferrule
+%    {}
+%    {\Gamma \vdash_{\Sigma'} f : A}
+%\end{mathpar}
+%to the grammar and rules for $\Sigma$.
+%
+\item[Adding a new equation] 
+Similarly.
+% If $\Gamma \vdash_\Sigma a, a' : A$, then we can introduce a new equation $a = a'$. 
+% %Assume we have built an initial model for $\Sigma$. 
+% We obtain the rules for $\Sigma'$ which is $\Sigma$ extended with this equation by adding the rule
+% \begin{mathpar}
+%    \inferrule
+%    {}
+%    {\Gamma \vdash_{\Sigma'} a = a' : A}
+%\end{mathpar}
+%to the rules in $\Sigma$ that generate equations between terms.
+\end{description}
+Just as the construction in Castellan et al shows the existence of an initial cwf, the construction in the previous section shows the existence of an initial cwf supporting any gat.
+
+
+\section{Examples of generalized algebraic theories}
+
+\subsection{Example: (internal) categories} The generalized algebraic theory of categories has sort symbols Obj and Hom, operator symbols composition and identity, and associativity and identity laws as equations. We say that a cwf that supports this generalized algebraic theory is a cwf with an internal category.
+
+\subsection{Example: (internal) cwfs} Similarly, we can define a cwf that supports the generalized algebraic theory of cwfs. We add sort symbols for types and terms, operator symbols for all the cwf-combinators, and all the cwf-equations. We say that a cwf that supports this generalized algebraic theory is a cwf with an internal cwf.
+
+\subsection{Example: (internal) cwfs with $\Pi$-types} 
+We add operator symbols $\Pi, \lambda, \app$ and equations $\beta, \eta$ to the generalized algebraic theory of cwfs. 
+
+\subsection{Example: (internal) cwfs with $\N$-types} 
+We add operator symbols $\N, 0, \s, \Rec$ and equations for $\Rec$.
+
+\subsection{Example: (internal) cwfs with $\U_0$ closed under $\Pi$ and $\N$} 
+We add operator symbols $\U_0, \Ta_0$, the code operations $\N^0, \Pi^0$, and the decoding equations.
+
+\subsection{Example: (internal) cwfs with universe tower structures} We introduce a new sort symbol for levels and new operator symbols for 0, $\s$, and $\vee$ for levels with the equations for $\vee$. Then we have the other operator symbols and equations for universe tower structures.
+
+Note that we have here extended the notion of cwf with a sort of levels, that is, we are no longer strictly within the framework of (internal) cwfs.
+
+\subsection{Example: (internal) cwfs with universe polymorphic tower structures} Here we need to extend the cwf-framework further to take into account contexts with level variables, etc.
+
+\section{Generalized algebraic theories and essentially algebraic theories}
+
+It time permits. A remark about the biequivalence between categories with finite limits and democratic cwfs with $\Sigma$ and extensional identity types, as the basis for the correspondence between essentially and generalized algebraic theories.
+\end{document}

@@ -1,0 +1,83 @@
+%% Usage: \boxit{some stuff} puts a box around {some stuff}.
+%%        \boxit[title]{stuff} puts a box around {stuff} with a
+%%        [title] in it. 
+
+\newlength{\boxitwd} \newlength{\boxitht}% A couple of lengths
+\newlength{\boxitdp} \newlength{\boxittotal}% A couple more. 
+\newlength{\boxittitlewd}% And one more
+\newsavebox{\boxitcontents}        % and a box to save things in 
+\newcommand{\boxit}[2][{}]{%
+\settowidth{\boxittitlewd}{\hbox{#1}}%
+\ifdim\boxittitlewd>0pt%
+   \boxity{#1}{#2}%
+\else%
+   \boxitn{#2}%
+\fi%
+}
+\newcommand{\boxity}[2]{% Box with a title
+\savebox{\boxitcontents}{%                This box is the contents
+\makebox[\textwidth]{%                    of the Pitts-style box
+\begin{minipage}{0.95\textwidth}
+{#2}
+\end{minipage}
+}}%
+\settowidth{\boxitwd}{\usebox{\boxitcontents}}%
+\settoheight{\boxitht}{\usebox{\boxitcontents}}%
+\settodepth{\boxitdp}{\usebox{\boxitcontents}}%
+\setlength{\boxittotal}{\boxitht}%
+\addtolength{\boxittotal}{\boxitdp}%
+\begin{center}
+\makebox[\textwidth][l]{% Box the whole thing up 
+\raisebox{\boxitht}{%
+\makebox[0pt][l]{%                   The top line and its title
+\makebox[\textwidth][l]{\rule{0.1\textwidth}{0.1ex}%
+\raisebox{-0.5ex}{\textbf{{\ #1\ }}}\hrulefill}}}%
+\raisebox{-\boxitdp}{%   The bottom line
+\makebox[0pt][l]{% 
+\makebox[\textwidth][l]{\hrulefill}}}%
+\makebox[0pt][l]{%       The left hand line and contents, flush left.
+\makebox[\textwidth][l]{%
+\raisebox{-\boxitdp}{\rule{0.1ex}{\boxittotal}}%
+\usebox{\boxitcontents}%
+}}%
+\makebox[0pt][l]{%    The right hand line, flush right. 
+\makebox[\textwidth][r]{%
+\raisebox{-\boxitdp}{\rule{0.1ex}{\boxittotal}}%
+}}%
+}%
+\end{center}
+}
+%
+\newcommand{\boxitn}[1]{% No title
+\savebox{\boxitcontents}{%                This box is the contents
+\makebox[\textwidth]{%                    of the Pitts-style box
+\begin{minipage}{0.95\textwidth}
+{#1}
+\end{minipage}
+}}%
+\settowidth{\boxitwd}{\usebox{\boxitcontents}}%
+\settoheight{\boxitht}{\usebox{\boxitcontents}}%
+\settodepth{\boxitdp}{\usebox{\boxitcontents}}%
+\setlength{\boxittotal}{\boxitht}%
+\addtolength{\boxittotal}{\boxitdp}%
+\begin{center}
+\makebox[\textwidth][l]{% Box the whole thing up 
+\raisebox{\boxitht}{%
+\makebox[0pt][l]{%                   The top line
+\makebox[\textwidth][l]{\rule{0.1\textwidth}{0.1ex}%
+\hrulefill}}}%
+\raisebox{-\boxitdp}{%   The bottom line
+\makebox[0pt][l]{% 
+\makebox[\textwidth][l]{\hrulefill}}}%
+\makebox[0pt][l]{%       The left hand line and contents, flush left.
+\makebox[\textwidth][l]{%
+\raisebox{-\boxitdp}{\rule{0.1ex}{\boxittotal}}%
+\usebox{\boxitcontents}%
+}}%
+\makebox[0pt][l]{%    The right hand line, flush right. 
+\makebox[\textwidth][r]{%
+\raisebox{-\boxitdp}{\rule{0.1ex}{\boxittotal}}%
+}}%
+}%
+\end{center}
+}
