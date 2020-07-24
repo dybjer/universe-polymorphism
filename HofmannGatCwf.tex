@@ -54,9 +54,9 @@
 \def\Sort{\mathcal{S}}
 \def\Op{\mathcal{O}}
 \def\Eq{\mathcal{E}}
+\def\Cwf{\mathbf{CwF}}
 
-\title{A Note on Generalized Algebraic Theories\\and Categories with Families}
-\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
+\title[Generalized Algebraic Theories and Categories with Families]{A Note on Generalized Algebraic Theories\\and Categories with Families}\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
 
 \begin{document}
 
@@ -102,51 +102,53 @@ If $\Gamma$ is a context in $\T_\Sigma$, then we can extend $\Sigma$ with a new 
 \item[Adding a new operator symbol] 
 If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$, then we can extend $\Sigma$ with a new operator symbol $f$ (with type $A$ and context $\Gamma$). A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and there is $f_\C \in\Tm_\C(\inte{\Gamma},\inte{A}_{\Gamma})$.
 \item[Adding a new equation] 
-If $\Gamma$ is a context in $\T_\Sigma$, $A \in \Ty_{\T_\Sigma}(\Gamma)$, and $a, a' \in \Tm_{\T_\Sigma}(\Gamma,A)$. then we can extend $\Sigma$ with a new equation $a = a'$ (with type $A$ and context $\Gamma$). Then a cwf $\C$ that supports $\Sigma'$ is obtained by adding the requirement that $\inte{a}_{\Gamma,A}= \inte{a'}_{\Gamma,A} \in \Tm_\C(\inte{\Gamma},\inte{A}_\Gamma)$.
+If $\Gamma$ is a context in $\T_\Sigma$, $A \in \Ty_{\T_\Sigma}(\Gamma)$, and $a, a' \in \Tm_{\T_\Sigma}(\Gamma,A)$, then we can extend $\Sigma$ with a new equation $a = a'$ (with type $A$ and context $\Gamma$). Then a cwf $\C$ that supports $\Sigma'$ is obtained by adding the requirement that $\inte{a}_{\Gamma,A}= \inte{a'}_{\Gamma,A} \in \Tm_\C(\inte{\Gamma},\inte{A}_\Gamma)$.
 \end{description}
 
 %\begin{theorem}
 %Any generalized algebraic theory $\Sigma$ gives rise to an initial cwf supporting it.
 %\end{theorem}
 
-\section{The construction of generalized algebraic theories}
+\section{The construction of an initial cwf supporting a gat}
 
-The category $\Cwf$ of cwfs and strict cwf-morphisms has an initial object $\T_\emptyset$ \cite{castellan}.
+The category $\Cwf$ of cwfs and strict cwf-morphisms has an initial object \cite{castellan}. This is the initial cwf $\T_\emptyset$ supporting the empty gat.
 
-We assume a system of general rules for the following judgment forms for dependent type theory:
+We recall that this initial cwf is defined by first defining grammars for raw contexts, raw substitutions, raw types, and raw terms. Then four families of partial equivalence relations corresponding to the four judgment forms
 \begin{eqnarray*}
-\\&&\Gamma \vdash
-\\&&\Delta \vdash \gamma : \Gamma
-\\&&\Gamma \vdash A
-\\&&\Gamma \vdash a : A
 \\&&\Gamma = \Gamma' \vdash
 \\&&\Delta \vdash \gamma = \gamma' : \Gamma
 \\&&\Gamma \vdash A = A'
 \\&&\Gamma \vdash a = a' : A
 \end{eqnarray*}
-We shall now define what it means to be a generalized algebraic theory based on this system of rules. There are numerous proposals for such a system of rules and we could start with any one of them. However, we shall insist that the rules give rise to an initial cwf. To be specific we therefore choose the rules given by Castellan et al \cite{castellan:tlca2015}. First, grammars for raw contexts, raw substitutions, raw types, and raw terms are given. Then inference rules for the last four (equality) judgments are given together with the remark that the first four judgment are abbreviations of the reflexive instances. Finally, it is shown that these indeed form an initial object in a category of cwfs (possibly including extra structure for type formers such as $\Pi, \Sigma$) and morphisms preserving cwf-structure (and extra structure) on the nose.
+are defined inductively by inference rules. The four judgment forms
+\begin{eqnarray*}
+\\&&\Gamma \vdash
+\\&&\Delta \vdash \gamma : \Gamma
+\\&&\Gamma \vdash A
+\\&&\Gamma \vdash a : A
+\end{eqnarray*}
+are defined as the reflexitve instances of the partial equivalence relations.
 
-We write $\vdash_\Sigma$ for derivability of valid judgments in $\Sigma$.
-
-%We begin by defining the empty generalized algebraic theory $\Sigma_\emptyset$ as the initial cwf as constructed in Castellan et al. Recall that an initial model is specified by a grammar with productions for raw contexts, raw substitutions, raw types, and raw terms and rules which inductively generate four (families of) partial equivalence relations: $\Gamma = \Gamma' \vdash$ on raw contexts, one on substitutions $\Delta \vdash \gamma = \gamma' : \Gamma$, one on raw types $\Gamma \vdash A = A'$, and one on raw terms $\Gamma \vdash a = a' : A$. 
-
-To begin with all of $\Sort, \Op,$ and $\Eq$ are empty. The empty gat is defined as the set of judgement derivable only from the general rules mentioned above. 
-
-We then specify how to add a new sort symbol, a new operator symbol, or a new equation. 
+Assume we have specified grammars and inference rules for $\T_\Sigma$ and that we write $\vdash_\Sigma$ for derivability by these inference rules. Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to build $\T_{\Sigma'}$, to extend the grammars and inference rules for $\T_\Sigma$.
 \begin{description}
 \item[Adding a new sort symbol] 
-If $\Gamma \vdash_\Sigma$, then we can introduce a new sort symbol $F$ where its list of arguments have type $\Gamma$. We call the extended gat $\Sigma'$ which is obtained by adding the production
-%Assume we have built an initial model for $\Sigma$. Then we build the initial model for $\Sigma' = \Sigma + F$ by adding the following production to the grammar 
+If $\Gamma$ is a context in $\T_\Sigma$ and $\Sigma'$ is $\Sigma$ extended with a new sort symbol $F$ (with context $\Gamma$). Then $\T_{\Sigma'}$ is defined by adding the production
 $$
 A ::= F
 $$
-and rule
+to the grammar for raw types, and the inference rule
 \begin{mathpar}
     \inferrule
     {}
     {\Gamma \vdash_{\Sigma'} F}
   \end{mathpar}
-to the grammar and rules for $\Sigma$.
+to the inference rules for $\Sigma$.
+
+We then define $F_{\T_{\Sigma'}} = F$ and extend the definition of the interpretation morphism $\inte{-}$  to an interpretation morphism $\inte{-}' : \T_{\Sigma'} \to \C$ by 
+$$
+\inte{F}' = F_\C
+$$
+(Remember remark on equivalence classes.)
 
 \item[Adding a new operator symbol] 
 If $\Gamma \vdash_\Sigma A$, then we can introduce a new operator symbol $f$ where its list of arguments have type $\Gamma$ and its result type is $A$. 
@@ -175,30 +177,9 @@ to the grammar and rules for $\Sigma$.
 to the rules in $\Sigma$ that generate equations between terms.
 \end{description}
 
-It follows immediately that $\Gamma \vdash_\Sigma$ implies $\Gamma \vdash_{\Sigma'}$, etc.
-
-We would also like to check that sort symbols, operator symbols, and equations can be intermingled. 
-
-\section{Cwfs that support a generalized algebraic theory}
-
-Any cwf supports the empty generalized algebraic theory. The empty generalized algebraic theory is an initial cwf.
-
-Assume that we already know what it means for a cwf $\C$ to support a generalized algebraic theory $\Sigma$ and that $\Sigma$ gives rise to an initial cwf $\T_\Sigma$ supporting it. We shall now define what it means for a cwf to support $\Sigma'$, the extension of $\Sigma$ with a new sort symbol $\Gamma \vdash_{\Sigma'} F$. Then $\C$ also supports $\Sigma'$ provided there exists $F_{\C} \in \Ty_\C(\inte{\Gamma})$, where $\inte{-} : \T_\Sigma \to \C$ is the interpretation morphism from the initial cwf supporting $\Sigma$ to $\C$. Moreover, $\Sigma'$ gives rise to the initial cwf supporting it, since we can extend the definition of the interpretation map to an interpretation morphism $\inte{-}' : \T_{\Sigma'} \to \C$ by 
-$$
-\inte{F}' = F_\C
-$$
-There is more to say: e g that $F_{\T_{\Sigma'}} = F$.
-
-Similarly, if $\Sigma'$ is the extension with a new operator symbol $\Gamma \vdash_{\Sigma'} f : A$. Then a cwf $\C$ that supports $\Sigma'$ is obtained by adding the requirement that there exists $f_\C \in\Tm_\C(\inte{\Gamma},\inte{A}_{\Gamma})$.
-
-Finally, if $\Sigma'$ is the extension with a new equation $\Gamma \vdash_{\Sigma'} a = a': A$. Then a cwf $\C$ that supports $\Sigma'$ is obtained by adding the requirement that $\inte{a}_{\Gamma,A}= \inte{a'}_{\Gamma,A} \in \Tm_\C(\inte{\Gamma},\inte{A}_\Gamma)$.
-
 \begin{theorem}
-Any generalized algebraic theory $\Sigma$ gives rise to an initial cwf supporting it.
+For any signature $\Sigma$ for a gat there is an initial cwf $\T_\Sigma$ supporting it.
 \end{theorem}
-
-
-
 
 \section{Examples of generalized algebraic theories}
 
