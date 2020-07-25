@@ -89,8 +89,6 @@ Definition of cwfs and the category $\Cwf$.
 
 \section{An abstract definition of generalized algebraic theories}
 
-An official redefinition of Cartmell's notion. 
-
 The {\em signature} for a generalized algebraic theory (gat) $\Sigma$  is given by a list of sort symbols $\Sort$, operator symbols $\Op$, and equations (between terms) $\Eq$, with type information, as follows. (Cartmell also allows equations between sort terms, but most examples do not make use of such, and we skip it for simplicity.) We shall now define how to build a well-formed gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$. We proceed by induction on the size of $\Sigma$, but will postpone the construction of the initial cwfs until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$.
 \begin{description}
 \item[The empty generalized algebraic theory] First we define the empty gat $\emptyset = ([],[],[])$ and stipulate that any cwf supports it. 
