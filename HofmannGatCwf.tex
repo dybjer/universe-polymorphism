@@ -91,7 +91,7 @@ Definition of cwfs and the category $\Cwf$.
 
 An official redefinition of Cartmell's notion. 
 
-The {\em signature} for a generalized algebraic theory (gat) $\Sigma$  is given by a list of sort symbols $\Sort$, operator symbols $\Op$, and equations (between terms) $\Eq$, with type information, as follows. (Cartmell also allows equations between sort terms, but most examples do not make use of such, and we skip it for simplicity.) We shall now define how to build a well-formed gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$. We proceed by induction on the size of $\Sigma$, but will postpone the construction of the initial cwfs until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\Sigma$.
+The {\em signature} for a generalized algebraic theory (gat) $\Sigma$  is given by a list of sort symbols $\Sort$, operator symbols $\Op$, and equations (between terms) $\Eq$, with type information, as follows. (Cartmell also allows equations between sort terms, but most examples do not make use of such, and we skip it for simplicity.) We shall now define how to build a well-formed gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$. We proceed by induction on the size of $\Sigma$, but will postpone the construction of the initial cwfs until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$.
 \begin{description}
 \item[The empty generalized algebraic theory] First we define the empty gat $\emptyset = ([],[],[])$ and stipulate that any cwf supports it. 
 \end{description}
@@ -196,7 +196,7 @@ Every signature $\Sigma$ has an initial cwf $\T_\Sigma$ supporting it.
 
 \subsection{Categories} The generalized algebraic theory of categories has sort symbols Obj and Hom, operator symbols composition and identity, and associativity and identity laws as equations. 
 \begin{itemize}
-\item The initial cwf $\T_\emptyset$ has only one object (context) 1, one equivalence class of morphisms $id_1$, and no types and terms. Hence we can add a new constant sort Obj of (internal) objects with context $1$ to the signature. 
+\item The initial cwf $\T_\emptyset$ has only one object 1 (the empty context), one equivalence class of morphisms $id_1 = <>_1$ (the empty substitution), and no types and terms. Hence we can add a new constant sort Obj of (internal) objects with context $1$ to the signature. 
 \item $\T_{([Obj],[],[])}$ contains the context $(1.Obj).Obj[p_{1,Obj}]$ (corresponding to $x : Obj, y : Obj$ in usual notation with variables). Hence we can introduce the new sort $Hom$ with context $1,Obj.Obj[p_{1,Obj}]$.
 \item $\T_{([Obj, Hom],[],[])}$ contains the context $1.Obj$ (corresponding to the context $x : Obj$) and the type $Hom[<id_{Obj},q_{1,Obj}>]$ (corresponding to the type $Hom(x,x)$ in usual notation). Hence we can introduce the operator symbol $id$ with context $1.Obj$ and type $Hom[<id_{Obj},q_{1,Obj}>]$.
 \item In a similar way we can verify that the typings of composition and the equations give rise to well-formed signatures, but we omit the details.
