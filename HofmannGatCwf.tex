@@ -63,7 +63,9 @@
 \maketitle
 
 \begin{abstract}
-We define a new finitary version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows a possibly infinite set of sort and operator symbols, we only allow a finite number. Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules. This is in the spirit of Voevodsky's "initiality conjecture", whereby type theories are characterized as initial objects in appropriate categories of models of type theory.  Our main result is that the category of cwfs supporting a certain signature for gats has an initial object. This result is obtained by extending the construction of initial cwfs from Castellan, Clairambault, and Dybjer. We also point out that cwfs supporting the gats of categories cwfs, are cwfs with internal categories, cwfs, etc.
+We define a new finitary version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows a possibly infinite set of sort and operator symbols, we only allow a finite number. Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules. This is in the spirit of Voevodsky's "initiality conjecture", whereby type theories are characterized as initial objects in appropriate categories of models.  Our main result is that the category of cwfs supporting a certain signature for gats has an initial object. This result is obtained by extending the construction of initial cwfs from Castellan, Clairambault, and Dybjer. We also point out that cwfs supporting the gats of categories cwfs, are cwfs with internal categories, cwfs, etc.
+
+The notion of cwf supporting a gat signature is also new, at least wrt Cartmell's work. He only has models in Set, it seems.
 \end{abstract}
 
 \section{Introduction}
@@ -89,11 +91,9 @@ Definition of cwfs and the category $\Cwf$.
 
 \section{An abstract definition of generalized algebraic theories}
 
-An official redefinition of Cartmell's notion. 
-
-The {\em signature} for a generalized algebraic theory (gat) $\Sigma$  is given by a list of sort symbols $\Sort$, operator symbols $\Op$, and equations (between terms) $\Eq$, with type information, as follows. (Cartmell also allows equations between sort terms, but most examples do not make use of such, and we skip it for simplicity.) We shall now define how to build a well-formed gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$. We proceed by induction on the size of $\Sigma$, but will postpone the construction of the initial cwfs until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\Sigma$.
+The {\em signature} for a generalized algebraic theory (gat) $\Sigma$  is given by a list of sort symbols $\Sort$, operator symbols $\Op$, and equations (between terms) $\Eq$, with type information, as follows. (Cartmell also allows equations between sort terms, but most examples do not make use of such, and we skip it for simplicity.) We shall now define how to build a well-formed gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$. We proceed by induction on the size of $\Sigma$, but will postpone the construction of the initial cwfs until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$.
 \begin{description}
-\item[The empty generalized algebraic theory] First we define the empty gat $\emptyset = ([],[],[])$ and stipulate that any cwf supports it. 
+\item[The empty signature] The empty signature $\emptyset = ([],[],[])$ is well-formed, and and every cwf supports it. 
 \end{description}
 Assume now that $\Sigma$ is a (well-formed) signature and we have defined what it means for a cwf $\C$ to support it. Assume also that the category $\Cwf_\Sigma$ of cwfs that support $\Sigma$ has an initial object $\T_\Sigma$ with $\inte{-} : \T_\Sigma \to \C$ as the unique cwf-morphism into $\C$. Then we can add a new type symbol, or a new operator symbol, or a new equation, as follows:
 \begin{description}
@@ -113,8 +113,8 @@ Note that the empty signature $\emptyset$ is the only well-formed gat signature 
 \section{The construction of an initial cwf supporting a gat}
 
 \begin{description}
-\item[The empty generalized algebraic theory] 
-The category $\Cwf$ of cwfs and strict cwf-morphisms has an initial object \cite{castellan}. This is the initial cwf $\T_\emptyset$ supporting the empty gat.
+\item[The empty signature] 
+The category $\Cwf$ of cwfs and strict cwf-morphisms has an initial object \cite{castellan}. This is the initial cwf $\T_\emptyset$ supporting the empty signature.
 \end{description}
 
 We recall that this initial cwf is defined by first defining grammars for raw contexts, raw substitutions, raw types, and raw terms. Then four families of partial equivalence relations corresponding to the four judgment forms
@@ -196,30 +196,30 @@ Every signature $\Sigma$ has an initial cwf $\T_\Sigma$ supporting it.
 
 \subsection{Categories} The generalized algebraic theory of categories has sort symbols Obj and Hom, operator symbols composition and identity, and associativity and identity laws as equations. 
 \begin{itemize}
-\item The initial cwf $\T_\emptyset$ has only one object (context) 1, one equivalence class of morphisms $id_1$, and no types and terms. Hence we can add a new constant sort Obj of (internal) objects with context $1$ to the signature. 
+\item The initial cwf $\T_\emptyset$ has only one object 1 (the empty context), one equivalence class of morphisms $id_1 = <>_1$ (the empty substitution), and no types and terms. Hence we can add a new constant sort Obj of (internal) objects with context $1$ to the signature. 
 \item $\T_{([Obj],[],[])}$ contains the context $(1.Obj).Obj[p_{1,Obj}]$ (corresponding to $x : Obj, y : Obj$ in usual notation with variables). Hence we can introduce the new sort $Hom$ with context $1,Obj.Obj[p_{1,Obj}]$.
-\item $\T_{([Obj, Hom],[],[])}$ contains the context $1.Obj$ (corresponding to the context $x : Obj$) and the type $Hom[<<>,pq>,q>]$ (corresponding to the type $Hom(x,x)$ in usual notation). Hence we can introduce the operator symbol $id$ with context $1.Obj$ and type $Hom[<?,?>]$.
+\item $\T_{([Obj, Hom],[],[])}$ contains the context $1.Obj$ (corresponding to the context $x : Obj$) and the type $Hom[<id_{Obj},q_{1,Obj}>]$ (corresponding to the type $Hom(x,x)$ in usual notation). Hence we can introduce the operator symbol $id$ with context $1.Obj$ and type $Hom[<id_{Obj},q_{1,Obj}>]$.
 \item In a similar way we can verify that the typings of composition and the equations give rise to well-formed signatures, but we omit the details.
 \end{itemize}
 
-We say that a cwf that supports the generalized algebraic theory of categories is a cwf with an internal category. Note the similarity and difference with the usual notion of internal category in a category with finite limits.
+We say that a cwf that supports the generalized algebraic theory of categories is a cwf with an {\em internal category}. Note the similarity and difference with the usual notion of internal category in a category with finite limits.
 
-\subsection{Example: (internal) cwfs} Similarly, we can define a cwf that supports the generalized algebraic theory of cwfs. We add sort symbols for types and terms, operator symbols for all the cwf-combinators, and all the cwf-equations. We say that a cwf that supports this generalized algebraic theory is a cwf with an internal cwf.
+\subsection{Cwfs} Similarly, we can define a cwf that supports the generalized algebraic theory of cwfs. We add sort symbols for types and terms, operator symbols for all the cwf-combinators, and all the cwf-equations. We say that a cwf that supports this generalized algebraic theory is a cwf with an {\em internal cwf}.
 
-\subsection{Example: (internal) cwfs with $\Pi$-types} 
+\subsection{Cwfs with $\Pi$-types} 
 We add operator symbols $\Pi, \lambda, \app$ and equations $\beta, \eta$ to the generalized algebraic theory of cwfs. 
 
-\subsection{Example: (internal) cwfs with $\N$-types} 
+\subsection{Cwfs with $\N$-types} 
 We add operator symbols $\N, 0, \s, \Rec$ and equations for $\Rec$.
 
-\subsection{Example: (internal) cwfs with $\U_0$ closed under $\Pi$ and $\N$} 
+\subsection{Cwfs with $\U_0$ closed under $\Pi$ and $\N$} 
 We add operator symbols $\U_0, \Ta_0$, the code operations $\N^0, \Pi^0$, and the decoding equations.
 
-\subsection{Example: (internal) cwfs with universe tower structures} We introduce a new sort symbol for levels and new operator symbols for 0, $\s$, and $\vee$ for levels with the equations for $\vee$. Then we have the other operator symbols and equations for universe tower structures.
+\subsection{Cwfs with universe tower structures} We introduce a new sort symbol for levels and new operator symbols for 0, $\s$, and $\vee$ for levels with the equations for $\vee$. Then we have the other operator symbols and equations for universe tower structures.
 
 Note that we have here extended the notion of cwf with a sort of levels, that is, we are no longer strictly within the framework of (internal) cwfs.
 
-\subsection{Example: (internal) cwfs with universe polymorphic tower structures} Here we need to extend the cwf-framework further to take into account contexts with level variables, etc.
+\subsection{Cwfs with universe polymorphic tower structures} Here we need to extend the cwf-framework further to take into account contexts with level variables, etc.
 
 \section{Generalized algebraic theories and essentially algebraic theories}
 
