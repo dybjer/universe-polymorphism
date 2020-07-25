@@ -87,7 +87,88 @@ Also point out that the point of cwfs is to have a categorical notion of model w
 
 \section{Categories with families}
 
-Definition of cwfs and the category $\Cwf$.
+
+\section{Categories with families}\label{sec:def_cwf}
+
+We first define the category $\Fam$, whose objects are
+set-indexed families of sets, denoted as $(U_x)_{x\in X}$.
+A morphism of $\Fam$ with source $(U_x)_{x\in X}$ and target $(V_y)_{y\in Y}$
+consists of a re-indexing function $f: X\to Y$ together with a family
+$(g_x)_{x\in X}$ of functions $g_x : U_x \to V_{f(x)}$. %, for all $x\in X$.
+
+The next step is to define the category $\Cwf$. First we define the
+objects of $\Cwf$, which are called \emph{categories with families}.
+Then we briefly describe the morphisms of $\Cwf$. Since $\Cwf$ has 
+been developed as a categorical framework for the semantics of
+type theory, much of the terminology (contexts, substitutions,
+types, terms) refers the syntax of type theory, 
+suggesting the intended interpretation of this syntax in the 
+so-called $\Cwf$-semantics.
+
+The main novelty of this note is to use $\Cwf$ as a framework
+for the definition of generalised algebraic theories. 
+Contexts, substitutions and terms also make
+sense in relation to gat's. Perhaps it would have been natural
+to replace the phrase `type' by `sort' (ref to Makkai, FOLDS?),
+but we have chosen to stick to existing terminology.
+It is important to stress, however, that the definition
+of gat in this note is not a syntactical one. 
+
+
+\begin{definition}\label{def:cwf} 
+A category with families (cwf) consists of the following:
+\begin{itemize} 
+\item A category $\C$ with a terminal object $1$.
+
+\emph{Notation and terminology.} We use $\Gamma, \Delta,$ \emph{etc}, to range over objects of $\C$, and refer to
+those as {\em contexts}. Likewise, we use $\delta, \gamma,$ \emph{etc}, to range
+over morphisms, and refer to those as {\em substitutions}. We refer to $1$ as the
+\emph{empty context}. We write $\tuple{}_\Gamma \in \C(\Gamma, 1)$ for the
+terminal map, representing the {\em empty substitution}.
+\item A $\Fam$-valued presheaf, \emph{i.e.} a functor
+$T : \Cop \to \Fam$.
+
+\emph{Notation and terminology.} If $T(\Gamma) = (U_x)_{x\in X}$, we write $X = \Ty(\Gamma)$ and refer to
+its elements as \emph{types in context $\Gamma$} -- we use $A, B, C$ to range over
+such {\em types}. For $A \in X = \Ty(\Gamma)$, we write $U_A = \Tm(\Gamma, A)$
+and refer to its elements as \emph{terms of type $A$ in context $\Gamma$.} 
+Finally, for $\gamma : \Delta \to \Gamma$, the functorial action yields
+\[
+T(\gamma) : (\Tm(\Gamma, A))_{A\in \Ty(\Gamma)} \to 
+                (\Tm(\Delta, B))_{B\in \Ty(\Delta)}
+\]
+consisting of a pair of a reindexing function $\_\,[\gamma] : \Ty(\Gamma) \to
+\Ty(\Delta)$ referred to as \emph{substitution in types}, and for each $A\in
+\Ty(\Gamma)$ a function $\_\,[\gamma] : \Tm(\Gamma, A) \to \Tm(\Delta,
+A[\gamma])$ referred to as \emph{substitution in terms}.
+%\item a presheaf $\Ty : \Cop \to \Set$ of types ;
+%\item a presheaf $\Tm : (\int^\C \Ty)^\op \to \Set$ of terms;
+\item A \emph{context comprehension operation} which to a given context $\Gamma
+\in \Cobj$ and type $A \in \Ty(\Gamma)$ assigns a context $\Gamma \cext
+A$ and two projections
+\[
+\p_{\Gamma, A} : \Gamma \cext A \to \Gamma
+\qquad\qquad
+\q_{\Gamma, A} \in \Tm(\Gamma\cext A, A[\p_{\Gamma,A}])
+\] 
+satisfying the following universal property: for all $\gamma : \Delta \to
+\Gamma$, for all $a\in \Tm(\Delta, A[\gamma])$, there is a unique
+$\tuple{\gamma, a} : \Delta \to \Gamma \cext A$ such that
+\[
+\p_{\Gamma, A} \circ \tuple{\gamma, a} = \gamma
+\qquad \qquad
+\q_{\Gamma, A} [\tuple{\gamma, a}] = a\,.
+\]
+%
+%which is a terminal object in a category of triples
+%$$
+%(\Delta \in \Cobj, \gamma \in \C(\Delta,\Gamma), a \in \Tm(\Delta,A[\gamma]))
+%$$
+%where we use the notation $A[\gamma] = \Ty(\gamma)(A)$ for $\gamma \in \C(\Delta,\Gamma)$.
+We say that $(\Gamma\cext A, \p_{\Gamma, A}, \q_{\Gamma, A})$ is a
+\emph{context comprehension} of $\Gamma$ and $A$.
+\end{itemize}
+\end{definition}
 
 \section{An abstract definition of generalized algebraic theories}
 
