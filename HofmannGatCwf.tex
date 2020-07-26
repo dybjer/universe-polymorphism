@@ -55,6 +55,10 @@
 \def\Op{\mathcal{O}}
 \def\Eq{\mathcal{E}}
 \def\Cwf{\mathbf{CwF}}
+\def\Obj{\mathrm{Obj}}
+\def\Hom{\mathrm{Hom}}
+\def\id{\mathrm{id}}
+
 
 \title[Generalized Algebraic Theories and Categories with Families]{A Note on Generalized Algebraic Theories\\and Categories with Families}\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
 
@@ -140,7 +144,7 @@ A[\gamma])$ referred to as \emph{substitution in terms}.
 %\item a presheaf $\Ty : \Cop \to \Set$ of types ;
 %\item a presheaf $\Tm : (\int^\C \Ty)^\op \to \Set$ of terms;
 \item A \emph{context comprehension operation} which to a given context $\Gamma
-\in \Cobj$ and type $A \in \Ty(\Gamma)$ assigns a context $\Gamma \cext
+\in \C$ and type $A \in \Ty(\Gamma)$ assigns a context $\Gamma \cext
 A$ and two projections
 \[
 \p_{\Gamma, A} : \Gamma \cext A \to \Gamma
@@ -158,7 +162,7 @@ $\tuple{\gamma, a} : \Delta \to \Gamma \cext A$ such that
 %
 %which is a terminal object in a category of triples
 %$$
-%(\Delta \in \Cobj, \gamma \in \C(\Delta,\Gamma), a \in \Tm(\Delta,A[\gamma]))
+%(\Delta \in \C\Obj, \gamma \in \C(\Delta,\Gamma), a \in \Tm(\Delta,A[\gamma]))
 %$$
 %where we use the notation $A[\gamma] = \Ty(\gamma)(A)$ for $\gamma \in \C(\Delta,\Gamma)$.
 We say that $(\Gamma\cext A, \p_{\Gamma, A}, \q_{\Gamma, A})$ is a
@@ -191,7 +195,7 @@ Note that the empty signature $\emptyset$ is the only well-formed gat signature 
 
 \begin{description}
 \item[The empty generalized algebraic theory] 
-The category $\Cwf$ of cwfs and strict cwf-morphisms has an initial object \cite{castellan}. This is the initial cwf $\T_\emptyset$ supporting the empty gat.
+The category $\Cwf = \Cwf_\emptyset$ of cwfs and strict cwf-morphisms has an initial object \cite{castellan}. This is the initial cwf $\T_\emptyset$ supporting the empty gat.
 \end{description}
 
 We recall that this initial cwf is defined by first defining grammars for raw contexts, raw substitutions, raw types, and raw terms. Then four families of partial equivalence relations corresponding to the four judgment forms
@@ -208,7 +212,7 @@ are defined inductively by inference rules. The four judgment forms
 \\&&\Gamma \vdash A
 \\&&\Gamma \vdash a : A
 \end{eqnarray*}
-are defined as the reflexive instances of the partial equivalence relations.
+are then defined as the reflexive instances of the partial equivalence relations. The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$ with respect to the pers, such that $\Gamma \vdash$ See Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,castellan:lmcs} for details.
 
 Assume we have specified grammars and inference rules for $\T_\Sigma$ and that we write $\vdash_\Sigma$ for derivability by these inference rules. Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to build $\T_{\Sigma'}$, to extend the grammars and inference rules for $\T_\Sigma$.
 \begin{description}
@@ -225,7 +229,7 @@ to the grammar for raw types, and the inference rule
   \end{mathpar}
 to the inference rules for $\Sigma$.
 
-We then define $F_{\T_{\Sigma'}} = F$ and it follows that $ \T_{\Sigma'}$ supports $\Sigma'$. 
+We then define $F_{\T_{\Sigma'}} = F$. It follows that $ \T_{\Sigma'}$ supports $\Sigma'$. 
 
 Moreover, we extend the definition of the interpretation morphism $\inte{-}$  to an interpretation morphism $\inte{-}' : \T_{\Sigma'} \to \C$ by 
 $$
@@ -271,15 +275,17 @@ For every signature $\Sigma$ the category $\Cwf_\Sigma$ has an initial object $\
 
 \section{Examples of generalized algebraic theories}
 
-\subsection{Categories} The generalized algebraic theory of categories has sort symbols Obj and Hom, operator symbols composition and identity, and associativity and identity laws as equations. 
+\subsection{Categories} 
+The generalized algebraic theory of categories has sort symbols $\Obj$ 
+and $\Hom$, operator symbols $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. 
 \begin{itemize}
-\item The initial cwf $\T_\emptyset$ has only one object (context) 1, one equivalence class of morphisms $id_1$, and no types and terms. Hence we can add a new constant sort Obj of (internal) objects with context $1$ to the signature. 
-\item $\T_{([Obj],[],[])}$ contains the context $(1.Obj).Obj[p_{1,Obj}]$ (corresponding to $x : Obj, y : Obj$ in usual notation with variables). Hence we can introduce the new sort $Hom$ with context $1,Obj.Obj[p_{1,Obj}]$.
-\item $\T_{([Obj, Hom],[],[])}$ contains the context $1.Obj$ (corresponding to the context $x : Obj$) and the type $Hom[<<>,pq>,q>]$ (corresponding to the type $Hom(x,x)$ in usual notation). Hence we can introduce the operator symbol $id$ with context $1.Obj$ and type $Hom[<?,?>]$.
-\item In a similar way we can verify that the typings of composition and the equations give rise to well-formed signatures, but we omit the details.
+\item The initial cwf $\T_\emptyset$ has only one object (context) 1, one equivalence class of morphisms $\id_1$, and no types and terms. Hence we can add a new constant sort $\Obj$ of (internal) objects with context $1$ to the signature. 
+\item $\T_{([\Obj],[],[])}$ contains the context $(1.\Obj).\Obj[\p_{1,\Obj}]$ (corresponding to the context $x : \Obj, y : \Obj$ in usual notation with variables). Hence we can introduce a new sort $\Hom$ with this context.
+\item $\T_{([\Obj, \Hom],[],[])}$ contains the context $1.\Obj$ (corresponding to the context $x : \Obj$ in usual notation) and the type $\Hom[\tuple{\id_{1.\Obj},\q_{1,\Obj}}]$ (corresponding to the type $\Hom(x,x)$). Hence we can introduce an operator symbol $\id$ with this context and type.
+\item In a similar way we can add the operator symbol for composition and the equations, but we omit the details.
 \end{itemize}
 
-We say that a cwf that supports the generalized algebraic theory of categories is a cwf with an internal category. Note the similarity and difference with the usual notion of internal category in a category with finite limits.
+We say that a cwf that supports the generalized algebraic theory of categories is a cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits.
 
 \subsection{Example: (internal) cwfs} Similarly, we can define a cwf that supports the generalized algebraic theory of cwfs. We add sort symbols for types and terms, operator symbols for all the cwf-combinators, and all the cwf-equations. We say that a cwf that supports this generalized algebraic theory is a cwf with an internal cwf.
 
