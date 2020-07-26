@@ -168,13 +168,11 @@ We say that $(\Gamma\cext A, \p_{\Gamma, A}, \q_{\Gamma, A})$ is a
 
 \section{An abstract definition of generalized algebraic theories}
 
-An official redefinition of Cartmell's notion. 
-
-The {\em signature} for a generalized algebraic theory (gat) $\Sigma$  is given by a list of sort symbols $\Sort$, operator symbols $\Op$, and equations (between terms) $\Eq$, with type information, as follows. (Cartmell also allows equations between sort terms, but most examples do not make use of such, and we skip it for simplicity.) We shall now define how to build a well-formed gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$. We proceed by induction on the size of $\Sigma$, but will postpone the construction of the initial cwfs until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\Sigma$.
+The {\em signature} $\Sigma$ for a generalized algebraic theory (gat) is a triple $(\Sort,\Op,\Eq)$ consisting of a list of sort symbols $\Sort$, operator symbols $\Op$, and equations (between terms) $\Eq$, with type information, as follows. (Cartmell also allows equations between sort terms, but most examples do not make use of such, and we skip it for simplicity.) We shall now define how to build a well-formed gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$. We proceed by induction on the size of $\Sigma$, but will postpone the construction of the initial cwfs until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$.
 \begin{description}
-\item[The empty generalized algebraic theory] First we define the empty gat $\emptyset = ([],[],[])$ and stipulate that any cwf supports it. 
+\item[The empty signature] The empty signature $\emptyset = ([],[],[])$ is well-formed and every cwf supports it. 
 \end{description}
-Assume now that $\Sigma$ is a (well-formed) signature and we have defined what it means for a cwf $\C$ to support it. Assume also that the category $\Cwf_\Sigma$ of cwfs that support $\Sigma$ has an initial object $\T_\Sigma$ with $\inte{-} : \T_\Sigma \to \C$ as the unique cwf-morphism into $\C$. Then we can add a new type symbol, or a new operator symbol, or a new equation, as follows:
+Assume now that $\Sigma$ is a (well-formed) signature and we have defined what it means for a cwf $\C$ to support it. Assume also that the category $\Cwf_\Sigma$ (of cwfs that support $\Sigma$ and cwf-morphisms preserving the $\Sigma$-structure) has an initial object $\T_\Sigma$ with $\inte{-} : \T_\Sigma \to \C$ as the unique $\Cwf_\Sigma$-morphism into $\C$. Then we can add a new type symbol, or a new operator symbol, or a new equation, as follows:
 \begin{description}
 \item[Adding a new sort symbol] 
 If $\Gamma$ is a context in $\T_\Sigma$, then we can extend $\Sigma$ with a new sort symbol $F$ (with context $\Gamma$) to obtain an extended gat $\Sigma'$. A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and there is $F_\C \in \Ty_\C(\inte{\Gamma})$.
@@ -268,7 +266,7 @@ The interpretation morphism is as before, except that the equivalence classes ha
 \end{description}
 
 \begin{theorem}
-Every signature $\Sigma$ has an initial cwf $\T_\Sigma$ supporting it.
+For every signature $\Sigma$ the category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$.
 \end{theorem}
 
 \section{Examples of generalized algebraic theories}

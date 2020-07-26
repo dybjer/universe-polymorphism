@@ -224,7 +224,7 @@ Add the following productions:
 \begin{eqnarray*}
 m, n \in \mathbb{N} &::=& 0 \mid n^+ \mid m \vee n\\
 A \in \RawTy &::=& \Un \mid \Tan(a)\\
-a,b \in \RawTm &::=&  \Nhatn \mid \Pi^{m,n}(a,b) \mid \U^n \mid \Ta_n^{n+1}(a)
+a,b \in \RawTm &::=&  \N^0 \mid \Pi^{m,n}(a,b) \mid \U^n \mid \Ta_n^{n+1}(a)
 \end{eqnarray*}
 
 \subsection{Inference rules}
@@ -486,7 +486,7 @@ Let $\C$ be a cwf with $\Pi, \N$, and a universe tower structure. We now define 
 \inte{\Pi(a,b)}_{\Gamma,\U_{m \vee n}}&=& {{({\PiC})^{m,n}}}(\inte{a}_{\Gamma,\U_m},\inte{b}_{\Gamma \cdot a,\Un})\\
 \inte{\U_n}_{\Gamma,\U_{n+1}} &=& {({({\UC})^n})}_{\inte{\Gamma},((\UC)_{n+1})_{\inte{\Gamma}}}
 \end{eqnarray*}
-Note that the clause for $\Pi(a,b)$ does not work, since $m \vee n$ does not determine $m$ and $n$ uniquely. (If we assume decidable type-checking, we can check $\Gamma \vdash a : \U_p$ and $\Gamma \cdot a \vdash b : \U_p$ for $p \leq m \vee n$.)
+Note that the clause for $\Pi(a,b)$ does not work, since $m \vee n$ does not determine $m$ and $n$ uniquely. (If we assume uniqueness of types and decidable type-checking, we can check $\Gamma \vdash a : \U_p$ and $\Gamma \cdot a \vdash b : \U_p$ for $p \leq m \vee n$.)
 
 %The following are obsolete clauses from the cumulative case:
 %\begin{eqnarray*}
