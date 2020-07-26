@@ -76,20 +76,24 @@ We define a new finitary version of generalized algebraic theories. It differs f
 
 In this short note we define a notion of finitary generalized algebraic theory in the spirit of Voevodsky's {\em initiality conjecture}.
 
-Cartmell's definition of a generalized algebraic theory as a dependently typed generalization of many sorted algebraic theory \cite{cartmell:phd,cartmell:}. Mention his notion of contextual category. Mention Martin Hofmann's notion of category with attributes (cwa) and its relation to contextual categories. Also remark that Cartmell used the name cwa for a slightly different notion. Mention cwfs and Martin Hofmann's paper on "Syntax and Semantics of Dependent Types" which is based on cwfs. (Maybe one could actually elaborate this to a survey of Martin's contributions to the semantics of dependent type theory.) We could motivate this note by saying that it could be added to "Syntax and Semantics of Dependent Types" as yet another basic result for dependent type theory.
+Generalized algebraic theories (gats) were originally introduced by Cartmell in his PhD thesis \cite{cartmell:phd} as a dependently typed generalization of many sorted algebraic theories. Each gat is specified by a signature with (possibly infinite) sets of sort symbols, operator symbols, and equations. Cartmell's definition is in the spirit of traditional syntactic systems for dependent type theory. He also defines a notion of model whereby sort symbols are interpreted as families of sets.
 
-Then discuss Cartmell's definition a bit more and his notion of "derived rule". Cartmell's definition of a gat is purely syntactic, with no reference to categories. In particular it is not connected to initiality. On the other hand on of the theorems is an equivalence between the category of gats and the category of contextual categories. I would say that our notion is simpler and immediately gives rise to an initial structure.
+Voevodsky's initiality conjecture \cite{voevodsky:initiality} aims to characterize a whole class of "type theories" abstractly as initial objects in suitable classes of models and to prove that these initial objects exist. For example, we can define Martin-Löf type theory as the initial object in the category $\Cwf^{\Pi,\Sigma,\Id}$ of categories with families (cwfs) with extra structure for interpreting type formers such as $\Pi, \Sigma$ and identity types $\Id$. An explicit construction of this initial object has been constructed by Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,castellan:lmcs}. 
 
-Discuss the notion of cwf and why initial cwfs (with extra structure) is appropriate as an "abstract syntax" for dependent type theory, abstracting away from representation detail. Mention Voevodsky's initiality conjecture. Refer to Brunerie.
+We shall here define a finitary version of Cartmell's notion. Our definition is based on the notion of category with families (cwf) \cite{dybjer:torino}. We simultaneously define what it means to be a valid signature $\Sigma$ for a gat and the category $\Cwf_\Sigma$ of cwfs supporting $\Sigma$. This definition refers to the construction of initial objects in $\Cwf_\Sigma$ but is independent of the details of this construction. We show how to extend the construction of the initial object of $\Cwf$ to an initial object of $\Cwf_\Sigma$.
+\footnote{
+Mention contextual category and Cartmell's equivalence between the categories of gats and of contextual categories. 
+}
+\footnote
+{Mention Martin Hofmann's notion of category with attributes (cwa) and its relation to contextual categories. Also remark that Cartmell used the name cwa for a slightly different notion. Mention cwfs and Martin Hofmann's paper on "Syntax and Semantics of Dependent Types" which is based on cwfs. (Maybe one could actually elaborate this to a survey of Martin's contributions to the semantics of dependent type theory.) We could motivate this note by saying that it could be added to "Syntax and Semantics of Dependent Types" as yet another basic result for dependent type theory.
+}
+\footnote
+{Refer to Streicher and Brunerie for related work.}
+\footnote
+{Point out that the point of cwfs is that it is a gat, but that gats are defined in terms of cwfs, so cwfs appear both on the meta-level, and on the object level as an example of a gat.}
+\footnote
+{Mention the typical phenomenon in category that you define something first and only later show that it exists.}
 
-Also point out that the point of cwfs is to have a categorical notion of model which immediately gives rise to a generalized algebraic theory, a kind of idealized dependently typed syntax. Point out that cwfs and gats are mutually dependent of each other: To know what a cwf is we need to know what a gat is and to know what a gat is we need to know what a cwf is. Point out that cwfs appear on two levels in our account (i) the fundamental (set-theoretic) notion of cwf underlying the definition of gat (ii) the notion of "internal cwf" which is obtained by considering the models of the the gat of cwfs.
-
-200724: 
-\begin{itemize}
-\item mention "line of work in the spirit of Voevodsky's initiality conjecture", general definition of "a type theory".
-\item emphasize that Cartmell's original definition is syntactic. Is it infinitary?
-\item typical phenomenon in category that you define something first and only later show that it exists.
-\end{itemize}
 
 \section{Categories with families}\label{sec:def_cwf}
 
