@@ -116,34 +116,46 @@ is not a syntactical one.
 
 
 \begin{definition}\label{def:cwf} 
-A category with families (cwf) consists of the following:
+A category with families (cwf) consists of the following data:
 \begin{itemize} 
-\item A category $\C$ with a terminal object $1$.
 
-\emph{Notation and terminology.} We use $\Gamma, \Delta,$ \emph{etc}, to range over objects of $\C$, and refer to
-those as {\em contexts}. Likewise, we use $\delta, \gamma,$ \emph{etc}, to range
-over morphisms, and refer to those as {\em substitutions}. We refer to $1$ as the
-\emph{empty context}. We write $\tuple{}_\Gamma \in \C(\Gamma, 1)$ for the
-terminal map, representing the {\em empty substitution}.
-\item A $\Fam$-valued presheaf, \emph{i.e.} a functor
-$T : \Cop \to \Fam$.
+\item A category $\C$ with a terminal object $1$ and maps
+$\tuple{}_\Gamma \in \C(\Gamma, 1)$ for all objects $\Gamma$ of $\C$;
 
-\emph{Notation and terminology.} If $T(\Gamma) = (U_x)_{x\in X}$, we write $X = \Ty(\Gamma)$ and refer to
-its elements as \emph{types in context $\Gamma$} -- we use $A, B, C$ to range over
-such {\em types}. For $A \in X = \Ty(\Gamma)$, we write $U_A = \Tm(\Gamma, A)$
-and refer to its elements as \emph{terms of type $A$ in context $\Gamma$.} 
-Finally, for $\gamma : \Delta \to \Gamma$, the functorial action yields
+\item A $\Fam$-valued presheaf on $\C$, that is, a functor
+$T : \Cop \to \Fam$;
+
+\item Operations ${\cdot},~\p,~\q$ and $\tuple{\_,\_}$ 
+explained in the following paragraphs.
+\end{itemize}
+
+We let $\Gamma, \Delta,\ldots$ range over objects of $\C$, 
+and refer to them as \emph{contexts}. 
+We let $\delta, \gamma,\ldots$ range over morphisms, 
+and refer to them as \emph{substitutions}. 
+We refer to $1$ as the \emph{empty context}; the terminal maps
+$\tuple{}_\Gamma$ represent the \emph{empty substitution}.
+
+If $T(\Gamma) = (U_x)_{x\in X}$, we write $\Ty(\Gamma)$ for $X$.
+We call the elements of the set $\Ty(\Gamma)$
+\emph{types in context $\Gamma$}, and let $A, B, C$ range over such types. 
+Further, for $A \in \Ty(\Gamma)$, we write $\Tm(\Gamma, A)$ for $U_A$
+and call the elements of the set $\Tm(\Gamma, A)$
+\emph{terms of type $A$ in context $\Gamma$}. 
+
+For $\gamma : \Delta \to \Gamma$,
+the (contravariant) functorial action of $T$ yields a morphism
 \[
-T(\gamma) : (\Tm(\Gamma, A))_{A\in \Ty(\Gamma)} \to 
-                (\Tm(\Delta, B))_{B\in \Ty(\Delta)}
+T(\gamma) \in  \Fam((\Tm(\Gamma, A))_{A\in \Ty(\Gamma)}, % \to 
+                (\Tm(\Delta, B))_{B\in \Ty(\Delta)})
 \]
-consisting of a pair of a reindexing function $\_\,[\gamma] : \Ty(\Gamma) \to
+consisting of a reindexing function $\_\,[\gamma] : \Ty(\Gamma) \to
 \Ty(\Delta)$ referred to as \emph{substitution in types}, and for each $A\in
 \Ty(\Gamma)$ a function $\_\,[\gamma] : \Tm(\Gamma, A) \to \Tm(\Delta,
 A[\gamma])$ referred to as \emph{substitution in terms}.
 %\item a presheaf $\Ty : \Cop \to \Set$ of types ;
 %\item a presheaf $\Tm : (\int^\C \Ty)^\op \to \Set$ of terms;
-\item A \emph{context comprehension operation} which to a given context $\Gamma
+A \emph{context comprehension operation} which to a given context $\Gamma
 \in \C$ and type $A \in \Ty(\Gamma)$ assigns a context $\Gamma \cext
 A$ and two projections
 \[
@@ -167,7 +179,7 @@ $\tuple{\gamma, a} : \Delta \to \Gamma \cext A$ such that
 %where we use the notation $A[\gamma] = \Ty(\gamma)(A)$ for $\gamma \in \C(\Delta,\Gamma)$.
 We say that $(\Gamma\cext A, \p_{\Gamma, A}, \q_{\Gamma, A})$ is a
 \emph{context comprehension} of $\Gamma$ and $A$.
-\end{itemize}
+
 \end{definition}
 
 \section{An abstract definition of generalized algebraic theories}
