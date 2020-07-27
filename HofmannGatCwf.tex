@@ -193,7 +193,7 @@ We say that $(\Gamma\cext A, \p_{\Gamma, A}, \q_{\Gamma, A})$ is a
 
 \section{An abstract definition of generalized algebraic theories}
 
-The {\em signature} $\Sigma$ for a generalized algebraic theory (gat) is a triple $(\Sort,\Op,\Eq)$ consisting of a list of sort symbols $\Sort$, operator symbols $\Op$, and equations (between terms) $\Eq$, with type information, as follows. (Cartmell \cite{cartmell:phd,cartmell:apal} also allows equations between sort terms, but most examples do not make use of such. It would be straightforward to include such equations in our account too.) We shall now define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$. We proceed by induction on the size of $\Sigma$, but will postpone the construction of the initial cwfs until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$.
+The {\em signature} $\Sigma$ for a generalized algebraic theory (gat) is a triple $(\Sort,\Op,\Eq)$ consisting of a list of sort symbols $\Sort$, operator symbols $\Op$, and equations (between terms) $\Eq$, with type information, as follows. (Cartmell \cite{cartmell:phd,cartmell:apal} also allows equations between sort terms, but most examples do not make use of such. It would be straightforward to include such equations in our account too.) We shall now define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$, but will postpone the construction of these until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$.
 \begin{definition}
 We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs that support $\Sigma$ and cwf-morphisms that preserve it.
 \begin{description}
@@ -239,7 +239,7 @@ are defined inductively by inference rules. The four judgment forms
 \\&&\Gamma \vdash A
 \\&&\Gamma \vdash a : A
 \end{eqnarray*}
-are then defined as the reflexive instances of the partial equivalence relations. The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$ with respect to the pers, such that $\Gamma \vdash$ See Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs} for details.
+are then defined as the reflexive instances of the partial equivalence relations. The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash$. See Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs} for details.
 
 Assume we have specified grammars and inference rules for $\T_\Sigma$ and that we write $\vdash_\Sigma$ for derivability by these inference rules. Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to build $\T_{\Sigma'}$, to extend the grammars and inference rules for $\T_\Sigma$.
 \begin{description}
