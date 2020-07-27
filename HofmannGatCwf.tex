@@ -80,7 +80,7 @@ Generalized algebraic theories (gats) were originally introduced by Cartmell in 
 
 Voevodsky's initiality conjecture \cite{voevodsky:initiality} aims to characterize a whole class of type theories abstractly as initial objects in suitable categories of models and to prove that these initial objects exist. By abstracting from the precise details of syntax and inference rules for a particular type theory, one aims to develop a more general, elegant, semantic, rigorous, and formalizable metatheory of type theory. 
 
-For example, we can define Martin-Löf type theory as the initial object in the category of categories with families (cwfs) with extra structure for interpreting type formers. An explicit construction of this initial object has been carried out by Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,castellan:lmcs}. 
+For example, we can define Martin-Löf type theory as the initial object in the category of categories with families (cwfs) with extra structure for interpreting the type formers. An explicit construction of this initial object has been carried out by Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs}. 
 
 We shall here define a finitary notion of generalized algebraic theory and simultaneosly a general categorical notion of model. Our definition is based on categories with families (cwfs) \cite{dybjer:torino}. We simultaneously define what it means to be a valid signature $\Sigma$ for a gat and the category $\Cwf_\Sigma$ of cwfs supporting $\Sigma$. This definition refers to the construction of initial objects in $\Cwf_\Sigma$ but is independent of the details of this construction. Afterwards, we show one way to construct an initial object of $\Cwf_\Sigma$ by extending the construction of the initial object of the category $\Cwf$ of cwfs.
 \footnote{
@@ -189,12 +189,11 @@ $\tuple{\gamma, a} : \Delta \to \Gamma \cext A$ such that
 %where we use the notation $A[\gamma] = \Ty(\gamma)(A)$ for $\gamma \in \C(\Delta,\Gamma)$.
 We say that $(\Gamma\cext A, \p_{\Gamma, A}, \q_{\Gamma, A})$ is a
 \emph{context comprehension} of $\Gamma$ and $A$.
-
 \end{definition}
 
 \section{An abstract definition of generalized algebraic theories}
 
-The {\em signature} $\Sigma$ for a generalized algebraic theory (gat) is a triple $(\Sort,\Op,\Eq)$ consisting of a list of sort symbols $\Sort$, operator symbols $\Op$, and equations (between terms) $\Eq$, with type information, as follows. (Cartmell also allows equations between sort terms, but most examples do not make use of such, and we skip it for simplicity.) We shall now define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$. We proceed by induction on the size of $\Sigma$, but will postpone the construction of the initial cwfs until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$.
+The {\em signature} $\Sigma$ for a generalized algebraic theory (gat) is a triple $(\Sort,\Op,\Eq)$ consisting of a list of sort symbols $\Sort$, operator symbols $\Op$, and equations (between terms) $\Eq$, with type information, as follows. (Cartmell \cite{cartmell:phd,cartmell:apal} also allows equations between sort terms, but most examples do not make use of such. It would be straightforward to include such equations in our account too.) We shall now define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$. We proceed by induction on the size of $\Sigma$, but will postpone the construction of the initial cwfs until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$.
 \begin{definition}
 We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs that support $\Sigma$ and cwf-morphisms that preserve it.
 \begin{description}
@@ -223,7 +222,7 @@ The category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ for every valid sig
 The proof is by induction on the construction of $\Sigma$.
 \begin{description}
 \item[The empty signature] 
-The category $\Cwf = \Cwf_\emptyset$ of cwfs and strict cwf-morphisms has an initial object $\T_\emptyset$ \cite{castellan}.
+The category $\Cwf = \Cwf_\emptyset$ of cwfs and strict cwf-morphisms has an initial object $\T_\emptyset$ \cite{castellan:tlca2015,castellan:lmcs}.
 \end{description}
 
 We recall that this initial cwf is defined by first defining grammars for raw contexts, raw substitutions, raw types, and raw terms. Then four families of partial equivalence relations corresponding to the four judgment forms
@@ -240,7 +239,7 @@ are defined inductively by inference rules. The four judgment forms
 \\&&\Gamma \vdash A
 \\&&\Gamma \vdash a : A
 \end{eqnarray*}
-are then defined as the reflexive instances of the partial equivalence relations. The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$ with respect to the pers, such that $\Gamma \vdash$ See Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,castellan:lmcs} for details.
+are then defined as the reflexive instances of the partial equivalence relations. The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$ with respect to the pers, such that $\Gamma \vdash$ See Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs} for details.
 
 Assume we have specified grammars and inference rules for $\T_\Sigma$ and that we write $\vdash_\Sigma$ for derivability by these inference rules. Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to build $\T_{\Sigma'}$, to extend the grammars and inference rules for $\T_\Sigma$.
 \begin{description}
@@ -302,13 +301,13 @@ The interpretation morphism $\inte{-}'$ is defined as $\inte{-}$ but on the new 
 The signature for the generalized algebraic theory of categories has sort symbols $\Obj$ 
 and $\Hom$, operator symbols $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. 
 \begin{itemize}
-\item The initial cwf $\T_\emptyset$ (as constructed above) has only one object (context) 1, one equivalence class of morphisms $\id_1$, and no types and terms. Hence we can add a new constant sort $\Obj$ of (internal) objects with context $1$ to the signature. 
-\item $\T_{([\Obj],[],[])}$ (as constructed above) contains the context $(1.\Obj).\Obj[\p_{1,\Obj}]$ (corresponding to the context $x : \Obj, y : \Obj$ in usual notation). Hence we can introduce a new sort $\Hom$ with this context. This sort represents the family $\Hom(x,y)$ of (internal) morphisms.
-\item $\T_{([\Obj, \Hom],[],[])}$ contains the context $1.\Obj$ (corresponding to the context $x : \Obj$) and the type $\Hom[\tuple{\id_{1.\Obj},\q_{1,\Obj}}]$ (corresponding to the type $\Hom(x,x)$). Hence we can introduce an operator symbol $\id$ with this context and type.
+\item The initial cwf $\T_\emptyset$ (as constructed above) has only one object (context) [1], one equivalence class of morphisms $[\id_1]$ (with several representatives: $\tuple{}_1, \id_1 \circ \id_1$, etc), and no types and terms. Hence we can add a new constant sort $\Obj$ of (internal) objects with context $1$ to the signature. 
+\item $\T_{([\Obj],[],[])}$ (as constructed above) contains the context $[(1.\Obj).\Obj[\p_{1,\Obj}]]$ (corresponding to the context $x : \Obj, y : \Obj$ in usual notation). Hence we can introduce a new sort $\Hom$ with this context. This sort represents the family $\Hom(x,y)$ of (internal) morphisms.
+\item $\T_{([\Obj, \Hom],[],[])}$ contains the context $[1.\Obj]$ (corresponding to the context $x : \Obj$) and the type $[\Hom[\tuple{\id_{1.\Obj},\q_{1,\Obj}}]]$ (corresponding to the type $\Hom(x,x)$). Hence we can introduce an operator symbol $\id$ with this context and type.
 \item In a similar way we can add the operator symbol for composition and the equations, but we omit the details.
 \end{itemize}
 
-We say that a cwf that supports the generalized algebraic theory of categories is a cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits.
+We say that a cwf that supports the generalized algebraic theory of categories is a cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits. Note that every category with finite limits is a cwf, but not every cwf is a category with finite limits. The relationship between these two notions was characterized more precisely by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14}, who proved that the 2-category of finite limits is biequivalent to the 2-category of democratic cwfs that support $\Sigma$-types and extensional identity types.
 
 \subsection{Cwfs} Similarly, we can define a cwf that supports the generalized algebraic theory of cwfs. We add sort symbols for types and terms, operator symbols for all the cwf-combinators, and all the cwf-equations. We say that a cwf that supports this generalized algebraic theory is a cwf with an {\em internal cwf}.
 
@@ -327,7 +326,11 @@ Note that we have here extended the notion of cwf with a sort of levels, that is
 
 \subsection{Cwfs with universe polymorphic tower structures} Here we need to extend the cwf-framework further to take into account contexts with level variables, etc.
 
-\section{Generalized algebraic theories and essentially algebraic theories}
+%\section{Generalized algebraic theories and essentially algebraic theories}
+%
+%It time permits. A remark about the biequivalence between categories with finite limits and democratic cwfs with $\Sigma$ and extensional identity types, as the basis for the correspondence between essentially and generalized algebraic theories.
 
-It time permits. A remark about the biequivalence between categories with finite limits and democratic cwfs with $\Sigma$ and extensional identity types, as the basis for the correspondence between essentially and generalized algebraic theories.
+\bibliographystyle{plain}
+\bibliography{refs}
+%\input{referenc}
 \end{document}
