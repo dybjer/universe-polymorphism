@@ -212,7 +212,7 @@ If $\Gamma$ is a context in $\T_\Sigma$, then we can extend $\Sigma$ with a new 
 If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$, then we can extend $\Sigma$ with a new operator symbol $f$ (with context $\Gamma$ and type $A$). A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and there is $f_\C \in\Tm_\C(\inte{\Gamma},\inte{A}_{\Gamma})$.
 A cwf-morphism in $\C \to \D$ preserves $\Sigma'$ if it preserves $\Sigma$ and maps $f_\C$ to $f_\D$.
 \item[Adding a new equation] 
-If $\Gamma$ is a context in $\T_\Sigma$, $A \in \Ty_{\T_\Sigma}(\Gamma)$, and $a, a' \in \Tm_{\T_\Sigma}(\Gamma,A)$, then we can extend $\Sigma$ with a new equation $a = a'$ (with context $\Gamma$ and type $A$). Then a cwf $\C$ that supports $\Sigma'$ is obtained by adding the requirement that $\inte{a}_{\Gamma,A}= \inte{a'}_{\Gamma,A} \in \Tm_\C(\inte{\Gamma},\inte{A}_\Gamma)$.
+If $\Gamma$ is a context in $\T_\Sigma$, $A \in \Ty_{\T_\Sigma}(\Gamma)$, and $a, a' \in \Tm_{\T_\Sigma}(\Gamma,A)$, then we can extend $\Sigma$ with a new equation $a = a'$ (with context $\Gamma$ and type $A$). A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and and  $\inte{a}_{\Gamma,A}= \inte{a'}_{\Gamma,A} \in \Tm_\C(\inte{\Gamma},\inte{A}_\Gamma)$. A cwf-morphism in $\C \to \D$, where $\C$ and $\D$ support $\Sigma'$, preserves $\Sigma'$ iff it preserves $\Sigma$.
 \footnote{Martin: clarify! We need to be clear about what is $\inte{a}$ and $\inte{a}'$.}
 \end{description}
 \end{definition}
@@ -303,6 +303,9 @@ The interpretation morphism $\inte{-}'$ is defined as $\inte{-}$ but on the new 
 \footnote{Martin: clarify!}. It immediately follows that it is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.\end{description}
 
 \section{Examples of generalized algebraic theories}
+
+\subsection{Monoids} A sort symbol $\M$. operator symbols $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. This is an ordinary algebraic theory.
+
 
 \subsection{Categories} 
 The signature for the generalized algebraic theory of categories has sort symbols $\Obj$ 
