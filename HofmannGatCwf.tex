@@ -127,7 +127,7 @@ of the notion of a generalised algebraic theory in this note
 is not a syntactical one. 
 
 
-\begin{definition}\label{def:cwf} 
+%\begin{definition}\label{def:cwf} 
 A category with families (cwf) consists of the following data:
 \begin{itemize} 
 
@@ -137,7 +137,7 @@ $\tuple{}_\Gamma \in \C(\Gamma, 1)$ for all objects $\Gamma$ of $\C$;
 \item A $\Fam$-valued presheaf on $\C$, that is, a functor
 $T : \Cop \to \Fam$;
 
-\item Operations ${\cdot},~\p,~\q$ and $\tuple{\_,\_}$ 
+\item Operations ${\cext\,},~\p,~\q$ and $\tuple{\_,\_}$ 
 explained in the following paragraphs.
 \end{itemize}
 
@@ -148,15 +148,15 @@ and refer to them as \emph{substitutions}.
 We refer to $1$ as the \emph{empty context}; the terminal maps
 $\tuple{}_\Gamma$ represent the \emph{empty substitution}.
 
-If $T(\Gamma) = (U_x)_{x\in X}$, we write $\Ty(\Gamma)$ for $X$.
-We call the elements of the set $\Ty(\Gamma)$
-\emph{types in context $\Gamma$}, and let $A, B, C$ range over such types. 
-Further, for $A \in \Ty(\Gamma)$, we write $\Tm(\Gamma, A)$ for $U_A$
-and call the elements of the set $\Tm(\Gamma, A)$
+If $T(\Gamma) = (U_x)_{x\in X}$, then we write $\Ty(\Gamma)$ for the set $X$.
+We call the elements of $\Ty(\Gamma)$ \emph{types in context $\Gamma$}, 
+and let $A, B, C$ range over such types. 
+Furthermore, for $A \in \Ty(\Gamma)$, we write $\Tm(\Gamma, A)$ for the set $U_A$
+and call the elements of $\Tm(\Gamma, A)$ 
 \emph{terms of type $A$ in context $\Gamma$}. 
 
 For $\gamma : \Delta \to \Gamma$,
-the (contravariant) functorial action of $T$ yields a morphism
+the functorial action of $T$ yields a morphism
 \[
 T(\gamma) \in  \Fam((\Tm(\Gamma, A))_{A\in \Ty(\Gamma)}, % \to 
                 (\Tm(\Delta, B))_{B\in \Ty(\Delta)})
@@ -164,34 +164,37 @@ T(\gamma) \in  \Fam((\Tm(\Gamma, A))_{A\in \Ty(\Gamma)}, % \to
 consisting of a reindexing function $\_\,[\gamma] : \Ty(\Gamma) \to
 \Ty(\Delta)$ referred to as \emph{substitution in types}, and for each $A\in
 \Ty(\Gamma)$ a function $\_\,[\gamma] : \Tm(\Gamma, A) \to \Tm(\Delta,
-A[\gamma])$ referred to as \emph{substitution in terms}.
-%\item a presheaf $\Ty : \Cop \to \Set$ of types ;
-%\item a presheaf $\Tm : (\int^\C \Ty)^\op \to \Set$ of terms;
-A \emph{context comprehension operation} which to a given context $\Gamma
-\in \C$ and type $A \in \Ty(\Gamma)$ assigns a context $\Gamma \cext
-A$ and two projections
+A[\gamma])$, referred to as \emph{substitution in terms}.
+
+Now we turn to the explanation of the operations 
+${\cext\,},~\p,~\q,~\tuple{\_,\_}$.
+Given a $\Gamma \in \C$ and type $A \in \Ty(\Gamma)$,
+we have
+
 \[
+\Gamma \cext A \in \C
+\qquad\qquad
 \p_{\Gamma, A} : \Gamma \cext A \to \Gamma
 \qquad\qquad
 \q_{\Gamma, A} \in \Tm(\Gamma\cext A, A[\p_{\Gamma,A}])
 \] 
-satisfying the following universal property: for all $\gamma : \Delta \to
-\Gamma$, for all $a\in \Tm(\Delta, A[\gamma])$, there is a unique
-$\tuple{\gamma, a} : \Delta \to \Gamma \cext A$ such that
+We call $\Gamma \cext A$ an \emph{extended} context 
+and $\p$ the \emph{first projection}. 
+If, furthermore, $\gamma : \Delta \to \Gamma$ 
+and $a\in \Tm(\Delta, A[\gamma])$, then 
+\[
+\tuple{\gamma, a} : \Delta \to \Gamma \cext A.
+\]
+We call $\tuple{\gamma, a}$ an \emph{extended} substitution.
+
+The operations  ${\cext\,},~\p,~\q,~\tuple{\_,\_}$
+satisfy the following universal property
 \[
 \p_{\Gamma, A} \circ \tuple{\gamma, a} = \gamma
 \qquad \qquad
 \q_{\Gamma, A} [\tuple{\gamma, a}] = a\,.
 \]
-%
-%which is a terminal object in a category of triples
-%$$
-%(\Delta \in \C\Obj, \gamma \in \C(\Delta,\Gamma), a \in \Tm(\Delta,A[\gamma]))
-%$$
-%where we use the notation $A[\gamma] = \Ty(\gamma)(A)$ for $\gamma \in \C(\Delta,\Gamma)$.
-We say that $(\Gamma\cext A, \p_{\Gamma, A}, \q_{\Gamma, A})$ is a
-\emph{context comprehension} of $\Gamma$ and $A$.
-\end{definition}
+%\end{definition}
 
 \section{Signatures and models of generalized algebraic theories}
 
