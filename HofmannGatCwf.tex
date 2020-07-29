@@ -126,7 +126,6 @@ It is important to stress, however, that the definition
 of the notion of a generalised algebraic theory in this note
 is not a syntactical one. 
 
-
 %\begin{definition}\label{def:cwf} 
 A category with families (cwf) consists of the following data:
 \begin{itemize} 
@@ -205,7 +204,7 @@ We define inductively how to build a valid signature $\Sigma$ and the category $
 \begin{description}
 \item[The empty signature] The empty signature $\emptyset = ([],[],[])$ is valid and $\Cwf_\emptyset = \Cwf$. 
 \end{description}
-Assume now that $\Sigma$ is a valid signature and that the category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ with $\inte{-} : \T_\Sigma \to \C$ as the unique morphism into an object $\C$. Then we can add a new type symbol, or a new operator symbol, or a new equation, as follows:
+Assume now that $\Sigma$ is a valid signature and that the category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ with $\inte{-} : \T_\Sigma \to \C$ as the unique morphism into an object $\C$. Then we can add a new type symbol, or a new operator symbol, or a new equation, to get a new valid signature, as follows:
 \begin{description}
 \item[Adding a new sort symbol] 
 If $\Gamma$ is a context in $\T_\Sigma$, then we can extend $\Sigma$ with a new sort symbol $F$ (with context $\Gamma$) to obtain an extended gat $\Sigma'$. A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and there is $F_\C \in \Ty_\C(\inte{\Gamma})$. A cwf-morphism in $\C \to \D$ preserves $\Sigma'$ if it preserves $\Sigma$ and maps $F_\C$ to $F_\D$.
@@ -214,6 +213,7 @@ If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$, the
 A cwf-morphism in $\C \to \D$ preserves $\Sigma'$ if it preserves $\Sigma$ and maps $f_\C$ to $f_\D$.
 \item[Adding a new equation] 
 If $\Gamma$ is a context in $\T_\Sigma$, $A \in \Ty_{\T_\Sigma}(\Gamma)$, and $a, a' \in \Tm_{\T_\Sigma}(\Gamma,A)$, then we can extend $\Sigma$ with a new equation $a = a'$ (with context $\Gamma$ and type $A$). Then a cwf $\C$ that supports $\Sigma'$ is obtained by adding the requirement that $\inte{a}_{\Gamma,A}= \inte{a'}_{\Gamma,A} \in \Tm_\C(\inte{\Gamma},\inte{A}_\Gamma)$.
+\footnote{Martin: clarify! We need to be clear about what is $\inte{a}$ and $\inte{a}'$.}
 \end{description}
 \end{definition}
 
@@ -271,7 +271,7 @@ $$
 It follows immediately that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
 
 \item[Adding a new operator symbol] 
-If $\Gamma$ is a context in $\T_\Sigma$, $A \in \Ty_{\T_\Sigma}(\Gamma)$ and $\Sigma'$ is $\Sigma$ extended with a new operator symbol $f$ (with context $\Gamma$ and type $A$). Then $\T_{\Sigma'}$ is defined by adding the production
+If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$ and $\Sigma'$ is $\Sigma$ extended with a new operator symbol $f$ (with context $\Gamma$ and type $A$). Then $\T_{\Sigma'}$ is defined by adding the production
 $$
 a ::= f
 $$
@@ -290,7 +290,7 @@ $$
 It follows immediately that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
 
 \item[Adding a new equation] 
-If $\Gamma$ is a context in $\T_\Sigma$, $A \in \Ty_{\T_\Sigma}(\Gamma)$, $a, a' \in \Tm_{\T_\Sigma}(\Gamma,A)$, and $\Sigma'$ is $\Sigma$ extended with a new equation $a = a'$ (with context $\Gamma$ and type $A$). Then $\T_{\Sigma'}$ is defined by adding the inference rule
+If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$ and $a, a' \in \Tm_{\T_\Sigma}(\Gamma,A)$, and $\Sigma'$ is $\Sigma$ extended with a new equation $a = a'$ (with context $\Gamma$ and type $A$). Then $\T_{\Sigma'}$ is defined by adding the inference rule
  \begin{mathpar}
     \inferrule
     {}
@@ -299,7 +299,8 @@ If $\Gamma$ is a context in $\T_\Sigma$, $A \in \Ty_{\T_\Sigma}(\Gamma)$, $a, a'
 to the inference rules for $\Sigma$.
 
 It is immediate that $\T_{\Sigma'}$ supports $\Sigma'$.
-The interpretation morphism $\inte{-}'$ is defined as $\inte{-}$ but on the new equivalence classes. It immediately follows that it is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.\end{description}
+The interpretation morphism $\inte{-}'$ is defined as $\inte{-}$ but on the new equivalence classes
+\footnote{Martin: clarify!}. It immediately follows that it is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.\end{description}
 
 \section{Examples of generalized algebraic theories}
 
