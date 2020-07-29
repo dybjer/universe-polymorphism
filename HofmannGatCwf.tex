@@ -57,6 +57,7 @@
 \def\D{\mathcal{D}}
 \def\Cwf{\mathbf{CwF}}
 \def\Obj{\mathrm{Obj}}
+\def\Ctx{\mathrm{Ctx}}
 \def\Hom{\mathrm{Hom}}
 \def\id{\mathrm{id}}
 
@@ -194,6 +195,35 @@ satisfy the following universal property
 \q_{\Gamma, A} [\tuple{\gamma, a}] = a\,.
 \]
 %\end{definition}
+
+\subsection{The generalized algebraic theory of cwfs}
+
+The gat of categories (with $\Ctx = \Obj$)
+
+Sort symbols:
+\begin{eqnarray*}
+&\vdash& \Ctx\\
+\Delta, \Gamma : \Ctx &\vdash& \Hom(\Delta,\Gamma)\\
+\end{eqnarray*}
+
+Operator symbols:
+\begin{eqnarray*}
+\Gamma : \Ctx &\vdash& \id_\Gamma : \Hom(\Gamma,\Gamma)\\
+\Xi,\Delta,\Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta) &\vdash&
+\gamma \circ \delta : \Hom(\Xi,\Gamma)
+\end{eqnarray*}
+
+Equations:
+
+\subsection{The extension with a family valued functor}
+
+\subsection{The extension with a terminal object}
+
+\subsection{The extension with context comprehension}
+
+
+
+
 
 \section{Signatures and models of generalized algebraic theories}
 
