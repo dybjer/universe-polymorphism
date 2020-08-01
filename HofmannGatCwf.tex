@@ -70,12 +70,12 @@
 \maketitle
 
 \begin{abstract}
-We define a new finitary version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows a possibly infinite set of sort and operator symbols, we only allow a finite number. Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules. This is in the spirit of Voevodsky's "initiality conjecture", whereby type theories are characterized as initial objects in appropriate categories of models of type theory.  Our main result is that the category of cwfs supporting a certain signature for gats has an initial object. This result is obtained by extending the construction of initial cwfs from Castellan, Clairambault, and Dybjer. We also point out that cwfs supporting the gat of categories is a cwf with an internal category. Similarly, a cwf supporting the gat of cwfs is a cwf with an internal cwf.
+We define a new finitary version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows a possibly infinite set of sort and operator symbols, we only allow a finite number. Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules. This is in the spirit of Voevodsky's "initiality conjecture"\footnote{200731: Maybe we should mention Martin Hofmann already in the abstract, and perhaps remove Voevodsky?} whereby type theories are characterized as initial objects in appropriate categories of models of type theory.  Our main result is that the category of cwfs supporting a certain signature for gats has an initial object. This result is obtained by extending the construction of initial cwfs from Castellan, Clairambault, and Dybjer. We also point out that cwfs supporting the gat of categories is a cwf with an internal category. Similarly, a cwf supporting the gat of cwfs is a cwf with an internal cwf.
 \end{abstract}
 
 \section{Introduction}
 
-In this short note we define a notion of finitary generalized algebraic theory in the spirit of Voevodsky's {\em initiality conjecture}.
+In this short note we define a notion of finitary generalized algebraic theory in the spirit of Voevodsky's {\em initiality conjecture}.\footnote{200731: Better to replace this by "intial algebra semantics", which goes back to John Isbell and the ADJ group? Repeat the sentence "Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules". Emphaisze that the definition is quite trivial, but this is a good thing since we get something "canonical": we are writing "the only thing possible". Also think of Mike Shulman as a reader.}
 
 Generalized algebraic theories (gats) were originally introduced by Cartmell in his PhD thesis \cite{cartmell:phd} as a dependently typed generalization of many sorted algebraic theories. Each gat is specified by a signature with (possibly infinite) sets of sort symbols, operator symbols, and equations. Cartmell's definition of gats \cite{cartmell:phd,cartmell:apal} is based on a notion of {\em derived rule} expressed in terms of a traditional syntactic system for dependent type theory. He also defines a notion of model whereby sort symbols are interpreted as families of sets.
 
@@ -101,6 +101,8 @@ Mention contextual category and Cartmell's equivalence between the categories of
 
 
 \section{Categories with families}\label{sec:def_cwf}
+
+\subsection{The category of cwfs and strict cwf-morphisms}
 
 We first define the category $\Fam$, and then the category $\Cwf$.
 
@@ -209,7 +211,24 @@ TBD
 
 \subsection{The generalized algebraic theory of cwfs}
 
-The gat of categories (with $\Ctx = \Obj$)
+A generalized algebraic theory is specified by a {\em signature}. This is a list of sort symbols, operator symbols, and equations (between terms). (Cartmell \cite{cartmell:phd,cartmell:apal} also allows equations between sort terms, but most examples do not make use of such. It would be straightforward to include such equations in our account too.) In the next section we shall formally define both the notion of valid signature $\Sigma$ and its associated category of cwfs $\Cwf_\Sigma$ of cwfs that support $\Sigma$. As we shall see sort symbols, operator symbols, and equations can appear in any order as long as $\Sigma$ is constructed as a valid signature.
+
+But before giving the formal definition we shall give one example of a gat: the gat of cwfs. This can be fournd in the original paper on cwfs \cite{dybjer:torino}. However, we show it here in our notation where we use the following notation for the eight forms of judgment\footnote{Do two columns using array environment}
+\begin{eqnarray*}
+\\&&\Gamma \vdash
+\\&&\Delta \vdash \gamma : \Gamma
+\\&&\Gamma \vdash A
+\\&&\Gamma \vdash a : A
+\\&&\Gamma = \Gamma' \vdash
+\\&&\Delta \vdash \gamma = \gamma' : \Gamma
+\\&&\Gamma \vdash A = A'
+\\&&\Gamma \vdash a = a' : A
+\end{eqnarray*}
+Note that we have explicit judgments $\Gamma \vdash$ meaning "$\Gamma$ is a valid context", and $\Delta \vdash \gamma : \Gamma$ meaning $\gamma$ is a valid context morphism (substitution) with source $\Delta$ and target $\Gamma$, in addition to the third and fourth judgment form introduced by Martin-Löf \cite{martinlof:hannover,martinlof:padova}.
+
+We shall employ this notation both for inference rules written in ordinary notation with variable names, and for later for inference rules written in the variable free notation of cwf-combinators.
+
+\subsubsection{The gat of categories} We begin with the gat of categories, one of Cartmell's motivating examples.
 
 Sort symbols:
 \begin{eqnarray*}
@@ -225,12 +244,22 @@ Operator symbols:
 \end{eqnarray*}
 
 Equations:
+\begin{eqnarray*}
+\Delta, \Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash& \id_\Gamma \circ \gamma = \gamma : \Hom(\Delta,\Gamma)\\
+\Delta, \Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash& \gamma \circ \id_\Delta = \gamma : \Hom(\Delta,\Gamma)\\
+\Theta, \Xi,\Delta,\Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta), \xi : \Hom(\Theta,\Xi) &\vdash&
+(\gamma \circ \delta) \circ \xi = \gamma \circ (\delta \circ \xi): \Hom(\Theta,\Gamma)
+\end{eqnarray*}
 
-\subsection{The extension with a family valued functor}
+We make a few remarks. $\Ctx = \Obj$ is the constant sort of objects of the category of contexts in a cwf. $\Hom$ is a binary sort symbol for the context morphisms in the cwf. These typing of the two arguments are represented by the context $\Delta, \Gamma : \Ctx$. In our type theory we have an operation which maps a type $\Gamma \vdash A$ and a substitution $\Delta \vdash \gamma : \Gamma$ to $\Delta \vdash A[\gamma]$ (defined below). Hence when we apply $\Hom$ to two concrete arguments $\Delta,\Gamma$ we get the result $\Hom(\Delta,\Gamma)$ by using this substitution operation. (More to say ...)
 
-\subsection{The extension with a terminal object}
+Moreover, composition $\gamma \circ \delta$ is officially an operation with five arguments ($\gamma \circ_{\Xi,\Delta,\Gamma} \delta$) but we suppress the context arguments $\Xi,\Delta,\Gamma$. We will do so for some other operations too.
 
-\subsection{The extension with context comprehension}
+\subsubsection{The extension with a family valued functor}
+
+\subsubsection{The extension with a terminal object}
+
+\subsubsection{The extension with context comprehension}
 
 
 
@@ -238,7 +267,7 @@ Equations:
 
 \section{Signatures and models of generalized algebraic theories}
 
-The {\em signature} $\Sigma$ for a generalized algebraic theory (gat) is a triple $(\Sort,\Op,\Eq)$ consisting of a list of sort symbols $\Sort$, operator symbols $\Op$, and equations (between terms) $\Eq$, with type information, as follows. (Cartmell \cite{cartmell:phd,cartmell:apal} also allows equations between sort terms, but most examples do not make use of such. It would be straightforward to include such equations in our account too.) We shall now define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$, but will postpone the construction of these until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$. 
+ We shall now define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$, but will postpone the construction of these until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$. 
 \footnote{Say something about the fact that we do not assume anything about the relationship between $\T_\Sigma$ and $\T_{\Sigma'}$ because all initial objects are isomorphic, and hence we can move between them.}
 \begin{definition}
 We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs that support $\Sigma$ and cwf-morphisms that preserve it.
@@ -278,14 +307,7 @@ We recall that this initial cwf is defined by first defining grammars for raw co
 \\&&\Gamma \vdash A = A'
 \\&&\Gamma \vdash a = a' : A
 \end{eqnarray*}
-are defined inductively by inference rules. The four judgment forms
-\begin{eqnarray*}
-\\&&\Gamma \vdash
-\\&&\Delta \vdash \gamma : \Gamma
-\\&&\Gamma \vdash A
-\\&&\Gamma \vdash a : A
-\end{eqnarray*}
-are then defined as the reflexive instances of the partial equivalence relations. The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash$. See Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs} for details.
+are defined inductively by inference rules. are then defined as the reflexive instances of the partial equivalence relations. The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash$. See Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs} for details.
 
 Assume we have specified grammars and inference rules for $\T_\Sigma$ and that we write $\vdash_\Sigma$ for derivability by these inference rules. Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to build $\T_{\Sigma'}$, to extend the grammars and inference rules for $\T_\Sigma$.
 \begin{description}
@@ -371,7 +393,7 @@ We add operator symbols $\U_0, \Ta_0$, the code operations $\N^0, \Pi^0$, and th
 
 \subsection{Cwfs with universe tower structures} We introduce a new sort symbol for levels and new operator symbols for 0, $\s$, and $\vee$ for levels with the equations for $\vee$. Then we have the other operator symbols and equations for universe tower structures.
 
-Note that we have here extended the notion of cwf with a sort of levels, that is, we are no longer strictly within the framework of (internal) cwfs.
+Note that we have here extended the notion of cwf with a sort of levels; we don't have an (internal) {\em type} of levels, only a sort. Adding such a new sort corresponds to adding a new form of judgment in the syntactic presentation with raw terms and inference rules.  This sort of levels can be equipped with the structure of an “internal semilattice”.
 
 \subsection{Cwfs with universe polymorphic tower structures} Here we need to extend the cwf-framework further to take into account contexts with level variables, etc.
 
