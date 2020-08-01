@@ -204,9 +204,50 @@ so that $\q_{\Gamma, A} [\tuple{\gamma, a}]$ and $a$ are elements of the same se
 (End Definition~\ref{def:Cwfobj}.)
 \end{definition}
 
+A cwf is thus a structure $(\C,1,\tuple{},T,\cext\, , \tuple{\_,\_},\p, \q$, 
+subject to some equations. 
+
 \begin{definition}\label{def:Cwfmor} 
-TBD
+
+We will now introduce a notion of morphisms between cwfs.
+
+\begin{definition}
+A \emph{(strict) cwf-morphism between cwfs $(\C,T_\C)$ and $(\D,T_\D)$} is
+a pair $(F, \sigma)$ where $F : \C \to \D$
+is a functor preserving $1$ on the nose, and
+\[
+\sigma : T_\C \implies T_\D \circ F
+\]
+is a natural transformation between $\Fam$-valued presheaves,
+preserving context comprehension on the nose.
 \end{definition}
+
+Thus we have $$\sigma_\Gamma :
+\Ty_\C(\Gamma) \to \Ty_\D(F \Gamma)$$
+\[
+\sigma_\Gamma^A : \Tm_\C(\Gamma, A) \to \Tm_\D(F\Gamma, \sigma_\Gamma (A))
+\]
+for $\Gamma \in \Cobj$ and $A\in
+\Ty(\Gamma)$.
+
+It is convenient to simplify notations and write all the components
+of a cwf-morphism as $F$ so that we write $F(A)$ for $\sigma_\Gamma(A)$ and $F(a)$ for $\sigma^A_\Gamma(a)$. Naturality of $\sigma$
+amounts to preservation of substitution, \emph{i.e.}, for all $\gamma
+: \Delta \to \Gamma$ in $\C$, we have
+\[
+F(A[\gamma]) = (FA)[F\gamma] \qquad \qquad F(a[\gamma]) =
+(Fa)[F\gamma]\,.
+\]
+
+Finally, preservation of context comprehension on
+the nose means that $F(\Gamma\cext A) = F\Gamma\cext
+FA$, with $F(\p_{\Gamma, A}) = \p_{F\Gamma, FA}$ and $F(\q_{\Gamma,
+A}) = \q_{F\Gamma, FA}$.
+
+\end{definition}
+
+Small cwfs and strict cwfs-morphisms form a category, written $\Cwf$. 
+
 
 
 \subsection{The generalized algebraic theory of cwfs}
