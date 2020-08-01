@@ -251,9 +251,9 @@ Equations:
 (\gamma \circ \delta) \circ \xi = \gamma \circ (\delta \circ \xi): \Hom(\Theta,\Gamma)
 \end{eqnarray*}
 
-We make a few remarks. $\Ctx = \Obj$ is the constant sort of objects of the category of contexts in a cwf. $\Hom$ is a binary sort symbol for the context morphisms in the cwf. The typing of the two arguments are represented by the context $\Delta, \Gamma : \Ctx$. In order to build $\Hom(\Delta,\Gamma)$ for two concrete contexts $\vdash \Delta : \Ctx$ and $\vdash \Gamma : \Ctx$ we need to apply $\Hom$ to the context morphism consisting of $\Delta$ and $\Gamma$ to yield $\Hom(\Delta,\Gamma)$. (There is more to say ...)
-
-Moreover, composition $\gamma \circ \delta$ is officially an operation with five arguments ($\gamma \circ_{\Xi,\Delta,\Gamma} \delta$) but we suppress the context arguments $\Xi,\Delta,\Gamma$. We will do so for some other operations too.
+We make a few remarks. $\Ctx = \Obj$ is the constant sort of objects of the category of contexts in a cwf. $\Hom$ is a binary sort symbol for the context morphisms in the cwf. The typing of the two arguments is represented by the context $\Delta, \Gamma : \Ctx$. 
+%In order to build $\Hom(\Delta,\Gamma)$ for two concrete contexts $\vdash \Delta : \Ctx$ and $\vdash \Gamma : \Ctx$ we need to apply $\Hom$ to the context morphism consisting of $\Delta$ and $\Gamma$ to yield $\Hom(\Delta,\Gamma)$. (There is more to say ...)
+Moreover, composition is officially an operator symbols with five arguments. In the official notation we should write $\gamma \circ_{\Xi,\Delta,\Gamma} \delta$, but we suppress the context arguments $\Xi,\Delta,\Gamma$. We will do so for some other operations too.
 
 \subsubsection{The extension with a family valued functor}
 
@@ -361,7 +361,9 @@ interpretation morphism $\inte{-}'$, recall that the interpretation morphism $\i
 
 \section{Examples of generalized algebraic theories}
 
-\subsection{Monoids} The one sorted algebraic theory of monoids has two operator symbols  $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. As every other algebraic theory in the ordinary sense the algebraic theory of monoids yields a generalized algebraic theory. We first introduce one constant sort symbol $M$, and the operator symbols $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. A cwf $\C$ that supports this gat is an {\em internal monoid} in $\C$. Ordinary (small) monoids come out as internal monoids in $\Set$, the category of small sets.
+\subsection{Monoids} The one sorted algebraic theory of monoids has two operator symbols  $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. As every other algebraic theory in the ordinary sense the algebraic theory of monoids yields a generalized algebraic theory. We first introduce one constant sort symbol $M$, and then the operator symbols $\id$ for identity and $\circ$ for composition, and the associativity and identity laws as equations. 
+
+A cwf $\C$ that supports this gat is an {\em internal monoid} in $\C$. Ordinary (small) monoids come out as internal monoids in $\Set$, the category of small sets.
 
 \subsection{Categories} 
 The signature for the generalized algebraic theory of categories has sort symbols $\Obj$ 
@@ -384,17 +386,109 @@ We add operator symbols $\Pi, \lambda, \app$ and equations $\beta, \eta$ to the 
 We add operator symbols $\N, 0, \s, \Rec$ and equations for $\Rec$.
 
 \subsection{Cwfs with $\U_0$ closed under $\Pi$ and $\N$} 
-We add operator symbols $\U_0, \Ta_0$, the code operations $\N^0, \Pi^0$, and the decoding equations.
+We add operator symbols
+\begin{eqnarray*}
+\Gamma : \Ctx &\vdash& (\U_0)_\Gamma : \Ty(\Gamma)\\
+\Gamma : \Ctx, a : \Tm(\Gamma,(\U_0)_\Gamma) &\vdash& {\Ta_0}(a) : \Ty(\Gamma)\\
+\Gamma : \Ctx &\vdash& (\N^0)_\Gamma : \Tm(\Gamma,(\U_0)_\Gamma) \\
+\Gamma : \Ctx, 
+a : \Tm(\Gamma,(\U_0)_\Gamma), 
+b :  \Tm(\Gamma \cdot \Ta_0(a), (\U_0)_\Gamma))
+&\vdash&
+ \Pi^0(a,b) : \Tm(\Gamma,(\U_0)_\Gamma)
+\end{eqnarray*}
+$(\U_0)_\Gamma$ is the first universe (a type) relative to the context $\Gamma$; $\Ta_0$ is the decoding operation mapping a term in the first universe to the corresponding type; \footnote{add discussion of sort vs type in the introduction}; $\N^0$ is the code for $\N$ in the first universe, and $\Pi^0$ forms codes for $\Pi$-types in the first universe. (Note that we have dropped the context argument of $\Ta_0$ and $\Pi^0$.)
+
+We add the decoding equations:
+\begin{eqnarray*}
+\Ta_0(\N^0_\Gamma) &=& \N_\Gamma\\
+\Ta_0(\Pi^0(a,b)) &=& \Pi(\Ta_0(a),\Ta_0(b))
+\end{eqnarray*}
+and the equations for preservation of substitution:
+\begin{eqnarray*}
+{(\U_0)}_\Gamma [ \gamma ] &=& {(\U_0)}_\Delta\\
+\Ta_0(a) [ \gamma ] &=& \Ta_0(a[ \gamma ] )\\
+\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
+\Pi^0(a,b)[ \gamma ] &=& \Pi^0(a [ \gamma ], b[ \gamma^+ ])
+\end{eqnarray*}
+where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
+
+We remark that the gat for the first universe is inevitably "a la Tarski" in the sense that we distinguish between types and terms in a cwf and we must have an operation decoding a term into a type. However, the terminology "a la Russell" vs "a la Tarski" in Martin-Löf's sense refers to two different formalizations of the raw syntax and inference rules of type theory. The a la Tarski formulation is the one which arises most directly by turning the gat signature into its initial algebra. However, we can prove that the a la Russell formlulation also gives rise to an initial algebra for the same signature. It follows that a la Tarski and a la Russell give rise to isomorphic cwfs that support a first universe.
 
 \subsection{Cwfs with universe tower structures} We introduce a new sort symbol for levels and new operator symbols for 0, $\s$, and $\vee$ for levels with the equations for $\vee$. Then we have the other operator symbols and equations for universe tower structures.
 
 Note that we have here extended the notion of cwf with a sort of levels; we don't have an (internal) {\em type} of levels, only a sort. Adding such a new sort corresponds to adding a new form of judgment in the syntactic presentation with raw terms and inference rules.  This sort of levels can be equipped with the structure of an “internal semilattice”.
 
+ universe tower structure on a cwf with $\Pi, \N$-structures consists of the following.
+\begin{itemize}
+\item 
+At each level $n$ we have types ${(\Un)}_\Gamma \in \Ty(\Gamma)$ for all contexts $\Gamma$ and functions $\Ta_n : \Tm(\Gamma,{(\U_n)}_\Gamma) \to \Ty(\Gamma)$. These are closed under $\N$ and $\Pi$ in the sense that there are codes $\N^0_\Gamma \in \Tm(\Gamma,{(\U_0)}_\Gamma)$ and $\Pi^{m,n} : (a \in \Tm(\Gamma,{(\U_m)}_\Gamma)) \to \Tm(\Gamma \cdot \Tan(a),{(\Un)}_{\Gamma \cdot \Tan(a)}
+) \to \Tm(\Gamma,{(\U_{m\vee n})}_\Gamma)$ such that 
+\begin{eqnarray*}
+\Tan(\N^0_\Gamma) &=& \N_\Gamma\\
+\Ta_{m \vee n}(\Pi^{m,n}(a,b)) &=& \Pi(\Ta_m(a),\Tan(b))
+\end{eqnarray*}
+\item
+The universe at each level has a code in the next: $(\U^n)_\Gamma \in \Tm(\Gamma,(\U_{n+1})_\Gamma)$ such that 
+\begin{eqnarray*}
+\Ta_{n+1}((\U^n)_\Gamma ) &=& (\U_n)_\Gamma
+\end{eqnarray*}
+\item
+We also have lifting operations
+$\Ta_n^{n+1} : \Tm(\Gamma,(\U_n)_\Gamma) \to  \Tm(\Gamma,(\U_{n+1})_\Gamma)$
+with the equations
+$$
+\Ta_{n+1}(\Ta_n^{n+1}(a)) = \Ta_n(a)
+$$
+Note that we do not have any equations for $\Ta_n^{n+1}$ such as
+$\Ta^{n+1}_n((\N^n)_\Gamma) = (\N^{n+1})_\Gamma$, since we only have $\N^0$. In the non-cumulative case $\Ta_n^{n+1}$ is a "constructor" for the universe $\U_{n+1}$.
+\item
+Finally, all operations commute with substitution: if $\gamma : \Delta \to \Gamma$, then
+\begin{eqnarray*}
+{(\Un)}_\Gamma [ \gamma ] &=& {(\Un)}_\Delta\\
+\Tan(a) [ \gamma ] &=& \Tan(a[ \gamma ] )\\
+\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
+\Pi^{m,n}(a,b)[ \gamma ] &=& \Pi^{m,n}(a [ \gamma ], b[ \gamma^+ ])\\
+\U^n[\gamma] &=& \U^n\\
+\Ta_n^{n+1}(a)[\gamma]  &=& \Ta_n^{n+1}(a[\gamma])
+\end{eqnarray*}
+\end{itemize}
+Cwfs with universe tower structures form a generalized algebraic theory in Cartmell's sense. We have written the rules and axioms in an informal style, omitting some arguments of the operations.
+To see that we really have an generalized algebraic theory we need, in addition to the original four sort symbols for the generalised algebraic theory of cwfs, a new sort symbol $\Level$
+%$\mathbb{N}$ 
+for the external natural numbers serving as universe levels and also operator symbols $0, n^+, m \vee n$, for zero, successor, and supremum of levels. \footnote{Be consistent about using $n^+$ and $n+1$.} We have the following equations:
+\begin{eqnarray*}
+m \vee 0 &=&m\\
+0 \vee n &=& n\\
+m^+ \vee n^+ &=& (m \vee n)^+
+\end{eqnarray*}
+If we work in an intensional setting we may also want the equations for a $\vee$-semilattice and
+\begin{eqnarray*}
+n^+ \vee n &=& n^+\\
+m^+ \vee n^+ &=& (m \vee n)^+
+\end{eqnarray*}
+
+{\bf Remark}. In the universe polymorphic system that we are going to show later, we instead have the operator symbols $\alpha_i, n^+, m \vee n$, where $\alpha_i$ is a level variable, and we have the equations for a $\vee$-semilattice and also 
+\begin{eqnarray*}
+n^+ \vee n &=& n^+\\
+m^+ \vee n^+ &=& (m \vee n)^+
+\end{eqnarray*}
+
 \subsection{Cwfs with universe polymorphic tower structures} Here we need to extend the cwf-framework further to take into account contexts with level variables, etc.
 
-%\section{Generalized algebraic theories and essentially algebraic theories}
-%
-%It time permits. A remark about the biequivalence between categories with finite limits and democratic cwfs with $\Sigma$ and extensional identity types, as the basis for the correspondence between essentially and generalized algebraic theories.
+\section{Related work}
+
+Streicher, Brunerie for constructions of initial contextual categories supporting the calculus of constructions and Martin-Löf type theory (ordinary syntax, but with annotated application). Streicher shows that the annotations can be removed assuming we have a normal form property.
+
+\footnote{Mention LF-encodings, mention work on initiality conjecture? Uemura}
+
+Our $\T_\Sigma$ is closely related to Altenkirch and Kaprosi's quotient inductive-inductive types. Inductive-inductive types \cite{nordvallforsberg:phd} is a generalization of mutual inductive families, where one index set may depend on another. The motivating example is building the formal system of type theory by simultaneously defining contexts, substitutions depending on contexts, types depending on context, and terms depending on types and contexts. We can do so by considering the sort symbols of the gat of cwfs as formation rules and the operator symbols as introduction rules. A quotient inductive-inductive type is a combination of quotient types and inductive-inductive types, where there are also constructors witnessing equations. 
+
+Our $\T_\Sigma$ differs from Altenkirch and Kaprosi's notion. The stipulated equations in $\Sigma$ generate judgmental equalities in a system for dependent type theory implementing $\T_\Sigma$. While the stipulated equations in quotient inductive-inductive types are propositional identities. Some of the cwf-equations depend on earlier equations. If these are propositional equalities we need to introduce transport maps between in the types. 
+
+Altenkirch and Kaprosi's notion assumes a setting of intensional type theory, such as Agda's. They implement their notion in Agda.
+
+Given that we have definition of a valid signature $\Sigma$ and a semantics for $\T_\Sigma$ we could ask whether we could add the construction of these to type theory. This would make most sense in extensional type theory, since we can then move seamlessly between propositional and judgmental equalities. It is however, not clear how to provide canonical form semantics in the sense of Martin-Löf's meaning explanations for this notion. However, although our development takes place in set theory, everything we do is constructive and could be formalized in CZF presumably.
 
 \bibliographystyle{plain}
 \bibliography{refs}
