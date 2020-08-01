@@ -251,7 +251,7 @@ Equations:
 (\gamma \circ \delta) \circ \xi = \gamma \circ (\delta \circ \xi): \Hom(\Theta,\Gamma)
 \end{eqnarray*}
 
-We make a few remarks. $\Ctx = \Obj$ is the constant sort of objects of the category of contexts in a cwf. $\Hom$ is a binary sort symbol for the context morphisms in the cwf. These typing of the two arguments are represented by the context $\Delta, \Gamma : \Ctx$. In our type theory we have an operation which maps a type $\Gamma \vdash A$ and a substitution $\Delta \vdash \gamma : \Gamma$ to $\Delta \vdash A[\gamma]$ (defined below). Hence when we apply $\Hom$ to two concrete arguments $\Delta,\Gamma$ we get the result $\Hom(\Delta,\Gamma)$ by using this substitution operation. (More to say ...)
+We make a few remarks. $\Ctx = \Obj$ is the constant sort of objects of the category of contexts in a cwf. $\Hom$ is a binary sort symbol for the context morphisms in the cwf. The typing of the two arguments are represented by the context $\Delta, \Gamma : \Ctx$. In order to build $\Hom(\Delta,\Gamma)$ for two concrete contexts $\vdash \Delta : \Ctx$ and $\vdash \Gamma : \Ctx$ we need to apply $\Hom$ to the context morphism consisting of $\Delta$ and $\Gamma$ to yield $\Hom(\Delta,\Gamma)$. (There is more to say ...)
 
 Moreover, composition $\gamma \circ \delta$ is officially an operation with five arguments ($\gamma \circ_{\Xi,\Delta,\Gamma} \delta$) but we suppress the context arguments $\Xi,\Delta,\Gamma$. We will do so for some other operations too.
 
@@ -261,18 +261,14 @@ Moreover, composition $\gamma \circ \delta$ is officially an operation with five
 
 \subsubsection{The extension with context comprehension}
 
-
-
-
-
 \section{Signatures and models of generalized algebraic theories}
 
- We shall now define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$, but will postpone the construction of these until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$. 
+ We shall now define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$, but we will postpone the construction of these until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$. 
 \footnote{Say something about the fact that we do not assume anything about the relationship between $\T_\Sigma$ and $\T_{\Sigma'}$ because all initial objects are isomorphic, and hence we can move between them.}
 \begin{definition}
-We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs that support $\Sigma$ and cwf-morphisms that preserve it.
+We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs that support $\Sigma$ and cwf-morphisms that preserve it. First, the base case:
 \begin{description}
-\item[The empty signature] The empty signature $\emptyset = ([],[],[])$ is valid and $\Cwf_\emptyset = \Cwf$. 
+\item[The empty signature] The empty signature $\emptyset$ is valid and $\Cwf_\emptyset = \Cwf$. 
 \end{description}
 Assume now that $\Sigma$ is a valid signature and that the category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ with $\inte{-} : \T_\Sigma \to \C$ as the unique morphism into an object $\C$. Then we can add a new type symbol, or a new operator symbol, or a new equation, to get a new valid signature, as follows:
 \begin{description}
@@ -360,13 +356,12 @@ If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$ and 
 \end{mathpar}
 to the inference rules for $\Sigma$.
 
-It is immediate that $\T_{\Sigma'}$ supports $\Sigma'$.
-The interpretation morphism $\inte{-}'$ is defined as $\inte{-}$ but on the new equivalence classes
-\footnote{Martin: clarify!}. It immediately follows that it is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.\end{description}
+It is immediate that $\T_{\Sigma'}$ supports $\Sigma'$. In order to define the
+interpretation morphism $\inte{-}'$, recall that the interpretation morphism $\inte{-} : \T_\Sigma \vdash \C$ is defined in two steps. The first step is to define a partial function mapping raw contexts to objects of $\C$, raw substitutions to morphisms of $\C$, raw types to types of $\C$, and raw terms to terms of $\C$. The second step is to prove that this partial function preserves the partial equivalence relation and define $\inte{-}$ on the equivalence classes. In order to define $\inte{-}'$ we first define the partial function on the raw syntax to be identical to the partial function on the raw syntax for $\inte{-}$. (The raw syntax for $\T_{\Sigma'}$ is the same as the one for $\T_\Sigma$.) We then prove that this partial function preserves the extended partial equivalence relation and define $\inte{-}'$ on the new equivalence classes. It follows that $\inte{-}'$ is unique.\end{description}
 
 \section{Examples of generalized algebraic theories}
 
-\subsection{Monoids} A sort symbol $M$. operator symbols $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. This is an ordinary algebraic theory.
+\subsection{Monoids} The one sorted algebraic theory of monoids has two operator symbols  $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. As every other algebraic theory in the ordinary sense the algebraic theory of monoids yields a generalized algebraic theory. We first introduce one constant sort symbol $M$, and the operator symbols $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. A cwf $\C$ that supports this gat is an {\em internal monoid} in $\C$. Ordinary (small) monoids come out as internal monoids in $\Set$, the category of small sets.
 
 \subsection{Categories} 
 The signature for the generalized algebraic theory of categories has sort symbols $\Obj$ 
