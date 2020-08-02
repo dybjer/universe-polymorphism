@@ -136,7 +136,7 @@ is not a syntactical one.
 
 \begin{definition}\label{def:Cwfobj} 
 A category with families (cwf) consists of the following data:
-\begin{itemize} 
+\begin{enumerate} 
 
 \item A category $\C$ with a terminal object $1$ and maps
 $\tuple{}_\Gamma \in \C(\Gamma, 1)$ for all objects $\Gamma$ of $\C$;
@@ -146,7 +146,9 @@ $T : \Cop \to \Fam$;
 
 \item Operations ${\cext\,},~\tuple{\_,\_},~\p$ and $\q$ 
 explained in the following paragraphs.
-\end{itemize}
+These four operations and their associated equations
+are referred to as \emph{context comprehension}.
+\end{enumerate}
 
 We let $\Gamma, \Delta,\ldots$ range over objects of $\C$, 
 and refer to them as \emph{contexts}. 
@@ -205,13 +207,11 @@ so that $\q_{\Gamma, A} [\tuple{\gamma, a}]$ and $a$ are elements of the same se
 \end{definition}
 
 A cwf is thus a structure $(\C,1,\tuple{},T,\cext\, , \tuple{\_,\_},\p, \q$, 
-subject to some equations. 
+subject to equations, for the category and the presheaf, and for context
+comprehension. The morphisms to be defined next preserve this structure,
+partly in a strict way (`on the nose').
 
-\begin{definition}\label{def:Cwfmor} 
-
-We will now introduce a notion of morphisms between cwfs.
-
-\begin{definition}
+\begin{definition}\label{def:Cwfmor}  
 A \emph{(strict) cwf-morphism between cwfs $(\C,T_\C)$ and $(\D,T_\D)$} is
 a pair $(F, \sigma)$ where $F : \C \to \D$
 is a functor preserving $1$ on the nose, and
@@ -220,7 +220,6 @@ is a functor preserving $1$ on the nose, and
 \]
 is a natural transformation between $\Fam$-valued presheaves,
 preserving context comprehension on the nose.
-\end{definition}
 
 Thus we have $$\sigma_\Gamma :
 \Ty_\C(\Gamma) \to \Ty_\D(F \Gamma)$$
@@ -243,7 +242,7 @@ Finally, preservation of context comprehension on
 the nose means that $F(\Gamma\cext A) = F\Gamma\cext
 FA$, with $F(\p_{\Gamma, A}) = \p_{F\Gamma, FA}$ and $F(\q_{\Gamma,
 A}) = \q_{F\Gamma, FA}$.
-
+(End Definition~\ref{def:Cwfmor}.)
 \end{definition}
 
 Small cwfs and strict cwfs-morphisms form a category, written $\Cwf$. 
