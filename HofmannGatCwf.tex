@@ -136,6 +136,7 @@ is not a syntactical one.
 
 \begin{definition}\label{def:Cwfobj} 
 A category with families (cwf) consists of the following data:
+
 \begin{enumerate} 
 
 \item A category $\C$ with a terminal object $1$ and maps
@@ -206,47 +207,57 @@ so that $\q_{\Gamma, A} [\tuple{\gamma, a}]$ and $a$ are elements of the same se
 (End Definition~\ref{def:Cwfobj}.)
 \end{definition}
 
-A cwf is thus a structure $(\C,1,\tuple{},T,\cext\, , \tuple{\_,\_},\p, \q$, 
+A cwf is thus a structure $(\C,1,\tuple{},T,\cext\, , \tuple{\_,\_},\p, \q)$, 
 subject to equations, for the category and the presheaf, and for context
 comprehension. The morphisms to be defined next preserve this structure,
-partly in a strict way (`on the nose').
+partly even in a strict way (`on the nose').
+We often shorten the notation of a cwf to $(\C,T)$, leaving the remaining
+structure implicit.
 
 \begin{definition}\label{def:Cwfmor}  
-A \emph{(strict) cwf-morphism between cwfs $(\C,T_\C)$ and $(\D,T_\D)$} is
-a pair $(F, \sigma)$ where $F : \C \to \D$
-is a functor preserving $1$ on the nose, and
-\[
-\sigma : T_\C \implies T_\D \circ F
-\]
-is a natural transformation between $\Fam$-valued presheaves,
-preserving context comprehension on the nose.
+A \emph{(strict) cwf-morphism $F$ between cwfs $(\C,T_\C)$ and $(\D,T_\D)$}
+consists of
 
-Thus we have $$\sigma_\Gamma :
-\Ty_\C(\Gamma) \to \Ty_\D(F \Gamma)$$
-\[
-\sigma_\Gamma^A : \Tm_\C(\Gamma, A) \to \Tm_\D(F\Gamma, \sigma_\Gamma (A))
-\]
-for $\Gamma \in \Cobj$ and $A\in
-\Ty(\Gamma)$.
+\begin{enumerate}
 
-It is convenient to simplify notations and write all the components
-of a cwf-morphism as $F$ so that we write $F(A)$ for $\sigma_\Gamma(A)$ and $F(a)$ for $\sigma^A_\Gamma(a)$. Naturality of $\sigma$
-amounts to preservation of substitution, \emph{i.e.}, for all $\gamma
-: \Delta \to \Gamma$ in $\C$, we have
+\item A functor $F_{cat} : \C \to \D$, preserving $1$ on the nose,
+that is, $F_{cat}(1_{\C}) = 1_{\D}$;
+
+\item A natural transformation $F_{nat} : T_\C \Rightarrow (T_\D \circ F_{cat})$,
+preserving context comprehension on the nose (explained below).
+
+\end{enumerate}
+ 
+As $F_{nat}$ is a natural transformation between $\Fam$-valued presheaves,
+$F_{nat}$ has a component for any object $\Gamma$ of $\C$, and
+these components are morphisms in $\Fam(T_C(\Gamma),T_\D(F_{cat}(\Gamma)))$.
+Recall that morphisms in $\Fam$ consist of a reindexing function
+and a family of functions. It is convenient to denote $F_{cat}$,
+all reindexing functions, as well as all members of the families of functions,
+simply by $F$. Thus we have $F(A) \in \Ty_\D(F(\Gamma))$ 
+and $F(a) \in \Tm_\D(F(\Gamma), F(A))$, for all $\Gamma$
+and $A\in\Ty_\C(\Gamma)$ and $a\in \Tm_\C(\Gamma, A)$.
+
+Naturality of $F_{nat}$
+amounts to preservation of substitution, {i.e.}, for all 
+$\gamma : \Delta \to \Gamma$ in $\C$, we have
 \[
-F(A[\gamma]) = (FA)[F\gamma] \qquad \qquad F(a[\gamma]) =
-(Fa)[F\gamma]\,.
+F(A[\gamma]) = F(A)[F(\gamma)] \qquad \qquad 
+F(a[\gamma]) = F(a)[F\gamma]\,.
 \]
 
-Finally, preservation of context comprehension on
-the nose means that $F(\Gamma\cext A) = F\Gamma\cext
-FA$, with $F(\p_{\Gamma, A}) = \p_{F\Gamma, FA}$ and $F(\q_{\Gamma,
-A}) = \q_{F\Gamma, FA}$.
+Last but not least, we turn to the preservation of context comprehension
+on the nose, and require
+\[ 
+F(\Gamma\cext A) = F(\Gamma)\cext F(A) \qquad
+%F(\tuple{\gamma,a}) = \tuple{F(\gamma),F(a)} \qquad
+F(\p_{\Gamma, A}) = \p_{F(\Gamma), F(A)} \qquad
+F(\q_{\Gamma, A}) = \q_{F(\Gamma), F(A)}\,.
+\]
 (End Definition~\ref{def:Cwfmor}.)
 \end{definition}
 
-Small cwfs and strict cwfs-morphisms form a category, written $\Cwf$. 
-
+Small cwfs with strict cwfs-morphisms form a category, written $\Cwf$. 
 
 
 \subsection{The generalized algebraic theory of cwfs}
