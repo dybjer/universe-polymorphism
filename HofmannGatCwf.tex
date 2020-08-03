@@ -72,7 +72,7 @@
 \begin{abstract}
 We define a new finitary version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows a possibly infinite set of sort and operator symbols, we only allow a finite number. Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules. 
 %This is in the spirit of Voevodsky's "initiality conjecture"\footnote{200731: Maybe we should mention Martin Hofmann already in the abstract, and perhaps remove Voevodsky?} whereby type theories are characterized as initial objects in appropriate categories of models of type theory.  
-Our main result is that the category of cwfs supporting a certain signature for gats has an initial object. This result is obtained by extending the construction of initial cwfs from Castellan, Clairambault, and Dybjer. We also point out that cwfs supporting the gat of categories is a cwf with an internal category. Similarly, a cwf supporting the gat of cwfs is a cwf with an internal cwf.
+Our main result is that the category of cwfs supporting a certain signature for gats has an initial object. This result is obtained by extending the construction of initial cwfs from Castellan, Clairambault, and Dybjer. We also provide a list of examples of cwfs, such as the cwfs of monoids, categories, cwfs, and cwfs extended with a first universe and several different formulations of towers of universes. We also point out that cwfs supporting the gats of monoids, categories, cwfs, etc are cwfs with internal monoid, category, cwf, etc, respectively.
 \end{abstract}
 
 \section{Introduction}
@@ -319,6 +319,23 @@ Moreover, composition is officially an operator symbols with five arguments. In 
 
 \subsubsection{The extension with context comprehension}
 
+\subsection{The initial cwf}
+
+\begin{theorem}
+(Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs}) The category $\Cwf$ has an initial object $\T$.
+\end{theorem}
+
+We recall that this initial cwf is defined by first defining grammars for raw contexts, raw substitutions, raw types, and raw terms. Then four families of partial equivalence relations corresponding to the four judgment forms
+\begin{eqnarray*}
+\\&&\Gamma = \Gamma' \vdash
+\\&&\Delta \vdash \gamma = \gamma' : \Gamma
+\\&&\Gamma \vdash A = A'
+\\&&\Gamma \vdash a = a' : A
+\end{eqnarray*}
+are defined inductively by inference rules. are then defined as the reflexive instances of the partial equivalence relations. The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash$. See Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs} for details.
+
+Note that the initial cwf $\T$ is rather uninteresting: its category of contexts contains only an initial object (the empty context), and there are no types and terms. Nevertheless, the syntax and inference rules used in its definition form the starting point both for the formulation of Martin-Löf type theory as initial cwfs supporting type formers and for the formulation of our notion of generalized algebraic theory as intial cwfs supporting their signatures.
+
 \section{Signatures and models of generalized algebraic theories}
 
 We now come to the main point of this note. We define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$, but we will postpone the construction of these until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$. 
@@ -353,15 +370,6 @@ The proof is by induction on the construction of $\Sigma$.
 \item[The empty signature] 
 The category $\Cwf = \Cwf_\emptyset$ of cwfs and strict cwf-morphisms has an initial object $\T_\emptyset$ \cite{castellan:tlca2015,castellan:lmcs}.
 \end{description}
-
-We recall that this initial cwf is defined by first defining grammars for raw contexts, raw substitutions, raw types, and raw terms. Then four families of partial equivalence relations corresponding to the four judgment forms
-\begin{eqnarray*}
-\\&&\Gamma = \Gamma' \vdash
-\\&&\Delta \vdash \gamma = \gamma' : \Gamma
-\\&&\Gamma \vdash A = A'
-\\&&\Gamma \vdash a = a' : A
-\end{eqnarray*}
-are defined inductively by inference rules. are then defined as the reflexive instances of the partial equivalence relations. The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash$. See Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs} for details.
 
 Assume we have specified grammars and inference rules for $\T_\Sigma$ and that we write $\vdash_\Sigma$ for derivability by these inference rules. Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to build $\T_{\Sigma'}$, to extend the grammars and inference rules for $\T_\Sigma$.
 \begin{description}
@@ -425,7 +433,7 @@ A cwf $\C$ that supports this gat is an {\em internal monoid} in $\C$. Ordinary 
 
 \subsection{Categories} 
 The signature for the generalized algebraic theory of categories has sort symbols $\Obj$ 
-and $\Hom$, operator symbols $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. 
+and $\Hom$, operator symbols $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. We shall here sketch how to generate the valid signature for categories with reference to definition \ref{} and using cwf-combinators.
 \begin{itemize}
 \item The initial cwf $\T_\emptyset$ (as constructed above) has only one object (context) [1], one equivalence class of morphisms $[\id_1]$ (with several representatives: $\tuple{}_1, \id_1 \circ \id_1$, etc), and no types and terms. Hence we can add a new constant sort $\Obj$ of (internal) objects with context $1$ to the signature. 
 \item $\T_{([\Obj],[],[])}$ (as constructed above) contains the context $[(1.\Obj).\Obj[\p_{1,\Obj}]]$ (corresponding to the context $x : \Obj, y : \Obj$ in usual notation). Hence we can introduce a new sort $\Hom$ with this context. This sort represents the family $\Hom(x,y)$ of (internal) morphisms.
@@ -436,6 +444,8 @@ and $\Hom$, operator symbols $\id$ for identity and $\circ$ for composition, and
 We say that a cwf that supports the generalized algebraic theory of categories is a cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits. As shown by Martin Hofmann's \cite{hofmann:csl,hofmann:cambridge}, every category with finite limits yields a category with attributes, and hence a cwf. However, not every cwf has finite limits; we need more structure.  Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} proved that the 2-category of finite limits is biequivalent to the 2-category of democratic cwfs that support $\Sigma$-types and extensional identity types.
 
 \subsection{Cwfs} Similarly, we can define a cwf that supports the generalized algebraic theory of cwfs. We add sort symbols for types and terms, operator symbols for all the cwf-combinators, and all the cwf-equations. We say that a cwf that supports this generalized algebraic theory is a cwf with an {\em internal cwf}.
+
+The signature for the gat of cwfs was already displayed in \ref{}. We leave it to the reader to verify that it can be formulated as a valid signature using cwf-combinators too.
 
 \subsection{Cwfs with $\Pi$-types} 
 We add operator symbols $\Pi, \lambda, \app$ and equations $\beta, \eta$ to the generalized algebraic theory of cwfs. 
