@@ -72,7 +72,7 @@
 \begin{abstract}
 We define a new finitary version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows a possibly infinite set of sort and operator symbols, we only allow a finite number. Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules. 
 %This is in the spirit of Voevodsky's "initiality conjecture"\footnote{200731: Maybe we should mention Martin Hofmann already in the abstract, and perhaps remove Voevodsky?} whereby type theories are characterized as initial objects in appropriate categories of models of type theory.  
-Our main result is that the category of cwfs supporting a certain signature for gats has an initial object. This result is obtained by extending the construction of initial cwfs from Castellan, Clairambault, and Dybjer. We also provide a list of examples of cwfs, such as the cwfs of monoids, categories, cwfs, and cwfs extended with a first universe and several different formulations of towers of universes. We also point out that cwfs supporting the gats of monoids, categories, cwfs, etc are cwfs with internal monoid, category, cwf, etc, respectively.
+Our main result is that the category of cwfs supporting a certain signature for gats has an initial object. This result is obtained by extending the construction of initial cwfs from Castellan, Clairambault, and Dybjer. We also provide a list of examples of gats, such as the gats of monoids, categories, cwfs, and cwfs extended with a first universe and several different formulations of towers of universes. We also point out that cwfs supporting the gats of monoids, categories, cwfs, etc are cwfs with an internal monoid, category, cwf, etc, respectively.
 \end{abstract}
 
 \section{Introduction}
@@ -325,16 +325,46 @@ Moreover, composition is officially an operator symbols with five arguments. In 
 (Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs}) The category $\Cwf$ has an initial object $\T$.
 \end{theorem}
 
-We recall that this initial cwf is defined by first defining grammars for raw contexts, raw substitutions, raw types, and raw terms. Then four families of partial equivalence relations corresponding to the four judgment forms
-\begin{eqnarray*}
-\\&&\Gamma = \Gamma' \vdash
-\\&&\Delta \vdash \gamma = \gamma' : \Gamma
-\\&&\Gamma \vdash A = A'
-\\&&\Gamma \vdash a = a' : A
-\end{eqnarray*}
-are defined inductively by inference rules. are then defined as the reflexive instances of the partial equivalence relations. The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash$. See Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs} for details.
+%We only sketch the construction of $\T$ and refer to \cite{castellan:tlca2015,castellan:lmcs} for details.
 
-Note that the initial cwf $\T$ is rather uninteresting: its category of contexts contains only an initial object (the empty context), and there are no types and terms. Nevertheless, the syntax and inference rules used in its definition form the starting point both for the formulation of Martin-Löf type theory as initial cwfs supporting type formers and for the formulation of our notion of generalized algebraic theory as intial cwfs supporting their signatures.
+We only sketch the construction of $\T$. It is defined in three steps:
+\begin{itemize}
+\item 
+First we define grammars for raw contexts, raw substitutions, raw types, and raw terms.
+\begin{eqnarray*}
+\Gamma \in \RawCtx &::=& 1  \ |\ \Gamma\cext A\\
+\gamma \in \RawSub \ &::=& \gamma \circ \gamma \ |\ \id_\Gamma \ |\ \langle\rangle_\Gamma \ |\ \p_{A} \ |\ \langle \gamma, a \rangle_A\\
+A \in \RawTy &::=& o \ |\  A[\gamma]\\
+a \in \RawTm &::=& a[\gamma] \ |\ \qI_A
+\end{eqnarray*}
+\item
+Then we define the well-formed contexts and types, and the well-typed
+substitutions and terms. In Martin-L\"of's substitution calculus these are defined by a system of inference rules for all the eight forms of judgments. Here we choose a more economical way, by only defining well-formed \emph{equal} contexts and types, and the well-typed \emph{equal} substitutions and terms. Thus we define four families of partial equivalence relations (pers), corresponding to the four forms of equality judgments, by a mutual inductive definition:
+$$
+\Gamma = \Gamma' \vdash
+\qquad
+\Gamma \vdash A = A' 
+\qquad
+\Delta \vdash \gamma = \gamma' : \Gamma
+\qquad
+\Gamma \vdash a = a' : A
+$$
+where $\Gamma, \Gamma' \in \RawCtx, \gamma, \gamma' \in \RawSub, A, A' \in \RawTy,$ and $a,a' \in \RawTm$. The basic judgment forms can then be defined as the reflexive instances of the pers:
+\begin{itemize}
+\item 
+$\Gamma \vdash$ abbreviates $\Gamma = \Gamma \vdash$, 
+\item
+$\Gamma \vdash A$ abbreviates $\Gamma \vdash A = A$,
+\item
+$\Delta \vdash \gamma : \Gamma$ abbreviates  $\Delta \vdash \gamma = \gamma : \Gamma$, 
+\item
+$\Gamma \vdash a : A$ abbreviates $\Gamma \vdash a = a : A$.
+\end{itemize}
+\item
+The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash$. See Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs} for details.
+\end{itemize}
+
+Note that the initial cwf $\T$ is rather uninteresting: its category of contexts contains only an initial object (the empty context), and there are no types and terms. Nevertheless, the syntax and inference rules used in its definition form the starting point both for the formulation of Martin-Löf type theory as initial cwfs supporting type formers such as $\Pi, \Sigma, \N$, etc, and for our notion of generalized algebraic theory as the intial object $\T_\Sigma$ in the category $\Cwf_\Sigma$ of cwfs supporting a valid signature $\Sigma$.
 
 \section{Signatures and models of generalized algebraic theories}
 
