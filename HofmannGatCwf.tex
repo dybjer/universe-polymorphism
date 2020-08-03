@@ -70,20 +70,24 @@
 \maketitle
 
 \begin{abstract}
-We define a new finitary version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows a possibly infinite set of sort and operator symbols, we only allow a finite number. Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules. This is in the spirit of Voevodsky's "initiality conjecture"\footnote{200731: Maybe we should mention Martin Hofmann already in the abstract, and perhaps remove Voevodsky?} whereby type theories are characterized as initial objects in appropriate categories of models of type theory.  Our main result is that the category of cwfs supporting a certain signature for gats has an initial object. This result is obtained by extending the construction of initial cwfs from Castellan, Clairambault, and Dybjer. We also point out that cwfs supporting the gat of categories is a cwf with an internal category. Similarly, a cwf supporting the gat of cwfs is a cwf with an internal cwf.
+We define a new finitary version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows a possibly infinite set of sort and operator symbols, we only allow a finite number. Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules. 
+%This is in the spirit of Voevodsky's "initiality conjecture"\footnote{200731: Maybe we should mention Martin Hofmann already in the abstract, and perhaps remove Voevodsky?} whereby type theories are characterized as initial objects in appropriate categories of models of type theory.  
+Our main result is that the category of cwfs supporting a certain signature for gats has an initial object. This result is obtained by extending the construction of initial cwfs from Castellan, Clairambault, and Dybjer. We also point out that cwfs supporting the gat of categories is a cwf with an internal category. Similarly, a cwf supporting the gat of cwfs is a cwf with an internal cwf.
 \end{abstract}
 
 \section{Introduction}
 
-In this short note we define a notion of finitary generalized algebraic theory in the spirit of Voevodsky's {\em initiality conjecture}.\footnote{200731: Better to replace this by "intial algebra semantics", which goes back to John Isbell and the ADJ group? Repeat the sentence "Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules". Emphaisze that the definition is quite trivial, but this is a good thing since we get something "canonical": we are writing "the only thing possible". Also think of Mike Shulman as a reader.}
+%In this short note we define a notion of finitary generalized algebraic theory in the spirit of Voevodsky's {\em initiality conjecture}.
+\footnote{200803: I removed the first sentence referring to the initiality conjecture. 200731: Better to replace this by "intial algebra semantics", which goes back to John Isbell and the ADJ group? Repeat the sentence "Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules". Emphaisze that the definition is quite trivial, but this is a good thing since we get something "canonical": we are writing "the only thing possible". Also think of Mike Shulman as a reader.}
 
 Generalized algebraic theories (gats) were originally introduced by Cartmell in his PhD thesis \cite{cartmell:phd} as a dependently typed generalization of many sorted algebraic theories. Each gat is specified by a signature with (possibly infinite) sets of sort symbols, operator symbols, and equations. Cartmell's definition of gats \cite{cartmell:phd,cartmell:apal} is based on a notion of {\em derived rule} expressed in terms of a traditional syntactic system for dependent type theory. He also defines a notion of model whereby sort symbols are interpreted as families of sets.
 
-Voevodsky's initiality conjecture \cite{voevodsky:initiality} aims to characterize a whole class of type theories abstractly as initial objects in suitable categories of models and to prove that these initial objects exist. By abstracting from the precise details of syntax and inference rules for a particular type theory, one aims to develop a more general, elegant, semantic, rigorous, and formalizable metatheory of type theory. \footnote{I just read  \cite{voevodsky:initiality} and feel that this paragraph is too much my own interpretation of the initiality conjecture}
+We shall here define a new finitary notion of generalized algebraic theory and simultaneosly a general categorical notion of model. Our definition is based on categories with families (cwfs) \cite{dybjer:torino}. We simultaneously define what it means to be a valid signature $\Sigma$ for a gat and the category $\Cwf_\Sigma$ of cwfs supporting $\Sigma$. This definition refers to the construction of initial objects in $\Cwf_\Sigma$ but is independent of the details of this construction. Afterwards, we show that the initial object of $\Cwf_\Sigma$ exists for all valid $\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of the initial object of the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
 
-For example, we can define Martin-Löf type theory as the initial object in the category of categories with families (cwfs) with extra structure for interpreting the type formers. An explicit construction of this initial object has been carried out by Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs}. 
+\footnote{200803: I also removed the following about the initiality conjecture: "Voevodsky's initiality conjecture \cite{voevodsky:initiality} aims to characterize a whole class of type theories abstractly as initial objects in suitable categories of models and to prove that these initial objects exist. By abstracting from the precise details of syntax and inference rules for a particular type theory, one aims to develop a more general, elegant, semantic, rigorous, and formalizable metatheory of type theory. (I just read  \cite{voevodsky:initiality} and feel that this paragraph is too much my own interpretation of the initiality conjecture.)
 
-We shall here define a finitary notion of generalized algebraic theory and simultaneosly a general categorical notion of model. Our definition is based on categories with families (cwfs) \cite{dybjer:torino}. We simultaneously define what it means to be a valid signature $\Sigma$ for a gat and the category $\Cwf_\Sigma$ of cwfs supporting $\Sigma$. This definition refers to the construction of initial objects in $\Cwf_\Sigma$ but is independent of the details of this construction. Afterwards, we show that initial object of $\Cwf_\Sigma$ exist for all valid $\Sigma$ by extending the construction of the initial object of the category $\Cwf$ of cwfs.
+For example, we can define Martin-Löf type theory as the initial object in the category of categories with families (cwfs) with extra structure for interpreting the type formers. An explicit construction of this initial object has been carried out by Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs}. "}
+
 \footnote{
 Mention contextual category and Cartmell's equivalence between the categories of gats and of contextual categories. 
 }
@@ -98,7 +102,6 @@ Mention contextual category and Cartmell's equivalence between the categories of
 {Mention the typical phenomenon in category that you define something first and only later show that it exists.}
 \footnote
 {Mention the connection with QIITs of Altenkirch and Kaprosi. We provide set-theoretic semantics for a class of QIITs, those generated by valid signatures in our sense. It remains to explain how such semantics can be integrated in the full set-theoretic semantics of type theory. Also check how Altenkirch and Kaprosi's QIITs deal with intensional vs definitional equality. They don't have definitional quotients.}
-
 
 \section{Categories with families}\label{sec:def_cwf}
 
@@ -259,25 +262,29 @@ F(\q_{\Gamma, A}) = \q_{F(\Gamma), F(A)}\,.
 
 Small cwfs with strict cwfs-morphisms form a category, written $\Cwf$. 
 
-
 \subsection{The generalized algebraic theory of cwfs}
 
-A generalized algebraic theory is specified by a {\em signature}. This is a list of sort symbols, operator symbols, and equations (between terms). (Cartmell \cite{cartmell:phd,cartmell:apal} also allows equations between sort terms, but most examples do not make use of such. It would be straightforward to include such equations in our account too.) In the next section we shall formally define both the notion of valid signature $\Sigma$ and its associated category of cwfs $\Cwf_\Sigma$ of cwfs that support $\Sigma$. As we shall see sort symbols, operator symbols, and equations can appear in any order as long as $\Sigma$ is constructed as a valid signature.
+One of the main features of cwfs is that they are models of a certain generalized algebraic theory which arises naturally by unfolding the definition above. Moreover, this gat bears a close resemblance to Martin-Löf's substitution calculus. However a main difference is that Martin-Löf's calculus uses ordinary named variables whereas the gat for cwfs uses a combinator language quite similar to the ccc-combinators that arise from the definition of cartesian closed categories. Another main difference is that a gat is not a usual formal system defined in terms of a raw syntax and inference rules. Instead it is a dependently typed generalization of many sorted algebras. The formalism assumes a basic framework for dependent type theory. In this language you specify a {\em signature} consisting of a list of sort symbols and operator symbols, with dependent typings, and equations (between terms). (Cartmell \cite{cartmell:phd,cartmell:apal} also allows equations between sort terms, but most examples do not make use of such. It would be straightforward to include such equations in our account too.) 
 
-But before giving the formal definition we shall give one example of a gat: the gat of cwfs. This can be fournd in the original paper on cwfs \cite{dybjer:torino}. However, we show it here in our notation where we use the following notation for the eight forms of judgment\footnote{Do two columns using array environment}
+We shall now display the sort symbols, operator symbols, and equations of the gat of cwfs. Note that the four sort symbols $\Ctx, \Hom, \Ty,$ and $\Tm$ correspond to the respective four of the judgment forms of Martin-Löf's substitution calculus:
 \begin{eqnarray*}
 \\&&\Gamma \vdash
 \\&&\Delta \vdash \gamma : \Gamma
 \\&&\Gamma \vdash A
 \\&&\Gamma \vdash a : A
+\end{eqnarray*}
+In addition to these the substitution calculus have the following forms of equality judgments:
+\begin{eqnarray*}
 \\&&\Gamma = \Gamma' \vdash
 \\&&\Delta \vdash \gamma = \gamma' : \Gamma
 \\&&\Gamma \vdash A = A'
 \\&&\Gamma \vdash a = a' : A
 \end{eqnarray*}
-Note that we have explicit judgments $\Gamma \vdash$ meaning "$\Gamma$ is a valid context", and $\Delta \vdash \gamma : \Gamma$ meaning $\gamma$ is a valid context morphism (substitution) with source $\Delta$ and target $\Gamma$, in addition to the third and fourth judgment form introduced by Martin-Löf \cite{martinlof:hannover,martinlof:padova}.
+Furthermore, the operator symbols correspond to syntactic constructions of contexts, substitutions, types, and terms, with their typing rules. Finally, the equations correspond to certain equality rules, expressed in terms of the equality judgments. 
 
-We shall employ this notation both for inference rules written in ordinary notation with variable names, and for later for inference rules written in the variable free notation of cwf-combinators.
+We will now specify the sort symbols, operators symbols and equations of the gat of cwfs in traditional notation with variables. Here we assume that the reader is familiar with dependent type theory to get an informal understanding of what a gat is. Note that mutual dependence of the notions of gat and cwf. Here we define cwfs as a gat and in the next section we will define valid signatures and models of gats in terms of initial cwfs. Note also that the official metalanguage of this article is set theory, and that definition X should be understood in set-theoretic metalanguage.
+
+We shall give the signature of the cwf of gats stepwise: first the signature for categories, then we extend it with a family-valued functor, then with a terminal object, and finally with context comprehension.
 
 \subsubsection{The gat of categories} We begin with the gat of categories, one of Cartmell's motivating examples.
 
@@ -314,7 +321,7 @@ Moreover, composition is officially an operator symbols with five arguments. In 
 
 \section{Signatures and models of generalized algebraic theories}
 
- We shall now define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$, but we will postpone the construction of these until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$. 
+We now come to the main point of this note. We define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$, but we will postpone the construction of these until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$. 
 \footnote{Say something about the fact that we do not assume anything about the relationship between $\T_\Sigma$ and $\T_{\Sigma'}$ because all initial objects are isomorphic, and hence we can move between them.}
 \begin{definition}
 We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs that support $\Sigma$ and cwf-morphisms that preserve it. First, the base case:
