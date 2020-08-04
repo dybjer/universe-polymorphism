@@ -78,7 +78,7 @@ Our main result is that the category of cwfs supporting a certain signature for 
 \section{Introduction}
 
 %In this short note we define a notion of finitary generalized algebraic theory in the spirit of Voevodsky's {\em initiality conjecture}.
-\footnote{200803: I removed the first sentence referring to the initiality conjecture. 200731: Better to replace this by "intial algebra semantics", which goes back to John Isbell and the ADJ group? Repeat the sentence "Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules". Emphaisze that the definition is quite trivial, but this is a good thing since we get something "canonical": we are writing "the only thing possible". Also think of Mike Shulman as a reader.}
+\footnote{200803: I removed the first sentence referring to the initiality conjecture. 200731: Better to replace this by "initial algebra semantics", which goes back to John Isbell and the ADJ group? Repeat the sentence "Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules". Emphaisze that the definition is quite trivial, but this is a good thing since we get something "canonical": we are writing "the only thing possible". Also think of Mike Shulman as a reader.}
 
 Generalized algebraic theories (gats) were originally introduced by Cartmell in his PhD thesis \cite{cartmell:phd} as a dependently typed generalization of many sorted algebraic theories. Each gat is specified by a signature with (possibly infinite) sets of sort symbols, operator symbols, and equations. Cartmell's definition of gats \cite{cartmell:phd,cartmell:apal} is based on a notion of {\em derived rule} expressed in terms of a traditional syntactic system for dependent type theory. He also defines a notion of model whereby sort symbols are interpreted as families of sets.
 
@@ -107,6 +107,9 @@ Mention contextual category and Cartmell's equivalence between the categories of
 
 \subsection{The category of cwfs and strict cwf-morphisms}
 
+In this section (whole paper?), the meta-language is set-theoretic.
+Much of the vocabulary is category-theoretic, but we freely use
+equality of objects in a categorical context.
 We first define the category $\Fam$, and then the category $\Cwf$.
 
 \begin{definition}\label{def:catFam}
@@ -142,11 +145,13 @@ A category with families (cwf) consists of the following data:
 
 \begin{enumerate} 
 
-\item A category $\C$ with a terminal object $1$ and maps
-$\tuple{}_\Gamma \in \C(\Gamma, 1)$ for all objects $\Gamma$ of $\C$;
+\item A category $\C$; 
 
 \item A $\Fam$-valued presheaf on $\C$, that is, a functor
 $T : \Cop \to \Fam$;
+
+\item A terminal object $1\in \C$, and unique maps
+$\tuple{}_\Gamma \in \C(\Gamma, 1)$ for all objects $\Gamma$ of $\C$;
 
 \item Operations ${\cext\,},~\tuple{\_,\_},~\p$ and $\q$ 
 explained in the following paragraphs.
@@ -196,10 +201,11 @@ We call $\Gamma \cext A$ the \emph{extended} context
 and $\tuple{\gamma, a}$ the \emph{extended} substitution.
 
 The operations  ${\cext\,},~\tuple{\_,\_},~\p,~\q$
-satisfy the following universal property
+satisfy the following universal property, that is,
+$\tuple{\gamma, a}$ is the unique substitution satisfying
 \[
 \p_{\Gamma, A} \circ \tuple{\gamma, a} = \gamma
-\qquad \qquad
+\qquad \text{and}\qquad
 \q_{\Gamma, A} [\tuple{\gamma, a}] = a\,.
 \]
 We refer (colloquially) to $\p$ as the \emph{first projection},
@@ -210,10 +216,13 @@ so that $\q_{\Gamma, A} [\tuple{\gamma, a}]$ and $a$ are elements of the same se
 (End Definition~\ref{def:Cwfobj}.)
 \end{definition}
 
+
+
 A cwf is thus a structure $(\C,1,\tuple{},T,\cext\, , \tuple{\_,\_},\p, \q)$, 
-subject to equations, for the category and the presheaf, and for context
-comprehension. The morphisms to be defined next preserve this structure,
-partly even in a strict way (`on the nose').
+subject to equations, for the category and the presheaf, and universal
+properties for the terminal object and for context comprehension. 
+The morphisms to be defined next preserve this structure,
+even in a strict way (`on the nose').
 We often shorten the notation of a cwf to $(\C,T)$, leaving the remaining
 structure implicit.
 
@@ -366,7 +375,7 @@ The initial cwf $\T$ is then constructed from the equivalence classes of derivab
 We refer to Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs} both for the list of inference rules for the partial equivalence relations and for the details of the initiality proof.
 
 
-Note that the initial cwf $\T$ is rather uninteresting: its category of contexts contains only an terminal object (the empty context), and there are no types and terms. Nevertheless, the syntax and inference rules used in its definition form the starting point both for the formulation of Martin-Löf type theory as initial cwfs supporting type formers such as $\Pi, \Sigma, \N$, etc, and for our notion of generalized algebraic theory as the intial object $\T_\Sigma$ in the category $\Cwf_\Sigma$ of cwfs supporting a valid signature $\Sigma$.
+Note that the initial cwf $\T$ is rather uninteresting: its category of contexts contains only a terminal object (the empty context), and there are no types and terms. Nevertheless, the syntax and inference rules used in its definition form the starting point both for the formulation of Martin-Löf type theory as initial cwfs supporting type formers such as $\Pi, \Sigma, \N$, etc, and for our notion of generalized algebraic theory as the initial object $\T_\Sigma$ in the category $\Cwf_\Sigma$ of cwfs supporting a valid signature $\Sigma$.
 
 \section{Signatures and models of generalized algebraic theories}
 
