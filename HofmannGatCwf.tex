@@ -330,6 +330,21 @@ Moreover, composition is officially an operator symbols with five arguments. In 
 \subsubsection{The extension with a family valued functor}
 
 \subsubsection{The extension with a terminal object}
+The universal property of the terminal object can be expressed by 
+a simple equation. (This is not true for the universal property of
+context comprehension, as that would require a conditional equation.) 
+
+Operator symbols:
+\begin{eqnarray*}
+&\vdash& 1 : \Ctx\\
+\Gamma : \Ctx &\vdash& \tuple{}_\Gamma : \Hom(\Gamma,1)
+\end{eqnarray*}
+
+Equation:
+\begin{eqnarray*}
+\Gamma : \Ctx, \gamma : \Hom(\Gamma,1) &\vdash& \gamma = \tuple{}_\Gamma : \Hom(\Gamma,1)
+\end{eqnarray*}
+
 
 \subsubsection{The extension with context comprehension}
 
