@@ -72,7 +72,7 @@
 \begin{abstract}
 We define a new finitary version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows a possibly infinite set of sort and operator symbols, we only allow a finite number. Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules. 
 %This is in the spirit of Voevodsky's "initiality conjecture"\footnote{200731: Maybe we should mention Martin Hofmann already in the abstract, and perhaps remove Voevodsky?} whereby type theories are characterized as initial objects in appropriate categories of models of type theory.  
-Our main result is that the category of cwfs supporting a certain signature for gats has an initial object. This result is obtained by extending the construction of initial cwfs from Castellan, Clairambault, and Dybjer. We also provide a list of examples of gats, such as the gats of monoids, categories, cwfs, and cwfs extended with a first universe and several different formulations of towers of universes. We also point out that cwfs supporting the gats of monoids, categories, cwfs, etc are cwfs with an internal monoid, category, cwf, etc, respectively.
+Our main result is that the category of cwfs supporting a certain signature for gats has an initial object. This result is obtained by extending the construction of an initial cwf from Castellan, Clairambault, and Dybjer. We provide examples of gats for monoids, categories, cwfs, cwfs extended with a first universe, and several different formulations of cwfs with a towers of universes. We also point out that cwfs supporting the gats of monoids, categories, cwfs are cwfs with an internal monoid, category, cwf, respectively.
 \end{abstract}
 
 \section{Introduction}
@@ -361,10 +361,12 @@ $\Delta \vdash \gamma : \Gamma$ abbreviates  $\Delta \vdash \gamma = \gamma : \G
 $\Gamma \vdash a : A$ abbreviates $\Gamma \vdash a = a : A$.
 \end{itemize}
 \item
-The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash$. See Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs} for details.
+The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash$. To prove that $\T$ is initial we construct a cwf-morphism $\inte{-} : \T \to \C$ to an arbitrary cwf $\C$. This morphism is a partial function mapping raw contexts to contexts in $\C$, raw substitutions to substitutions in $\C$, raw types to types in $\C$, and raw terms to terms in $\C$. Then we show that these partial functions preserve the partial equivalence relations so that we can define the interpretation morphism on the equivalence classes, and also show that it is indeed a cwf-morphism.
 \end{itemize}
+We refer to Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs} both for the list of inference rules for the partial equivalence relations and for the details of the initiality proof.
 
-Note that the initial cwf $\T$ is rather uninteresting: its category of contexts contains only an initial object (the empty context), and there are no types and terms. Nevertheless, the syntax and inference rules used in its definition form the starting point both for the formulation of Martin-Löf type theory as initial cwfs supporting type formers such as $\Pi, \Sigma, \N$, etc, and for our notion of generalized algebraic theory as the intial object $\T_\Sigma$ in the category $\Cwf_\Sigma$ of cwfs supporting a valid signature $\Sigma$.
+
+Note that the initial cwf $\T$ is rather uninteresting: its category of contexts contains only an terminal object (the empty context), and there are no types and terms. Nevertheless, the syntax and inference rules used in its definition form the starting point both for the formulation of Martin-Löf type theory as initial cwfs supporting type formers such as $\Pi, \Sigma, \N$, etc, and for our notion of generalized algebraic theory as the intial object $\T_\Sigma$ in the category $\Cwf_\Sigma$ of cwfs supporting a valid signature $\Sigma$.
 
 \section{Signatures and models of generalized algebraic theories}
 
@@ -513,7 +515,27 @@ where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
 
 We remark that the gat for the first universe is inevitably "a la Tarski" in the sense that we distinguish between types and terms in a cwf and we must have an operation decoding a term into a type. However, the terminology "a la Russell" vs "a la Tarski" in Martin-Löf's sense refers to two different formalizations of the raw syntax and inference rules of type theory. The a la Tarski formulation is the one which arises most directly by turning the gat signature into its initial cwf. However, we can prove that the a la Russell formulation also gives rise to an initial cwf for the same signature. It follows that a la Tarski and a la Russell give rise to isomorphic cwfs that support a first universe.
 
-\subsection{Cwfs with universe tower structures} We introduce a new sort symbol for levels and new operator symbols for 0, $\s$, and $\vee$ for levels with the equations for $\vee$. Then we have the other operator symbols and equations for universe tower structures.
+\subsection{Cwfs with universe tower structures} 
+
+The first formulation of intuitionistic type theory with an infinite sequence of universes is due to Martin-Löf
+\cite{martinlof:predicative}. This is an infinite sequence indexed by external natural numbers, and as a consequence the theory has infinitely many rules. We shall now formalize a finitary gat with a new sort symbol 
+$$
+\vdash \Level
+$$
+in addition to the previous four sort symbols. An element $n : \Level$ represent an external natural number. (Note that the new sort $\Level$ corresponds to adding a new form of judgment $\vdash n \Level$ to the formal system.)
+
+We add operator symbols
+\begin{eqnarray*}
+\Gamma : \Ctx &\vdash& (\U_0)_\Gamma : \Ty(\Gamma)\\
+\Gamma : \Ctx, a : \Tm(\Gamma,(\U_0)_\Gamma) &\vdash& {\Ta_0}(a) : \Ty(\Gamma)\\
+\Gamma : \Ctx &\vdash& (\N^0)_\Gamma : \Tm(\Gamma,(\U_0)_\Gamma) \\
+\Gamma : \Ctx, 
+a : \Tm(\Gamma,(\U_0)_\Gamma), 
+b :  \Tm(\Gamma \cdot \Ta_0(a), (\U_0)_\Gamma))
+&\vdash&
+ \Pi^0(a,b) : \Tm(\Gamma,(\U_0)_\Gamma)
+\end{eqnarray*}
+We introduce a new sort symbol for levels and new operator symbols for 0, $\s$, and $\vee$ for levels with the equations for $\vee$. Then we have the other operator symbols and equations for universe tower structures.
 
 Note that we have here extended the notion of cwf with a sort of levels; we don't have an (internal) {\em type} of levels, only a sort. Adding such a new sort corresponds to adding a new form of judgment in the syntactic presentation with raw terms and inference rules.  This sort of levels can be equipped with the structure of an “internal semilattice”.
 
