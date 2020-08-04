@@ -201,7 +201,7 @@ We call $\Gamma \cext A$ the \emph{extended} context
 and $\tuple{\gamma, a}$ the \emph{extended} substitution.
 
 The operations  ${\cext\,},~\tuple{\_,\_},~\p,~\q$
-satisfy the following universal property, that is,
+satisfy the following universal property:
 $\tuple{\gamma, a}$ is the unique substitution satisfying
 \[
 \p_{\Gamma, A} \circ \tuple{\gamma, a} = \gamma
@@ -266,6 +266,11 @@ F(\Gamma\cext A) = F(\Gamma)\cext F(A) \qquad
 F(\p_{\Gamma, A}) = \p_{F(\Gamma), F(A)} \qquad
 F(\q_{\Gamma, A}) = \q_{F(\Gamma), F(A)}\,.
 \]
+
+Note that the universal property implies that also
+$F(\tuple{\gamma,a}) = \tuple{F(\gamma),F(a)}$.
+The same is true for the terminal maps:
+$F(\tuple{}_\Gamma) = \tuple{}_{F(\Gamma)}$.
 (End Definition~\ref{def:Cwfmor}.)
 \end{definition}
 
