@@ -518,81 +518,54 @@ We remark that the gat for the first universe is inevitably "a la Tarski" in the
 \subsection{Cwfs with universe tower structures} 
 
 The first formulation of intuitionistic type theory with an infinite sequence of universes is due to Martin-Löf
-\cite{martinlof:predicative}. This is an infinite sequence indexed by external natural numbers, and as a consequence the theory has infinitely many rules. We shall now formalize a finitary gat with a new sort symbol 
+\cite{martinlof:predicative}. Rules for cumulativity (or lifting) were added in Martin-Löf \cite{martinlof:hannover}. Both formulations have an infinite sequence of universes indexed by external natural numbers, and as a consequence the theories have infinitely many rules. 
+
+We shall now formalize a notion of finitary gat closely related to Martin-Löf's cumulative version. The external natural number indices will be represented by internal level indices in the gat. To this end we introduce a new sort symbol 
 $$
 \vdash \Level
 $$
-in addition to the previous four sort symbols. An element $n : \Level$ represent an external natural number. (Note that the new sort $\Level$ corresponds to adding a new form of judgment $\vdash n \Level$ to the formal system.)
+in addition to the previous four sort symbols. (However, we do not have a {\em type} of levels.) An element $n : \Level$ represent an external natural number. (Note that the new sort $\Level$ corresponds to adding a new form of judgment $\vdash n\  \Level$ to the formal system.)
 
-We add operator symbols
+We add operator symbols for levels
 \begin{eqnarray*}
-\Gamma : \Ctx &\vdash& (\U_0)_\Gamma : \Ty(\Gamma)\\
-\Gamma : \Ctx, a : \Tm(\Gamma,(\U_0)_\Gamma) &\vdash& {\Ta_0}(a) : \Ty(\Gamma)\\
-\Gamma : \Ctx &\vdash& (\N^0)_\Gamma : \Tm(\Gamma,(\U_0)_\Gamma) \\
-\Gamma : \Ctx, 
-a : \Tm(\Gamma,(\U_0)_\Gamma), 
-b :  \Tm(\Gamma \cdot \Ta_0(a), (\U_0)_\Gamma))
+&\vdash& 0 : \Level\\
+n : \Level &\vdash& \s(n) : \Level
+\end{eqnarray*}
+and operator symbols for types and terms:
+\begin{eqnarray*}
+n : \Level, \Gamma : \Ctx &\vdash& (\U_n)_\Gamma : \Ty(\Gamma)\\
+n : \Level, \Gamma : \Ctx, a : \Tm(\Gamma,(\U_n)_\Gamma) &\vdash& {\Ta_n}(a) : \Ty(\Gamma)\\
+n : \Level, \Gamma : \Ctx &\vdash& (\N^n)_\Gamma : \Tm(\Gamma,(\U_n)_\Gamma) \\
+n : \Level, \Gamma : \Ctx, 
+a : \Tm(\Gamma,(\U_n)_\Gamma), 
+b :  \Tm(\Gamma \cdot \Ta_n(a), (\U_n)_\Gamma))
 &\vdash&
- \Pi^0(a,b) : \Tm(\Gamma,(\U_0)_\Gamma)
+ \Pi^n(a,b) : \Tm(\Gamma,(\U_n)_\Gamma)\\
+n : \Level, \Gamma : \Ctx &\vdash& (\U^n)_\Gamma \in \Tm(\Gamma,(\U_{n+1})_\Gamma)\\
+n : \Level, \Gamma : \Ctx, a : \Tm(\Gamma,(\U_n)_\Gamma) &\vdash& \Ta_n^{n+1}(a) : \Tm(\Gamma,(\U_{n+1})_\Gamma)
 \end{eqnarray*}
-We introduce a new sort symbol for levels and new operator symbols for 0, $\s$, and $\vee$ for levels with the equations for $\vee$. Then we have the other operator symbols and equations for universe tower structures.
-
-Note that we have here extended the notion of cwf with a sort of levels; we don't have an (internal) {\em type} of levels, only a sort. Adding such a new sort corresponds to adding a new form of judgment in the syntactic presentation with raw terms and inference rules.  This sort of levels can be equipped with the structure of an “internal semilattice”.
-
- universe tower structure on a cwf with $\Pi, \N$-structures consists of the following.
-\begin{itemize}
-\item 
-At each level $n$ we have types ${(\Un)}_\Gamma \in \Ty(\Gamma)$ for all contexts $\Gamma$ and functions $\Ta_n : \Tm(\Gamma,{(\U_n)}_\Gamma) \to \Ty(\Gamma)$. These are closed under $\N$ and $\Pi$ in the sense that there are codes $\N^0_\Gamma \in \Tm(\Gamma,{(\U_0)}_\Gamma)$ and $\Pi^{m,n} : (a \in \Tm(\Gamma,{(\U_m)}_\Gamma)) \to \Tm(\Gamma \cdot \Tan(a),{(\Un)}_{\Gamma \cdot \Tan(a)}
-) \to \Tm(\Gamma,{(\U_{m\vee n})}_\Gamma)$ such that 
+The last operator symbol is the lifting (or cumulativity) operator. We have the following equations
 \begin{eqnarray*}
-\Tan(\N^0_\Gamma) &=& \N_\Gamma\\
-\Ta_{m \vee n}(\Pi^{m,n}(a,b)) &=& \Pi(\Ta_m(a),\Tan(b))
+\Tan((\N^n)_\Gamma) &=& \N_\Gamma\\
+\Ta_n(\Pi^{n}(a,b)) &=& \Pi(\Ta_n(a),\Tan(b))\\
+\Ta_{n+1}((\U^n)_\Gamma ) &=& (\U_n)_\Gamma\\
+%&\Ta_{n+1}(\Ta_n^{n+1}(a)) &=& \Ta_n(a)\\
+\Ta^{n+1}_n((\N^n)_\Gamma) &=& (\N^{n+1})_\Gamma\\
+\Ta^{n+1}_n(\Pi^{n}(a,b)) &=& \Pi^{n+1}(\Ta^{n+1}_n(a),\Ta^{n+1}_n(b))\\
+\Ta^{n+2}_{n+1}((\U^n)_\Gamma ) &=& (\U^{n+1})_\Gamma
 \end{eqnarray*}
-\item
-The universe at each level has a code in the next: $(\U^n)_\Gamma \in \Tm(\Gamma,(\U_{n+1})_\Gamma)$ such that 
-\begin{eqnarray*}
-\Ta_{n+1}((\U^n)_\Gamma ) &=& (\U_n)_\Gamma
-\end{eqnarray*}
-\item
-We also have lifting operations
-$\Ta_n^{n+1} : \Tm(\Gamma,(\U_n)_\Gamma) \to  \Tm(\Gamma,(\U_{n+1})_\Gamma)$
-with the equations
-$$
-\Ta_{n+1}(\Ta_n^{n+1}(a)) = \Ta_n(a)
-$$
-Note that we do not have any equations for $\Ta_n^{n+1}$ such as
-$\Ta^{n+1}_n((\N^n)_\Gamma) = (\N^{n+1})_\Gamma$, since we only have $\N^0$. In the non-cumulative case $\Ta_n^{n+1}$ is a "constructor" for the universe $\U_{n+1}$.
-\item
-Finally, all operations commute with substitution: if $\gamma : \Delta \to \Gamma$, then
+Finally, all operator symbols commute with substitution:
 \begin{eqnarray*}
 {(\Un)}_\Gamma [ \gamma ] &=& {(\Un)}_\Delta\\
 \Tan(a) [ \gamma ] &=& \Tan(a[ \gamma ] )\\
-\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
-\Pi^{m,n}(a,b)[ \gamma ] &=& \Pi^{m,n}(a [ \gamma ], b[ \gamma^+ ])\\
+\N^n_\Gamma [ \gamma ] &=&\N^n_\Delta\\
+\Pi^{n}(a,b)[ \gamma ] &=& \Pi^{n}(a [ \gamma ], b[ \gamma^+ ])\\
 \U^n[\gamma] &=& \U^n\\
 \Ta_n^{n+1}(a)[\gamma]  &=& \Ta_n^{n+1}(a[\gamma])
 \end{eqnarray*}
-\end{itemize}
-Cwfs with universe tower structures form a generalized algebraic theory in Cartmell's sense. We have written the rules and axioms in an informal style, omitting some arguments of the operations.
-To see that we really have an generalized algebraic theory we need, in addition to the original four sort symbols for the generalised algebraic theory of cwfs, a new sort symbol $\Level$
-%$\mathbb{N}$ 
-for the external natural numbers serving as universe levels and also operator symbols $0, n^+, m \vee n$, for zero, successor, and supremum of levels. \footnote{Be consistent about using $n^+$ and $n+1$.} We have the following equations:
-\begin{eqnarray*}
-m \vee 0 &=&m\\
-0 \vee n &=& n\\
-m^+ \vee n^+ &=& (m \vee n)^+
-\end{eqnarray*}
-If we work in an intensional setting we may also want the equations for a $\vee$-semilattice and
-\begin{eqnarray*}
-n^+ \vee n &=& n^+\\
-m^+ \vee n^+ &=& (m \vee n)^+
-\end{eqnarray*}
+Mention a la Russell initiality?
 
-{\bf Remark}. In the universe polymorphic system that we are going to show later, we instead have the operator symbols $\alpha_i, n^+, m \vee n$, where $\alpha_i$ is a level variable, and we have the equations for a $\vee$-semilattice and also 
-\begin{eqnarray*}
-n^+ \vee n &=& n^+\\
-m^+ \vee n^+ &=& (m \vee n)^+
-\end{eqnarray*}
+\subsection{Removing cumulativity} Agda, cumulativity up to equivalence.
 
 \subsection{Cwfs with universe polymorphic tower structures} Here we need to extend the cwf-framework further to take into account contexts with level variables, etc.
 
