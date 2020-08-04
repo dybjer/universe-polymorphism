@@ -541,18 +541,18 @@ a : \Tm(\Gamma,(\U_n)_\Gamma),
 b :  \Tm(\Gamma \cdot \Ta_n(a), (\U_n)_\Gamma))
 &\vdash&
  \Pi^n(a,b) : \Tm(\Gamma,(\U_n)_\Gamma)\\
-n : \Level, \Gamma : \Ctx &\vdash& (\U^n)_\Gamma \in \Tm(\Gamma,(\U_{n+1})_\Gamma)\\
-n : \Level, \Gamma : \Ctx, a : \Tm(\Gamma,(\U_n)_\Gamma) &\vdash& \Ta_n^{n+1}(a) : \Tm(\Gamma,(\U_{n+1})_\Gamma)
+n : \Level, \Gamma : \Ctx &\vdash& (\U^n)_\Gamma \in \Tm(\Gamma,(\U_{\s(n)})_\Gamma)\\
+n : \Level, \Gamma : \Ctx, a : \Tm(\Gamma,(\U_n)_\Gamma) &\vdash& \Ta_n^{n+1}(a)\footnote{200804: should we change notation $\Ta_n^{n+1}$ to $\Ta^n$?} : \Tm(\Gamma,(\U_{\s(n)})_\Gamma)
 \end{eqnarray*}
 The last operator symbol is the lifting (or cumulativity) operator. We have the following equations
 \begin{eqnarray*}
 \Tan((\N^n)_\Gamma) &=& \N_\Gamma\\
 \Ta_n(\Pi^{n}(a,b)) &=& \Pi(\Ta_n(a),\Tan(b))\\
-\Ta_{n+1}((\U^n)_\Gamma ) &=& (\U_n)_\Gamma\\
+\Ta_{\s(n)}((\U^n)_\Gamma ) &=& (\U_n)_\Gamma\\
 %&\Ta_{n+1}(\Ta_n^{n+1}(a)) &=& \Ta_n(a)\\
-\Ta^{n+1}_n((\N^n)_\Gamma) &=& (\N^{n+1})_\Gamma\\
-\Ta^{n+1}_n(\Pi^{n}(a,b)) &=& \Pi^{n+1}(\Ta^{n+1}_n(a),\Ta^{n+1}_n(b))\\
-\Ta^{n+2}_{n+1}((\U^n)_\Gamma ) &=& (\U^{n+1})_\Gamma
+\Ta^{n+1}_n((\N^n)_\Gamma) &=& (\N^{\s(n)})_\Gamma\\
+\Ta^{n+1}_n(\Pi^{n}(a,b)) &=& \Pi^{\s(n)}(\Ta^{n+1}_n(a),\Ta^{n+1}_n(b))
+%\Ta^{\s(n)+1}_{\s(n)}((\U^n)_\Gamma ) &=& (\U^{\s(n)})_\Gamma
 \end{eqnarray*}
 Finally, all operator symbols commute with substitution:
 \begin{eqnarray*}
