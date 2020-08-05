@@ -480,23 +480,51 @@ and $\Hom$, operator symbols $\id$ for identity and $\circ$ for composition, and
 The gat of cwf is obtained by extending the gat of categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension.
 
 \subsubsection{The extension with a family valued functor}
+\mbox{ }
+
+Sort symbols:
+\begin{eqnarray*}
+\Gamma : \Ctx &\vdash& \Ty(\Gamma)\\
+\Gamma : \Ctx, A:\Ty(\Gamma) &\vdash& \Tm(\Gamma,A)
+\end{eqnarray*}
+
+Operator symbols:
+\begin{eqnarray*}
+\Gamma,\Delta : \Ctx, A:\Ty(\Gamma), \gamma : \Hom(\Delta,\Gamma) &\vdash& 
+A[\gamma] : \Ty(\Delta)\\
+\Gamma,\Delta : \Ctx, A:\Ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\Tm(\Gamma,A) &\vdash&  a[\gamma] : \Tm(\Delta,A[\gamma])
+\end{eqnarray*}
+
+
+
+Equations:
+\begin{eqnarray*}
+\Gamma : \Ctx, A:\Ty(\Gamma) &\vdash& A[\id_\Gamma] = A : \Ty(\Gamma)\\
+\Gamma : \Ctx, A:\Ty(\Gamma), a:\Tm(\Gamma,A) &\vdash& a[\id_\Gamma] = a : \Tm(\Gamma,A)\\
+\Xi,\Delta,\Gamma : \Ctx, \delta : \Hom(\Xi,\Delta), \gamma : \Hom(\Delta,\Gamma),
+A:\Ty(\Gamma) &\vdash& A[\gamma\circ\delta] = A[\gamma][\delta]: \Ty(\Xi)\\
+\Xi,\Delta,\Gamma : \Ctx, \delta : \Hom(\Xi,\Delta), \gamma : \Hom(\Delta,\Gamma),
+A:\Ty(\Gamma), a:\Tm(\Gamma,A) &\vdash& 
+a[\gamma\circ\delta] = a[\gamma][\delta]: \Tm(\Xi,A[\gamma\circ\delta])
+\end{eqnarray*}
 
 \subsubsection{The extension with a terminal object}
-The universal property of the terminal object can be expressed by 
-a simple equation. (This is not true for the universal property of
-context comprehension, as that would require a conditional equation.) 
-
+No new sorts are required.
+  
 Operator symbols:
 \begin{eqnarray*}
 &\vdash& 1 : \Ctx\\
 \Gamma : \Ctx &\vdash& \tuple{}_\Gamma : \Hom(\Gamma,1)
 \end{eqnarray*}
 
-Equation:
+Equations:
 \begin{eqnarray*}
-\Gamma : \Ctx, \gamma : \Hom(\Gamma,1) &\vdash& \gamma = \tuple{}_\Gamma : \Hom(\Gamma,1)
+ &\vdash& \id_1 = \tuple{}_1 : \Hom(1,1)\\
+\Gamma,\Delta : \Ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash& 
+\tuple{}_\Gamma\circ\gamma = \tuple{}_\Delta : \Hom(\Delta,1)
 \end{eqnarray*}
-
+(The latter two equations are better for term rewriting then the
+obvious single one expressing the uniqueness of $\tuple{}_\Gamma$.)
 
 \subsubsection{The extension with context comprehension}
 
