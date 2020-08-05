@@ -300,20 +300,72 @@ We will now specify the sort symbols, operators symbols and equations of the gat
 We shall give the signature of the cwf of gats stepwise: first the signature for categories, then we extend it with a family-valued functor, then with a terminal object, and finally with context comprehension.
 }
 
+\section{Signatures and models of generalized algebraic theories}
 
+We now come to the main point of this note. We define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$, but we will postpone the construction of these until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$. 
+\footnote{Say something about the fact that we do not assume anything about the relationship between $\T_\Sigma$ and $\T_{\Sigma'}$ because all initial objects are isomorphic, and hence we can move between them.}
+\begin{definition}
+We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs that support $\Sigma$ and cwf-morphisms that preserve it. First, the base case:
+\begin{description}
+\item[The empty signature] The empty signature $\emptyset$ is valid and $\Cwf_\emptyset = \Cwf$. 
+\end{description}
+Assume now that $\Sigma$ is a valid signature and that the category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ with $\inte{-} : \T_\Sigma \to \C$ as the unique morphism into an object $\C$. Then we can add a new type symbol, or a new operator symbol, or a new equation, to get a new valid signature, as follows:
+\begin{description}
+\item[Adding a new sort symbol] 
+If $\Gamma$ is a context in $\T_\Sigma$, then we can extend $\Sigma$ with a new sort symbol $F$ (with context $\Gamma$) to obtain an extended gat $\Sigma'$. A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and there is $F_\C \in \Ty_\C(\inte{\Gamma})$. A cwf-morphism in $\C \to \D$ preserves $\Sigma'$ if it preserves $\Sigma$ and maps $F_\C$ to $F_\D$.
+\item[Adding a new operator symbol] 
+If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$, then we can extend $\Sigma$ with a new operator symbol $f$ (with context $\Gamma$ and type $A$). A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and there is $f_\C \in\Tm_\C(\inte{\Gamma},\inte{A}_{\Gamma})$.
+A cwf-morphism in $\C \to \D$ preserves $\Sigma'$ if it preserves $\Sigma$ and maps $f_\C$ to $f_\D$.
+\item[Adding a new equation] 
+If $\Gamma$ is a context in $\T_\Sigma$, $A \in \Ty_{\T_\Sigma}(\Gamma)$, and $a, a' \in \Tm_{\T_\Sigma}(\Gamma,A)$, then we can extend $\Sigma$ with a new equation $a = a'$ (with context $\Gamma$ and type $A$). A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and $\inte{a}_{\Gamma,A}= \inte{a'}_{\Gamma,A} \in \Tm_\C(\inte{\Gamma},\inte{A}_\Gamma)$. A cwf-morphism in $\C \to \D$, where $\C$ and $\D$ support $\Sigma'$, preserves $\Sigma'$ iff it preserves $\Sigma$.
+\end{description}
+\end{definition}
 
-\subsection{The initial cwf}
+Note that the empty signature $\emptyset$ is the only valid signature that can be directly constructed from the definition. In order to form other signatures we need to construct initial cwfs supporting already constructed signatures. This is the topic of the next section.
 
+\section{All signatures have initial cwfs supporting them}
+
+We shall now show our main theorem. It can be viewed as a generalization of Birkhoff's completeness theorem for equational logic \cite{birkhoff}:
 \begin{theorem}
-(Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs}) The category $\Cwf$ has an initial object $\T$.
+The category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ for every valid signature $\Sigma$.
 \end{theorem}
 
-%We only sketch the construction of $\T$ and refer to \cite{castellan:tlca2015,castellan:lmcs} for details.
+The construction of $\T_\Sigma$ will be based on the construction of initial cwfs in \cite{castellan:tlca2015,castellan:lmcs}. For each $\Sigma$ we will define the following.
+\begin{itemize}
+\item 
+A grammar for raw contexts in $\RawCtx_\Sigma$, raw substitutions in $\RawSub_\Sigma$, raw types in $\RawTy_\Sigma$, and raw terms in $\RawTm_\Sigma$. These grammars generate a language of {\em cwf-combinators}.
+\item
+A system of inference rules that generate four families of partial equivalence relations (pers) by a mutual inductive definition:
+$$
+\Gamma = \Gamma' \vdash_\Sigma
+\qquad
+\Gamma \vdash_\Sigma A = A' 
+\qquad
+\Delta \vdash_\Sigma \gamma = \gamma' : \Gamma
+\qquad
+\Gamma \vdash_\Sigma a = a' : A
+$$
+where $\Gamma, \Gamma' \in \RawCtx_\Sigma, \gamma, \gamma' \in \RawSub_\Sigma, A, A' \in \RawTy,$ and $a,a' \in \RawTm_\Sigma$. Instances of these pers correspond to valid equality judgments of a variable free version of dependent type theory with explicit substitutions based on the cwf-combinators. The ordinary judgments will be defined as the reflexive instances of these equality judgments. For example $\Gamma \vdash_\Sigma$ (meaning ”$\Gamma$ is a valid context") is defined as $\Gamma = \Gamma \vdash_\Sigma$.
+\item
+A cwf $\T_\Sigma$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T_\Sigma$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash_\Sigma$. We will show that $\T_\Sigma$ is a cwf that supports $\Sigma$, that is, an object of $\Cwf_\Sigma$.
+\item
+A $\Cwf_\Sigma$-morphism $\inte{-} : \T_\Sigma \to \C$ for every $\C \in \Cwf_\Sigma$. This is the {\em interpretation morphism}. It is the unique such morphism showing that $\T_\Sigma$ is initial in $\Cwf_\Sigma$.
+ \end{itemize}
+ 
+ The proof is by induction on the construction of $\Sigma$. 
+\begin{description}
+\item[The empty signature] 
+$\T_\emptyset$ is the initial object of $\Cwf_\emptyset = \Cwf$, the category of cwfs and strict cwf-morphisms.
+\end{description}
 
-We only sketch the construction of $\T$. It is defined in three steps:
+
+The initial cwf $\T_\emptyset$ is rather degenerate. Its category of contexts has one object (the empty context) and one morphism (the empty substitution). 
+We sketch the construction of $\T_\emptyset$. It is defined in three steps:
 \begin{itemize}
 \item 
 First we define grammars for raw contexts, raw substitutions, raw types, and raw terms.
+\item
+
 \begin{eqnarray*}
 \Gamma \in \RawCtx &::=& 1  \ |\ \Gamma\cext A\\
 \gamma \in \RawSub \ &::=& \gamma \circ \gamma \ |\ \id_\Gamma \ |\ \langle\rangle_\Gamma \ |\ \p_{A} \ |\ \langle \gamma, a \rangle_A\\
@@ -351,41 +403,6 @@ We refer to Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castell
 
 Note that the initial cwf $\T$ is rather uninteresting: its category of contexts contains only a terminal object (the empty context), and there are no types and terms. Nevertheless, the syntax and inference rules used in its definition form the starting point both for the formulation of Martin-Löf type theory as initial cwfs supporting type formers such as $\Pi, \Sigma, \N$, etc, and for our notion of generalized algebraic theory as the initial object $\T_\Sigma$ in the category $\Cwf_\Sigma$ of cwfs supporting a valid signature $\Sigma$.
 
-\section{Signatures and models of generalized algebraic theories}
-
-We now come to the main point of this note. We define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$, but we will postpone the construction of these until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$. 
-\footnote{Say something about the fact that we do not assume anything about the relationship between $\T_\Sigma$ and $\T_{\Sigma'}$ because all initial objects are isomorphic, and hence we can move between them.}
-\begin{definition}
-We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs that support $\Sigma$ and cwf-morphisms that preserve it. First, the base case:
-\begin{description}
-\item[The empty signature] The empty signature $\emptyset$ is valid and $\Cwf_\emptyset = \Cwf$. 
-\end{description}
-Assume now that $\Sigma$ is a valid signature and that the category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ with $\inte{-} : \T_\Sigma \to \C$ as the unique morphism into an object $\C$. Then we can add a new type symbol, or a new operator symbol, or a new equation, to get a new valid signature, as follows:
-\begin{description}
-\item[Adding a new sort symbol] 
-If $\Gamma$ is a context in $\T_\Sigma$, then we can extend $\Sigma$ with a new sort symbol $F$ (with context $\Gamma$) to obtain an extended gat $\Sigma'$. A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and there is $F_\C \in \Ty_\C(\inte{\Gamma})$. A cwf-morphism in $\C \to \D$ preserves $\Sigma'$ if it preserves $\Sigma$ and maps $F_\C$ to $F_\D$.
-\item[Adding a new operator symbol] 
-If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$, then we can extend $\Sigma$ with a new operator symbol $f$ (with context $\Gamma$ and type $A$). A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and there is $f_\C \in\Tm_\C(\inte{\Gamma},\inte{A}_{\Gamma})$.
-A cwf-morphism in $\C \to \D$ preserves $\Sigma'$ if it preserves $\Sigma$ and maps $f_\C$ to $f_\D$.
-\item[Adding a new equation] 
-If $\Gamma$ is a context in $\T_\Sigma$, $A \in \Ty_{\T_\Sigma}(\Gamma)$, and $a, a' \in \Tm_{\T_\Sigma}(\Gamma,A)$, then we can extend $\Sigma$ with a new equation $a = a'$ (with context $\Gamma$ and type $A$). A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and $\inte{a}_{\Gamma,A}= \inte{a'}_{\Gamma,A} \in \Tm_\C(\inte{\Gamma},\inte{A}_\Gamma)$. A cwf-morphism in $\C \to \D$, where $\C$ and $\D$ support $\Sigma'$, preserves $\Sigma'$ iff it preserves $\Sigma$.
-\end{description}
-\end{definition}
-
-Note that the empty signature $\emptyset$ is the only valid signature that can be directly constructed from the definition. In order to form other signatures we need to construct initial cwfs supporting already constructed signatures. This is the topic of the next section.
-
-\section{All signatures have initial cwfs supporting them}
-
-We shall now show our main theorem. It can be viewed as a generalization of Birkhoff's completeness theorem for equational logic \cite{birkhoff}:
-\begin{theorem}
-The category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ for every valid signature $\Sigma$.
-\end{theorem}
-
-The proof is by induction on the construction of $\Sigma$.
-\begin{description}
-\item[The empty signature] 
-The category $\Cwf = \Cwf_\emptyset$ of cwfs and strict cwf-morphisms has an initial object $\T_\emptyset$ \cite{castellan:tlca2015,castellan:lmcs}.
-\end{description}
 
 Assume we have specified grammars and inference rules for $\T_\Sigma$ and that we write $\vdash_\Sigma$ for derivability by these inference rules. Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to build $\T_{\Sigma'}$, to extend the grammars and inference rules for $\T_\Sigma$.
 \begin{description}
