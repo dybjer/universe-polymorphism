@@ -300,53 +300,7 @@ We will now specify the sort symbols, operators symbols and equations of the gat
 
 We shall give the signature of the cwf of gats stepwise: first the signature for categories, then we extend it with a family-valued functor, then with a terminal object, and finally with context comprehension.
 
-\subsubsection{The gat of categories} We begin with the gat of categories, one of Cartmell's motivating examples.
 
-Sort symbols:
-\begin{eqnarray*}
-&\vdash& \Ctx\\
-\Delta, \Gamma : \Ctx &\vdash& \Hom(\Delta,\Gamma)\\
-\end{eqnarray*}
-
-Operator symbols:
-\begin{eqnarray*}
-\Gamma : \Ctx &\vdash& \id_\Gamma : \Hom(\Gamma,\Gamma)\\
-\Xi,\Delta,\Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta) &\vdash&
-\gamma \circ \delta : \Hom(\Xi,\Gamma)
-\end{eqnarray*}
-
-Equations:
-\begin{eqnarray*}
-\Delta, \Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash& \id_\Gamma \circ \gamma = \gamma : \Hom(\Delta,\Gamma)\\
-\Delta, \Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash& \gamma \circ \id_\Delta = \gamma : \Hom(\Delta,\Gamma)\\
-\Theta, \Xi,\Delta,\Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta), \xi : \Hom(\Theta,\Xi) &\vdash&
-(\gamma \circ \delta) \circ \xi = \gamma \circ (\delta \circ \xi): \Hom(\Theta,\Gamma)
-\end{eqnarray*}
-
-We make a few remarks. $\Ctx = \Obj$ is the constant sort of objects of the category of contexts in a cwf. $\Hom$ is a binary sort symbol for the context morphisms in the cwf. The typing of the two arguments is represented by the context $\Delta, \Gamma : \Ctx$. 
-%In order to build $\Hom(\Delta,\Gamma)$ for two concrete contexts $\vdash \Delta : \Ctx$ and $\vdash \Gamma : \Ctx$ we need to apply $\Hom$ to the context morphism consisting of $\Delta$ and $\Gamma$ to yield $\Hom(\Delta,\Gamma)$. (There is more to say ...)
-Moreover, composition is officially an operator symbols with five arguments. In the official notation we should write $\gamma \circ_{\Xi,\Delta,\Gamma} \delta$, but we suppress the context arguments $\Xi,\Delta,\Gamma$. We will do so for some other operations too.
-
-\subsubsection{The extension with a family valued functor}
-
-\subsubsection{The extension with a terminal object}
-The universal property of the terminal object can be expressed by 
-a simple equation. (This is not true for the universal property of
-context comprehension, as that would require a conditional equation.) 
-
-Operator symbols:
-\begin{eqnarray*}
-&\vdash& 1 : \Ctx\\
-\Gamma : \Ctx &\vdash& \tuple{}_\Gamma : \Hom(\Gamma,1)
-\end{eqnarray*}
-
-Equation:
-\begin{eqnarray*}
-\Gamma : \Ctx, \gamma : \Hom(\Gamma,1) &\vdash& \gamma = \tuple{}_\Gamma : \Hom(\Gamma,1)
-\end{eqnarray*}
-
-
-\subsubsection{The extension with context comprehension}
 
 \subsection{The initial cwf}
 
@@ -493,7 +447,34 @@ interpretation morphism $\inte{-}'$, recall that the interpretation morphism $\i
 
 A cwf $\C$ that supports this gat is an {\em internal monoid} in $\C$. Ordinary (small) monoids come out as internal monoids in $\Set$, the category of small sets.
 
-\subsection{Categories} 
+\subsection{Categories} We begin with the gat of categories, one of Cartmell's motivating examples. We first show it in ordinary notation with variables. Then we show how to generate a valid signature for the gat of categories using the combinator language used for constructing initial cwfs $\T_\Sigma$ as explained in section \ref{}.
+
+Sort symbols:
+\begin{eqnarray*}
+&\vdash& \Ctx\\
+\Delta, \Gamma : \Ctx &\vdash& \Hom(\Delta,\Gamma)\\
+\end{eqnarray*}
+
+Operator symbols:
+\begin{eqnarray*}
+\Gamma : \Ctx &\vdash& \id_\Gamma : \Hom(\Gamma,\Gamma)\\
+\Xi,\Delta,\Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta) &\vdash&
+\gamma \circ \delta : \Hom(\Xi,\Gamma)
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+\Delta, \Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash& \id_\Gamma \circ \gamma = \gamma : \Hom(\Delta,\Gamma)\\
+\Delta, \Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash& \gamma \circ \id_\Delta = \gamma : \Hom(\Delta,\Gamma)\\
+\Theta, \Xi,\Delta,\Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta), \xi : \Hom(\Theta,\Xi) &\vdash&
+(\gamma \circ \delta) \circ \xi = \gamma \circ (\delta \circ \xi): \Hom(\Theta,\Gamma)
+\end{eqnarray*}
+
+We make a few remarks. $\Ctx = \Obj$ is the constant sort of objects of the category of contexts in a cwf. $\Hom$ is a binary sort symbol for the context morphisms in the cwf. The typing of the two arguments is represented by the context $\Delta, \Gamma : \Ctx$. 
+%In order to build $\Hom(\Delta,\Gamma)$ for two concrete contexts $\vdash \Delta : \Ctx$ and $\vdash \Gamma : \Ctx$ we need to apply $\Hom$ to the context morphism consisting of $\Delta$ and $\Gamma$ to yield $\Hom(\Delta,\Gamma)$. (There is more to say ...)
+Moreover, composition is officially an operator symbols with five arguments. In the official notation we should write $\gamma \circ_{\Xi,\Delta,\Gamma} \delta$, but we suppress the context arguments $\Xi,\Delta,\Gamma$. We will do so for some other operations too.
+
+\subsubsection{How to generate the valid signature using the combinator language} 
 The signature for the generalized algebraic theory of categories has sort symbols $\Obj$ 
 and $\Hom$, operator symbols $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. We shall here sketch how to generate the valid signature for categories with reference to definition \ref{} and using cwf-combinators.
 \begin{itemize}
@@ -502,6 +483,31 @@ and $\Hom$, operator symbols $\id$ for identity and $\circ$ for composition, and
 \item $\T_{([\Obj, \Hom],[],[])}$ contains the context $[1.\Obj]$ (corresponding to the context $x : \Obj$) and the type $[\Hom[\tuple{\id_{1.\Obj},\q_{1,\Obj}}]]$ (corresponding to the type $\Hom(x,x)$). Hence we can introduce an operator symbol $\id$ with this context and type.
 \item In a similar way we can add the operator symbol for composition and the equations, but we omit the details.
 \end{itemize}
+
+\subsection{Cwfs}
+
+The gat of cwf is obtained by extending the gat of categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension.
+
+\subsubsection{The extension with a family valued functor}
+
+\subsubsection{The extension with a terminal object}
+The universal property of the terminal object can be expressed by 
+a simple equation. (This is not true for the universal property of
+context comprehension, as that would require a conditional equation.) 
+
+Operator symbols:
+\begin{eqnarray*}
+&\vdash& 1 : \Ctx\\
+\Gamma : \Ctx &\vdash& \tuple{}_\Gamma : \Hom(\Gamma,1)
+\end{eqnarray*}
+
+Equation:
+\begin{eqnarray*}
+\Gamma : \Ctx, \gamma : \Hom(\Gamma,1) &\vdash& \gamma = \tuple{}_\Gamma : \Hom(\Gamma,1)
+\end{eqnarray*}
+
+
+\subsubsection{The extension with context comprehension}
 
 We say that a cwf that supports the generalized algebraic theory of categories is a cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits. As shown by Martin Hofmann's \cite{hofmann:csl,hofmann:cambridge}, every category with finite limits yields a category with attributes, and hence a cwf. However, not every cwf has finite limits; we need more structure.  Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} proved that the 2-category of finite limits is biequivalent to the 2-category of democratic cwfs that support $\Sigma$-types and extensional identity types.
 
