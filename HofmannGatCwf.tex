@@ -354,9 +354,7 @@ A cwf $\T_\Sigma$ is then constructed from the equivalence classes of derivable 
 A $\Cwf_\Sigma$-morphism $\inte{-} : \T_\Sigma \to \C$ for every $\C \in \Cwf_\Sigma$. This is the {\em interpretation morphism}. This morphism is a partial function defined by induction on the raw syntax, such that it maps raw contexts to contexts in $\C$, raw substitutions to substitutions in $\C$, raw types to types in $\C$, and raw terms to terms in $\C$. We show that these partial functions preserve the partial equivalence relations so that we can define the interpretation morphism on the equivalence classes. Finally we show that it indeed is a $\Cwf_\Sigma$-morphism and the unique such into $\C$.
 \end{itemize}
  
-We begin with the base case.
-\begin{description}
-\item[The empty signature] 
+We begin by doing this construction for the base case: the {\bf empty signature} $\emptyset$. 
 \begin{itemize}
 \item 
 We start with the following grammar for raw contexts, raw substitutions, raw types, and raw terms.
@@ -367,39 +365,46 @@ A \in \RawTy &::=& A[\gamma]\\
 a \in \RawTm &::=& a[\gamma] \ |\ \qI_A
 \end{eqnarray*}
 \item
-The system of inference rules is displayed in \cite{castellan:tlca2015,castellan:lmcs}. It is a system of {\em general rules}, rules for dependent type theory which come before you introduce any sort symbols and operator symbols and equations (or any rules for the type formers of intuitionistic type theory). We do not have room here to display them, but note that they can be divided into the following groups:
-
+The system of inference rules is displayed in \cite{castellan:tlca2015,castellan:lmcs}. It is a system of {\em general rules}, rules for dependent type theory which come before you introduce any sort symbols and operator symbols and equations (or any rules for the type formers of intuitionistic type theory). We do not have room here to display them, but note that they can be divided into the four groups: 
+\begin{itemize}
+\item the per rules, amounting to symmetry and transitivity for the four forms of equality judgments;
+\item preservation rules for judgments amounting to substitution of equals for equals (an example of such a rule is the {\em type equality rule});
+\item congruence rules for operators expressing that the cwf-combinators preserve equality;
+\item conversion rules for the cwf-combinators.
+\end{itemize}
 \item
-The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash$. To prove that $\T$ is initial we construct a cwf-morphism $\inte{-} : \T \to \C$ to an arbitrary cwf $\C$. \end{itemize}
-We refer to Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs} both for the list of inference rules for the partial equivalence relations and for the details of the initiality proof.
+Note that the initial cwf $\T_\emptyset$ is rather uninteresting: its category of contexts contains only a terminal object (the empty context), and there are no types and terms. Nevertheless, the grammar and inference rules used in its definition form a starting point. The grammar for raw types and raw terms will be extended each time we add a new sort symbol or operator symbol, respectively. For each such new symbol and each new equation we will also add a new inference rule. As a consequence we will generate non-trivial $\T_\Sigma$.
+\end{itemize}
 
-
-Note that the initial cwf $\T$ is rather uninteresting: its category of contexts contains only a terminal object (the empty context), and there are no types and terms. Nevertheless, the syntax and inference rules used in its definition form the starting point both for the formulation of Martin-Löf type theory as initial cwfs supporting type formers such as $\Pi, \Sigma, \N$, etc, and for our notion of generalized algebraic theory as the initial object $\T_\Sigma$ in the category $\Cwf_\Sigma$ of cwfs supporting a valid signature $\Sigma$.
-
-\end{description}
-
-Assume we have specified grammars and inference rules for $\T_\Sigma$ and that we write $\vdash_\Sigma$ for derivability by these inference rules. Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to build $\T_{\Sigma'}$, to extend the grammars and inference rules for $\T_\Sigma$.
+Assume now for the induction step that we have specified the grammar and the inference rules for $\Sigma$.
+Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to build the extended grammar and the extended set of inference rules for $\Sigma'$.
 \begin{description}
-\item[Adding a new sort symbol] 
-If $\Gamma$ is a context in $\T_\Sigma$ and $\Sigma'$ is $\Sigma$ extended with a new sort symbol $F$ (with context $\Gamma$). Then $\T_{\Sigma'}$ is defined by adding the production
+\item[Adding a new sort symbol $F$ in context $\Gamma$] 
+
+\begin{itemize}
+\item
+$\Sigma'$ has a new production for raw types
 $$
 A ::= F
 $$
-to the grammar for raw types, and the inference rule
+in addition to the productions for $\Sigma$.
+\item
+If $\Gamma \vdash_\Sigma$ then we add  the inference rule
 \begin{mathpar}
     \inferrule
     {}
     {\Gamma \vdash_{\Sigma'} F}
   \end{mathpar}
 to the inference rules for $\Sigma$.
-
-We then define $F_{\T_{\Sigma'}} = [F]$. It follows that $ \T_{\Sigma'}$ supports $\Sigma'$. 
-
-Moreover, we extend the definition of the interpretation morphism $\inte{-}$  to an interpretation morphism $\inte{-}' : \T_{\Sigma'} \to \C$ by 
+\item
+We define $F_{\T_{\Sigma'}} = [F]$. It follows that $ \T_{\Sigma'}$ supports $\Sigma'$. 
+\item
+We extend the definition of the interpretation morphism $\inte{-}$  to an interpretation morphism $\inte{-}' : \T_{\Sigma'} \to \C$ by 
 $$
 \inte{[F]}' = F_\C
 $$
 It follows immediately that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
+\end{itemize}
 
 \item[Adding a new operator symbol] 
 If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$ and $\Sigma'$ is $\Sigma$ extended with a new operator symbol $f$ (with context $\Gamma$ and type $A$). Then $\T_{\Sigma'}$ is defined by adding the production
