@@ -330,7 +330,7 @@ We shall now show our main theorem. It can be viewed as a generalization of Birk
 The category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ for every valid signature $\Sigma$.
 \end{theorem}
 
-The construction of $\T_\Sigma$ will be by induction on the construction of $\Sigma$. It is based on construction of initial cwfs in \cite{castellan:tlca2015,castellan:lmcs} and we refer the reader to those papers for more details. 
+The construction of $\T_\Sigma$ will be by induction on the construction of $\Sigma$. It is based on construction of initial cwfs in \cite{castellan:tlca2015,castellan:lmcs} and we refer the reader to those papers for more details. Here we will only provide a sketch and focus on how to extend the construction to $\T_\Sigma$.
 
 For each $\Sigma$ we will define the following.
 \begin{itemize}
@@ -379,8 +379,8 @@ Note that the initial cwf $\T_\emptyset$ is rather uninteresting: its category o
 Assume now for the induction step that we have specified the grammar and the inference rules for $\Sigma$.
 Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to build the extended grammar and the extended set of inference rules for $\Sigma'$.
 \begin{description}
-\item[Adding a new sort symbol $F$ in context $\Gamma$] 
-
+\item[Adding a new sort symbol $F$ in $\Gamma$] 
+We show how the four parts change:
 \begin{itemize}
 \item
 $\Sigma'$ has a new production for raw types
@@ -395,7 +395,7 @@ If $\Gamma \vdash_\Sigma$ then we add  the inference rule
     {}
     {\Gamma \vdash_{\Sigma'} F}
   \end{mathpar}
-to the inference rules for $\Sigma$.
+to the inference rules for $\Sigma$. (Note that the context $\Gamma$ represents the types of the arguments of $F$.)
 \item
 We define $F_{\T_{\Sigma'}} = [F]$. It follows that $ \T_{\Sigma'}$ supports $\Sigma'$. 
 \item
@@ -406,25 +406,32 @@ $$
 It follows immediately that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
 \end{itemize}
 
-\item[Adding a new operator symbol] 
-If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$ and $\Sigma'$ is $\Sigma$ extended with a new operator symbol $f$ (with context $\Gamma$ and type $A$). Then $\T_{\Sigma'}$ is defined by adding the production
+\item[Adding a new operator symbol $f$ of type $A$ in context $\Gamma$] 
+We modify the four parts as follows:
+\begin{itemize}
+\item
+$\Sigma'$ has a new production for raw terms
 $$
 a ::= f
 $$
-to the grammar for raw terms, and the inference rule
+in addition to the productions for $\Sigma$.
+\item
+If $\Gamma \vdash_\Sigma$ then we add  the inference rule
 \begin{mathpar}
     \inferrule
     {}
     {\Gamma \vdash_{\Sigma'} f : A}
-\end{mathpar}
-to the inference rules for $\Sigma$.
-
-We then define $f_{\T_{\Sigma'}} = [f]$ and extend the definition of the interpretation morphism $\inte{-}$  to an interpretation morphism $\inte{-}' : \T_{\Sigma'} \to \C$ by 
+  \end{mathpar}
+to the inference rules for $\Sigma$. (Note that the context $\Gamma$ represents the types of the arguments of $f$ and $A$ is the type of the result.)
+\item
+We define $f_{\T_{\Sigma'}} = [f]$. It follows that $ \T_{\Sigma'}$ supports $\Sigma'$. 
+\item
+We extend the definition of the interpretation morphism $\inte{-}$  to an interpretation morphism $\inte{-}' : \T_{\Sigma'} \to \C$ by 
 $$
 \inte{[f]}' = f_\C
 $$
 It follows immediately that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
-
+\end{itemize}
 \item[Adding a new equation] 
 If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$ and $a, a' \in \Tm_{\T_\Sigma}(\Gamma,A)$, and $\Sigma'$ is $\Sigma$ extended with a new equation $a = a'$ (with context $\Gamma$ and type $A$). Then $\T_{\Sigma'}$ is defined by adding the inference rule
  \begin{mathpar}
@@ -435,7 +442,8 @@ If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$ and 
 to the inference rules for $\Sigma$.
 
 It is immediate that $\T_{\Sigma'}$ supports $\Sigma'$. In order to define the
-interpretation morphism $\inte{-}'$, recall that the interpretation morphism $\inte{-} : \T_\Sigma \to \C$ is defined in two steps. The first step is to define a partial function mapping raw contexts to objects of $\C$, raw substitutions to morphisms of $\C$, raw types to types of $\C$, and raw terms to terms of $\C$. The second step is to prove that this partial function preserves the partial equivalence relation and define $\inte{-}$ on the equivalence classes. In order to define $\inte{-}'$ we first define the partial function on the raw syntax to be identical to the partial function on the raw syntax for $\inte{-}$. (The raw syntax for $\T_{\Sigma'}$ is the same as the one for $\T_\Sigma$.) We then prove that this partial function preserves the extended partial equivalence relation and define $\inte{-}'$ on the new equivalence classes. It follows that $\inte{-}'$ is unique.\end{description}
+interpretation morphism $\inte{-}'$, recall that the interpretation morphism $\inte{-} : \T_\Sigma \to \C$ is defined in two steps. The first step is to define a partial function mapping raw contexts to objects of $\C$, raw substitutions to morphisms of $\C$, raw types to types of $\C$, and raw terms to terms of $\C$. The second step is to prove that this partial function preserves the partial equivalence relation and define $\inte{-}$ on the equivalence classes. In order to define $\inte{-}'$ we first define the partial function on the raw syntax to be identical to the partial function on the raw syntax for $\inte{-}$. (The raw syntax for $\T_{\Sigma'}$ is the same as the one for $\T_\Sigma$.) We then prove that this partial function preserves the extended partial equivalence relation and define $\inte{-}'$ on the new equivalence classes. It follows that $\inte{-}'$ is unique.
+\end{description}
 
 \section{Examples of generalized algebraic theories}
 
