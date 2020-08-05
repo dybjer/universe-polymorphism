@@ -276,9 +276,8 @@ $F(\tuple{}_\Gamma) = \tuple{}_{F(\Gamma)}$.
 
 Small cwfs with strict cwfs-morphisms form a category, written $\Cwf$. 
 
-\subsection{The generalized algebraic theory of cwfs}
-
-One of the main features of cwfs is that they are models of a certain generalized algebraic theory which arises naturally by unfolding the definition above. Moreover, this gat bears a close resemblance to Martin-Löf's substitution calculus. However a main difference is that Martin-Löf's calculus uses ordinary named variables whereas the gat for cwfs uses a combinator language quite similar to the ccc-combinators that arise from the definition of cartesian closed categories. Another main difference is that a gat is not a usual formal system defined in terms of a raw syntax and inference rules. Instead it is a dependently typed generalization of many sorted algebras. The formalism assumes a basic framework for dependent type theory. In this language you specify a {\em signature} consisting of a list of sort symbols and operator symbols, with dependent typings, and equations (between terms). (Cartmell \cite{cartmell:phd,cartmell:apal} also allows equations between sort terms, but most examples do not make use of such. It would be straightforward to include such equations in our account too.) 
+\footnote{200805: The following is removed for the time being. Some of it should probably be moved to the introduction of section 5:
+"One of the main features of cwfs is that they are models of a certain generalized algebraic theory which arises naturally by unfolding the definition above. Moreover, this gat bears a close resemblance to Martin-Löf's substitution calculus. However a main difference is that Martin-Löf's calculus uses ordinary named variables whereas the gat for cwfs uses a combinator language quite similar to the ccc-combinators that arise from the definition of cartesian closed categories. Another main difference is that a gat is not a usual formal system defined in terms of a raw syntax and inference rules. Instead it is a dependently typed generalization of many sorted algebras. The formalism assumes a basic framework for dependent type theory. In this language you specify a {\em signature} consisting of a list of sort symbols and operator symbols, with dependent typings, and equations (between terms). (Cartmell \cite{cartmell:phd,cartmell:apal} also allows equations between sort terms, but most examples do not make use of such. It would be straightforward to include such equations in our account too.) 
 
 We shall now display the sort symbols, operator symbols, and equations of the gat of cwfs. Note that the four sort symbols $\Ctx, \Hom, \Ty,$ and $\Tm$ correspond to the respective four of the judgment forms of Martin-Löf's substitution calculus:
 \begin{eqnarray*}
@@ -299,6 +298,7 @@ Furthermore, the operator symbols correspond to syntactic constructions of conte
 We will now specify the sort symbols, operators symbols and equations of the gat of cwfs in traditional notation with variables. Here we assume that the reader is familiar with dependent type theory to get an informal understanding of what a gat is. Note that mutual dependence of the notions of gat and cwf. Here we define cwfs as a gat and in the next section we will define valid signatures and models of gats in terms of initial cwfs. Note also that the official metalanguage of this article is set theory, and that definition X should be understood in set-theoretic metalanguage.
 
 We shall give the signature of the cwf of gats stepwise: first the signature for categories, then we extend it with a family-valued functor, then with a terminal object, and finally with context comprehension.
+}
 
 
 
