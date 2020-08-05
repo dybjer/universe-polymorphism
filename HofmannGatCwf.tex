@@ -566,8 +566,11 @@ Equations:
 \Gamma : \Ctx, A:\Ty(\Gamma) &\vdash& 
 \id_{\Gamma\cext A} = \tuple{p,q} : \Hom(\Gamma\cext A,\Gamma\cext A)
 \end{eqnarray*}
-(The latter two equations are better for term rewriting then the
-obvious single one expressing the uniqueness of $\tuple{}_\Gamma$.)
+(If $p\circ\delta = \gamma$ and $q[\delta]=a$, we get
+$\tuple{\gamma,a}=\tuple{p\circ\delta, q[\delta]} = \tuple{p,q}\circ\delta =
+\delta$, the uniqueness requirement of the universal property.
+However, the equation for surjective pairing is not left-linear and with
+a variable on one side --- not good for rewriting.)
 
 
 
