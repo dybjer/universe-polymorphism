@@ -330,7 +330,9 @@ We shall now show our main theorem. It can be viewed as a generalization of Birk
 The category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ for every valid signature $\Sigma$.
 \end{theorem}
 
-The construction of $\T_\Sigma$ will be based on the construction of initial cwfs in \cite{castellan:tlca2015,castellan:lmcs}. For each $\Sigma$ we will define the following.
+The construction of $\T_\Sigma$ will be by induction on the construction of $\Sigma$. It is based on construction of initial cwfs in \cite{castellan:tlca2015,castellan:lmcs} and we refer the reader to those papers for more details. 
+
+For each $\Sigma$ we will define the following.
 \begin{itemize}
 \item 
 A grammar for raw contexts in $\RawCtx_\Sigma$, raw substitutions in $\RawSub_\Sigma$, raw types in $\RawTy_\Sigma$, and raw terms in $\RawTm_\Sigma$. These grammars generate a language of {\em cwf-combinators}.
@@ -345,64 +347,36 @@ $$
 \qquad
 \Gamma \vdash_\Sigma a = a' : A
 $$
-where $\Gamma, \Gamma' \in \RawCtx_\Sigma, \gamma, \gamma' \in \RawSub_\Sigma, A, A' \in \RawTy,$ and $a,a' \in \RawTm_\Sigma$. Instances of these pers correspond to valid equality judgments of a variable free version of dependent type theory with explicit substitutions based on the cwf-combinators. The ordinary judgments will be defined as the reflexive instances of these equality judgments. For example $\Gamma \vdash_\Sigma$ (meaning ”$\Gamma$ is a valid context") is defined as $\Gamma = \Gamma \vdash_\Sigma$.
+where $\Gamma, \Gamma' \in \RawCtx_\Sigma, \gamma, \gamma' \in \RawSub_\Sigma, A, A' \in \RawTy,$ and $a,a' \in \RawTm_\Sigma$. Instances of these pers correspond to valid equality judgments of a variable free version of dependent type theory with explicit substitutions based on the cwf-combinators. The ordinary judgments will be defined as the reflexive instances of these equality judgments. For example $\Gamma \vdash_\Sigma$ (meaning ”$\Gamma$ is a valid context") is defined as the reflexive instance $\Gamma = \Gamma \vdash_\Sigma$.
 \item
 A cwf $\T_\Sigma$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T_\Sigma$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash_\Sigma$. We will show that $\T_\Sigma$ is a cwf that supports $\Sigma$, that is, an object of $\Cwf_\Sigma$.
 \item
-A $\Cwf_\Sigma$-morphism $\inte{-} : \T_\Sigma \to \C$ for every $\C \in \Cwf_\Sigma$. This is the {\em interpretation morphism}. It is the unique such morphism showing that $\T_\Sigma$ is initial in $\Cwf_\Sigma$.
- \end{itemize}
+A $\Cwf_\Sigma$-morphism $\inte{-} : \T_\Sigma \to \C$ for every $\C \in \Cwf_\Sigma$. This is the {\em interpretation morphism}. This morphism is a partial function defined by induction on the raw syntax, such that it maps raw contexts to contexts in $\C$, raw substitutions to substitutions in $\C$, raw types to types in $\C$, and raw terms to terms in $\C$. We show that these partial functions preserve the partial equivalence relations so that we can define the interpretation morphism on the equivalence classes. Finally we show that it indeed is a $\Cwf_\Sigma$-morphism and the unique such into $\C$.
+\end{itemize}
  
- The proof is by induction on the construction of $\Sigma$. 
+We begin with the base case.
 \begin{description}
 \item[The empty signature] 
-$\T_\emptyset$ is the initial object of $\Cwf_\emptyset = \Cwf$, the category of cwfs and strict cwf-morphisms.
-\end{description}
-
-
-The initial cwf $\T_\emptyset$ is rather degenerate. Its category of contexts has one object (the empty context) and one morphism (the empty substitution). 
-We sketch the construction of $\T_\emptyset$. It is defined in three steps:
 \begin{itemize}
 \item 
-First we define grammars for raw contexts, raw substitutions, raw types, and raw terms.
-\item
-
+We start with the following grammar for raw contexts, raw substitutions, raw types, and raw terms.
 \begin{eqnarray*}
 \Gamma \in \RawCtx &::=& 1  \ |\ \Gamma\cext A\\
 \gamma \in \RawSub \ &::=& \gamma \circ \gamma \ |\ \id_\Gamma \ |\ \langle\rangle_\Gamma \ |\ \p_{A} \ |\ \langle \gamma, a \rangle_A\\
-A \in \RawTy &::=& o \ |\  A[\gamma]\\
+A \in \RawTy &::=& A[\gamma]\\
 a \in \RawTm &::=& a[\gamma] \ |\ \qI_A
 \end{eqnarray*}
 \item
-Then we define the well-formed contexts and types, and the well-typed
-substitutions and terms. In Martin-L\"of's substitution calculus these are defined by a system of inference rules for all the eight forms of judgments. Here we choose a more economical way, by only defining well-formed \emph{equal} contexts and types, and the well-typed \emph{equal} substitutions and terms. Thus we define four families of partial equivalence relations (pers), corresponding to the four forms of equality judgments, by a mutual inductive definition:
-$$
-\Gamma = \Gamma' \vdash
-\qquad
-\Gamma \vdash A = A' 
-\qquad
-\Delta \vdash \gamma = \gamma' : \Gamma
-\qquad
-\Gamma \vdash a = a' : A
-$$
-where $\Gamma, \Gamma' \in \RawCtx, \gamma, \gamma' \in \RawSub, A, A' \in \RawTy,$ and $a,a' \in \RawTm$. The basic judgment forms can then be defined as the reflexive instances of the pers:
-\begin{itemize}
-\item 
-$\Gamma \vdash$ abbreviates $\Gamma = \Gamma \vdash$, 
+The system of inference rules is displayed in \cite{castellan:tlca2015,castellan:lmcs}. It is a system of {\em general rules}, rules for dependent type theory which come before you introduce any sort symbols and operator symbols and equations (or any rules for the type formers of intuitionistic type theory). We do not have room here to display them, but note that they can be divided into the following groups:
+
 \item
-$\Gamma \vdash A$ abbreviates $\Gamma \vdash A = A$,
-\item
-$\Delta \vdash \gamma : \Gamma$ abbreviates  $\Delta \vdash \gamma = \gamma : \Gamma$, 
-\item
-$\Gamma \vdash a : A$ abbreviates $\Gamma \vdash a = a : A$.
-\end{itemize}
-\item
-The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash$. To prove that $\T$ is initial we construct a cwf-morphism $\inte{-} : \T \to \C$ to an arbitrary cwf $\C$. This morphism is a partial function mapping raw contexts to contexts in $\C$, raw substitutions to substitutions in $\C$, raw types to types in $\C$, and raw terms to terms in $\C$. Then we show that these partial functions preserve the partial equivalence relations so that we can define the interpretation morphism on the equivalence classes, and also show that it is indeed a cwf-morphism.
-\end{itemize}
+The initial cwf $\T$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash$. To prove that $\T$ is initial we construct a cwf-morphism $\inte{-} : \T \to \C$ to an arbitrary cwf $\C$. \end{itemize}
 We refer to Castellan, Clairambault, and Dybjer \cite{castellan:tlca2015,castellan:lmcs} both for the list of inference rules for the partial equivalence relations and for the details of the initiality proof.
 
 
 Note that the initial cwf $\T$ is rather uninteresting: its category of contexts contains only a terminal object (the empty context), and there are no types and terms. Nevertheless, the syntax and inference rules used in its definition form the starting point both for the formulation of Martin-Löf type theory as initial cwfs supporting type formers such as $\Pi, \Sigma, \N$, etc, and for our notion of generalized algebraic theory as the initial object $\T_\Sigma$ in the category $\Cwf_\Sigma$ of cwfs supporting a valid signature $\Sigma$.
 
+\end{description}
 
 Assume we have specified grammars and inference rules for $\T_\Sigma$ and that we write $\vdash_\Sigma$ for derivability by these inference rules. Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to build $\T_{\Sigma'}$, to extend the grammars and inference rules for $\T_\Sigma$.
 \begin{description}
