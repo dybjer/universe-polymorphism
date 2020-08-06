@@ -222,8 +222,8 @@ subject to equations, for the category and the presheaf, and universal
 properties for the terminal object and for context comprehension. 
 The morphisms to be defined next preserve this structure,
 even in a strict way (`on the nose').
-We often shorten the notation of a cwf to $(\C,T)$, leaving the remaining
-structure implicit.
+We often shorten the notation of a cwf to $(\C,T)$, or even just $\C$, 
+leaving the remaining structure implicit.
 
 \begin{definition}\label{def:Cwfmor}  
 A \emph{(strict) cwf-morphism $F$ between cwfs $(\C,T_\C)$ and $(\D,T_\D)$}
@@ -346,7 +346,7 @@ $$
 \qquad
 \Gamma \vdash_\Sigma a = a' : A
 $$
-where $\Gamma, \Gamma' \in \RawCtx_\Sigma, \gamma, \gamma' \in \RawSub_\Sigma, A, A' \in \RawTy,$ and $a,a' \in \RawTm_\Sigma$. Instances of these pers correspond to valid equality judgments of a variable free version of dependent type theory with explicit substitutions based on the cwf-combinators. The ordinary judgments will be defined as the reflexive instances of these equality judgments. For example $\Gamma \vdash_\Sigma$ (meaning ”$\Gamma$ is a valid context") is defined as the reflexive instance $\Gamma = \Gamma \vdash_\Sigma$.
+where $\Gamma, \Gamma' \in \RawCtx_\Sigma, \gamma, \gamma' \in \RawSub_\Sigma, A, A' \in \RawTy_\Sigma,$ and $a,a' \in \RawTm_\Sigma$. Instances of these pers correspond to valid equality judgments of a variable free version of dependent type theory with explicit substitutions based on the cwf-combinators. The ordinary judgments will be defined as the reflexive instances of these equality judgments. For example $\Gamma \vdash_\Sigma$ (meaning ”$\Gamma$ is a valid context") is defined as the reflexive instance $\Gamma = \Gamma \vdash_\Sigma$.
 \item
 A cwf $\T_\Sigma$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T_\Sigma$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash_\Sigma$. We will show that $\T_\Sigma$ is a cwf that supports $\Sigma$, that is, an object of $\Cwf_\Sigma$.
 \item
