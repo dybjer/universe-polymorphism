@@ -496,7 +496,7 @@ x : \Mon &\vdash& \comp(x,\idmon) = x : \Mon\\
 x, y, z : \Mon &\vdash& \comp(\comp(x,y),z) = \comp(x,\comp(y,z)) : \Mon
 \end{eqnarray*}
 
-A cwf $\C$ that supports this gat is an {\em internal monoid} in $\C$. This is a cwf-version of the notion of internal monoid which can be defined in any category with finite products. Ordinary (small) monoids come out as internal monoids in $\Set$, the cwf of small sets.
+A cwf $\C$ that supports this gat has an {\em internal monoid} in $\C$. This is a cwf-version of the notion of internal monoid which can be defined in any category with finite products. Ordinary (small) monoids come out as internal monoids in $\Set$, the cwf of small sets.
 
 \subsection{Categories} We begin with the gat of categories, one of Cartmell's motivating examples. We first show it in ordinary notation with variables.
 
@@ -526,20 +526,25 @@ Note that composition is officially an operator symbols with five arguments. In 
 The rendering of the gat of categories in cwf-combinator language and the proof that it indeed yields a valid signature is of course similar to what it was for the gat of monoids. The inference rules for the two sort symbols in cwf-combinator language are
 \begin{eqnarray*}
 1 &\vdash& \Obj\\
-1.Obj.Obj[\p] &\vdash& \Hom
+1.\Obj.\Obj[\p] &\vdash& \Hom
 \end{eqnarray*}
-and the opertor symbols for identity and composition are
+and the operator symbols for identity
+\begin{eqnarray*}
+1.\Obj &\vdash& \idmon : \Hom[\tuple{\id_{1.\Obj},\q_{1,\Obj}}]]
+\end{eqnarray*}
+We omit the cwf-rendering of the inference rule for composition and the equations.
 
+A cwf that supports the generalized algebraic theory of categories is a cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits. As shown by Martin Hofmann \cite{hofmann:csl,hofmann:cambridge}, every category with finite limits yields a category with attributes, and hence a cwf. However, not every cwf has finite limits, but we need more structure. As shown by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14}  the 2-category of finite limits is biequivalent to the 2-category of democratic cwfs that support $\Sigma$-types and extensional identity types.
 
-\subsubsection{How to generate the valid signature using the combinator language} 
-The signature for the generalized algebraic theory of categories has sort symbols $\Obj$ 
-and $\Hom$, operator symbols $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. We shall here sketch how to generate the valid signature for categories with reference to definition \ref{} and using cwf-combinators.
-\begin{itemize}
-\item The initial cwf $\T_\emptyset$ (as constructed above) has only one object (context) [1], one equivalence class of morphisms $[\id_1]$ (with several representatives: $\tuple{}_1, \id_1 \circ \id_1$, etc), and no types and terms. Hence we can add a new constant sort $\Obj$ of (internal) objects with context $1$ to the signature. 
-\item $\T_{([\Obj],[],[])}$ (as constructed above) contains the context $[(1.\Obj).\Obj[\p_{1,\Obj}]]$ (corresponding to the context $x : \Obj, y : \Obj$ in usual notation). Hence we can introduce a new sort $\Hom$ with this context. This sort represents the family $\Hom(x,y)$ of (internal) morphisms.
-\item $\T_{([\Obj, \Hom],[],[])}$ contains the context $[1.\Obj]$ (corresponding to the context $x : \Obj$) and the type $[\Hom[\tuple{\id_{1.\Obj},\q_{1,\Obj}}]]$ (corresponding to the type $\Hom(x,x)$). Hence we can introduce an operator symbol $\id$ with this context and type.
-\item In a similar way we can add the operator symbol for composition and the equations, but we omit the details.
-\end{itemize}
+%\subsubsection{How to generate the valid signature using the combinator language} 
+%The signature for the generalized algebraic theory of categories has sort symbols $\Obj$ 
+%and $\Hom$, operator symbols $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. We shall here sketch how to generate the valid signature for categories with reference to definition \ref{} and using cwf-combinators.
+%\begin{itemize}
+%\item The initial cwf $\T_\emptyset$ (as constructed above) has only one object (context) [1], one equivalence class of morphisms $[\id_1]$ (with several representatives: $\tuple{}_1, \id_1 \circ \id_1$, etc), and no types and terms. Hence we can add a new constant sort $\Obj$ of (internal) objects with context $1$ to the signature. 
+%\item $\T_{([\Obj],[],[])}$ (as constructed above) contains the context $[(1.\Obj).\Obj[\p_{1,\Obj}]]$ (corresponding to the context $x : \Obj, y : \Obj$ in usual notation). Hence we can introduce a new sort $\Hom$ with this context. This sort represents the family $\Hom(x,y)$ of (internal) morphisms.
+%\item $\T_{([\Obj, \Hom],[],[])}$ contains the context $[1.\Obj]$ (corresponding to the context $x : \Obj$) and the type $[\Hom[\tuple{\id_{1.\Obj},\q_{1,\Obj}}]]$ (corresponding to the type $\Hom(x,x)$). Hence we can introduce an operator symbol $\id$ with this context and type.
+%\item In a similar way we can add the operator symbol for composition and the equations, but we omit the details.
+%\end{itemize}
 
 \subsection{Cwfs}
 
@@ -618,9 +623,6 @@ $\tuple{\gamma,a}=\tuple{p\circ\delta, q[\delta]} = \tuple{p,q}\circ\delta =
 However, the equation for surjective pairing is not left-linear and with
 a variable on one side --- not good for rewriting.)
 
-
-
-We say that a cwf that supports the generalized algebraic theory of categories is a cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits. As shown by Martin Hofmann's \cite{hofmann:csl,hofmann:cambridge}, every category with finite limits yields a category with attributes, and hence a cwf. However, not every cwf has finite limits; we need more structure.  Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} proved that the 2-category of finite limits is biequivalent to the 2-category of democratic cwfs that support $\Sigma$-types and extensional identity types.
 
 \subsection{Cwfs} Similarly, we can define a cwf that supports the generalized algebraic theory of cwfs. We add sort symbols for types and terms, operator symbols for all the cwf-combinators, and all the cwf-equations. We say that a cwf that supports this generalized algebraic theory is a cwf with an {\em internal cwf}.
 
