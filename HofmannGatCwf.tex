@@ -523,7 +523,7 @@ Equations:
 %In order to build $\Hom(\Delta,\Gamma)$ for two concrete contexts $\vdash \Delta : \Ctx$ and $\vdash \Gamma : \Ctx$ we need to apply $\Hom$ to the context morphism consisting of $\Delta$ and $\Gamma$ to yield $\Hom(\Delta,\Gamma)$. (There is more to say ...)
 Note that composition is officially an operator symbols with five arguments. In the official notation we should write $\gamma \circ_{\Xi,\Delta,\Gamma} \delta$, but we suppress the context arguments $\Xi,\Delta,\Gamma$. We will do so for some other operations too.
 
-The rendering of the gat of categories in cwf-combinator language and the proof that it indeed yields a valid signature is of course similar to what it was for the gat of monoids. The inference rules for the two sort symbols in cwf-combinator language are
+The rendering of the gat of categories in cwf-combinator language and the proof that it indeed yields a valid signature are similar to what they were for the gat of monoids. The inference rules for the two sort symbols in cwf-combinator language are
 \begin{eqnarray*}
 1 &\vdash& \Obj\\
 1.\Obj.\Obj[\p] &\vdash& \Hom
@@ -532,9 +532,9 @@ and the operator symbols for identity
 \begin{eqnarray*}
 1.\Obj &\vdash& \idmon : \Hom[\tuple{\id_{1.\Obj},\q_{1,\Obj}}]]
 \end{eqnarray*}
-We omit the cwf-rendering of the inference rule for composition and the equations.
+We omit the verbose cwf-renderings of the inference rule for composition and the equations.
 
-A cwf that supports the generalized algebraic theory of categories is a cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits. As shown by Martin Hofmann \cite{hofmann:csl,hofmann:cambridge}, every category with finite limits yields a category with attributes, and hence a cwf. However, not every cwf has finite limits, but we need more structure. As shown by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14}  the 2-category of finite limits is biequivalent to the 2-category of democratic cwfs that support $\Sigma$-types and extensional identity types.
+A cwf that supports the generalized algebraic theory of categories is a cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits. As shown by Martin Hofmann \cite{hofmann:csl,hofmann:cambridge}, every category with finite limits yields a category with attributes, and hence a cwf. However, not every cwf has finite limits. To achieve this we need more structure. As shown by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} the 2-category of finite limits is biequivalent to the 2-category of democratic cwfs that support $\Sigma$-types and extensional identity types.
 
 %\subsubsection{How to generate the valid signature using the combinator language} 
 %The signature for the generalized algebraic theory of categories has sort symbols $\Obj$ 
