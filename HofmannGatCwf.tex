@@ -380,7 +380,7 @@ The system of inference rules is displayed in \cite{castellan:tlca2015,castellan
 Note that the initial cwf $\T_\emptyset$ is rather uninteresting: its category of contexts contains only a terminal object (the empty context), and there are no types and terms. Nevertheless, the grammar and inference rules used in its definition form a starting point. The grammar for raw types and raw terms will be extended each time we add a new sort symbol or operator symbol, respectively. For each such new symbol and each new equation we will also add a new inference rule. As a consequence we will generate non-trivial $\T_\Sigma$.
 \end{itemize}
 
-Assume now for the induction step that we have defined the grammar, the inference rules, $\T_\Sigma$ and the interpretation morphism $\inte{-} : \T_{\Sigma'} \to \C$ for $\Sigma$.
+Assume now for the induction step that we have defined the grammar, the inference rules, $\T_\Sigma$ and the interpretation morphism $\inte{-} : \T_{\Sigma} \to \C$ for $\Sigma$.
 Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to extend these definitions to $\Sigma'$.
 \begin{description}
 \item[Adding a new sort symbol $F$ in $\Gamma$] (The context $\Gamma$ represents the types of the arguments of $F$.)
