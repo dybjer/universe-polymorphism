@@ -550,7 +550,7 @@ An internal category in the cwf $\Set$ of small sets is a small category.
 
 \subsection{Cwfs}
 
-The gat of cwf is obtained by extending the gat of categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of context to $\Ctx$.
+The gat of cwfs is obtained by extending the gat of categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of context to $\Ctx$.
 
 \subsubsection{The extension with a family valued functor}
 \mbox{ }
@@ -718,17 +718,14 @@ Mention a la Russell initiality?
 
 \section{Related work}
 
-Streicher, Brunerie for constructions of initial contextual categories supporting the calculus of constructions and Martin-Löf type theory (ordinary syntax, but with annotated application). Streicher shows that the annotations can be removed assuming we have a normal form property.
+The first proof of initiality of a formal system with dependent types is due to Streicher \cite{streicher:semtt}. He proved that the formal system for the Calculus of Construction forms an initial object in a category of contextual categories with extra structure for interpreting the whole calculus. Recently, Brunerie \cite{brunerie:initiality} presented a formalized proof in the Agda system that a formal system for Martin-Löf type theory forms an initial object in a category of contextual categories with extra structure for interpreting
+the type formers.
 
 \footnote{Mention LF-encodings, mention work on initiality conjecture? Uemura}
 
-Our $\T_\Sigma$ is closely related to Altenkirch and Kaprosi's quotient inductive-inductive types. Inductive-inductive types \cite{nordvallforsberg:phd} is a generalization of mutual inductive families, where one index set may depend on another. The motivating example is building the formal system of type theory by simultaneously defining contexts, substitutions depending on contexts, types depending on context, and terms depending on types and contexts. We can do so by considering the sort symbols of the gat of cwfs as formation rules and the operator symbols as introduction rules. A quotient inductive-inductive type is a combination of quotient types and inductive-inductive types, where there are also constructors witnessing equations. 
+Our $\T_\Sigma$ is closely related to Altenkirch and Kaprosi's quotient inductive-inductive types \cite{altenkirch:qiits}. Inductive-inductive types \cite{nordvallforsberg:iids} is a generalization of mutual inductive families, where one index set may depend on another. The motivating example is the formal system of type theory by simultaneously defining contexts, substitutions depending on contexts, types depending on context, and terms depending on types and contexts. We can do so by considering the sort symbols of the gat of cwfs as formation rules and the operator symbols as introduction rules. A quotient inductive-inductive type is a combination of quotient types and inductive-inductive types, where there are also constructors witnessing equations. Our $\T_\Sigma$ differs from Altenkirch and Kaprosi's notion in the following respects. The stipulated equations in $\Sigma$ generate judgmental equalities in a system for dependent type theory implementing $\T_\Sigma$. On the other hand quotient inductive-inductive types are developed in the setting of an intensional type theory, such as Agda's, and the stipulated equations are propositional equalities and hence we need to use transport maps when we move between equal types. 
 
-Our $\T_\Sigma$ differs from Altenkirch and Kaprosi's notion. The stipulated equations in $\Sigma$ generate judgmental equalities in a system for dependent type theory implementing $\T_\Sigma$. While the stipulated equations in quotient inductive-inductive types are propositional identities. Some of the cwf-equations depend on earlier equations. If these are propositional equalities we need to introduce transport maps between in the types. 
-
-Altenkirch and Kaprosi's notion assumes a setting of intensional type theory, such as Agda's. They implement their notion in Agda.
-
-Given that we have definition of a valid signature $\Sigma$ and a semantics for $\T_\Sigma$ we could ask whether we could add the construction of these to type theory. This would make most sense in extensional type theory, since we can then move seamlessly between propositional and judgmental equalities. It is however, not clear how to provide canonical form semantics in the sense of Martin-Löf's meaning explanations for this notion. However, although our development takes place in set theory, everything we do is constructive and could be formalized in CZF presumably.
+%Given that we have definition of a valid signature $\Sigma$ and a semantics for $\T_\Sigma$ we could ask whether we could add the construction of these to type theory. This would make most sense in extensional type theory, since we can then move seamlessly between propositional and judgmental equalities. It is however, not clear how to provide canonical form semantics in the sense of Martin-Löf's meaning explanations for this notion. However, although our development takes place in set theory, everything we do is constructive and could be formalized in CZF presumably.
 
 \bibliographystyle{plain}
 \bibliography{refs}
