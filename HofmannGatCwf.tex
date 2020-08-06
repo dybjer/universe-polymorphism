@@ -60,6 +60,9 @@
 \def\Ctx{\mathrm{Ctx}}
 \def\Hom{\mathrm{Hom}}
 \def\id{\mathrm{id}}
+\def\Mon{\mathrm{M}}
+\def\idmon{\mathrm{e}}
+\def\comp{\mathrm{*}}
 
 
 
@@ -335,7 +338,7 @@ The construction of $\T_\Sigma$ will be by induction on the construction of $\Si
 For each $\Sigma$ we will define the following.
 \begin{itemize}
 \item 
-A grammar for raw contexts in $\RawCtx_\Sigma$, raw substitutions in $\RawSub_\Sigma$, raw types in $\RawTy_\Sigma$, and raw terms in $\RawTm_\Sigma$. These grammars generate a language of {\em cwf-combinators}.
+A grammar for raw contexts in $\RawCtx_\Sigma$, raw substitutions in $\RawSub_\Sigma$, raw types in $\RawTy_\Sigma$, and raw terms in $\RawTm_\Sigma$. 
 \item
 A system of inference rules that generate four families of partial equivalence relations (pers) by a mutual inductive definition:
 $$
@@ -359,11 +362,12 @@ We begin by doing this construction for the base case: the {\bf empty signature}
 \item 
 We start with the following grammar for raw contexts, raw substitutions, raw types, and raw terms.
 \begin{eqnarray*}
-\Gamma \in \RawCtx &::=& 1  \ |\ \Gamma\cext A\\
-\gamma \in \RawSub \ &::=& \gamma \circ \gamma \ |\ \id_\Gamma \ |\ \langle\rangle_\Gamma \ |\ \p_{A} \ |\ \langle \gamma, a \rangle_A\\
-A \in \RawTy &::=& A[\gamma]\\
-a \in \RawTm &::=& a[\gamma] \ |\ \qI_A
+\Gamma \in \RawCtx_\emptyset &::=& 1  \ |\ \Gamma\cext A\\
+\gamma \in \RawSub_\emptyset  \ &::=& \gamma \circ \gamma \ |\ \id_\Gamma \ |\ \langle\rangle_\Gamma \ |\ \p_{A} \ |\ \langle \gamma, a \rangle_A\\
+A \in \RawTy_\emptyset  &::=& A[\gamma]\\
+a \in \RawTm_\emptyset  &::=& a[\gamma] \ |\ \qI_A
 \end{eqnarray*}
+These grammars generate a language of {\em cwf-combinators}.
 \item
 The system of inference rules is displayed in \cite{castellan:tlca2015,castellan:lmcs}. It is a system of {\em general rules}, rules for dependent type theory which come before you introduce any sort symbols and operator symbols and equations (or any rules for the type formers of intuitionistic type theory). We do not have room here to display them, but note that they can be divided into the four groups: 
 \begin{itemize}
@@ -452,36 +456,80 @@ In order to define $\inte{-}'$ we first define the partial function on the raw s
 
 \section{Examples of generalized algebraic theories}
 
-\subsection{Monoids} The one sorted algebraic theory of monoids has two operator symbols  $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. As every other algebraic theory in the ordinary sense the algebraic theory of monoids yields a generalized algebraic theory. We first introduce one constant sort symbol $M$, and then the operator symbols $\id$ for identity and $\circ$ for composition, and the associativity and identity laws as equations. 
+\subsection{Monoids} The one sorted algebraic theory of monoids has two operator symbols  $\idmon$ for identity and $\comp$ for composition, and associativity and identity laws as equations. As every other algebraic theory in the ordinary sense the algebraic theory of monoids yields a generalized algebraic theory. We first introduce one constant sort symbol $M$, and then the operator symbols $\id$ for identity and $\circ$ for composition, and the associativity and identity laws as equations. 
 
-A cwf $\C$ that supports this gat is an {\em internal monoid} in $\C$. Ordinary (small) monoids come out as internal monoids in $\Set$, the category of small sets.
+We shall now show in how to build a valid signature for monoids following the recipe in the previous section using the cwf-combinators. (Note that we drop the indices on $\p_A, \q_A,\tuple{\gamma,a}_A$ and $\id_\Gamma$
+and the index on $\vdash_\Sigma$.)
+\begin{itemize}
+\item 
+First, we have $1 \vdash$ for the empty signature, so we can add a production for the constant sort symbol $\Mon$ and the inference rule:
+\begin{eqnarray*}
+1 &\vdash& \Mon
+\end{eqnarray*}
+\item
+We then add a production for the constant operator symbol $\idmon$ and the inference rule:
+\begin{eqnarray*}
+1 &\vdash& \idmon : \Mon
+\end{eqnarray*}
+\item
+We then add a production for the binary operator symbol $\comp$. Since we can derive
+$1.\Mon.\Mon[\p] \vdash$ using the previous inference rules, we can add the inference rule
+\begin{eqnarray*}
+1.\Mon.\Mon[\p] &\vdash& \comp : \Mon[\p][\p]
+\end{eqnarray*}
+Note that we need to weaken $\Mon$ by substituting with $\p$.
+\item
+Since we can derive $1.\Mon \vdash$, $1.\Mon \vdash \comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}] : \Mon[p]$ and $1.\Mon \vdash \q : \Mon[\p]$ using the previous inference rules, we can add the inference rule for the equation ($\idmon$ is a left identity):
+\begin{eqnarray*}
+1.\Mon &\vdash& \comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}] = \q : \Mon[\p]
+\end{eqnarray*}
+\item
+We omit the rendering of the right identity and associativity laws.
+\end{itemize}
+We also display the sort symbols, operator symbols, and equations in ordinary notation with variables for comparison:
+\begin{eqnarray*}
+&\vdash& \Mon\\
+&\vdash& e : \Mon\\
+x, y : \Mon &\vdash& \comp(x,y) : \Mon\\
+y : \Mon &\vdash& \comp(\idmon,y) = y : \Mon\\
+x : \Mon &\vdash& \comp(x,\idmon) = x : \Mon\\
+x, y, z : \Mon &\vdash& \comp(\comp(x,y),z) = \comp(x,\comp(y,z)) : \Mon
+\end{eqnarray*}
 
-\subsection{Categories} We begin with the gat of categories, one of Cartmell's motivating examples. We first show it in ordinary notation with variables. Then we show how to generate a valid signature for the gat of categories using the combinator language used for constructing initial cwfs $\T_\Sigma$ as explained in section \ref{}.
+A cwf $\C$ that supports this gat is an {\em internal monoid} in $\C$. This is a cwf-version of the notion of internal monoid which can be defined in any category with finite products. Ordinary (small) monoids come out as internal monoids in $\Set$, the cwf of small sets.
+
+\subsection{Categories} We begin with the gat of categories, one of Cartmell's motivating examples. We first show it in ordinary notation with variables.
 
 Sort symbols:
 \begin{eqnarray*}
-&\vdash& \Ctx\\
-\Delta, \Gamma : \Ctx &\vdash& \Hom(\Delta,\Gamma)\\
+&\vdash& \Obj\\
+\Delta, \Gamma : \Obj &\vdash& \Hom(\Delta,\Gamma)\\
 \end{eqnarray*}
 
-Operator symbols:
+Operator symbols\footnote{We must distinguish between notation for identity and composition in the cwf and in the gat based on the cwf}:
 \begin{eqnarray*}
-\Gamma : \Ctx &\vdash& \id_\Gamma : \Hom(\Gamma,\Gamma)\\
-\Xi,\Delta,\Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta) &\vdash&
+\Gamma : \Obj &\vdash& \id_\Gamma : \Hom(\Gamma,\Gamma)\\
+\Xi,\Delta,\Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta) &\vdash&
 \gamma \circ \delta : \Hom(\Xi,\Gamma)
 \end{eqnarray*}
 
 Equations:
 \begin{eqnarray*}
-\Delta, \Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash& \id_\Gamma \circ \gamma = \gamma : \Hom(\Delta,\Gamma)\\
-\Delta, \Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash& \gamma \circ \id_\Delta = \gamma : \Hom(\Delta,\Gamma)\\
-\Theta, \Xi,\Delta,\Gamma : \Ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta), \xi : \Hom(\Theta,\Xi) &\vdash&
+\Delta, \Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma) &\vdash& \id_\Gamma \circ \gamma = \gamma : \Hom(\Delta,\Gamma)\\
+\Delta, \Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma) &\vdash& \gamma \circ \id_\Delta = \gamma : \Hom(\Delta,\Gamma)\\
+\Theta, \Xi,\Delta,\Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta), \xi : \Hom(\Theta,\Xi) &\vdash&
 (\gamma \circ \delta) \circ \xi = \gamma \circ (\delta \circ \xi): \Hom(\Theta,\Gamma)
 \end{eqnarray*}
-
-We make a few remarks. $\Ctx = \Obj$ is the constant sort of objects of the category of contexts in a cwf. $\Hom$ is a binary sort symbol for the context morphisms in the cwf. The typing of the two arguments is represented by the context $\Delta, \Gamma : \Ctx$. 
 %In order to build $\Hom(\Delta,\Gamma)$ for two concrete contexts $\vdash \Delta : \Ctx$ and $\vdash \Gamma : \Ctx$ we need to apply $\Hom$ to the context morphism consisting of $\Delta$ and $\Gamma$ to yield $\Hom(\Delta,\Gamma)$. (There is more to say ...)
-Moreover, composition is officially an operator symbols with five arguments. In the official notation we should write $\gamma \circ_{\Xi,\Delta,\Gamma} \delta$, but we suppress the context arguments $\Xi,\Delta,\Gamma$. We will do so for some other operations too.
+Note that composition is officially an operator symbols with five arguments. In the official notation we should write $\gamma \circ_{\Xi,\Delta,\Gamma} \delta$, but we suppress the context arguments $\Xi,\Delta,\Gamma$. We will do so for some other operations too.
+
+The rendering of the gat of categories in cwf-combinator language and the proof that it indeed yields a valid signature is of course similar to what it was for the gat of monoids. The inference rules for the two sort symbols in cwf-combinator language are
+\begin{eqnarray*}
+1 &\vdash& \Obj\\
+1.Obj.Obj[\p] &\vdash& \Hom
+\end{eqnarray*}
+and the opertor symbols for identity and composition are
+
 
 \subsubsection{How to generate the valid signature using the combinator language} 
 The signature for the generalized algebraic theory of categories has sort symbols $\Obj$ 
@@ -512,8 +560,6 @@ Operator symbols:
 A[\gamma] : \Ty(\Delta)\\
 \Gamma,\Delta : \Ctx, A:\Ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\Tm(\Gamma,A) &\vdash&  a[\gamma] : \Tm(\Delta,A[\gamma])
 \end{eqnarray*}
-
-
 
 Equations:
 \begin{eqnarray*}
