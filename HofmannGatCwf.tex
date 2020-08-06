@@ -536,6 +536,8 @@ We omit the verbose cwf-renderings of the inference rule for composition and the
 
 A cwf that supports the generalized algebraic theory of categories is a cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits. As shown by Martin Hofmann \cite{hofmann:csl,hofmann:cambridge}, every category with finite limits yields a category with attributes, and hence a cwf. However, not every cwf has finite limits. To achieve this we need more structure. As shown by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} the 2-category of finite limits is biequivalent to the 2-category of democratic cwfs that support $\Sigma$-types and extensional identity types.
 
+An internal category in the cwf $\Set$ of small sets is a small category.
+
 %\subsubsection{How to generate the valid signature using the combinator language} 
 %The signature for the generalized algebraic theory of categories has sort symbols $\Obj$ 
 %and $\Hom$, operator symbols $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. We shall here sketch how to generate the valid signature for categories with reference to definition \ref{} and using cwf-combinators.
@@ -548,7 +550,7 @@ A cwf that supports the generalized algebraic theory of categories is a cwf with
 
 \subsection{Cwfs}
 
-The gat of cwf is obtained by extending the gat of categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension.
+The gat of cwf is obtained by extending the gat of categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of context to $\Ctx$.
 
 \subsubsection{The extension with a family valued functor}
 \mbox{ }
@@ -603,30 +605,27 @@ Operator symbols:
 \begin{eqnarray*}
 \Gamma : \Ctx, A:\Ty(\Gamma) &\vdash& \Gamma\cext A : \Ctx\\
 \Gamma,\Delta : \Ctx, A:\Ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\Tm(\Delta,A[\gamma]) &\vdash& \tuple{\gamma,a} : \Hom(\Delta,\Gamma\cext A)\\
-\Gamma : \Ctx, A:\Ty(\Gamma) &\vdash& p: \Hom(\Gamma\cext A,\Gamma)\\
-\Gamma : \Ctx, A:\Ty(\Gamma) &\vdash& q: \Tm(\Gamma\cext A,A[p])
+\Gamma : \Ctx, A:\Ty(\Gamma) &\vdash& \p: \Hom(\Gamma\cext A,\Gamma)\\
+\Gamma : \Ctx, A:\Ty(\Gamma) &\vdash& \q: \Tm(\Gamma\cext A,A[\p])
 \end{eqnarray*}
 
 Equations:
 \begin{eqnarray*}
-\Gamma,\Delta : \Ctx, A:\Ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\Tm(\Delta,A[\gamma]) &\vdash& p\circ\tuple{\gamma,a} = \gamma : \Hom(\Delta,\Gamma)\\
-\Gamma,\Delta : \Ctx, A:\Ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\Tm(\Delta,A[\gamma]) &\vdash& q[\tuple{\gamma,a}] = a : \Tm(\Delta,A[\gamma]) \\
+\Gamma,\Delta : \Ctx, A:\Ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\Tm(\Delta,A[\gamma]) &\vdash& \p\circ\tuple{\gamma,a} = \gamma : \Hom(\Delta,\Gamma)\\
+\Gamma,\Delta : \Ctx, A:\Ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\Tm(\Delta,A[\gamma]) &\vdash& \q[\tuple{\gamma,a}] = a : \Tm(\Delta,A[\gamma]) \\
 \Gamma,\Delta,\Xi : \Ctx, A:\Ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\Tm(\Delta,A[\gamma]), \delta : \Hom(\Xi,\Delta) &\vdash& 
 \tuple{\gamma,a} \circ \delta = \tuple{\gamma\circ\delta,a[\delta]} : 
 \Hom(\Xi,\Gamma\cext A) \\
 \Gamma : \Ctx, A:\Ty(\Gamma) &\vdash& 
-\id_{\Gamma\cext A} = \tuple{p,q} : \Hom(\Gamma\cext A,\Gamma\cext A)
+\id_{\Gamma\cext A} = \tuple{\p,\q} : \Hom(\Gamma\cext A,\Gamma\cext A)
 \end{eqnarray*}
-(If $p\circ\delta = \gamma$ and $q[\delta]=a$, we get
-$\tuple{\gamma,a}=\tuple{p\circ\delta, q[\delta]} = \tuple{p,q}\circ\delta =
+(If $\p\circ\delta = \gamma$ and $\q[\delta]=a$, we get
+$\tuple{\gamma,a}=\tuple{\p\circ\delta, \q[\delta]} = \tuple{\p,\q}\circ\delta =
 \delta$, the uniqueness requirement of the universal property.
 However, the equation for surjective pairing is not left-linear and with
 a variable on one side --- not good for rewriting.)
 
-
-\subsection{Cwfs} Similarly, we can define a cwf that supports the generalized algebraic theory of cwfs. We add sort symbols for types and terms, operator symbols for all the cwf-combinators, and all the cwf-equations. We say that a cwf that supports this generalized algebraic theory is a cwf with an {\em internal cwf}.
-
-The signature for the gat of cwfs was already displayed in \ref{}. We leave it to the reader to verify that it can be formulated as a valid signature using cwf-combinators too.
+A cwf that supports the generalized algebraic theory of cwfs is a cwf with an {\em internal cwf}. An internal cwf in the cwf $\Set$ of small sets is a {\em small cwf}, that is, it is a cwf in the ordinary sense (see definition \ref{}) except that it has small sets of objects, morphisms, types, and terms.
 
 \subsection{Cwfs with $\Pi$-types} 
 We add operator symbols $\Pi, \lambda, \app$ and equations $\beta, \eta$ to the generalized algebraic theory of cwfs. 
