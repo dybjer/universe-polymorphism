@@ -71,7 +71,7 @@
 %\newcommand{\hom}{\mathrm{hom}}
 
 
-\title[Generalized Algebraic Theories and Categories with Families]{A Note on Generalized Algebraic Theories\\and Categories with Families}\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
+\title[Generalized Algebraic Theories and Categories with Families]{A Note on Finitary Generalized Algebraic Theories\\and Categories with Families}\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
 
 \begin{document}
 
@@ -98,7 +98,7 @@ However, the reader may now object that we have a circular definition. We learn 
 
 In this paper we explore and resolve this circularity. The main novelty is to get a syntax independent definition of gats in terms of cwfs. We define a new finitary notion of generalized algebraic theory and simultaneosly a general categorical notion of model. We simultaneously define what it means to be a valid signature $\Sigma$ for a gat and the category $\Cwf_\Sigma$ of cwfs supporting $\Sigma$. This definition refers to the construction of initial objects in $\Cwf_\Sigma$ but is independent of the details of this construction. Afterwards, we show that the initial object of $\Cwf_\Sigma$ exists for all valid $\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of the initial object of the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
 
-The contents of this paper may appear quite straightforward. Once one has the idea that it is natural to define gats in terms of cwfs, the definition writes itself. There are no surprises. The good side of this is that the definition seems quite canonical, provided we accept the idea that the abstract definition of dependent type theory in terms of initial cwfs (with extra structure) is canonical. (Refer here to Voevodsky's initiality conjecture?)
+Once one has the appropriate definition of gats in terms of cwfs, the details become natural and there are no surprises. The definition becomes canonical once we accept the abstract definition of dependent type theories as initial cwfs with extra structure. (Refer here to Voevodsky's initiality conjecture in the related work section.)
 
 \footnote{200803: I also removed the following about the initiality conjecture: "Voevodsky's initiality conjecture \cite{voevodsky:initiality} aims to characterize a whole class of type theories abstractly as initial objects in suitable categories of models and to prove that these initial objects exist. By abstracting from the precise details of syntax and inference rules for a particular type theory, one aims to develop a more general, elegant, semantic, rigorous, and formalizable metatheory of type theory. (I just read  \cite{voevodsky:initiality} and feel that this paragraph is too much my own interpretation of the initiality conjecture.)
 
@@ -119,9 +119,11 @@ Mention contextual category and Cartmell's equivalence between the categories of
 
 We are writing this note in honour of Martin Hofmann. The introduction of categories with families was strongly influenced by his work on categories with attributes, which for example play the role of "syntax" in his paper on the interpretation of Martin-Löf type theory in locally cartesian closed categories \cite{hofmann:csl}. Moreover, his lecture notes on "Syntax and Semantics of Dependent Types" \cite{hofmann:cambridge} are based on cwfs and developed many useful basic results about them, including a conservativity theorem for logical framework encodings using the cwf of presheaves.
 
-Martin's perhaps most well-known contribution is probably his work with Thomas Streicher on the groupoid model of dependent type theory. This seminal work was a forerunner to Voevodsky's univalent foundations, where their axiom of universe extensionality is a special case of the univalence axiom. 
+Martin's perhaps most well-known contribution is probably his work with Thomas Streicher on the groupoid model of dependent type theory. This seminal work can be seen as a forerunner to Voevodsky's univalent foundations. Their axiom of universe extensionality is a special case of the univalence axiom. 
 
 The groupoid model advanced our understanding of the relationship between intensional and extensional type theory in an important way. This question was also the motivation for Martin's PhD thesis "Extensional Concepts in Intensional Type Theory" \cite{hofmann:phd} on the setoid model of type theory. Yet another contribution to this question was his conservativity theorem for extensional type theory over intensional type theory \cite{hofmann:conservativity}.
+
+Martin was also influential in many other topic. Some of us had the honour of collaborating with him.
 
 More to write about? Semantical analysis of higher-order abstract syntax. Normalization by evaluation.
 
