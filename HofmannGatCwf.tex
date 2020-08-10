@@ -55,6 +55,7 @@
 \def\Op{\mathcal{O}}
 \def\Eq{\mathcal{E}}
 \def\D{\mathcal{D}}
+\def\V{\mathrm{V}}
 \def\Cwf{\mathbf{CwF}}
 \def\Obj{\mathrm{Obj}}
 \def\Ctx{\mathrm{Ctx}}
@@ -622,6 +623,10 @@ However, the equation for surjective pairing is not left-linear and with
 a variable on one side --- not good for rewriting.)
 
 A cwf that supports the generalized algebraic theory of cwfs is a cwf with an {\em internal cwf}. An internal cwf in the cwf $\Set$ of small sets is a {\em small cwf}, that is, it is a cwf in the ordinary sense (see definition \ref{}) except that it has small sets of objects, morphisms, types, and terms.
+
+An example of a cwf with an internal cwf is provided by the cwf $\Set$ of small sets with an internal category of "very small sets". We can make this precise if we assume that we work in set theory with two Grothendieck universes $\V_0$ and $\V_1$ with $\V_0 \in \V_1$. We call the members of $\U_1$ "small sets" and the members of $\U_0$ "very small sets". The category of contexts the cwf $\Set$ is the usual category of small sets, and the family valued functor maps a small set to a family of small sets. To get an internal cwf, we interpret the sort of objects as the small set $\V_0$, the sort of morphisms as a family of small sets (indexed by very small sets), and the sort of types (indexed by very small sets) as a family of small sets, etc.
+
+Further examples of internal cwfs inside $\Set$ are provided by freely generated cwfs, and cwfs supporting signatures of generalized algebraic theories, as constructed in the previous section.
 
 \subsection{Cwfs with $\Pi$-types} 
 We add operator symbols $\Pi, \lambda, \app$ and equations $\beta, \eta$ to the generalized algebraic theory of cwfs. 
