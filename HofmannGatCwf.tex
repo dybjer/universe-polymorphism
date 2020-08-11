@@ -335,10 +335,10 @@ We define inductively how to build a valid signature $\Sigma$ and the category $
 \end{description}
 Assume now that $\Sigma$ is a valid signature and that the category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ with $\inte{-} : \T_\Sigma \to \C$ as the unique morphism into an object $\C$. Then we can add a new type symbol, or a new operator symbol, or a new equation, to get a new valid signature, as follows:
 \begin{description}
+\item[Adding a new sort symbol (Thierry)] 
+Let $\Gamma_\C \in \C$ for $\C \in \Cwf_{\Sigma}$ be a uniform family of contexts, that is, if $f(\Gamma_\C) = \Gamma_\D$ for all morphisms $f \in \Cwf_{\Sigma}(\C,\D)$. Then we can extend $\Sigma$ with a new sort symbol to obtain an extended gat $\Sigma' = (\Sigma,F)$, where $F_\C \in \Ty_\C(\Gamma_\C)$ is a uniform family of types, that is $f(F_\C) = F_\D$. The objects of $\Cwf_{\Sigma'}$ are pairs $(\C,F)$, where $\C$ is an object of $\Cwf_{\Sigma}$. A morphism in $\Cwf_{\Sigma'}((\C,F), (\D,G))$ is a morphism $f \in \Cwf_{\Sigma}(\C,\D)$ such that $f(F_\C) = G_\D$.
 \item[Adding a new sort symbol] 
 If $\Gamma$ is a context in $\T_\Sigma$, then we can extend $\Sigma$ with a new sort symbol $F$ (with context $\Gamma$) to obtain an extended gat $\Sigma'$. The objects of $\Cwf_{\Sigma'}$ are pairs $(\C,F_\C)$, where $\C$ is an object of $\Cwf_{\Sigma}$ and $F_\C \in \Ty_\C(\inte{\Gamma})$. A morphism in $\Cwf_{\Sigma'}((\C,F_\C), (\D,F_\D))$ is a morphism in $\Cwf_{\Sigma}(\C,\D)$ that maps $F_\C$ to $F_\D$.
-\item[Adding a new sort symbol] 
-If $\Gamma$ is a context in $\T_\Sigma$, then we can extend $\Sigma$ with a new sort symbol $F$ (with context $\Gamma$) to obtain an extended gat $\Sigma'$. A cwf with support for $\Sigma'$ is a pair $(\C,F_\C)$, where $\C$ is a cwf with support for $\Sigma$  and $F_\C \in \Ty_\C(\inte{\Gamma})$. A morphism in $(\C,F_\C) \to (\D,F_\D)$ preserves $\Sigma'$ if it preserves $\Sigma$ and maps $F_\C$ to $F_\D$.
 \item[Adding a new operator symbol] 
 If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$, then we can extend $\Sigma$ with a new operator symbol $f$ (with context $\Gamma$ and type $A$). A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and there is $f_\C \in\Tm_\C(\inte{\Gamma},\inte{A}_{\Gamma})$.
 A cwf-morphism in $\C \to \D$ preserves $\Sigma'$ if it preserves $\Sigma$ and maps $f_\C$ to $f_\D$.
