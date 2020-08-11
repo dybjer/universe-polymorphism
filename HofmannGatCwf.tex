@@ -98,7 +98,7 @@ Once one has the appropriate definition of gats in terms of cwfs, the details be
 
 \subsection*{Plan of the paper}
 
-In Section 2 we define the category $\Cwf$ of categories with families and morphisms preserving cwf-structure on the nose. Section 3 contains our main definition of a syntax independent notion of valid signature $\Sigma$ for a gat and its associated category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure. In Section 4 we construct an initial object $\T_\Sigma$ in $\Cwf_\Sigma$. In Section 5 we show several examples of gats: for monoids, categories, cwfs, and cwfs with extra structure for a first universe. We also point out that cwfs with extra structure for  gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively. Finally, in Section 6 we discuss related work, for example relating to Voevodsky's initiality conjecture \cite{voevodsky:initiality}. We also discuss the relation to Altenkirch and Kaprosi's quotient inductive-inductive types \cite{altenkirch:qiits}.
+In Section 2 we define the category $\Cwf$ of categories with families and morphisms preserving cwf-structure on the nose. Section 3 contains our main definition of a syntax independent notion of valid signature $\Sigma$ for a gat and its associated category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure. In Section 4 we construct an initial object $\T_\Sigma$ in $\Cwf_\Sigma$. In Section 5 we show several examples of gats: for monoids, categories, cwfs, and cwfs with extra structure for a first universe. We also point out that cwfs with extra structure for  gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively. Finally, in Section 6 we discuss related work, for example relating to Voevodsky's initiality conjecture \cite{voevodsky:initiality} and Altenkirch and Kaprosi's quotient inductive-inductive types \cite{altenkirch:qiits}.
 
 We remark that we work in set-theoretic metalanguage throughout the paper. Everything we do is constructive and should be possible to formalize in Aczel's CZF \cite{AczelP:typtic}. We also remark that it would be interesting to work in type-theoretic metalanguage, for example, in homotopy type theory and Voevodsky's univalent foundations. As such it could contribute to the recent work by several researchers inspired by Voevodsky's initiality conjecture.
 
@@ -342,7 +342,7 @@ category $\Cwf_{\Sigma}$.
 Then we can add a new type symbol, or a new operator symbol, or a new equation, to get a new valid signature,
 as follows:
 \begin{description}
-\item[Adding a new sort symbol] 
+\item[Adding a sort symbol] 
   Let $\Gamma = (\Gamma_\C)$ be a uniform family of contexts.
   Then we can extend $\Sigma$ with a new sort symbol to obtain an extended gat
   $\Sigma' = (\Sigma,F)$.
@@ -350,13 +350,13 @@ as follows:
   and $F_{\C}$ is a type over $\Gamma_{\C}$.
   A morphism in $\Cwf_{\Sigma'}((\C,F_{\C}), (\D,F_{\D}))$
   is a morphism $f \in \Cwf_{\Sigma}(\C,\D)$ such that $f(F_\C) = F_\D$.
-\item[Adding a new operator symbol] 
+\item[Adding an operator symbol] 
   If $\Gamma$ is a uniform family of contexts and $A$ a uniform family of types over $\Gamma$,
   then we can extend $\Sigma$ with a new operator symbol $t$. An object of $\Cwf_{\Sigma'}$
   is a pair $\C,t_{\C}$ where $\C$ is an object in $\Cwf_{\Sigma}$ and $t_{\C}$ is
   in $\Tm_\C(\Gamma_\C,A_\C)$.
   A morphism in $(\C,t_{\C}) \to (\D,t_{\D})$ is a morphism $f$ in $\C\to \D$ such that $f(t_{\C}) = t_{\D}$
-\item[Adding a new equation] 
+\item[Adding an equation] 
   If $\Gamma$ is a uniform family of contexts, $A$ a uniform family of types over $\Gamma$
   and $a,a'$ uniform family of terms in $A$, then we can extend $\Sigma$ with a new equation
   $a = a'$ (with context $\Gamma$ and type $A$). In this case,
@@ -455,7 +455,7 @@ Note that the initial cwf $\T_\emptyset$ is rather uninteresting: its category o
 Assume now for the induction step that we have defined the grammar, the inference rules, $\T_\Sigma$ and the interpretation morphism $\inte{-} : \T_{\Sigma} \to \C$ in $\Cwf_\Sigma$.
 Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to define $\T_{\Sigma'}$.
 \begin{description}
-\item[Adding a new sort symbol] If $\Gamma \vdash_\Sigma$, then we can introduce a new sort symbol $F$ in the context $\Gamma$ representing the sequence of types of the arguments of $F$.
+\item[Adding a sort symbol] If $\Gamma \vdash_\Sigma$, then we can introduce a new sort symbol $F$ in the context $\Gamma$ representing the sequence of types of the arguments of $F$.
 \begin{itemize}
 \item
 We add a new production for raw types
@@ -481,12 +481,12 @@ $$
 It follows immediately that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
 \end{itemize}
 
-\item[Adding a new operator symbol] If $\Gamma \vdash_\Sigma A$, then we can introduce a new operator symbol $t$, where the context $\Gamma$ represents the sequence of types of the arguments and $A$ is the type of the result.
+\item[Adding an operator symbol] If $\Gamma \vdash_\Sigma A$, then we can introduce a new operator symbol $t$, where the context $\Gamma$ represents the sequence of types of the arguments and $A$ is the type of the result.
 \begin{itemize}
 \item
 We add a new production for raw terms
 $$
-a ::= f
+a ::= t
 $$
 to the productions for $\T_\Sigma$.
 \item
@@ -494,7 +494,7 @@ We add  the inference rule
 \begin{mathpar}
     \inferrule
     {}
-    {\Gamma \vdash_{\Sigma'} f : A}
+    {\Gamma \vdash_{\Sigma'} t : A}
   \end{mathpar}
 to the inference rules for $\T_\Sigma$. 
 \item
@@ -506,7 +506,7 @@ $$
 It follows immediately that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
 \end{itemize}
 
-\item[Adding a new equation] If $\Gamma \vdash_\Sigma a : A$ and $\Gamma \vdash_\Sigma a' : A$ we can introduce a new equation $a = a'$.
+\item[Adding an equation] If $\Gamma \vdash_\Sigma a : A$ and $\Gamma \vdash_\Sigma a' : A$ we can introduce a new equation $a = a'$.
 \begin{itemize}
 \item
 $\T_\Sigma'$ has the same productions as $\T_\Sigma$.
@@ -738,60 +738,62 @@ where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
 
 We remark that the gat for the first universe is inevitably "a la Tarski" in the sense that we distinguish between types and terms in a cwf and we must have an operation decoding a term into a type. However, the terminology "a la Russell" vs "a la Tarski" in Martin-Löf's sense refers to two different formalizations of the raw syntax and inference rules of type theory. The a la Tarski formulation is the one which arises most directly by turning the gat signature into its initial cwf. However, we can prove that the a la Russell formulation also gives rise to an initial cwf for the same signature. It follows that a la Tarski and a la Russell give rise to isomorphic cwfs that support a first universe.
 
-\subsection{Cwfs with universe tower structures} 
-
-The first formulation of intuitionistic type theory with an infinite sequence of universes is due to Martin-Löf
-\cite{martinlof:predicative}. Rules for cumulativity (or lifting) were added in Martin-Löf \cite{martinlof:hannover}. Both formulations have an infinite sequence of universes indexed by external natural numbers, and as a consequence the theories have infinitely many rules. 
-
-We shall now formalize a notion of finitary gat closely related to Martin-Löf's cumulative version. The external natural number indices will be represented by internal level indices in the gat. To this end we introduce a new sort symbol 
-$$
-\vdash \Level
-$$
-in addition to the previous four sort symbols. (However, we do not have a {\em type} of levels.) An element $n : \Level$ represent an external natural number. (Note that the new sort $\Level$ corresponds to adding a new form of judgment $\vdash n\  \Level$ to the formal system.)
-
-We add operator symbols for levels
-\begin{eqnarray*}
-&\vdash& 0 : \Level\\
-n : \Level &\vdash& \s(n) : \Level
-\end{eqnarray*}
-and operator symbols for types and terms:
-\begin{eqnarray*}
-n : \Level, \Gamma : \Ctx &\vdash& (\U_n)_\Gamma : \Ty(\Gamma)\\
-n : \Level, \Gamma : \Ctx, a : \Tm(\Gamma,(\U_n)_\Gamma) &\vdash& {\Ta_n}(a) : \Ty(\Gamma)\\
-n : \Level, \Gamma : \Ctx &\vdash& (\N^n)_\Gamma : \Tm(\Gamma,(\U_n)_\Gamma) \\
-n : \Level, \Gamma : \Ctx, 
-a : \Tm(\Gamma,(\U_n)_\Gamma), 
-b :  \Tm(\Gamma \cdot \Ta_n(a), (\U_n)_\Gamma))
-&\vdash&
- \Pi^n(a,b) : \Tm(\Gamma,(\U_n)_\Gamma)\\
-n : \Level, \Gamma : \Ctx &\vdash& (\U^n)_\Gamma \in \Tm(\Gamma,(\U_{\s(n)})_\Gamma)\\
-n : \Level, \Gamma : \Ctx, a : \Tm(\Gamma,(\U_n)_\Gamma) &\vdash& \Ta_n^{n+1}(a)\footnote{200804: should we change notation $\Ta_n^{n+1}$ to $\Ta^n$?} : \Tm(\Gamma,(\U_{\s(n)})_\Gamma)
-\end{eqnarray*}
-The last operator symbol is the lifting (or cumulativity) operator. We have the following equations
-\begin{eqnarray*}
-\Tan((\N^n)_\Gamma) &=& \N_\Gamma\\
-\Ta_n(\Pi^{n}(a,b)) &=& \Pi(\Ta_n(a),\Tan(b))\\
-\Ta_{\s(n)}((\U^n)_\Gamma ) &=& (\U_n)_\Gamma\\
-%&\Ta_{n+1}(\Ta_n^{n+1}(a)) &=& \Ta_n(a)\\
-\Ta^{n+1}_n((\N^n)_\Gamma) &=& (\N^{\s(n)})_\Gamma\\
-\Ta^{n+1}_n(\Pi^{n}(a,b)) &=& \Pi^{\s(n)}(\Ta^{n+1}_n(a),\Ta^{n+1}_n(b))
-\end{eqnarray*}
-Finally, all operator symbols commute with substitution:
-\begin{eqnarray*}
-{(\Un)}_\Gamma [ \gamma ] &=& {(\Un)}_\Delta\\
-\Tan(a) [ \gamma ] &=& \Tan(a[ \gamma ] )\\
-\N^n_\Gamma [ \gamma ] &=&\N^n_\Delta\\
-\Pi^{n}(a,b)[ \gamma ] &=& \Pi^{n}(a [ \gamma ], b[ \gamma^+ ])\\
-\U^n[\gamma] &=& \U^n\\
-\Ta_n^{n+1}(a)[\gamma]  &=& \Ta_n^{n+1}(a[\gamma])
-\end{eqnarray*}
-Mention a la Russell initiality?
-
-\subsection{Removing cumulativity} Agda, cumulativity up to equivalence.
-
-\subsection{Cwfs with universe polymorphic tower structures} Here we need to extend the cwf-framework further to take into account contexts with level variables, etc.
+%\subsection{Cwfs with universe tower structures} 
+%
+%The first formulation of intuitionistic type theory with an infinite sequence of universes is due to Martin-Löf
+%\cite{martinlof:predicative}. Rules for cumulativity (or lifting) were added in Martin-Löf \cite{martinlof:hannover}. Both formulations have an infinite sequence of universes indexed by external natural numbers, and as a consequence the theories have infinitely many rules. 
+%
+%We shall now formalize a notion of finitary gat closely related to Martin-Löf's cumulative version. The external natural number indices will be represented by internal level indices in the gat. To this end we introduce a new sort symbol 
+%$$
+%\vdash \Level
+%$$
+%in addition to the previous four sort symbols. (However, we do not have a {\em type} of levels.) An element $n : \Level$ represent an external natural number. (Note that the new sort $\Level$ corresponds to adding a new form of judgment $\vdash n\  \Level$ to the formal system.)
+%
+%We add operator symbols for levels
+%\begin{eqnarray*}
+%&\vdash& 0 : \Level\\
+%n : \Level &\vdash& \s(n) : \Level
+%\end{eqnarray*}
+%and operator symbols for types and terms:
+%\begin{eqnarray*}
+%n : \Level, \Gamma : \Ctx &\vdash& (\U_n)_\Gamma : \Ty(\Gamma)\\
+%n : \Level, \Gamma : \Ctx, a : \Tm(\Gamma,(\U_n)_\Gamma) &\vdash& {\Ta_n}(a) : \Ty(\Gamma)\\
+%n : \Level, \Gamma : \Ctx &\vdash& (\N^n)_\Gamma : \Tm(\Gamma,(\U_n)_\Gamma) \\
+%n : \Level, \Gamma : \Ctx, 
+%a : \Tm(\Gamma,(\U_n)_\Gamma), 
+%b :  \Tm(\Gamma \cdot \Ta_n(a), (\U_n)_\Gamma))
+%&\vdash&
+% \Pi^n(a,b) : \Tm(\Gamma,(\U_n)_\Gamma)\\
+%n : \Level, \Gamma : \Ctx &\vdash& (\U^n)_\Gamma \in \Tm(\Gamma,(\U_{\s(n)})_\Gamma)\\
+%n : \Level, \Gamma : \Ctx, a : \Tm(\Gamma,(\U_n)_\Gamma) &\vdash& \Ta_n^{n+1}(a)\footnote{200804: should we change notation $\Ta_n^{n+1}$ to $\Ta^n$?} : \Tm(\Gamma,(\U_{\s(n)})_\Gamma)
+%\end{eqnarray*}
+%The last operator symbol is the lifting (or cumulativity) operator. We have the following equations
+%\begin{eqnarray*}
+%\Tan((\N^n)_\Gamma) &=& \N_\Gamma\\
+%\Ta_n(\Pi^{n}(a,b)) &=& \Pi(\Ta_n(a),\Tan(b))\\
+%\Ta_{\s(n)}((\U^n)_\Gamma ) &=& (\U_n)_\Gamma\\
+%%&\Ta_{n+1}(\Ta_n^{n+1}(a)) &=& \Ta_n(a)\\
+%\Ta^{n+1}_n((\N^n)_\Gamma) &=& (\N^{\s(n)})_\Gamma\\
+%\Ta^{n+1}_n(\Pi^{n}(a,b)) &=& \Pi^{\s(n)}(\Ta^{n+1}_n(a),\Ta^{n+1}_n(b))
+%\end{eqnarray*}
+%Finally, all operator symbols commute with substitution:
+%\begin{eqnarray*}
+%{(\Un)}_\Gamma [ \gamma ] &=& {(\Un)}_\Delta\\
+%\Tan(a) [ \gamma ] &=& \Tan(a[ \gamma ] )\\
+%\N^n_\Gamma [ \gamma ] &=&\N^n_\Delta\\
+%\Pi^{n}(a,b)[ \gamma ] &=& \Pi^{n}(a [ \gamma ], b[ \gamma^+ ])\\
+%\U^n[\gamma] &=& \U^n\\
+%\Ta_n^{n+1}(a)[\gamma]  &=& \Ta_n^{n+1}(a[\gamma])
+%\end{eqnarray*}
+%Mention a la Russell initiality?
+%
+%\subsection{Removing cumulativity} Agda, cumulativity up to equivalence.
+%
+%\subsection{Cwfs with universe polymorphic tower structures} Here we need to extend the cwf-framework further to take into account contexts with level variables, etc.
 
 \section{Related work}
+
+Palmgren and Vickers \cite{palmgrenvickers}.
 
 The first proof of initiality of a formal system with dependent types is due to Streicher \cite{streicher:semtt}. He proved that the formal system for the Calculus of Construction forms an initial object in a category of contextual categories with extra structure for interpreting the whole calculus. Recently, Brunerie \cite{brunerie:initiality} presented a formalized proof in the Agda system that a formal system for Martin-Löf type theory forms an initial object in a category of contextual categories with extra structure for interpreting
 the type formers.
