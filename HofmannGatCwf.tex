@@ -78,9 +78,9 @@
 \maketitle
 
 \begin{abstract}
-We define a new finitely presented version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows a possibly infinite set of sort and operator symbols and equations, we only allow a finite number. Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules. 
+We define a version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows a possibly infinite sets of sort and operator symbols and equations, we only allow a finite number. Moreover, our definition is syntax independent in the sense that it is expressed in terms of uniform families in categories of models of generalized algebraic theories. %categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules. 
 %This is in the spirit of Voevodsky's "initiality conjecture"\footnote{200731: Maybe we should mention Martin Hofmann already in the abstract, and perhaps remove Voevodsky?} whereby type theories are characterized as initial objects in appropriate categories of models of type theory.  
-Our main result is that the category of cwfs supporting a certain signature for gats has an initial object. This result is obtained by extending the construction of an initial cwf from Castellan, Clairambault, and Dybjer. We provide examples of gats for monoids, categories, cwfs, and cwfs with extra structure for a first universe. We also point out that cwfs with extra structure for  gats of monoids, categories, cwfs are cwfs with an internal monoid, category, cwf, respectively.
+Our main result is that these categories of models all have initial objects defined in terms of syntax and inference rules. This result is obtained by extending Castellan, Clairambault, and Dybjer's construction of an initial cwf. We provide examples of gats for monoids, categories, cwfs, and cwfs with extra structure for a first universe. We also point out that cwfs with extra structure for  gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively.
 \end{abstract}
 
 \section{Introduction}
@@ -411,7 +411,7 @@ To build this initial object will be the topic of the next section.
 %
 %Note that the empty signature $\emptyset$ is the only valid signature that can be directly constructed from the definition. In order to form other signatures we need to construct initial cwfs supporting already constructed signatures. This is the topic of the next section.
 
-\section{All signatures have initial cwfs supporting them}
+\section{The construction of an initial object in $\Cwf_\Sigma$}
 
 We shall now show our main theorem. It can be viewed as a generalization of Birkhoff's completeness theorem for equational logic \cite{birkhoff}:
 \begin{theorem}
