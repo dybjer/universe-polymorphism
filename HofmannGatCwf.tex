@@ -468,7 +468,7 @@ Note that the initial cwf $\T_\emptyset$ is rather uninteresting: its category o
 Assume now for the induction step that we have defined the grammar, the inference rules, $\T_\Sigma$ and the interpretation morphism $\inte{-} : \T_{\Sigma} \to \C$ in $\Cwf_\Sigma$.
 Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to define $\T_{\Sigma'}$.
 \begin{description}
-\item[Adding a new sort symbol $F$] If $\Gamma \vdash_\Sigma$, then we can introduce a new sort symbol $F$ in the context $\Gamma$ representing the sequence of types of the arguments of $F$.
+\item[Adding a new sort symbol] If $\Gamma \vdash_\Sigma$, then we can introduce a new sort symbol $F$ in the context $\Gamma$ representing the sequence of types of the arguments of $F$.
 \begin{itemize}
 \item
 We add a new production for raw types
@@ -494,46 +494,45 @@ $$
 It follows immediately that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
 \end{itemize}
 
-\item[Adding a new operator symbol $f$ of type $A$ in context $\Gamma$] (The context $\Gamma$ represents the types of the arguments of $f$ and $A$ is the type of the result.)
+\item[Adding a new operator symbol] If $\Gamma \vdash_\Sigma A$, then we can introduce a new operator symbol $t$, where the context $\Gamma$ represents the sequence of types of the arguments and $A$ is the type of the result.
 \begin{itemize}
 \item
-$\Sigma'$ has a new production for raw terms
+We add a new production for raw terms
 $$
 a ::= f
 $$
-in addition to the productions for $\Sigma$.
+to the productions for $\T_\Sigma$.
 \item
-If $\Gamma \vdash_\Sigma$ then we add  the inference rule
+We add  the inference rule
 \begin{mathpar}
     \inferrule
     {}
     {\Gamma \vdash_{\Sigma'} f : A}
   \end{mathpar}
-to the inference rules for $\Sigma$. 
+to the inference rules for $\T_\Sigma$. 
 \item
-We define $f_{\T_{\Sigma'}} = [f]$. It follows that $ \T_{\Sigma'}$ supports $\Sigma'$. 
-\item
+We define $t_{\T_{\Sigma'}} = [t]$, so that $ \T_{\Sigma'}$ has a $\Sigma'$-structure $(\T_\Sigma,[t])$.\item
 We extend the definition of the interpretation morphism $\inte{-}$  to an interpretation morphism $\inte{-}' : \T_{\Sigma'} \to \C$ by 
 $$
-\inte{[f]}' = f_\C
+\inte{[t]}' = t_\C
 $$
 It follows immediately that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
 \end{itemize}
 
-\item[Adding a new equation $a = a'$ of type $A$ in context $\Gamma$] (The context $\Gamma$ represents the types of the arguments of $a$ and $a'$ and $A$ is the type of the result.)
+\item[Adding a new equation] If $\Gamma \vdash_\Sigma a : A$ and $\Gamma \vdash_\Sigma a' : A$ we can introduce a new equation $a = a'$.
 \begin{itemize}
 \item
-$\Sigma'$ has the same productions as $\Sigma$.
+$\T_\Sigma'$ has the same productions as $\T_\Sigma$.
 \item
-If $\Gamma \vdash_\Sigma a : A$ and $\Gamma \vdash_\Sigma a' : A$ then we add  the inference rule
+We add  the inference rule
 \begin{mathpar}
     \inferrule
     {}
     {\Gamma \vdash_{\Sigma'} a = a' : A}
   \end{mathpar}
-to the inference rules for $\Sigma$. 
+to the inference rules for $\T_\Sigma$. 
 \item
-$\T_{\Sigma'}$ is based on the same raw syntax as $\T_\Sigma$ but the equivalence relation has changed. To show that it supports $\Sigma'$ we need to show that it supports $\Sigma$ and the new equation, and both are immediate.
+$\T_{\Sigma'}$ is based on the same raw syntax as $\T_\Sigma$ but the equivalence relation has changed. To show that $\T_{\Sigma'} \in \Cwf_\Sigma'$ we just need to show that $[ a ] = [ a' ]$ but this immediate from the inference rule $\Gamma \vdash_{\Sigma'} a = a' : A$.
 \item
 In order to define $\inte{-}'$ we first define the partial function on the raw syntax to be identical to the partial function on the raw syntax for $\inte{-}$. We then prove that this partial function preserves the extended partial equivalence relation and define $\inte{-}'$ on the new equivalence classes. It follows immediately that $\inte{-}'$ is unique.
 \end{itemize}
