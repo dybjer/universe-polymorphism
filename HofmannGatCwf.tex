@@ -366,12 +366,12 @@ as follows:
 
 \end{definition}
 
-This definition is {\em syntax independent}. It corresponds however
-to a purely syntactical definition of formal systems, which describe for each signature
-$\Sigma$ an {\em initial object} $\T_{\Sigma}$ in $\Cwf_{\Sigma}$. To give a uniform
-  family of contexts is then equivalent to give a context in
-  $\T_{\Sigma}$ and similarly for uniform family of types and terms.
-To build this initial object will be the topic of the next section.
+This definition is {\em syntax independent}. However, it corresponds
+to a purely syntactic definition of an {\em initial object} $\T_{\Sigma}$ in $\Cwf_{\Sigma}$ (for all valid signatures $\Sigma$) in terms of grammars and inference rules. A context will be an equivalence class $[ \Gamma ]$ of raw contexts, and similarly for substitutions, types, and terms. To give a uniform
+  family of contexts $\Gamma_\C$ is then equivalent to give a context $[ \Gamma ] \in \T_{\Sigma}$, since $\Gamma_\C = \inte{ [ \Gamma ] }$ where $\inte{-}$ is the interpretation morphism $\T_\Sigma \to \C$.
+Uniform families of types and terms arise from types and terms in $\T_\Sigma$ in a similar way.
+
+To construction of $\T_\Sigma$ is the topic of the next section.
 
 %\section{Signatures and models of generalized algebraic theories}
 %
