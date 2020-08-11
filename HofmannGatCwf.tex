@@ -326,28 +326,91 @@ We shall give the signature of the cwf of gats stepwise: first the signature for
 
 \section{Signatures and models of generalized algebraic theories}
 
-We now come to the main point of this note. We define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$, but we will postpone the construction of these until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$. 
-\footnote{Say something about the fact that we do not assume anything about the relationship between $\T_\Sigma$ and $\T_{\Sigma'}$ because all initial objects are isomorphic, and hence we can move between them.}
+We now come to the main point of this note.
+We define how to build a valid gat signature $\Sigma$ and the associated
+category $\Cwf_{\Sigma}$ of cwfs with a $\Sigma$-structure.
+Each object of $\Cwf_{\Sigma}$ is a cwf with extra structure and
+each morphism will be a cwf morphism preserving this extra structure.
+For this definition, we will need the following auxiliary notions.
+
+A {\em uniform family of contexts} is a family of context $\Gamma = (\Gamma_{\C})$ for each
+$\C \in \Cwf_{\Sigma}$ such that
+$f(\Gamma_\C) = \Gamma_\D$ for all morphisms $f \in \Cwf_{\Sigma}(\C,\D)$.
+If $\Gamma$ is such a family, a {\em uniform family of types} over $\Gamma$ is a
+family of types $A = (A_{\C})$ with $A_{\C}$ type over $\Gamma_{\C}$ and
+$f(A_{\C}) = A_{\D}$ for all morphisms $f \in \Cwf_{\Sigma}(\C,\D)$.
+Finally, given $\Gamma$ and $A$, a {\em uniform family of terms} is a family
+of terms $a = (a_{\C})$ in $\Tm_{\C}(\Gamma_{\C},A_{\C})$ such that
+$f(a_{\C}) = a_{\D}$ for all morphisms $f \in \Cwf_{\Sigma}(\C,\D)$.
+
+
+
 \begin{definition}
 We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs with support for $\Sigma$ and cwf-morphisms that preserve it. First, the base case:
 \begin{description}
 \item[The empty signature] The empty signature $\emptyset$ is valid and $\Cwf_\emptyset = \Cwf$. 
 \end{description}
-Assume now that $\Sigma$ is a valid signature and that the category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ with $\inte{-} : \T_\Sigma \to \C$ as the unique morphism into an object $\C$. Then we can add a new type symbol, or a new operator symbol, or a new equation, to get a new valid signature, as follows:
+Assume now that we have defined $\Sigma$ as a valid signature and the associated
+category $\Cwf_{\Sigma}$.
+Then we can add a new type symbol, or a new operator symbol, or a new equation, to get a new valid signature,
+as follows:
 \begin{description}
-\item[Adding a new sort symbol (Thierry)] 
-Let $\Gamma_\C \in \C$ for $\C \in \Cwf_{\Sigma}$ be a uniform family of contexts, that is, if $f(\Gamma_\C) = \Gamma_\D$ for all morphisms $f \in \Cwf_{\Sigma}(\C,\D)$. Then we can extend $\Sigma$ with a new sort symbol to obtain an extended gat $\Sigma' = (\Sigma,F)$, where $F_\C \in \Ty_\C(\Gamma_\C)$ is a uniform family of types, that is $f(F_\C) = F_\D$. The objects of $\Cwf_{\Sigma'}$ are pairs $(\C,F)$, where $\C$ is an object of $\Cwf_{\Sigma}$. A morphism in $\Cwf_{\Sigma'}((\C,F), (\D,G))$ is a morphism $f \in \Cwf_{\Sigma}(\C,\D)$ such that $f(F_\C) = G_\D$.
 \item[Adding a new sort symbol] 
-If $\Gamma$ is a context in $\T_\Sigma$, then we can extend $\Sigma$ with a new sort symbol $F$ (with context $\Gamma$) to obtain an extended gat $\Sigma'$. The objects of $\Cwf_{\Sigma'}$ are pairs $(\C,F_\C)$, where $\C$ is an object of $\Cwf_{\Sigma}$ and $F_\C \in \Ty_\C(\inte{\Gamma})$. A morphism in $\Cwf_{\Sigma'}((\C,F_\C), (\D,F_\D))$ is a morphism in $\Cwf_{\Sigma}(\C,\D)$ that maps $F_\C$ to $F_\D$.
+  Let $\Gamma = (\Gamma_\C)$ be a uniform family of contexts.
+  Then we can extend $\Sigma$ with a new sort symbol to obtain an extended gat
+  $\Sigma' = (\Sigma,F)$.
+  The objects of $\Cwf_{\Sigma'}$ are pairs $(\C,F_{\C})$, where $\C$ is an object of $\Cwf_{\Sigma}$
+  and $F_{\C}$ is a type over $\Gamma_{\C}$.
+  A morphism in $\Cwf_{\Sigma'}((\C,F_{\C}), (\D,F_{\D}))$
+  is a morphism $f \in \Cwf_{\Sigma}(\C,\D)$ such that $f(F_\C) = F_\D$.
 \item[Adding a new operator symbol] 
-If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$, then we can extend $\Sigma$ with a new operator symbol $f$ (with context $\Gamma$ and type $A$). A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and there is $f_\C \in\Tm_\C(\inte{\Gamma},\inte{A}_{\Gamma})$.
-A cwf-morphism in $\C \to \D$ preserves $\Sigma'$ if it preserves $\Sigma$ and maps $f_\C$ to $f_\D$.
+  If $\Gamma$ is a uniform family of contexts and $A$ a uniform family of types over $\Gamma$,
+  then we can extend $\Sigma$ with a new operator symbol $t$. An object of $\Cwf_{\Sigma'}$
+  is a pair $\C,t_{\C}$ where $\C$ is an object in $\Cwf_{\Sigma}$ and $t_{\C}$ is
+  in $\Tm_\C(\Gamma_\C,A_\C)$.
+  A morphism in $(\C,t_{\C}) \to (\D,t_{\D})$ is a morphism $f$ in $\C\to \D$ such that $f(t_{\C}) = t_{\D}$
 \item[Adding a new equation] 
-If $\Gamma$ is a context in $\T_\Sigma$, $A \in \Ty_{\T_\Sigma}(\Gamma)$, and $a, a' \in \Tm_{\T_\Sigma}(\Gamma,A)$, then we can extend $\Sigma$ with a new equation $a = a'$ (with context $\Gamma$ and type $A$). A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and $\inte{a}_{\Gamma,A}= \inte{a'}_{\Gamma,A} \in \Tm_\C(\inte{\Gamma},\inte{A}_\Gamma)$. A cwf-morphism in $\C \to \D$, where $\C$ and $\D$ support $\Sigma'$, preserves $\Sigma'$ iff it preserves $\Sigma$.
+  If $\Gamma$ is a uniform family of contexts, $A$ a uniform family of types over $\Gamma$
+  and $a,a'$ uniform family of terms in $A$, then we can extend $\Sigma$ with a new equation
+  $a = a'$ (with context $\Gamma$ and type $A$). In this case,
+  $\Cwf_{\Sigma'}$ is a full subcategory of $\Cwf_{\Sigma}$. An object $\C$ in $\Cwf_{\Sigma'}$ is an object
+  $\C$ of $\Cwf_\Sigma$ such that $a_{\C} = a'_{\C}$.
 \end{description}
+
 \end{definition}
 
-Note that the empty signature $\emptyset$ is the only valid signature that can be directly constructed from the definition. In order to form other signatures we need to construct initial cwfs supporting already constructed signatures. This is the topic of the next section.
+This definition is {\em syntax independent}. It corresponds however
+to a purely syntactical definition of formal systems, which describe for each signature
+$\Sigma$ the {\em initial object} $\T_{\Sigma}$. To give a uniform
+  family of contexts is then equivalent to give a context in
+  $\T_{\Sigma}$ and similarly for uniform family of types and terms.
+of the category $\Cwf_{\Sigma}$.
+To build this initial object will be the topic of the next section.
+
+%\section{Signatures and models of generalized algebraic theories}
+%
+%We now come to the main point of this note. We define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$, but we will postpone the construction of these until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$. 
+%\footnote{Say something about the fact that we do not assume anything about the relationship between $\T_\Sigma$ and $\T_{\Sigma'}$ because all initial objects are isomorphic, and hence we can move between them.}
+%\begin{definition}
+%We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs with support for $\Sigma$ and cwf-morphisms that preserve it. First, the base case:
+%\begin{description}
+%\item[The empty signature] The empty signature $\emptyset$ is valid and $\Cwf_\emptyset = \Cwf$. 
+%\end{description}
+%Assume now that $\Sigma$ is a valid signature and that the category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ with $\inte{-} : \T_\Sigma \to \C$ as the unique morphism into an object $\C$. Then we can add a new type symbol, or a new operator symbol, or a new equation, to get a new valid signature, as follows:
+%\begin{description}
+%\item[Adding a new sort symbol (Thierry)] 
+%Let $\Gamma_\C \in \C$ for $\C \in \Cwf_{\Sigma}$ be a uniform family of contexts, that is, if $f(\Gamma_\C) = \Gamma_\D$ for all morphisms $f \in \Cwf_{\Sigma}(\C,\D)$. Then we can extend $\Sigma$ with a new sort symbol to obtain an extended gat $\Sigma' = (\Sigma,F)$, where $F_\C \in \Ty_\C(\Gamma_\C)$ is a uniform family of types, that is $f(F_\C) = F_\D$. The objects of $\Cwf_{\Sigma'}$ are pairs $(\C,F)$, where $\C$ is an object of $\Cwf_{\Sigma}$. A morphism in $\Cwf_{\Sigma'}((\C,F), (\D,G))$ is a morphism $f \in \Cwf_{\Sigma}(\C,\D)$ such that $f(F_\C) = G_\D$.
+%\item[Adding a new sort symbol] 
+%If $\Gamma$ is a context in $\T_\Sigma$, then we can extend $\Sigma$ with a new sort symbol $F$ (with context $\Gamma$) to obtain an extended gat $\Sigma'$. The objects of $\Cwf_{\Sigma'}$ are pairs $(\C,F_\C)$, where $\C$ is an object of $\Cwf_{\Sigma}$ and $F_\C \in \Ty_\C(\inte{\Gamma})$. A morphism in $\Cwf_{\Sigma'}((\C,F_\C), (\D,F_\D))$ is a morphism in $\Cwf_{\Sigma}(\C,\D)$ that maps $F_\C$ to $F_\D$.
+%\item[Adding a new operator symbol] 
+%If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$, then we can extend $\Sigma$ with a new operator symbol $f$ (with context $\Gamma$ and type $A$). A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and there is $f_\C \in\Tm_\C(\inte{\Gamma},\inte{A}_{\Gamma})$.
+%A cwf-morphism in $\C \to \D$ preserves $\Sigma'$ if it preserves $\Sigma$ and maps $f_\C$ to $f_\D$.
+%\item[Adding a new equation] 
+%If $\Gamma$ is a context in $\T_\Sigma$, $A \in \Ty_{\T_\Sigma}(\Gamma)$, and $a, a' \in \Tm_{\T_\Sigma}(\Gamma,A)$, then we can extend $\Sigma$ with a new equation $a = a'$ (with context $\Gamma$ and type $A$). A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and $\inte{a}_{\Gamma,A}= \inte{a'}_{\Gamma,A} \in \Tm_\C(\inte{\Gamma},\inte{A}_\Gamma)$. A cwf-morphism in $\C \to \D$, where $\C$ and $\D$ support $\Sigma'$, preserves $\Sigma'$ iff it preserves $\Sigma$.
+%\end{description}
+%\end{definition}
+%
+%Note that the empty signature $\emptyset$ is the only valid signature that can be directly constructed from the definition. In order to form other signatures we need to construct initial cwfs supporting already constructed signatures. This is the topic of the next section.
 
 \section{All signatures have initial cwfs supporting them}
 
