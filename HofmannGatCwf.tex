@@ -206,24 +206,26 @@ and $a\in \Tm(\Delta, A[\gamma])$, we have
 \quad\qquad
 \q_{\Gamma, A} \in \Tm(\Gamma\cext A, A[\p_{\Gamma,A}])
 \quad\qquad
-\tuple{\gamma, a} : \Delta \to \Gamma \cext A.
+\tuple{\gamma, a}_A : \Delta \to \Gamma \cext A.
 \] 
 We call $\Gamma \cext A$ the \emph{extended} context 
-and $\tuple{\gamma, a}$ the \emph{extended} substitution.
+and $\tuple{\gamma, a}_A$ the \emph{extended} substitution.
 
 The operations  ${\cext\,},~\tuple{\_,\_},~\p,~\q$
 satisfy the following universal property:
-$\tuple{\gamma, a}$ is the unique substitution satisfying
+$\tuple{\gamma, a}_A$ is the unique substitution satisfying
 \[
-\p_{\Gamma, A} \circ \tuple{\gamma, a} = \gamma
+\p_{\Gamma, A} \circ \tuple{\gamma, a}_A = \gamma
 \qquad \text{and}\qquad
-\q_{\Gamma, A} [\tuple{\gamma, a}] = a\,.
+\q_{\Gamma, A} [\tuple{\gamma, a}_A] = a\,.
 \]
 We refer (colloquially) to $\p$ as the \emph{first projection},
 and to $\q$ as the \emph{second projection}. %\footnote%
 {Note that the first equation implies that
 $\Tm(\Delta,A[\p_{\Gamma,A}][\tuple{\gamma, a}]) = \Tm(\Delta,A[\gamma])$
 so that $\q_{\Gamma, A} [\tuple{\gamma, a}]$ and $a$ are elements of the same set.}
+Here and below, subscripts are omitted from ${\cext\,},~\tuple{\_,\_},~\p,~\q$
+when they can be reconstructed from the context (pun not intended).
 (End Definition~\ref{def:Cwfobj}.)
 \end{definition}
 
@@ -527,36 +529,58 @@ In order to define $\inte{-}'$ we first define the partial function on the raw s
 
 \section{Examples of generalized algebraic theories}
 
-\subsection{Monoids} The one sorted algebraic theory of monoids has two operator symbols  $\idmon$ for identity and $\comp$ for composition, and associativity and identity laws as equations. As every other algebraic theory in the ordinary sense the algebraic theory of monoids yields a generalized algebraic theory. We first introduce one constant sort symbol $M$, and then the operator symbols $\id$ for identity and $\circ$ for composition, and the associativity and identity laws as equations. 
+\subsection{Monoids} The one-sorted algebraic theory of monoids has two operator symbols,
+$\idmon$ for identity and $\comp$ for composition, and associativity and identity laws as equations.
+As every other algebraic theory in the ordinary sense the algebraic theory of monoids yields a
+generalized algebraic theory. 
 
-We shall now show in how to build a valid signature for monoids following the recipe in the previous section using the cwf-combinators. (Note that we drop the indices on $\p_A, \q_A,\tuple{\gamma,a}_A$ and $\id_\Gamma$
-and the index on $\vdash_\Sigma$.)
+%One first introduces one constant sort symbol $M$, and then 
+%the operator symbols $\idmon$ for identity and $\comp$ for composition, 
+%and the associativity and identity laws as equations. 
+
+We shall now show in some detail how to build a valid signature for monoids 
+using the cwf-combinators, following the recipe in the previous section. 
+(Note that we drop the index $\Sigma$ in $\vdash_\Sigma$. See \cite{CCD} for
+the inference rules for the cwf-combinators. 
+As a rule of the thumb: these inference rules closely follow Definition~\ref{def:Cwfobj}.)
+
 \begin{itemize}
 \item 
-First, we have $1 \vdash$ for the empty signature, so we can add a production for the constant sort symbol $\Mon$ and the inference rule:
+First, we have $1 \vdash$ for the empty signature, so we can 
+add a production for the constant sort symbol $\Mon$ and the inference rule:
 \begin{eqnarray*}
 1 &\vdash& \Mon
 \end{eqnarray*}
+For later use we infer $1.\Mon \vdash$ and, using $\p:1.\Mon \to 1$, $1.\Mon\vdash\Mon[\p]$,
+so $1.\Mon.\Mon[\p] \vdash$.
 \item
 We then add a production for the constant operator symbol $\idmon$ and the inference rule:
 \begin{eqnarray*}
 1 &\vdash& \idmon : \Mon
 \end{eqnarray*}
+Again for later use we infer $1.\Mon\vdash \idmon[\p] :\Mon[\p]$.
+Note that here $\p = \tuple{}$, the empty substitution $1.\Mon \to 1$,
+since there is only one substitution $1.\Mon \to 1$.
 \item
-We then add a production for the binary operator symbol $\comp$. Since we can derive
-$1.\Mon.\Mon[\p] \vdash$ using the previous inference rules, we can add the inference rule
+We then add a production for the binary operator symbol $\comp$. 
+Using another $\p: 1.\Mon.\Mon[\p] \to 1.\Mon$ (note the different type), 
+we can derive $1.\Mon.\Mon[\p] \vdash \Mon[\p][\p]$, so we can add the inference rule
 \begin{eqnarray*}
 1.\Mon.\Mon[\p] &\vdash& \comp : \Mon[\p][\p]
 \end{eqnarray*}
-Note that we need to weaken $\Mon$ by substituting with $\p$.
+Note that we project $\Mon$ on the right twice, reflecting that $\comp$ is binary.
 \item
-Since we can derive $1.\Mon \vdash$, $1.\Mon \vdash \comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}] : \Mon[p]$ and $1.\Mon \vdash \q : \Mon[\p]$ using the previous inference rules, we can add the inference rule for the equation ($\idmon$ is a left identity):
+We can derive $1.\Mon \vdash \q : \Mon[\p]$. With some effort,
+using previous inferences, we can also derive 
+$1.\Mon \vdash \comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}] : \Mon[\p]$.
+Hence we can add the inference rule for the equation ($\idmon$ is a left identity):
 \begin{eqnarray*}
 1.\Mon &\vdash& \comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}] = \q : \Mon[\p]
 \end{eqnarray*}
 \item
 We omit the rendering of the right identity and associativity laws.
 \end{itemize}
+
 We also display the sort symbols, operator symbols, and equations in ordinary notation with variables for comparison:
 \begin{eqnarray*}
 &\vdash& \Mon\\
