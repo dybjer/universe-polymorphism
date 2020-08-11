@@ -78,9 +78,9 @@
 \maketitle
 
 \begin{abstract}
-We define a version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows a possibly infinite sets of sort and operator symbols and equations, we only allow a finite number. Moreover, our definition is syntax independent in the sense that it is expressed in terms of uniform families in categories of models of generalized algebraic theories. %categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules. 
+We define a new version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows possibly infinite sets of sort and operator symbols and equations, we only allow a finite number. Moreover, our definition is syntax independent in the sense that it is expressed in terms of uniform families in categories of models of generalized algebraic theories. %categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules. 
 %This is in the spirit of Voevodsky's "initiality conjecture"\footnote{200731: Maybe we should mention Martin Hofmann already in the abstract, and perhaps remove Voevodsky?} whereby type theories are characterized as initial objects in appropriate categories of models of type theory.  
-Our main result is that these categories of models all have initial objects defined in terms of syntax and inference rules. This result is obtained by extending Castellan, Clairambault, and Dybjer's construction of an initial cwf. We provide examples of gats for monoids, categories, cwfs, and cwfs with extra structure for a first universe. We also point out that cwfs with extra structure for  gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively.
+These categories of models are categories of categories with families with extra structure. Our main result is that they all have initial objects defined in terms of syntax and inference rules. This result is obtained by extending Castellan, Clairambault, and Dybjer's construction of an initial cwf. We provide examples of gats for monoids, categories, cwfs, and cwfs with extra structure for a first universe. We also point out that cwfs with extra structure for  gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively.
 \end{abstract}
 
 \section{Introduction}
@@ -96,7 +96,7 @@ The gat of cwfs is a kind of idealized formal system of dependent type theory. I
 
 However, the reader may now object that we have a circular definition. We learn what dependent type theory is provided we already know what dependent type theory is!
 
-In this paper we explore and resolve this circularity. The main novelty is to get a syntax independent definition of gats in terms of cwfs. We define a new finitary notion of generalized algebraic theory and simultaneosly a general categorical notion of model. We simultaneously define what it means to be a valid signature $\Sigma$ for a gat and the category $\Cwf_\Sigma$ of cwfs supporting $\Sigma$. This definition refers to the construction of initial objects in $\Cwf_\Sigma$ but is independent of the details of this construction. Afterwards, we show that the initial object of $\Cwf_\Sigma$ exists for all valid $\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of the initial object of the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
+In this paper we explore and resolve this circularity. The main novelty is to get a syntax independent definition of gats in terms of cwfs with extra structure. We define a new finitely presented notion of generalized algebraic theory and simultaneosly a general categorical notion of model. We simultaneously define what it means to be a valid signature $\Sigma$ for a gat and the category $\Cwf_\Sigma$ of cwfs supporting $\Sigma$. This definition refers to uniform families of contexts, types, and terms in $\Cwf_\Sigma$, a purely semantic notion. Afterwards, we construct an initial object $\T_\Sigma \i \Cwf_\Sigma$ for all valid $\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of the initial object of the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
 
 Once one has the appropriate definition of gats in terms of cwfs, the details become natural and there are no surprises. The definition becomes canonical once we accept the abstract definition of dependent type theories as initial cwfs with extra structure. (Refer here to Voevodsky's initiality conjecture in the related work section.)
 
@@ -808,6 +808,8 @@ Mention a la Russell initiality?
 
 The first proof of initiality of a formal system with dependent types is due to Streicher \cite{streicher:semtt}. He proved that the formal system for the Calculus of Construction forms an initial object in a category of contextual categories with extra structure for interpreting the whole calculus. Recently, Brunerie \cite{brunerie:initiality} presented a formalized proof in the Agda system that a formal system for Martin-Löf type theory forms an initial object in a category of contextual categories with extra structure for interpreting
 the type formers.
+
+Voevodsky's initiality conjecture programme.
 
 \footnote{Mention LF-encodings, mention work on initiality conjecture? Uemura}
 
