@@ -71,16 +71,16 @@
 %\newcommand{\hom}{\mathrm{hom}}
 
 
-\title[Generalized Algebraic Theories and Categories with Families]{A Note on Finitary Generalized Algebraic Theories\\and Categories with Families}\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
+\title[Generalized Algebraic Theories and Categories with Families]{A Note\\ on Finitely Presented Generalized Algebraic Theories\\and Categories with Families}\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-We define a new finitary version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows a possibly infinite set of sort and operator symbols, we only allow a finite number. Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules. 
+We define a new finitely presented version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows a possibly infinite set of sort and operator symbols and equations, we only allow a finite number. Moreover, our definition is categorical in the sense that it is based on the notion of initial cwf, and abstract in that it is independent of the particular construction of initial cwfs in terms of syntax and inference rules. 
 %This is in the spirit of Voevodsky's "initiality conjecture"\footnote{200731: Maybe we should mention Martin Hofmann already in the abstract, and perhaps remove Voevodsky?} whereby type theories are characterized as initial objects in appropriate categories of models of type theory.  
-Our main result is that the category of cwfs supporting a certain signature for gats has an initial object. This result is obtained by extending the construction of an initial cwf from Castellan, Clairambault, and Dybjer. We provide examples of gats for monoids, categories, cwfs, cwfs extended with a first universe, and several different formulations of cwfs with a towers of universes. We also point out that cwfs supporting the gats of monoids, categories, cwfs are cwfs with an internal monoid, category, cwf, respectively.
+Our main result is that the category of cwfs supporting a certain signature for gats has an initial object. This result is obtained by extending the construction of an initial cwf from Castellan, Clairambault, and Dybjer. We provide examples of gats for monoids, categories, cwfs, and cwfs with extra structure for a first universe. We also point out that cwfs with extra structure for  gats of monoids, categories, cwfs are cwfs with an internal monoid, category, cwf, respectively.
 \end{abstract}
 
 \section{Introduction}
@@ -381,10 +381,9 @@ as follows:
 
 This definition is {\em syntax independent}. It corresponds however
 to a purely syntactical definition of formal systems, which describe for each signature
-$\Sigma$ the {\em initial object} $\T_{\Sigma}$. To give a uniform
+$\Sigma$ an {\em initial object} $\T_{\Sigma}$ in $\Cwf_{\Sigma}$. To give a uniform
   family of contexts is then equivalent to give a context in
   $\T_{\Sigma}$ and similarly for uniform family of types and terms.
-of the category $\Cwf_{\Sigma}$.
 To build this initial object will be the topic of the next section.
 
 %\section{Signatures and models of generalized algebraic theories}
@@ -443,7 +442,7 @@ A cwf $\T_\Sigma$ is then constructed from the equivalence classes of derivable 
 A $\Cwf_\Sigma$-morphism $\inte{-} : \T_\Sigma \to \C$ for every $\C \in \Cwf_\Sigma$. This is the {\em interpretation morphism}. This morphism is a partial function defined by induction on the raw syntax, such that it maps raw contexts to contexts in $\C$, raw substitutions to substitutions in $\C$, raw types to types in $\C$, and raw terms to terms in $\C$. We show that these partial functions preserve the partial equivalence relations so that we can define the interpretation morphism on the equivalence classes. Finally we show that it indeed is a $\Cwf_\Sigma$-morphism and the unique such into $\C$.
 \end{itemize}
  
-We begin by doing this construction for the base case: the {\bf empty signature} $\emptyset$. 
+We begin with the construction for the base case: the {\bf empty signature} $\emptyset$. 
 \begin{itemize}
 \item 
 We start with the following grammar for raw contexts, raw substitutions, raw types, and raw terms.
@@ -466,27 +465,27 @@ The system of inference rules is displayed in \cite{castellan:tlca2015,castellan
 Note that the initial cwf $\T_\emptyset$ is rather uninteresting: its category of contexts contains only a terminal object (the empty context), and there are no types and terms. Nevertheless, the grammar and inference rules used in its definition form a starting point. The grammar for raw types and raw terms will be extended each time we add a new sort symbol or operator symbol, respectively. For each such new symbol and each new equation we will also add a new inference rule. As a consequence we will generate non-trivial $\T_\Sigma$.
 \end{itemize}
 
-Assume now for the induction step that we have defined the grammar, the inference rules, $\T_\Sigma$ and the interpretation morphism $\inte{-} : \T_{\Sigma} \to \C$ for $\Sigma$.
-Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to extend these definitions to $\Sigma'$.
+Assume now for the induction step that we have defined the grammar, the inference rules, $\T_\Sigma$ and the interpretation morphism $\inte{-} : \T_{\Sigma} \to \C$ in $\Cwf_\Sigma$.
+Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to define $\T_{\Sigma'}$.
 \begin{description}
-\item[Adding a new sort symbol $F$ in $\Gamma$] (The context $\Gamma$ represents the types of the arguments of $F$.)
+\item[Adding a new sort symbol $F$] If $\Gamma \vdash_\Sigma$, then we can introduce a new sort symbol $F$ in the context $\Gamma$ representing the sequence of types of the arguments of $F$.
 \begin{itemize}
 \item
-$\Sigma'$ has a new production for raw types
+We add a new production for raw types
 $$
 A ::= F
 $$
-in addition to the productions for $\Sigma$.
+to the productions for $\T_\Sigma$.
 \item
-If $\Gamma \vdash_\Sigma$ then we add  the inference rule
+We add  the inference rule
 \begin{mathpar}
     \inferrule
     {}
     {\Gamma \vdash_{\Sigma'} F}
   \end{mathpar}
-to the inference rules for $\Sigma$. 
+to the inference rules for $\T_\Sigma$. 
 \item
-We define $F_{\T_{\Sigma'}} = [F]$. It follows that $ \T_{\Sigma'}$ supports $\Sigma'$. 
+We define $F_{\T_{\Sigma'}} = [F]$, so that $ \T_{\Sigma'}$ has a $\Sigma'$-structure $(\T_\Sigma,[F])$. 
 \item
 We extend the definition of the interpretation morphism $\inte{-}$  to an interpretation morphism $\inte{-}' : \T_{\Sigma'} \to \C$ by 
 $$
