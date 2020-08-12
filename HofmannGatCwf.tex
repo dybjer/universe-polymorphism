@@ -510,10 +510,8 @@ generalized algebraic theory.
 %and the associativity and identity laws as equations. 
 
 We shall now show in some detail how to build a valid signature for internal monoids 
-using the cwf-combinators, following the recipe in the previous section. 
-(Note that we drop the index $\Sigma$ in $\vdash_\Sigma$. See \cite{CCD} for
-the inference rules for the cwf-combinators. 
-Note that these inference rules follow the principles of introducing sort symbols, operator symbols, and equations we displayed in Section 4 when building the initial cwf $\T_\Sigma$ for appropriate $\Sigma$.
+using the cwf-combinators, following the recipe for introducing sort symbols, operators symbols, and equations in the previous section. (We shall omit the index $\Sigma$ in $\vdash_\Sigma$.)
+%Note that these inference rules follow the principles of introducing sort symbols, operator symbols, and equations we displayed in Section 4 when building the initial cwf $\T_\Sigma$ for appropriate $\Sigma$.
 
 \begin{itemize}
 \item 
@@ -577,7 +575,7 @@ Sort symbols:
 \Delta, \Gamma : \Obj &\vdash& \Hom(\Delta,\Gamma)\\
 \end{eqnarray*}
 
-Operator symbols\footnote{We must distinguish between notation for identity and composition in the cwf and in the gat based on the cwf}:
+Operator symbols:
 \begin{eqnarray*}
 \Gamma : \Obj &\vdash& \id_\Gamma : \Hom(\Gamma,\Gamma)\\
 \Xi,\Delta,\Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta) &\vdash&
@@ -720,7 +718,7 @@ b :  \tm(\Gamma \cdot \Ta_0(a), (\U_0)_\Gamma))
 &\vdash&
  \Pi^0(a,b) : \tm(\Gamma,(\U_0)_\Gamma)
 \end{eqnarray*}
-$(\U_0)_\Gamma$ is the first universe (a type) relative to the context $\Gamma$; $\Ta_0$ is the decoding operation mapping a term in the first universe to the corresponding type; \footnote{add discussion of sort vs type in the introduction}; $\N^0$ is the code for $\N$ in the first universe, and $\Pi^0$ forms codes for $\Pi$-types in the first universe. (Note that we have dropped the context argument of $\Ta_0$ and $\Pi^0$.)
+$(\U_0)_\Gamma$ is the first universe (a type) relative to the context $\Gamma$; $\Ta_0$ is the decoding operation mapping a term in the first universe to the corresponding type; $\N^0$ is the code for $\N$ in the first universe, and $\Pi^0$ forms codes for $\Pi$-types in the first universe. (Note that we have dropped the context argument of $\Ta_0$ and $\Pi^0$.)
 
 We add the decoding equations:
 \begin{eqnarray*}
