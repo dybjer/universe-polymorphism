@@ -701,10 +701,27 @@ An example of a cwf with an internal cwf is provided by the cwf $\Set$ of small 
 Further examples of internal cwfs inside $\Set$ are provided by cwfs supporting signatures of generalized algebraic theories, as constructed in the previous section.
 
 \subsection{Intrnal cwfs with $\Pi$-types} 
-We add operator symbols $\Pi, \lambda, \app$ and equations $\beta, \eta$ to the generalized algebraic theory of cwfs. 
+We add the operator symbols 
+\begin{eqnarray*}
+\Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A)&\vdash& \Pi(A,B) : \ty(\Gamma)\\
+\Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A), b : \tm(\Gamma.A, B) &\vdash& \lambda(b) : \tm(\Gamma,\Pi(A,B))\\
+\Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A), c :  \tm(\Gamma,\Pi(A,B)), a : \tm(\Gamma, A) &\vdash& \app(c,a) : \tm(\Gamma, B[\tuple{\id,a}])
+\end{eqnarray*}
+and equations for $\beta, \eta$ (omitting the context and type)
+ \begin{eqnarray*}
+ \app(\lambda(b),a) &=& b[\tuple{\id,a}]\\
+ \lambda(\app(c,\q)) &=& c
+\end{eqnarray*}
+and commutation with respect to substitution.
+\begin{eqnarray*}
+\Pi(A,B)[ \gamma ] &=& \Pi(A [ \gamma ], B[ \gamma^+ ])\\
+\lambda(b) [ \gamma ] &=& \lambda(b[\gamma^+ ])\\
+\app(c,a) [ \gamma ] &=& \app(c[ \gamma ], a[ \gamma ] )
+\end{eqnarray*}
+where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
 
 \subsection{Internal cwfs with $\N$-types} 
-We add operator symbols $\N, 0, \s, \Rec$ and equations for $\Rec$.
+We add operator symbols $\N, 0, \s, \Rec$ and equations for $\Rec$ and commutativity with substitution, but omit the details.
 
 \subsection{Internal cwfs with $\U_0$ closed under $\Pi$ and $\N$} 
 We add operator symbols
@@ -732,7 +749,7 @@ and the equations for preservation of substitution:
 \N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
 \Pi^0(a,b)[ \gamma ] &=& \Pi^0(a [ \gamma ], b[ \gamma^+ ])
 \end{eqnarray*}
-where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
+%where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
 
 We remark that the gat for the first universe is inevitably {\em \`a la Tarski} in the sense that we distinguish between types and terms in a cwf and we must have an operation decoding a term into a type. However, Martin-Löf's distinction between {\em \`a la Russell} and {\em \`a la Tarski} is a distinction between two different formulation of the raw syntax and inference rules of type theory.
 
