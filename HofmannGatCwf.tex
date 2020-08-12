@@ -817,7 +817,7 @@ We remark that the gat for the first universe is inevitably "a la Tarski" in the
 
 \section{Related work}
 
-Palmgren and Vickers \cite{palmgrenvickers}.
+
 
 The first proof of initiality of a formal system with dependent types is due to Streicher \cite{streicher:semtt}. He proved that the formal system for the Calculus of Construction forms an initial object in a category of contextual categories with extra structure for interpreting the whole calculus. Recently, Brunerie \cite{brunerie:initiality} presented a formalized proof in the Agda system that a formal system for Martin-Löf type theory forms an initial object in a category of contextual categories with extra structure for interpreting
 the type formers.
@@ -825,6 +825,9 @@ the type formers.
 Voevodsky's initiality conjecture programme.
 
 \footnote{Mention LF-encodings, mention work on initiality conjecture? Uemura}
+
+Another related contribution is Palmgren and Vickers' \cite{palmgrenvickers} detailed construction of 
+an initial model of an essentially algebraic theory.
 
 Our $\T_\Sigma$ are closely related to Altenkirch and Kaprosi's quotient inductive-inductive types \cite{altenkirch:qiits}. Inductive-inductive types \cite{nordvallforsberg:iids} is a generalization of mutual inductive families, where one index set may depend on another. The motivating example is the formal system of type theory by simultaneously defining contexts, substitutions depending on contexts, types depending on context, and terms depending on types and contexts. We can do so by considering the sort symbols of the gat of cwfs as formation rules and the operator symbols as introduction rules. A quotient inductive-inductive type is a combination of quotient types and inductive-inductive types, where there are also constructors witnessing equations. Our $\T_\Sigma$ differs from Altenkirch and Kaprosi's notion in the following respects. The stipulated equations in $\Sigma$ generate judgmental equalities in a system for dependent type theory implementing $\T_\Sigma$. On the other hand quotient inductive-inductive types are developed in the setting of an intensional type theory, such as Agda's, and the stipulated equations are propositional equalities and hence we need to use transport maps when we move between equal types. 
 
