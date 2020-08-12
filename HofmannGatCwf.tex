@@ -105,6 +105,12 @@ In Section 2 we define the category $\Cwf$ of categories with families and morph
 We remark that we work in set-theoretic metalanguage throughout the paper. Everything we do is constructive and should be possible to formalize in Aczel's CZF \cite{AczelP:typtic}. We also remark that it would be interesting to work in type-theoretic metalanguage, for example, in homotopy type theory and Voevodsky's univalent foundations. As such it could contribute to the recent work by several researchers inspired by Voevodsky's initiality conjecture.
 
 \subsection*{To the memory of Martin Hofmann}
+The content of this paper  is closely related to several of Martin's
+important contributions to the semantics of dependent type theory.
+Martin was an extremely gifted and generous person, 
+many researchers have benefitted from his collaboration.
+He is truly missed.
+
 
 \section{Categories with families}\label{sec:def_cwf}
 
@@ -544,7 +550,8 @@ Hence we can add the inference rule for the equation ($\idmon$ is a left identit
 We omit the rendering of the right identity and associativity laws.
 \end{itemize}
 
-We also display the sort symbols, operator symbols, and equations in ordinary notation with variables for comparison:
+We also display the sort symbols, operator symbols, 
+and equations in ordinary notation with named variables for comparison:
 \begin{eqnarray*}
 &\vdash& \Mon\\
 &\vdash& e : \Mon\\
@@ -553,6 +560,8 @@ y : \Mon &\vdash& \comp(\idmon,y) = y : \Mon\\
 x : \Mon &\vdash& \comp(x,\idmon) = x : \Mon\\
 x, y, z : \Mon &\vdash& \comp(\comp(x,y),z) = \comp(x,\comp(y,z)) : \Mon
 \end{eqnarray*}
+Examples later in this section will use named variables,
+which are easier to read, but more difficult to deal with semantically.
 
 A cwf $\C$ that supports this gat has an {\em internal monoid} in $\C$. This is a cwf-version of the notion of internal monoid which can be defined in any category with finite products. Ordinary (small) monoids come out as internal monoids in $\Set$, the cwf of small sets.
 
