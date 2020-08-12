@@ -57,9 +57,9 @@
 \def\D{\mathcal{D}}
 \def\V{\mathrm{V}}
 \def\Cwf{\mathbf{CwF}}
-\def\Obj{\mathrm{Obj}}
+\def\Obj{\mathrm{obj}}
 \def\Ctx{\mathrm{Ctx}}
-\def\Hom{\mathrm{Hom}}
+\def\Hom{\mathrm{hom}}
 \def\id{\mathrm{id}}
 \def\Mon{\mathrm{M}}
 \def\idmon{\mathrm{e}}
@@ -621,33 +621,33 @@ An internal category in the cwf $\Set$ of small sets is a small category.
 
 \subsection{Internal cwfs}
 
-The gat of internal cwfs is obtained by extending the gat of internal categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of context to $\Ctx$.
+The gat of internal cwfs is obtained by extending the gat of internal categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of context to $\ctx$.
 
 \subsubsection{The extension with a family valued functor}
 \mbox{ }
 
 Sort symbols:
 \begin{eqnarray*}
-\Gamma : \Ctx &\vdash& \Ty(\Gamma)\\
-\Gamma : \Ctx, A:\Ty(\Gamma) &\vdash& \Tm(\Gamma,A)
+\Gamma : \ctx &\vdash& \ty(\Gamma)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \tm(\Gamma,A)
 \end{eqnarray*}
 
 Operator symbols:
 \begin{eqnarray*}
-\Gamma,\Delta : \Ctx, A:\Ty(\Gamma), \gamma : \Hom(\Delta,\Gamma) &\vdash& 
-A[\gamma] : \Ty(\Delta)\\
-\Gamma,\Delta : \Ctx, A:\Ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\Tm(\Gamma,A) &\vdash&  a[\gamma] : \Tm(\Delta,A[\gamma])
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma) &\vdash& 
+A[\gamma] : \ty(\Delta)\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Gamma,A) &\vdash&  a[\gamma] : \tm(\Delta,A[\gamma])
 \end{eqnarray*}
 
 Equations:
 \begin{eqnarray*}
-\Gamma : \Ctx, A:\Ty(\Gamma) &\vdash& A[\id_\Gamma] = A : \Ty(\Gamma)\\
-\Gamma : \Ctx, A:\Ty(\Gamma), a:\Tm(\Gamma,A) &\vdash& a[\id_\Gamma] = a : \Tm(\Gamma,A)\\
-\Xi,\Delta,\Gamma : \Ctx, \delta : \Hom(\Xi,\Delta), \gamma : \Hom(\Delta,\Gamma),
-A:\Ty(\Gamma) &\vdash& A[\gamma\circ\delta] = A[\gamma][\delta]: \Ty(\Xi)\\
-\Xi,\Delta,\Gamma : \Ctx, \delta : \Hom(\Xi,\Delta), \gamma : \Hom(\Delta,\Gamma),
-A:\Ty(\Gamma), a:\Tm(\Gamma,A) &\vdash& 
-a[\gamma\circ\delta] = a[\gamma][\delta]: \Tm(\Xi,A[\gamma\circ\delta])
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& A[\id_\Gamma] = A : \ty(\Gamma)\\
+\Gamma : \ctx, A:\ty(\Gamma), a:\tm(\Gamma,A) &\vdash& a[\id_\Gamma] = a : \tm(\Gamma,A)\\
+\Xi,\Delta,\Gamma : \ctx, \delta : \Hom(\Xi,\Delta), \gamma : \Hom(\Delta,\Gamma),
+A:\ty(\Gamma) &\vdash& A[\gamma\circ\delta] = A[\gamma][\delta]: \ty(\Xi)\\
+\Xi,\Delta,\Gamma : \ctx, \delta : \Hom(\Xi,\Delta), \gamma : \Hom(\Delta,\Gamma),
+A:\ty(\Gamma), a:\tm(\Gamma,A) &\vdash& 
+a[\gamma\circ\delta] = a[\gamma][\delta]: \tm(\Xi,A[\gamma\circ\delta])
 \end{eqnarray*}
 
 \subsubsection{The extension with a terminal object}
@@ -655,14 +655,14 @@ No new sorts are required.
   
 Operator symbols:
 \begin{eqnarray*}
-&\vdash& 1 : \Ctx\\
-\Gamma : \Ctx &\vdash& \tuple{}_\Gamma : \Hom(\Gamma,1)
+&\vdash& 1 : \ctx\\
+\Gamma : \ctx &\vdash& \tuple{}_\Gamma : \Hom(\Gamma,1)
 \end{eqnarray*}
 
 Equations:
 \begin{eqnarray*}
  &\vdash& \id_1 = \tuple{}_1 : \Hom(1,1)\\
-\Gamma,\Delta : \Ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash& 
+\Gamma,\Delta : \ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash& 
 \tuple{}_\Gamma\circ\gamma = \tuple{}_\Delta : \Hom(\Delta,1)
 \end{eqnarray*}
 (The latter two equations are better for term rewriting then the
@@ -674,20 +674,20 @@ No new sorts are required.
   
 Operator symbols:
 \begin{eqnarray*}
-\Gamma : \Ctx, A:\Ty(\Gamma) &\vdash& \Gamma\cext A : \Ctx\\
-\Gamma,\Delta : \Ctx, A:\Ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\Tm(\Delta,A[\gamma]) &\vdash& \tuple{\gamma,a} : \Hom(\Delta,\Gamma\cext A)\\
-\Gamma : \Ctx, A:\Ty(\Gamma) &\vdash& \p: \Hom(\Gamma\cext A,\Gamma)\\
-\Gamma : \Ctx, A:\Ty(\Gamma) &\vdash& \q: \Tm(\Gamma\cext A,A[\p])
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \Gamma\cext A : \ctx\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \tuple{\gamma,a} : \Hom(\Delta,\Gamma\cext A)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \p: \Hom(\Gamma\cext A,\Gamma)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \q: \tm(\Gamma\cext A,A[\p])
 \end{eqnarray*}
 
 Equations:
 \begin{eqnarray*}
-\Gamma,\Delta : \Ctx, A:\Ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\Tm(\Delta,A[\gamma]) &\vdash& \p\circ\tuple{\gamma,a} = \gamma : \Hom(\Delta,\Gamma)\\
-\Gamma,\Delta : \Ctx, A:\Ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\Tm(\Delta,A[\gamma]) &\vdash& \q[\tuple{\gamma,a}] = a : \Tm(\Delta,A[\gamma]) \\
-\Gamma,\Delta,\Xi : \Ctx, A:\Ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\Tm(\Delta,A[\gamma]), \delta : \Hom(\Xi,\Delta) &\vdash& 
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \p\circ\tuple{\gamma,a} = \gamma : \Hom(\Delta,\Gamma)\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \q[\tuple{\gamma,a}] = a : \tm(\Delta,A[\gamma]) \\
+\Gamma,\Delta,\Xi : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]), \delta : \Hom(\Xi,\Delta) &\vdash& 
 \tuple{\gamma,a} \circ \delta = \tuple{\gamma\circ\delta,a[\delta]} : 
 \Hom(\Xi,\Gamma\cext A) \\
-\Gamma : \Ctx, A:\Ty(\Gamma) &\vdash& 
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& 
 \id_{\Gamma\cext A} = \tuple{\p,\q} : \Hom(\Gamma\cext A,\Gamma\cext A)
 \end{eqnarray*}
 (If $\p\circ\delta = \gamma$ and $\q[\delta]=a$, we get
@@ -698,7 +698,7 @@ a variable on one side --- not good for rewriting.)
 
 A cwf that supports the generalized algebraic theory of cwfs is a cwf with an {\em internal cwf}. An internal cwf in the cwf $\Set$ of small sets is a {\em small cwf}, that is, it is a cwf in the ordinary sense (see definition \ref{}) except that it has small sets of objects, morphisms, types, and terms.
 
-An example of a cwf with an internal cwf is provided by the cwf $\Set$ of small sets with an internal category of very small sets. We can make this precise if we work in set theory with two Grothendieck universes $\V_0 \in \V_1$. We call the members of $\V_1$ "small sets" and the members of $\V_0$ "very small sets". The category of contexts of the cwf $\Set$ is the usual category of small sets, by which we here mean that the set of objects $\Ctx = \V_1$. Moreover, the types are also the small sets, that is, $\Ty(\Gamma) = \V_1$. To get an internal cwf, we interpret its sort of objects $\ctx$ as the small set $\V_0$ of very small sets, and the sorts of types $\ty(\Gamma)$ also as $\V_0$.
+An example of a cwf with an internal cwf is provided by the cwf $\Set$ of small sets with an internal category of very small sets. We can make this precise if we work in set theory with two Grothendieck universes $\V_0 \in \V_1$. We call the members of $\V_1$ "small sets" and the members of $\V_0$ "very small sets". The category of contexts of the cwf $\Set$ is the usual category of small sets, by which we here mean that its objects are in $\V_1$. Moreover, the types are also the small sets in $\V_1$. To get an internal cwf, we interpret its sort of objects $\ctx$ as the small set $\V_0$ of very small sets, and the sorts of types $\ty(\Gamma)$ also as $\V_0$.
 
 Further examples of internal cwfs inside $\Set$ are provided by cwfs supporting signatures of generalized algebraic theories, as constructed in the previous section.
 
@@ -711,14 +711,14 @@ We add operator symbols $\N, 0, \s, \Rec$ and equations for $\Rec$.
 \subsection{Internal cwfs with $\U_0$ closed under $\Pi$ and $\N$} 
 We add operator symbols
 \begin{eqnarray*}
-\Gamma : \Ctx &\vdash& (\U_0)_\Gamma : \Ty(\Gamma)\\
-\Gamma : \Ctx, a : \Tm(\Gamma,(\U_0)_\Gamma) &\vdash& {\Ta_0}(a) : \Ty(\Gamma)\\
-\Gamma : \Ctx &\vdash& (\N^0)_\Gamma : \Tm(\Gamma,(\U_0)_\Gamma) \\
-\Gamma : \Ctx, 
-a : \Tm(\Gamma,(\U_0)_\Gamma), 
-b :  \Tm(\Gamma \cdot \Ta_0(a), (\U_0)_\Gamma))
+\Gamma : \ctx &\vdash& (\U_0)_\Gamma : \ty(\Gamma)\\
+\Gamma : \ctx, a : \tm(\Gamma,(\U_0)_\Gamma) &\vdash& {\Ta_0}(a) : \ty(\Gamma)\\
+\Gamma : \ctx &\vdash& (\N^0)_\Gamma : \tm(\Gamma,(\U_0)_\Gamma) \\
+\Gamma : \ctx, 
+a : \tm(\Gamma,(\U_0)_\Gamma), 
+b :  \tm(\Gamma \cdot \Ta_0(a), (\U_0)_\Gamma))
 &\vdash&
- \Pi^0(a,b) : \Tm(\Gamma,(\U_0)_\Gamma)
+ \Pi^0(a,b) : \tm(\Gamma,(\U_0)_\Gamma)
 \end{eqnarray*}
 $(\U_0)_\Gamma$ is the first universe (a type) relative to the context $\Gamma$; $\Ta_0$ is the decoding operation mapping a term in the first universe to the corresponding type; \footnote{add discussion of sort vs type in the introduction}; $\N^0$ is the code for $\N$ in the first universe, and $\Pi^0$ forms codes for $\Pi$-types in the first universe. (Note that we have dropped the context argument of $\Ta_0$ and $\Pi^0$.)
 
@@ -756,8 +756,8 @@ We remark that the gat for the first universe is inevitably {\em \`a la Tarski} 
 %\end{eqnarray*}
 %and operator symbols for types and terms:
 %\begin{eqnarray*}
-%n : \Level, \Gamma : \Ctx &\vdash& (\U_n)_\Gamma : \Ty(\Gamma)\\
-%n : \Level, \Gamma : \Ctx, a : \Tm(\Gamma,(\U_n)_\Gamma) &\vdash& {\Ta_n}(a) : \Ty(\Gamma)\\
+%n : \Level, \Gamma : \ctx &\vdash& (\U_n)_\Gamma : \Ty(\Gamma)\\
+%n : \Level, \Gamma : \ctx, a : \Tm(\Gamma,(\U_n)_\Gamma) &\vdash& {\Ta_n}(a) : \Ty(\Gamma)\\
 %n : \Level, \Gamma : \Ctx &\vdash& (\N^n)_\Gamma : \Tm(\Gamma,(\U_n)_\Gamma) \\
 %n : \Level, \Gamma : \Ctx, 
 %a : \Tm(\Gamma,(\U_n)_\Gamma), 
