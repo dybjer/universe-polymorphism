@@ -498,7 +498,9 @@ In order to define $\inte{-}'$ we first define the partial function on the raw s
 
 \section{Examples of generalized algebraic theories}
 
-\subsection{Monoids} The one-sorted algebraic theory of monoids has two operator symbols,
+We will now display the sort symbols, operator symbols, and equations for the generalized algebraic theories of internal monoids, internal categories, and internal cwfs. We will also show how to add operator symbols and equations when adding internal notions of $\Pi, \N$ and a universe of closed under $\Pi$ and $\N$. The reason for prefacing these notions by the word "internal" is that the models of the theories are internal monoids, categories, and cwfs in $\Cwf_\Sigma$ for the respective signatures for these theories. Note that internal monoids, categories, and cwfs in the cwf $\Set$ are small monoids, categories, and cwfs, respectively. Note furthermore, that our underlying notion of cwf in Section 2 is not small, and hence not an object of $\Cwf_\Sigma$ if $\Sigma$ is the signature for internal cwfs.
+
+\subsection{Internal monoids} The one-sorted algebraic theory of monoids has two operator symbols,
 $\idmon$ for identity and $\comp$ for composition, and associativity and identity laws as equations.
 As every other algebraic theory in the ordinary sense the algebraic theory of monoids yields a
 generalized algebraic theory. 
@@ -507,11 +509,11 @@ generalized algebraic theory.
 %the operator symbols $\idmon$ for identity and $\comp$ for composition, 
 %and the associativity and identity laws as equations. 
 
-We shall now show in some detail how to build a valid signature for monoids 
+We shall now show in some detail how to build a valid signature for internal monoids 
 using the cwf-combinators, following the recipe in the previous section. 
 (Note that we drop the index $\Sigma$ in $\vdash_\Sigma$. See \cite{CCD} for
 the inference rules for the cwf-combinators. 
-As a rule of the thumb: these inference rules closely follow Definition~\ref{def:Cwfobj}.)
+Note that these inference rules follow the principles of introducing sort symbols, operator symbols, and equations we displayed in Section 4 when building the initial cwf $\T_\Sigma$ for appropriate $\Sigma$.
 
 \begin{itemize}
 \item 
@@ -565,7 +567,9 @@ which are easier to read, but more difficult to deal with semantically.
 
 A cwf $\C$ that supports this gat has an {\em internal monoid} in $\C$. This is a cwf-version of the notion of internal monoid which can be defined in any category with finite products. Ordinary (small) monoids come out as internal monoids in $\Set$, the cwf of small sets.
 
-\subsection{Categories} We begin with the gat of categories, one of Cartmell's motivating examples. We first show it in ordinary notation with variables.
+In the remaining examples, we shall mainly use ordinary notation with variables.
+
+\subsection{Internal categories} The gat of categories was one of Cartmell's motivating examples. It has the following sort symbols, operator symbols, and equations. Again, note that in our case the models are internal categories.
 
 Sort symbols:\footnote{200810: I suggest to use Thierry's naming scheme, with $\ctx, \ty, \tm$ for internal contexts, types, and terms. Maybe we can overload the operator symbols, after having made a comment?}
 \begin{eqnarray*}
@@ -615,9 +619,9 @@ An internal category in the cwf $\Set$ of small sets is a small category.
 %\item In a similar way we can add the operator symbol for composition and the equations, but we omit the details.
 %\end{itemize}
 
-\subsection{Cwfs}
+\subsection{Internal cwfs}
 
-The gat of cwfs is obtained by extending the gat of categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of context to $\Ctx$.
+The gat of internal cwfs is obtained by extending the gat of internal categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of context to $\Ctx$.
 
 \subsubsection{The extension with a family valued functor}
 \mbox{ }
@@ -698,13 +702,13 @@ An example of a cwf with an internal cwf is provided by the cwf $\Set$ of small 
 
 Further examples of internal cwfs inside $\Set$ are provided by cwfs supporting signatures of generalized algebraic theories, as constructed in the previous section.
 
-\subsection{Cwfs with $\Pi$-types} 
+\subsection{Intrnal cwfs with $\Pi$-types} 
 We add operator symbols $\Pi, \lambda, \app$ and equations $\beta, \eta$ to the generalized algebraic theory of cwfs. 
 
-\subsection{Cwfs with $\N$-types} 
+\subsection{Internal cwfs with $\N$-types} 
 We add operator symbols $\N, 0, \s, \Rec$ and equations for $\Rec$.
 
-\subsection{Cwfs with $\U_0$ closed under $\Pi$ and $\N$} 
+\subsection{Internal cwfs with $\U_0$ closed under $\Pi$ and $\N$} 
 We add operator symbols
 \begin{eqnarray*}
 \Gamma : \Ctx &\vdash& (\U_0)_\Gamma : \Ty(\Gamma)\\
