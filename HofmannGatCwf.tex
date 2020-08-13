@@ -337,7 +337,7 @@ as follows:
   If $\Gamma$ is a uniform family of contexts and $A$ a uniform family of 
   types over $\Gamma$, then we can extend $\Sigma$ with a new operator 
   symbol $f$ relative to $\Gamma$ and $A$,, to obtain
-  the gat $\Sigma' = (\Sigma,(\Gamma,A,S))$.
+  the gat $\Sigma' = (\Sigma,(\Gamma,A,f))$.
   An object of $\Cwf_{\Sigma'}$
   is a pair $\C,f_{\C}$ where $\C$ is an object in $\Cwf_{\Sigma}$ and $f_{\C} \in \Tm_\C(\Gamma_\C,A_\C)$.
   A morphism in $(\C,f_{\C}) \to (\D,f_{\D})$ is a morphism $F$ in $\C\to \D$ such that $F(f_{\C}) = f_{\D}$
@@ -346,7 +346,7 @@ as follows:
   $A$ is a uniform family of types over $\Gamma$
   and $a,a'$ are uniform families of terms in $A$, 
   then we can extend $\Sigma$ with a new equation $a = a'$ , to obtain
-  the gat $\Sigma' = (\Sigma,(\Gamma,A,a,a',S))$.
+  the gat $\Sigma' = (\Sigma,(\Gamma,A,a,a'))$.
   In this case,
   $\Cwf_{\Sigma'}$ is a full subcategory of $\Cwf_{\Sigma}$. An object $\C$ in
   $\Cwf_{\Sigma'}$ is an object $\C$ of $\Cwf_\Sigma$ such that $a_{\C} = a'_{\C}$.
