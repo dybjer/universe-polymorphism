@@ -102,7 +102,7 @@ In this paper we explore and resolve this circularity. The main novelty is a syn
 
 In Section 2 we define the category $\Cwf$ of categories with families and morphisms preserving cwf-structure on the nose. Section 3 contains our main definition of a syntax independent notion of valid signature $\Sigma$ for a gat and its associated category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure. In Section 4 we construct an initial object $\T_\Sigma$ in $\Cwf_\Sigma$. In Section 5 we show several examples of gats: for monoids, categories, cwfs, and cwfs with extra structure for a first universe. We also point out that cwfs with extra structure for  gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively. Finally, in Section 6 we discuss related work, for example relating to Voevodsky's initiality conjecture \cite{voevodsky:initiality} and Altenkirch and Kaprosi's quotient inductive-inductive types \cite{altenkirch:qiits}.
 
-We remark that we work in set-theoretic metalanguage throughout the paper. Everything we do is constructive and should be possible to formalize in Aczel's CZF \cite{AczelP:typtic}. We also remark that it would be interesting to work in type-theoretic metalanguage, for example, in homotopy type theory and Voevodsky's univalent foundations. As such it could contribute to the recent work by several researchers inspired by Voevodsky's initiality conjecture.
+We remark that we work in set-theoretic metalanguage throughout the paper. Everything we do is constructive and should be possible to formalize in Aczel's CZF \cite{MR519801}. We also remark that it would be interesting to work in type-theoretic metalanguage, for example, in homotopy type theory and Voevodsky's univalent foundations. As such it could contribute to the recent work by several researchers inspired by Voevodsky's initiality conjecture.
 
 \subsection*{To the memory of Martin Hofmann}
 The content of this paper  is closely related to several of Martin's
@@ -449,7 +449,7 @@ We extend the definition of the interpretation morphism $\inte{-}$  to an interp
 $$
 \inte{[S]}' = S_\C
 $$
-It follows immediately that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
+It follows  that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
 \end{itemize}
 
 \item[Adding an operator symbol] If $\Gamma \vdash_\Sigma A$, then we can introduce a new operator symbol $f$, where the context $\Gamma$ represents the sequence of types of the arguments and $A$ is the type of the result.
@@ -474,7 +474,7 @@ We extend the definition of the interpretation morphism $\inte{-}$  to an interp
 $$
 \inte{[f]}' = f_\C
 $$
-It follows immediately that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
+It follows  that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
 \end{itemize}
 
 \item[Adding an equation] If $\Gamma \vdash_\Sigma a : A$ and $\Gamma \vdash_\Sigma a' : A$ we can introduce a new equation $a = a'$.
@@ -490,9 +490,9 @@ We add  the inference rule
   \end{mathpar}
 to the inference rules for $\T_\Sigma$. 
 \item
-$\T_{\Sigma'}$ is based on the same raw syntax as $\T_\Sigma$ but the equivalence relation has changed. To show that $\T_{\Sigma'} \in \Cwf_\Sigma'$ we just need to show that $[ a ] = [ a' ]$ but this immediate from the inference rule $\Gamma \vdash_{\Sigma'} a = a' : A$.
+$\T_{\Sigma'}$ is based on the same raw syntax as $\T_\Sigma$ but the equivalence relation has changed. To show that $\T_{\Sigma'} \in \Cwf_\Sigma'$ we just need to show that $[ a ] = [ a' ]$ but this  from the inference rule $\Gamma \vdash_{\Sigma'} a = a' : A$.
 \item
-In order to define $\inte{-}'$ we first define the partial function on the raw syntax to be identical to the partial function on the raw syntax for $\inte{-}$. We then prove that this partial function preserves the extended partial equivalence relation and define $\inte{-}'$ on the new equivalence classes. It follows immediately that $\inte{-}'$ is unique.
+In order to define $\inte{-}'$ we first define the partial function on the raw syntax to be identical to the partial function on the raw syntax for $\inte{-}$. We then prove that this partial function preserves the extended partial equivalence relation and define $\inte{-}'$ on the new equivalence classes. It follows  that $\inte{-}'$ is unique.
 \end{itemize}
 \end{description}
 
