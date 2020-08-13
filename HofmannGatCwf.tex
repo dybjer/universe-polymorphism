@@ -327,23 +327,29 @@ as follows:
 \begin{description}
 \item[Adding a sort symbol] 
   Let $\Gamma = (\Gamma_\C)$ be a uniform family of contexts.
-  Then we can extend $\Sigma$ with a new sort symbol $S$ relative to $\Gamma$ to obtain an extended gat
-  $\Sigma' = (\Sigma,S)$.
+  Then we can extend $\Sigma$ with a new sort symbol $S$ relative to $\Gamma$, to obtain
+  the gat $\Sigma' = (\Sigma,(\Gamma,S))$.
   The objects of $\Cwf_{\Sigma'}$ are pairs $(\C,S_{\C})$, where $\C$ is an object of $\Cwf_{\Sigma}$
   and $S_{\C}$ is a type over $\Gamma_{\C}$.
   A morphism in $\Cwf_{\Sigma'}((\C,S_{\C}), (\D,S_{\D}))$
   is a morphism $F \in \Cwf_{\Sigma}(\C,\D)$ such that $F(S_\C) = S_\D$.
 \item[Adding an operator symbol] 
-  If $\Gamma$ is a uniform family of contexts and $A$ a uniform family of types over $\Gamma$,
-  then we can extend $\Sigma$ with a new operator symbol $f$. An object of $\Cwf_{\Sigma'}$
+  If $\Gamma$ is a uniform family of contexts and $A$ a uniform family of 
+  types over $\Gamma$, then we can extend $\Sigma$ with a new operator 
+  symbol $f$ relative to $\Gamma$ and $A$,, to obtain
+  the gat $\Sigma' = (\Sigma,(\Gamma,A,S))$.
+  An object of $\Cwf_{\Sigma'}$
   is a pair $\C,f_{\C}$ where $\C$ is an object in $\Cwf_{\Sigma}$ and $f_{\C} \in \Tm_\C(\Gamma_\C,A_\C)$.
   A morphism in $(\C,f_{\C}) \to (\D,f_{\D})$ is a morphism $F$ in $\C\to \D$ such that $F(f_{\C}) = f_{\D}$
 \item[Adding an equation] 
-  If $\Gamma$ is a uniform family of contexts, $A$ is a uniform family of types over $\Gamma$
-  and $a,a'$ are uniform families of terms in $A$, then we can extend $\Sigma$ with a new equation
-  $a = a'$ (with context $\Gamma$ and type $A$). In this case,
-  $\Cwf_{\Sigma'}$ is a full subcategory of $\Cwf_{\Sigma}$. An object $\C$ in $\Cwf_{\Sigma'}$ is an object
-  $\C$ of $\Cwf_\Sigma$ such that $a_{\C} = a'_{\C}$.
+  If $\Gamma$ is a uniform family of contexts,
+  $A$ is a uniform family of types over $\Gamma$
+  and $a,a'$ are uniform families of terms in $A$, 
+  then we can extend $\Sigma$ with a new equation $a = a'$ , to obtain
+  the gat $\Sigma' = (\Sigma,(\Gamma,A,a,a',S))$.
+  In this case,
+  $\Cwf_{\Sigma'}$ is a full subcategory of $\Cwf_{\Sigma}$. An object $\C$ in
+  $\Cwf_{\Sigma'}$ is an object $\C$ of $\Cwf_\Sigma$ such that $a_{\C} = a'_{\C}$.
 \end{description}
 
 \end{definition}
@@ -705,7 +711,10 @@ $\tuple{\gamma,a}=\tuple{\p\circ\delta, \q[\delta]} = \tuple{\p,\q}\circ\delta =
 However, the equation for surjective pairing is not left-linear and with
 a variable on one side --- not good for rewriting.)
 
-A cwf that supports the generalized algebraic theory of cwfs is a cwf with an {\em internal cwf}. An internal cwf in the cwf $\Set$ of small sets is a {\em small cwf}, that is, it is a cwf in the ordinary sense (see definition \ref{}) except that it has small sets of objects, morphisms, types, and terms.
+A cwf that supports the generalized algebraic theory of cwfs is a cwf with an 
+\emph{internal cwf}. An internal cwf in the cwf $\Set$ of small sets is a {\em small cwf},
+that is, it is a cwf in the ordinary sense (see Definition~\ref{def:Cwfobj})
+except that it has small sets of objects, morphisms, types, and terms.
 
 An example of a cwf with an internal cwf is provided by the cwf $\Set$ of small sets with an internal category of very small sets. We can make this precise if we work in set theory with two Grothendieck universes $\V_0 \in \V_1$. We call the members of $\V_1$ "small sets" and the members of $\V_0$ "very small sets". The category of contexts of the cwf $\Set$ is the usual category of small sets, by which we here mean that its objects are in $\V_1$. Moreover, the types are also the small sets in $\V_1$. To get an internal cwf, we interpret its sort of objects $\ctx$ as the small set $\V_0$ of very small sets, and the sorts of types $\ty(\Gamma)$ also as $\V_0$.
 
