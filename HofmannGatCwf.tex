@@ -102,7 +102,18 @@ In this paper we explore and resolve this circularity. The main novelty is a syn
 
 In Section 2 we define the category $\Cwf$ of categories with families and morphisms preserving cwf-structure on the nose. Section 3 contains our main definition of a syntax independent notion of valid signature $\Sigma$ for a gat and its associated category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure. In Section 4 we construct an initial object $\T_\Sigma$ in $\Cwf_\Sigma$. In Section 5 we show several examples of gats: for monoids, categories, cwfs, and cwfs with extra structure for a first universe. We also point out that cwfs with extra structure for  gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively. Finally, in Section 6 we discuss related work, for example relating to Voevodsky's initiality conjecture \cite{voevodsky:initiality} and Altenkirch and Kaprosi's quotient inductive-inductive types \cite{altenkirch:qiits}.
 
-We remark that we work in set-theoretic metalanguage throughout the paper. Everything we do is constructive and should be possible to formalize in Aczel's CZF \cite{MR519801}. We also remark that it would be interesting to work in type-theoretic metalanguage, for example, in homotopy type theory and Voevodsky's univalent foundations. As such it could contribute to the recent work by several researchers inspired by Voevodsky's initiality conjecture.
+All our development can be formulated in a constructive set theory, 
+as described for instance in the paper of Aczel \cite{MR519801}, though the set theory
+we are using for formulating the notion of cwf with a $\Sigma$-structure is probably
+much weaker. As emphasized by Voevodsky, the structures we are studing are invariant
+under {\em isomorphisms} and not under {\em equivalences}, and it is actually misleading
+to call them ``category'' (and this is why Voevodsky used the terminology ``$C$-system''
+instead for what Cartmell called contextual ``category''). 
+As he also noticed, this
+important distinction between categories and notions invariant under isomorphisms becomes
+precise in the setting of univalent foundations where not all collections of objects
+are constructed from sets.
+%% We remark that we work in set-theoretic metalanguage throughout the paper. Everything we do is constructive and should be possible to formalize in Aczel's CZF \cite{MR519801}. We also remark that it would be interesting to work in type-theoretic metalanguage, for example, in homotopy type theory and Voevodsky's univalent foundations. As such it could contribute to the recent work by several researchers inspired by Voevodsky's initiality conjecture.
 
 \subsection*{To the memory of Martin Hofmann}
 The content of this paper  is closely related to several of Martin's
