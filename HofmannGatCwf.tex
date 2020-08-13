@@ -764,6 +764,27 @@ and the equations for preservation of substitution:
 
 We remark that the gat for the first universe is inevitably {\em \`a la Tarski} in the sense that we distinguish between types and terms in a cwf and we must have an operation decoding a term into a type. However, Martin-Löf's distinction between {\em \`a la Russell} and {\em \`a la Tarski} is a distinction between two different formulation of the raw syntax and inference rules of type theory.
 
+\subsection{A possible refinement to contextual categories}
+
+ Our treatment can be adapted to some non finitely presented GAT.
+If we have an increasing sequence of signatures $\Sigma_n$ we can consider the
+union of the theory $T_{\Sigma_n}$.
+For instance, we can describe a GAT of contextual categories/$C$-systems by
+the following stratification of the theory of cwfs. We replace the sort $\Ctx$
+by a sequence of sorts $\Ctx_0,\,\Ctx_1,\,\dots$ where $\Ctx_n$ represents the sort
+of contexts of length $n$ and a corresponding sequence of sorts
+$\Ty_n(\Gamma)$ for $\Gamma$ in $\Ctx_n$
+and $\Tm_n(\Gamma,A)$ for $A$ in $\Ty_n(\Gamma)$. Context extension $\Gamma.A$ is now in $\Ctx_{n+1}$
+if $A$ is in $\Ty_n(\Gamma)$ and so on. We also add {\em desctructors}: we have
+$\mathrm{ft}(\Gamma)$ in $\Ctx_n$
+and $\mathrm{st}(\Gamma)$ in $\Ty_n(\mathrm{ft}(\Gamma))$
+with $\Gamma = \mathrm{ft}(\Gamma).\mathrm{st}(\Gamma)$.
+Similarly we have a stratification of the sort of substitutions
+$\Sub_{n,m}(\Delta,\Gamma)$ for $\Delta$ in $\Ctx_n$ and $\Gamma$ in $\Ctx_m$.
+The GAT we get has then exactly for models the {\em contextual categories}.
+
+
+
 %\subsection{Cwfs with universe tower structures} 
 %
 %The first formulation of intuitionistic type theory with an infinite sequence of universes is due to Martin-Löf
