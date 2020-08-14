@@ -80,7 +80,7 @@
 \maketitle
 
 \begin{abstract}
-We define a new notion of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows possibly infinite sets of sort and operator symbols and equations, we only allow a finite number. Moreover, our definition is syntax independent and expressed in terms of uniform families in categories of models of generalized algebraic theories. 
+We define a new notion of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows possibly infinite sets of sort and operator symbols and equations, we only allow a finite number. Moreover, our definition is syntax independent and expressed in terms of uniform families in categories of models of generalized algebraic theories.
 The objects of these are categories with families with extra structure and the morphisms preserve all the structure on the nose. Our main result is the syntactic construction of initial categories with families with extra structure, a result which can be viewed as a generalization of Birkhoff's completeness theorem for equational logic. This result is obtained by extending Castellan, Clairambault, and Dybjer's construction of an initial cwf. We provide examples of gats for monoids, categories, categories with families, and categories with families with extra structure for some type formers of dependent type theory. The models of these are internal monoids, internal categories, and internal categories with families (with extra structure) in a category with families.
 \end{abstract}
 
@@ -88,10 +88,10 @@ The objects of these are categories with families with extra structure and the m
 
 Generalized algebraic theories (gats) were introduced by Cartmell in his PhD thesis \cite{cartmell:phd} as a dependently typed generalization of many sorted algebraic theories. Each gat is specified by a signature with (possibly infinite) sets of sort symbols, operator symbols, and equations. Cartmell's definition of gats \cite{cartmell:phd,cartmell:apal} is based on a notion of {\em derived rule} expressed in terms of a traditional syntactic system for dependent type theory. He also defines a notion of model whereby sort symbols are interpreted as families of sets.
 
-Categories with families (cwfs) \cite{dybjer:torino} were introduced as a new notion of model of dependent type theory. Cwfs arise by reformulating the notion of category with attributes (cwa) in Martin Hofmann's sense \cite{hofmann:csl}. The key point is to make it clear that cwfs arise as models of a certain generalized algebraic theory closely related to Martin-Löf's substitution calculus \cite{martinlof:gbg92}. As such it becomes a useful intermediary between traditional syntactic systems for dependent type theory and a variety of categorical notions of model.
+Categories with families (cwfs) \cite{dybjer:torino} were introduced as a new notion of model of dependent type theory. Cwfs arise by reformulating the notion of category with attributes (cwa) in Martin Hofmann's sense \cite{hofmann:csl}. The key point is to make it clear that cwfs arise as models of a certain generalized algebraic theory closely related to Martin-Löf's substitution calculus \cite{martinlof:gbg92}. As such the notion of cwf becomes a useful intermediary between traditional syntactic systems for dependent type theory and a variety of categorical notions of model.
 
-The gat of cwfs is thus a kind of idealized formal system of dependent type theory. In contrast to Martin-Löf's substitution calculus, and other syntactic systems for dependent type thoery, it is {\em not} formulated in terms of grammars and inference rules for the forms of judgment of type theory. Instead it is formulated in terms of sort symbols (corresponding to the judgment forms), operator symbols (corresponding to the formation, introduction, and elimination rules), and equations (corresponding to the equality rules for the type formers). Some of the general reasoning (about equality, substitution, and assumptions) is taken care of by the underlying machinery of dependent type theory. This makes it possible to abstract away from some of the details in the formulation of grammars and inference rules. In contrast to the various syntactic systems, we would like to argue that the gat of cwfs appears to be "canonical". We may define dependent type theory in a syntax independent way as the initial object in a category of cwfs with extra structure for interpreting the type formers. 
-%However, the reader may now object that this looks like a circular definition. 
+The gat of cwfs is thus a kind of idealized formal system of dependent type theory. In contrast to Martin-Löf's substitution calculus, and other syntactic systems for dependent type theory, it is {\em not} formulated in terms of grammars and inference rules for the forms of judgment of type theory. Instead it is formulated in terms of sort symbols (corresponding to the judgment forms), operator symbols (corresponding to the formation, introduction, and elimination rules), and equations (corresponding to the equality rules for the type formers). Some of the general reasoning (about equality, substitution, and assumptions) is taken care of by the underlying machinery of dependent type theory. This makes it possible to abstract away from some of the details in the formulation of grammars and inference rules. In contrast to the various syntactic systems, we would like to argue that the gat of cwfs appears to be "canonical". We may define dependent type theory in a syntax independent way as the initial object in a category of cwfs with extra structure for interpreting the type formers.
+%However, the reader may now object that this looks like a circular definition.
 %We learn what dependent type theory is if we already know what dependent type theory is!
 
 In this note we explore the interdependence between gats and cwfs. The main novelty is a syntax independent definition of gats in terms of cwfs with extra structure. We define a new finitely presented notion of generalized algebraic theory and simultaneosly a general categorical notion of model. We simultaneously define what it means to be a valid signature $\Sigma$ for a gat and the associated category $\Cwf_\Sigma$ with extra structure for $\Sigma$. This definition refers to {\em uniform families} of contexts, types, and terms in $\Cwf_\Sigma$, a purely semantic notion. Afterwards, we construct initial objects $\T_\Sigma \in \Cwf_\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of the initial object in the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
@@ -102,13 +102,13 @@ In this note we explore the interdependence between gats and cwfs. The main nove
 
 In Section 2 we define the category $\Cwf$ of categories with families and morphisms preserving cwf-structure on the nose. Section 3 contains our main definition of a syntax independent notion of valid signature $\Sigma$ for a gat and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure. In Section 4 we construct an initial object $\T_\Sigma$ in $\Cwf_\Sigma$. In Section 5 we show several examples of gats: for monoids, categories, cwfs, and cwfs with extra structure for one universe. We point out that cwfs with extra structure for gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively. We also sketch how to extend our approach to some countably presented gats, and show the example of contextual cwfs, a variant of Cartmell's contextual categories \cite{cartmell:phd,cartmell:apal}. Finally, in Section 6 we discuss related work, for example relating to Voevodsky's initiality conjecture \cite{voevodsky:initiality} and Altenkirch and Kaprosi's quotient inductive-inductive types \cite{altenkirch:qiits}.
 
-All our development can be formulated in a constructive set theory, 
+All our development can be formulated in a constructive set theory,
 as described for instance by Aczel \cite{MR519801}, though the set theory
 we use for formulating the notion of cwf with a $\Sigma$-structure is probably
-much weaker. As emphasized by Voevodsky, we study structures invariant
+much weaker. As emphasized by Voevodsky~\cite{voevodsky:initiality}, we study structures invariant
 under {\em isomorphisms} and not under {\em equivalences}, and it is actually misleading
 to call them ``category'' (and this is why Voevodsky used the term ``$C$-system''
-for what Cartmell called ``contextual category''). 
+for what Cartmell called ``contextual category'').
 As he also noticed, this
 important distinction between categories and notions invariant under isomorphisms becomes
 precise in the setting of univalent foundations where not all collections of objects
@@ -118,8 +118,8 @@ are constructed from sets.
 \subsection*{To the memory of Martin Hofmann}
 The content of this paper  is closely related to several of Martin's
 important contributions to the semantics of dependent type theory.
-Martin was an extremely gifted and generous person, 
-many researchers have benefitted from his collaboration.
+Martin was an extremely gifted and generous person,
+many researchers have benefited from his collaboration.
 He is truly missed.
 
 
@@ -140,27 +140,28 @@ consists of a re-indexing function $f: X\to Y$ together with a family
 $(g_x)_{x\in X}$ of functions $g_x : U_x \to V_{f(x)}$. %, for all $x\in X$.
 \end{definition}
 
-The next step is to define the category $\Cwf$. 
-We split this definition in two: first the objects, 
+The next step is to define the category $\Cwf$.
+We split this definition in two: first the objects,
 which are called \emph{categories with families}, in Definition~\ref{def:Cwfobj},
-and then the morphisms in Definition~\ref{def:Cwfmor}. 
+and then the morphisms in Definition~\ref{def:Cwfmor}.
 Since $\Cwf$ has been developed as a categorical framework for the semantics of
 type theory, much of the terminology (contexts, substitutions,
-types, terms) refers to the syntax of type theory, 
-suggesting the intended interpretation of this syntax in the 
+types, terms) refers to the syntax of type theory,
+suggesting the intended interpretation of this syntax in the
 so-called $\Cwf$-semantics.
 
 The main novelty of this note is to use $\Cwf$ as a framework
-to define a new notion of a generalized algebraic theory. 
+to define a new notion of a generalized algebraic theory.
 Contexts, substitutions, types, and terms also make
-sense in relation to gats. Note however that we use the term {\em ``sort symbol"} from universal algebra for what might have been called ``type symbol".
+sense in relation to gats.
+% Note however that we use the term {\em ``sort symbol"} from universal algebra for what might have been called ``type symbol".
 
-\begin{definition}\label{def:Cwfobj} 
+\begin{definition}\label{def:Cwfobj}
 A category with families (cwf) consists of the following data:
 
-\begin{enumerate} 
+\begin{enumerate}
 
-\item A category $\C$; 
+\item A category $\C$;
 
 \item A $\Fam$-valued presheaf on $\C$, that is, a functor
 $T : \Cop \to \Fam$;
@@ -168,30 +169,30 @@ $T : \Cop \to \Fam$;
 \item A terminal object $1\in \C$, and unique maps
 $\tuple{}_\Gamma \in \C(\Gamma, 1)$ for all objects $\Gamma$ of $\C$;
 
-\item Operations ${\cext\,},~\tuple{\_,\_},~\p$ and $\q$ 
+\item Operations ${\cext\,},~\tuple{\_,\_},~\p$ and $\q$
 explained in the following paragraphs.
 These four operations and their associated equations
 are referred to as \emph{context comprehension}.
 \end{enumerate}
 
-We let $\Gamma, \Delta,\ldots$ range over objects of $\C$, 
-and refer to them as \emph{contexts}. 
-We let $\delta, \gamma,\ldots$ range over morphisms, 
-and refer to them as \emph{substitutions}. 
+We let $\Gamma, \Delta,\ldots$ range over objects of $\C$,
+and refer to them as \emph{contexts}.
+We let $\delta, \gamma,\ldots$ range over morphisms,
+and refer to them as \emph{substitutions}.
 We refer to $1$ as the \emph{empty} context; the terminal maps
 $\tuple{}_\Gamma$ represent the \emph{empty} substitutions.
 
 If $T(\Gamma) = (U_x)_{x\in X}$, we write $\Ty(\Gamma)$ for the set $X$.
-We call the elements of $\Ty(\Gamma)$ \emph{types in context $\Gamma$}, 
-and let $A, B, C$ range over such types. 
+We call the elements of $\Ty(\Gamma)$ \emph{types in context $\Gamma$},
+and let $A, B, C$ range over such types.
 Furthermore, for $A \in \Ty(\Gamma)$, we write $\Tm(\Gamma, A)$ for the set $U_A$
-and call the elements of $\Tm(\Gamma, A)$ 
-\emph{terms of type $A$ in context $\Gamma$}. 
+and call the elements of $\Tm(\Gamma, A)$
+\emph{terms of type $A$ in context $\Gamma$}.
 
 For $\gamma : \Delta \to \Gamma$,
 the functorial action of $T$ yields a morphism
 \[
-T(\gamma) \in  \Fam\left((\Tm(\Gamma, A))_{A\in \Ty(\Gamma)}, % \to 
+T(\gamma) \in  \Fam\left((\Tm(\Gamma, A))_{A\in \Ty(\Gamma)}, % \to
                 (\Tm(\Delta, B))_{B\in \Ty(\Delta)}\right)
 \]
 consisting of a reindexing function $\_\,[\gamma] : \Ty(\Gamma) \to
@@ -199,7 +200,7 @@ consisting of a reindexing function $\_\,[\gamma] : \Ty(\Gamma) \to
 \Ty(\Gamma)$ a function $\_\,[\gamma] : \Tm(\Gamma, A) \to \Tm(\Delta,
 A[\gamma])$, referred to as \emph{substitution in terms}.
 
-Now we turn to the explanation of the operations 
+Now we turn to the explanation of the operations
 ${\cext\,},~\tuple{\_,\_},~\p,~\q$.
 Given $\Gamma \in \C$, $A \in \Ty(\Gamma)$, $\gamma : \Delta \to \Gamma$,
 and $a\in \Tm(\Delta, A[\gamma])$, we have
@@ -211,8 +212,8 @@ and $a\in \Tm(\Delta, A[\gamma])$, we have
 \q_{\Gamma, A} \in \Tm(\Gamma\cext A, A[\p_{\Gamma,A}])
 \quad\qquad
 \tuple{\gamma, a}_A : \Delta \to \Gamma \cext A.
-\] 
-We call $\Gamma \cext A$ the \emph{extended} context 
+\]
+We call $\Gamma \cext A$ the \emph{extended} context
 and $\tuple{\gamma, a}_A$ the \emph{extended} substitution.
 
 The operations  ${\cext\,},~\tuple{\_,\_},~\p,~\q$
@@ -229,21 +230,21 @@ and to $\q$ as the \emph{second projection}. %\footnote%
 $\Tm(\Delta,A[\p_{\Gamma,A}][\tuple{\gamma, a}]) = \Tm(\Delta,A[\gamma])$
 so that $\q_{\Gamma, A} [\tuple{\gamma, a}]$ and $a$ are elements of the same set.}
 Here and below, subscripts are omitted from ${\cext\,},~\tuple{\_,\_},~\p,~\q$
-when they can be reconstructed from the context (pun not intended).
+when they can be reconstructed from the context (no pun intended).
 (End Definition~\ref{def:Cwfobj}.)
 \end{definition}
 
 
 
-A cwf is thus a structure $(\C,1,\tuple{},T,\cext\, , \tuple{\_,\_},\p, \q)$, 
+A cwf is thus a structure $(\C,1,\tuple{},T,\cext\, , \tuple{\_,\_},\p, \q)$,
 subject to equations, for the category and the presheaf, and universal
-properties for the terminal object and for context comprehension. 
+properties, formulated purely equationally, for the terminal object and for context comprehension.
 The morphisms to be defined next preserve this structure,
-even in a strict way (`on the nose').
-We often shorten the notation of a cwf to $(\C,T)$, or even just $\C$, 
+even in a strict way, `on the nose'.
+We often shorten the notation of a cwf to $(\C,T)$, or even just $\C$,
 leaving the remaining structure implicit.
 
-\begin{definition}\label{def:Cwfmor}  
+\begin{definition}\label{def:Cwfmor}
 A \emph{(strict) cwf-morphism $F$ between cwfs $(\C,T_\C)$ and $(\D,T_\D)$}
 consists of
 
@@ -256,28 +257,28 @@ that is, $F_\fun(1_{\C}) = 1_{\D}$;
 preserving context comprehension on the nose (explained below).
 
 \end{enumerate}
- 
+
 Since $F_\nt$ is a natural transformation between $\Fam$-valued presheaves,
 $F_\nt$ has a component for any object $\Gamma$ of $\C$, and
 these components are morphisms in $\Fam(T_C(\Gamma),T_\D(F_\fun(\Gamma)))$.
 Recall that morphisms in $\Fam$ consist of a reindexing function
 and a family of functions. It is convenient to denote $F_\fun$,
 all reindexing functions, as well as all members of the families of functions,
-simply by $F$. Thus we have $F(A) \in \Ty_\D(F(\Gamma))$ 
+simply by $F$. Thus we have $F(A) \in \Ty_\D(F(\Gamma))$
 and $F(a) \in \Tm_\D(F(\Gamma), F(A))$, for all $\Gamma$
 and $A\in\Ty_\C(\Gamma)$ and $a\in \Tm_\C(\Gamma, A)$.
 
 Naturality of $F_\nt$
-amounts to preservation of substitution, {i.e.}, for all 
+amounts to preservation of substitution, {i.e.}, for all
 $\gamma : \Delta \to \Gamma$ in $\C$, we have
 \[
-F(A[\gamma]) = F(A)[F(\gamma)] \qquad \qquad 
+F(A[\gamma]) = F(A)[F(\gamma)] \qquad \qquad
 F(a[\gamma]) = F(a)[F\gamma]\,.
 \]
 
 Last but not least, we turn to the preservation of context comprehension
 on the nose, and require
-\[ 
+\[
 F(\Gamma\cext A) = F(\Gamma)\cext F(A) \qquad
 %F(\tuple{\gamma,a}) = \tuple{F(\gamma),F(a)} \qquad
 F(\p_{\Gamma, A}) = \p_{F(\Gamma), F(A)} \qquad
@@ -291,7 +292,7 @@ $F(\tuple{}_\Gamma) = \tuple{}_{F(\Gamma)}$.
 (End Definition~\ref{def:Cwfmor}.)
 \end{definition}
 
-Small cwfs with strict cwfs-morphisms form a category, written $\Cwf$. 
+Small cwfs with strict cwfs-morphisms form a category, written $\Cwf$.
 
 
 \section{Signatures and models of generalized algebraic theories}
@@ -318,14 +319,14 @@ $F(a_{\C}) = a_{\D}$ for all morphisms $F \in \Cwf_{\Sigma}(\C,\D)$.
 \begin{definition}
 We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs with support for $\Sigma$ and cwf-morphisms that preserve it. First, the base case:
 \begin{description}
-\item[The empty signature] The empty signature $\emptyset$ is valid and $\Cwf_\emptyset = \Cwf$. 
+\item[The empty signature] The empty signature $\emptyset$ is valid and $\Cwf_\emptyset = \Cwf$.
 \end{description}
 Assume now that we have defined $\Sigma$ as a valid signature and the associated
 category $\Cwf_{\Sigma}$.
-Then we can add a new type symbol, or a new operator symbol, or a new equation, to get a new valid signature,
+Then we can add a new sort symbol, or a new operator symbol, or a new equation, to get a new valid signature,
 as follows:
 \begin{description}
-\item[Adding a sort symbol] 
+\item[Adding a sort symbol]
   Let $\Gamma = (\Gamma_\C)$ be a uniform family of contexts.
   Then we can extend $\Sigma$ with a new sort symbol $S$ relative to $\Gamma$, to obtain
   the gat $\Sigma' = (\Sigma,(\Gamma,S))$.
@@ -333,18 +334,18 @@ as follows:
   and $S_{\C} \in \Ty_\C(\Gamma_{\C})$.
   A morphism in $\Cwf_{\Sigma'}((\C,S_{\C}), (\D,S_{\D}))$
   is a morphism $F \in \Cwf_{\Sigma}(\C,\D)$ such that $F(S_\C) = S_\D$.
-\item[Adding an operator symbol] 
-  If $\Gamma$ is a uniform family of contexts and $A$ a uniform family of 
-  types over $\Gamma$, then we can extend $\Sigma$ with a new operator 
+\item[Adding an operator symbol]
+  If $\Gamma$ is a uniform family of contexts and $A$ a uniform family of
+  types over $\Gamma$, then we can extend $\Sigma$ with a new operator
   symbol $f$ relative to $\Gamma$ and $A$, to obtain
   the gat $\Sigma' = (\Sigma,(\Gamma,A,f))$.
   An object of $\Cwf_{\Sigma'}$
   is a pair $(\C,f_{\C})$ where $\C$ is an object in $\Cwf_{\Sigma}$ and $f_{\C} \in \Tm_\C(\Gamma_\C,A_\C)$.
   A morphism in $(\C,f_{\C}) \to (\D,f_{\D})$ is a morphism $F \in \Cwf_{\Sigma}(\C,\D)$ such that $F(f_{\C}) = f_{\D}$
-\item[Adding an equation] 
+\item[Adding an equation]
   If $\Gamma$ is a uniform family of contexts,
   $A$ is a uniform family of types over $\Gamma$
-  and $a,a'$ are uniform families of terms in $A$, 
+  and $a,a'$ are uniform families of terms in $A$,
   then we can extend $\Sigma$ with a new equation $a = a'$, to obtain
   the gat $\Sigma' = (\Sigma,(\Gamma,A,a,a'))$.
   In this case,
@@ -363,23 +364,23 @@ Uniform families of types and terms arise from types and terms in $\T_\Sigma$ in
 
 %\section{Signatures and models of generalized algebraic theories}
 %
-%We now come to the main point of this note. We define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$, but we will postpone the construction of these until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$. 
+%We now come to the main point of this note. We define how to build a valid gat signature $\Sigma$ and what it means for a cwf to support it. This definition relies on the construction of initial cwfs $\T_\Sigma$ supporting $\Sigma$, but we will postpone the construction of these until the next section. In this way we separate the abstract definition from the concrete syntactic details employed for building $\T_\Sigma$.
 %\footnote{Say something about the fact that we do not assume anything about the relationship between $\T_\Sigma$ and $\T_{\Sigma'}$ because all initial objects are isomorphic, and hence we can move between them.}
 %\begin{definition}
 %We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs with support for $\Sigma$ and cwf-morphisms that preserve it. First, the base case:
 %\begin{description}
-%\item[The empty signature] The empty signature $\emptyset$ is valid and $\Cwf_\emptyset = \Cwf$. 
+%\item[The empty signature] The empty signature $\emptyset$ is valid and $\Cwf_\emptyset = \Cwf$.
 %\end{description}
-%Assume now that $\Sigma$ is a valid signature and that the category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ with $\inte{-} : \T_\Sigma \to \C$ as the unique morphism into an object $\C$. Then we can add a new type symbol, or a new operator symbol, or a new equation, to get a new valid signature, as follows:
+%Assume now that $\Sigma$ is a valid signature and that the category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ with $\inte{-} : \T_\Sigma \to \C$ as the unique morphism into an object $\C$. Then we can add a new sort symbol, or a new operator symbol, or a new equation, to get a new valid signature, as follows:
 %\begin{description}
-%\item[Adding a new sort symbol (Thierry)] 
+%\item[Adding a new sort symbol (Thierry)]
 %Let $\Gamma_\C \in \C$ for $\C \in \Cwf_{\Sigma}$ be a uniform family of contexts, that is, if $f(\Gamma_\C) = \Gamma_\D$ for all morphisms $f \in \Cwf_{\Sigma}(\C,\D)$. Then we can extend $\Sigma$ with a new sort symbol to obtain an extended gat $\Sigma' = (\Sigma,F)$, where $F_\C \in \Ty_\C(\Gamma_\C)$ is a uniform family of types, that is $f(F_\C) = F_\D$. The objects of $\Cwf_{\Sigma'}$ are pairs $(\C,F)$, where $\C$ is an object of $\Cwf_{\Sigma}$. A morphism in $\Cwf_{\Sigma'}((\C,F), (\D,G))$ is a morphism $f \in \Cwf_{\Sigma}(\C,\D)$ such that $f(F_\C) = G_\D$.
-%\item[Adding a new sort symbol] 
+%\item[Adding a new sort symbol]
 %If $\Gamma$ is a context in $\T_\Sigma$, then we can extend $\Sigma$ with a new sort symbol $F$ (with context $\Gamma$) to obtain an extended gat $\Sigma'$. The objects of $\Cwf_{\Sigma'}$ are pairs $(\C,F_\C)$, where $\C$ is an object of $\Cwf_{\Sigma}$ and $F_\C \in \Ty_\C(\inte{\Gamma})$. A morphism in $\Cwf_{\Sigma'}((\C,F_\C), (\D,F_\D))$ is a morphism in $\Cwf_{\Sigma}(\C,\D)$ that maps $F_\C$ to $F_\D$.
-%\item[Adding a new operator symbol] 
+%\item[Adding a new operator symbol]
 %If $\Gamma$ is a context in $\T_\Sigma$ and $A \in \Ty_{\T_\Sigma}(\Gamma)$, then we can extend $\Sigma$ with a new operator symbol $f$ (with context $\Gamma$ and type $A$). A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and there is $f_\C \in\Tm_\C(\inte{\Gamma},\inte{A}_{\Gamma})$.
 %A cwf-morphism in $\C \to \D$ preserves $\Sigma'$ if it preserves $\Sigma$ and maps $f_\C$ to $f_\D$.
-%\item[Adding a new equation] 
+%\item[Adding a new equation]
 %If $\Gamma$ is a context in $\T_\Sigma$, $A \in \Ty_{\T_\Sigma}(\Gamma)$, and $a, a' \in \Tm_{\T_\Sigma}(\Gamma,A)$, then we can extend $\Sigma$ with a new equation $a = a'$ (with context $\Gamma$ and type $A$). A cwf $\C$ supports $\Sigma'$ if it supports $\Sigma$ and $\inte{a}_{\Gamma,A}= \inte{a'}_{\Gamma,A} \in \Tm_\C(\inte{\Gamma},\inte{A}_\Gamma)$. A cwf-morphism in $\C \to \D$, where $\C$ and $\D$ support $\Sigma'$, preserves $\Sigma'$ iff it preserves $\Sigma$.
 %\end{description}
 %\end{definition}
@@ -398,14 +399,14 @@ The construction of $\T_\Sigma$ will be by induction on the construction of $\Si
 
 For each $\Sigma$ we will define the following.
 \begin{itemize}
-\item 
-A grammar for raw contexts in $\RawCtx_\Sigma$, raw substitutions in $\RawSub_\Sigma$, raw types in $\RawTy_\Sigma$, and raw terms in $\RawTm_\Sigma$. 
+\item
+A grammar for raw contexts in $\RawCtx_\Sigma$, raw substitutions in $\RawSub_\Sigma$, raw types in $\RawTy_\Sigma$, and raw terms in $\RawTm_\Sigma$.
 \item
 A system of inference rules that generate four families of partial equivalence relations (pers) by a mutual inductive definition:
 $$
 \Gamma = \Gamma' \vdash_\Sigma
 \qquad
-\Gamma \vdash_\Sigma A = A' 
+\Gamma \vdash_\Sigma A = A'
 \qquad
 \Delta \vdash_\Sigma \gamma = \gamma' : \Gamma
 \qquad
@@ -415,12 +416,12 @@ where $\Gamma, \Gamma' \in \RawCtx_\Sigma, \gamma, \gamma' \in \RawSub_\Sigma, A
 \item
 A cwf $\T_\Sigma$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T_\Sigma$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash_\Sigma$. We will show that $\T_\Sigma$ is a cwf that supports $\Sigma$, that is, an object of $\Cwf_\Sigma$.
 \item
-A $\Cwf_\Sigma$-morphism $\inte{-} : \T_\Sigma \to \C$ for every $\C \in \Cwf_\Sigma$. This is the {\em interpretation morphism}. This morphism is a partial function defined by induction on the raw syntax, that (whenever it is defined) maps raw contexts to contexts in $\C$, raw substitutions to substitutions in $\C$, raw types to types in $\C$, and raw terms to terms in $\C$. We show that these partial functions preserve the partial equivalence relations so that we can define the interpretation morphism on the equivalence classes. Finally we show that it indeed is a $\Cwf_\Sigma$-morphism and the unique such into $\C$.
+A $\Cwf_\Sigma$-morphism $\inte{-} : \T_\Sigma \to \C$ for every $\C \in \Cwf_\Sigma$. This is the {\em interpretation morphism}. This morphism is a partial function defined by induction on the raw syntax, that (whenever it is defined) maps raw contexts to contexts in $\C$, raw substitutions to substitutions in $\C$, raw types to types in $\C$, and raw terms to terms in~$\C$. We show that these partial functions preserve the partial equivalence relations so that we can define the interpretation morphism on the equivalence classes. Finally we show that it indeed is a $\Cwf_\Sigma$-morphism and the unique such into $\C$.
 \end{itemize}
- 
-We begin with the construction for the base case: the {\bf empty signature} $\emptyset$. 
+
+We begin with the construction for the base case: the {\bf empty signature} $\emptyset$.
 \begin{itemize}
-\item 
+\item
 We start with the following grammar for raw contexts, raw substitutions, raw types, and raw terms.
 \begin{eqnarray*}
 \Gamma \in \RawCtx_\emptyset &::=& 1  \ |\ \Gamma\cext A\\
@@ -430,15 +431,15 @@ a \in \RawTm_\emptyset  &::=& a[\gamma] \ |\ \qI_A
 \end{eqnarray*}
 These grammars generate a language of {\em cwf-combinators}.
 \item
-The system of inference rules is displayed in \cite{castellan:tlca2015,castellan:lmcs}. It is a system of {\em general rules}, rules for dependent type theory which come before you introduce any sort symbols and operator symbols and equations (or any rules for the type formers of intuitionistic type theory). We do not have room here to display them, but note that they can be divided into four groups: 
+The system of inference rules is displayed in \cite{castellan:tlca2015,castellan:lmcs}. It is a system of {\em general rules}, rules for dependent type theory which come before we introduce any sort symbols and operator symbols and equations (or any rules for the type formers of intuitionistic type theory). We do not have room here to display them, but note that they can be divided into four groups:
 \begin{itemize}
 \item the per rules, amounting to symmetry and transitivity for the four forms of equality judgments;
-\item preservation rules for judgments amounting to substitution of equals for equals (an example of such a rule is the {\em type equality rule});
+\item preservation rules for judgments, amounting to substitution of equals for equals (an example of such a rule is the {\em type equality rule});
 \item congruence rules for operators expressing that the cwf-combinators preserve equality;
 \item conversion rules for the cwf-combinators.
 \end{itemize}
 \item
-Note that the initial cwf $\T_\emptyset$ is rather uninteresting: its category of contexts contains only a terminal object (the empty context), and there are no types and terms. Nevertheless, the grammar and inference rules used in its definition form a starting point. The grammar for raw types and raw terms will be extended each time we add a new sort symbol or operator symbol, respectively. For each such new symbol and each new equation we will add a new inference rule. As a consequence we will generate non-trivial $\T_\Sigma$.
+Note that the initial cwf $\T_\emptyset$ is rather uninteresting: its category of contexts contains only a terminal object (the empty context), and there are no types and terms. Nevertheless, the grammar and inference rules used in its definition form a starting point. The grammar for raw types and raw terms will be extended each time we add a new sort symbol or operator symbol, respectively. For each such new symbol and each new equation we will add a new inference rule. As a consequence we will generate a non-trivial $\T_\Sigma$.
 \end{itemize}
 
 Assume now for the induction step that we have defined the grammar, the inference rules, $\T_\Sigma$ and the interpretation morphism $\inte{-} : \T_{\Sigma} \to \C$ in $\Cwf_\Sigma$.
@@ -459,11 +460,11 @@ We add  the inference rule
     {}
     {\Gamma \vdash_{\Sigma'} S}
   \end{mathpar}
-to the inference rules for $\T_\Sigma$. 
+to the inference rules for $\T_\Sigma$.
 \item
-We define $S_{\T_{\Sigma'}} = [S]$, so that $ \T_{\Sigma'}$ has a $\Sigma'$-structure $(\T_\Sigma,[S])$. 
+We define $S_{\T_{\Sigma'}} = [S]$, so that $ \T_{\Sigma'}$ has a $\Sigma'$-structure $(\T_\Sigma,[S])$.
 \item
-We extend the definition of the interpretation morphism $\inte{-}$  to an interpretation morphism $\inte{-}' : \T_{\Sigma'} \to \C$ by 
+We extend the definition of the interpretation morphism $\inte{-}$  to an interpretation morphism $\inte{-}' : \T_{\Sigma'} \to \C$ by
 $$
 \inte{[S]}' = S_\C
 $$
@@ -485,10 +486,10 @@ We add  the inference rule
     {}
     {\Gamma \vdash_{\Sigma'} f : A}
   \end{mathpar}
-to the inference rules for $\T_\Sigma$. 
+to the inference rules for $\T_\Sigma$.
 \item
 We define $f_{\T_{\Sigma'}} = [f]$, so that $ \T_{\Sigma'}$ has a $\Sigma'$-structure $(\T_\Sigma,[f])$.\item
-We extend the definition of the interpretation morphism $\inte{-}$  to an interpretation morphism $\inte{-}' : \T_{\Sigma'} \to \C$ by 
+We extend the definition of the interpretation morphism $\inte{-}$  to an interpretation morphism $\inte{-}' : \T_{\Sigma'} \to \C$ by
 $$
 \inte{[f]}' = f_\C
 $$
@@ -506,36 +507,39 @@ We add  the inference rule
     {}
     {\Gamma \vdash_{\Sigma'} a = a' : A}
   \end{mathpar}
-to the inference rules for $\T_\Sigma$. 
+to the inference rules for $\T_\Sigma$.
 \item
 $\T_{\Sigma'}$ is based on the same raw syntax as $\T_\Sigma$ but the equivalence relation has changed. To show that $\T_{\Sigma'} \in \Cwf_\Sigma'$ we just need to show that $[ a ] = [ a' ]$ but this follows from the inference rule $\Gamma \vdash_{\Sigma'} a = a' : A$.
 \item
 In order to define $\inte{-}'$ we first define the partial function on the raw syntax to be identical to the partial function on the raw syntax for $\inte{-}$. We then prove that this partial function preserves the extended partial equivalence relation and define $\inte{-}'$ on the new equivalence classes. It follows  that $\inte{-}'$ is unique.
 \end{itemize}
 \end{description}
+This concludes the proof of the theorem. \qed
+
+
 
 \section{Examples of generalized algebraic theories}
 
-We will now display the sort symbols, operator symbols, and equations for the generalized algebraic theories of internal monoids, internal categories, and internal cwfs. We will show how to add operator symbols and equations when adding internal notions of $\Pi, \N$ and a universe closed under $\Pi$ and $\N$. The reason for prefacing these notions by the word "internal" is that the models of the theories are internal monoids, categories, and cwfs in $\Cwf_\Sigma$ for the respective signatures for these theories. Moreover, internal monoids, categories, and cwfs in the cwf $\Set$ are small monoids, categories, and cwfs, respectively. Note that our underlying notion of cwf in Section 2 is not small, and hence not an internal cwf.
+We will now display the sort symbols, operator symbols, and equations for the generalized algebraic theories of internal monoids, internal categories, and internal cwfs. We will show how to add operator symbols and equations when adding internal notions of $\Pi, \N$ and a universe closed under $\Pi$ and $\N$. The reason for prefacing these notions by the word "internal" is that the models of the theories are internal monoids, categories, and cwfs in $\Cwf_\Sigma$ for the respective signatures for these theories. Moreover, internal monoids, categories, and cwfs in the cwf~$\Set$ are small monoids, categories, and cwfs, respectively. Note that our underlying notion of cwf in Section 2 is not small, and hence not an internal cwf in the cwf~$\Set$.
 
 Our final example is the gat of internal contextual cwfs, a variant of Cartmell's contextual categories. The contexts in such contextual cwfs come with a length $n$. We sketch how this can be axiomatized as a gat with countably many sort symbols $\ctx_n, \sub_n, \ty_n, \tm_n$ for an external natural number $n$ (and similarly for the operator symbols and equations). We also indicate how our framework can be extended to cover such gats.
 
 \subsection{Internal monoids} The one-sorted algebraic theory of monoids has two operator symbols,
 $\idmon$ for identity and $\comp$ for composition, and associativity and identity laws as equations.
-As every other algebraic theory in the ordinary sense the algebraic theory of monoids yields a
-generalized algebraic theory. 
+As any other ordinary algebraic theory, the algebraic theory of monoids yields a
+generalized algebraic theory.
 
-%One first introduces one constant sort symbol $M$, and then 
-%the operator symbols $\idmon$ for identity and $\comp$ for composition, 
-%and the associativity and identity laws as equations. 
+%One first introduces one constant sort symbol $M$, and then
+%the operator symbols $\idmon$ for identity and $\comp$ for composition,
+%and the associativity and identity laws as equations.
 
-We now show in some detail how to build a valid signature for internal monoids 
+We now show in some detail how to build a valid signature for internal monoids
 using the cwf-combinators, following the recipe for introducing sort symbols, operators symbols, and equations in the previous section. (We omit the index $\Sigma$ in $\vdash_\Sigma$.)
 %Note that these inference rules follow the principles of introducing sort symbols, operator symbols, and equations we displayed in Section 4 when building the initial cwf $\T_\Sigma$ for appropriate $\Sigma$.
 
 \begin{itemize}
-\item 
-First, we have $1 \vdash$ for the empty signature, so we can 
+\item
+First, we have $1 \vdash$ for the empty signature, so we can
 add a production for the constant sort symbol $\Mon$ and the inference rule:
 \begin{eqnarray*}
 1 &\vdash& \Mon
@@ -551,8 +555,8 @@ Again for later use we infer $1.\Mon\vdash \idmon[\p] :\Mon[\p]$.
 Note that here $\p = \tuple{}$, the empty substitution $1.\Mon \to 1$,
 since there is only one substitution $1.\Mon \to 1$.
 \item
-We then add a production for the binary operator symbol $\comp$. 
-Using another $\p: 1.\Mon.\Mon[\p] \to 1.\Mon$ (note the different type), 
+We then add a production for the binary operator symbol $\comp$.
+Using another $\p: 1.\Mon.\Mon[\p] \to 1.\Mon$ (note the different type),
 we can derive $1.\Mon.\Mon[\p] \vdash \Mon[\p][\p]$, so we can add the inference rule
 \begin{eqnarray*}
 1.\Mon.\Mon[\p] &\vdash& \comp : \Mon[\p][\p]
@@ -560,7 +564,7 @@ we can derive $1.\Mon.\Mon[\p] \vdash \Mon[\p][\p]$, so we can add the inference
 Note that we project $\Mon$ on the right twice, reflecting that $\comp$ is binary.
 \item
 We can derive $1.\Mon \vdash \q : \Mon[\p]$. With some effort,
-using previous inferences, we can  derive 
+using previous inferences, we can  derive
 $1.\Mon \vdash \comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}] : \Mon[\p]$.
 Hence we can add the inference rule for the equation ($\idmon$ is a left identity):
 \begin{eqnarray*}
@@ -570,7 +574,7 @@ Hence we can add the inference rule for the equation ($\idmon$ is a left identit
 We omit the rendering of the right identity and associativity laws.
 \end{itemize}
 
-We also display the sort symbols, operator symbols, 
+We also display the sort symbols, operator symbols,
 and equations in ordinary notation with named variables for comparison:
 \begin{eqnarray*}
 &\vdash& \Mon\\
@@ -585,7 +589,8 @@ which are easier to read, but more difficult to deal with semantically.
 
 A cwf $\C$ that supports this gat has an {\em internal monoid} in $\C$. This is a cwf-version of the notion of internal monoid which can be defined in any category with finite products. Ordinary (small) monoids come out as internal monoids in $\Set$, the cwf of small sets.
 
-In the remaining examples, we shall mainly use ordinary notation with variables.
+% In the remaining examples, we shall mainly use ordinary notation with variables.
+% % We have already said that.
 
 \subsection{Internal categories} The gat of categories was one of Cartmell's motivating examples. It has the following sort symbols, operator symbols, and equations. Again, note that in our case the models are internal categories in a cwf. To emphasize the difference between the internal notions of category and cwf and the external notions (introduced in Section 2), our notation for sort symbols in the gat of internal cwfs use lower case letters ($\Obj, \Hom, \ty, \tm$). This is in contrast to the upper case letters for the external versions ($\Ty, \Tm$). We will however overload notation for operator symbols, and for example use $\circ$ both for the cwf-combinator and for the operator symbol in the gat of internal categories.
 
@@ -610,7 +615,7 @@ Equations:
 (\gamma \circ \delta) \circ \xi = \gamma \circ (\delta \circ \xi): \Hom(\Theta,\Gamma)
 \end{eqnarray*}
 %In order to build $\Hom(\Delta,\Gamma)$ for two concrete contexts $\vdash \Delta : \Ctx$ and $\vdash \Gamma : \Ctx$ we need to apply $\Hom$ to the context morphism consisting of $\Delta$ and $\Gamma$ to yield $\Hom(\Delta,\Gamma)$. (There is more to say ...)
-Note that composition is officially an operator symbols with five arguments. In the official notation we should write $\gamma \circ_{\Xi,\Delta,\Gamma} \delta$, but we suppress the context arguments $\Xi,\Delta,\Gamma$. We will do so for some other operations too.
+Note that composition is officially an operator symbol with five arguments. In the official notation we should write $\gamma \circ_{\Xi,\Delta,\Gamma} \delta$, but we suppress the context arguments $\Xi,\Delta,\Gamma$. We will do so for some other operations too.
 
 The rendering of the gat of categories in cwf-combinator language and the proof that it indeed yields a valid signature are similar to what they were for the gat of monoids. The inference rules for the two sort symbols in cwf-combinator language are
 \begin{eqnarray*}
@@ -627,11 +632,11 @@ A cwf that supports the generalized algebraic theory of categories is a cwf with
 
 An internal category in the cwf $\Set$ of small sets is a small category.
 
-%\subsubsection{How to generate the valid signature using the combinator language} 
-%The signature for the generalized algebraic theory of categories has sort symbols $\Obj$ 
+%\subsubsection{How to generate the valid signature using the combinator language}
+%The signature for the generalized algebraic theory of categories has sort symbols $\Obj$
 %and $\Hom$, operator symbols $\id$ for identity and $\circ$ for composition, and associativity and identity laws as equations. We shall here sketch how to generate the valid signature for categories with reference to definition \ref{} and using cwf-combinators.
 %\begin{itemize}
-%\item The initial cwf $\T_\emptyset$ (as constructed above) has only one object (context) [1], one equivalence class of morphisms $[\id_1]$ (with several representatives: $\tuple{}_1, \id_1 \circ \id_1$, etc), and no types and terms. Hence we can add a new constant sort $\Obj$ of (internal) objects with context $1$ to the signature. 
+%\item The initial cwf $\T_\emptyset$ (as constructed above) has only one object (context) [1], one equivalence class of morphisms $[\id_1]$ (with several representatives: $\tuple{}_1, \id_1 \circ \id_1$, etc), and no types and terms. Hence we can add a new constant sort $\Obj$ of (internal) objects with context $1$ to the signature.
 %\item $\T_{([\Obj],[],[])}$ (as constructed above) contains the context $[(1.\Obj).\Obj[\p_{1,\Obj}]]$ (corresponding to the context $x : \Obj, y : \Obj$ in usual notation). Hence we can introduce a new sort $\Hom$ with this context. This sort represents the family $\Hom(x,y)$ of (internal) morphisms.
 %\item $\T_{([\Obj, \Hom],[],[])}$ contains the context $[1.\Obj]$ (corresponding to the context $x : \Obj$) and the type $[\Hom[\tuple{\id_{1.\Obj},\q_{1,\Obj}}]]$ (corresponding to the type $\Hom(x,x)$). Hence we can introduce an operator symbol $\id$ with this context and type.
 %\item In a similar way we can add the operator symbol for composition and the equations, but we omit the details.
@@ -652,7 +657,7 @@ Sort symbols:
 
 Operator symbols:
 \begin{eqnarray*}
-\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma) &\vdash& 
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma) &\vdash&
 A[\gamma] : \ty(\Delta)\\
 \Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Gamma,A) &\vdash&  a[\gamma] : \tm(\Delta,A[\gamma])
 \end{eqnarray*}
@@ -664,13 +669,13 @@ Equations:
 \Xi,\Delta,\Gamma : \ctx, \delta : \Hom(\Xi,\Delta), \gamma : \Hom(\Delta,\Gamma),
 A:\ty(\Gamma) &\vdash& A[\gamma\circ\delta] = A[\gamma][\delta]: \ty(\Xi)\\
 \Xi,\Delta,\Gamma : \ctx, \delta : \Hom(\Xi,\Delta), \gamma : \Hom(\Delta,\Gamma),
-A:\ty(\Gamma), a:\tm(\Gamma,A) &\vdash& 
+A:\ty(\Gamma), a:\tm(\Gamma,A) &\vdash&
 a[\gamma\circ\delta] = a[\gamma][\delta]: \tm(\Xi,A[\gamma\circ\delta])
 \end{eqnarray*}
 
 \subsubsection{The extension with a terminal object}
 No new sorts are required.
-  
+
 Operator symbols:
 \begin{eqnarray*}
 &\vdash& 1 : \ctx\\
@@ -680,16 +685,16 @@ Operator symbols:
 Equations:
 \begin{eqnarray*}
  &\vdash& \id_1 = \tuple{}_1 : \Hom(1,1)\\
-\Gamma,\Delta : \ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash& 
+\Gamma,\Delta : \ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash&
 \tuple{}_\Gamma\circ\gamma = \tuple{}_\Delta : \Hom(\Delta,1)
 \end{eqnarray*}
-(The latter two equations are better for term rewriting then the
+(The latter two equations are better for term rewriting than the
 obvious single one expressing the uniqueness of $\tuple{}_\Gamma$.)
 
 \subsubsection{The extension with context comprehension}
 
 No new sorts are required.
-  
+
 Operator symbols:
 \begin{eqnarray*}
 \Gamma : \ctx, A:\ty(\Gamma) &\vdash& \Gamma\cext A : \ctx\\
@@ -702,29 +707,29 @@ Equations:
 \begin{eqnarray*}
 \Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \p\circ\tuple{\gamma,a} = \gamma : \Hom(\Delta,\Gamma)\\
 \Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \q[\tuple{\gamma,a}] = a : \tm(\Delta,A[\gamma]) \\
-\Gamma,\Delta,\Xi : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]), \delta : \Hom(\Xi,\Delta) &\vdash& 
-\tuple{\gamma,a} \circ \delta = \tuple{\gamma\circ\delta,a[\delta]} : 
+\Gamma,\Delta,\Xi : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]), \delta : \Hom(\Xi,\Delta) &\vdash&
+\tuple{\gamma,a} \circ \delta = \tuple{\gamma\circ\delta,a[\delta]} :
 \Hom(\Xi,\Gamma\cext A) \\
-\Gamma : \ctx, A:\ty(\Gamma) &\vdash& 
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash&
 \id_{\Gamma\cext A} = \tuple{\p,\q} : \Hom(\Gamma\cext A,\Gamma\cext A)
 \end{eqnarray*}
 (If $\p\circ\delta = \gamma$ and $\q[\delta]=a$, we get
 $\tuple{\gamma,a}=\tuple{\p\circ\delta, \q[\delta]} = \tuple{\p,\q}\circ\delta =
 \delta$, the uniqueness requirement of the universal property.
 However, the equation for surjective pairing is not left-linear and with
-a variable on one side --- not good for rewriting.)
+a variable on one side, which is not good for rewriting.)
 
-A cwf that supports the generalized algebraic theory of cwfs is a cwf with an 
+A cwf that supports the generalized algebraic theory of cwfs is a cwf with an
 \emph{internal cwf}. An internal cwf in the cwf $\Set$ of small sets is a {\em small cwf},
 that is, it is a cwf in the ordinary sense (see Definition~\ref{def:Cwfobj})
 except that it has small sets of objects, morphisms, types, and terms.
 
-An example of a cwf with an internal cwf is provided by the cwf $\Set$ of small sets with an internal category of very small sets. We can make this precise if we work in set theory with two Grothendieck universes $\V_0 \in \V_1$. We call the members of $\V_1$ "small sets" and the members of $\V_0$ "very small sets". The category of contexts of the cwf $\Set$ is the usual category of small sets, by which we here mean that its objects are in $\V_1$. Moreover, the types are also the small sets in $\V_1$. To get an internal cwf, we interpret its sort of objects $\ctx$ as the small set $\V_0$ of very small sets, and the sorts of types $\ty(\Gamma)$ also as $\V_0$.
+An example of a cwf with an internal cwf is provided by the cwf $\Set$ of small sets with an internal category of very small sets. We can make this precise if we work in set theory with two Grounding universes $\V_0 \in \V_1$. We call the members of $\V_1$ "small sets" and the members of $\V_0$ "very small sets". The category of contexts of the cwf $\Set$ is the usual category of small sets, by which we here mean that its objects are in $\V_1$. Moreover, the types are also the small sets in $\V_1$. To get an internal cwf, we interpret its sort of objects $\ctx$ as the small set $\V_0$ of very small sets, and the sorts of types $\ty(\Gamma)$ also as $\V_0$.
 
 %Further examples of internal cwfs inside $\Set$ are provided by cwfs supporting signatures of generalized algebraic theories, as constructed in the previous section.
 
-\subsection{Internal cwfs with $\Pi$-types} 
-We add the operator symbols 
+\subsection{Internal cwfs with $\Pi$-types}
+We add the operator symbols
 \begin{eqnarray*}
 \Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A)&\vdash& \Pi(A,B) : \ty(\Gamma)\\
 \Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A), b : \tm(\Gamma.A, B) &\vdash& \lambda(b) : \tm(\Gamma,\Pi(A,B))\\
@@ -744,22 +749,22 @@ and commutation with respect to substitution.
 \end{eqnarray*}
 where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
 
-\subsection{Internal cwfs with $\N$-types} 
-We add operator symbols $\N, 0, \s, \Rec$ and equations for $\Rec$ and commutativity with substitution, but omit the details.
+\subsection{Internal cwfs with $\N$-types}
+We add operator symbols $\N, 0, \s, \Rec$ and equations for the induction principle $\Rec$ and commutativity with substitution, but omit the details.
 
-\subsection{Internal cwfs with $\U_0$ closed under $\Pi$ and $\N$} 
+\subsection{Internal cwfs with $\U_0$ closed under $\Pi$ and $\N$}
 We add operator symbols
 \begin{eqnarray*}
 \Gamma : \ctx &\vdash& (\U_0)_\Gamma : \ty(\Gamma)\\
 \Gamma : \ctx, a : \tm(\Gamma,(\U_0)_\Gamma) &\vdash& {\Ta_0}(a) : \ty(\Gamma)\\
 \Gamma : \ctx &\vdash& (\N^0)_\Gamma : \tm(\Gamma,(\U_0)_\Gamma) \\
-\Gamma : \ctx, 
-a : \tm(\Gamma,(\U_0)_\Gamma), 
+\Gamma : \ctx,
+a : \tm(\Gamma,(\U_0)_\Gamma),
 b :  \tm(\Gamma \cdot \Ta_0(a), (\U_0)_\Gamma))
 &\vdash&
  \Pi^0(a,b) : \tm(\Gamma,(\U_0)_\Gamma)
 \end{eqnarray*}
-$(\U_0)_\Gamma$ is the universe (a type) relative to the context $\Gamma$; $\Ta_0$ is the decoding operation mapping a term in the universe to the corresponding type; $\N^0$ is the code for $\N$ in the universe, and $\Pi^0$ forms codes for $\Pi$-types in the 
+$(\U_0)_\Gamma$ is the universe (a type) relative to the context $\Gamma$; $\Ta_0$ is the decoding operation mapping a term in the universe to the corresponding type; $\N^0$ is the code for $\N$ in the universe, and $\Pi^0$ forms codes for $\Pi$-types in the
  universe. (Note that we have dropped the context argument of $\Ta_0$ and $\Pi^0$.)
 
 We add the decoding equations:
@@ -789,7 +794,7 @@ by a sequence of sorts $\ctx_0,\,\ctx_1,\,\dots$ where $\ctx_n$ represents the s
 of contexts of length $n$ and a corresponding sequence of sorts
 $\ty_n(\Gamma)$ for $\Gamma$ in $\ctx_n$
 and $\tm_n(\Gamma,A)$ for $A$ in $\ty_n(\Gamma)$. Context extension $\Gamma.A$ is now in $\ctx_{n+1}$
-if $A$ is in $\ty_n(\Gamma)$ and so on. 
+if $A$ is in $\ty_n(\Gamma)$ and so on.
 We also add {\em destructors}: we have
 $\mathrm{ft}(\Gamma)$ in $\ctx_n$
 and $\mathrm{st}(\Gamma)$ in $\ty_n(\mathrm{ft}(\Gamma))$
@@ -800,12 +805,12 @@ The resulting models are {\em internal contextual cwfs} in a cwf.
 
 
 
-%\subsection{Cwfs with universe tower structures} 
+%\subsection{Cwfs with universe tower structures}
 %
 %The first formulation of intuitionistic type theory with an infinite sequence of universes is due to Martin-Löf
-%\cite{martinlof:predicative}. Rules for cumulativity (or lifting) were added in Martin-Löf \cite{martinlof:hannover}. Both formulations have an infinite sequence of universes indexed by external natural numbers, and as a consequence the theories have infinitely many rules. 
+%\cite{martinlof:predicative}. Rules for cumulativity (or lifting) were added in Martin-Löf \cite{martinlof:hannover}. Both formulations have an infinite sequence of universes indexed by external natural numbers, and as a consequence the theories have infinitely many rules.
 %
-%We shall now formalize a notion of finitary gat closely related to Martin-Löf's cumulative version. The external natural number indices will be represented by internal level indices in the gat. To this end we introduce a new sort symbol 
+%We shall now formalize a notion of finitary gat closely related to Martin-Löf's cumulative version. The external natural number indices will be represented by internal level indices in the gat. To this end we introduce a new sort symbol
 %$$
 %\vdash \Level
 %$$
@@ -821,8 +826,8 @@ The resulting models are {\em internal contextual cwfs} in a cwf.
 %n : \Level, \Gamma : \ctx &\vdash& (\U_n)_\Gamma : \Ty(\Gamma)\\
 %n : \Level, \Gamma : \ctx, a : \Tm(\Gamma,(\U_n)_\Gamma) &\vdash& {\Ta_n}(a) : \Ty(\Gamma)\\
 %n : \Level, \Gamma : \Ctx &\vdash& (\N^n)_\Gamma : \Tm(\Gamma,(\U_n)_\Gamma) \\
-%n : \Level, \Gamma : \Ctx, 
-%a : \Tm(\Gamma,(\U_n)_\Gamma), 
+%n : \Level, \Gamma : \Ctx,
+%a : \Tm(\Gamma,(\U_n)_\Gamma),
 %b :  \Tm(\Gamma \cdot \Ta_n(a), (\U_n)_\Gamma))
 %&\vdash&
 % \Pi^n(a,b) : \Tm(\Gamma,(\U_n)_\Gamma)\\
@@ -862,12 +867,12 @@ the type formers.
 
 More generally, Voevodsky \cite{voevodsky:initiality} has outlined a new vision of the theory of syntax and semantics of dependent type theories. In this vision formal systems for dependent type theory are proved to be initial in suitable categories of models ({\em the initiality conjecture}). The above mentioned contributions by Streicher and Brunerie et al are two examples of such characterizations. However, Voevodsky's aim was to go further and characterize a whole class of type theories and prove uniform initiality results for them with the aim to form the basis for a general metatheory of dependent type theory. Our work can be viewed as a contribution to Voevodsky's programme, since we prove an initiality theorem for the whole class of finitely presented generalized algebraic theories.
 
-Another related contribution is Palmgren and Vickers' \cite{palmgrenvickers} detailed construction of 
+Another related contribution is Palmgren and Vickers' \cite{palmgrenvickers} detailed construction of
 an initial model of an essentially algebraic theory.
 
 Altenkirch and Kaprosi \cite{altenkirch:qiits} give several examples of what they call {\em quotient inductive-inductive types (qiits)}. Their main example is a definition of dependent type theory with $\Pi$-types and a universe, as a simultaneous definition in the Agda system \cite{agda-wiki} of the data types $\Ctx$ of contexts, $\Sub(\Delta,\Gamma)$ of substitutions, $\Ty(\Gamma)$, and $\Tm(\Gamma,A)$ of terms. Their definition is {\em inductive-inductive} \cite{nordvallforsberg:iids}, since the index sets of $\Sub, \Ty,$ and $\Tm$ are generated simultaneously, and as a consequence are not indexed inductive definitions in the usual sense where the index sets are fixed in advance. Furthermore, it is a quotient inductive-inductive type since they also have constructors for identities, as in {\em higher inductive types}.
 
-There is a clear relationship to our initial internal cwf with $\Pi$-types and a universe: our sort symbols correspond to their formation rules (set constructors), our operator symbols correspond to their introduction rules (constructors), and our equations correspond to their propositional identities. However, there is an important difference. Our equations are judgmental equalities while theirs are propositional identities. As a consequence they need to use transport maps when moving between identical types. Using the terminology of qiits we provide a definition of a class of valid qiits (in our modified sense) together with a class of models for each of them. 
+There is a clear relationship to our initial internal cwf with $\Pi$-types and a universe: our sort symbols correspond to their formation rules (set constructors), our operator symbols correspond to their introduction rules (constructors), and our equations correspond to their propositional identities. However, there is an important difference. Our equations are judgmental equalities while theirs are propositional identities. As a consequence they need to use transport maps when moving between identical types. Using the terminology of qiits, here we provide a definition of a class of valid qiits (in our modified sense) together with a class of models for each of them.
 
 
 %Given that we have definition of a valid signature $\Sigma$ and a semantics for $\T_\Sigma$ we could ask whether we could add the construction of these to type theory. This would make most sense in extensional type theory, since we can then move seamlessly between propositional and judgmental equalities. It is however, not clear how to provide canonical form semantics in the sense of Martin-Löf's meaning explanations for this notion. However, although our development takes place in set theory, everything we do is constructive and could be formalized in CZF presumably.
