@@ -99,7 +99,7 @@ In this note we explore the interdependence between gats and cwfs. The main nove
 
 \subsection*{Plan of the paper}
 
-In Section 2 we define the category $\Cwf$ of categories with families and morphisms preserving cwf-structure on the nose. Section 3 contains our main definition of a syntax independent notion of valid signature $\Sigma$ for a gat and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure. In Section 4 we construct an initial object $\T_\Sigma$ in $\Cwf_\Sigma$. In Section 5 we show several examples of gats: for monoids, categories, cwfs, and cwfs with extra structure for a first universe. We also point out that cwfs with extra structure for gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively. We also sketch how to extend our approach to some countably presented gats, and show the example of contextual cwfs, a variant of Cartmell's contextual categories \cite{cartmell:phd,cartmell:apal}. Finally, in Section 6 we discuss related work, for example relating to Voevodsky's initiality conjecture \cite{voevodsky:initiality} and Altenkirch and Kaprosi's quotient inductive-inductive types \cite{altenkirch:qiits}.
+In Section 2 we define the category $\Cwf$ of categories with families and morphisms preserving cwf-structure on the nose. Section 3 contains our main definition of a syntax independent notion of valid signature $\Sigma$ for a gat and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure. In Section 4 we construct an initial object $\T_\Sigma$ in $\Cwf_\Sigma$. In Section 5 we show several examples of gats: for monoids, categories, cwfs, and cwfs with extra structure for a first universe. We point out that cwfs with extra structure for gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively. We also sketch how to extend our approach to some countably presented gats, and show the example of contextual cwfs, a variant of Cartmell's contextual categories \cite{cartmell:phd,cartmell:apal}. Finally, in Section 6 we discuss related work, for example relating to Voevodsky's initiality conjecture \cite{voevodsky:initiality} and Altenkirch and Kaprosi's quotient inductive-inductive types \cite{altenkirch:qiits}.
 
 All our development can be formulated in a constructive set theory, 
 as described for instance by Aczel \cite{MR519801}, though the set theory
@@ -283,7 +283,7 @@ F(\p_{\Gamma, A}) = \p_{F(\Gamma), F(A)} \qquad
 F(\q_{\Gamma, A}) = \q_{F(\Gamma), F(A)}\,.
 \]
 
-Note that the universal property implies that also
+Note that the universal property implies that
 $F(\tuple{\gamma,a}) = \tuple{F(\gamma),F(a)}$.
 The same is true for the terminal maps:
 $F(\tuple{}_\Gamma) = \tuple{}_{F(\Gamma)}$.
@@ -436,7 +436,7 @@ The system of inference rules is displayed in \cite{castellan:tlca2015,castellan
 \item conversion rules for the cwf-combinators.
 \end{itemize}
 \item
-Note that the initial cwf $\T_\emptyset$ is rather uninteresting: its category of contexts contains only a terminal object (the empty context), and there are no types and terms. Nevertheless, the grammar and inference rules used in its definition form a starting point. The grammar for raw types and raw terms will be extended each time we add a new sort symbol or operator symbol, respectively. For each such new symbol and each new equation we will also add a new inference rule. As a consequence we will generate non-trivial $\T_\Sigma$.
+Note that the initial cwf $\T_\emptyset$ is rather uninteresting: its category of contexts contains only a terminal object (the empty context), and there are no types and terms. Nevertheless, the grammar and inference rules used in its definition form a starting point. The grammar for raw types and raw terms will be extended each time we add a new sort symbol or operator symbol, respectively. For each such new symbol and each new equation we will add a new inference rule. As a consequence we will generate non-trivial $\T_\Sigma$.
 \end{itemize}
 
 Assume now for the induction step that we have defined the grammar, the inference rules, $\T_\Sigma$ and the interpretation morphism $\inte{-} : \T_{\Sigma} \to \C$ in $\Cwf_\Sigma$.
@@ -514,7 +514,7 @@ In order to define $\inte{-}'$ we first define the partial function on the raw s
 
 \section{Examples of generalized algebraic theories}
 
-We will now display the sort symbols, operator symbols, and equations for the generalized algebraic theories of internal monoids, internal categories, and internal cwfs. We will also show how to add operator symbols and equations when adding internal notions of $\Pi, \N$ and a universe closed under $\Pi$ and $\N$. The reason for prefacing these notions by the word "internal" is that the models of the theories are internal monoids, categories, and cwfs in $\Cwf_\Sigma$ for the respective signatures for these theories. Moreover, internal monoids, categories, and cwfs in the cwf $\Set$ are small monoids, categories, and cwfs, respectively. Note that our underlying notion of cwf in Section 2 is not small, and hence not an internal cwf.
+We will now display the sort symbols, operator symbols, and equations for the generalized algebraic theories of internal monoids, internal categories, and internal cwfs. We will show how to add operator symbols and equations when adding internal notions of $\Pi, \N$ and a universe closed under $\Pi$ and $\N$. The reason for prefacing these notions by the word "internal" is that the models of the theories are internal monoids, categories, and cwfs in $\Cwf_\Sigma$ for the respective signatures for these theories. Moreover, internal monoids, categories, and cwfs in the cwf $\Set$ are small monoids, categories, and cwfs, respectively. Note that our underlying notion of cwf in Section 2 is not small, and hence not an internal cwf.
 
 Our final example is the gat of internal contextual cwfs, a variant of Cartmell's contextual categories. The contexts in such contextual cwfs come with a length $n$. We sketch how this can be axiomatized as a gat with countably many sort symbols $\ctx_n, \sub_n, \ty_n, \tm_n$ for an external natural number $n$ (and similarly for the operator symbols and equations). We also indicate how our framework can be extended to cover such gats.
 
@@ -558,7 +558,7 @@ we can derive $1.\Mon.\Mon[\p] \vdash \Mon[\p][\p]$, so we can add the inference
 Note that we project $\Mon$ on the right twice, reflecting that $\comp$ is binary.
 \item
 We can derive $1.\Mon \vdash \q : \Mon[\p]$. With some effort,
-using previous inferences, we can also derive 
+using previous inferences, we can  derive 
 $1.\Mon \vdash \comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}] : \Mon[\p]$.
 Hence we can add the inference rule for the equation ($\idmon$ is a left identity):
 \begin{eqnarray*}
