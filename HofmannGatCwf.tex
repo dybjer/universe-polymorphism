@@ -329,22 +329,22 @@ as follows:
   Then we can extend $\Sigma$ with a new sort symbol $S$ relative to $\Gamma$, to obtain
   the gat $\Sigma' = (\Sigma,(\Gamma,S))$.
   The objects of $\Cwf_{\Sigma'}$ are pairs $(\C,S_{\C})$, where $\C$ is an object of $\Cwf_{\Sigma}$
-  and $S_{\C}$ is a type over $\Gamma_{\C}$.
+  and $S_{\C} \in \Ty_\C(\Gamma_{\C})$.
   A morphism in $\Cwf_{\Sigma'}((\C,S_{\C}), (\D,S_{\D}))$
   is a morphism $F \in \Cwf_{\Sigma}(\C,\D)$ such that $F(S_\C) = S_\D$.
 \item[Adding an operator symbol] 
   If $\Gamma$ is a uniform family of contexts and $A$ a uniform family of 
   types over $\Gamma$, then we can extend $\Sigma$ with a new operator 
-  symbol $f$ relative to $\Gamma$ and $A$,, to obtain
+  symbol $f$ relative to $\Gamma$ and $A$, to obtain
   the gat $\Sigma' = (\Sigma,(\Gamma,A,f))$.
   An object of $\Cwf_{\Sigma'}$
-  is a pair $\C,f_{\C}$ where $\C$ is an object in $\Cwf_{\Sigma}$ and $f_{\C} \in \Tm_\C(\Gamma_\C,A_\C)$.
-  A morphism in $(\C,f_{\C}) \to (\D,f_{\D})$ is a morphism $F$ in $\C\to \D$ such that $F(f_{\C}) = f_{\D}$
+  is a pair $(\C,f_{\C})$ where $\C$ is an object in $\Cwf_{\Sigma}$ and $f_{\C} \in \Tm_\C(\Gamma_\C,A_\C)$.
+  A morphism in $(\C,f_{\C}) \to (\D,f_{\D})$ is a morphism $F \in \Cwf_{\Sigma}(\C,\D)$ such that $F(f_{\C}) = f_{\D}$
 \item[Adding an equation] 
   If $\Gamma$ is a uniform family of contexts,
   $A$ is a uniform family of types over $\Gamma$
   and $a,a'$ are uniform families of terms in $A$, 
-  then we can extend $\Sigma$ with a new equation $a = a'$ , to obtain
+  then we can extend $\Sigma$ with a new equation $a = a'$, to obtain
   the gat $\Sigma' = (\Sigma,(\Gamma,A,a,a'))$.
   In this case,
   $\Cwf_{\Sigma'}$ is a full subcategory of $\Cwf_{\Sigma}$. An object $\C$ in
@@ -413,7 +413,7 @@ where $\Gamma, \Gamma' \in \RawCtx_\Sigma, \gamma, \gamma' \in \RawSub_\Sigma, A
 \item
 A cwf $\T_\Sigma$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T_\Sigma$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash_\Sigma$. We will show that $\T_\Sigma$ is a cwf that supports $\Sigma$, that is, an object of $\Cwf_\Sigma$.
 \item
-A $\Cwf_\Sigma$-morphism $\inte{-} : \T_\Sigma \to \C$ for every $\C \in \Cwf_\Sigma$. This is the {\em interpretation morphism}. This morphism is a partial function defined by induction on the raw syntax, such that it maps raw contexts to contexts in $\C$, raw substitutions to substitutions in $\C$, raw types to types in $\C$, and raw terms to terms in $\C$. We show that these partial functions preserve the partial equivalence relations so that we can define the interpretation morphism on the equivalence classes. Finally we show that it indeed is a $\Cwf_\Sigma$-morphism and the unique such into $\C$.
+A $\Cwf_\Sigma$-morphism $\inte{-} : \T_\Sigma \to \C$ for every $\C \in \Cwf_\Sigma$. This is the {\em interpretation morphism}. This morphism is a partial function defined by induction on the raw syntax, that (whenever it is defined) maps raw contexts to contexts in $\C$, raw substitutions to substitutions in $\C$, raw types to types in $\C$, and raw terms to terms in $\C$. We show that these partial functions preserve the partial equivalence relations so that we can define the interpretation morphism on the equivalence classes. Finally we show that it indeed is a $\Cwf_\Sigma$-morphism and the unique such into $\C$.
 \end{itemize}
  
 We begin with the construction for the base case: the {\bf empty signature} $\emptyset$. 
@@ -428,7 +428,7 @@ a \in \RawTm_\emptyset  &::=& a[\gamma] \ |\ \qI_A
 \end{eqnarray*}
 These grammars generate a language of {\em cwf-combinators}.
 \item
-The system of inference rules is displayed in \cite{castellan:tlca2015,castellan:lmcs}. It is a system of {\em general rules}, rules for dependent type theory which come before you introduce any sort symbols and operator symbols and equations (or any rules for the type formers of intuitionistic type theory). We do not have room here to display them, but note that they can be divided into the four groups: 
+The system of inference rules is displayed in \cite{castellan:tlca2015,castellan:lmcs}. It is a system of {\em general rules}, rules for dependent type theory which come before you introduce any sort symbols and operator symbols and equations (or any rules for the type formers of intuitionistic type theory). We do not have room here to display them, but note that they can be divided into four groups: 
 \begin{itemize}
 \item the per rules, amounting to symmetry and transitivity for the four forms of equality judgments;
 \item preservation rules for judgments amounting to substitution of equals for equals (an example of such a rule is the {\em type equality rule});
