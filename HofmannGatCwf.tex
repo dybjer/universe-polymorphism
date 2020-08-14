@@ -80,7 +80,7 @@
 \maketitle
 
 \begin{abstract}
-We define a new version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows possibly infinite sets of sort and operator symbols and equations, we only allow a finite number. Moreover, our definition is syntax independent and expressed in terms of uniform families in categories of models of generalized algebraic theories. 
+We define a new notion of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows possibly infinite sets of sort and operator symbols and equations, we only allow a finite number. Moreover, our definition is syntax independent and expressed in terms of uniform families in categories of models of generalized algebraic theories. 
 The objects of these are categories with families with extra structure and the morphisms preserve all the structure on the nose. Our main result is the syntactic construction of initial categories with families with extra structure, a result which can be viewed as a generalization of Birkhoff's completeness theorem for equational logic. This result is obtained by extending Castellan, Clairambault, and Dybjer's construction of an initial cwf. We provide examples of gats for monoids, categories, categories with families, and categories with families with extra structure for some type formers of dependent type theory. The models of these are internal monoids, internal categories, and internal categories with families (with extra structure) in a category with families.
 \end{abstract}
 
@@ -91,7 +91,8 @@ Generalized algebraic theories (gats) were introduced by Cartmell in his PhD the
 Categories with families (cwfs) \cite{dybjer:torino} were introduced as a new notion of model of dependent type theory. Cwfs arise by reformulating the notion of category with attributes (cwa) in Martin Hofmann's sense \cite{hofmann:csl}. The key point is to make it clear that cwfs arise as models of a certain generalized algebraic theory closely related to Martin-Löf's substitution calculus \cite{martinlof:gbg92}. As such it becomes a useful intermediary between traditional syntactic systems for dependent type theory and a variety of categorical notions of model.
 
 The gat of cwfs is thus a kind of idealized formal system of dependent type theory. In contrast to Martin-Löf's substitution calculus, and other syntactic systems for dependent type thoery, it is {\em not} formulated in terms of grammars and inference rules for the forms of judgment of type theory. Instead it is formulated in terms of sort symbols (corresponding to the judgment forms), operator symbols (corresponding to the formation, introduction, and elimination rules), and equations (corresponding to the equality rules for the type formers). Some of the general reasoning (about equality, substitution, and assumptions) is taken care of by the underlying machinery of dependent type theory. This makes it possible to abstract away from some of the details in the formulation of grammars and inference rules. In contrast to the various syntactic systems, we would like to argue that the gat of cwfs appears to be "canonical". We may define dependent type theory in a syntax independent way as the initial object in a category of cwfs with extra structure for interpreting the type formers. 
-However, the reader may now object that this looks like a circular definition. We learn what dependent type theory is if we already know what dependent type theory is!
+%However, the reader may now object that this looks like a circular definition. 
+%We learn what dependent type theory is if we already know what dependent type theory is!
 
 In this note we explore the interdependence between gats and cwfs. The main novelty is a syntax independent definition of gats in terms of cwfs with extra structure. We define a new finitely presented notion of generalized algebraic theory and simultaneosly a general categorical notion of model. We simultaneously define what it means to be a valid signature $\Sigma$ for a gat and the associated category $\Cwf_\Sigma$ with extra structure for $\Sigma$. This definition refers to {\em uniform families} of contexts, types, and terms in $\Cwf_\Sigma$, a purely semantic notion. Afterwards, we construct initial objects $\T_\Sigma \in \Cwf_\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of the initial object in the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
 
@@ -99,7 +100,7 @@ In this note we explore the interdependence between gats and cwfs. The main nove
 
 \subsection*{Plan of the paper}
 
-In Section 2 we define the category $\Cwf$ of categories with families and morphisms preserving cwf-structure on the nose. Section 3 contains our main definition of a syntax independent notion of valid signature $\Sigma$ for a gat and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure. In Section 4 we construct an initial object $\T_\Sigma$ in $\Cwf_\Sigma$. In Section 5 we show several examples of gats: for monoids, categories, cwfs, and cwfs with extra structure for a first universe. We point out that cwfs with extra structure for gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively. We also sketch how to extend our approach to some countably presented gats, and show the example of contextual cwfs, a variant of Cartmell's contextual categories \cite{cartmell:phd,cartmell:apal}. Finally, in Section 6 we discuss related work, for example relating to Voevodsky's initiality conjecture \cite{voevodsky:initiality} and Altenkirch and Kaprosi's quotient inductive-inductive types \cite{altenkirch:qiits}.
+In Section 2 we define the category $\Cwf$ of categories with families and morphisms preserving cwf-structure on the nose. Section 3 contains our main definition of a syntax independent notion of valid signature $\Sigma$ for a gat and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure. In Section 4 we construct an initial object $\T_\Sigma$ in $\Cwf_\Sigma$. In Section 5 we show several examples of gats: for monoids, categories, cwfs, and cwfs with extra structure for one universe. We point out that cwfs with extra structure for gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively. We also sketch how to extend our approach to some countably presented gats, and show the example of contextual cwfs, a variant of Cartmell's contextual categories \cite{cartmell:phd,cartmell:apal}. Finally, in Section 6 we discuss related work, for example relating to Voevodsky's initiality conjecture \cite{voevodsky:initiality} and Altenkirch and Kaprosi's quotient inductive-inductive types \cite{altenkirch:qiits}.
 
 All our development can be formulated in a constructive set theory, 
 as described for instance by Aczel \cite{MR519801}, though the set theory
@@ -302,7 +303,7 @@ Each object of $\Cwf_{\Sigma}$ is a cwf with extra structure and
 each morphism is a cwf morphism preserving this extra structure.
 For this definition, we will need the following auxiliary notions.
 
-A {\em uniform family of contexts} is a family of context $\Gamma = (\Gamma_{\C})$ for each
+A {\em uniform family of contexts} is a family of contexts $\Gamma = (\Gamma_{\C})$ for each
 $\C \in \Cwf_{\Sigma}$ such that
 $F(\Gamma_\C) = \Gamma_\D$ for all morphisms $F \in \Cwf_{\Sigma}(\C,\D)$.
 If $\Gamma$ is such a family, a {\em uniform family of types} over $\Gamma$ is a
@@ -389,7 +390,8 @@ Uniform families of types and terms arise from types and terms in $\T_\Sigma$ in
 
 We shall now show our main theorem. It can be viewed as a generalization of Birkhoff's completeness theorem for equational logic \cite{birkhoff}:
 \begin{theorem}
-The category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$ for every valid signature $\Sigma$.
+The category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$,
+for every valid signature $\Sigma$.
 \end{theorem}
 
 The construction of $\T_\Sigma$ will be by induction on the construction of $\Sigma$. It is based on construction of initial cwfs in \cite{castellan:tlca2015,castellan:lmcs} and we refer the reader to those papers for more details. Here we will only provide a sketch and focus on how to extend the construction to $\T_\Sigma$.
@@ -506,7 +508,7 @@ We add  the inference rule
   \end{mathpar}
 to the inference rules for $\T_\Sigma$. 
 \item
-$\T_{\Sigma'}$ is based on the same raw syntax as $\T_\Sigma$ but the equivalence relation has changed. To show that $\T_{\Sigma'} \in \Cwf_\Sigma'$ we just need to show that $[ a ] = [ a' ]$ but this  from the inference rule $\Gamma \vdash_{\Sigma'} a = a' : A$.
+$\T_{\Sigma'}$ is based on the same raw syntax as $\T_\Sigma$ but the equivalence relation has changed. To show that $\T_{\Sigma'} \in \Cwf_\Sigma'$ we just need to show that $[ a ] = [ a' ]$ but this follows from the inference rule $\Gamma \vdash_{\Sigma'} a = a' : A$.
 \item
 In order to define $\inte{-}'$ we first define the partial function on the raw syntax to be identical to the partial function on the raw syntax for $\inte{-}$. We then prove that this partial function preserves the extended partial equivalence relation and define $\inte{-}'$ on the new equivalence classes. It follows  that $\inte{-}'$ is unique.
 \end{itemize}
@@ -637,7 +639,7 @@ An internal category in the cwf $\Set$ of small sets is a small category.
 
 \subsection{Internal cwfs}
 
-The gat of internal cwfs is obtained by extending the gat of internal categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of context to $\ctx$.
+The gat of internal cwfs is obtained by extending the gat of internal categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of contexts to $\ctx$.
 
 \subsubsection{The extension with a family valued functor}
 \mbox{ }
@@ -757,7 +759,8 @@ b :  \tm(\Gamma \cdot \Ta_0(a), (\U_0)_\Gamma))
 &\vdash&
  \Pi^0(a,b) : \tm(\Gamma,(\U_0)_\Gamma)
 \end{eqnarray*}
-$(\U_0)_\Gamma$ is the first universe (a type) relative to the context $\Gamma$; $\Ta_0$ is the decoding operation mapping a term in the first universe to the corresponding type; $\N^0$ is the code for $\N$ in the first universe, and $\Pi^0$ forms codes for $\Pi$-types in the first universe. (Note that we have dropped the context argument of $\Ta_0$ and $\Pi^0$.)
+$(\U_0)_\Gamma$ is the universe (a type) relative to the context $\Gamma$; $\Ta_0$ is the decoding operation mapping a term in the universe to the corresponding type; $\N^0$ is the code for $\N$ in the universe, and $\Pi^0$ forms codes for $\Pi$-types in the 
+ universe. (Note that we have dropped the context argument of $\Ta_0$ and $\Pi^0$.)
 
 We add the decoding equations:
 \begin{eqnarray*}
@@ -773,7 +776,7 @@ and the equations for preservation of substitution:
 \end{eqnarray*}
 %where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
 
-We remark that the gat for the first universe is inevitably {\em \`a la Tarski} in the sense that we distinguish between types and terms in a cwf and we must have an operation decoding a term into a type. However, Martin-Löf's distinction between {\em \`a la Russell} and {\em \`a la Tarski} is a distinction between two different formulation of the raw syntax and inference rules of type theory.
+We remark that the gat for the universe is inevitably {\em \`a la Tarski} in the sense that we distinguish between types and terms in a cwf and we must have an operation decoding a term into a type. However, Martin-Löf's distinction between {\em \`a la Russell} and {\em \`a la Tarski} is a distinction between two different formulation of the raw syntax and inference rules of type theory.
 
 \subsection{A possible refinement to internal contextual cwfs}
 
@@ -786,8 +789,9 @@ by a sequence of sorts $\ctx_0,\,\ctx_1,\,\dots$ where $\ctx_n$ represents the s
 of contexts of length $n$ and a corresponding sequence of sorts
 $\ty_n(\Gamma)$ for $\Gamma$ in $\ctx_n$
 and $\tm_n(\Gamma,A)$ for $A$ in $\ty_n(\Gamma)$. Context extension $\Gamma.A$ is now in $\ctx_{n+1}$
-if $A$ is in $\ty_n(\Gamma)$ and so on. We also add {\em destructors}: we have
-$\mathrm{ft}(\Gamma)$ in $\Ctx_n$
+if $A$ is in $\ty_n(\Gamma)$ and so on. 
+We also add {\em destructors}: we have
+$\mathrm{ft}(\Gamma)$ in $\ctx_n$
 and $\mathrm{st}(\Gamma)$ in $\ty_n(\mathrm{ft}(\Gamma))$
 with $\Gamma = \mathrm{ft}(\Gamma).\mathrm{st}(\Gamma)$.
 Similarly we have a stratification of the sort of substitutions
