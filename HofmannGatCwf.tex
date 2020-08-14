@@ -73,7 +73,7 @@
 \def\fun{\mathrm{fun}}
 
 
-\title[Generalized Algebraic Theories and Categories with Families]{A Note\\ on Finitely Presented Generalized Algebraic Theories\\and Categories with Families}\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
+\title[Generalized Algebraic Theories and Categories with Families]{A Note on Generalized Algebraic Theories\\and Categories with Families}\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
 
 \begin{document}
 
@@ -514,7 +514,9 @@ In order to define $\inte{-}'$ we first define the partial function on the raw s
 
 \section{Examples of generalized algebraic theories}
 
-We will now display the sort symbols, operator symbols, and equations for the generalized algebraic theories of internal monoids, internal categories, and internal cwfs. We will also show how to add operator symbols and equations when adding internal notions of $\Pi, \N$ and a universe of closed under $\Pi$ and $\N$. The reason for prefacing these notions by the word "internal" is that the models of the theories are internal monoids, categories, and cwfs in $\Cwf_\Sigma$ for the respective signatures for these theories. Note that internal monoids, categories, and cwfs in the cwf $\Set$ are small monoids, categories, and cwfs, respectively. Note furthermore, that our underlying notion of cwf in Section 2 is not small, and hence not an internal cwf.
+We will now display the sort symbols, operator symbols, and equations for the generalized algebraic theories of internal monoids, internal categories, and internal cwfs. We will also show how to add operator symbols and equations when adding internal notions of $\Pi, \N$ and a universe closed under $\Pi$ and $\N$. The reason for prefacing these notions by the word "internal" is that the models of the theories are internal monoids, categories, and cwfs in $\Cwf_\Sigma$ for the respective signatures for these theories. Moreover, internal monoids, categories, and cwfs in the cwf $\Set$ are small monoids, categories, and cwfs, respectively. Note that our underlying notion of cwf in Section 2 is not small, and hence not an internal cwf.
+
+Our final example is the gat of internal contextual cwfs, a variant of Cartmell's contextual categories. The contexts in such contextual cwfs come with a length $n$. We sketch how this can be axiomatized as a gat with countably many sort symbols $\ctx_n, \sub_n, \ty_n, \tm_n$ for an external natural number $n$ (and similarly for the operator symbols and equations). We also indicate how our framework can be extended to cover such gats.
 
 \subsection{Internal monoids} The one-sorted algebraic theory of monoids has two operator symbols,
 $\idmon$ for identity and $\comp$ for composition, and associativity and identity laws as equations.
@@ -525,8 +527,8 @@ generalized algebraic theory.
 %the operator symbols $\idmon$ for identity and $\comp$ for composition, 
 %and the associativity and identity laws as equations. 
 
-We shall now show in some detail how to build a valid signature for internal monoids 
-using the cwf-combinators, following the recipe for introducing sort symbols, operators symbols, and equations in the previous section. (We shall omit the index $\Sigma$ in $\vdash_\Sigma$.)
+We now show in some detail how to build a valid signature for internal monoids 
+using the cwf-combinators, following the recipe for introducing sort symbols, operators symbols, and equations in the previous section. (We omit the index $\Sigma$ in $\vdash_\Sigma$.)
 %Note that these inference rules follow the principles of introducing sort symbols, operator symbols, and equations we displayed in Section 4 when building the initial cwf $\T_\Sigma$ for appropriate $\Sigma$.
 
 \begin{itemize}
@@ -583,7 +585,7 @@ A cwf $\C$ that supports this gat has an {\em internal monoid} in $\C$. This is 
 
 In the remaining examples, we shall mainly use ordinary notation with variables.
 
-\subsection{Internal categories} The gat of categories was one of Cartmell's motivating examples. It has the following sort symbols, operator symbols, and equations. Again, note that in our case the models are internal categories. To emphasize the difference between the internal notions of category and cwf and the external notions (introduced in Section 2), our sort symbols will only use lower case letters ($\Obj, \Hom, \ty, \tm$). This is in contrast to the upper case letters for the external versions ($\Ty, \Tm$). We will however overload notation for operator symbols, and for example use $\circ$ both for the cwf-combinator and for the operator symbol in the gat of internal categories.
+\subsection{Internal categories} The gat of categories was one of Cartmell's motivating examples. It has the following sort symbols, operator symbols, and equations. Again, note that in our case the models are internal categories in a cwf. To emphasize the difference between the internal notions of category and cwf and the external notions (introduced in Section 2), our notation for sort symbols in the gat of internal cwfs use lower case letters ($\Obj, \Hom, \ty, \tm$). This is in contrast to the upper case letters for the external versions ($\Ty, \Tm$). We will however overload notation for operator symbols, and for example use $\circ$ both for the cwf-combinator and for the operator symbol in the gat of internal categories.
 
 Sort symbols:
 \begin{eqnarray*}
@@ -617,7 +619,7 @@ and the operator symbols for identity
 \begin{eqnarray*}
 1.\Obj &\vdash& \idmon : \Hom[\tuple{\id_{1.\Obj},\q_{1,\Obj}}]
 \end{eqnarray*}
-We omit the verbose cwf-renderings of the inference rule for composition and the equations.
+We omit the verbose cwf-renderings of the operator symbol for composition and the equations.
 
 A cwf that supports the generalized algebraic theory of categories is a cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits. As shown by Martin Hofmann \cite{hofmann:csl,hofmann:cambridge}, every category with finite limits yields a category with attributes, and hence a cwf. However, not every cwf has finite limits. To achieve this we need more structure. As shown by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} the 2-category of categories with finite limits is biequivalent to the 2-category of democratic cwfs that support $\Sigma$-types and extensional identity types.
 
@@ -717,7 +719,7 @@ except that it has small sets of objects, morphisms, types, and terms.
 
 An example of a cwf with an internal cwf is provided by the cwf $\Set$ of small sets with an internal category of very small sets. We can make this precise if we work in set theory with two Grothendieck universes $\V_0 \in \V_1$. We call the members of $\V_1$ "small sets" and the members of $\V_0$ "very small sets". The category of contexts of the cwf $\Set$ is the usual category of small sets, by which we here mean that its objects are in $\V_1$. Moreover, the types are also the small sets in $\V_1$. To get an internal cwf, we interpret its sort of objects $\ctx$ as the small set $\V_0$ of very small sets, and the sorts of types $\ty(\Gamma)$ also as $\V_0$.
 
-Further examples of internal cwfs inside $\Set$ are provided by cwfs supporting signatures of generalized algebraic theories, as constructed in the previous section.
+%Further examples of internal cwfs inside $\Set$ are provided by cwfs supporting signatures of generalized algebraic theories, as constructed in the previous section.
 
 \subsection{Internal cwfs with $\Pi$-types} 
 We add the operator symbols 
@@ -726,7 +728,8 @@ We add the operator symbols
 \Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A), b : \tm(\Gamma.A, B) &\vdash& \lambda(b) : \tm(\Gamma,\Pi(A,B))\\
 \Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A), c :  \tm(\Gamma,\Pi(A,B)), a : \tm(\Gamma, A) &\vdash& \app(c,a) : \tm(\Gamma, B[\tuple{\id,a}])
 \end{eqnarray*}
-and equations for $\beta, \eta$ (omitting the context and type)
+(again omitting some of the official arguments)
+and equations for $\beta, \eta$ (also omitting the context and type of the equality judgment)
  \begin{eqnarray*}
  \app(\lambda(b),a) &=& b[\tuple{\id,a}]\\
  \lambda(\app(c[\p],\q)) &=& c
@@ -772,24 +775,24 @@ and the equations for preservation of substitution:
 
 We remark that the gat for the first universe is inevitably {\em \`a la Tarski} in the sense that we distinguish between types and terms in a cwf and we must have an operation decoding a term into a type. However, Martin-Löf's distinction between {\em \`a la Russell} and {\em \`a la Tarski} is a distinction between two different formulation of the raw syntax and inference rules of type theory.
 
-\subsection{A possible refinement to contextual categories}
+\subsection{A possible refinement to internal contextual cwfs}
 
- Our treatment can be adapted to some non finitely presented gat.
+Our treatment can be adapted to some non finitely presented gats.
 If we have an increasing sequence of signatures $\Sigma_n$ we can consider the
 union of the theory $T_{\Sigma_n}$.
-For instance, we can describe a gat of contextual categories/$C$-systems by
-the following stratification of the theory of cwfs. We replace the sort $\Ctx$
-by a sequence of sorts $\Ctx_0,\,\Ctx_1,\,\dots$ where $\Ctx_n$ represents the sort
+For instance, we can describe a gat of contextual cwfs (also close to Voevodsky's $C$-systems) by
+the following stratification of the theory of cwfs. We replace the sort $\ctx$
+by a sequence of sorts $\ctx_0,\,\ctx_1,\,\dots$ where $\ctx_n$ represents the sort
 of contexts of length $n$ and a corresponding sequence of sorts
-$\Ty_n(\Gamma)$ for $\Gamma$ in $\Ctx_n$
-and $\Tm_n(\Gamma,A)$ for $A$ in $\Ty_n(\Gamma)$. Context extension $\Gamma.A$ is now in $\Ctx_{n+1}$
-if $A$ is in $\Ty_n(\Gamma)$ and so on. We also add {\em desctructors}: we have
+$\ty_n(\Gamma)$ for $\Gamma$ in $\ctx_n$
+and $\tm_n(\Gamma,A)$ for $A$ in $\ty_n(\Gamma)$. Context extension $\Gamma.A$ is now in $\ctx_{n+1}$
+if $A$ is in $\ty_n(\Gamma)$ and so on. We also add {\em destructors}: we have
 $\mathrm{ft}(\Gamma)$ in $\Ctx_n$
-and $\mathrm{st}(\Gamma)$ in $\Ty_n(\mathrm{ft}(\Gamma))$
+and $\mathrm{st}(\Gamma)$ in $\ty_n(\mathrm{ft}(\Gamma))$
 with $\Gamma = \mathrm{ft}(\Gamma).\mathrm{st}(\Gamma)$.
 Similarly we have a stratification of the sort of substitutions
-$\Sub_{n,m}(\Delta,\Gamma)$ for $\Delta$ in $\Ctx_n$ and $\Gamma$ in $\Ctx_m$.
-The gat we get has then exactly for models the {\em contextual categories}.
+$\hom_{n,m}(\Delta,\Gamma)$ for $\Delta$ in $\ctx_n$ and $\Gamma$ in $\ctx_m$.
+The resulting models are {\em internal contextual cwfs} in a cwf.
 
 
 
