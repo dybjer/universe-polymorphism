@@ -91,7 +91,7 @@ Generalized algebraic theories (gats) were introduced by Cartmell in his PhD the
 Categories with families (cwfs) \cite{dybjer:torino} were introduced as a new notion of model of dependent type theory. Cwfs arise by reformulating the notion of category with attributes (cwa) in Martin Hofmann's sense \cite{hofmann:csl}. The key point is to make it clear that cwfs arise as models of a certain generalized algebraic theory closely related to Martin-Löf's substitution calculus \cite{martinlof:gbg92}. As such it becomes a useful intermediary between traditional syntactic systems for dependent type theory and a variety of categorical notions of model.
 
 The gat of cwfs is thus a kind of idealized formal system of dependent type theory. In contrast to Martin-Löf's substitution calculus, and other syntactic systems for dependent type thoery, it is {\em not} formulated in terms of grammars and inference rules for the forms of judgment of type theory. Instead it is formulated in terms of sort symbols (corresponding to the judgment forms), operator symbols (corresponding to the formation, introduction, and elimination rules), and equations (corresponding to the equality rules for the type formers). Some of the general reasoning (about equality, substitution, and assumptions) is taken care of by the underlying machinery of dependent type theory. This makes it possible to abstract away from some of the details in the formulation of grammars and inference rules. In contrast to the various syntactic systems, we would like to argue that the gat of cwfs appears to be "canonical". We may define dependent type theory in a syntax independent way as the initial object in a category of cwfs with extra structure for interpreting the type formers. 
-However, the reader may now object that this looks like a circular definition. We learn what dependent type theory is provided we already know what dependent type theory is!
+However, the reader may now object that this looks like a circular definition. We learn what dependent type theory is if we already know what dependent type theory is!
 
 In this note we explore the interdependence between gats and cwfs. The main novelty is a syntax independent definition of gats in terms of cwfs with extra structure. We define a new finitely presented notion of generalized algebraic theory and simultaneosly a general categorical notion of model. We simultaneously define what it means to be a valid signature $\Sigma$ for a gat and the associated category $\Cwf_\Sigma$ with extra structure for $\Sigma$. This definition refers to {\em uniform families} of contexts, types, and terms in $\Cwf_\Sigma$, a purely semantic notion. Afterwards, we construct initial objects $\T_\Sigma \in \Cwf_\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of the initial object in the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
 
@@ -106,8 +106,8 @@ as described for instance by Aczel \cite{MR519801}, though the set theory
 we use for formulating the notion of cwf with a $\Sigma$-structure is probably
 much weaker. As emphasized by Voevodsky, we study structures invariant
 under {\em isomorphisms} and not under {\em equivalences}, and it is actually misleading
-to call them ``category'' (and this is why Voevodsky used the terminology ``$C$-system''
-instead for what Cartmell called contextual ``category''). 
+to call them ``category'' (and this is why Voevodsky used the term ``$C$-system''
+for what Cartmell called ``contextual category''). 
 As he also noticed, this
 important distinction between categories and notions invariant under isomorphisms becomes
 precise in the setting of univalent foundations where not all collections of objects
@@ -152,7 +152,7 @@ so-called $\Cwf$-semantics.
 The main novelty of this note is to use $\Cwf$ as a framework
 to define a new notion of a generalized algebraic theory. 
 Contexts, substitutions, types, and terms also make
-sense in relation to gat's. Note however that we use the term {\em ``sort symbol"} from universal algebra for what might have been called ``type symbol".
+sense in relation to gats. Note however that we use the term {\em ``sort symbol"} from universal algebra for what might have been called ``type symbol".
 
 \begin{definition}\label{def:Cwfobj} 
 A category with families (cwf) consists of the following data:
