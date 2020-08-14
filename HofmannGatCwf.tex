@@ -93,7 +93,7 @@ Categories with families (cwfs) \cite{dybjer:torino} were introduced as a new no
 The gat of cwfs is thus a kind of idealized formal system of dependent type theory. In contrast to Martin-Löf's substitution calculus, and other syntactic systems for dependent type thoery, it is {\em not} formulated in terms of grammars and inference rules for the forms of judgment of type theory. Instead it is formulated in terms of sort symbols (corresponding to the judgment forms), operator symbols (corresponding to the formation, introduction, and elimination rules), and equations (corresponding to the equality rules for the type formers). Some of the general reasoning (about equality, substitution, and assumptions) is taken care of by the underlying machinery of dependent type theory. This makes it possible to abstract away from some of the details in the formulation of grammars and inference rules. In contrast to the various syntactic systems, we would like to argue that the gat of cwfs appears to be "canonical". We may define dependent type theory in a syntax independent way as the initial object in a category of cwfs with extra structure for interpreting the type formers. 
 However, the reader may now object that this looks like a circular definition. We learn what dependent type theory is provided we already know what dependent type theory is!
 
-In this paper we explore the interdependence between gats and cwfs. The main novelty is a syntax independent definition of gats in terms of cwfs with extra structure. We define a new finitely presented notion of generalized algebraic theory and simultaneosly a general categorical notion of model. We simultaneously define what it means to be a valid signature $\Sigma$ for a gat and the associated category $\Cwf_\Sigma$ with extra structure for $\Sigma$. This definition refers to {\em uniform families} of contexts, types, and terms in $\Cwf_\Sigma$, a purely semantic notion. Afterwards, we construct initial objects $\T_\Sigma \in \Cwf_\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of the initial object in the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
+In this note we explore the interdependence between gats and cwfs. The main novelty is a syntax independent definition of gats in terms of cwfs with extra structure. We define a new finitely presented notion of generalized algebraic theory and simultaneosly a general categorical notion of model. We simultaneously define what it means to be a valid signature $\Sigma$ for a gat and the associated category $\Cwf_\Sigma$ with extra structure for $\Sigma$. This definition refers to {\em uniform families} of contexts, types, and terms in $\Cwf_\Sigma$, a purely semantic notion. Afterwards, we construct initial objects $\T_\Sigma \in \Cwf_\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of the initial object in the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
 
 %Once one has the appropriate definition of gats in terms of cwfs, the details become natural and there are no surprises. The definition becomes canonical once we accept the abstract definition of dependent type theories as initial cwfs with extra structure.
 
@@ -150,9 +150,9 @@ suggesting the intended interpretation of this syntax in the
 so-called $\Cwf$-semantics.
 
 The main novelty of this note is to use $\Cwf$ as a framework
-to define a new notion of a generalised algebraic theory. 
+to define a new notion of a generalized algebraic theory. 
 Contexts, substitutions, types, and terms also make
-sense in relation to gat's. Note that we use the term {\em sort symbol} from universal algebra for what might have been called type symbol.
+sense in relation to gat's. Note however that we use the term {\em ``sort symbol"} from universal algebra for what might have been called ``type symbol".
 
 \begin{definition}\label{def:Cwfobj} 
 A category with families (cwf) consists of the following data:
@@ -299,7 +299,7 @@ We now come to the main point of this note.
 We define how to build a valid gat signature $\Sigma$ and the associated
 category $\Cwf_{\Sigma}$ of cwfs with a $\Sigma$-structure.
 Each object of $\Cwf_{\Sigma}$ is a cwf with extra structure and
-each morphism will be a cwf morphism preserving this extra structure.
+each morphism is a cwf morphism preserving this extra structure.
 For this definition, we will need the following auxiliary notions.
 
 A {\em uniform family of contexts} is a family of context $\Gamma = (\Gamma_{\C})$ for each
