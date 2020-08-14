@@ -789,8 +789,9 @@ by a sequence of sorts $\ctx_0,\,\ctx_1,\,\dots$ where $\ctx_n$ represents the s
 of contexts of length $n$ and a corresponding sequence of sorts
 $\ty_n(\Gamma)$ for $\Gamma$ in $\ctx_n$
 and $\tm_n(\Gamma,A)$ for $A$ in $\ty_n(\Gamma)$. Context extension $\Gamma.A$ is now in $\ctx_{n+1}$
-if $A$ is in $\ty_n(\Gamma)$ and so on. We also add {\em destructors}: we have
-$\mathrm{ft}(\Gamma)$ in $\Ctx_n$
+if $A$ is in $\ty_n(\Gamma)$ and so on. 
+We also add {\em destructors}: we have
+$\mathrm{ft}(\Gamma)$ in $\ctx_n$
 and $\mathrm{st}(\Gamma)$ in $\ty_n(\mathrm{ft}(\Gamma))$
 with $\Gamma = \mathrm{ft}(\Gamma).\mathrm{st}(\Gamma)$.
 Similarly we have a stratification of the sort of substitutions
