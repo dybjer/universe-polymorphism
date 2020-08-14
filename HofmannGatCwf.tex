@@ -80,8 +80,8 @@
 \maketitle
 
 \begin{abstract}
-We define a new version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows possibly infinite sets of sort and operator symbols and equations, we only allow a finite number. Moreover, our definition is syntax independent in the sense that it is expressed in terms of uniform families in categories of models of generalized algebraic theories. 
-The objects of these categories are categories with families with extra structure and the morphisms preserve all structure on the nose. Our main result is the construction of initial cwfs with extra structure defined in terms of syntax and inference rules. This result is obtained by extending Castellan, Clairambault, and Dybjer's construction of an initial cwf. We provide examples of gats for monoids, categories, cwfs, and cwfs with extra structure for a first universe. We also point out that cwfs with extra structure for  gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively.
+We define a new version of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows possibly infinite sets of sort and operator symbols and equations, we only allow a finite number. Moreover, our definition is syntax independent and expressed in terms of uniform families in categories of models of generalized algebraic theories. 
+The objects of these are categories with families with extra structure and the morphisms preserve all the structure on the nose. Our main result is the syntactic construction of initial categories with families with extra structure, a result which can be viewed as a generalization of Birkhoff's completeness theorem for equational logic. This result is obtained by extending Castellan, Clairambault, and Dybjer's construction of an initial cwf. We provide examples of gats for monoids, categories, categories with families, and categories with families with extra structure for some type formers of dependent type theory. The models of these are internal monoids, internal categories, and internal categories with families (with extra structure) in a category with families.
 \end{abstract}
 
 \section{Introduction}
@@ -775,10 +775,10 @@ We remark that the gat for the first universe is inevitably {\em \`a la Tarski} 
 
 \subsection{A possible refinement to contextual categories}
 
- Our treatment can be adapted to some non finitely presented GAT.
+ Our treatment can be adapted to some non finitely presented gat.
 If we have an increasing sequence of signatures $\Sigma_n$ we can consider the
 union of the theory $T_{\Sigma_n}$.
-For instance, we can describe a GAT of contextual categories/$C$-systems by
+For instance, we can describe a gat of contextual categories/$C$-systems by
 the following stratification of the theory of cwfs. We replace the sort $\Ctx$
 by a sequence of sorts $\Ctx_0,\,\Ctx_1,\,\dots$ where $\Ctx_n$ represents the sort
 of contexts of length $n$ and a corresponding sequence of sorts
@@ -790,7 +790,7 @@ and $\mathrm{st}(\Gamma)$ in $\Ty_n(\mathrm{ft}(\Gamma))$
 with $\Gamma = \mathrm{ft}(\Gamma).\mathrm{st}(\Gamma)$.
 Similarly we have a stratification of the sort of substitutions
 $\Sub_{n,m}(\Delta,\Gamma)$ for $\Delta$ in $\Ctx_n$ and $\Gamma$ in $\Ctx_m$.
-The GAT we get has then exactly for models the {\em contextual categories}.
+The gat we get has then exactly for models the {\em contextual categories}.
 
 
 
