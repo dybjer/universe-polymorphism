@@ -80,8 +80,8 @@
 \maketitle
 
 \begin{abstract}
-We define a new notion of generalized algebraic theories. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows possibly infinite sets of sort and operator symbols and equations, we only allow a finite number. Moreover, our definition is syntax independent and expressed in terms of uniform families in categories of models of generalized algebraic theories.
-The objects of these are categories with families with extra structure and the morphisms preserve all the structure on the nose. Our main result is the syntactic construction of initial categories with families with extra structure, a result which can be viewed as a generalization of Birkhoff's completeness theorem for equational logic. This result is obtained by extending Castellan, Clairambault, and Dybjer's construction of an initial cwf. We provide examples of gats for monoids, categories, categories with families, and categories with families with extra structure for some type formers of dependent type theory. The models of these are internal monoids, internal categories, and internal categories with families (with extra structure) in a category with families.
+We define a new notion of generalized algebraic theory. It differs from Cartmell's original syntactic definition in two respects. Whereas Cartmell allows possibly infinite sets of sort and operator symbols and equations, we only allow a finite number. Moreover, our definition is syntax independent and expressed in terms of uniform families in categories of models of generalized algebraic theories.
+The objects of these are categories with families with extra structure and the morphisms preserve all the structure on the nose. Our main result is the syntactic construction of initial categories with families with extra structure, a result which can be viewed as a generalization of Birkhoff's completeness theorem for equational logic. This result is obtained by extending Castellan, Clairambault, and Dybjer's construction of an initial cwf. We provide examples of generalized algebraic theories for monoids, categories, categories with families, and categories with families with extra structure for some type formers of dependent type theory. The models of these are internal monoids, internal categories, and internal categories with families (with extra structure) in a category with families.
 \end{abstract}
 
 \section{Introduction}
@@ -94,7 +94,7 @@ The gat of cwfs is thus a kind of idealized formal system of dependent type theo
 %However, the reader may now object that this looks like a circular definition.
 %We learn what dependent type theory is if we already know what dependent type theory is!
 
-In this note we explore the interdependence between gats and cwfs. The main novelty is a syntax independent definition of gats in terms of cwfs with extra structure. We define a new finitely presented notion of generalized algebraic theory and simultaneosly a general categorical notion of model. We simultaneously define what it means to be a valid signature $\Sigma$ for a gat and the associated category $\Cwf_\Sigma$ with extra structure for $\Sigma$. This definition refers to {\em uniform families} of contexts, types, and terms in $\Cwf_\Sigma$, a purely semantic notion. Afterwards, we construct initial objects $\T_\Sigma \in \Cwf_\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of the initial object in the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
+In this note we explore the interdependence between gats and cwfs. The main novelty is a syntax independent definition of gats in terms of cwfs with extra structure. We define a new finitely presented notion of generalized algebraic theory and simultaneosly a general categorical notion of model. We define what it means to be a valid signature $\Sigma$ for a gat and the associated category $\Cwf_\Sigma$ with extra structure for $\Sigma$. This definition refers to {\em uniform families} of contexts, types, and terms in $\Cwf_\Sigma$, a purely semantic notion. Afterwards, we construct initial objects $\T_\Sigma \in \Cwf_\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of an initial object in the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
 
 %Once one has the appropriate definition of gats in terms of cwfs, the details become natural and there are no surprises. The definition becomes canonical once we accept the abstract definition of dependent type theories as initial cwfs with extra structure.
 
@@ -234,8 +234,6 @@ when they can be reconstructed from the context (no pun intended).
 (End Definition~\ref{def:Cwfobj}.)
 \end{definition}
 
-
-
 A cwf is thus a structure $(\C,1,\tuple{},T,\cext\, , \tuple{\_,\_},\p, \q)$,
 subject to equations, for the category and the presheaf, and universal
 properties, formulated purely equationally, for the terminal object and for context comprehension.
@@ -317,7 +315,7 @@ $F(a_{\C}) = a_{\D}$ for all morphisms $F \in \Cwf_{\Sigma}(\C,\D)$.
 
 
 \begin{definition}
-We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs with support for $\Sigma$ and cwf-morphisms that preserve it. First, the base case:
+We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure and cwf-morphisms that preserve this structure. First, the base case:
 \begin{description}
 \item[The empty signature] The empty signature $\emptyset$ is valid and $\Cwf_\emptyset = \Cwf$.
 \end{description}
@@ -395,7 +393,7 @@ The category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$,
 for every valid signature $\Sigma$.
 \end{theorem}
 
-The construction of $\T_\Sigma$ will be by induction on the construction of $\Sigma$. It is based on construction of initial cwfs in \cite{castellan:tlca2015,castellan:lmcs} and we refer the reader to those papers for more details. Here we will only provide a sketch and focus on how to extend the construction to $\T_\Sigma$.
+The construction of $\T_\Sigma$ will be by induction on the construction of $\Sigma$. It is based on construction of initial cwfs in \cite{castellan:tlca2015,castellan:lmcs} and we refer the reader to those papers for more details. Here we only provide a sketch and focus on how to extend the construction to $\T_\Sigma$.
 
 For each $\Sigma$ we will define the following.
 \begin{itemize}
@@ -414,7 +412,7 @@ $$
 $$
 where $\Gamma, \Gamma' \in \RawCtx_\Sigma, \gamma, \gamma' \in \RawSub_\Sigma, A, A' \in \RawTy_\Sigma,$ and $a,a' \in \RawTm_\Sigma$. Instances of these pers correspond to valid equality judgments of a variable free version of dependent type theory with explicit substitutions based on the cwf-combinators. The ordinary judgments will be defined as the reflexive instances of these equality judgments. For example $\Gamma \vdash_\Sigma$ (meaning ”$\Gamma$ is a valid context") is defined as the reflexive instance $\Gamma = \Gamma \vdash_\Sigma$.
 \item
-A cwf $\T_\Sigma$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T_\Sigma$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash_\Sigma$. We will show that $\T_\Sigma$ is a cwf that supports $\Sigma$, that is, an object of $\Cwf_\Sigma$.
+A cwf $\T_\Sigma$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T_\Sigma$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash_\Sigma$. We will show that $\T_\Sigma$ is a cwf with a $\Sigma$-structure, that is, an object of $\Cwf_\Sigma$.
 \item
 A $\Cwf_\Sigma$-morphism $\inte{-} : \T_\Sigma \to \C$ for every $\C \in \Cwf_\Sigma$. This is the {\em interpretation morphism}. This morphism is a partial function defined by induction on the raw syntax, that (whenever it is defined) maps raw contexts to contexts in $\C$, raw substitutions to substitutions in $\C$, raw types to types in $\C$, and raw terms to terms in~$\C$. We show that these partial functions preserve the partial equivalence relations so that we can define the interpretation morphism on the equivalence classes. Finally we show that it indeed is a $\Cwf_\Sigma$-morphism and the unique such into $\C$.
 \end{itemize}
@@ -520,7 +518,7 @@ This concludes the proof of the theorem. \qed
 
 \section{Examples of generalized algebraic theories}
 
-We will now display the sort symbols, operator symbols, and equations for the generalized algebraic theories of internal monoids, internal categories, and internal cwfs. We will show how to add operator symbols and equations when adding internal notions of $\Pi, \N$ and a universe closed under $\Pi$ and $\N$. The reason for prefacing these notions by the word "internal" is that the models of the theories are internal monoids, categories, and cwfs in $\Cwf_\Sigma$ for the respective signatures for these theories. Moreover, internal monoids, categories, and cwfs in the cwf~$\Set$ are small monoids, categories, and cwfs, respectively. Note that our underlying notion of cwf in Section 2 is not small, and hence not an internal cwf in the cwf~$\Set$.
+We will now display the sort symbols, operator symbols, and equations for the generalized algebraic theories of internal monoids, internal categories, and internal cwfs. We will show how to add operator symbols and equations when adding internal notions of $\Pi, \N$ and a universe closed under $\Pi$ and $\N$. The reason for prefacing these notions by the word "internal" is that the models of the theories are internal monoids, categories, and cwfs in cwfs with extra structure for the respective signatures for these theories. Moreover, internal monoids, categories, and cwfs in the cwf~$\Set$ are small monoids, categories, and cwfs, respectively. Note that our underlying notion of cwf in Section 2 is not small, and hence not an internal cwf in the cwf~$\Set$.
 
 Our final example is the gat of internal contextual cwfs, a variant of Cartmell's contextual categories. The contexts in such contextual cwfs come with a length $n$. We sketch how this can be axiomatized as a gat with countably many sort symbols $\ctx_n, \sub_n, \ty_n, \tm_n$ for an external natural number $n$ (and similarly for the operator symbols and equations). We also indicate how our framework can be extended to cover such gats.
 
@@ -587,7 +585,7 @@ x, y, z : \Mon &\vdash& \comp(\comp(x,y),z) = \comp(x,\comp(y,z)) : \Mon
 Examples later in this section will use named variables,
 which are easier to read, but more difficult to deal with semantically.
 
-A cwf $\C$ that supports this gat has an {\em internal monoid} in $\C$. This is a cwf-version of the notion of internal monoid which can be defined in any category with finite products. Ordinary (small) monoids come out as internal monoids in $\Set$, the cwf of small sets.
+A cwf $\C$ with extra structure for this gat has an {\em internal monoid} in $\C$. This is a cwf-version of the notion of internal monoid which can be defined in any category with finite products. Ordinary (small) monoids come out as internal monoids in $\Set$, the cwf of small sets.
 
 % In the remaining examples, we shall mainly use ordinary notation with variables.
 % % We have already said that.
@@ -628,7 +626,7 @@ and the operator symbols for identity
 \end{eqnarray*}
 We omit the verbose cwf-renderings of the operator symbol for composition and the equations.
 
-A cwf that supports the generalized algebraic theory of categories is a cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits. As shown by Martin Hofmann \cite{hofmann:csl,hofmann:cambridge}, every category with finite limits yields a category with attributes, and hence a cwf. However, not every cwf has finite limits. To achieve this we need more structure. As shown by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} the 2-category of categories with finite limits is biequivalent to the 2-category of democratic cwfs that support $\Sigma$-types and extensional identity types.
+A cwf with extra structure for the generalized algebraic theory of categories is a cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits. As shown by Martin Hofmann \cite{hofmann:csl,hofmann:cambridge}, every category with finite limits yields a category with attributes, and hence a cwf. However, not every cwf has finite limits. To achieve this we need more structure. As shown by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} the 2-category of categories with finite limits is biequivalent to the 2-category of democratic cwfs that support $\Sigma$-types and extensional identity types.
 
 An internal category in the cwf $\Set$ of small sets is a small category.
 
@@ -719,17 +717,17 @@ $\tuple{\gamma,a}=\tuple{\p\circ\delta, \q[\delta]} = \tuple{\p,\q}\circ\delta =
 However, the equation for surjective pairing is not left-linear and with
 a variable on one side, which is not good for rewriting.)
 
-A cwf that supports the generalized algebraic theory of cwfs is a cwf with an
+A cwf with extra structure supporting the generalized algebraic theory of cwfs is a cwf with an
 \emph{internal cwf}. An internal cwf in the cwf $\Set$ of small sets is a {\em small cwf},
 that is, it is a cwf in the ordinary sense (see Definition~\ref{def:Cwfobj})
 except that it has small sets of objects, morphisms, types, and terms.
 
-An example of a cwf with an internal cwf is provided by the cwf $\Set$ of small sets with an internal category of very small sets. We can make this precise if we work in set theory with two Grounding universes $\V_0 \in \V_1$. We call the members of $\V_1$ "small sets" and the members of $\V_0$ "very small sets". The category of contexts of the cwf $\Set$ is the usual category of small sets, by which we here mean that its objects are in $\V_1$. Moreover, the types are also the small sets in $\V_1$. To get an internal cwf, we interpret its sort of objects $\ctx$ as the small set $\V_0$ of very small sets, and the sorts of types $\ty(\Gamma)$ also as $\V_0$.
+An example of a cwf with an internal cwf is provided by the cwf $\Set$ of small sets with an internal category of very small sets. We can make this precise if we work in set theory with two Grothendieck universes $\V_0 \in \V_1$. We call the members of $\V_1$ "small sets" and the members of $\V_0$ "very small sets". The category of contexts of the cwf $\Set$ is the usual category of small sets, by which we here mean that its objects are in $\V_1$. Moreover, the types are also the small sets in $\V_1$. To get an internal cwf, we interpret its sort of objects $\ctx$ as the small set $\V_0$ of very small sets, and the sorts of types $\ty(\Gamma)$ also as $\V_0$.
 
 %Further examples of internal cwfs inside $\Set$ are provided by cwfs supporting signatures of generalized algebraic theories, as constructed in the previous section.
 
 \subsection{Internal cwfs with $\Pi$-types}
-We add the operator symbols
+We add three operator symbols in addition to the operator symbols for cwfs in Section 5.2 and 5.3:
 \begin{eqnarray*}
 \Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A)&\vdash& \Pi(A,B) : \ty(\Gamma)\\
 \Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A), b : \tm(\Gamma.A, B) &\vdash& \lambda(b) : \tm(\Gamma,\Pi(A,B))\\
@@ -749,11 +747,11 @@ and commutation with respect to substitution.
 \end{eqnarray*}
 where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
 
-\subsection{Internal cwfs with $\N$-types}
-We add operator symbols $\N, 0, \s, \Rec$ and equations for the induction principle $\Rec$ and commutativity with substitution, but omit the details.
+\subsection{Internal cwfs with $\N$}
+We add four operator symbols $\N, 0, \s, \Rec$  in addition to the operator symbols for cwfs in Section 5.2 and 5.3, and equations for the induction principle $\Rec$ and commutativity with substitution, but omit the details.
 
 \subsection{Internal cwfs with $\U_0$ closed under $\Pi$ and $\N$}
-We add operator symbols
+We add four operator symbols  in addition to the operator symbols for cwfs with $\Pi$-types and $\N$ in Section 5.2 - 5.5:
 \begin{eqnarray*}
 \Gamma : \ctx &\vdash& (\U_0)_\Gamma : \ty(\Gamma)\\
 \Gamma : \ctx, a : \tm(\Gamma,(\U_0)_\Gamma) &\vdash& {\Ta_0}(a) : \ty(\Gamma)\\
@@ -781,7 +779,7 @@ and the equations for preservation of substitution:
 \end{eqnarray*}
 %where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
 
-We remark that the gat for the universe is inevitably {\em \`a la Tarski} in the sense that we distinguish between types and terms in a cwf and we must have an operation decoding a term into a type. However, Martin-Löf's distinction between {\em \`a la Russell} and {\em \`a la Tarski} is a distinction between two different formulation of the raw syntax and inference rules of type theory.
+We remark that the gat for the universe is inevitably {\em \`a la Tarski} in the sense that we distinguish between types and terms in a cwf and we must have an operation decoding a term into a type. However, Martin-Löf's distinction between {\em \`a la Russell} and {\em \`a la Tarski} \cite{martinlof:padova} is a distinction between two different formulation of the raw syntax and inference rules of type theory.
 
 \subsection{A possible refinement to internal contextual cwfs}
 
@@ -803,13 +801,10 @@ Similarly we have a stratification of the sort of substitutions
 $\hom_{n,m}(\Delta,\Gamma)$ for $\Delta$ in $\ctx_n$ and $\Gamma$ in $\ctx_m$.
 The resulting models are {\em internal contextual cwfs} in a cwf.
 
-<<<<<<< HEAD
 %\subsection{Cwfs with universe tower structures} 
-=======
-
 
 %\subsection{Cwfs with universe tower structures}
->>>>>>> f66a72a0f81a1e71048f2dbd002711720ffd9b1f
+
 %
 %The first formulation of intuitionistic type theory with an infinite sequence of universes is due to Martin-Löf
 %\cite{martinlof:predicative}. Rules for cumulativity (or lifting) were added in Martin-Löf \cite{martinlof:hannover}. Both formulations have an infinite sequence of universes indexed by external natural numbers, and as a consequence the theories have infinitely many rules.
@@ -864,8 +859,6 @@ The resulting models are {\em internal contextual cwfs} in a cwf.
 
 \section{Related work}
 
-
-
 The first proof of initiality of a formal system with dependent types is due to Streicher \cite{streicher:semtt}. He proved that the formal system for the Calculus of Construction forms an initial object in a category of contextual categories with suitable extra structure. Recently, Brunerie et al \cite{brunerie:initiality} presented a formalized proof in the Agda system that a formal system for Martin-Löf type theory forms an initial object in a category of contextual categories with extra structure for
 the type formers.
 
@@ -874,9 +867,9 @@ More generally, Voevodsky \cite{voevodsky:initiality} has outlined a new vision 
 Another related contribution is Palmgren and Vickers' \cite{palmgrenvickers} detailed construction of
 an initial model of an essentially algebraic theory.
 
-Altenkirch and Kaprosi \cite{altenkirch:qiits} give several examples of what they call {\em quotient inductive-inductive types (qiits)}. Their main example is a definition of dependent type theory with $\Pi$-types and a universe, as a simultaneous definition in the Agda system \cite{agda-wiki} of the data types $\Ctx$ of contexts, $\Sub(\Delta,\Gamma)$ of substitutions, $\Ty(\Gamma)$, and $\Tm(\Gamma,A)$ of terms. Their definition is {\em inductive-inductive} \cite{nordvallforsberg:iids}, since the index sets of $\Sub, \Ty,$ and $\Tm$ are generated simultaneously, and as a consequence are not indexed inductive definitions in the usual sense where the index sets are fixed in advance. Furthermore, it is a quotient inductive-inductive type since they also have constructors for identities, as in {\em higher inductive types}.
+Altenkirch and Kaprosi \cite{altenkirch:qiits} give several examples of what they call {\em quotient inductive-inductive types (qiits)}. Their main example is a definition of dependent type theory with $\Pi$-types and a universe, as a simultaneous definition in the Agda system \cite{agda-wiki} of the data types $\Ctx$ of contexts, $\Sub(\Delta,\Gamma)$ of substitutions, $\Ty(\Gamma)$, and $\Tm(\Gamma,A)$ of terms. Their definition is {\em inductive-inductive} \cite{nordvallforsberg:iids}, since the index sets of $\Sub, \Ty,$ and $\Tm$ are generated simultaneously, and as a consequence are not indexed inductive definitions in the usual sense where the index sets are fixed in advance. Furthermore, it is a quotient inductive-inductive type since they also have constructors for identity types, as in {\em higher inductive types}.
 
-There is a clear relationship to our initial internal cwf with $\Pi$-types and a universe: our sort symbols correspond to their formation rules (set constructors), our operator symbols correspond to their introduction rules (constructors), and our equations correspond to their propositional identities. However, there is an important difference. Our equations are judgmental equalities while theirs are propositional identities. As a consequence they need to use transport maps when moving between identical types. Using the terminology of qiits, here we provide a definition of a class of valid qiits (in our modified sense) together with a class of models for each of them.
+There is a clear relationship with our initial internal cwf with $\Pi$-types and a universe. Like our definition, their qiit-definition uses cwf-combinators. Moreover, our sort symbols correspond to their formation rules (data type constructors), our operator symbols correspond to their introduction rules (constructors), and our equations correspond to their propositional identities. However, the fact that our equations are judgmental equalities while theirs are propositional identities is an important difference. As a consequence they need to use transport maps when moving between identical types. Using the terminology of qiits, we here provide a definition of a class of valid qiits (in our modified sense) together with a class of models for each of them.
 
 
 %Given that we have definition of a valid signature $\Sigma$ and a semantics for $\T_\Sigma$ we could ask whether we could add the construction of these to type theory. This would make most sense in extensional type theory, since we can then move seamlessly between propositional and judgmental equalities. It is however, not clear how to provide canonical form semantics in the sense of Martin-Löf's meaning explanations for this notion. However, although our development takes place in set theory, everything we do is constructive and could be formalized in CZF presumably.
