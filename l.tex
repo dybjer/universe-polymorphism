@@ -154,34 +154,7 @@
 \section{Introduction}
 We prove the decidability of join-semilattice theory with
 a successor function.
-The motivation for this problem comes from dependent type theory, where
-the relevant operations on universe levels are taking the
-supremum of two levels, and incrementing a level.
-Ever since Skolem ??
-we know that lattice theory is decidable, but this fact has
-to be reconsidered in the presence of a successor function.
-
-
-One novel, rigorous way to avoid so-called universe inconsistencies
-in type theory would be to let the typings depend not only
-on a context assigning types to variables, but also on a
-finite set of universe level constraints. A typing would then
-only be valid if its constraints can be inferred from the set
-of constraints in the context. Moreover, the latter set should
-be consistent in the sense that there are no loops. 
-A loop is a lattice term that is equal to its successor; 
-a good intuition is that loops lead to universe-inconsistencies 
-comparable to the paradoxes in set theory.
-
-In type theory it is important that typing checking is decidable.
-%and preferably even efficient. 
-It is important that extensions
-of the type checking procedure do not jeopardise decidability. 
-The results of this note show that making typings depend
-on a set of universe level constraints preserves the decidability
-of type checking.
-
-We depart from an algebraic definition of semilattices in which the
+We start from an algebraic definition of semilattices in which the
 join, denoted by $\vee$, is an associative, commutative, and idempotent
 binary operation. The successor function, denoted by ${\_}^+$,
 satisfies the following two equational axioms:
@@ -205,7 +178,7 @@ let $t+k$ denote the $k$-fold successor of $t$.
 Since the successor function commutes we the join operation,
 every lattice term $t$ is equal to a term of the
 form $\jterm{x}{k}{m}$, with all variables $x_i$ occurring in $t$
-and $k_i\in \N$.
+and all $k_i\in \N$.
 
 A \emph{lattice presentation} consists of a
 set $V$ of \emph{generators} and
@@ -238,7 +211,7 @@ propositional Horn clauses with a non-empty body.}
 \begin{align*}
 \jbody{x}{k}{m} &\to y_1+l_1 \\
 &\ldots  \\
-\jbody{x}{k}{m} &\to y_\Ninf l_n 
+\jbody{x}{k}{m} &\to y_n+l_n 
 \end{align*}
 and
 \begin{align*}
@@ -259,9 +232,9 @@ The next question is: for which $x$ do we need a predecessor clause?
 Since $x \vee x^+ = x^+$ is implicitly universally quantified,
 we would need all instances with $x$ a term over $V$.
 For this it suffices to have all predecessor clauses
-$x+k+1 \to x+k$ with $x\in V$ and $k\in \N$.
+$x+k+1 \to x+k$ with $x\in V$ and all $k\in \N$.
 
-The axiom stating that successor and join commute is built in
+The axiom stating that successor and join commute is built-in
 in the notion of term over $V$ and does not require extra clauses.
 However, we should not forget the congruence axioms from
 equational logic. Congruence of the successor means that $s=t$
@@ -276,7 +249,7 @@ In summary: given a lattice presentation $(V,C)$,
 let $S^+_C$ be the smallest set of clauses that 
 is closed under shifting upwards and contains
 the set $S_C$ coming from the constraint in $C$,
-as well as all predecessor clauses. 
+as well as all predecessor clauses for each $v\in V$. 
 
 Given a set $S$ of Horn clauses,
 let $S\prvH A\to b$ denote provability from $S$.
@@ -288,7 +261,7 @@ $S\prvH A\to b$ if $S\prvH A\to c$ and $S\prvH A,c\to b$.
 
 We now have (cf.\ Lorenzen, Thm 3) the following theorem.
 
-\begin{theorem}\label{the:LvsH}
+\begin{theorem}\label{thm:LvsH}
 For all terms $\jbody{x}{k}{m},y+l$ over $V$ we have:
 \[
 C\prvL \jterm{x}{k}{m}\geq y+l 
@@ -317,13 +290,13 @@ Moreover, for each constraint $s=t$ in $C$
 we have $s\equiv t$, as $S_{s=t}$ is included in $S^+_C$.
 
 By soundness, if $C\prvL s=t$, then $s\equiv t$.
-In particular we have the converse implication of the theorem.
+In particular we have the only-if part of the theorem.
 \end{proof}
 
 \section{Decidability}
 
 In this section we prove the decidability of $S^+_C\prvH A\to b$.
-By Theorem~\ref{the:LvsH} this is sufficient for
+By Theorem~\ref{thm:LvsH} this is sufficient for
 the decidability of $C\prvL s=t$. We recall a basic fact
 about Horn clauses: the models (as satisfying sets of atoms)
 are closed under intersection. Moreover, every set $X$ of atoms
@@ -445,7 +418,7 @@ Also, in each clause $A\to b$ in $S^+_C$
 we can leave out all atoms of the form $v+k$ from $A$.
 If we get a (forbidden) clause $\emptyset\to v'+l$,
 we can infer $f(v')=\infty$ and continue.
-We end up with a subset $V'$ of $V$ and a (restricted)
+We end up with a strict subset $V'$ of $V$ and a (restricted)
 $f : V' \to \N$.
 
 Alternatively, we can do the simplification of the lattice
@@ -513,15 +486,84 @@ in the same way as with $W$ and $g$ above.
 This terminates since we exhaust $V$.
 \end{proof}
 
-- General case obtained most easily with $f: V\to -1,\Ninf$.
+{\color{red}
+From Theorem~\ref{thm:main} we get the decidability of $S^+_C\prvH A\to b$
+when $A$ can be represented by a function $f: V\to\N$. If every
+variable $v$ in $V$ occurs in $A$, then $f(v)$ is simply
+the maximal $k$ such that $v+k \in A$. We can then simply check
+$S^+_C\prvH A\to b$ by computing the least $g\geq f$ that is
+a model of $S^+_C$ and check whether atom $b$ is satisfied by $g$.
 
+Another application of Theorem~\ref{thm:main} is loop checking.
+Let $k$ be maximal such that $x+k$ occurs in the body of
+a clause in $S_C$ ($x\in V$).
+Take $f: V\to\N$ to be the constant $k$ function and compute $g$.
+Let $W$ be the subset of $V$ such that $g(w)=\infty$ for
+all $w\in W$. Then there exist $n\in\N$ such that 
+$S^+_C\prvH W+n \to w+n+1$ for all $w\in W$.
+Proof: if $W=V$, then $n=k$, otherwise $n= \max(g(V-W))+\M$,
+since variables in $V-W$ cannot play a role above $n$.
+
+
+The method in the previous paragraph only works
+if every variable in $V$ occurs in $A$.
+However, it is not difficult to extend Theorem~\ref{thm:main}
+such that we get decidability of $S^+_C\prvH A\to b$ in
+general. For example, we can allow $f: V\to\Ninf$ to be partial.
+If $f(x)$ is undefined, we must put $k\leq f(x)$ false,
+since $\set{x+k \mid k\leq f(x)}$ must be empty.
+On the other hand, it is possible that we can infer a value for $x$
+even if $f(x)$ is undefined, so we must put $f(x)\leq k$ true
+for all $k\in\Ninf$. An elegant solution to this
+problem is to use $f(x)=-1$ to mean that $f(x)$ is undefined.
+One can then verify that Theorem~\ref{thm:main} and
+Lemma~\ref{lem:secondary} go through with minimal adaptations
+in their proofs.
+} %end red
 - Decidability result (incl. loop detection)
 
 
 \section{Discussion}
 
-- Short discussion of alternative choices
-  (0 level, total ordering, injective successor)
+\subsection{Motivation}
+
+The motivation for this problem comes from dependent type theory, 
+where the relevant operations on universe levels are taking the
+supremum of two levels, and incrementing a level.
+
+One novel, rigorous way to avoid so-called universe inconsistencies
+in type theory would be to let the typings depend not only
+on a context assigning types to variables, but also on a
+finite set of universe level constraints. A typing would then
+only be valid if its constraints can be inferred from the set
+of constraints in the context. Moreover, the latter set should
+be consistent in the sense that there are no loops. 
+A loop is a lattice term that is equal to its successor; 
+a good intuition is that loops lead to universe-inconsistencies 
+comparable to the paradoxes in set theory.
+
+In type theory it is important that typing checking is decidable.
+%and preferably even efficient. 
+The results of this note show that having typings depend
+on a set of universe level constraints does not make 
+type checking undecidable.
+
+Since dependent type theory is meant to be a foundation of mathematics,
+we want to make minimal mathematical assumptions about the universe levels.
+For example, we don't say that they are natural numbers
+with a zero, successor and a maximum function.
+Such assumptions would weaken, at least philosophically,
+the foundational claim of dependent type theory:
+natural numbers are introduced as an inductive type
+at some later point in the development. For similar reasons
+we don't assume that universe levels are totally ordered,
+nor that the successor function is injective.
+
+\subsection{Related work}
+
+There is a considerable body of research done on efficient
+constraint solving in the same language as in this note,
+but interpreted in the integer or in the rational numbers.
 
 
 \bibliographystyle{plain}
