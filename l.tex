@@ -171,7 +171,7 @@ of injectivity of the successor function).
 As is customary, we let $s\geq t$ abbreviate $s\vee t = s$.
 
 
-\section{Lattice presentations and Horn clauses}
+\section{Lattice presentations and Horn clauses}\label{sec:latt-Horn}
 
 For any lattice term $t$ and natural number $k$, 
 let $t+k$ denote the $k$-fold successor of $t$.
@@ -486,7 +486,7 @@ in the same way as with $W$ and $g$ above.
 This terminates since we exhaust $V$.
 \end{proof}
 
-{\color{red}
+{\color{blue}
 From Theorem~\ref{thm:main} we get the decidability of $S^+_C\prvH A\to b$
 when $A$ can be represented by a function $f: V\to\N$. If every
 variable $v$ in $V$ occurs in $A$, then $f(v)$ is simply
@@ -504,8 +504,7 @@ $S^+_C\prvH W+n \to w+n+1$ for all $w\in W$.
 Proof: if $W=V$, then $n=k$, otherwise $n= \max(g(V-W))+\M$,
 since variables in $V-W$ cannot play a role above $n$.
 
-
-The method in the previous paragraph only works
+The decision method above for $S^+_C\prvH A\to b$ only works
 if every variable in $V$ occurs in $A$.
 However, it is not difficult to extend Theorem~\ref{thm:main}
 such that we get decidability of $S^+_C\prvH A\to b$ in
@@ -519,9 +518,7 @@ problem is to use $f(x)=-1$ to mean that $f(x)$ is undefined.
 One can then verify that Theorem~\ref{thm:main} and
 Lemma~\ref{lem:secondary} go through with minimal adaptations
 in their proofs.
-} %end red
-- Decidability result (incl. loop detection)
-
+} %end color
 
 \section{Discussion}
 
@@ -548,6 +545,7 @@ The results of this note show that having typings depend
 on a set of universe level constraints does not make 
 type checking undecidable.
 
+{\color{blue}
 Since dependent type theory is meant to be a foundation of mathematics,
 we want to make minimal mathematical assumptions about the universe levels.
 For example, we don't say that they are natural numbers
@@ -558,13 +556,28 @@ natural numbers are introduced as an inductive type
 at some later point in the development. For similar reasons
 we don't assume that universe levels are totally ordered,
 nor that the successor function is injective.
+} %end color
 
 \subsection{Related work}
 
-There is a considerable body of research done on efficient
-constraint solving in the same language as in this note,
-but interpreted in the integer or in the rational numbers.
-
+{\color{blue}
+There exist in the literature a considerable body of research 
+on efficient constraint solving in the same language as in this note,
+but interpreted in the integers or in the rational numbers.
+The latter are totally ordered, which makes the problem different.
+Consider, for example, the constraint $x\vee y = x^+$.
+When the ordering is total, this constraint implies $y = x^+$.
+However, if $x$ and $y$ are incomparable, there are countermodels
+of $x\vee y = x^+$ in which $y = x^+$ is false. The simplest
+countermodel has three points. The model of $x\vee y = x^+$
+as described in the proof of Theorem~\ref{thm:LvsH} is based
+on $V$-terms with $V=\set{x,y}$, modulo the congruence $\equiv$.
+This congruence gives ${x+k \vee y+l} \equiv {x+l+1}$ if $k\leq l$
+(use $x,y \to x+1$),
+and ${x+k \vee y+l} \equiv {x+k}$ if $k>l$
+(use $x+1\to y$).
+In this model $y = x^+$ is false ($y\to x+1$ cannot be derived).
+} %end color
 
 \bibliographystyle{plain}
 \bibliography{refs}
