@@ -206,6 +206,38 @@ Ignore the rest of this file, please.
 We now try to relate the models. It is here that we'll need some
 equations for L.
 
+\begin{code}
+data U'' : ℕ → Set
+T'' : (i : ℕ) → U'' i → Set
+
+_⊔_ : ℕ → ℕ → ℕ
+zero ⊔ j = j
+succ i ⊔ zero = succ i
+succ i ⊔ succ j = succ (i ⊔ j)
+
+data U'' where
+ ⌜ℕ₀⌝  : (i : ℕ) → U'' i
+ ⌜ℕ₁⌝  : (i : ℕ) → U'' i
+ ⌜ℕ⌝   : (i : ℕ) → U'' i
+ ⌜+⌝   : (i j : ℕ) → U'' i → U'' j → U'' (i ⊔ j)
+ ⌜Π⌝   : (i j : ℕ) (a : U'' i) → (T'' i a → U'' j) → U'' (i ⊔ j)
+ ⌜Σ⌝   : (i j : ℕ) (a : U'' i) → (T'' i a → U'' j) → U'' (i ⊔ j)
+ ⌜W⌝   : (i j : ℕ) (a : U'' i) → (T'' i a → U'' j) → U'' (i ⊔ j)
+ ⌜Id⌝  : (i : ℕ) (a : U'' i) → T'' i a → T'' i a → U'' i
+ ⌜U''⌝ : (i : ℕ) → U'' (succ i)
+
+T'' i (⌜ℕ₀⌝ i)             = ℕ₀
+T'' i (⌜ℕ₁⌝ i)             = ℕ₁
+T'' i (⌜ℕ⌝ i)              = ℕ
+T'' .(i ⊔ j) (⌜+⌝ i j a b) = T'' i a + T'' j b
+T'' .(i ⊔ j) (⌜Π⌝ i j a b) = Π (T'' i a) (λ x → T'' j (b x))
+T'' .(i ⊔ j) (⌜Σ⌝ i j a b) = Σ (T'' i a) (λ x → T'' j (b x))
+T'' .(i ⊔ j) (⌜W⌝ i j a b) = W (T'' i a) (λ x → T'' j (b x))
+T'' i (⌜Id⌝ i a x y)       = Id (T'' i a) x y
+T'' .(succ i) (⌜U''⌝ i)    = U'' i
+
+\end{code}
+
 -- \begin{code}
 
 --  _≡_ : {X : Set} → X → X → Set
