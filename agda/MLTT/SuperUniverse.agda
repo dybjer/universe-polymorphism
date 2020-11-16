@@ -4,65 +4,116 @@
 
 module MLTT.SuperUniverse where
 
-open import MLTT.MonomorphicSets hiding (F)
+open import MLTT.MonomorphicSets hiding (U;T)
 
--- If U, T is a family of sets (perceived as a universe)
--- then F U T, G U T is the next universe above it
+-- If A, B is a family of sets (perceived as a universe)
+-- then U A B, T A B is the next universe above it
 
 mutual
-  data F (U : Set) (T : U -> Set) : Set where
-    n₀ : F U T
-    n₁ : F U T
-    _⊕_ : F U T -> F U T -> F U T
-    σ : (a : F U T) -> (G U T a -> F U T) -> F U T
-    π : (a : F U T) -> (G U T a -> F U T) -> F U T
-    n : F U T
-    w : (a : F U T) -> (G U T a -> F U T) -> F U T
-    i : (a : F U T) -> G U T a -> G U T a -> F U T    
-    u : F U T
-    t : U → F U T -- the cumulativity map, the lift
+  data U (A : Set) (B : A -> Set) : Set where
+    n₀ : U A B
+    n₁ : U A B
+    _⊕_ : U A B → U A B → U A B
+-- cf  σ : (a : U₀) → (B a → U₀) → U₀ for the first universe
+    σ : (a : U A B) → (T A B a → U A B) → U A B
+    π : (a : U A B) → (T A B a → U A B) → U A B
+    n : U A B
+    w : (a : U A B) → (T A B a → U A B) → U A B
+    i : (a : U A B) → T A B a → T A B a → U A B
+    u : U A B     -- the code for the previous universe
+    t : A → U A B -- codes for the results of the cumulativity map,
+                  -- "lift" in Agda terminology
 
-  G : (U : Set) -> (T : U -> Set) -> F U T -> Set
-  G U T n₀        = N₀
-  G U T n₁        = N₁
-  G U T (a ⊕ b)   = G U T a + G U T b
-  G U T (σ a b)   = Σ (G U T a) (\x -> G U T (b x))
-  G U T (π a b)   = Π (G U T a) (\x -> G U T (b x))
-  G U T n         = N
-  G U T (w a b)   = W (G U T a) (\x -> G U T (b x))
-  G U T (i a b c) = I (G U T a) b c
-  G U T u         = U
-  G U T (t a)     = T a -- cumulativity on the nose
-  
--- The super universe is closed
--- under the next universe operator
--- It contains the first universe,
--- since it is the next universe above the empty universe:
--- U₀ = F N₀ R₀ and T₀ = G N₀ R₀
+  T : (A : Set) → (B : A → Set) → U A B → Set
+  T A B n₀        = N₀
+  T A B n₁        = N₁
+  T A B (a ⊕ b)   = T A B a + T A B b
+  T A B (σ a b)   = Σ (T A B a) (λ x → T A B (b x))
+  T A B (π a b)   = Π (T A B a) (λ x → T A B (b x))
+  T A B n         = N
+  T A B (w a b)   = W (T A B a) (λ x → T A B (b x))
+  T A B (i a b c) = I (T A B a) b c
+  T A B u         = A
+  T A B (t a)     = B a -- cumulativity on the nose
+
+-- The zeroth universe U₀, T₀ is the empty universe
+
+U₀ = N₀
+T₀ : U₀ → Set
+T₀ ()
+
+-- The first universe U₁, T₁ is the universe above the empty universe
+
+U₁ = U N₀ T₀
+T₁ = T N₀ T₀
+
+-- etc
+
+-- We can internalize the infinite tower of universes:
+
+mutual
+  U' : N → Set
+  U' O = N₀
+  U' (s m) = U (U' m) (T' m)
+
+  T' : (m : N) → U' m → Set
+  T' (s m) = T (U' m) (T' m)
+
+-- and define universe polymorphic notions:
+
+n' : (m : N) → U' (s m)
+n' m = n {U' m} {T' m}
+
+⊕' : (m : N) → U' m → U' m → U' m
+⊕' (s m) a b = a ⊕ b
+
+σ' : (m : N) → (a : U' m) → (T' m a → U' m) → U' m
+σ' (s m) a b = σ a b
+
+i' : (m : N) → (a : U' m) → T' m a → T' m a → U' m
+i' (s m) a x y = i a x y
+
+-- we can also define the limit of U' n:
+
+U-ω : Set
+U-ω = Σ N U'
+
+T-ω : U-ω → Set
+T-ω (m , a) = T' m a
 
 mutual
   data V : Set where
      n₀ : V
      n₁ : V
-     _⊕_ : V -> V -> V
-     σ : (a : V) -> (S a -> V) -> V
-     π : (a : V) -> (S a -> V) -> V
+     _⊕_ : V → V → V
+     σ : (a : V) → (S a → V) → V
+     π : (a : V) → (S a → V) → V
      n : V
-     w : (a : V) -> (S a -> V) -> V
-     i : (a : V) -> S a -> S a -> V
-     f : (a : V) -> (S a -> V) -> V
-     g : (a : V) -> (b : S a -> V) -> F (S a) (λ x -> S (b x)) -> V
+     w : (a : V) → (S a → V) → V
+     i : (a : V) → S a → S a → V
+--   V is closed under the "next universe operator U,T", i e under
+     u : (a : V) → (S a → V) → V
+     t : (a : V) → (b : S a → V) → U (S a) (λ x → S (b x)) → V
 
-  S : V -> Set
+  S : V → Set
   S n₀        = N₀
   S n₁        = N₁
   S (a ⊕ b)   = S a + S b
-  S (σ a b)   = Σ (S a) (\x -> S (b x))
-  S (π a b)   = Π (S a) (\x -> S (b x))
+  S (σ a b)   = Σ (S a) (λ x → S (b x))
+  S (π a b)   = Π (S a) (λ x → S (b x))
   S n         = N
-  S (w a b)   = W (S a) (\x -> S (b x))
+  S (w a b)   = W (S a) (λ x → S (b x))
   S (i a b c) = I (S a) b c
-  S (f a b)   = F (S a) (\x -> S (b x))
-  S (g a b c) = G (S a) (\x -> S (b x)) c
+  S (u a b)   = U (S a) (λ x → S (b x))
+  S (t a b c) = T (S a) (λ x → S (b x)) c
 
+mutual
+  u' : N → V
+  u' O = n₀
+  u' (s m) = u (u' m) (t' m)
 
+  t' : (m : N) → S (u' m) → V
+  t' (s m) = t (u' m) (t' m)
+
+u-ω : V
+u-ω = σ n u'
