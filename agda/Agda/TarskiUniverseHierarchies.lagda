@@ -98,10 +98,11 @@ assumptions:
 
 \begin{code}
 
-module _ (L   : Set)
-         (O   : L)
-         (_⁺  : L → L)
-         (_⊔_ : L → L → L)
+module cumulative-by-coercion
+        (L   : Set)
+        (O   : L)
+        (_⁺  : L → L)
+        (_⊔_ : L → L → L)
        where
 
 \end{code}
@@ -199,110 +200,81 @@ We now define U' and T' by mutual induction-recursion:
 
 Notice that the last equation is what gives cumulativity on the nose.
 
-TODO. Write CwF definitions.
+The following is adapted from Peters files (and it is due to Palmgren
+and ?). It just changes notation.
 
-Ignore the rest of this file, please.
+An abstract universe is a pair (U , T) with U : Set and T : U → Set.
 
-We now try to relate the models. It is here that we'll need some
-equations for L.
+The following constructs an abstract universe (U' , T') from an
+abstract universe (U , T).
 
 \begin{code}
-data U'' : ℕ → Set
-T'' : (i : ℕ) → U'' i → Set
 
-_⊔_ : ℕ → ℕ → ℕ
-zero ⊔ j = j
-succ i ⊔ zero = succ i
-succ i ⊔ succ j = succ (i ⊔ j)
+module next (U : Set) (T : U -> Set) where
 
-data U'' where
- ⌜ℕ₀⌝  : (i : ℕ) → U'' i
- ⌜ℕ₁⌝  : (i : ℕ) → U'' i
- ⌜ℕ⌝   : (i : ℕ) → U'' i
- ⌜+⌝   : (i j : ℕ) → U'' i → U'' j → U'' (i ⊔ j)
- ⌜Π⌝   : (i j : ℕ) (a : U'' i) → (T'' i a → U'' j) → U'' (i ⊔ j)
- ⌜Σ⌝   : (i j : ℕ) (a : U'' i) → (T'' i a → U'' j) → U'' (i ⊔ j)
- ⌜W⌝   : (i j : ℕ) (a : U'' i) → (T'' i a → U'' j) → U'' (i ⊔ j)
- ⌜Id⌝  : (i : ℕ) (a : U'' i) → T'' i a → T'' i a → U'' i
- ⌜U''⌝ : (i : ℕ) → U'' (succ i)
+  data U'  : Set
+  T' : U' → Set
 
-T'' i (⌜ℕ₀⌝ i)             = ℕ₀
-T'' i (⌜ℕ₁⌝ i)             = ℕ₁
-T'' i (⌜ℕ⌝ i)              = ℕ
-T'' .(i ⊔ j) (⌜+⌝ i j a b) = T'' i a + T'' j b
-T'' .(i ⊔ j) (⌜Π⌝ i j a b) = Π (T'' i a) (λ x → T'' j (b x))
-T'' .(i ⊔ j) (⌜Σ⌝ i j a b) = Σ (T'' i a) (λ x → T'' j (b x))
-T'' .(i ⊔ j) (⌜W⌝ i j a b) = W (T'' i a) (λ x → T'' j (b x))
-T'' i (⌜Id⌝ i a x y)       = Id (T'' i a) x y
-T'' .(succ i) (⌜U''⌝ i)    = U'' i
+  data U' where
+    ⌜ℕ₀⌝  : U'
+    ⌜ℕ₁⌝  : U'
+    ⌜ℕ⌝   : U'
+    _⌜+⌝_ : U' → U' → U'
+    ⌜Σ⌝   : (a : U') → (T' a → U') → U'
+    ⌜Π⌝   : (a : U') → (T' a → U') → U'
+    ⌜W⌝   : (a : U') → (T' a → U') → U'
+    ⌜Id⌝  : (a : U') → T' a → T' a → U'
+    ⌜U⌝   : U'
+    ⌜L⌝   : U → U'
+
+  T' ⌜ℕ₀⌝         = ℕ₀
+  T' ⌜ℕ₁⌝         = ℕ₁
+  T' ⌜ℕ⌝          = ℕ
+  T' (a ⌜+⌝ b)    = T' a + T' b
+  T' (⌜Σ⌝ a b)    = Σ (T' a) (λ x → T' (b x))
+  T' (⌜Π⌝ a b)    = Π (T' a) (λ x → T' (b x))
+  T' (⌜W⌝ a b)    = W (T' a) (λ x → T' (b x))
+  T' (⌜Id⌝ a b c) = Id (T' a) b c
+  T' ⌜U⌝          = U
+  T' (⌜L⌝ a)      = T a
 
 \end{code}
 
--- \begin{code}
+The super-universe (V , S).
 
---  _≡_ : {X : Set} → X → X → Set
---  x ≡ y = Id _ x y
+\begin{code}
 
---  module _ (e₀ : (i : L) → (O ⊔ i) ≡ i)
---         where
+data V : Set
+S : V → Set
+U : (a : V) (b : S a → V) → Set
+T : (a : V) (b : S a → V) (c : U a b) → Set
 
---   τ : {X : Set} (A : X → Set) {x y : X} → x ≡ y → A x → A x
---   τ A (refl i) a = a
 
---   f : (i : L) → U i → U' i
---   g : (i : L) → U' i → U i
---   φ : (i : L) (a : U i) → T i a → T' i (f i a)
---   γ : (i : L) (a : U i) → T' i (f i a) → T i a
---   α : (i : L) (a : U' i) → T' i a → T i (g i a)
---   β : (i : L) (a : U' i) → T i (g i a) → T' i a
+U a b = next.U' (S a) (λ (x : S a) → S (b x))
 
---   f i (⌜ℕ₀⌝ i) = v
---    where
---     u : U' (O ⊔ i)
---     u = ⌜Lift⌝ O i ⌜ℕ₀⌝
---     v : U' i
---     v = {!!} -- τ U' (e₀ i) u
---   f i (⌜ℕ₁⌝ i) = {!!} -- τ U' (e₀ i) (⌜Lift⌝ O i ⌜ℕ₁⌝)
---   f i (⌜ℕ⌝ i) = {!!} -- τ U' (e₀ i) (⌜Lift⌝ O i ⌜ℕ⌝)
---   f .(i ⊔ j) (⌜+⌝ i j a b) = ⌜+⌝ i j (f i a) (f j b)
---   f .(i ⊔ j) (⌜Π⌝ i j a b) = ⌜Π⌝ i j (f i a) (λ x → f j (b (γ i a x)))
---   f .(i ⊔ j) (⌜Σ⌝ i j a b) = ⌜Σ⌝ i j (f i a) (λ x → f j (b (γ i a x)))
---   f .(i ⊔ j) (⌜W⌝ i j a b) = ⌜W⌝ i j (f i a) (λ x → f j (b (γ i a x)))
---   f i (⌜Id⌝ i a x y) = ⌜Id⌝ i (f i a) (φ i a x) (φ i a y)
---   f .(i ⁺) (⌜U⌝ i) = ⌜U⌝ i
+T a b c = next.T' (S a) (λ (x : S a) → S (b x)) c
 
---   g i ⌜ℕ₀⌝ = ⌜ℕ₀⌝ i
---   g i ⌜ℕ₁⌝ = ⌜ℕ₁⌝ i
---   g i ⌜ℕ⌝ = ⌜ℕ⌝ i
---   g .(i ⊔ j) (⌜+⌝ i j a b) = ⌜+⌝ i j (g i a) (g j b)
---   g .(i ⊔ j) (⌜Π⌝ i j a b) = ⌜Π⌝ i j (g i a) (λ x → g j (b (β i a x)))
---   g .(i ⊔ j) (⌜Σ⌝ i j a b) = ⌜Σ⌝ i j (g i a) (λ x → g j (b (β i a x)))
---   g .(i ⊔ j) (⌜W⌝ i j a b) = ⌜W⌝ i j (g i a) (λ x → g j (b (β i a x)))
---   g i (⌜Id⌝ i a x y) = ⌜Id⌝ i (g i a) (α i a x) (α i a y)
---   g .(i ⁺) (⌜U⌝ i) = ⌜U⌝ i
---   g .(i ⊔ j) (⌜Lift⌝ i j a) = Lift i j (g i a)
+data V where
+  ⌜ℕ₀⌝  : V
+  ⌜ℕ₁⌝  : V
+  ⌜ℕ⌝   : V
+  _⌜+⌝_ : V → V → V
+  ⌜Σ⌝   : (a : V) → (S a → V) → V
+  ⌜Π⌝   : (a : V) → (S a → V) → V
+  ⌜W⌝   : (a : V) → (S a → V) → V
+  ⌜Id⌝  : (a : V) → S a → S a → V
+  ⌜U⌝   : (a : V) → (S a → V) → V
+  ⌜L⌝   : (a : V) → (b : S a → V) → U a b → V
 
---   φ i (⌜ℕ₁⌝ i) x = {!!}
---   φ i (⌜ℕ⌝ i) x = {!!}
---   φ .(i ⊔ j) (⌜+⌝ i j a b) (inl A) = inl (φ i a A)
---   φ .(i ⊔ j) (⌜+⌝ i j a b) (inr B) = inr (φ j b B)
---   φ .(i ⊔ j) (⌜Π⌝ i j a b) f t = {!!}
---    where
---     u : {!!}
---     u = β {!!} {!!} {!!}
---     v : {!!}
---     v = {!!}
---   φ .(i ⊔ j) (⌜Σ⌝ i j a b) (x , y) = φ i a x , {!!}
---    where
---     u : T' j (f j (b x))
---     u = φ j (b x) y
---     v : T' j (f j (b (γ i a (φ i a x))))
---     v = τ (λ - → {!T' j (f j (b -))!}) {!!} {!!}
---   φ .(i ⊔ j) (⌜W⌝ i j a b) t = {!!}
---   φ i (⌜Id⌝ i a x y) t = {!!}
---   φ .(i ⁺) (⌜U⌝ i) t = {!!}
+S ⌜ℕ₀⌝         = ℕ₀
+S ⌜ℕ₁⌝         = ℕ₁
+S ⌜ℕ⌝          = ℕ
+S (a ⌜+⌝ b)    = S a + S b
+S (⌜Σ⌝ a b)    = Σ (S a) (λ x → S (b x))
+S (⌜Π⌝ a b)    = Π (S a) (λ x → S (b x))
+S (⌜W⌝ a b)    = W (S a) (λ x → S (b x))
+S (⌜Id⌝ a b c) = Id (S a) b c
+S (⌜U⌝  a b)   = U a b
+S (⌜L⌝ a b c)  = T a b c
 
---   γ = {!!}
---   α = {!!}
---   β = {!!}
--- \end{code}
+\end{code}
