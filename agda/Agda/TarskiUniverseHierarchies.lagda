@@ -203,16 +203,19 @@ Notice that the last equation is what gives cumulativity on the nose.
 The following is adapted from Peters files (and it is due to Palmgren
 and ?). It just changes notation.
 
-An abstract universe is a pair (U , T) with U : Set and T : U → Set.
+A universe is just a pair (U , T) with
+
+  * U : Set (the carrier), and
+  * T : U → Set (the structure).
 
 The following constructs an abstract universe (U' , T') from an
-abstract universe (U , T).
+abstract universe (U , T), its successor.
 
 \begin{code}
 
-module next (U : Set) (T : U -> Set) where
+module successor (U : Set) (T : U -> Set) where
 
-  data U'  : Set
+  data U' : Set
   T' : U' → Set
 
   data U' where
@@ -225,7 +228,7 @@ module next (U : Set) (T : U -> Set) where
     ⌜W⌝   : (a : U') → (T' a → U') → U'
     ⌜Id⌝  : (a : U') → T' a → T' a → U'
     ⌜U⌝   : U'
-    ⌜L⌝   : U → U'
+    ⌜T⌝   : U → U'
 
   T' ⌜ℕ₀⌝         = ℕ₀
   T' ⌜ℕ₁⌝         = ℕ₁
@@ -236,7 +239,10 @@ module next (U : Set) (T : U -> Set) where
   T' (⌜W⌝ a b)    = W (T' a) (λ x → T' (b x))
   T' (⌜Id⌝ a b c) = Id (T' a) b c
   T' ⌜U⌝          = U
-  T' (⌜L⌝ a)      = T a
+  T' (⌜T⌝ a)      = T a
+
+  carrier    = U'
+  structure  = T'
 
 \end{code}
 
@@ -244,37 +250,53 @@ The super-universe (V , S).
 
 \begin{code}
 
-data V : Set
-S : V → Set
-U : (a : V) (b : S a → V) → Set
-T : (a : V) (b : S a → V) (c : U a b) → Set
+module as-peters where
 
+ data V : Set
+ S : V → Set
 
-U a b = next.U' (S a) (λ (x : S a) → S (b x))
+\end{code}
 
-T a b c = next.T' (S a) (λ (x : S a) → S (b x)) c
+We also define (U , T) as follows, for the sake of readability of the
+definition of (V , S).
 
-data V where
-  ⌜ℕ₀⌝  : V
-  ⌜ℕ₁⌝  : V
-  ⌜ℕ⌝   : V
-  _⌜+⌝_ : V → V → V
-  ⌜Σ⌝   : (a : V) → (S a → V) → V
-  ⌜Π⌝   : (a : V) → (S a → V) → V
-  ⌜W⌝   : (a : V) → (S a → V) → V
-  ⌜Id⌝  : (a : V) → S a → S a → V
-  ⌜U⌝   : (a : V) → (S a → V) → V
-  ⌜L⌝   : (a : V) → (b : S a → V) → U a b → V
+We think of a pair (u , t), with u : V and t : S a → V, as an
+"internal universe".
 
-S ⌜ℕ₀⌝         = ℕ₀
-S ⌜ℕ₁⌝         = ℕ₁
-S ⌜ℕ⌝          = ℕ
-S (a ⌜+⌝ b)    = S a + S b
-S (⌜Σ⌝ a b)    = Σ (S a) (λ x → S (b x))
-S (⌜Π⌝ a b)    = Π (S a) (λ x → S (b x))
-S (⌜W⌝ a b)    = W (S a) (λ x → S (b x))
-S (⌜Id⌝ a b c) = Id (S a) b c
-S (⌜U⌝  a b)   = U a b
-S (⌜L⌝ a b c)  = T a b c
+Then S u is a Set and λ (a : S u) → S (t a) is a family S u → Set, and
+hence the pair (S u , λ (a : S u) → S (t a)) is the external version
+of the internal universe (u , t). We define (U u t , T u t) to be the
+successor universe of this external version.
+
+\begin{code}
+
+ U : (u : V) (t : S u → V) → Set
+ T : (u : V) (t : S u → V) → U u t → Set
+
+ U u t = successor.carrier   (S u) (λ (a : S u) → S (t a))
+ T u t = successor.structure (S u) (λ (a : S u) → S (t a))
+
+ data V where
+   ⌜ℕ₀⌝  : V
+   ⌜ℕ₁⌝  : V
+   ⌜ℕ⌝   : V
+   _⌜+⌝_ : V → V → V
+   ⌜Σ⌝   : (a : V) → (S a → V) → V
+   ⌜Π⌝   : (a : V) → (S a → V) → V
+   ⌜W⌝   : (a : V) → (S a → V) → V
+   ⌜Id⌝  : (a : V) → S a → S a → V
+   ⌜U⌝   : (u : V) → (S u → V) → V
+   ⌜T⌝   : (u : V) (t : S u → V) → U u t → V
+
+ S ⌜ℕ₀⌝         = ℕ₀
+ S ⌜ℕ₁⌝         = ℕ₁
+ S ⌜ℕ⌝          = ℕ
+ S (a ⌜+⌝ b)    = S a + S b
+ S (⌜Σ⌝ a b)    = Σ (S a) (λ (x : S a) → S (b x))
+ S (⌜Π⌝ a b)    = Π (S a) (λ (x : S a) → S (b x))
+ S (⌜W⌝ a b)    = W (S a) (λ (x : S a) → S (b x))
+ S (⌜Id⌝ a x y) = Id (S a) x y
+ S (⌜U⌝  u t)   = U u t
+ S (⌜T⌝ u t a)  = T u t a
 
 \end{code}
