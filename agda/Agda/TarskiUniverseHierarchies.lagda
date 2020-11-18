@@ -60,13 +60,23 @@ data _+_ (A B : Set) : Set where
 Π : (A : Set) → (A → Set) → Set
 Π A B = (x : A) → B x
 
+syntax Π X (λ x → y) = Π x ꞉ X , y
+
 data Σ (A : Set) (B : A → Set) : Set where
  _,_ : (a : A) → B a → Σ A B
+
+syntax Σ X (λ x → y) = Σ x ꞉ X , y
 
 Σ-induction : (A : Set) (B : A → Set) (P : Σ A B → Set)
             → ((a : A) → (b : B a) → P(a , b))
             → (c : Σ A B) → P c
 Σ-induction A B P f (x , y) = f x y
+
+pr₁ : {A : Set} {B : A → Set} → Σ A B → A
+pr₁ (x , y) = x
+
+pr₂ : {A : Set} {B : A → Set} → (z : Σ A B) → B (pr₁ z)
+pr₂ (x , y) = y
 
 data W (A : Set) (B : A → Set) : Set where
  sup : (a : A) → (B a → W A B) → W A B
@@ -260,7 +270,7 @@ module as-peters where
 We also define (U , T) as follows, for the sake of readability of the
 definition of (V , S).
 
-We think of a pair (u , t), with u : V and t : S a → V, as an
+We think of a pair (u , t), with u : V and t : S u → V, as an
 "internal universe".
 
 Then S u is a Set and λ (a : S u) → S (t a) is a family S u → Set, and
@@ -296,7 +306,57 @@ successor universe of this external version.
  S (⌜Π⌝ a b)    = Π (S a) (λ (x : S a) → S (b x))
  S (⌜W⌝ a b)    = W (S a) (λ (x : S a) → S (b x))
  S (⌜Id⌝ a x y) = Id (S a) x y
- S (⌜U⌝  u t)   = U u t
+ S (⌜U⌝ u t)    = U u t
  S (⌜T⌝ u t a)  = T u t a
+
+\end{code}
+
+An ordinal indexed tower of universes:
+
+\begin{code}
+
+ internal-universe : Set
+ internal-universe = Σ u ꞉ V , (S u → V)
+
+ next : internal-universe → internal-universe
+ next (u , t) = ⌜U⌝ u t , ⌜T⌝ u t
+
+ sum : (I : V) → (S I → internal-universe) → internal-universe
+ sum I α = (⌜Σ⌝ I (λ u → pr₁ (α u)) , λ {(u , s) → pr₂ (α u) s})
+
+ data Ord : Set where
+  zero : Ord
+  succ : Ord → Ord
+  sup  : (ℕ → Ord) → Ord
+
+ w : Ord → internal-universe
+ w zero     = next (⌜ℕ₀⌝ , λ ())      -- Could remove "next" but then the first universe is empty.
+ w (succ x) = next (w x)
+ w (sup α)  = sum ⌜ℕ⌝ (λ i → w (α i))
+
+\end{code}
+
+The corresponding external universes:
+
+\begin{code}
+
+ 𝓤 : Ord → Set
+ 𝓤 x = S (pr₁ (w x))
+
+ 𝓣 : (x : Ord) → 𝓤 x → Set
+ 𝓣 x a = S (pr₂ (w x) a)
+
+ data _≡_ {A : Set₁} : A → A → Set₁ where
+   refl : (a : A) → a ≡ a
+
+ ⌜ℕ₀⌝' : (x : Ord) → 𝓤 x
+ ⌜ℕ₀⌝' zero = successor.⌜ℕ₀⌝
+ ⌜ℕ₀⌝' (succ x) = {!!}
+ ⌜ℕ₀⌝' (sup x) = {!!}
+
+ 𝓣-⌜ℕ₀⌝ : (x : Ord) → 𝓣 x (⌜ℕ₀⌝' x) ≡ ℕ₀
+ 𝓣-⌜ℕ₀⌝ zero = refl _
+ 𝓣-⌜ℕ₀⌝ (succ x) = {!!}
+ 𝓣-⌜ℕ₀⌝ (sup x) = {!!}
 
 \end{code}
