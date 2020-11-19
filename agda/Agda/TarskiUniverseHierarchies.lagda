@@ -62,8 +62,14 @@ data _+_ (A B : Set) : Set where
 
 syntax Π X (λ x → y) = Π x ꞉ X , y
 
-data Σ (A : Set) (B : A → Set) : Set where
- _,_ : (a : A) → B a → Σ A B
+record Σ (A : Set) (B : A → Set) : Set where
+ constructor
+   _,_
+ field
+   pr₁ : A
+   pr₂ : B pr₁
+
+open Σ
 
 syntax Σ X (λ x → y) = Σ x ꞉ X , y
 
@@ -72,14 +78,10 @@ syntax Σ X (λ x → y) = Σ x ꞉ X , y
             → (c : Σ A B) → P c
 Σ-induction A B P f (x , y) = f x y
 
-pr₁ : {A : Set} {B : A → Set} → Σ A B → A
-pr₁ (x , y) = x
-
-pr₂ : {A : Set} {B : A → Set} → (z : Σ A B) → B (pr₁ z)
-pr₂ (x , y) = y
-
 data W (A : Set) (B : A → Set) : Set where
  sup : (a : A) → (B a → W A B) → W A B
+
+syntax W X (λ x → y) = W x ꞉ X , y
 
 W-induction : (A : Set) (B : A → Set) (P : W A B → Set)
             → ((a : A) → (s : B a → W A B) → ((b : B a) → P(s b)) → P(sup a s))
@@ -260,7 +262,7 @@ The super-universe (V , S).
 
 \begin{code}
 
-module as-peters where
+module based-on-peters-Agda-rendering-of-palmgren where
 
  data V : Set
  S : V → Set
@@ -311,15 +313,181 @@ successor universe of this external version.
 
 \end{code}
 
-An ordinal indexed tower of universes:
+An ℕ-indexed tower of universes v n, where we choose the first
+universe to be empty, but then we work only with v (succ n):
 
 \begin{code}
 
  internal-universe : Set
  internal-universe = Σ u ꞉ V , (S u → V)
 
+ Carrier : internal-universe → Set
+ Carrier (u , t) = S u
+
+ Structure : (i : internal-universe) → Carrier i → Set
+ Structure (u , t) a = S (t a)
+
  next : internal-universe → internal-universe
  next (u , t) = ⌜U⌝ u t , ⌜T⌝ u t
+
+ v : ℕ → internal-universe
+ v zero     = ⌜ℕ₀⌝ , ℕ₀-induction (λ _ → V)
+ v (succ x) = next (v x)
+
+ 𝓥 : ℕ → Set
+ 𝓥 n = Carrier (v (succ n))
+
+ 𝓢 : (n : ℕ) → 𝓥 n → Set
+ 𝓢 n = Structure (v (succ n))
+
+ data _≡_ {A : Set₁} : A → A → Set₁ where
+   refl : (a : A) → a ≡ a
+
+
+ module version₀ where
+
+   module _ (n : ℕ) where
+
+     |ℕ₀|   : 𝓥 n
+     |ℕ₁|   : 𝓥 n
+     |ℕ|    : 𝓥 n
+     _|+|_  : 𝓥 n → 𝓥 n → 𝓥 n
+     |Σ|    : (a : 𝓥 n) → (𝓢 n a → 𝓥 n) → 𝓥 n
+     |Π|    : (a : 𝓥 n) → (𝓢 n a → 𝓥 n) → 𝓥 n
+     |W|    : (a : 𝓥 n) → (𝓢 n a → 𝓥 n) → 𝓥 n
+     |Id|   : (a : 𝓥 n) → 𝓢 n a → 𝓢 n a → 𝓥 n
+     |U|    : 𝓥 n
+     |T|    : 𝓥 n → 𝓥 (succ n)
+
+     |ℕ₀|   = successor.⌜ℕ₀⌝
+     |ℕ₁|   = successor.⌜ℕ₁⌝
+     |ℕ|    = successor.⌜ℕ⌝
+     _|+|_  = successor._⌜+⌝_
+     |Σ|    = successor.⌜Σ⌝
+     |Π|    = successor.⌜Π⌝
+     |W|    = successor.⌜W⌝
+     |Id|   = successor.⌜Id⌝
+     |U|    = successor.⌜U⌝
+     |T|    = successor.⌜T⌝
+
+\end{code}
+
+The equations that should hold definitionally indeed do:
+
+\begin{code}
+
+     |ℕ₀|-eq : 𝓢 n |ℕ₀| ≡ ℕ₀
+     |ℕ₁|-eq : 𝓢 n |ℕ₁| ≡ ℕ₁
+     |ℕ|-eq  : 𝓢 n |ℕ|  ≡ ℕ
+     |+|-eq  : (a b : 𝓥 n) → 𝓢 n (a |+| b) ≡ (𝓢 n a + 𝓢 n b)
+     |Σ|-eq  : (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|Σ| a b) ≡ (Σ x ꞉ 𝓢 n a , 𝓢 n (b x))
+     |Π|-eq  : (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|Π| a b) ≡ (Π x ꞉ 𝓢 n a , 𝓢 n (b x))
+     |W|-eq  : (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|W| a b) ≡ (W x ꞉ 𝓢 n a , 𝓢 n (b x))
+
+     |ℕ₀|-eq    = refl _
+     |ℕ₁|-eq    = refl _
+     |ℕ|-eq     = refl _
+     |+|-eq a b = refl _
+     |Σ|-eq a b = refl _
+     |Π|-eq a b = refl _
+     |W|-eq a b = refl _
+
+\end{code}
+
+These equations need to go outside the above anonymous module, as they
+using varying n's:
+
+\begin{code}
+
+   |U|-eq : (n : ℕ) → 𝓢 (succ n) (|U| (succ n)) ≡ 𝓥 n
+   |T|-eq : (n : ℕ) (a : 𝓥 n) → 𝓢 (succ n) (|T| n a) ≡ 𝓢 n a
+
+   |U|-eq n   = refl _
+   |T|-eq n a = refl _
+
+\end{code}
+
+We now try with joins of levels (max on integers). Because max is not
+commutative on the nose, we need two lift functions for the code below
+to type check without transports.
+
+\begin{code}
+
+ max : ℕ → ℕ → ℕ
+ max zero     n        = n
+ max (succ m) zero     = succ m
+ max (succ m) (succ n) = succ (max m n)
+
+ module version₁ where
+
+
+     |ℕ₀|   : (n : ℕ) → 𝓥 n
+     |ℕ₁|   : (n : ℕ) → 𝓥 n
+     |ℕ|    : (n : ℕ) → 𝓥 n
+     _|+|_  : (m n : ℕ) → 𝓥 m → 𝓥 n → 𝓥 (max m n)
+     |Σ|    : (m n : ℕ) → (a : 𝓥 m) → (𝓢 m a → 𝓥 n) → 𝓥 (max m n)
+     |Π|    : (m n : ℕ) → (a : 𝓥 m) → (𝓢 m a → 𝓥 n) → 𝓥 (max m n)
+     |W|    : (m n : ℕ) → (a : 𝓥 m) → (𝓢 m a → 𝓥 n) → 𝓥 (max m n)
+     |Id|   : (n : ℕ) → (a : 𝓥 n) → 𝓢 n a → 𝓢 n a → 𝓥 n
+     |U|    : (n : ℕ) → 𝓥 n
+     |T|    : (n : ℕ) → 𝓥 n → 𝓥 (succ n)
+     LiftL   : (m n : ℕ) → 𝓥 m → 𝓥 (max m n)
+     LiftR   : (m n : ℕ) → 𝓥 n → 𝓥 (max m n)
+
+     |ℕ₀|   n       = successor.⌜ℕ₀⌝
+     |ℕ₁|   n       = successor.⌜ℕ₁⌝
+     |ℕ|    n       = successor.⌜ℕ⌝
+     _|+|_  m n a b = successor._⌜+⌝_ (LiftL m n a) (LiftR m n b)
+     |Σ|    m n a b = successor.⌜Σ⌝ (LiftL m n a) (λ x → LiftR m n (b {!!})) -- trouble still (transport).
+     |Π|    m n a b = successor.⌜Π⌝ (LiftL m n a) (λ x → LiftR m n (b {!!}))
+     |W|    m n a b = successor.⌜W⌝ (LiftL m n a) (λ x → LiftR m n (b {!!}))
+     |Id|   n       = successor.⌜Id⌝
+     |U|    n       = successor.⌜U⌝
+     |T|    n       = successor.⌜T⌝
+
+     LiftL zero     zero     a = a
+     LiftL zero     (succ n) a = |T| n (LiftL zero n a)
+     LiftL (succ m) zero     a = a
+     LiftL (succ m) (succ n) a = γ
+      where
+       IH : 𝓥 (succ m) → 𝓥 (max (succ m) n)
+       IH = LiftL (succ m) n
+
+       a' : 𝓥 (max (succ m) n)
+       a' = IH a
+
+       γ : 𝓥 (max (succ m) (succ n))
+       γ = {!!} -- We need a further induction to get this from a'
+
+
+     LiftR m n a = {!!}
+
+{-
+     |ℕ₀|-eq : (n : ℕ) → 𝓢 n |ℕ₀| ≡ ℕ₀
+     |ℕ₁|-eq : (n : ℕ) → 𝓢 n |ℕ₁| ≡ ℕ₁
+     |ℕ|-eq  : (n : ℕ) → 𝓢 n |ℕ|  ≡ ℕ
+     |+|-eq  : (m n : ℕ) → (a b : 𝓥 n) → 𝓢 n (a |+| b) ≡ (𝓢 n a + 𝓢 n b)
+     |Σ|-eq  : (m n : ℕ) → (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|Σ| a b) ≡ (Σ x ꞉ 𝓢 n a , 𝓢 n (b x))
+     |Π|-eq  : (m n : ℕ) → (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|Π| a b) ≡ (Π x ꞉ 𝓢 n a , 𝓢 n (b x))
+     |W|-eq  : (n : ℕ) → (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|W| a b) ≡ (W x ꞉ 𝓢 n a , 𝓢 n (b x))
+     |U|-eq : (n : ℕ) → 𝓢 (succ n) (|U| (succ n)) ≡ 𝓥 n
+     |T|-eq : (n : ℕ) (a : 𝓥 n) → 𝓢 (succ n) (|T| n a) ≡ 𝓢 n a
+
+     |ℕ₀|-eq    = refl _
+     |ℕ₁|-eq    = refl _
+     |ℕ|-eq     = refl _
+     |+|-eq a b = refl _
+     |Σ|-eq a b = refl _
+     |Π|-eq a b = refl _
+     |W|-eq a b = refl _
+     |U|-eq n   = refl _
+     |T|-eq n a = refl _
+-}
+\end{code}
+
+An ordinal indexed tower of universes:
+
+\begin{code}
 
  sum : (I : V) → (S I → internal-universe) → internal-universe
  sum I α = (⌜Σ⌝ I (λ u → pr₁ (α u)) , λ {(u , s) → pr₂ (α u) s})
@@ -330,33 +498,11 @@ An ordinal indexed tower of universes:
   sup  : (ℕ → Ord) → Ord
 
  w : Ord → internal-universe
- w zero     = next (⌜ℕ₀⌝ , λ ())      -- Could remove "next" but then the first universe is empty.
+ w zero     = ⌜ℕ₀⌝ , λ ()
  w (succ x) = next (w x)
  w (sup α)  = sum ⌜ℕ⌝ (λ i → w (α i))
 
 \end{code}
 
-The corresponding external universes:
-
-\begin{code}
-
- 𝓤 : Ord → Set
- 𝓤 x = S (pr₁ (w x))
-
- 𝓣 : (x : Ord) → 𝓤 x → Set
- 𝓣 x a = S (pr₂ (w x) a)
-
- data _≡_ {A : Set₁} : A → A → Set₁ where
-   refl : (a : A) → a ≡ a
-
- ⌜ℕ₀⌝' : (x : Ord) → 𝓤 x
- ⌜ℕ₀⌝' zero = successor.⌜ℕ₀⌝
- ⌜ℕ₀⌝' (succ x) = {!!}
- ⌜ℕ₀⌝' (sup x) = {!!}
-
- 𝓣-⌜ℕ₀⌝ : (x : Ord) → 𝓣 x (⌜ℕ₀⌝' x) ≡ ℕ₀
- 𝓣-⌜ℕ₀⌝ zero = refl _
- 𝓣-⌜ℕ₀⌝ (succ x) = {!!}
- 𝓣-⌜ℕ₀⌝ (sup x) = {!!}
-
-\end{code}
+I think that now we will lose some definitional equalities, compared
+to the ℕ-indexed tower. Leave this for later.
