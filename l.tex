@@ -425,7 +425,8 @@ Alternatively, we can do the simplification of the lattice
 presentation and end up with $(V',C')$. Here $C'$
 is obtained from $C$ by removing all $v+k$ from the joins,
 taking care to continue if a join becomes empty, and so on.%
-\footnote{One can take $f(v)=\infty$ to mean $\bot=v=v+1$.}
+\footnote{One can take $f(v)=\infty$ to mean $\bot=v=v+1$,
+which yields $\bot=v+k$ for all $k\in\N$.}
 Both methods lead to the same set of clauses $S^+_{C'}$,
 and this set satisfies all requirements, in particular
 each clause has gain at most $\M$.
@@ -581,6 +582,13 @@ In this model $y = x^+$ is false ($y\to x+1$ cannot be derived).
 
 \bibliographystyle{plain}
 \bibliography{refs}
+\begin{thebibliography}{99}
+\bibitem{VV}
+  Vladimir Voevodsky,
+ \newblock\emph{Universe polymorphic type system}.
+Manuscript, \url{http://www.math.ias.edu/Voevodsky/voevodsky-publications_abstracts.html\#UPTS},
+  {2014}
+\end{thebibliography}
 
 \end{document}
 
