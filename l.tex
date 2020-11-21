@@ -144,8 +144,8 @@
 \title{Decidability of the theory of join-semilattices with a successor}
 %\title{Decidability of join-semilattices with a successor}
 
-%\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
-\author{} \date{}
+\author{Marc Bezem and Thierry Coquand}
+\date{}
 
 
 \maketitle
@@ -198,7 +198,7 @@ by $C\prvL s=t$. In the next section we will prove that
 $C\prvL s=t$ is decidable for finite lattice presentations $(V,C)$.
 The results below hold for arbitrary lattice presentations.
 
-We follow Skolem (??), Lorenzen (??) for an equivalent 
+We follow Lorenzen \cite[Section 2]{Lorenzen51} for an equivalent 
 characterisation of $C\prvL s=t$ using Horn clauses.
 Let $(V,C)$ be a lattice presentation.
 Let $s:= \jterm{x}{k}{m}$ and $t:= \jterm{y}{l}{n}$ be
@@ -206,7 +206,8 @@ terms over $V$. From the constraint $s=t$
 we can prove $m+n$ inequalities which we write as 
 the set $S_{s=t}$ consisting of the following 
 Horn clauses\footnote{In this note all clauses are positive,
-propositional Horn clauses with a non-empty body.}
+propositional Horn clauses with a non-empty body,
+with abstract atoms of the form $x+k$ with $x\in V$ and $k\in \N$.}
 :
 \begin{align*}
 \jbody{x}{k}{m} &\to y_1+l_1 \\
@@ -221,8 +222,6 @@ and
 \end{align*}
 Let $S_C$ be the union of all $S_{s=t}$ with $s=t$ 
 a constraint in $C$.
-Such Horn clauses are to be read in propositional logic
-with abstract atoms of the form $x+k$ with $x\in V$ and $k\in \N$.
 
 We reflect for a moment on which other clauses we need.
 Consider the axiom $x \vee x^+ = x^+$. This would lead to three
@@ -248,18 +247,18 @@ It is easy to see that this does not require extra clauses.
 In summary: given a lattice presentation $(V,C)$,
 let $S^+_C$ be the smallest set of clauses that 
 is closed under shifting upwards and contains
-the set $S_C$ coming from the constraint in $C$,
+the set $S_C$ coming from the constraints in $C$,
 as well as all predecessor clauses for each $v\in V$. 
 
 Given a set $S$ of Horn clauses,
 let $S\prvH A\to b$ denote provability from $S$.
-Recall that provability from $S$ is defined inductively by: 
-$S\prvH a\to a$;
-$S\prvH A\to b$ if $A\to b$ in $S$;
-$S\prvH A,c\to b$ if $S\prvH A\to b$;
-$S\prvH A\to b$ if $S\prvH A\to c$ and $S\prvH A,c\to b$. 
+Recall that provability from $S$ is defined inductively by
+one base case (1) $S\prvH a\to a$, and three induction cases:
+(2) $S\prvH A\to b$ if $A\to b$ in $S$;
+(3) $S\prvH A,c\to b$ if $S\prvH A\to b$;
+(4) $S\prvH A\to b$ if $S\prvH A\to c$ and $S\prvH A,c\to b$. 
 
-We now have (cf.\ Lorenzen, Thm 3) the following theorem.
+We now have the following theorem generalizing \cite[Theorem 3]{Lorenzen51}.
 
 \begin{theorem}\label{thm:LvsH}
 For all terms $\jbody{x}{k}{m},y+l$ over $V$ we have:
@@ -307,7 +306,7 @@ Horn clauses as generating rules.
 We proceed by defining an auxiliary notion that we call `gain'.
 The \emph{gain} of a clause $\jbody{x}{k}{m}\to y+l$ is $l$ 
 minus the minimum of $\set{k_1, ... ,k_m}$.
-For example, predecessor clauses have gain $-1$s.
+For example, predecessor clauses have gain $-1$.
 The gain of a clause is invariant under shifting.
 In this section we fix a constant $\M$ and consider
 finite lattice presentations $(V,C)$ such that
@@ -348,17 +347,18 @@ the least $h \geq f$ that is a model of $S^+_C{\downarrow}W$.
 
 \begin{proof}
 Let conditions be as stated in the lemma.
+Let $f: V\to\Ninf$ with $f(V-W)\subseteq \N$ be given
+and denote its restriction to $W$ by $f_W$.
 By the definition of $S^+_C{\downarrow}W$, any minimal $h\geq f$
 that is a model of $S^+_C{\downarrow}W$
 coincides with $f$ on $V-W$, so we focus on its values on $W$.
-For any $f: V\to \Ninf$, let $f_W$ be its restriction to $W$.
 By assumption we can compute the least $g_f \geq f_W$ that 
 is a model of $S^+_C|W$.
 Now we look at clauses in $S^+_C{\downarrow}W - S^+_C|W$. 
 Such clauses are of the form $X,Y \to w+k$ with $X$ a non-empty
 set of atoms over $V-W$, and possibly empty $Y$ over $W$. 
 If $X = \ldots,x_i+k_i,\ldots$ is satisfied by $f$, 
-then 
+then by the definition of $\M$ we have
 \[
 k \leq\min_i(f(x_i)) + \M \leq \max(f(V-W)) + \M.
 \]								
@@ -368,8 +368,9 @@ M(g_f) := \sum_{w \in W}  \max(0, \max(f(V-W)) + \M - g_f(w)).
 \] 
 
 In the base case we have $M(g_f)=0$.
-Then all clauses in $S^+_C{\downarrow}W$ are satisfied,
-and hence we can take $h=g_f$ on $W$ and $h=f$ on $V-W$.
+Then $k\leq g_f(w)$ and all clauses in $S^+_C{\downarrow}W$ are 
+satisfied by $g_f$.
+Hence we can take $h=g_f$ on $W$ and $h=f$ on $V-W$.
 
 For the induction step, let $M(g_f)>0$ and assume
 the lemma has been proved for smaller values of $M(g_f)$.
@@ -425,7 +426,8 @@ Alternatively, we can do the simplification of the lattice
 presentation and end up with $(V',C')$. Here $C'$
 is obtained from $C$ by removing all $v+k$ from the joins,
 taking care to continue if a join becomes empty, and so on.%
-\footnote{One can take $f(v)=\infty$ to mean $\bot=v=v+1$.}
+\footnote{One can take $f(v)=\infty$ to mean $\bot=v=v+1$,
+which yields $\bot=v+k$ for all $k\in\N$.}
 Both methods lead to the same set of clauses $S^+_{C'}$,
 and this set satisfies all requirements, in particular
 each clause has gain at most $\M$.
@@ -581,6 +583,20 @@ In this model $y = x^+$ is false ($y\to x+1$ cannot be derived).
 
 \bibliographystyle{plain}
 \bibliography{refs}
+\begin{thebibliography}{99}
+
+\bibitem{Lorenzen51}
+Paul Lorenzen
+  \newblock\emph{Algebraische und logistische Untersuchungen über freie Verbände},
+Journal of Symbolic Logic, 16(2), 81--106, 1951.
+English translation: \url{https://arxiv.org/abs/1710.08138}
+
+\bibitem{VV}
+  Vladimir Voevodsky,
+ \newblock\emph{Universe polymorphic type system}.
+Manuscript, \url{http://www.math.ias.edu/Voevodsky/voevodsky-publications_abstracts.html\#UPTS},
+  {2014}
+\end{thebibliography}
 
 \end{document}
 
