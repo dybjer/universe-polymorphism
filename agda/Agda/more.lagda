@@ -427,30 +427,12 @@ to type check without transports.
  succ m ≤ zero   = ℕ₀
  succ m ≤ succ n = m ≤ n
 
- ≤-refl : (n : ℕ) → n ≤ n
- ≤-refl zero     = *
- ≤-refl (succ n) = ≤-refl n
 
- minus : (m n : ℕ) → n ≤ m → ℕ
- minus zero     n        le = zero
- minus (succ m) zero     *  = succ m
- minus (succ m) (succ n) le = minus m n le
 
  cong : {X Y : Set} (f : X → Y) {x y : X} → Id X x y → Id Y (f x) (f y)
  cong f (refl _) = refl _
 
- minus-property : (m n : ℕ) (le : n ≤ m) → Id ℕ (minus m n le ∔ n) m
- minus-property zero     zero     *  = refl zero
- minus-property (succ m) zero     *  = refl (succ m)
- minus-property (succ m) (succ n) le = cong succ (minus-property m n le)
 
- max-≤-property : (m n : ℕ) → m ≤ max m n
- max-≤-property zero     n        = *
- max-≤-property (succ m) zero     = ≤-refl m
- max-≤-property (succ m) (succ n) = max-≤-property m n
-
- max-minus-property : (m n : ℕ) → Id ℕ (minus (max m n) m (max-≤-property m n) ∔ m) (max m n)
- max-minus-property m n = minus-property (max m n) m (max-≤-property m n)
 
  Lift₁ : (n : ℕ) → 𝓥 n → 𝓥 (succ n)
  Lift₁ n = successor.⌜T⌝
@@ -576,3 +558,10 @@ An ordinal indexed tower of universes:
 
 I think that now we will lose some definitional equalities, compared
 to the ℕ-indexed tower. Leave this for later.
+
+t (minus (max m n) m (max-≤-property m n) ∔ m) (max m n) (max-minus-property m n) b
+  where
+   t : (x y : ℕ) → Id ℕ x y → 𝓥 x → 𝓥 y
+   t x x (refl x) a = a
+   b : 𝓥 (minus (max m n) m (max-≤-property m n) ∔ m)
+   b = Lift-+' m (minus (max m n) m (max-≤-property m n)) a
