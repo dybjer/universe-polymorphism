@@ -91,20 +91,10 @@ W-induction A B P f (sup a s) = f a s (λ (b : B a) → W-induction A B P f (s b
 data Id (A : Set) : A → A → Set where
  refl : (a : A) → Id A a a
 
-infix 0 _≡_
-_≡_ : {A : Set} → A → A → Set
-x ≡ y = Id _ x y
-
 Id-induction : (A : Set) (P : (x y : A) → Id A x y → Set)
              → ((x : A) → P x x (refl x))
              → (a b : A) → (r : Id A a b) → P a b r
 Id-induction A P f a a (refl a) = f a
-
-ap : {A B : Set} (f : A → B) {x y : A} → x ≡ y → f x ≡ f y
-ap f (refl _) = refl _
-
-transport : {A : Set} (B : A → Set) {x y : A} (p : x ≡ y) → B x → B y
-transport B (refl _) b = b
 
 \end{code}
 
@@ -350,95 +340,8 @@ universe to be empty, but then we work only with v (succ n):
  𝓢 : (n : ℕ) → 𝓥 n → Set
  𝓢 n = Structure (v (succ n))
 
- data _≡₁_ {A : Set₁} : A → A → Set₁ where
-   refl : (a : A) → a ≡₁ a
-
- Lift-succ : (n : ℕ) → 𝓥 n → 𝓥 (succ n)
- Lift-succ _ = successor.⌜T⌝
-
- 𝓢-succ : (n : ℕ) (a : 𝓥 n) → 𝓢 (succ n) (Lift-succ n a) ≡₁ 𝓢 n a
- 𝓢-succ n a = refl _
-
- 𝓢-succ→ : (n : ℕ) (a : 𝓥 n) → 𝓢 n a → 𝓢 (succ n) (Lift-succ n a)
- 𝓢-succ→ n a x = x
-
- 𝓢-succ← : (n : ℕ) (a : 𝓥 n) → 𝓢 (succ n) (Lift-succ n a) → 𝓢 n a
- 𝓢-succ← n a x = x
- infixl 10 _∔_
- _∔_ : ℕ → ℕ → ℕ
- x ∔ zero   = x
- x ∔ succ y = succ (x ∔ y)
-
- Lift₀ : (n : ℕ) → 𝓥 zero → 𝓥 n
- Lift₀ zero     a = a
- Lift₀ (succ n) a = Lift-succ n (Lift₀ n a)
-
- Lift-+  : (n k : ℕ) → 𝓥 n → 𝓥 (n ∔ k)
- Lift-+ n zero     a = a
- Lift-+ n (succ k) a = Lift-succ (n ∔ k) (Lift-+ n k a)
-
- _≤_ : ℕ → ℕ → Set
- zero   ≤ n      = ℕ₁
- succ m ≤ zero   = ℕ₀
- succ m ≤ succ n = m ≤ n
-
- ≤-refl : (n : ℕ) → n ≤ n
- ≤-refl zero     = *
- ≤-refl (succ n) = ≤-refl n
-
- _-_[_] : (m n : ℕ) → n ≤ m → ℕ
- zero     - n        [ le ] = zero
- (succ m) - zero     [ *  ] = succ m
- (succ m) - (succ n) [ le ] = m - n [ le ]
-
- minus-property : (m n : ℕ) (le : n ≤ m) → (m - n [ le ]) ∔ n ≡ m
- minus-property zero     zero     *  = refl zero
- minus-property (succ m) zero     *  = refl (succ m)
- minus-property (succ m) (succ n) le = ap succ (minus-property m n le)
-
- max : ℕ → ℕ → ℕ
- max zero     n        = n
- max (succ m) zero     = succ m
- max (succ m) (succ n) = succ (max m n)
-
- ≤-max : (m n : ℕ) → m ≤ max m n
- ≤-max zero     n        = *
- ≤-max (succ m) zero     = ≤-refl m
- ≤-max (succ m) (succ n) = ≤-max m n
-
- max-minus-property : (m n : ℕ) → (max m n - m [ ≤-max m n ]) ∔ m ≡ max m n
- max-minus-property m n = minus-property (max m n) m (≤-max m n)
-
- max-comm : (m n : ℕ) → max m n ≡ max n m
- max-comm zero     zero     = refl zero
- max-comm zero     (succ n) = refl (succ n)
- max-comm (succ m) zero     = refl (succ m)
- max-comm (succ m) (succ n) = ap succ (max-comm m n)
-
- LiftR   : (m n : ℕ) → 𝓥 n → 𝓥 (max m n)
- LiftR m n a = {!!}
-
- Lift-L-max : (m n : ℕ) → 𝓥 m → 𝓥 (max m n)
- Lift-L-max m n a = t (max m n - m [ ≤-max m n ] ∔ m) (max m n) (max-minus-property m n) b
-  where
-   t : (x y : ℕ) → Id ℕ x y → 𝓥 x → 𝓥 y
-   t x x (refl x) a = a
-   b : 𝓥 (max m n - m [ ≤-max m n ] ∔ m)
-   b = Lift-+ m {!max m n - m [ ≤-max m n ]!} a
-   -- Lift-+ m (max m n - m [ ≤-max m n ]) ?
-
-
- Lift-L-max→ : (m n : ℕ) (a : 𝓥 m) → 𝓢 m a → 𝓢 (max m n) (Lift-L-max m n a)
- Lift-L-max→ m n a x = {!!}
-
- Lift-L-max← : (m n : ℕ) (a : 𝓥 m) → 𝓢 (max m n) (Lift-L-max m n a) → 𝓢 m a
- Lift-L-max← m n a x = {!!}
-
-
- Lift-R-max   : (m n : ℕ) → 𝓥 n → 𝓥 (max m n)
- Lift-R-max zero     n a        = a
- Lift-R-max (succ m) zero a     = Lift₀ (succ m) a
- Lift-R-max (succ m) (succ n) a = {!!}
+ data _≡_ {A : Set₁} : A → A → Set₁ where
+   refl : (a : A) → a ≡ a
 
 
  module version₀ where
@@ -473,13 +376,13 @@ The equations that should hold definitionally indeed do:
 
 \begin{code}
 
-     |ℕ₀|-eq : 𝓢 n |ℕ₀| ≡₁ ℕ₀
-     |ℕ₁|-eq : 𝓢 n |ℕ₁| ≡₁ ℕ₁
-     |ℕ|-eq  : 𝓢 n |ℕ|  ≡₁ ℕ
-     |+|-eq  : (a b : 𝓥 n) → 𝓢 n (a |+| b) ≡₁ (𝓢 n a + 𝓢 n b)
-     |Σ|-eq  : (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|Σ| a b) ≡₁ (Σ x ꞉ 𝓢 n a , 𝓢 n (b x))
-     |Π|-eq  : (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|Π| a b) ≡₁ (Π x ꞉ 𝓢 n a , 𝓢 n (b x))
-     |W|-eq  : (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|W| a b) ≡₁ (W x ꞉ 𝓢 n a , 𝓢 n (b x))
+     |ℕ₀|-eq : 𝓢 n |ℕ₀| ≡ ℕ₀
+     |ℕ₁|-eq : 𝓢 n |ℕ₁| ≡ ℕ₁
+     |ℕ|-eq  : 𝓢 n |ℕ|  ≡ ℕ
+     |+|-eq  : (a b : 𝓥 n) → 𝓢 n (a |+| b) ≡ (𝓢 n a + 𝓢 n b)
+     |Σ|-eq  : (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|Σ| a b) ≡ (Σ x ꞉ 𝓢 n a , 𝓢 n (b x))
+     |Π|-eq  : (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|Π| a b) ≡ (Π x ꞉ 𝓢 n a , 𝓢 n (b x))
+     |W|-eq  : (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|W| a b) ≡ (W x ꞉ 𝓢 n a , 𝓢 n (b x))
 
      |ℕ₀|-eq    = refl _
      |ℕ₁|-eq    = refl _
@@ -496,19 +399,92 @@ using varying n's:
 
 \begin{code}
 
-   |U|-eq : (n : ℕ) → 𝓢 (succ n) (|U| (succ n)) ≡₁ 𝓥 n
-   |T|-eq : (n : ℕ) (a : 𝓥 n) → 𝓢 (succ n) (|T| n a) ≡₁ 𝓢 n a
+   |U|-eq : (n : ℕ) → 𝓢 (succ n) (|U| (succ n)) ≡ 𝓥 n
+   |T|-eq : (n : ℕ) (a : 𝓥 n) → 𝓢 (succ n) (|T| n a) ≡ 𝓢 n a
 
    |U|-eq n   = refl _
    |T|-eq n a = refl _
 
 \end{code}
 
-We now try with joins of levels (max on natural numbers). Because max
-is not commutative on the nose, we need two lift functions for the
-code below to type check without transports.
+We now try with joins of levels (max on integers). Because max is not
+commutative on the nose, we need two lift functions for the code below
+to type check without transports.
 
 \begin{code}
+
+ _∔_ : ℕ → ℕ → ℕ
+ m ∔ zero = m
+ m ∔ succ n = succ (m ∔ n)
+
+ max : ℕ → ℕ → ℕ
+ max zero     n        = n
+ max (succ m) zero     = succ m
+ max (succ m) (succ n) = succ (max m n)
+
+ _≤_ : ℕ → ℕ → Set
+ zero   ≤ n      = ℕ₁
+ succ m ≤ zero   = ℕ₀
+ succ m ≤ succ n = m ≤ n
+
+
+
+ cong : {X Y : Set} (f : X → Y) {x y : X} → Id X x y → Id Y (f x) (f y)
+ cong f (refl _) = refl _
+
+
+
+ Lift₁ : (n : ℕ) → 𝓥 n → 𝓥 (succ n)
+ Lift₁ n = successor.⌜T⌝
+
+ Lift₁-eq : (n : ℕ) (a : 𝓥 n) → 𝓢 n a ≡ 𝓢 (succ n) (Lift₁ n a)
+ Lift₁-eq n a = refl _
+
+ Lift₀ : (n : ℕ) → 𝓥 zero → 𝓥 n
+ Lift₀ zero     a = a
+ Lift₀ (succ n) a = Lift₁ n (Lift₀ n a)
+
+ Lift₀-eq : (n : ℕ) (a : 𝓥 zero) → 𝓢 zero a ≡ 𝓢 n (Lift₀ n a)
+ Lift₀-eq zero     a = refl _
+ Lift₀-eq (succ n) a = Lift₀-eq n a
+
+ Lift-+ : (m n : ℕ) → 𝓥 m → 𝓥 (m ∔ n)
+ Lift-+ m zero     a = a
+ Lift-+ m (succ n) a = Lift₁ (m ∔ n) (Lift-+ m n a)
+
+ Lift-+' : (m n : ℕ) → 𝓥 m → 𝓥 (n ∔ m)
+ Lift-+' zero n a = Lift₀ n a
+ Lift-+' (succ m) n a = {!!}
+
+ LiftL : (m n : ℕ) → 𝓥 m → 𝓥 (max m n)
+ LiftL m n a = t (minus (max m n) m (max-≤-property m n) ∔ m) (max m n) (max-minus-property m n) b
+  where
+   t : (x y : ℕ) → Id ℕ x y → 𝓥 x → 𝓥 y
+   t x x (refl x) a = a
+   b : 𝓥 (minus (max m n) m (max-≤-property m n) ∔ m)
+   b = Lift-+' m (minus (max m n) m (max-≤-property m n)) a
+
+
+
+ Lift-≤ : (m n : ℕ) → m ≤ n → 𝓥 m → 𝓥 n
+ Lift-≤ zero     n        *  a = Lift₀ n a
+ Lift-≤ (succ m) zero     le a = ℕ₀-induction (λ _ → 𝓥 zero) le
+ Lift-≤ (succ m) (succ n) le a = {!!}
+
+ Lift-≤-eq : (m n : ℕ) (le : m ≤ n) (a : 𝓥 m) → 𝓢 m a ≡ 𝓢 n (Lift-≤ m n le a)
+ Lift-≤-eq zero     n        *  a = Lift₀-eq n a
+ Lift-≤-eq (succ m) (succ n) le a = {!!}
+
+
+
+ LiftR   : (m n : ℕ) → 𝓥 n → 𝓥 (max m n)
+ LiftR m n a = {!!}
+
+ try     : (m n : ℕ) (a : 𝓥 m) → 𝓢 (max m n) (LiftL m n a) ≡ 𝓢 m a
+ try zero zero a = refl _
+ try (succ m) zero a = {!!}
+ try m (succ n) a = {!!}
+
 
  module version₁ where
 
@@ -526,24 +502,28 @@ code below to type check without transports.
      |ℕ₀|   n       = successor.⌜ℕ₀⌝
      |ℕ₁|   n       = successor.⌜ℕ₁⌝
      |ℕ|    n       = successor.⌜ℕ⌝
-     _|+|_  m n a b = successor._⌜+⌝_ (Lift-L-max m n a) (Lift-R-max m n b)
-     |Σ|    m n a b = successor.⌜Σ⌝   (Lift-L-max m n a) (λ x → Lift-R-max m n (b (Lift-L-max← m n a x)))
-     |Π|    m n a b = successor.⌜Π⌝   (Lift-L-max m n a) (λ x → Lift-R-max m n (b (Lift-L-max← m n a x)))
-     |W|    m n a b = successor.⌜W⌝   (Lift-L-max m n a) (λ x → Lift-R-max m n (b (Lift-L-max← m n a x)))
+     _|+|_  m n a b = successor._⌜+⌝_ (LiftL m n a) (LiftR m n b)
+     |Σ|    m n a b = successor.⌜Σ⌝ (LiftL m n a) (λ (x : 𝓢 (max m n) (LiftL m n a)) → γ x)
+       where
+        γ : (x : 𝓢 (max m n) (LiftL m n a)) → 𝓥 (max m n)
+        γ x = {!!}
+     |Π|    m n a b = successor.⌜Π⌝ (LiftL m n a) (λ x → LiftR m n (b {!!}))
+     |W|    m n a b = successor.⌜W⌝ (LiftL m n a) (λ x → LiftR m n (b {!!}))
      |Id|   n       = successor.⌜Id⌝
      |U|    n       = successor.⌜U⌝
      |T|    n       = successor.⌜T⌝
 
+
 {-
-     |ℕ₀|-eq : (n : ℕ) → 𝓢 n |ℕ₀| ≡₁ ℕ₀
-     |ℕ₁|-eq : (n : ℕ) → 𝓢 n |ℕ₁| ≡₁ ℕ₁
-     |ℕ|-eq  : (n : ℕ) → 𝓢 n |ℕ|  ≡₁ ℕ
-     |+|-eq  : (m n : ℕ) → (a b : 𝓥 n) → 𝓢 n (a |+| b) ≡₁ (𝓢 n a + 𝓢 n b)
-     |Σ|-eq  : (m n : ℕ) → (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|Σ| a b) ≡₁ (Σ x ꞉ 𝓢 n a , 𝓢 n (b x))
-     |Π|-eq  : (m n : ℕ) → (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|Π| a b) ≡₁ (Π x ꞉ 𝓢 n a , 𝓢 n (b x))
-     |W|-eq  : (n : ℕ) → (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|W| a b) ≡₁ (W x ꞉ 𝓢 n a , 𝓢 n (b x))
-     |U|-eq : (n : ℕ) → 𝓢 (succ n) (|U| (succ n)) ≡₁ 𝓥 n
-     |T|-eq : (n : ℕ) (a : 𝓥 n) → 𝓢 (succ n) (|T| n a) ≡₁ 𝓢 n a
+     |ℕ₀|-eq : (n : ℕ) → 𝓢 n |ℕ₀| ≡ ℕ₀
+     |ℕ₁|-eq : (n : ℕ) → 𝓢 n |ℕ₁| ≡ ℕ₁
+     |ℕ|-eq  : (n : ℕ) → 𝓢 n |ℕ|  ≡ ℕ
+     |+|-eq  : (m n : ℕ) → (a b : 𝓥 n) → 𝓢 n (a |+| b) ≡ (𝓢 n a + 𝓢 n b)
+     |Σ|-eq  : (m n : ℕ) → (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|Σ| a b) ≡ (Σ x ꞉ 𝓢 n a , 𝓢 n (b x))
+     |Π|-eq  : (m n : ℕ) → (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|Π| a b) ≡ (Π x ꞉ 𝓢 n a , 𝓢 n (b x))
+     |W|-eq  : (n : ℕ) → (a : 𝓥 n) (b : 𝓢 n a → 𝓥 n) → 𝓢 n (|W| a b) ≡ (W x ꞉ 𝓢 n a , 𝓢 n (b x))
+     |U|-eq : (n : ℕ) → 𝓢 (succ n) (|U| (succ n)) ≡ 𝓥 n
+     |T|-eq : (n : ℕ) (a : 𝓥 n) → 𝓢 (succ n) (|T| n a) ≡ 𝓢 n a
 
      |ℕ₀|-eq    = refl _
      |ℕ₁|-eq    = refl _
@@ -578,3 +558,10 @@ An ordinal indexed tower of universes:
 
 I think that now we will lose some definitional equalities, compared
 to the ℕ-indexed tower. Leave this for later.
+
+t (minus (max m n) m (max-≤-property m n) ∔ m) (max m n) (max-minus-property m n) b
+  where
+   t : (x y : ℕ) → Id ℕ x y → 𝓥 x → 𝓥 y
+   t x x (refl x) a = a
+   b : 𝓥 (minus (max m n) m (max-≤-property m n) ∔ m)
+   b = Lift-+' m (minus (max m n) m (max-≤-property m n)) a
