@@ -6,7 +6,6 @@ The Agda type Set (or Set₀) will host all these universes à la Tarski.
 \begin{code}
 
 {-# OPTIONS --without-K #-}
-
 {-# OPTIONS --no-positivity-check #-}
 
 open import MLTT

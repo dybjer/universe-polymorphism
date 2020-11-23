@@ -37,5 +37,4 @@ Tᵢ (⌜Id⌝ a x y) = Id (Tᵢ a) x y
 Tᵢ ⌜U⌝          = Uᵢ
 Tᵢ (⌜Lift⌝ a)   = Tᵢ a
 
-
 \end{code}
