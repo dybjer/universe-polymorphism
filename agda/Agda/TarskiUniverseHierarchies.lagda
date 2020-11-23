@@ -14,8 +14,8 @@ import Palmgren
 import SequenceOfUniversesBase
 import SequenceOfUniversesV1
 import SequenceOfUniversesV2
-import UniverseStructures
 import OrdinalIndexedUniverses
+import UniverseStructures
 
 
 \end{code}
