@@ -1,23 +1,22 @@
-Peter Dybjer defines, in the Agda wiki, "the first universe à la
-Tarski" by induction-recursion:
+Various hierarchies of universes.
 
-http://wiki.portal.chalmers.se/agda/agda.php?n=Libraries.RulesForTheStandardSetFormers
-
-Here we define two hierarchies of universes à la Tarski, indexed by a
-successor-sup-semilattice, one cumulative by coercion, and the other
-cumulative on the nose.
-
-The Agda type Set (or Set₀) will host all these universes à la Tarski.
+This file is an index of various Agda files.
 
 \begin{code}
 
-{-# OPTIONS --without-K #-}
-
-{-# OPTIONS --no-positivity-check #-}
-
 module TarskiUniverseHierarchies where
 
-open import MLTT
+import MLTT
+import InconsistentUniverse
+import NonPositiveCumulativeByCoercion
+import NonPositiveCumulativeOnTheNose
+import Palmgren
+import SequenceOfUniversesBase
+import SequenceOfUniversesV1
+import SequenceOfUniversesV2
+import UniversesStructures
+import OrdinalIndexedUniverses
+
 
 \end{code}
 
@@ -262,53 +261,6 @@ universe to be empty, but then we work only with v (succ n):
  𝓢 : (n : ℕ) → 𝓥 n → Set
  𝓢 n = Structure (v (succ n))
 
- data _≡₁_ {A : Set₁} : A → A → Set₁ where
-   refl : (a : A) → a ≡₁ a
-
- Lift-succ : (n : ℕ) → 𝓥 n → 𝓥 (succ n)
- Lift-succ _ = successor.⌜T⌝
-
- 𝓢-succ : (n : ℕ) (a : 𝓥 n) → 𝓢 (succ n) (Lift-succ n a) ≡₁ 𝓢 n a
- 𝓢-succ n a = refl _
-
- 𝓢-succ→ : (n : ℕ) (a : 𝓥 n) → 𝓢 n a → 𝓢 (succ n) (Lift-succ n a)
- 𝓢-succ→ n a x = x
-
- 𝓢-succ← : (n : ℕ) (a : 𝓥 n) → 𝓢 (succ n) (Lift-succ n a) → 𝓢 n a
- 𝓢-succ← n a x = x
- Lift₀ : (n : ℕ) → 𝓥 zero → 𝓥 n
- Lift₀ zero     a = a
- Lift₀ (succ n) a = Lift-succ n (Lift₀ n a)
-
- Lift-+  : (n k : ℕ) → 𝓥 n → 𝓥 (n ∔ k)
- Lift-+ n zero     a = a
- Lift-+ n (succ k) a = Lift-succ (n ∔ k) (Lift-+ n k a)
-
-
- LiftR   : (m n : ℕ) → 𝓥 n → 𝓥 (max m n)
- LiftR m n a = {!!}
-
- Lift-L-max : (m n : ℕ) → 𝓥 m → 𝓥 (max m n)
- Lift-L-max m n a = t (max m n - m [ ≤-max m n ] ∔ m) (max m n) (max-minus-property m n) b
-  where
-   t : (x y : ℕ) → Id ℕ x y → 𝓥 x → 𝓥 y
-   t x x (refl x) a = a
-   b : 𝓥 (max m n - m [ ≤-max m n ] ∔ m)
-   b = Lift-+ m {!max m n - m [ ≤-max m n ]!} a
-   -- Lift-+ m (max m n - m [ ≤-max m n ]) ?
-
-
- Lift-L-max→ : (m n : ℕ) (a : 𝓥 m) → 𝓢 m a → 𝓢 (max m n) (Lift-L-max m n a)
- Lift-L-max→ m n a x = {!!}
-
- Lift-L-max← : (m n : ℕ) (a : 𝓥 m) → 𝓢 (max m n) (Lift-L-max m n a) → 𝓢 m a
- Lift-L-max← m n a x = {!!}
-
-
- Lift-R-max   : (m n : ℕ) → 𝓥 n → 𝓥 (max m n)
- Lift-R-max zero     n a        = a
- Lift-R-max (succ m) zero a     = Lift₀ (succ m) a
- Lift-R-max (succ m) (succ n) a = {!!}
 
 
  module version₀ where

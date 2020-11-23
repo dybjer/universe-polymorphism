@@ -4,6 +4,8 @@
 
 module MLTT where
 
+open import Agda.Primitive public
+
 data ℕ₀ : Set where
 
 ℕ₀-induction : (P : ℕ₀ → Set) → (n : ℕ₀) → P n
@@ -23,6 +25,7 @@ data ℕ : Set where
 ℕ-induction P x f zero = x
 ℕ-induction P x f (succ n) = f n (ℕ-induction P x f n)
 
+infixl 10 _+_
 data _+_ (A B : Set) : Set where
  inl : A → A + B
  inr : B → A + B
@@ -80,6 +83,10 @@ ap f (refl _) = refl _
 
 transport : {A : Set} (B : A → Set) {x y : A} (p : x ≡ y) → B x → B y
 transport B (refl _) b = b
+
+infix 0 _≡₁_
+data _≡₁_ {A : Set₁} : A → A → Set₁ where
+  refl : (a : A) → a ≡₁ a
 
 \end{code}
 
