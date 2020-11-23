@@ -141,10 +141,15 @@
 
 \begin{document}
 
-\title{Decidability of the theory of join-semilattices with a successor}
-%\title{Decidability of join-semilattices with a successor}
+\title{The decidability of the uniform word problem
+for join-semilattices with a successor}
 
-\author{Marc Bezem and Thierry Coquand}
+\author{Marc Bezem%
+\thanks{Department of Informatics, University of Bergen, {\tt Marc.Bezem@uib.no}}
+and Thierry Coquand
+\thanks{Department of Computer Science and Engineering, 
+Chalmers/University of Gothenburg, {\tt coquand@chalmers.se}}
+}
 \date{}
 
 
@@ -152,9 +157,12 @@
 
 
 \section{Introduction}
-We prove the decidability of join-semilattice theory with
-a successor function.
-We start from an algebraic definition of semilattices in which the
+The \emph{uniform word problem} for an algebraic theory $T$ is
+to determine, given a finite set $E$ of relations between generators,
+whether a given relation is provable from $E$ in $T$.
+We prove the decidability of the uniform word problem for
+the theory of join-semilattices with a successor function.
+We start from the algebraic definition of semilattices in which the
 join, denoted by $\vee$, is an associative, commutative, and idempotent
 binary operation. The successor function, denoted by ${\_}^+$,
 satisfies the following two equational axioms:
@@ -166,8 +174,7 @@ The logic is ordinary equational logic.
 We denote the resulting theory by $\lathy$.
 For example, we can prove $(t^+)^+ \vee t = (t^+)^+$ in $\lathy$,
 for any lattice term $t$. Also, we can infer $s^+ = (t^+)^+$
-from $s = t^+$, but not conversely (?? see below for a discussion
-of injectivity of the successor function). 
+from $s = t^+$, but not conversely. 
 As is customary, we let $s\geq t$ abbreviate $s\vee t = s$.
 
 
