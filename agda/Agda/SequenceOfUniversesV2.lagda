@@ -155,5 +155,5 @@ sample-|W|-eq  a b = refl _
 
 \end{code}
 
-And it should be a meta-theorem that the desired equations hold for
-any specific numeral, not just 7 and 13.
+And it should be a meta-theorem that the desired equations hold
+definitionally for any specific numeral, not just 7 and 13.
