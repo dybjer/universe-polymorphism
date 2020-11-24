@@ -17,7 +17,7 @@ data Ord : Set where
  sup  : (ℕ → Ord) → Ord
 
 w : Ord → internal-universe
-w zero     = ⌜ℕ₀⌝ , λ ()
+w zero     = ⌜ℕ₀⌝ , ℕ₀-induction (λ _ → V)
 w (succ x) = next (w x)
 w (sup α)  = sum ⌜ℕ⌝ (λ i → w (α i))
 
