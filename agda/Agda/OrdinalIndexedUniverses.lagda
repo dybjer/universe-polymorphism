@@ -16,7 +16,7 @@ The Agda type Set (or Set₀) will host all these universes à la Tarski.
 module OrdinalIndexedUniverses where
 
 open import MLTT
-open import Palmgren
+open import SuperUniverse
 open import SequenceOfUniversesBase
 
 sum : (I : V) → (S I → internal-universe) → internal-universe

@@ -10,12 +10,12 @@ import MLTT
 import InconsistentUniverse             -- uses --no-positivity-check
 import NonPositiveCumulativeByCoercion  -- uses --no-positivity-check
 import NonPositiveCumulativeOnTheNose   -- uses --no-positivity-check
-import Palmgren
+import SuperUniverse
 import SequenceOfUniversesBase
-import SequenceOfUniversesV1
-import SequenceOfUniversesV2            -- incomplete
 import OrdinalIndexedUniverses
 import UniverseStructures
+import SequenceOfUniversesV1
+import SequenceOfUniversesV2            -- incomplete
 
 
 \end{code}

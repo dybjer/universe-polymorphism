@@ -7,7 +7,7 @@ An ℕ-indexed tower of universes within Palmgren's superuniverse.
 module SequenceOfUniversesV1 where
 
 open import MLTT
-open import Palmgren
+open import SuperUniverse
 open import SequenceOfUniversesBase
 
 module _ (n : ℕ) where

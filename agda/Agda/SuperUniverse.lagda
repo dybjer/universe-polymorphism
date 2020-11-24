@@ -4,7 +4,7 @@ This is based on work by Palmgren.
 
 {-# OPTIONS --without-K #-}
 
-module Palmgren where
+module SuperUniverse where
 
 open import MLTT
 

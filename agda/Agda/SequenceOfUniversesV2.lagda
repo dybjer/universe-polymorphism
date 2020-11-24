@@ -7,7 +7,7 @@ identifications (as expected).
 {-# OPTIONS --without-K #-}
 
 open import MLTT
-open import Palmgren
+open import SuperUniverse
 open import SequenceOfUniversesBase
 open import Arithmetic
 
