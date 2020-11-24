@@ -41,7 +41,7 @@ A subtraction x - y with the assumption le : y ≤ x is written
 \begin{code}
 
 _-_[_] : (m n : ℕ) → n ≤ m → ℕ
-zero     - n    [ le ] = zero
+zero   - n      [ le ] = zero
 succ m - zero   [ le ] = succ m
 succ m - succ n [ le ] = m - n [ le ]
 

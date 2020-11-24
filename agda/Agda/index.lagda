@@ -4,7 +4,7 @@ This file is an index of various Agda files.
 
 \begin{code}
 
-module TarskiUniverseHierarchies where
+module index where
 
 import MLTT
 import InconsistentUniverse             -- uses --no-positivity-check
