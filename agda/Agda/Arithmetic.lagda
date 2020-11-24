@@ -36,18 +36,18 @@ succ m ≤ succ n = m ≤ n
 
 A subtraction x - y with the assumption le : y ≤ x is written
 
-  x - y [le ].
+  x - y [ le ].
 
 \begin{code}
 
 _-_[_] : (m n : ℕ) → n ≤ m → ℕ
-zero     - n        [ le ] = zero
-(succ m) - zero     [ *  ] = succ m
-(succ m) - (succ n) [ le ] = m - n [ le ]
+zero     - n    [ le ] = zero
+succ m - zero   [ le ] = succ m
+succ m - succ n [ le ] = m - n [ le ]
 
 minus-property : (m n : ℕ) (le : n ≤ m) → (m - n [ le ]) ∔ n ≡ m
-minus-property zero     zero     *  = refl zero
-minus-property (succ m) zero     *  = refl (succ m)
+minus-property zero     zero     le = refl zero
+minus-property (succ m) zero     le = refl (succ m)
 minus-property (succ m) (succ n) le = ap succ (minus-property m n le)
 
 max : ℕ → ℕ → ℕ
