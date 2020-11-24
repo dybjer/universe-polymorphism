@@ -77,6 +77,12 @@ We now need the following type coercions:
 𝓢-L-max : (m n : ℕ) (a : 𝓥 m) → 𝓢 (max m n) (lift-L-max m n a) → 𝓢 m a
 𝓢-L-max m n = 𝓢-≤ m (max m n) (left-≤-max m n)
 
+\end{code}
+
+With this we can give the Agda universe structure to the Palmgren superuniverse:
+
+\begin{code}
+
 |ℕ₀| : (n : ℕ) → 𝓥 n
 |ℕ₁| : (n : ℕ) → 𝓥 n
 |ℕ|  : (n : ℕ) → 𝓥 n
@@ -87,12 +93,6 @@ We now need the following type coercions:
 |Id| : (n : ℕ) → (a : 𝓥 n) → 𝓢 n a → 𝓢 n a → 𝓥 n
 |U|  : (n : ℕ) → 𝓥 n
 |T|  : (n : ℕ) → 𝓥 n → 𝓥 (succ n)
-
-\end{code}
-
-With this we can give the Agda universe structure to the Palmgren superuniverse:
-
-\begin{code}
 
 |ℕ₀| n       = successor.⌜ℕ₀⌝
 |ℕ₁| n       = successor.⌜ℕ₁⌝
