@@ -11,30 +11,30 @@ module InconsistentUniverse where
 
 open import MLTT
 
-data Uᵢ : Set
-Tᵢ : Uᵢ → Set
+data U : Set
+T : U → Set
 
-data Uᵢ where
- ⌜ℕ₀⌝   : Uᵢ
- ⌜ℕ₁⌝   : Uᵢ
- ⌜ℕ⌝    : Uᵢ
- ⌜+⌝    : Uᵢ → Uᵢ → Uᵢ
- ⌜Π⌝    : (a : Uᵢ) → (Tᵢ a → Uᵢ) → Uᵢ
- ⌜Σ⌝    : (a : Uᵢ) → (Tᵢ a → Uᵢ) → Uᵢ
- ⌜W⌝    : (a : Uᵢ) → (Tᵢ a → Uᵢ) → Uᵢ
- ⌜Id⌝   : (a : Uᵢ) → Tᵢ a → Tᵢ a → Uᵢ
- ⌜U⌝    : Uᵢ
- ⌜Lift⌝ : Uᵢ → Uᵢ
+data U where
+ ⌜ℕ₀⌝   : U
+ ⌜ℕ₁⌝   : U
+ ⌜ℕ⌝    : U
+ ⌜+⌝    : U → U → U
+ ⌜Π⌝    : (a : U) → (T a → U) → U
+ ⌜Σ⌝    : (a : U) → (T a → U) → U
+ ⌜W⌝    : (a : U) → (T a → U) → U
+ ⌜Id⌝   : (a : U) → T a → T a → U
+ ⌜U⌝    : U
+ ⌜Lift⌝ : U → U
 
-Tᵢ ⌜ℕ₀⌝         = ℕ₀
-Tᵢ ⌜ℕ₁⌝         = ℕ₁
-Tᵢ ⌜ℕ⌝          = ℕ
-Tᵢ (⌜+⌝ a b)    = Tᵢ a + Tᵢ b
-Tᵢ (⌜Π⌝ a b)    = Π (Tᵢ a) (λ x → Tᵢ (b x))
-Tᵢ (⌜Σ⌝ a b)    = Σ (Tᵢ a) (λ x → Tᵢ (b x))
-Tᵢ (⌜W⌝ a b)    = W (Tᵢ a) (λ x → Tᵢ (b x))
-Tᵢ (⌜Id⌝ a x y) = Id (Tᵢ a) x y
-Tᵢ ⌜U⌝          = Uᵢ
-Tᵢ (⌜Lift⌝ a)   = Tᵢ a
+T ⌜ℕ₀⌝         = ℕ₀
+T ⌜ℕ₁⌝         = ℕ₁
+T ⌜ℕ⌝          = ℕ
+T (⌜+⌝ a b)    = T a + T b
+T (⌜Π⌝ a b)    = Π (T a) (λ x → T (b x))
+T (⌜Σ⌝ a b)    = Σ (T a) (λ x → T (b x))
+T (⌜W⌝ a b)    = W (T a) (λ x → T (b x))
+T (⌜Id⌝ a x y) = Id (T a) x y
+T ⌜U⌝          = U
+T (⌜Lift⌝ a)   = T a
 
 \end{code}

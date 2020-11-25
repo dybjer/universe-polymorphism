@@ -10,7 +10,7 @@ can be.
 
 module UniverseStructures where
 
-open import MLTT hiding (_≤_)
+open import MLTT
 
 \end{code}
 
