@@ -15,16 +15,15 @@ data U : Set
 T : U → Set
 
 data U where
- ⌜ℕ₀⌝   : U
- ⌜ℕ₁⌝   : U
- ⌜ℕ⌝    : U
- ⌜+⌝    : U → U → U
- ⌜Π⌝    : (a : U) → (T a → U) → U
- ⌜Σ⌝    : (a : U) → (T a → U) → U
- ⌜W⌝    : (a : U) → (T a → U) → U
- ⌜Id⌝   : (a : U) → T a → T a → U
- ⌜U⌝    : U
- ⌜Lift⌝ : U → U
+ ⌜ℕ₀⌝ : U
+ ⌜ℕ₁⌝ : U
+ ⌜ℕ⌝  : U
+ ⌜+⌝  : U → U → U
+ ⌜Π⌝  : (a : U) → (T a → U) → U
+ ⌜Σ⌝  : (a : U) → (T a → U) → U
+ ⌜W⌝  : (a : U) → (T a → U) → U
+ ⌜Id⌝ : (a : U) → T a → T a → U
+ ⌜U⌝  : U
 
 T ⌜ℕ₀⌝         = ℕ₀
 T ⌜ℕ₁⌝         = ℕ₁
@@ -35,6 +34,5 @@ T (⌜Σ⌝ a b)    = Σ (T a) (λ x → T (b x))
 T (⌜W⌝ a b)    = W (T a) (λ x → T (b x))
 T (⌜Id⌝ a x y) = Id (T a) x y
 T ⌜U⌝          = U
-T (⌜Lift⌝ a)   = T a
 
 \end{code}
