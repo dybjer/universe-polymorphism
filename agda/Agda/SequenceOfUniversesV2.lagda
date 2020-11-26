@@ -129,7 +129,7 @@ The desired equations are the following:
 
 \end{code}
 
-Some of them hold definitionally, and the others require induction on ℕ.
+Some of them hold definitionally, but the others don't:
 
 \begin{code}
 
