@@ -11,8 +11,8 @@ open import SuperUniverse
 
 \end{code}
 
-We choose the first universe to be empty, but then we work only with v
-(succ n).
+We choose the first universe v zero to be empty, but then we work only
+with v (succ n).
 
 \begin{code}
 
@@ -44,4 +44,5 @@ v (succ x) = next (v x)
 
 𝓢 : (n : ℕ) → 𝓥 n → Set
 𝓢 n = Structure (v (succ n))
+
 \end{code}
