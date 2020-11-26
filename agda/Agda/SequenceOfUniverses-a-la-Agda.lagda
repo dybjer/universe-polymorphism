@@ -148,6 +148,7 @@ above equations.
  |ℕ₀|-eq n       = refl _
  |ℕ₁|-eq n       = refl _
  |ℕ|-eq  n       = refl _
+
  |+|-eq  m n a b = t
   where
    p : 𝓢 (max m n) (|+| m n a b) ≡₁ 𝓢 (max m n) (lift-L-max m n a) + 𝓢 (max m n) (lift-R-max m n b)
@@ -181,6 +182,7 @@ above equations.
 
    t : 𝓢 (max m n) (|Σ| m n a b) ≡₁ Σ y ꞉ 𝓢 m a , 𝓢 n (b y)
    t = change-of-variable Σ A (𝓢 m a) B (λ x → 𝓢 n (b x)) r s Σ-ext
+
  |Π|-eq  m n a b = t
   where
    A : Set
@@ -200,6 +202,7 @@ above equations.
 
    t : 𝓢 (max m n) (|Π| m n a b) ≡₁ Π x ꞉ 𝓢 m a , 𝓢 n (b x)
    t = change-of-variable Π A (𝓢 m a) B (λ x → 𝓢 n (b x)) r s Π-ext
+
  |W|-eq  m n a b = t
   where
    A : Set
