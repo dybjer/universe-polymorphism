@@ -89,6 +89,9 @@ ap f (refl _) = refl _
 transport : {A : Set} (B : A → Set) {x y : A} (p : x ≡ y) → B x → B y
 transport B (refl _) b = b
 
+apd : {A : Set} {B : A → Set} (f : (x : A) → B x) {x y : A} (p : x ≡ y)
+    → transport B p (f x) ≡ f y
+apd p (refl _) = refl _
 
 transportd : (A  : Set)
              (B  : A → Set)
@@ -101,17 +104,16 @@ transportd : (A  : Set)
 
 transportd A B C y (refl _) z = z
 
-
-transportd⁻¹ : (A  : Set)
+transportd₁ : (A  : Set)
              (B  : A → Set)
-             (C  : (x : A) → B x → Set)
+             (C  : (x : A) → B x → Set₁)
              {x  : A}
              (y  : B x)
              {x' : A}
              (p : x ≡ x')
-           → C x' (transport B p y) → C x y
+           → C x y → C x' (transport B p y)
 
-transportd⁻¹ A B C y (refl _) z = z
+transportd₁ A B C y (refl _) z = z
 
 \end{code}
 
@@ -122,5 +124,11 @@ We also need to compare sets for equality:
 infix 0 _≡₁_
 data _≡₁_ {A : Set₁} : A → A → Set₁ where
   refl : (a : A) → a ≡₁ a
+
+Id-to-fun : {A B : Set} → A ≡₁ B → A → B
+Id-to-fun (refl _) a = a
+
+transport₁ : {A : Set₁} (B : A → Set₁) {x y : A} (p : x ≡₁ y) → B x → B y
+transport₁ B (refl _) b = b
 
 \end{code}

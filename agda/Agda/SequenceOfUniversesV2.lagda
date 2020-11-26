@@ -46,21 +46,15 @@ lift-L-max m n = lift-≤ m (max m n) (left-≤-max m n)
 lift-R-max : (m n : ℕ) → 𝓥 n → 𝓥 (max m n)
 lift-R-max m n = lift-≤ n (max m n) (right-≤-max m n)
 
-\end{code}
+𝓢-succ-eq : (n : ℕ) (a : 𝓥 n) → 𝓢 (succ n) (lift-succ n a) ≡₁ 𝓢 n a
+𝓢-succ-eq n a = refl _
 
-We now need the following type coercions:
+𝓢-+-eq : (m k : ℕ) (a : 𝓥 m) → 𝓢 (m ∔ k) (lift-+ m k a) ≡₁ 𝓢 m a
+𝓢-+-eq m zero     a = refl _
+𝓢-+-eq m (succ k) a = 𝓢-+-eq m k a
 
-\begin{code}
-
-𝓢-succ : (n : ℕ) (a : 𝓥 n) → 𝓢 (succ n) (lift-succ n a) → 𝓢 n a
-𝓢-succ n a x = x
-
-𝓢-+ : (m k : ℕ) (a : 𝓥 m) → 𝓢 (m ∔ k) (lift-+ m k a) → 𝓢 m a
-𝓢-+ m zero     a x = x
-𝓢-+ m (succ k) a x = 𝓢-+ m k a x
-
-𝓢-≤ : (m n : ℕ) (le : m ≤ n) (a : 𝓥 m) → 𝓢 n (lift-≤ m n le a) → 𝓢 m a
-𝓢-≤ m n le a x = z
+𝓢-≤-eq : (m n : ℕ) (le : m ≤ n) (a : 𝓥 m) → 𝓢 n (lift-≤ m n le a) ≡₁ 𝓢 m a
+𝓢-≤-eq m n le a = r
  where
   k : ℕ
   k = n - m [ le ]
@@ -68,14 +62,26 @@ We now need the following type coercions:
   p : m ∔ k ≡ n
   p = plus-comm m k ∙ minus-property n m le
 
-  y : 𝓢 (m ∔ k) (lift-+ m k a)
-  y = transportd⁻¹ ℕ 𝓥 𝓢 (lift-+ m k a) p x
+  q : 𝓢 (m ∔ k) (lift-+ m k a) ≡₁ 𝓢 m a
+  q = 𝓢-+-eq m k a
 
-  z : 𝓢 m a
-  z = 𝓢-+ m k a y
+  r : 𝓢 n (lift-≤ m n le a) ≡₁ 𝓢 m a
+  r = transportd₁ ℕ 𝓥 (λ l b → 𝓢 l b ≡₁ 𝓢 m a) (lift-+ m k a) p q
+
+𝓢-L-max-eq : (m n : ℕ) (a : 𝓥 m) → 𝓢 (max m n) (lift-L-max m n a) ≡₁ 𝓢 m a
+𝓢-L-max-eq m n = 𝓢-≤-eq m (max m n) (left-≤-max m n)
+
+𝓢-R-max-eq : (m n : ℕ) (b : 𝓥 n) → 𝓢 (max m n) (lift-R-max m n b) ≡₁ 𝓢 n b
+𝓢-R-max-eq m n = 𝓢-≤-eq n (max m n) (right-≤-max m n)
+
+\end{code}
+
+We now need the following type coercions:
+
+\begin{code}
 
 𝓢-L-max : (m n : ℕ) (a : 𝓥 m) → 𝓢 (max m n) (lift-L-max m n a) → 𝓢 m a
-𝓢-L-max m n = 𝓢-≤ m (max m n) (left-≤-max m n)
+𝓢-L-max m n a = Id-to-fun (𝓢-L-max-eq m n a)
 
 \end{code}
 
@@ -130,10 +136,29 @@ Some of them hold definitionally, and the others require induction on ℕ.
 |ℕ₀|-eq n       = refl _
 |ℕ₁|-eq n       = refl _
 |ℕ|-eq  n       = refl _
-|+|-eq  m n a b = {!!} -- > Messy.
-|Σ|-eq  m n a b = {!!} --\
-|Π|-eq  m n a b = {!!} -- > Even messier (lots of nested transports in a difficult-to-see induction on ℕ).
-|W|-eq  m n a b = {!!} --/
+|+|-eq  m n a b = t
+ where
+  p : 𝓢 (max m n) (|+| m n a b) ≡₁ 𝓢 (max m n) (lift-L-max m n a) + 𝓢 (max m n) (lift-R-max m n b)
+  p = refl _
+  r : 𝓢 (max m n) (lift-L-max m n a) ≡₁ 𝓢 m a
+  r = 𝓢-L-max-eq m n a
+  s : 𝓢 (max m n) (lift-R-max m n b) ≡₁ 𝓢 n b
+  s = 𝓢-R-max-eq m n b
+  t : 𝓢 (max m n) (|+| m n a b) ≡₁ 𝓢 m a + 𝓢 n b
+  t = transport₁ (λ - → 𝓢 (max m n) (|+| m n a b) ≡₁ 𝓢 m a + -) s
+       (transport₁ (λ - → 𝓢 (max m n) (|+| m n a b) ≡₁ - + 𝓢 (max m n) (lift-R-max m n b)) r p)
+|Σ|-eq  m n a b = t
+ where
+  p : 𝓢 (max m n) (|Σ| m n a b) ≡₁ Σ x ꞉ 𝓢 (max m n) (lift-L-max m n a) , 𝓢 (max m n) (lift-R-max m n (b (𝓢-L-max m n a x)))
+  p = refl _
+  r : 𝓢 (max m n) (lift-L-max m n a) ≡₁ 𝓢 m a
+  r = 𝓢-L-max-eq m n a
+  s : (x : 𝓢 (max m n) (lift-L-max m n a)) → 𝓢 (max m n) (lift-R-max m n (b (𝓢-L-max m n a x))) ≡₁ 𝓢 n (b (𝓢-L-max m n a x))
+  s x = 𝓢-R-max-eq m n (b (𝓢-L-max m n a x))
+  t : 𝓢 (max m n) (|Σ| m n a b) ≡₁ Σ x ꞉ 𝓢 m a , 𝓢 n (b x)
+  t = {!!}
+|Π|-eq  m n a b = {!!}
+|W|-eq  m n a b = {!!}
 |U|-eq  n       = refl _
 |T|-eq  n a     = refl _
 
