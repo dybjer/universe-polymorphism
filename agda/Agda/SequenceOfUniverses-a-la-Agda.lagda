@@ -21,7 +21,9 @@ lift-succ _ = successor.⌜T⌝
 
 We want to define a lifting map 𝓥 m → 𝓥 (max m n). A direct induction
 on m and n doesn't work. So we define it by reduction to an easily
-defined lifting map 𝓥 m → 𝓥 (m ∔ k)
+defined lifting map 𝓥 m → 𝓥 (m ∔ k), where _∔_ is addition of natural
+numbers (the operator _+_ is already taken for the disjoint union of
+types).
 
 \begin{code}
 
