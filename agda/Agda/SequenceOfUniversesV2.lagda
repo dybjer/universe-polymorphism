@@ -113,7 +113,8 @@ With this we can give the Agda universe structure to the Palmgren superuniverse:
 
 \end{code}
 
-To prove the desired equations, we seem to need some amount of extensionality:
+To prove the desired equations, we seem to need some amount of
+extensionality, which we assume in the following anonymous module.
 
 \begin{code}
 
@@ -203,9 +204,11 @@ above equations.
 
 \end{code}
 
+(This is the end of the anonymous module.)
+
 However, without extensionality, it should be a meta-theorem that the
-desired equations hold definitionally for any specific numeral. We
-test this conjecture with 7 and 13:
+desired equations hold definitionally for any numeral. We test this
+conjecture with 7 and 13:
 
 \begin{code}
 

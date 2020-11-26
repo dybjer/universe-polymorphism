@@ -1,6 +1,7 @@
-Various hierarchies of universes.
+Marc Bezem, Thiery Coquand, Peter Dybjer, Martin Escardo
+November 2020
 
-This file is an index of various Agda files.
+This file is a clickable index of various Agda files.
 
 \begin{code}
 
