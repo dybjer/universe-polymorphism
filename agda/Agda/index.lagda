@@ -11,8 +11,8 @@ import MLTT
 import UniverseStructures
 import SuperUniverse
 import SequenceOfUniversesBase
-import SequenceOfUniversesV1
-import SequenceOfUniversesV2
+import SequenceOfUniverses
+import SequenceOfUniverses-a-la-Agda
 import OrdinalIndexedUniverses
 
 \end{code}

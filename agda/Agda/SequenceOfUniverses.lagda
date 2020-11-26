@@ -4,7 +4,7 @@ An ℕ-indexed tower of universes within Palmgren's superuniverse.
 
 {-# OPTIONS --without-K #-}
 
-module SequenceOfUniversesV1 where
+module SequenceOfUniverses where
 
 open import MLTT
 open import SuperUniverse

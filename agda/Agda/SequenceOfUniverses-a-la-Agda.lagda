@@ -1,6 +1,7 @@
 We carve universes à la Agda from a superuniverse à la Palmgren. But
 some equalities we would like to be definitional are only
-identifications (as expected).
+identifications, as expected, and moreover seem to require some amount
+of extensionality, which may be unexpected, for the cases of Σ, Π and W.
 
 \begin{code}
 
@@ -11,7 +12,7 @@ open import SuperUniverse
 open import SequenceOfUniversesBase
 open import Arithmetic
 
-module SequenceOfUniversesV2 where
+module SequenceOfUniverses-a-la-Agda where
 
 lift-succ : (n : ℕ) → 𝓥 n → 𝓥 (succ n)
 lift-succ _ = successor.⌜T⌝
