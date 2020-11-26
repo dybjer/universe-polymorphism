@@ -126,15 +126,15 @@ module _ (Σ-ext : is-extensional Σ)
          (W-ext : is-extensional W)
        where
 
-  |ℕ₀|-eq : (n : ℕ)   → 𝓢 n (|ℕ₀| n) ≡₁ ℕ₀
-  |ℕ₁|-eq : (n : ℕ)   → 𝓢 n (|ℕ₁| n) ≡₁ ℕ₁
-  |ℕ|-eq  : (n : ℕ)   → 𝓢 n (|ℕ| n) ≡₁ ℕ
-  |+|-eq  : (m n : ℕ) → (a : 𝓥 m) (b : 𝓥 n) → 𝓢 (max m n) (|+| m n a b) ≡₁ (𝓢 m a + 𝓢 n b)
-  |Σ|-eq  : (m n : ℕ) → (a : 𝓥 m) (b : 𝓢 m a → 𝓥 n) → 𝓢 (max m n) (|Σ| m n a b) ≡₁ (Σ x ꞉ 𝓢 m a , 𝓢 n (b x))
-  |Π|-eq  : (m n : ℕ) → (a : 𝓥 m) (b : 𝓢 m a → 𝓥 n) → 𝓢 (max m n) (|Π| m n a b) ≡₁ (Π x ꞉ 𝓢 m a , 𝓢 n (b x))
-  |W|-eq  : (m n : ℕ) → (a : 𝓥 m) (b : 𝓢 m a → 𝓥 n) → 𝓢 (max m n) (|W| m n a b) ≡₁ (W x ꞉ 𝓢 m a , 𝓢 n (b x))
-  |U|-eq  : (n : ℕ)    → 𝓢 (succ n) (|U| (succ n)) ≡₁ 𝓥 n
-  |T|-eq  : (n : ℕ)    → (a : 𝓥 n) → 𝓢 (succ n) (|T| n a) ≡₁ 𝓢 n a
+ |ℕ₀|-eq : (n : ℕ)   → 𝓢 n (|ℕ₀| n) ≡₁ ℕ₀
+ |ℕ₁|-eq : (n : ℕ)   → 𝓢 n (|ℕ₁| n) ≡₁ ℕ₁
+ |ℕ|-eq  : (n : ℕ)   → 𝓢 n (|ℕ| n) ≡₁ ℕ
+ |+|-eq  : (m n : ℕ) → (a : 𝓥 m) (b : 𝓥 n) → 𝓢 (max m n) (|+| m n a b) ≡₁ (𝓢 m a + 𝓢 n b)
+ |Σ|-eq  : (m n : ℕ) → (a : 𝓥 m) (b : 𝓢 m a → 𝓥 n) → 𝓢 (max m n) (|Σ| m n a b) ≡₁ (Σ x ꞉ 𝓢 m a , 𝓢 n (b x))
+ |Π|-eq  : (m n : ℕ) → (a : 𝓥 m) (b : 𝓢 m a → 𝓥 n) → 𝓢 (max m n) (|Π| m n a b) ≡₁ (Π x ꞉ 𝓢 m a , 𝓢 n (b x))
+ |W|-eq  : (m n : ℕ) → (a : 𝓥 m) (b : 𝓢 m a → 𝓥 n) → 𝓢 (max m n) (|W| m n a b) ≡₁ (W x ꞉ 𝓢 m a , 𝓢 n (b x))
+ |U|-eq  : (n : ℕ)    → 𝓢 (succ n) (|U| (succ n)) ≡₁ 𝓥 n
+ |T|-eq  : (n : ℕ)    → (a : 𝓥 n) → 𝓢 (succ n) (|T| n a) ≡₁ 𝓢 n a
 
 \end{code}
 
@@ -145,69 +145,69 @@ above equations.
 
 \begin{code}
 
-  |ℕ₀|-eq n       = refl _
-  |ℕ₁|-eq n       = refl _
-  |ℕ|-eq  n       = refl _
-  |+|-eq  m n a b = t
-   where
-    p : 𝓢 (max m n) (|+| m n a b) ≡₁ 𝓢 (max m n) (lift-L-max m n a) + 𝓢 (max m n) (lift-R-max m n b)
-    p = refl _
-    r : 𝓢 (max m n) (lift-L-max m n a) ≡₁ 𝓢 m a
-    r = 𝓢-L-max-eq m n a
-    s : 𝓢 (max m n) (lift-R-max m n b) ≡₁ 𝓢 n b
-    s = 𝓢-R-max-eq m n b
-    t : 𝓢 (max m n) (|+| m n a b) ≡₁ 𝓢 m a + 𝓢 n b
-    t = transport₁ (λ - → 𝓢 (max m n) (|+| m n a b) ≡₁ 𝓢 m a + -) s
-         (transport₁ (λ - → 𝓢 (max m n) (|+| m n a b) ≡₁ - + 𝓢 (max m n) (lift-R-max m n b)) r p)
-  |Σ|-eq  m n a b = t
-   where
-    A : Set
-    A = 𝓢 (max m n) (lift-L-max m n a)
-    B : A → Set
-    B x = 𝓢 (max m n) (lift-R-max m n (b (𝓢-L-max m n a x)))
-    p : 𝓢 (max m n) (|Σ| m n a b) ≡₁ Σ x ꞉ A , B x
-    p = refl _
-    r : A ≡₁ 𝓢 m a
-    r = 𝓢-L-max-eq m n a
-    s : (x : A) → B x ≡₁ 𝓢 n (b (𝓢-L-max m n a x))
-    s x = 𝓢-R-max-eq m n (b (𝓢-L-max m n a x))
-    t : 𝓢 (max m n) (|Σ| m n a b) ≡₁ Σ y ꞉ 𝓢 m a , 𝓢 n (b y)
-    t = change-of-variable Σ A (𝓢 m a) B (λ x → 𝓢 n (b x)) r s Σ-ext
-  |Π|-eq  m n a b = t
-   where
-    A : Set
-    A = 𝓢 (max m n) (lift-L-max m n a)
-    B : A → Set
-    B x = 𝓢 (max m n) (lift-R-max m n (b (𝓢-L-max m n a x)))
-    p : 𝓢 (max m n) (|Π| m n a b) ≡₁ Π x ꞉ A , B x
-    p = refl _
-    r : A ≡₁ 𝓢 m a
-    r = 𝓢-L-max-eq m n a
-    s : (x : A) → B x ≡₁ 𝓢 n (b (𝓢-L-max m n a x))
-    s x = 𝓢-R-max-eq m n (b (𝓢-L-max m n a x))
-    t : 𝓢 (max m n) (|Π| m n a b) ≡₁ Π x ꞉ 𝓢 m a , 𝓢 n (b x)
-    t = change-of-variable Π A (𝓢 m a) B (λ x → 𝓢 n (b x)) r s Π-ext
-  |W|-eq  m n a b = t
-   where
-    A : Set
-    A = 𝓢 (max m n) (lift-L-max m n a)
-    B : A → Set
-    B x = 𝓢 (max m n) (lift-R-max m n (b (𝓢-L-max m n a x)))
-    p : 𝓢 (max m n) (|W| m n a b) ≡₁ W x ꞉ A , B x
-    p = refl _
-    r : A ≡₁ 𝓢 m a
-    r = 𝓢-L-max-eq m n a
-    s : (x : A) → B x ≡₁ 𝓢 n (b (𝓢-L-max m n a x))
-    s x = 𝓢-R-max-eq m n (b (𝓢-L-max m n a x))
-    t : 𝓢 (max m n) (|W| m n a b) ≡₁ W x ꞉ 𝓢 m a , 𝓢 n (b x)
-    t = change-of-variable W A (𝓢 m a) B (λ x → 𝓢 n (b x)) r s W-ext
+ |ℕ₀|-eq n       = refl _
+ |ℕ₁|-eq n       = refl _
+ |ℕ|-eq  n       = refl _
+ |+|-eq  m n a b = t
+  where
+   p : 𝓢 (max m n) (|+| m n a b) ≡₁ 𝓢 (max m n) (lift-L-max m n a) + 𝓢 (max m n) (lift-R-max m n b)
+   p = refl _
+   r : 𝓢 (max m n) (lift-L-max m n a) ≡₁ 𝓢 m a
+   r = 𝓢-L-max-eq m n a
+   s : 𝓢 (max m n) (lift-R-max m n b) ≡₁ 𝓢 n b
+   s = 𝓢-R-max-eq m n b
+   t : 𝓢 (max m n) (|+| m n a b) ≡₁ 𝓢 m a + 𝓢 n b
+   t = transport₁ (λ - → 𝓢 (max m n) (|+| m n a b) ≡₁ 𝓢 m a + -) s
+        (transport₁ (λ - → 𝓢 (max m n) (|+| m n a b) ≡₁ - + 𝓢 (max m n) (lift-R-max m n b)) r p)
+ |Σ|-eq  m n a b = t
+  where
+   A : Set
+   A = 𝓢 (max m n) (lift-L-max m n a)
+   B : A → Set
+   B x = 𝓢 (max m n) (lift-R-max m n (b (𝓢-L-max m n a x)))
+   p : 𝓢 (max m n) (|Σ| m n a b) ≡₁ Σ x ꞉ A , B x
+   p = refl _
+   r : A ≡₁ 𝓢 m a
+   r = 𝓢-L-max-eq m n a
+   s : (x : A) → B x ≡₁ 𝓢 n (b (𝓢-L-max m n a x))
+   s x = 𝓢-R-max-eq m n (b (𝓢-L-max m n a x))
+   t : 𝓢 (max m n) (|Σ| m n a b) ≡₁ Σ y ꞉ 𝓢 m a , 𝓢 n (b y)
+   t = change-of-variable Σ A (𝓢 m a) B (λ x → 𝓢 n (b x)) r s Σ-ext
+ |Π|-eq  m n a b = t
+  where
+   A : Set
+   A = 𝓢 (max m n) (lift-L-max m n a)
+   B : A → Set
+   B x = 𝓢 (max m n) (lift-R-max m n (b (𝓢-L-max m n a x)))
+   p : 𝓢 (max m n) (|Π| m n a b) ≡₁ Π x ꞉ A , B x
+   p = refl _
+   r : A ≡₁ 𝓢 m a
+   r = 𝓢-L-max-eq m n a
+   s : (x : A) → B x ≡₁ 𝓢 n (b (𝓢-L-max m n a x))
+   s x = 𝓢-R-max-eq m n (b (𝓢-L-max m n a x))
+   t : 𝓢 (max m n) (|Π| m n a b) ≡₁ Π x ꞉ 𝓢 m a , 𝓢 n (b x)
+   t = change-of-variable Π A (𝓢 m a) B (λ x → 𝓢 n (b x)) r s Π-ext
+ |W|-eq  m n a b = t
+  where
+   A : Set
+   A = 𝓢 (max m n) (lift-L-max m n a)
+   B : A → Set
+   B x = 𝓢 (max m n) (lift-R-max m n (b (𝓢-L-max m n a x)))
+   p : 𝓢 (max m n) (|W| m n a b) ≡₁ W x ꞉ A , B x
+   p = refl _
+   r : A ≡₁ 𝓢 m a
+   r = 𝓢-L-max-eq m n a
+   s : (x : A) → B x ≡₁ 𝓢 n (b (𝓢-L-max m n a x))
+   s x = 𝓢-R-max-eq m n (b (𝓢-L-max m n a x))
+   t : 𝓢 (max m n) (|W| m n a b) ≡₁ W x ꞉ 𝓢 m a , 𝓢 n (b x)
+   t = change-of-variable W A (𝓢 m a) B (λ x → 𝓢 n (b x)) r s W-ext
 
-  |U|-eq  n       = refl _
-  |T|-eq  n a     = refl _
+ |U|-eq  n       = refl _
+ |T|-eq  n a     = refl _
 
 \end{code}
 
-(This is the end of the anonymous module.)
+This is the end of the anonymous module.
 
 However, without extensionality, it should be a meta-theorem that the
 desired equations hold definitionally for any numeral. We test this
