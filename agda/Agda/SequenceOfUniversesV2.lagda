@@ -76,7 +76,7 @@ lift-R-max m n = lift-≤ n (max m n) (right-≤-max m n)
 
 \end{code}
 
-We now need the following type coercions:
+We also need the following type coercion:
 
 \begin{code}
 
