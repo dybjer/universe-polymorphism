@@ -105,13 +105,13 @@ transportd : (A  : Set)
 transportd A B C y (refl _) z = z
 
 transportd₁ : (A  : Set)
-             (B  : A → Set)
-             (C  : (x : A) → B x → Set₁)
-             {x  : A}
-             (y  : B x)
-             {x' : A}
-             (p : x ≡ x')
-           → C x y → C x' (transport B p y)
+              (B  : A → Set)
+              (C  : (x : A) → B x → Set₁)
+              {x  : A}
+              (y  : B x)
+              {x' : A}
+              (p : x ≡ x')
+            → C x y → C x' (transport B p y)
 
 transportd₁ A B C y (refl _) z = z
 
@@ -132,7 +132,7 @@ Id-to-fun : {A B : Set} → A ≡₁ B → A → B
 Id-to-fun (refl _) a = a
 
 change-of-variable' : (ϕ    : (A  : Set) → (A → Set) → Set)
-                      (A A'  : Set)
+                      (A A' : Set)
                       (B    : A' → Set)
                       (p    : A ≡₁ A')
 
@@ -141,6 +141,8 @@ change-of-variable' : (ϕ    : (A  : Set) → (A → Set) → Set)
 change-of-variable' ϕ A .A B (refl .A) = refl (ϕ A B)
 
 \end{code}
+
+(We will consider ϕ = Σ and ϕ = Π and ϕ = W in our applications.)
 
 We need the following version of change of variable, which assumes the
 extensionality of ϕ:
