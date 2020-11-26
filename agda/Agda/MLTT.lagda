@@ -125,10 +125,44 @@ infix 0 _≡₁_
 data _≡₁_ {A : Set₁} : A → A → Set₁ where
   refl : (a : A) → a ≡₁ a
 
+transport₁ : {A : Set₁} (B : A → Set₁) {x y : A} (p : x ≡₁ y) → B x → B y
+transport₁ B (refl _) b = b
+
 Id-to-fun : {A B : Set} → A ≡₁ B → A → B
 Id-to-fun (refl _) a = a
 
-transport₁ : {A : Set₁} (B : A → Set₁) {x y : A} (p : x ≡₁ y) → B x → B y
-transport₁ B (refl _) b = b
+change-of-variable' : (ϕ    : (A  : Set) → (A → Set) → Set)
+                      (A A'  : Set)
+                      (B    : A' → Set)
+                      (p    : A ≡₁ A')
+
+                    → ϕ A (λ x → B (Id-to-fun p x)) ≡₁ ϕ A' B
+
+change-of-variable' ϕ A .A B (refl .A) = refl (ϕ A B)
+
+\end{code}
+
+We need the following version of change of variable, which assumes the
+extensionality of ϕ:
+
+\begin{code}
+
+is-extensional : ((A  : Set) → (A → Set) → Set) → Set₁
+is-extensional ϕ = (A : Set)
+                   (B B' : A → Set)
+                 → ((x : A) → B x ≡₁ B' x)
+                 → ϕ A B ≡₁ ϕ A B'
+
+change-of-variable : (ϕ    : (A  : Set) → (A → Set) → Set)
+                     (A A' : Set)
+                     (B    : A → Set)
+                     (B'   : A' → Set)
+                     (p    : A ≡₁ A')
+                     (q    : (x : A) → B x ≡₁ B' (Id-to-fun p x))
+
+                   → is-extensional ϕ
+                   → ϕ A B ≡₁ ϕ A' B'
+
+change-of-variable ϕ A .A B B' (refl .A) q i = i A B B' q
 
 \end{code}
