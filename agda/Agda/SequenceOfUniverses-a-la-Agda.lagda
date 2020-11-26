@@ -152,10 +152,13 @@ above equations.
   where
    p : 𝓢 (max m n) (|+| m n a b) ≡₁ 𝓢 (max m n) (lift-L-max m n a) + 𝓢 (max m n) (lift-R-max m n b)
    p = refl _
+
    r : 𝓢 (max m n) (lift-L-max m n a) ≡₁ 𝓢 m a
    r = 𝓢-L-max-eq m n a
+
    s : 𝓢 (max m n) (lift-R-max m n b) ≡₁ 𝓢 n b
    s = 𝓢-R-max-eq m n b
+
    t : 𝓢 (max m n) (|+| m n a b) ≡₁ 𝓢 m a + 𝓢 n b
    t = transport₁ (λ - → 𝓢 (max m n) (|+| m n a b) ≡₁ 𝓢 m a + -) s
         (transport₁ (λ - → 𝓢 (max m n) (|+| m n a b) ≡₁ - + 𝓢 (max m n) (lift-R-max m n b)) r p)
@@ -163,42 +166,57 @@ above equations.
   where
    A : Set
    A = 𝓢 (max m n) (lift-L-max m n a)
+
    B : A → Set
    B x = 𝓢 (max m n) (lift-R-max m n (b (𝓢-L-max m n a x)))
+
    p : 𝓢 (max m n) (|Σ| m n a b) ≡₁ Σ x ꞉ A , B x
    p = refl _
+
    r : A ≡₁ 𝓢 m a
    r = 𝓢-L-max-eq m n a
+
    s : (x : A) → B x ≡₁ 𝓢 n (b (𝓢-L-max m n a x))
    s x = 𝓢-R-max-eq m n (b (𝓢-L-max m n a x))
+
    t : 𝓢 (max m n) (|Σ| m n a b) ≡₁ Σ y ꞉ 𝓢 m a , 𝓢 n (b y)
    t = change-of-variable Σ A (𝓢 m a) B (λ x → 𝓢 n (b x)) r s Σ-ext
  |Π|-eq  m n a b = t
   where
    A : Set
    A = 𝓢 (max m n) (lift-L-max m n a)
+
    B : A → Set
    B x = 𝓢 (max m n) (lift-R-max m n (b (𝓢-L-max m n a x)))
+
    p : 𝓢 (max m n) (|Π| m n a b) ≡₁ Π x ꞉ A , B x
    p = refl _
+
    r : A ≡₁ 𝓢 m a
    r = 𝓢-L-max-eq m n a
+
    s : (x : A) → B x ≡₁ 𝓢 n (b (𝓢-L-max m n a x))
    s x = 𝓢-R-max-eq m n (b (𝓢-L-max m n a x))
+
    t : 𝓢 (max m n) (|Π| m n a b) ≡₁ Π x ꞉ 𝓢 m a , 𝓢 n (b x)
    t = change-of-variable Π A (𝓢 m a) B (λ x → 𝓢 n (b x)) r s Π-ext
  |W|-eq  m n a b = t
   where
    A : Set
    A = 𝓢 (max m n) (lift-L-max m n a)
+
    B : A → Set
    B x = 𝓢 (max m n) (lift-R-max m n (b (𝓢-L-max m n a x)))
+
    p : 𝓢 (max m n) (|W| m n a b) ≡₁ W x ꞉ A , B x
    p = refl _
+
    r : A ≡₁ 𝓢 m a
    r = 𝓢-L-max-eq m n a
+
    s : (x : A) → B x ≡₁ 𝓢 n (b (𝓢-L-max m n a x))
    s x = 𝓢-R-max-eq m n (b (𝓢-L-max m n a x))
+
    t : 𝓢 (max m n) (|W| m n a b) ≡₁ W x ꞉ 𝓢 m a , 𝓢 n (b x)
    t = change-of-variable W A (𝓢 m a) B (λ x → 𝓢 n (b x)) r s W-ext
 
@@ -226,3 +244,6 @@ sample-|Π|-eq  a b = refl _
 sample-|W|-eq  a b = refl _
 
 \end{code}
+
+Interestingly, we haven't used the induction principle of Palmgren's
+superuniverse.
