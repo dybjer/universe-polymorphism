@@ -133,8 +133,8 @@ module _ (Σ-ext : is-extensional Σ)
  |Σ|-eq  : (m n : ℕ) → (a : 𝓥 m) (b : 𝓢 m a → 𝓥 n) → 𝓢 (max m n) (|Σ| m n a b) ≡₁ (Σ x ꞉ 𝓢 m a , 𝓢 n (b x))
  |Π|-eq  : (m n : ℕ) → (a : 𝓥 m) (b : 𝓢 m a → 𝓥 n) → 𝓢 (max m n) (|Π| m n a b) ≡₁ (Π x ꞉ 𝓢 m a , 𝓢 n (b x))
  |W|-eq  : (m n : ℕ) → (a : 𝓥 m) (b : 𝓢 m a → 𝓥 n) → 𝓢 (max m n) (|W| m n a b) ≡₁ (W x ꞉ 𝓢 m a , 𝓢 n (b x))
- |U|-eq  : (n : ℕ)    → 𝓢 (succ n) (|U| (succ n)) ≡₁ 𝓥 n
- |T|-eq  : (n : ℕ)    → (a : 𝓥 n) → 𝓢 (succ n) (|T| n a) ≡₁ 𝓢 n a
+ |U|-eq  : (n : ℕ)   → 𝓢 (succ n) (|U| (succ n)) ≡₁ 𝓥 n
+ |T|-eq  : (n : ℕ)   → (a : 𝓥 n) → 𝓢 (succ n) (|T| n a) ≡₁ 𝓢 n a
 
 \end{code}
 
