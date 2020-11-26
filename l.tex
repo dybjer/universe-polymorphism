@@ -235,7 +235,7 @@ Consider the axiom $x \vee x^+ = x^+$. This would lead to three
 clauses: $x,x^+ \to x^+$, $x^+ \to x^+$, and $x^+ \to x$.
 Only the last is non-trivial, we call it a \emph{predecessor clause}.
 The next question is: for which $x$ do we need a predecessor clause?
-Since $x \vee x^+ = x^+$ is implicitly universally quantified,
+Since the axiom $x \vee x^+ = x^+$ is implicitly universally quantified,
 we would need all instances with $x$ a term over $V$.
 For this it suffices to have all predecessor clauses
 $x+k+1 \to x+k$ with $x\in V$ and all $k\in \N$.
@@ -287,7 +287,7 @@ and $(\jterm{x}{k}{m})^+ := x_1+k_1+1 \vee\cdots\vee x_m+k_m+1$.
 The latter is well-defined, since we have $s^+\equiv t^+$ 
 if $s\equiv t$, as $S^+_C$ is closed under shifting upwards.
 
-Now one can show that all axioms are satisfied modulo $\equiv$. 
+Now one can show that all axioms and rules are satisfied modulo $\equiv$. 
 For example, $\equiv$ is an equivalence relation and
 a congruence with respect to join and successor.
 All lattice axioms are satisfied, for example,
@@ -325,7 +325,7 @@ Given a finite lattice presentation $(V,C)$, we view
 a function $f: V\to\Ninf$ as specifying the set
 of atoms $\set{v+k \mid v\in V,~k\in\N,~k \leq f(v)}$.
 We are interested in such sets as models of $S^+_C$.
-We shall prove the following theorem.
+%We shall prove the following theorem.
 
 Given a finite lattice presentation $(V,C)$
 and a subset $W$ of $V$, we denote by $S^+_C|W$ 
@@ -495,7 +495,7 @@ in the same way as with $W$ and $g$ above.
 This terminates since we exhaust $V$.
 \end{proof}
 
-{\color{blue}
+
 From Theorem~\ref{thm:main} we get the decidability of $S^+_C\prvH A\to b$
 when $A$ can be represented by a function $f: V\to\N$. If every
 variable $v$ in $V$ occurs in $A$, then $f(v)$ is simply
@@ -503,74 +503,119 @@ the maximal $k$ such that $v+k \in A$. We can then simply check
 $S^+_C\prvH A\to b$ by computing the least $g\geq f$ that is
 a model of $S^+_C$ and check whether atom $b$ is satisfied by $g$.
 
-Another application of Theorem~\ref{thm:main} is loop checking.
-Let $k$ be maximal such that $x+k$ occurs in the body of
-a clause in $S_C$ ($x\in V$).
-Take $f: V\to\N$ to be the constant $k$ function and compute $g$.
-Let $W$ be the subset of $V$ such that $g(w)=\infty$ for
-all $w\in W$. Then there exist $n\in\N$ such that 
-$S^+_C\prvH W+n \to w+n+1$ for all $w\in W$.
-Proof: if $W=V$, then $n=k$, otherwise $n= \max(g(V-W))+\M$,
-since variables in $V-W$ cannot play a role above $n$.
-
 The decision method above for $S^+_C\prvH A\to b$ only works
 if every variable in $V$ occurs in $A$.
 However, it is not difficult to extend Theorem~\ref{thm:main}
 such that we get decidability of $S^+_C\prvH A\to b$ in
 general. For example, we can allow $f: V\to\Ninf$ to be partial.
-If $f(x)$ is undefined, we must put $k\leq f(x)$ false,
-since $\set{x+k \mid k\leq f(x)}$ must be empty.
-On the other hand, it is possible that we can infer a value for $x$
-even if $f(x)$ is undefined, so we must put $f(x)\leq k$ true
-for all $k\in\Ninf$. An elegant solution to this
-problem is to use $f(x)=-1$ to mean that $f(x)$ is undefined.
+If $f(x)$ is undefined, we must put $k\leq f(x)$ false
+for all $k\in\N$, since $\set{x+k \mid k\leq f(x)}$ must be empty.
+On the other hand, we want to express $h\geq f$ and it is possible 
+that $h(x)\in\Ninf$ and $f(x)$ is undefined. 
+An elegant solution to this
+problem is to use $f(x)=-1$ to express that $f(x)$ is undefined.
 One can then verify that Theorem~\ref{thm:main} and
 Lemma~\ref{lem:secondary} go through with minimal adaptations
-in their proofs.
-} %end color
+in their proofs. Thus we have {\color{red} CHECK}:
+
+\begin{corollary}\label{cor:decidability}
+For all $C,A,b,s,t$, $S^+_C\prvH A\to b$ and $C\prvL s=t$ are decidable.
+\end{corollary}
+
+Another application of Theorem~\ref{thm:main} is loop checking.
+Given a finite lattice presentation $(V,C)$, a \emph{loop} is a 
+term $t$ over $V$ such that $C\prvL t^+=t$. Let $L$ be the
+lattice presented by $(V,C)$. Let $N$ be the lattice $\N$ with
+the usual $\max$ and successor functions.
+
+\begin{corollary}\label{cor:loopchecking}
+Exactly one of the following two decidable cases holds:
+(1) There is a loop;
+(2) There is a homomorphism $h: L\to N$.
+\end{corollary}
+\begin{proof}
+Let $k$ be maximal such that $x+k$ occurs in the body of a clause in $S_C$.
+Take $f: V\to\N$ to be the constant $k$ function and compute $g$ according
+to Theorem~\ref{thm:main}. Let $W$ be the subset of $V$ such that 
+$g(w)=\infty$ for all $w\in W$. Claim: if $W$ is not empty,
+then we have (1) because there exists an $n\in\N$ such that 
+$S^+_C\prvH W+n \to w+n+1$ for all $w\in W$.
+Proof: if $W=V$, then $n=k$, otherwise $n= \max(g(V-W))+\M$.
+We have $S^+_C\prvH V+k \to w+n+1$. However,
+variables in $V-W$ cannot play a role above $n$.
+Hence we must have $S^+_C\prvH W+n \to w+n+1$.
+
+If $W$ is empty we can construct a homomorphism $h: L\to N$.
+Define $h(x) = \max(g(V))- g(x)$ for all $x\in V$. 
+Extend $h$ to terms over $V$ by $h(t^+) = h(t)+1$ 
+and $h(s\vee t) = \max(h(s),h(t))$.
+We have to make sure that definition of $h$ respects
+equality in $L$, that is, if $C\prvL s=t$, then $h(s)=h(t)$.
+For this it suffices to show $h(s)=h(t)$ for all $s=t$ in $C$.
+This can in turn be simplified to: $h(\jterm{x}{k}{m}) \geq h(y)+l$ 
+for every $\jbody{x}{k}{m} \to y+l$ in $S_C$.
+Easy calculations show that we must prove
+$\min(g(x_1)-k_1,\ldots,g(x_m)-k_m) \leq g(y)-l$.
+Wlog we assume that $g(x_1)-k_1$ is the minimum on the left.
+Since $\jbody{x}{k}{m} \to y+l$ in $S_C$ we know 
+that $g(x_1)\geq f(x_1)\geq k_1$. Shifting the clause
+upwards by $g(x_1)-k_1$ we get the clause
+$x_1+g(x_1),\ldots,x_m+k_m+g(x_1)-k_1 \to y+l+g(x_1)-k_1$
+in $S_C^+$. Due to the assumption that $g(x_1)-k_1$ is minimal,
+the body of this clause is satisfied by $g$.
+Since $g$ is a model of $S_C^+$ by Theorem~\ref{thm:main},
+the conclusion is also satisfied by $g$, that is,
+$g(y)\geq l+g(x_1)-k_1$, so $g(y)-l\geq g(x_1)-k_1$.
+This completes the proof that $h$ respects equality in $L$.
+%It is clear that (1) and (2) are exclude each other.
+\end{proof}
+
 
 \section{Discussion}
 
 \subsection{Motivation}
 
 The motivation for this problem comes from dependent type theory, 
-where the relevant operations on universe levels are taking the
-supremum of two levels, and incrementing a level.
+where the relevant operations on universe levels are to take the
+supremum of two levels, and to increment a level.
 
-One novel, rigorous way to avoid so-called universe inconsistencies
-in type theory would be to let the typings depend not only
+One way, {\color{red}suggested by Voevodsky in \cite{VV},}
+to avoid so-called universe inconsistencies
+in type theory would be to let typings depend not only
 on a context assigning types to variables, but also on a
 finite set of universe level constraints. A typing would then
 only be valid if its constraints can be inferred from the set
-of constraints in the context. Moreover, the latter set should
+of constraints in the context. 
+{\color{red}(This is not well explained, the set of constraints can also grow.)}
+ Moreover, the latter set should
 be consistent in the sense that there are no loops. 
-A loop is a lattice term that is equal to its successor; 
+As defined above, a loop is a lattice term that is equal to its successor; 
 a good intuition is that loops lead to universe-inconsistencies 
 comparable to the paradoxes in set theory.
 
 In type theory it is important that typing checking is decidable.
 %and preferably even efficient. 
 The results of this note show that having typings depend
-on a set of universe level constraints does not make 
-type checking undecidable.
+on a set of universe level constraints preserves the decidability
+of type checking.
 
-{\color{blue}
 Since dependent type theory is meant to be a foundation of mathematics,
 we want to make minimal mathematical assumptions about the universe levels.
 For example, we don't say that they are natural numbers
-with a zero, successor and a maximum function.
+with a zero, successor and a maximum function {\color{red}(like Voevodsky in \cite{VV},
+referring to Presburger Arithmetic for decidability)}.
 Such assumptions would weaken, at least philosophically,
 the foundational claim of dependent type theory:
 natural numbers are introduced as an inductive type
 at some later point in the development. For similar reasons
 we don't assume that universe levels are totally ordered,
 nor that the successor function is injective.
-} %end color
+
 
 \subsection{Related work}
 
-{\color{blue}
-There exist in the literature a considerable body of research 
+
+In the literature one can find a considerable body of research 
 on efficient constraint solving in the same language as in this note,
 but interpreted in the integers or in the rational numbers.
 The latter are totally ordered, which makes the problem different.
@@ -586,7 +631,7 @@ This congruence gives ${x+k \vee y+l} \equiv {x+l+1}$ if $k\leq l$
 and ${x+k \vee y+l} \equiv {x+k}$ if $k>l$
 (use $x+1\to y$).
 In this model $y = x^+$ is false ($y\to x+1$ cannot be derived).
-} %end color
+
 
 \bibliographystyle{plain}
 \bibliography{refs}
@@ -596,7 +641,7 @@ In this model $y = x^+$ is false ($y\to x+1$ cannot be derived).
 Paul Lorenzen
   \newblock\emph{Algebraische und logistische Untersuchungen über freie Verbände},
 Journal of Symbolic Logic, 16(2), 81--106, 1951.
-English translation: \url{https://arxiv.org/abs/1710.08138}
+English translation by Stefan Neuwirth: \url{https://arxiv.org/abs/1710.08138}
 
 \bibitem{VV}
   Vladimir Voevodsky,
