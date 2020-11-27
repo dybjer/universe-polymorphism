@@ -1,7 +1,8 @@
 A "cumulative by coercion" hierarchy of universes à la Tarski, indexed
-by a successor-sup-semilattice. This requires --no-positivity-check and is inconsistent if we have e.g. i⁺ = i, as in this case we get type in type.
+by a successor-sup-semilattice. This requires --no-positivity-check and
+is inconsistent if we have e.g. i⁺ = i, as in this case we get type-in-type.
 
-The Agda type Set (or Set₀) will host all these universes à la Tarski.
+The Agda type Type (or Set₀) will host all these universes à la Tarski.
 
 \begin{code}
 
@@ -11,7 +12,7 @@ The Agda type Set (or Set₀) will host all these universes à la Tarski.
 open import MLTT
 
 module NonPositiveCumulativeByCoercion
-        (L   : Set)
+        (L   : Type)
         (O   : L)
         (_⁺  : L → L)
         (_⊔_ : L → L → L)
@@ -27,8 +28,8 @@ We now define U and T by mutual induction-recursion:
 
 \begin{code}
 
-data U : L → Set
-T : (i : L) → U i → Set
+data U : L → Type
+T : (i : L) → U i → Type
 
 data U where
  ⌜ℕ₀⌝  : (i : L) → U i

@@ -12,18 +12,18 @@ open import MLTT
 
 A universe is just a pair (U , T) with
 
-  * U : Set (the carrier), and
-  * T : U → Set (the structure).
+  * U : Type (the carrier), and
+  * T : U → Type (the structure).
 
 The following constructs an abstract universe (U' , T') from an
 abstract universe (U , T), its successor.
 
 \begin{code}
 
-module successor (U : Set) (T : U -> Set) where
+module successor (U : Type) (T : U -> Type) where
 
-  data U' : Set
-  T' : U' → Set
+  data U' : Type
+  T' : U' → Type
 
   data U' where
     ⌜ℕ₀⌝  : U'
@@ -57,8 +57,8 @@ The super-universe (V , S).
 
 \begin{code}
 
-data V : Set
-S : V → Set
+data V : Type
+S : V → Type
 
 \end{code}
 
@@ -68,15 +68,15 @@ definition of (V , S).
 We think of a pair (u , t), with u : V and t : S u → V, as an
 "internal universe".
 
-Then S u is a Set and λ (a : S u) → S (t a) is a family S u → Set, and
+Then S u is a Type and λ (a : S u) → S (t a) is a family S u → Type, and
 hence the pair (S u , λ (a : S u) → S (t a)) is the external version
 of the internal universe (u , t). We define (U u t , T u t) to be the
 successor universe of this external version.
 
 \begin{code}
 
-U : (u : V) (t : S u → V) → Set
-T : (u : V) (t : S u → V) → U u t → Set
+U : (u : V) (t : S u → V) → Type
+T : (u : V) (t : S u → V) → U u t → Type
 
 U u t = successor.carrier   (S u) (λ (a : S u) → S (t a))
 T u t = successor.structure (S u) (λ (a : S u) → S (t a))

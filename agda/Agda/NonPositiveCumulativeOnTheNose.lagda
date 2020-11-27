@@ -8,14 +8,14 @@ This uses --no-positivity-check and is inconsistent if e.g. i⁺ = i.
 open import MLTT
 
 module NonPositiveCumulativeOnTheNose
-        (L   : Set)
+        (L   : Type)
         (O   : L)
         (_⁺  : L → L)
         (_⊔_ : L → L → L)
        where
 
-data U : L → Set
-T : (i : L) → U i → Set
+data U : L → Type
+T : (i : L) → U i → Type
 
 data U where
  ⌜ℕ₀⌝   : U O

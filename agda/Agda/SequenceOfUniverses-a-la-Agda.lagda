@@ -163,12 +163,13 @@ above equations.
    t : 𝓢 (max m n) (|+| m n a b) ≡₁ 𝓢 m a + 𝓢 n b
    t = transport₁ (λ - → 𝓢 (max m n) (|+| m n a b) ≡₁ 𝓢 m a + -) s
         (transport₁ (λ - → 𝓢 (max m n) (|+| m n a b) ≡₁ - + 𝓢 (max m n) (lift-R-max m n b)) r p)
+
  |Σ|-eq  m n a b = t
   where
-   A : Set
+   A : Type
    A = 𝓢 (max m n) (lift-L-max m n a)
 
-   B : A → Set
+   B : A → Type
    B x = 𝓢 (max m n) (lift-R-max m n (b (𝓢-L-max m n a x)))
 
    p : 𝓢 (max m n) (|Σ| m n a b) ≡₁ Σ x ꞉ A , B x
@@ -185,10 +186,10 @@ above equations.
 
  |Π|-eq  m n a b = t
   where
-   A : Set
+   A : Type
    A = 𝓢 (max m n) (lift-L-max m n a)
 
-   B : A → Set
+   B : A → Type
    B x = 𝓢 (max m n) (lift-R-max m n (b (𝓢-L-max m n a x)))
 
    p : 𝓢 (max m n) (|Π| m n a b) ≡₁ Π x ꞉ A , B x
@@ -205,10 +206,10 @@ above equations.
 
  |W|-eq  m n a b = t
   where
-   A : Set
+   A : Type
    A = 𝓢 (max m n) (lift-L-max m n a)
 
-   B : A → Set
+   B : A → Type
    B x = 𝓢 (max m n) (lift-R-max m n (b (𝓢-L-max m n a x)))
 
    p : 𝓢 (max m n) (|W| m n a b) ≡₁ W x ꞉ A , B x

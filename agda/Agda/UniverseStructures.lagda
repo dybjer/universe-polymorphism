@@ -24,12 +24,12 @@ both indexed by a succ-sup-semilattice L.
 
 \begin{code}
 
-record Succ-Sup-Semilattice : Set₁ where
+record Succ-Sup-Semilattice : Type₁ where
  constructor
   succ-sup-semilattice
 
  field
-  L   : Set
+  L   : Type
   O   : L
   _⁺  : L → L
   _∨_ : L → L → L
@@ -40,15 +40,15 @@ record Succ-Sup-Semilattice : Set₁ where
   assoc  : (i j k : L) → i ∨ (j ∨ k) ≡ (i ∨ j) ∨ k
   distr  : (i j : L)   → (i ∨ j)⁺ ≡ (i ⁺) ∨ (j ⁺)
 
- _≤_ : L → L → Set
+ _≤_ : L → L → Type
  x ≤ y = x ∨ y ≡ y
 
 
-record cumulative-by-coercion (𝓛 : Succ-Sup-Semilattice) : Set₁ where
+record cumulative-by-coercion (𝓛 : Succ-Sup-Semilattice) : Type₁ where
  open Succ-Sup-Semilattice 𝓛
  field
-  U : L → Set
-  T : (i : L) → U i → Set
+  U : L → Type
+  T : (i : L) → U i → Type
 
   ⌜ℕ₀⌝  : (i : L) → U i
   ⌜ℕ₁⌝  : (i : L) → U i
@@ -71,11 +71,11 @@ record cumulative-by-coercion (𝓛 : Succ-Sup-Semilattice) : Set₁ where
   T-⌜U⌝  : (i   : L)                             → T (i ⁺) (⌜U⌝ i)         ≡₁ U i
 
 
-record cumulative-on-the-nose (𝓛 : Succ-Sup-Semilattice) : Set₁ where
+record cumulative-on-the-nose (𝓛 : Succ-Sup-Semilattice) : Type₁ where
  open Succ-Sup-Semilattice 𝓛
  field
-  U : L → Set
-  T : (i : L) → U i → Set
+  U : L → Type
+  T : (i : L) → U i → Type
 
   ⌜ℕ₀⌝   : U O
   ⌜ℕ₁⌝   : U O

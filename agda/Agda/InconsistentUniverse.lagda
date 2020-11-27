@@ -11,8 +11,8 @@ module InconsistentUniverse where
 
 open import MLTT
 
-data U : Set
-T : U → Set
+data U : Type
+T : U → Type
 
 data U where
  ⌜ℕ₀⌝ : U
