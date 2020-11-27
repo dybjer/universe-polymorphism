@@ -252,7 +252,7 @@ Congruence of join means that $s=t$ implies $r\vee s=r\vee t$.
 It is easy to see that this does not require extra clauses. 
 
 In summary: given a lattice presentation $(V,C)$,
-let $S^+_C$ be the smallest set of clauses that 
+let $S^\uparrow_C$ be the smallest set of clauses that 
 is closed under shifting upwards and contains
 the set $S_C$ coming from the constraints in $C$,
 as well as all predecessor clauses for each $v\in V$. 
@@ -260,19 +260,62 @@ as well as all predecessor clauses for each $v\in V$.
 Given a set $S$ of Horn clauses,
 let $S\prvH A\to b$ denote provability from $S$.
 Recall that provability from $S$ is defined inductively by
-one base case (1) $S\prvH a\to a$, and three induction cases:
-(2) $S\prvH A\to b$ if $A\to b$ in $S$;
-(3) $S\prvH A,c\to b$ if $S\prvH A\to b$;
-(4) $S\prvH A\to b$ if $S\prvH A\to c$ and $S\prvH A,c\to b$. 
+two base cases, 
+(1) $S\prvH a\to a$ and 
+(2) $S\prvH A\to b$ if $A\to b$ in $S$, and two induction cases,
+\emph{weakening} (3) $S\prvH A,c\to b$ if $S\prvH A\to b$ and
+\emph{cut} (4) $S\prvH A\to b$ if $S\prvH A\to c$ and $S\prvH A,c\to b$.
+The following lemmas will be used later on.
 
-We now have the following theorem generalizing \cite[Theorem 3]{Lorenzen51}.
+\begin{lemma}\label{lem:plusbodyS}
+Let $S$ be a set of clauses of the form $X\to y$ with $X\cap V = \emptyset$.
+If $S\prvH A\to b$, then we have $b\in A$ or $S\prvH (A-V)\to b$
+(without increasing the length of the derivation).
+\end{lemma} 
+\begin{proof} By induction on the definition of $S\prvH A\to b$.
+The base cases and weakening are obvious. Regarding the cut,
+assume $S\prvH A\to b$ is inferred from $S\prvH A\to c$ and 
+$S\prvH A,c\to b$, and assume the lemma holds for the latter two (IH).
+If $b\in A$ we are done. If $c\in A$ we are done by (IH). If neither of
+the latter two is the case, we have $b=c$ or $S\prvH ((A,c)-V)\to b$ by (IH).
+If $b=c$ we are done by (IH). If $S\prvH ((A,c)-V)\to b$ and $c\in V$ we are
+done. If $c\notin V$, then we have $S\prvH (A-V),c\to b$
+and $S\prvH (A-V)\to c$ and we get $S\prvH (A-V)\to b$ by a cut.
+\end{proof}
+
+For $X$ a set of atoms, define $X^+ := \set{x^+\mid x\in X}$.
+For $S$ a set of clauses, define $S^+ := \set{X^+\to y^+ \mid (X\to y) \in S}$.
+
+\begin{lemma}\label{lem:shift-up}
+Let $S$ be a set of clauses, and $T=\set{v^+\to v \mid v\in V}$. 
+Then we have:
+$S\prvH A\to b$ if and only if $S^+ \cup T \prvH A^+\to b^+$.
+\end{lemma} 
+\begin{proof} From left to right is obvious.
+The other direction is proved by induction on the length of the derivation of 
+$S^+ \cup T \prvH A^+\to b^+$.
+The base cases and weakening are obvious. 
+Assume the lemma holds for shorter derivations (IH).
+Regarding the cut, assume $S^+ \cup T \prvH A^+\to b^+$ is 
+inferred from $S^+ \cup T \prvH A^+\to c$ and 
+$S^+ \cup T \prvH A^+,c \to b^+$.
+If $c=d^+$ for some $d$ we are done by an appeal to (IH) and cut. 
+Otherwise we have $c\in V$ and proceed as follows.
+The set of clauses $S^+ \cup T$ satisfies the condition of Lemma~\ref{lem:plusbodyS}.
+Hence we have $b^+\in A^+,c$, so $b^+\in A^+$ and we are done, or
+$S^+ \cup T \prvH ((A^+,c) -V) \to b^+$, that is, $S^+ \cup T \prvH A^+ \to b^+$
+without increasing the length {\color{red}of the subderivation}. 
+Now we are done by (IH).
+\end{proof}
+
+We have the following theorem generalizing \cite[Theorem 3]{Lorenzen51}.
 
 \begin{theorem}\label{thm:LvsH}
 For all terms $\jbody{x}{k}{m},y+l$ over $V$ we have:
 \[
 C\prvL \jterm{x}{k}{m}\geq y+l 
 \quad\text{iff}\quad
-S^+_C\prvH \jbody{x}{k}{m}\to y+l.
+S^\uparrow_C\prvH \jbody{x}{k}{m}\to y+l.
 \]
 \end{theorem} 
 \begin{proof}
@@ -282,10 +325,10 @@ The converse implication is more interesting.
 For any set of Horn clauses $X,Y$, let $X \prvH Y$ mean
 that $X \prvH A\to b$ for all clauses $A\to b$ in $Y$.
 For any two terms $s,t$ over $V$, define $s\equiv t$ by
-$S^+_C \prvH S_{s=t}$. We define $s\vee t$ in the obvious way,
+$S^\uparrow_C \prvH S_{s=t}$. We define $s\vee t$ in the obvious way,
 and $(\jterm{x}{k}{m})^+ := x_1+k_1+1 \vee\cdots\vee x_m+k_m+1$.
 The latter is well-defined, since we have $s^+\equiv t^+$ 
-if $s\equiv t$, as $S^+_C$ is closed under shifting upwards.
+if $s\equiv t$, as $S^\uparrow_C$ is closed under shifting upwards.
 
 Now one can show that all axioms and rules are satisfied modulo $\equiv$. 
 For example, $\equiv$ is an equivalence relation and
@@ -293,7 +336,7 @@ a congruence with respect to join and successor.
 All lattice axioms are satisfied, for example,
 the predecessor clauses prove $s\vee s^+ \equiv s^+$. 
 Moreover, for each constraint $s=t$ in $C$ 
-we have $s\equiv t$, as $S_{s=t}$ is included in $S^+_C$.
+we have $s\equiv t$, as $S_{s=t}$ is included in $S^\uparrow_C$.
 
 By soundness, if $C\prvL s=t$, then $s\equiv t$.
 In particular we have the only-if part of the theorem.
@@ -301,7 +344,7 @@ In particular we have the only-if part of the theorem.
 
 \section{Decidability}
 
-In this section we prove the decidability of $S^+_C\prvH A\to b$.
+In this section we prove the decidability of $S^\uparrow_C\prvH A\to b$.
 By Theorem~\ref{thm:LvsH} this is sufficient for
 the decidability of $C\prvL s=t$. We recall a basic fact
 about Horn clauses: the models (as satisfying sets of atoms)
@@ -324,20 +367,20 @@ by $n < \infty$ for all $n\in\N$.
 Given a finite lattice presentation $(V,C)$, we view
 a function $f: V\to\Ninf$ as specifying the set
 of atoms $\set{v+k \mid v\in V,~k\in\N,~k \leq f(v)}$.
-We are interested in such sets as models of $S^+_C$.
+We are interested in such sets as models of $S^\uparrow_C$.
 %We shall prove the following theorem.
 
 Given a finite lattice presentation $(V,C)$
-and a subset $W$ of $V$, we denote by $S^+_C|W$ 
-the set of clauses in $S^+_C$ mentioning only variables in $W$,
-and by $S^+_C{\downarrow}W$
-the set of clauses in $S^+_C$ with conclusion over $W$.
+and a subset $W$ of $V$, we denote by $S^\uparrow_C|W$ 
+the set of clauses in $S^\uparrow_C$ mentioning only variables in $W$,
+and by $S^\uparrow_C{\downarrow}W$
+the set of clauses in $S^\uparrow_C$ with conclusion over $W$.
 
 \begin{theorem}\label{thm:main}
 Let  $(V,C)$ be a finite lattice presentation
 such that each clause in $S_C$ has gain at most $\M$.
 For any $f: V\to\Ninf$ we can compute
-the least $g \geq f$ that is a model of $S^+_C$.
+the least $g \geq f$ that is a model of $S^\uparrow_C$.
 \end{theorem}
 
 We prepare the proof of this theorem with a lemma.
@@ -347,21 +390,21 @@ Let  $(V,C)$ be a finite lattice presentation
 such that each clause in $S_C$ has gain at most $\M$.
 Let $W$ be a strict subset of $V$ such that 
 for any $f: W\to\Ninf$ we can compute
-the least $g \geq f$ that is a model of $S^+_C|W$.
+the least $g \geq f$ that is a model of $S^\uparrow_C|W$.
 Then for any $f: V\to\Ninf$ with $f(V-W)\subseteq \N$ we can compute
-the least $h \geq f$ that is a model of $S^+_C{\downarrow}W$.
+the least $h \geq f$ that is a model of $S^\uparrow_C{\downarrow}W$.
 \end{lemma}
 
 \begin{proof}
 Let conditions be as stated in the lemma.
 Let $f: V\to\Ninf$ with $f(V-W)\subseteq \N$ be given
 and denote its restriction to $W$ by $f_W$.
-By the definition of $S^+_C{\downarrow}W$, any minimal $h\geq f$
-that is a model of $S^+_C{\downarrow}W$
+By the definition of $S^\uparrow_C{\downarrow}W$, any minimal $h\geq f$
+that is a model of $S^\uparrow_C{\downarrow}W$
 coincides with $f$ on $V-W$, so we focus on its values on $W$.
 By assumption we can compute the least $g_f \geq f_W$ that 
-is a model of $S^+_C|W$.
-Now we look at clauses in $S^+_C{\downarrow}W - S^+_C|W$. 
+is a model of $S^\uparrow_C|W$.
+Now we look at clauses in $S^\uparrow_C{\downarrow}W - S^\uparrow_C|W$. 
 Such clauses are of the form $X,Y \to w+k$ with $X$ a non-empty
 set of atoms over $V-W$, and possibly empty $Y$ over $W$. 
 If $X = \ldots,x_i+k_i,\ldots$ is satisfied by $f$, 
@@ -375,7 +418,7 @@ M(g_f) := \sum_{w \in W}  \max(0, \max(f(V-W)) + \M - g_f(w)).
 \] 
 
 In the base case we have $M(g_f)=0$.
-Then $k\leq g_f(w)$ and all clauses in $S^+_C{\downarrow}W$ are 
+Then $k\leq g_f(w)$ and all clauses in $S^\uparrow_C{\downarrow}W$ are 
 satisfied by $g_f$.
 Hence we can take $h=g_f$ on $W$ and $h=f$ on $V-W$.
 
@@ -383,9 +426,9 @@ For the induction step, let $M(g_f)>0$ and assume
 the lemma has been proved for smaller values of $M(g_f)$.
 We now make a case distinction that is decidable since
 the lattice presentation $(V,C)$ is finite,
-and hence $S_C$ is finite (even though $S^+_C$ is not).
+and hence $S_C$ is finite (even though $S^\uparrow_C$ is not).
 Thus we only have to check finitely many clauses.
-If all clauses in $S^+_C{\downarrow}W - S^+_C|W$ are satisfied 
+If all clauses in $S^\uparrow_C{\downarrow}W - S^\uparrow_C|W$ are satisfied 
 by $g_f$ we are again done, like in the base case.
 Otherwise, assume we can infer the value $g_f(w)+k+1$
 for $w\in W$, using values of $f$ on $V-W$ and values 
@@ -411,18 +454,18 @@ We now return to the proof of Theorem~\ref{thm:main}.
 Let  $(V,C)$ be a finite lattice presentation
 such that each clause in $S_C$ has gain at most $\M$.
 By induction on $|V|$ we compute, for any $f: V\to\Ninf$,
-the least $g \geq f$ that is a model of $S^+_C$.
+the least $g \geq f$ that is a model of $S^\uparrow_C$.
 
 In the base case $|V|=0$ there is nothing to prove.
 
 For the induction step, let $|V|>0$ and assume the
 theorem has been proved for smaller values of $|V|$.
 Let $f: V\to\Ninf$. If $f(v)=\infty$ for some $v\in V$,
-then we can eliminate $v$ form $S^+_C$. Recall that
+then we can eliminate $v$ form $S^\uparrow_C$. Recall that
 $f(v)=\infty$ means that all atoms of the form $v+k$
 are true. This means that all clauses of the form
-$\ldots\to v+k$ can be left out from $S^+_C$.
-Also, in each clause $A\to b$ in $S^+_C$
+$\ldots\to v+k$ can be left out from $S^\uparrow_C$.
+Also, in each clause $A\to b$ in $S^\uparrow_C$
 we can leave out all atoms of the form $v+k$ from $A$.
 If we get a (forbidden) clause $\emptyset\to v'+l$,
 we can infer $f(v')=\infty$ and continue.
@@ -435,7 +478,7 @@ is obtained from $C$ by removing all $v+k$ from the joins,
 taking care to continue if a join becomes empty, and so on.%
 \footnote{One can take $f(v)=\infty$ to mean $\bot=v=v+1$,
 which yields $\bot=v+k$ for all $k\in\N$.}
-Both methods lead to the same set of clauses $S^+_{C'}$,
+Both methods lead to the same set of clauses $S^\uparrow_{C'}$,
 and this set satisfies all requirements, in particular
 each clause has gain at most $\M$.
 
@@ -445,7 +488,7 @@ function with values $\infty$ for all $v \in V-V'$.
 Otherwise we have $f: V\to\N$.
 We compute first the subset of variables $x\in V$ 
 whose value $f(x)$ can be improved in one step,
-by a clause $A\to x+k$ in $S^+_C$ such that $A$ is
+by a clause $A\to x+k$ in $S^\uparrow_C$ such that $A$ is
 satisfied by $f$, yielding the result $k$ for $x$. 
 Let $g(x)$ be the maximum of $f(x)$ and the results
 for $x$ as obtained in this way. Since $S_C$ is finite,
@@ -455,10 +498,10 @@ all $x$ such that $g(x) > f(x)$ and distinguish the
 following cases.
 
 If $W$ is empty we are done since then $f$ itself 
-is a model of $S^+_C$.
+is a model of $S^\uparrow_C$.
 
 If $W = V$ we are done since then $h(x) = \infty$ for all 
-$x \in V$ is the least $h \geq f$ that is a model of $S^+_C$.
+$x \in V$ is the least $h \geq f$ that is a model of $S^\uparrow_C$.
 Proof: by using the predecessor clauses we can infer
 $x+f(x)+1$ from every $x+g(x)$ with $g(x)>f(x)$ as above,
 for every $x\in V$. By shifting upwards we can infer
@@ -470,7 +513,7 @@ hypothesis to $W$ to satisfy the condition of
 Lemma~\ref{lem:secondary}. We apply the conclusion of 
 the lemma to $g$, noting that $g(V-W)=f(V-W)$ is
 a subset of $\N$. Hence we can compute the least 
-$h\geq g$ that is a model of $S^+_C{\downarrow}W$.
+$h\geq g$ that is a model of $S^\uparrow_C{\downarrow}W$.
 This function $h$ coincides with $g$ and $f$ on $V-W$. 
 
 If $h(w) = \infty$ for some $w\in W$, 
@@ -480,12 +523,12 @@ Otherwise we have $h: V\to\N$.
 Like in the proof of Lemma~\ref{lem:secondary},
 we make a case distinction that is decidable since
 the lattice presentation $(V,C)$ is finite,
-and hence $S_C$ is finite (even though $S^+_C$ is not).
+and hence $S_C$ is finite (even though $S^\uparrow_C$ is not).
 Thus we only have to check finitely many clauses.
-If all clauses in $S^+_C$ are satisfied by $h$ then we are done.
+If all clauses in $S^\uparrow_C$ are satisfied by $h$ then we are done.
 Otherwise, we can infer in one step a value $h(y)+k+1$ 
 for some variable(s) $y$. Such $y$ must be in $V-W$ 
-since $h$ is a model of $S^+_C{\downarrow}W$.
+since $h$ is a model of $S^\uparrow_C{\downarrow}W$.
 For every $y\in V$, let $j(y)$ be the maximum of $h(y)$
 and the values $h(y)+k+1$ that can possibly
 be inferred in one step.
@@ -496,30 +539,23 @@ This terminates since we exhaust $V$.
 \end{proof}
 
 
-From Theorem~\ref{thm:main} we get the decidability of $S^+_C\prvH A\to b$
+From Theorem~\ref{thm:main} we get the decidability of $S^\uparrow_C\prvH A\to b$
 when $A$ can be represented by a function $f: V\to\N$. If every
 variable $v$ in $V$ occurs in $A$, then $f(v)$ is simply
 the maximal $k$ such that $v+k \in A$. We can then simply check
-$S^+_C\prvH A\to b$ by computing the least $g\geq f$ that is
-a model of $S^+_C$ and check whether atom $b$ is satisfied by $g$.
+$S^\uparrow_C\prvH A\to b$ by computing the least $g\geq f$ that is
+a model of $S^\uparrow_C$ and check whether atom $b$ is satisfied by $g$.
 
-The decision method above for $S^+_C\prvH A\to b$ only works
+The decision method above for $S^\uparrow_C\prvH A\to b$ only works
 if every variable in $V$ occurs in $A$.
 However, it is not difficult to extend Theorem~\ref{thm:main}
-such that we get decidability of $S^+_C\prvH A\to b$ in
-general. For example, we can allow $f: V\to\Ninf$ to be partial.
-If $f(x)$ is undefined, we must put $k\leq f(x)$ false
-for all $k\in\N$, since $\set{x+k \mid k\leq f(x)}$ must be empty.
-On the other hand, we want to express $h\geq f$ and it is possible 
-that $h(x)\in\Ninf$ and $f(x)$ is undefined. 
-An elegant solution to this
-problem is to use $f(x)=-1$ to express that $f(x)$ is undefined.
-One can then verify that Theorem~\ref{thm:main} and
-Lemma~\ref{lem:secondary} go through with minimal adaptations
-in their proofs. Thus we have {\color{red} CHECK}:
+so that we get decidability of $S^\uparrow_C\prvH A\to b$ in
+general. {\color{red} Use Lemma~\ref{lem:plusbodyS} and Lemma~\ref{lem:shift-up} TBD}.
+
+Thus we get:
 
 \begin{corollary}\label{cor:decidability}
-For all $C,A,b,s,t$, $S^+_C\prvH A\to b$ and $C\prvL s=t$ are decidable.
+For all $C,A,b,s,t$, $S^\uparrow_C\prvH A\to b$ and $C\prvL s=t$ are decidable.
 \end{corollary}
 
 Another application of Theorem~\ref{thm:main} is loop checking.
@@ -538,14 +574,15 @@ Let $k$ be maximal such that $x+k$ occurs in the body of a clause in $S_C$.
 Take $f: V\to\N$ to be the constant $k$ function and compute $g$ according
 to Theorem~\ref{thm:main}. Let $W$ be the subset of $V$ such that 
 $g(w)=\infty$ for all $w\in W$. Claim: if $W$ is not empty,
-then we have (1) because there exists an $n\in\N$ such that 
-$S^+_C\prvH W+n \to w+n+1$ for all $w\in W$.
+then we have a loop, case (1), because there exists an $n\in\N$ such that 
+$S^\uparrow_C\prvH W+n \to w+n+1$ for all $w\in W$.
 Proof: if $W=V$, then $n=k$, otherwise $n= \max(g(V-W))+\M$.
-We have $S^+_C\prvH V+k \to w+n+1$. However,
+We have $S^\uparrow_C\prvH V+k \to w+n+1$. However,
 variables in $V-W$ cannot play a role above $n$.
-Hence we must have $S^+_C\prvH W+n \to w+n+1$.
+{\color{red} TO BE ELABORATED}
+Hence we must have $S^\uparrow_C\prvH W+n \to w+n+1$.
 
-If $W$ is empty we can construct a homomorphism $h: L\to N$.
+If $W$ is empty we can construct a homomorphism $h: L\to N$, case (2).
 Define $h(x) = \max(g(V))- g(x)$ for all $x\in V$. 
 Extend $h$ to terms over $V$ by $h(t^+) = h(t)+1$ 
 and $h(s\vee t) = \max(h(s),h(t))$.
@@ -567,7 +604,8 @@ Since $g$ is a model of $S_C^+$ by Theorem~\ref{thm:main},
 the conclusion is also satisfied by $g$, that is,
 $g(y)\geq l+g(x_1)-k_1$, so $g(y)-l\geq g(x_1)-k_1$.
 This completes the proof that $h$ respects equality in $L$.
-%It is clear that (1) and (2) are exclude each other.
+
+It should be clear that (1) and (2) are exclude each other.
 \end{proof}
 
 
@@ -579,15 +617,16 @@ The motivation for this problem comes from dependent type theory,
 where the relevant operations on universe levels are to take the
 supremum of two levels, and to increment a level.
 
-One way, {\color{red}suggested by Voevodsky in \cite{VV},}
-to avoid so-called universe inconsistencies
-in type theory would be to let typings depend not only
-on a context assigning types to variables, but also on a
-finite set of universe level constraints. A typing would then
+In order to avoid so-called universe inconsistencies in type theory, 
+it has been suggested in \cite{Huet87}, \cite{HarperP91}, \cite{VV}
+to use constraints on universe levels.
+In \cite{Huet87}, \cite{HarperP91} these constraints
+are linear inequalities between universe levels.
+In \cite{VV} also the maximum of two universe levels is used.
+A typing would then
 only be valid if its constraints can be inferred from the set
 of constraints in the context. 
-{\color{red}(This is not well explained, the set of constraints can also grow.)}
- Moreover, the latter set should
+Moreover, the latter set should
 be consistent in the sense that there are no loops. 
 As defined above, a loop is a lattice term that is equal to its successor; 
 a good intuition is that loops lead to universe-inconsistencies 
@@ -602,8 +641,8 @@ of type checking.
 Since dependent type theory is meant to be a foundation of mathematics,
 we want to make minimal mathematical assumptions about the universe levels.
 For example, we don't say that they are natural numbers
-with a zero, successor and a maximum function {\color{red}(like Voevodsky in \cite{VV},
-referring to Presburger Arithmetic for decidability)}.
+with a zero, successor and a maximum function (like Voevodsky in \cite{VV},
+referring to Presburger Arithmetic for decidability).
 Such assumptions would weaken, at least philosophically,
 the foundational claim of dependent type theory:
 natural numbers are introduced as an inductive type
@@ -625,7 +664,7 @@ However, if $x$ and $y$ are incomparable, there are countermodels
 of $x\vee y = x^+$ in which $y = x^+$ is false. The simplest
 countermodel has three points. The model of $x\vee y = x^+$
 as described in the proof of Theorem~\ref{thm:LvsH} is based
-on $V$-terms with $V=\set{x,y}$, modulo the congruence $\equiv$.
+on terms over $V=\set{x,y}$, modulo the congruence $\equiv$.
 This congruence gives ${x+k \vee y+l} \equiv {x+l+1}$ if $k\leq l$
 (use $x,y \to x+1$),
 and ${x+k \vee y+l} \equiv {x+k}$ if $k>l$
@@ -637,17 +676,30 @@ In this model $y = x^+$ is false ($y\to x+1$ cannot be derived).
 \bibliography{refs}
 \begin{thebibliography}{99}
 
+\bibitem{Huet87}
+G\'erard Huet.
+\newblock\emph{Extending the calculus of constructions with {Type:Type}},
+\newblock unpublished manuscript, April 1987.
+
+\bibitem{HarperP91}
+Robert Harper and Robert Pollack.
+\newblock\emph{Type checking with universes},
+Theoretical Computer Science, 89, 107--136, 1991.
+
 \bibitem{Lorenzen51}
-Paul Lorenzen
+Paul Lorenzen.
   \newblock\emph{Algebraische und logistische Untersuchungen über freie Verbände},
 Journal of Symbolic Logic, 16(2), 81--106, 1951.
 English translation by Stefan Neuwirth: \url{https://arxiv.org/abs/1710.08138}
 
 \bibitem{VV}
-  Vladimir Voevodsky,
- \newblock\emph{Universe polymorphic type system}.
-Manuscript, \url{http://www.math.ias.edu/Voevodsky/voevodsky-publications_abstracts.html\#UPTS},
-  {2014}
+  Vladimir Voevodsky.
+ \newblock\emph{Universe polymorphic type system},
+manuscript, 
+ \newblock \url{http://www.math.ias.edu/Voevodsky/voevodsky-publications_abstracts.html\#UPTS}, {2014}.
+
+
+
 \end{thebibliography}
 
 \end{document}
