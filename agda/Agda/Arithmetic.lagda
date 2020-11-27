@@ -23,7 +23,7 @@ plus-comm : (m n : ℕ) → m ∔ n ≡ n ∔ m
 plus-comm zero     n = zero-left n
 plus-comm (succ m) n = succ-left m n ∙ ap succ (plus-comm m n)
 
-_≤_ : ℕ → ℕ → Set
+_≤_ : ℕ → ℕ → Type
 zero   ≤ n      = ℕ₁
 succ m ≤ zero   = ℕ₀
 succ m ≤ succ n = m ≤ n

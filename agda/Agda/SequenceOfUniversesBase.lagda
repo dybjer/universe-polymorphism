@@ -16,7 +16,7 @@ with v (succ n).
 
 \begin{code}
 
-internal-universe : Set
+internal-universe : Type
 internal-universe = Σ u ꞉ V , (S u → V)
 
 \end{code}
@@ -26,10 +26,10 @@ defined by U = Carrier (u , t) and T = Structure (u , t).
 
 \begin{code}
 
-Carrier : internal-universe → Set
+Carrier : internal-universe → Type
 Carrier (u , t) = S u
 
-Structure : (i : internal-universe) → Carrier i → Set
+Structure : (i : internal-universe) → Carrier i → Type
 Structure (u , t) a = S (t a)
 
 next : internal-universe → internal-universe
@@ -39,10 +39,10 @@ v : ℕ → internal-universe
 v zero     = ⌜ℕ₀⌝ , ℕ₀-induction (λ _ → V)
 v (succ x) = next (v x)
 
-𝓥 : ℕ → Set
+𝓥 : ℕ → Type
 𝓥 n = Carrier (v (succ n))
 
-𝓢 : (n : ℕ) → 𝓥 n → Set
+𝓢 : (n : ℕ) → 𝓥 n → Type
 𝓢 n = Structure (v (succ n))
 
 \end{code}
