@@ -549,10 +549,13 @@ a model of $S^\uparrow_C$ and check whether atom $b$ is satisfied by $g$.
 The decision method above for $S^\uparrow_C\prvH A\to b$ only works
 if every variable in $V$ occurs in $A$.
 However, it is not difficult to extend Theorem~\ref{thm:main}
-so that we get decidability of $S^\uparrow_C\prvH A\to b$ in
-general. {\color{red} Use Lemma~\ref{lem:plusbodyS} and Lemma~\ref{lem:shift-up} TBD}.
-
-Thus we get:
+so that we get decidability of $S^\uparrow_C\prvH A\to b$ in general. 
+{\color{red} By Lemma~\ref{lem:plusbodyS} and Lemma~\ref{lem:shift-up}
+we see that $S^\uparrow_C\prvH A\to b$ is equivalent to
+$S^{\uparrow+}_C + T \prvH V,A^+ \to b^+$. We note in passing
+that $S^{\uparrow+}_C + T$ is in fact $S^{\uparrow}_{C^+}$, where
+$C^+$ is the set of constraints $s^+ = t^+$ with $s=t$ in $C$.
+} Thus we get:
 
 \begin{corollary}\label{cor:decidability}
 For all $C,A,b,s,t$, $S^\uparrow_C\prvH A\to b$ and $C\prvL s=t$ are decidable.
@@ -570,17 +573,26 @@ Exactly one of the following two decidable cases holds:
 (2) There is a homomorphism $h: L\to N$.
 \end{corollary}
 \begin{proof}
-Let $k$ be maximal such that $x+k$ occurs in the body of a clause in $S_C$.
-Take $f: V\to\N$ to be the constant $k$ function and compute $g$ according
+Let $m$ be maximal such that $x+m$ occurs in the body of a clause in $S_C$.
+Take $f: V\to\N$ to be the constant $m$ function and compute $g$ according
 to Theorem~\ref{thm:main}. Let $W$ be the subset of $V$ such that 
 $g(w)=\infty$ for all $w\in W$. Claim: if $W$ is not empty,
 then we have a loop, case (1), because there exists an $n\in\N$ such that 
 $S^\uparrow_C\prvH W+n \to w+n+1$ for all $w\in W$.
-Proof: if $W=V$, then $n=k$, otherwise $n= \max(g(V-W))+\M$.
-We have $S^\uparrow_C\prvH V+k \to w+n+1$. However,
-variables in $V-W$ cannot play a role above $n$.
-{\color{red} TO BE ELABORATED}
-Hence we must have $S^\uparrow_C\prvH W+n \to w+n+1$.
+{\color{red} Proof: if $W=V$, then $n=m$ and we are done,
+otherwise take $n= \max(g(V-W))+\M$. The idea of this choice of $n$ is 
+that variables in $V-W$ cannot play a role above $n$.
+In order to see this, define $f': V\to\N$ by $f'(x)=g(x)$ if $x\in V-W$
+and $f'(w)=n$ if $w\in W$. Then $g\geq f'\geq f$, so $g$ is also the minimal 
+model when starting from $f'$. Since $f'$ and $g$ coincide on $V-W$ we have
+that all clauses in $S^\uparrow_C{\downarrow}(V-W)$ are satisfied by $f'$.
+By the particular choice of $n$, using same reasoning as in the proof of 
+Lemma~\ref{lem:secondary}, albeit with $f'$ instead of $f$, also
+$S^\uparrow_C{\downarrow}W - S^\uparrow_C|W$ is satisfied by $f'$.
+Hence the only clauses that play a role in computing $g$ are
+clauses from $S^\uparrow_C|W$, so we must have 
+$S^\uparrow_C\prvH W+n \to w+n+1$ for all $w\in W$.
+It follows that $\vee_{w\in W} w+n$ is a loop.}
 
 If $W$ is empty we can construct a homomorphism $h: L\to N$, case (2).
 Define $h(x) = \max(g(V))- g(x)$ for all $x\in V$. 
@@ -694,7 +706,7 @@ English translation by Stefan Neuwirth: \url{https://arxiv.org/abs/1710.08138}
 
 \bibitem{VV}
   Vladimir Voevodsky.
- \newblock\emph{Universe polymorphic type system},
+ \newblock\emph{A universe polymorphic type system},
 manuscript, 
  \newblock \url{http://www.math.ias.edu/Voevodsky/voevodsky-publications_abstracts.html\#UPTS}, {2014}.
 
