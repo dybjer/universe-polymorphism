@@ -259,54 +259,32 @@ as well as all predecessor clauses for each $v\in V$.
 
 Given a set $S$ of Horn clauses,
 let $S\prvH A\to b$ denote provability from $S$.
-Recall that provability from $S$ is defined inductively by
-two base cases, 
-(1) $S\prvH a\to a$ and 
-(2) $S\prvH A\to b$ if $A\to b$ in $S$, and two induction cases,
-\emph{weakening} (3) $S\prvH A,c\to b$ if $S\prvH A\to b$ and
-\emph{cut} (4) $S\prvH A\to b$ if $S\prvH A\to c$ and $S\prvH A,c\to b$.
-The following lemmas will be used later on.
-
-\begin{lemma}\label{lem:plusbodyS}
-Let $S$ be a set of clauses of the form $X\to y$ with $X\cap V = \emptyset$.
-If $S\prvH A\to b$, then we have $b\in A$ or $S\prvH (A-V)\to b$
-(without increasing the length of the derivation).
-\end{lemma} 
-\begin{proof} By induction on the definition of $S\prvH A\to b$.
-The base cases and weakening are obvious. Regarding the cut,
-assume $S\prvH A\to b$ is inferred from $S\prvH A\to c$ and 
-$S\prvH A,c\to b$, and assume the lemma holds for the latter two (IH).
-If $b\in A$ we are done. If $c\in A$ we are done by (IH). If neither of
-the latter two is the case, we have $b=c$ or $S\prvH ((A,c)-V)\to b$ by (IH).
-If $b=c$ we are done by (IH). If $S\prvH ((A,c)-V)\to b$ and $c\in V$ we are
-done. If $c\notin V$, then we have $S\prvH (A-V),c\to b$
-and $S\prvH (A-V)\to c$ and we get $S\prvH (A-V)\to b$ by a cut.
-\end{proof}
+{\color{red}%
+One convenient way to define this is by induction:
+$S\prvH A\to b$ if 
+(i) $b\in A$ or 
+(ii) $S\prvH A,c\to b$ for some $c$ such that there exists
+a clause $A'\to c$ in $S$ with $A'\subseteq A$.
+This is the inductive way of defining forward reasoning,
+that is, using the Horn clauses in $S$ to generate atoms from $A$.
+We can also use this definition if $A$ is infinite.
+Then it is more customary to write $S,A \prvH b$.
 
 For $X$ a set of atoms, define $X^+ := \set{x^+\mid x\in X}$.
-For $S$ a set of clauses, define $S^+ := \set{X^+\to y^+ \mid (X\to y) \in S}$.
+For $S$ a set of clauses, define 
+$S^+ := \set{X^+\to y^+ \mid \text{$X\to y$ in $S$}}$.
+The following lemma will be used later on.
 
 \begin{lemma}\label{lem:shift-up}
-Let $S$ be a set of clauses, and $T=\set{v^+\to v \mid v\in V}$. 
-Then we have:
-$S\prvH A\to b$ if and only if $S^+ \cup T \prvH A^+\to b^+$.
+Let $V$ be a finite set of variables.
+Let $S$ and $T$ be sets of Horn clauses, where all clauses in $T$ 
+have conclusion in $V$. Then the following three are equivalent:
+(1) $S\prvH A\to b$; (2) $S^+\prvH A^+\to b^+$; (3) $S^+ \cup T \prvH V,A^+\to b^+$.
 \end{lemma} 
-\begin{proof} From left to right is obvious.
-The other direction is proved by induction on the length of the derivation of 
-$S^+ \cup T \prvH A^+\to b^+$.
-The base cases and weakening are obvious. 
-Assume the lemma holds for shorter derivations (IH).
-Regarding the cut, assume $S^+ \cup T \prvH A^+\to b^+$ is 
-inferred from $S^+ \cup T \prvH A^+\to c$ and 
-$S^+ \cup T \prvH A^+,c \to b^+$.
-If $c=d^+$ for some $d$ we are done by an appeal to (IH) and cut. 
-Otherwise we have $c\in V$ and proceed as follows.
-The set of clauses $S^+ \cup T$ satisfies the condition of Lemma~\ref{lem:plusbodyS}.
-Hence we have $b^+\in A^+,c$, so $b^+\in A^+$ and we are done, or
-$S^+ \cup T \prvH ((A^+,c) -V) \to b^+$, that is, $S^+ \cup T \prvH A^+ \to b^+$
-without increasing the length {\color{red}of the subderivation}. 
-Now we are done by (IH).
+\begin{proof} 
+Immediate by induction on the definition of $\prvH$.
 \end{proof}
+}
 
 We have the following theorem generalizing \cite[Theorem 3]{Lorenzen51}.
 
@@ -351,7 +329,7 @@ about Horn clauses: the models (as satisfying sets of atoms)
 are closed under intersection. Moreover, every set $X$ of atoms
 can be extended to a unique minimal model; this minimal model
 consists of all atoms that can be inferred from $X$ using the
-Horn clauses as generating rules. 
+Horn clauses as generating rules, as defined just before Lemma~\ref{lem:shift-up}. 
 
 We proceed by defining an auxiliary notion that we call `gain'.
 The \emph{gain} of a clause $\jbody{x}{k}{m}\to y+l$ is $l$ 
@@ -550,22 +528,22 @@ The decision method above for $S^\uparrow_C\prvH A\to b$ only works
 if every variable in $V$ occurs in $A$.
 However, it is not difficult to extend Theorem~\ref{thm:main}
 so that we get decidability of $S^\uparrow_C\prvH A\to b$ in general. 
-{\color{red} By Lemma~\ref{lem:plusbodyS} and Lemma~\ref{lem:shift-up}
+{\color{red} Let $T=\set{v^+\to v \mid v\in V}$. By Lemma~\ref{lem:shift-up}
 we see that $S^\uparrow_C\prvH A\to b$ is equivalent to
-$S^{\uparrow+}_C + T \prvH V,A^+ \to b^+$. We note in passing
-that $S^{\uparrow+}_C + T$ is in fact $S^{\uparrow}_{C^+}$, where
+$S^{\uparrow+}_C \cup T \prvH V,A^+ \to b^+$, and
+$S^{\uparrow+}_C \cup T$ is in fact $S^{\uparrow}_{C^+}$, where
 $C^+$ is the set of constraints $s^+ = t^+$ with $s=t$ in $C$.
 } Thus we get:
 
 \begin{corollary}\label{cor:decidability}
-For all $C,A,b,s,t$, $S^\uparrow_C\prvH A\to b$ and $C\prvL s=t$ are decidable.
+For all $A,b,s,t$, $S^\uparrow_C\prvH A\to b$ and $C\prvL s=t$ are decidable.
 \end{corollary}
 
 Another application of Theorem~\ref{thm:main} is loop checking.
 Given a finite lattice presentation $(V,C)$, a \emph{loop} is a 
 term $t$ over $V$ such that $C\prvL t^+=t$. Let $L$ be the
 lattice presented by $(V,C)$. Let $N$ be the lattice $\N$ with
-the usual $\max$ and successor functions.
+the usual $\max$ and successor function.
 
 \begin{corollary}\label{cor:loopchecking}
 Exactly one of the following two decidable cases holds:
