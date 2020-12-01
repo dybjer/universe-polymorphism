@@ -21,7 +21,7 @@
 \usepackage{proof}
 \usepackage{latexsym}
 %\usepackage{mytheorems}
-\newtheorem{theorem}{Theorem}[section]
+\newtheorem{theorem}{Theorem}%[section]
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}{Lemma}[theorem]
 \newtheorem{proposition}{Proposition}[theorem]
@@ -162,7 +162,7 @@ to determine, given a finite set $E$ of relations between generators,
 whether a given relation is provable from $E$ in $T$.
 We prove the decidability of the uniform word problem for
 the theory of join-semilattices with a successor function.
-We start from the algebraic definition of semilattices in which the
+We start from the equational definition of semilattices in which the
 join, denoted by $\vee$, is an associative, commutative, and idempotent
 binary operation. The successor function, denoted by ${\_}^+$,
 satisfies the following two equational axioms:
@@ -182,6 +182,7 @@ As is customary, we let $s\geq t$ abbreviate $s\vee t = s$.
 
 For any lattice term $t$ and natural number $k$, 
 let $t+k$ denote the $k$-fold successor of $t$.
+Thus $t+0 = t$, and we may use $t+1$ and $t^+$ interchangeably. 
 Since the successor function commutes we the join operation,
 every lattice term $t$ is equal to a term of the
 form $\jterm{x}{k}{m}$, with all variables $x_i$ occurring in $t$
@@ -259,7 +260,6 @@ as well as all predecessor clauses for each $v\in V$.
 
 Given a set $S$ of Horn clauses,
 let $S\prvH A\to b$ denote provability from $S$.
-{\color{red}%
 One convenient way to define this is by induction:
 $S\prvH A\to b$ if 
 (i) $b\in A$ or 
@@ -276,15 +276,15 @@ $S^+ := \set{X^+\to y^+ \mid \text{$X\to y$ in $S$}}$.
 The following lemma will be used later on.
 
 \begin{lemma}\label{lem:shift-up}
-Let $V$ be a finite set of variables.
+Let $V$ be a finite set of variables, and $A\to b$ a Horn clause.
 Let $S$ and $T$ be sets of Horn clauses, where all clauses in $T$ 
-have conclusion in $V$. Then the following three are equivalent:
+have conclusion \emph{in} $V$. Then the following three are equivalent:
 (1) $S\prvH A\to b$; (2) $S^+\prvH A^+\to b^+$; (3) $S^+ \cup T \prvH V,A^+\to b^+$.
 \end{lemma} 
 \begin{proof} 
 Immediate by induction on the definition of $\prvH$.
 \end{proof}
-}
+
 
 We have the following theorem generalizing \cite[Theorem 3]{Lorenzen51}.
 
@@ -412,7 +412,7 @@ Otherwise, assume we can infer the value $g_f(w)+k+1$
 for $w\in W$, using values of $f$ on $V-W$ and values 
 of $g_f$ on $W$. Then we know that the term with $g_f(w)$
 in the sum defining $M(g_f)$ is positive.
-Define $f' : V -> \Ninf$ by 
+Define $f' : V \to \Ninf$ by 
 \begin{align*}
 f'(x)&= f(x)   \quad\quad\text{for $x$ in $V-W$,}\\ 
 f'(y)&= g_f(y) \quad\quad\text{for $y$ in $W-\set{w}$, and}\\ 
@@ -528,12 +528,12 @@ The decision method above for $S^\uparrow_C\prvH A\to b$ only works
 if every variable in $V$ occurs in $A$.
 However, it is not difficult to extend Theorem~\ref{thm:main}
 so that we get decidability of $S^\uparrow_C\prvH A\to b$ in general. 
-{\color{red} Let $T=\set{v^+\to v \mid v\in V}$. By Lemma~\ref{lem:shift-up}
+Let $T=\set{v^+\to v \mid v\in V}$. By Lemma~\ref{lem:shift-up}
 we see that $S^\uparrow_C\prvH A\to b$ is equivalent to
 $S^{\uparrow+}_C \cup T \prvH V,A^+ \to b^+$, and
 $S^{\uparrow+}_C \cup T$ is in fact $S^{\uparrow}_{C^+}$, where
 $C^+$ is the set of constraints $s^+ = t^+$ with $s=t$ in $C$.
-} Thus we get:
+ Thus we get:
 
 \begin{corollary}\label{cor:decidability}
 For all $A,b,s,t$, $S^\uparrow_C\prvH A\to b$ and $C\prvL s=t$ are decidable.
@@ -557,7 +557,8 @@ to Theorem~\ref{thm:main}. Let $W$ be the subset of $V$ such that
 $g(w)=\infty$ for all $w\in W$. Claim: if $W$ is not empty,
 then we have a loop, case (1), because there exists an $n\in\N$ such that 
 $S^\uparrow_C\prvH W+n \to w+n+1$ for all $w\in W$.
-{\color{red} Proof: if $W=V$, then $n=m$ and we are done,
+
+Proof of claim: if $W=V$, then $n=m$ and we are done,
 otherwise take $n= \max(g(V-W))+\M$. The idea of this choice of $n$ is 
 that variables in $V-W$ cannot play a role above $n$.
 In order to see this, define $f': V\to\N$ by $f'(x)=g(x)$ if $x\in V-W$
@@ -570,7 +571,7 @@ $S^\uparrow_C{\downarrow}W - S^\uparrow_C|W$ is satisfied by $f'$.
 Hence the only clauses that play a role in computing $g$ are
 clauses from $S^\uparrow_C|W$, so we must have 
 $S^\uparrow_C\prvH W+n \to w+n+1$ for all $w\in W$.
-It follows that $\vee_{w\in W} w+n$ is a loop.}
+It follows that $\vee_{w\in W} w+n$ is a loop.
 
 If $W$ is empty we can construct a homomorphism $h: L\to N$, case (2).
 Define $h(x) = \max(g(V))- g(x)$ for all $x\in V$. 
@@ -595,7 +596,7 @@ the conclusion is also satisfied by $g$, that is,
 $g(y)\geq l+g(x_1)-k_1$, so $g(y)-l\geq g(x_1)-k_1$.
 This completes the proof that $h$ respects equality in $L$.
 
-It should be clear that (1) and (2) are exclude each other.
+It should be clear that (1) and (2) exclude each other.
 \end{proof}
 
 
@@ -639,6 +640,45 @@ natural numbers are introduced as an inductive type
 at some later point in the development. For similar reasons
 we don't assume that universe levels are totally ordered,
 nor that the successor function is injective.
+
+\subsection{Example}
+Let $S_C$ consist of the clauses 
+$a,b\to b+1$; $b\to c+3$; $c+1\to d$; $b,d+2\to e$.
+We shall show how the proof of Theorem~\ref{thm:main} works to find the 
+minimal model above the function that is constant $0$.
+Sets of variables will be denoted by a string, e.g., $V=abcde$. 
+We denote functions with domain $V$ by a string of values, e.g., $00000$.
+(Digits will suffice in this example). We have $\M=3$.
+
+First we compute the function $g_0 = 01300$ with the maximal values
+that can be obtained \emph{in one step} from $00000$. We have $W_0 = bc$.
+(We give indices to $g,W$ from the proof since the proof is inductive 
+and we'll need several local versions of these parameters.) 
+The proof of Theorem~\ref{thm:main} now invokes
+Lemma~\ref{lem:secondary} to compute the minimal model 
+above $g_0$ of all clauses in $S$ with conclusion over $W_0$,
+$a,b\to b+1$ and $b\to c+3$. Also the proof of the lemma is inductive,
+but we immediately get that this minimal model is $h_0 = 01400$.
+
+We now check whether $h_0$ is a model of $S_C$. It is not:
+(only) the clause $c+1\to d$ is not satisfied, and the
+maximal value for $d$ is $3$. So we continue with
+$g_1 = 01430$ and $W_1 = bcd$ and compute the minimal
+model $h_1$ of the clauses with conclusion over $W_1$,
+which happens to be $g_1$ itself.
+
+One more, very similar round yields
+$g_2 = 01431$ and $W_2 = bcde$ and $h_2=g_2$,
+which satisfies all clauses of $S_C$, and is the minimal 
+model starting from the function that is constant $0$.
+
+An interesting variation would be to add the clause
+$z\to a$ and to see that the algorithm then detects
+the loop. This is indeed the
+case because $z\to a$ is not satisfied by $h_2$ and so
+$g_3 = 11431$ and $W_3=abcde$ are computed.
+Now $V=W_3$ and the loop has been detected,
+the minimal model is the function that is constant $\infty$.
 
 
 \subsection{Related work}
