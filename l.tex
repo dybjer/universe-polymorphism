@@ -146,7 +146,7 @@ for join-semilattices with a successor}
 
 \author{Marc Bezem%
 \thanks{Department of Informatics, University of Bergen, {\tt Marc.Bezem@uib.no}}
-and Thierry Coquand
+~and Thierry Coquand
 \thanks{Department of Computer Science and Engineering, 
 Chalmers/University of Gothenburg, {\tt coquand@chalmers.se}}
 }
@@ -183,7 +183,7 @@ As is customary, we let $s\geq t$ abbreviate $s\vee t = s$.
 For any lattice term $t$ and natural number $k$, 
 let $t+k$ denote the $k$-fold successor of $t$.
 Thus $t+0 = t$, and we may use $t+1$ and $t^+$ interchangeably. 
-Since the successor function commutes we the join operation,
+Since the successor function commutes with the join operation,
 every lattice term $t$ is equal to a term of the
 form $\jterm{x}{k}{m}$, with all variables $x_i$ occurring in $t$
 and all $k_i\in \N$.
@@ -211,12 +211,12 @@ characterisation of $C\prvL s=t$ using Horn clauses.
 Let $(V,C)$ be a lattice presentation.
 Let $s:= \jterm{x}{k}{m}$ and $t:= \jterm{y}{l}{n}$ be
 terms over $V$. From the constraint $s=t$
-we can prove $m+n$ inequalities which we write as 
-the set $S_{s=t}$ consisting of the following 
-Horn clauses\footnote{In this note all clauses are positive,
+we can prove $m+n$ inequalities which we write as
+Horn clauses by replacing join by conjunction (written as ``,'') and $\geq$
+by implication.\footnote{In this note all clauses are positive,
 propositional Horn clauses with a non-empty body,
-with abstract atoms of the form $x+k$ with $x\in V$ and $k\in \N$.}
-:
+with abstract atoms of the form $x+k$ with $x\in V$ and $k\in \N$.} 
+Thus we get the set $S_{s=t}$ consisting of the following Horn clauses:
 \begin{align*}
 \jbody{x}{k}{m} &\to y_1+l_1 \\
 &\ldots  \\
@@ -608,7 +608,7 @@ The motivation for this problem comes from dependent type theory,
 where the relevant operations on universe levels are to take the
 supremum of two levels, and to increment a level.
 
-In order to avoid so-called universe inconsistencies in type theory, 
+In order to avoid universe inconsistencies in type theory, 
 it has been suggested in \cite{Huet87}, \cite{HarperP91}, \cite{VV}
 to use constraints on universe levels.
 In \cite{Huet87}, \cite{HarperP91} these constraints
@@ -620,7 +620,7 @@ of constraints in the context.
 Moreover, the latter set should
 be consistent in the sense that there are no loops. 
 As defined above, a loop is a lattice term that is equal to its successor; 
-a good intuition is that loops lead to universe-inconsistencies 
+a good intuition is that loops lead to universe inconsistencies 
 comparable to the paradoxes in set theory.
 
 In type theory it is important that typing checking is decidable.
@@ -648,7 +648,7 @@ We shall show how the proof of Theorem~\ref{thm:main} works to find the
 minimal model above the function that is constant $0$.
 Sets of variables will be denoted by a string, e.g., $V=abcde$. 
 We denote functions with domain $V$ by a string of values, e.g., $00000$.
-(Digits will suffice in this example). We have $\M=3$.
+(Digits will suffice in this example.) We have $\M=3$.
 
 First we compute the function $g_0 = 01300$ with the maximal values
 that can be obtained \emph{in one step} from $00000$. We have $W_0 = bc$.
@@ -673,9 +673,9 @@ which satisfies all clauses of $S_C$, and is the minimal
 model starting from the function that is constant $0$.
 
 An interesting variation would be to add the clause
-$z\to a$ and to see that the algorithm then detects
+$e\to a$ and to see that the algorithm then detects
 the loop. This is indeed the
-case because $z\to a$ is not satisfied by $h_2$ and so
+case because $e\to a$ is not satisfied by $h_2$ and so
 $g_3 = 11431$ and $W_3=abcde$ are computed.
 Now $V=W_3$ and the loop has been detected,
 the minimal model is the function that is constant $\infty$.
@@ -690,9 +690,9 @@ but interpreted in the integers or in the rational numbers.
 The latter are totally ordered, which makes the problem different.
 Consider, for example, the constraint $x\vee y = x^+$.
 When the ordering is total, this constraint implies $y = x^+$.
-However, if $x$ and $y$ are incomparable, there are countermodels
+However, if $x$ and $y$ are incomparable, there are models
 of $x\vee y = x^+$ in which $y = x^+$ is false. The simplest
-countermodel has three points. The model of $x\vee y = x^+$
+such countermodel has three elements. The model of $x\vee y = x^+$
 as described in the proof of Theorem~\ref{thm:LvsH} is based
 on terms over $V=\set{x,y}$, modulo the congruence $\equiv$.
 This congruence gives ${x+k \vee y+l} \equiv {x+l+1}$ if $k\leq l$
