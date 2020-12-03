@@ -22,10 +22,10 @@
 \usepackage{latexsym}
 %\usepackage{mytheorems}
 \newtheorem{theorem}{Theorem}%[section]
-\newtheorem{corollary}{Corollary}[theorem]
-\newtheorem{lemma}{Lemma}[theorem]
-\newtheorem{proposition}{Proposition}[theorem]
-\newtheorem{example}{Example}[theorem]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{proposition}{Proposition}[theorem]
+%\newtheorem{example}{Example}[theorem]
 
 \usepackage{float}
 \floatstyle{boxed}
@@ -157,7 +157,7 @@ Chalmers/University of Gothenburg, {\tt coquand@chalmers.se}}
 
 
 \section{Introduction}
-The \emph{uniform word problem} for an algebraic theory $T$ is
+The \emph{uniform word problem} for an equational theory $T$ is
 to determine, given a finite set $E$ of relations between generators,
 whether a given relation is provable from $E$ in $T$.
 We prove the decidability of the uniform word problem for
