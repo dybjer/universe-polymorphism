@@ -1,15 +1,15 @@
-\DeclareMathOperator{\Ker}{Ker}
-\DeclareMathOperator{\nf}{nf}
-\DeclareMathOperator{\domain}{dom}
-\DeclareMathOperator{\codomain}{cod}
-\DeclareMathOperator{\cod}{cod}
-\DeclareMathOperator{\dom}{dom}
-\DeclareMathOperator{\ctxof}{ctx-of}
-\DeclareMathOperator{\typeof}{type-of}
-\DeclareMathOperator{\fix}{fix}
+%\DeclareMathOperator{\Ker}{Ker}
+%\DeclareMathOperator{\nf}{nf}
+%\DeclareMathOperator{\domain}{dom}
+%\DeclareMathOperator{\codomain}{cod}
+%\DeclareMathOperator{\cod}{cod}
+%\DeclareMathOperator{\dom}{dom}
+%\DeclareMathOperator{\ctxof}{ctx-of}
+%\DeclareMathOperator{\typeof}{type-of}
+%\DeclareMathOperator{\fix}{fix}
 
 %\newcommand{\vdashS}{\ \vdash\ }
-\newcommand{\vdashS}{\vdash}
+%\newcommand{\vdashS}{\vdash}
 \newcommand {\emptyContext}{1}
 \newcommand {\emptyContextI}{\diamond}
 \newcommand {\emptyContextS}{\textbf 1}
@@ -120,7 +120,7 @@
 \newcommand{\bal}[0]{{\sf b}}
 \newcommand{\sat}[1]{{\rm Sat}(#1)}
 \newcommand{\set}[0]{{\rm Set}}
-\newcommand{\Set}[0]{{\rm Set}}
+\newcommand{\Set}[0]{{\bf Set}}
 \newcommand{\true}[0]{{\sf T}}
 \newcommand{\monus}{\stackrel{{}^{\scriptstyle .}}{\smash{-}}}
 
@@ -137,7 +137,7 @@
 
 \newcommand{\bintree}[0]{{\rm T}_2}
 
-\newcommand{\sequent}[0]{\vdash}
+%\newcommand{\sequent}[0]{\vdash}
 
 
 \renewcommand{\conv}[0]{\approx}
@@ -162,16 +162,8 @@
 %\newcommand{\red}[1]{}
 \renewcommand{\bar}[1]{\overline{#1}}
 
-% Definitions for todonotes
-\newcommand{\rkPierreInline}[1]{\todo[inline,color=blue!40]{Pierre --- #1}}
-\newcommand{\rkPierre}[1]{\todo[color=blue!40]{Pierre --- #1}}
-\newcommand{\rkSimonInline}[1]{\todo[inline,color=red!40]{Simon --- #1}}
-\newcommand{\rkSimon}[1]{\todo[color=red!40]{Simon --- #1}}
-\newcommand{\rkPeterInline}[1]{\todo[inline,color=green!40]{Peter --- #1}}
-\newcommand{\rkPeter}[1]{\todo[color=green!40]{Peter --- #1}}
-
-\newdir{pb}{:(1,-1)@^{|-}}
-\def\pb#1{\save[]+<16 pt,0 pt>:a(#1)\ar@{pb{}}[]\restore}
+%\newdir{pb}{:(1,-1)@^{|-}}
+%\def\pb#1{\save[]+<16 pt,0 pt>:a(#1)\ar@{pb{}}[]\restore}
 
 \newcommand{\Fam}{\textbf{Fam}}
 \newcommand{\nilc}{1}
@@ -195,5 +187,5 @@
 \def\q{\mathrm{q}}
 \newcommand{\tuple}[1]{\langle #1 \rangle}
 
-
+\newtheorem{remark}{Remark}
 \newtheorem{definition}{Definition}
