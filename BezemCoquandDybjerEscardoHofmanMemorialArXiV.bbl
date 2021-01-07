@@ -1,0 +1,134 @@
+\begin{thebibliography}{10}
+
+\bibitem{agda-wiki}
+The {Agda} wiki.
+\newblock {\tt http://appserv.cs.chalmers.se/users/ulfn/wiki/agda.php}.
+
+\bibitem{MR519801}
+Peter Aczel.
+\newblock The type theoretic interpretation of constructive set theory.
+\newblock In {\em Logic {C}olloquium '77 ({P}roc. {C}onf., {W}roc\l aw, 1977)},
+  volume~96 of {\em Stud. Logic Foundations Math.}, pages 55--66.
+  North-Holland, Amsterdam-New York, 1978.
+
+\bibitem{altenkirch:qiits}
+Thorsten Altenkirch and Ambrus Kaposi.
+\newblock Type theory in type theory using quotient inductive types.
+\newblock In Rastislav Bod{\'{\i}}k and Rupak Majumdar, editors, {\em
+  Proceedings of the 43rd Annual {ACM} {SIGPLAN-SIGACT} Symposium on Principles
+  of Programming Languages, {POPL} 2016, St. Petersburg, FL, USA, January 20 -
+  22, 2016}, pages 18--29. {ACM}, 2016.
+
+\bibitem{birkhoff}
+Garret Birkhoff.
+\newblock On the structure of abstract algebras.
+\newblock In {\em Proceeding of the Cambridge Philosophical Society},
+  volume~31, page 433–454, 1935.
+
+\bibitem{brunerie:initiality}
+Guillaume Brunerie.
+\newblock A formalization of the initiality conjecture in {Agda}.
+\newblock Slides from a talk about joint work with Menno de Boer, Peter
+  Lumsdaine, and Anders Mörtberg, at HoTT, CMU, Pittsburgh, 2019.
+
+\bibitem{cartmell:phd}
+John Cartmell.
+\newblock {\em Generalized Algebraic Theories and Contextual Categories}.
+\newblock D.~{Phil.}, Oxford University, 1978.
+
+\bibitem{cartmell:apal}
+John Cartmell.
+\newblock Generalized algebraic theories and contextual categories.
+\newblock {\em Annals of Pure and Applied Logic}, 32:209--243, 1986.
+
+\bibitem{castellan:tlca2015}
+Simon Castellan, Pierre Clairambault, and Peter Dybjer.
+\newblock Undecidability of equality in the free locally cartesian closed
+  category.
+\newblock In {\em 13th International Conference on Typed Lambda Calculi and
+  Applications, {TLCA} 2015, July 1-3, 2015, Warsaw, Poland}, pages 138--152,
+  2015.
+
+\bibitem{castellan:lmcs}
+Simon Castellan, Pierre Clairambault, and Peter Dybjer.
+\newblock Undecidability of equality in the free locally cartesian closed
+  category (extended version).
+\newblock {\em Logical Methods in Computer Science}, 13(4), 2017.
+
+\bibitem{castellan:lambek}
+Simon Castellan, Pierre Clairambault, and Peter Dybjer.
+\newblock Categories with families: Unityped, simply typed, and dependently
+  typed.
+\newblock {\em CoRR}, abs/1904.00827, 2019.
+
+\bibitem{ClairambaultD11}
+Pierre Clairambault and Peter Dybjer.
+\newblock The biequivalence of locally cartesian closed categories and
+  {Martin-L{\"{o}}f} type theories.
+\newblock In {\em Typed Lambda Calculi and Applications - 10th International
+  Conference, {TLCA} 2011, Novi Sad, Serbia, June 1-3, 2011. Proceedings},
+  pages 91--106, 2011.
+
+\bibitem{ClairambaultD14}
+Pierre Clairambault and Peter Dybjer.
+\newblock The biequivalence of locally cartesian closed categories and
+  {Martin-L{\"{o}}f} type theories.
+\newblock {\em Mathematical Structures in Computer Science}, 24(6), 2014.
+
+\bibitem{dybjer:torino}
+Peter Dybjer.
+\newblock Internal type theory.
+\newblock In {\em TYPES '95, Types for Proofs and Programs}, number 1158 in
+  Lecture Notes in Computer Science, pages 120--134. Springer, 1996.
+
+\bibitem{nordvallforsberg:iids}
+Fredrik~Nordvall Forsberg and Anton Setzer.
+\newblock Inductive-inductive definitions.
+\newblock In Anuj Dawar and Helmut Veith, editors, {\em Computer Science Logic,
+  24th International Workshop, {CSL} 2010, 19th Annual Conference of the EACSL,
+  Brno, Czech Republic, August 23-27, 2010. Proceedings}, volume 6247 of {\em
+  Lecture Notes in Computer Science}, pages 454--468. Springer, 2010.
+
+\bibitem{hofmann:csl}
+Martin Hofmann.
+\newblock On the interpretation of type theory in locally cartesian closed
+  categories.
+\newblock In Leszek Pacholski and Jerzy Tiuryn, editors, {\em CSL}, volume 933
+  of {\em Lecture Notes in Computer Science}. Springer, 1994.
+
+\bibitem{hofmann:cambridge}
+Martin Hofmann.
+\newblock Syntax and semantics of dependent types.
+\newblock In Andrew Pitts and Peter Dybjer, editors, {\em Semantics and Logics
+  of Computation}. Cambridge University Press, 1996.
+
+\bibitem{martinlof:padova}
+Per Martin-L{\"o}f.
+\newblock {\em Intuitionistic Type Theory}.
+\newblock Bibliopolis, 1984.
+
+\bibitem{martinlof:gbg92}
+Per Martin-L{\"o}f.
+\newblock Substitution calculus.
+\newblock Notes from a lecture given in {G}{\"o}teborg, November 1992.
+
+\bibitem{palmgrenvickers}
+Erik Palmgren and Steven~J. Vickers.
+\newblock Partial {Horn} logic and cartesian categories.
+\newblock {\em Ann. Pure Appl. Log.}, 145(3):314--353, 2007.
+
+\bibitem{streicher:semtt}
+Thomas Streicher.
+\newblock {\em Semantics of Type Theory}.
+\newblock {Birkh\"auser}, 1991.
+
+\bibitem{voevodsky:initiality}
+Vladimir Voevodsky.
+\newblock Models, interpretations and the initiality conjectures.
+\newblock Notes from a lecture at the 2017 Logic Colloquium in Stockholm,
+  special session on Category Theory and Type Theory in honor of Per
+  Martin-Löf on his 75th birthday.
+  \url{https://www.math.ias.edu/Voevodsky/files/files-annotated/Dropbox/Unfinished_papers/Type_systems/Notes_on_Type_Systems/2017_LC_Martin-Lof_special_session/BSL_extended_abstract.pdf},
+  August 2017.
+
+\end{thebibliography}
