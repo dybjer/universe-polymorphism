@@ -1,0 +1,157 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2577
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\ftech\fcharset77 Symbol;\f2\fnil\fcharset0 AppleSymbols;
+\f3\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue233;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c0\c0\c93333;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww14900\viewh18840\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs26\fsmilli13333 \cf2 \expnd0\expndtw0\kerning0
+I have revised the paper in view of the referees\'92 comments. I have made a footnote for each significant change.\
+\
+> Referee: 1\
+> \
+> Comments to the Corresponding Author\
+> The paper gives a definition for GATs internal to a CwF; i.e. a\
+> signature is extra structure on a CwF. This extra structure is defined\
+> inductively. It shows that the initial CwF with extra structure exists\
+> for any signature by a generic variant of Streicher's initiality\
+> proof. These results are not new, but the method of initiality proof\
+> is new and the presentation is nice with illuminating\
+> examples. However some important related work is not mentioned.\
+> \
+> The notion of signature relies on Awodey-Frey-Speight's (AFS)\
+> encoding of inductive types.\
+> \
+>\'a0\'a0 Steve Awodey, Jonas Frey, and Sam Speight. 2018. Impredicative Encodings of (Higher) Inductive Types. In Proceedings of the 33rd Annual ACM/IEEE Symposium on Logic in Computer Science (LICS '18). Association for Computing Machinery, New York, NY, USA, 76\'9685. DOI:https://doi.org/10.1145/3209108.3209130\
+> \
+> More precisely a uniform family of contexts is the AFS encoding of\
+> contexts, a type is the AFS encoding of types, and so on.\
+> \
+> UCon\uc0\u931 \'a0\'a0\'a0 := (\u915  : (C:|c\u931 |)
+\f1 \uc0\u8594 
+\f0 Con_C)\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0 \'d7 ((F: c\uc0\u931 (C,D)) 
+\f1 \uc0\u8594 
+\f0  F (\uc0\u915  C) = \u915  D)\
+> UTy\uc0\u931  \u915 \'a0\'a0 := (A : (C:|c\u931 |)
+\f1 \uc0\u8594 
+\f0 Ty_C(\uc0\u915  C))\'a0\'a0\'a0\'a0\'a0 \'d7 ((F: c\u931 (C,D)) 
+\f1 \uc0\u8594 
+\f0  F (A C) = A D)\
+> UTm\uc0\u931  \u915  A := (t : (C:|c\u931 |)
+\f1 \uc0\u8594 
+\f0 Tm_C(\uc0\u915  C)(A C)) \'d7 ((F: c\u931 (C,D)) 
+\f1 \uc0\u8594 
+\f0  F (t C) = t D)\
+\
+See footnote 2 on page 4 for a text about Freyd, Reynolds and the above.\
+\
+> An example usage of the AFS encoding to define signatures for inductive-inductive types\
+> is Ambrus Kaposi, Andr\'e1s Kov\'e1cs and Ambroise Lafont. For finitary induction-induction, induction is enough. TYPES 2019 post-proceedings.\
+> QIITs are generalisations of your notion of GAT (they include\
+> extensions of CwFs but also many other algebraic theories). \
+\
+I have inserted footnote 5 on page 14 in response to this, and also inserted the two references below.\
+\
+> The first definition of signatures and categories of algebras for QIITs was by\
+> \
+>\'a0\'a0 Altenkirch T., Capriotti P., Dijkstra G., Kraus N., Nordvall Forsberg F. (2018) Quotient Inductive-Inductive Types. In: Baier C., Dal Lago U. (eds) Foundations of Software Science and Computation Structures. FoSSaCS 2018. Lecture Notes in Computer Science, vol 10803. Springer, Cham. {\field{\*\fldinst{HYPERLINK "https://webmail.chalmers.se/owa/redir.aspx?REF=_oGs7eYInopCpe4EFu6sKo5WyDn0ac8ChlIupETkstkCZiDKpLfYCAFodHRwczovL2RvaS5vcmcvMTAuMTAwNy85NzgtMy0zMTktODkzNjYtMl8xNg.."}}{\fldrslt \cf3 \ul \ulc3 https://doi.org/10.1007/978-3-319-89366-2_16}}\
+> \
+> where they use a method very similar to yours: they construct\
+> signatures step by step at the same time as the category of\
+> algebras. Their notion of signature is also inductive-recursive, see\
+> Gabe Dijkstra's PhD thesis Definition 4.3.1.\
+\
+> The existence of initial algebras for QIITs including metatheoretic\
+> parameters (like in your example 5.7) was proved in\
+> \
+>\'a0\'a0 Ambrus Kaposi, Andr\'e1s Kov\'e1cs, and Thorsten Altenkirch. 2019. Constructing quotient inductive-inductive types. Proc. ACM Program. Lang. 3, POPL, Article 2 (January 2019), 24 pages. DOI:https://doi.org/10.1145/3290315\
+> \
+> Instead of constructing initial algebras directly from preterms as you\
+> do, they construct initial algebras from the theory of signatures\
+> which is a CwF with some extra type formers. The theory of signatures\
+> seems to describe exactly the same signatures as yours: they also\
+> start with a CwF with type formers U ("adding a sort symbol"), El\
+> ("adding an operator symbol"), Id ("adding an equation"), Pi (adding\
+> dependencies -- corresponds to the usage of contexts for your sorts,\
+> operators and equations). \
+\
+> Instead of a hand crafted\
+> inductive-recursive definition, they say that a signature is a context\
+> in the initial CwF with U,El,Id,Pi.\
+>\
+> Another work close to yours is\
+> \
+>\'a0\'a0 Taichi Uemura. A General Framework for the Semantics of Type Theory. Preprint, 2019. arXiv:1904.04097\
+> \
+> He also defines CwFs with extra structure and proves the existence of\
+> initial algebra for any signature.\
+\
+Footnote 5 is a sentence about Uemura.\
+\
+> Small remarks.\
+> \
+> - Bottom of page 4: in the definition of uniform family of contexts,\
+>\'a0\'a0 you should say which CwF \uc0\u915 _C is a context of (C), and similarly for\
+>\'a0\'a0 types and terms.\
+\
+See footnote 1.\
+\
+> - End of Sec. 3. I'm not sure what you mean by "syntax-independent"\
+>\'a0\'a0 definition. You use Church encoding to obtain some sort of\
+>\'a0\'a0 initiality and an initial object for a category of algebras is what\
+>\'a0\'a0 I would call "syntax".\
+\
+> - In 5.3.1, the equations a[id] = a and a[\uc0\u947 
+\f2 \uc0\u8728 
+\f0 \uc0\u948 ] = a[\u947 ][\u948 ] can be\
+>\'a0\'a0 derived if you have comprehension (so these are not strictly\
+>\'a0\'a0 necessary).\
+>\
+> - Part 5.6. Russell universes could be specified using the sort\
+>\'a0\'a0 equation "ty(\uc0\u915 ) = tm(\u915 ,U)"\
+\
+I have not made any changes in view these remarks.\
+\
+> Referee: 2\
+> \
+> Comments to the Corresponding Author\
+> This paper presents an inductive definition of generalised algebraic theory in terms of cwfs, and a sketch of proof of the existence of an initial object for the corresponding syntactic category.\
+> \
+> It is not really clear what new ideas, if any, are contained in this paper. \
+\
+It is a new definition of correct signature for a finitely presented gat and its models together with a construction of initial models. This is done in the spirit of the initiality conjecture, and we would like to claim that is simple and \'93canonical\'94.  We are not aware of any prior papers that have done this.\
+\
+Although the notion of qiit is related it is different, as we explain in the paper. There are several papers on qiits explaining how to define qiit signatures and models. Apart from the fundamental difference between gats and qiits there are many technical differences between the approaches which make a precise comparison difficult.\
+\
+> Inductive-inductive signatures (called qiits) have been around for some time, and the authors acknowledge the similarity, but the explanation of why they differ from the approach of the current paper is not really elaborated upon, and not particularly compelling as is.\
+\
+As already mentioned in the introduction, qiits are developed in a version of Martin-L\'f6f type theory with intensional identity types, and equations in a qiit are propositional equalities. In fact the authors not only assume intensional identity types. In the paper \'93Quotient inductive-inductive types\'94 by Altenkirch et al they state:\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs20 \cf0 \kerning1\expnd0\expndtw0 \'93We work in a standard Martin-L\'a8of style type theory and assume\
+function extensionality.\'94
+\f0\fs26\fsmilli13333 \cf2 \expnd0\expndtw0\kerning0
+\
+\
+> I question the characterisation of this notion as "syntax-independent". The syntax is still there in the inductive definition of signature, albeit slightly concealed by the lack of explicit inference rules. In fact, as observed later, a uniform family of contexts in $CwF_\uc0\u931 $ is precisely a context in the initial object of $CwF_\u931 $. More importantly, the initiality proof is entirely syntactic.\
+> The idea itself of using cwfs (or similar models of dependent type theory) for expressing gats is not particularly novel, and has been around for some time. See for example the HoTTEST talk by Simon Henry ({\field{\*\fldinst{HYPERLINK "https://webmail.chalmers.se/owa/redir.aspx?REF=Z6ut1rskZkh4jOXHEZlHatIvloGHaru_c-yDVq7ERakCZiDKpLfYCAFodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PTdfWDBxYlNYbGZr"}}{\fldrslt \cf3 \ul \ulc3 https://www.youtube.com/watch?v=7_X0qbSXlfk}}) and the recent work of Jonas Frey, presented at the HoTT/UF workshop 2020 ({\field{\*\fldinst{HYPERLINK "https://webmail.chalmers.se/owa/redir.aspx?REF=EBgQ5S2DlftQTj-KZ711874UYnM1y9dzVovfVfCSjbICZiDKpLfYCAFodHRwczovL2hvdHQtdWYuZ2l0aHViLmlvLzIwMjAv"}}{\fldrslt \cf3 \ul \ulc3 https://hott-uf.github.io/2020/}}).\
+\
+I haven\'92t added anything to the paper in response to this. In my view both talks are only tangentially related to our paper. Henry\'92s talk is about gats and Quillen model structures. Frey\'92s talk is about gats and clans. \
+\
+> It would be interesting to explore the connection between the inductive definition of signature given here, and the notion of cell complex obtained from the wfs introduced by Simon Henry. For example, do the operations of adding a new sort, operator and equation correspond to generators for a left class of morphisms in a wfs on the category of (strict) categories over cwf\
+> The examples of gats presented are well-known, and have been explored in the work about qiits that the authors mention. I fail to see any new insight there, and I would have preferred a more compact presentation.\
+\
+I have not changed the paper in view of these comments. \
+\
+The examples are not new, because already Cartmell 1978 uses the gat of categories as a motivating example, and the fact that cwfs can be presented as models of a gat is already in Dybjer 1996. In the latter paper it is also explained how to add gat-rules for the type formers of Martin-L\'f6f type theory to extend the gat of cwfs. These examples have pedagogical purpose in our paper, since they are expressed in the present formalism. It also gives us the opportunity to explain why they provide \'93internal\'94 notions of categories, cwfs, etc.\
+\
+> Overall, the paper is enjoyable to read and gives a clean and elegant presentation of gats. Although most of the ideas can be found scattered around the literature, it is perhaps not a bad thing to have them collected in one paper.\
+> \
+> # Minor comments\
+> \
+>\'a0 - quotation marks are sometimes inverted\
+>\'a0 - Kaprosi => Kaposi\
+>\'a0 - Categories "up to isomorphisms" (i.e. where equality of objects is important) are usually called *strict categories*.}
