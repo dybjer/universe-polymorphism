@@ -15,6 +15,8 @@
 \usepackage{stmaryrd}
 \usepackage{cmll}
 \usepackage{enumerate}
+\usepackage{url}
+
 %usepackage{graphicx}
 %\usepackage[all]{xy}
 \usepackage{listings}
@@ -79,20 +81,23 @@
 \maketitle
 
 \begin{abstract}
-We give a new syntax independent definition of the notion of a finitely presented generalized algebraic theory as an initial object in a category of categories with families with extra structure. To this end we define inductively how to build a valid signature $\Sigma$ for a generalized algebraic theory and the associated category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure and cwf-morphisms that preserve this structure on the nose.  Our definition refers to {\em uniform families} of contexts, types, and terms, a purely semantic notion. Furthermore, we show how to syntactically construct initial cwfs with $\Sigma$-structures. This result can be viewed as a generalization of Birkhoff's completeness theorem for equational logic. It is obtained by extending Castellan, Clairambault, and Dybjer's construction of an initial cwf. We provide examples of generalized algebraic theories for monoids, categories, categories with families, and categories with families with extra structure for some type formers of dependent type theory. The models of these are internal monoids, internal categories, and internal categories with families (with extra structure) in a category with families. Finally, we show how to extend our definition to some generalized algebraic theories that are not finitely presented, such as the theory of contextual categories with families.
+We give a new syntax independent definition of the notion of a finitely presented generalized algebraic theory as an initial object in a category of categories with families (cwfs) with extra structure. To this end we define inductively how to build a valid signature $\Sigma$ for a generalized algebraic theory and the associated category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure and cwf-morphisms that preserve $\Sigma$-structure on the nose.  Our definition refers to {\em uniform families} of contexts, types, and terms, a purely semantic notion. Furthermore, we show how to syntactically construct initial cwfs with $\Sigma$-structures. This result can be viewed as a generalization of Birkhoff's completeness theorem for equational logic. It is obtained by extending Castellan, Clairambault, and Dybjer's construction of an initial cwf. We provide examples of generalized algebraic theories for monoids, categories, categories with families, and categories with families with extra structure for some type formers of dependent type theory. The models of these are internal monoids, internal categories, and internal categories with families (with extra structure) in a category with families. Finally, we show how to extend our definition to some generalized algebraic theories that are not finitely presented, such as the theory of contextual categories with families.
 \end{abstract}
 
 \section{Introduction}
 
+Martin-Löf type theory can be characterized in a syntax independent way as the initial category with families (cwf)  with extra structure for the type formers \cite{castellan:tlca2015,castellan:lmcs}. The main contribution of this note is a similar syntax independent characterization of the notion of generalized algebraic theory as the initial cwf with extra structure.
+
 Generalized algebraic theories (gats) were introduced by Cartmell in his PhD thesis \cite{cartmell:phd} as a dependently typed generalization of many sorted algebraic theories. Each gat is specified by a signature with (possibly infinite) sets of sort symbols, operator symbols, and equations. Cartmell's definition of gats \cite{cartmell:phd,cartmell:apal} is based on a notion of {\em derived rule} expressed in terms of a traditional syntactic system for dependent type theory. He also defines a notion of model whereby sort symbols are interpreted as families of sets.
 
-Categories with families (cwfs) \cite{dybjer:torino} were introduced as a new notion of model of dependent type theory. Cwfs arise by reformulating the notion of category with attributes (cwa) in Martin Hofmann's sense \cite{hofmann:csl}. The key point is to make it clear that cwfs arise as models of a certain generalized algebraic theory closely related to Martin-Löf's substitution calculus \cite{martinlof:gbg92}. As such the notion of cwf becomes a useful intermediary between traditional syntactic systems for dependent type theory and a variety of categorical notions of model.
+Categories with families (cwfs) \cite{dybjer:torino} were introduced as a new notion of model of dependent type theory. Cwfs arise by reformulating the notion of category with attributes in Martin Hofmann's sense \cite{hofmann:csl}. The key point is to make it clear that cwfs arise as models of a certain generalized algebraic theory closely related to Martin-Löf's substitution calculus \cite{martinlof:gbg92}. As such the notion of cwf becomes a useful intermediary between traditional syntactic systems for dependent type theory and a variety of categorical notions of model.
 
-The gat of cwfs is thus a kind of idealized formal system of dependent type theory. In contrast to Martin-Löf's substitution calculus, and other syntactic systems for dependent type theory, it is {\em not} formulated in terms of grammars and inference rules for the forms of judgment of type theory. Instead it is formulated in terms of sort symbols (corresponding to the judgment forms), operator symbols (corresponding to the formation, introduction, and elimination rules), and equations (corresponding to the equality rules for the type formers). Some of the general reasoning (about equality, substitution, and assumptions) is taken care of by the underlying machinery of dependent type theory. This makes it possible to abstract away from some of the details in the formulation of grammars and inference rules. In contrast to the various syntactic systems, we would like to argue that the gat of cwfs appears to be ``canonical". We may define dependent type theory in a syntax independent way as the initial object in a category of cwfs with extra structure for interpreting the type formers.
+The gat of cwfs is thus a kind of idealized formal system of dependent type theory. In contrast to Martin-Löf's substitution calculus, and other syntactic systems for dependent type theory, it is {\em not} formulated in terms of grammars and inference rules for the forms of judgment of type theory. Instead it is formulated in terms of the sort symbols (corresponding to the judgment forms), operator symbols (corresponding to the formation, introduction, and elimination rules), and equations (corresponding to the equality rules for the type formers) of the gat. Some of the general reasoning (about equality, substitution, and assumptions) is taken care of by the underlying machinery of dependent type theory. This makes it possible to abstract away from details in the formulation of grammars and inference rules. In contrast to the various syntactic systems, the gat of cwfs has a canonical flavour. 
+%We may define dependent type theory in a syntax independent way as the initial object in a category of cwfs with extra structure for interpreting the type formers.
 %However, the reader may now object that this looks like a circular definition.
 %We learn what dependent type theory is if we already know what dependent type theory is!
 
-In this note we explore the interdependence between gats and cwfs. The main novelty is a syntax independent definition of gats in terms of cwfs with extra structure. We define a new finitely presented notion of generalized algebraic theory and simultaneosly a general categorical notion of model. We define what it means to be a valid signature $\Sigma$ for a gat and the associated category $\Cwf_\Sigma$ with extra structure for $\Sigma$. This definition refers to {\em uniform families} of contexts, types, and terms in $\Cwf_\Sigma$, a purely semantic notion. Afterwards, we construct initial objects $\T_\Sigma \in \Cwf_\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of an initial object in the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
+In this note we explore the interdependence between gats and cwfs. We already explained that cwfs can be defined as models of a gat. (This gat is presented in section \ref{gat-cwf}.) In the other direction, the notion of gat relies on the notion of cwf, in the sense that the latter expresses the underlying infrastructure of dependent types. We shall here define a new finitely presented notion of gat and simultaneosly a general categorical notion of model. To this end we define what it means to be a valid signature $\Sigma$ for a gat and the associated category $\Cwf_\Sigma$ with extra structure for $\Sigma$. Our definition refers to {\em uniform families} of contexts, types, and terms in $\Cwf_\Sigma$, a purely semantic notion. Afterwards, we construct initial objects $\T_\Sigma \in \Cwf_\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of an initial object in the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
 
 %Once one has the appropriate definition of gats in terms of cwfs, the details become natural and there are no surprises. The definition becomes canonical once we accept the abstract definition of dependent type theories as initial cwfs with extra structure.
 
@@ -120,7 +125,7 @@ are constructed from sets.
 %many researchers have benefited from his collaboration.
 %He is truly missed.
 
-
+\newpage
 \section{Categories with families}\label{sec:def_cwf}
 
 \subsection{The category of cwfs and strict cwf-morphisms}
@@ -295,24 +300,25 @@ We now come to the main point of this note.
 We define how to build a valid gat signature $\Sigma$ and the associated
 category $\Cwf_{\Sigma}$ of cwfs with a $\Sigma$-structure.
 Each object of $\Cwf_{\Sigma}$ is a cwf with extra structure and
-each morphism is a cwf morphism preserving this extra structure.
+each morphism is a cwf-morphism preserving $\Sigma$-structure.
 For this definition, we will need the following auxiliary notions.
 
-A {\em uniform family of contexts} is a family $\Gamma = (\Gamma_{\C})$ of contexts in 
-$\C$ (for each $\C \in \Cwf_{\Sigma}$)\footnote{Check new formulation in view of reviewer's comment!} such that
+A {\em uniform family of contexts} is a family $\Gamma = (\Gamma_{\C})$ with $\Gamma_\C$ a context in 
+$\C$ for each $\C \in \Cwf_{\Sigma}$, such that
 $F(\Gamma_\C) = \Gamma_\D$ for all morphisms $F \in \Cwf_{\Sigma}(\C,\D)$.
 If $\Gamma$ is such a family, a {\em uniform family of types} over $\Gamma$ is a
-family of types $A = (A_{\C})$ with $A_{\C}$ type over $\Gamma_{\C}$ and
+family of types $A = (A_{\C})$ with $A_{\C}$ a type over $\Gamma_{\C}$ and
 $F(A_{\C}) = A_{\D}$ for all morphisms $F \in \Cwf_{\Sigma}(\C,\D)$.
 Finally, given $\Gamma$ and $A$, a {\em uniform family of terms} is a family
-of terms $a = (a_{\C})$ in $\Tm_{\C}(\Gamma_{\C},A_{\C})$ such that
-$F(a_{\C}) = a_{\D}$ for all morphisms $F \in \Cwf_{\Sigma}(\C,\}D)$.
-\footnote{Insert here or in related works section: Uniform families appear in Freyd's proof of the adjoint functor theorem \cite{freyd:abelian}, in Reynolds' \cite{reynolds:impredicative} construction of an initial algebra for an endofunctor from an impredicative encoding of an inductive type, and in Awodey, Frey, and Speight's \cite{awodey:impredicative} construction of an impredicative encoding of a higher inductive type. You first construct a weakly initial object and then the initial object is obtained by taking uniform families.} 
+of terms $a = (a_{\C})$ with $a_\C \in \Tm_{\C}(\Gamma_{\C},A_{\C})$ such that
+$F(a_{\C}) = a_{\D}$ for all morphisms $F \in \Cwf_{\Sigma}(\C,\D)$. 
 
-
+\begin{remark}
+Uniform families appear in Freyd's proof of the adjoint functor theorem \cite{freyd:abelian}, in Reynolds' \cite{reynolds:impredicative} and Reynolds and Plotkin's construction \cite{plotkin-reynolds} of an initial algebra for an endofunctor from an impredicative encoding of an inductive type, and in Awodey, Frey, and Speight's  \cite{awodey:impredicative} construction of an impredicative encoding of a higher inductive type. The common idea in these works is to first construct a weakly initial object and then the initial object is obtained by taking uniform families.
+\end{remark}
 
 \begin{definition}
-We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure and cwf-morphisms that preserve this structure. First, the base case:
+We define inductively how to build a valid signature $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure and cwf-morphisms that preserve $\Sigma$-structure. First, the base case:
 \begin{description}
 \item[The empty signature] The empty signature $\emptyset$ is valid and $\Cwf_\emptyset = \Cwf$.
 \end{description}
@@ -544,14 +550,14 @@ Our final example is the gat of internal contextual cwfs, a variant of Cartmell'
 
 \subsection{Internal monoids} The one-sorted algebraic theory of monoids has two operator symbols,
 $\idmon$ for identity and $\comp$ for composition, and associativity and identity laws as equations.
-As any other ordinary algebraic theory, the algebraic theory of monoids yields a
+As any other one-sorted algebraic theory, the theory of monoids yields a
 generalized algebraic theory.
 
 %One first introduces one constant sort symbol $M$, and then
 %the operator symbols $\idmon$ for identity and $\comp$ for composition,
 %and the associativity and identity laws as equations.
 
-We now show in some detail how to build a valid signature for internal monoids
+We now show in detail how to build a valid signature for internal monoids
 using the cwf-combinators, following the recipe for introducing sort symbols, operators symbols, and equations in the previous section. (We omit the index $\Sigma$ in $\vdash_\Sigma$.)
 %Note that these inference rules follow the principles of introducing sort symbols, operator symbols, and equations we displayed in Section 4 when building the initial cwf $\T_\Sigma$ for appropriate $\Sigma$.
 
@@ -660,7 +666,7 @@ An internal category in the cwf $\Set$ of small sets is a small category.
 %\item In a similar way we can add the operator symbol for composition and the equations, but we omit the details.
 %\end{itemize}
 
-\subsection{Internal cwfs}
+\subsection{Internal cwfs}\label{gat-cwf}
 
 The gat of internal cwfs is obtained by extending the gat of internal categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of contexts to $\ctx$.
 
@@ -827,7 +833,9 @@ Similarly we have a stratification of the sort of substitutions
 $\hom_{n,m}(\Delta,\Gamma)$ for $\Delta$ in $\ctx_n$ and $\Gamma$ in $\ctx_m$.
 The resulting models are {\em internal contextual cwfs} in a cwf.
 
-\footnote{Insert: Generalized algebraic presentations of contextual categories (C-systems) have been given by Voevodsky \cite{voevodsky:c-systems} and Cartmell \cite{cartmell:gat-contextual}.}
+\begin{remark}
+Generalized algebraic presentations of contextual categories (C-systems) have been given by Voevodsky \cite{voevodsky:c-systems} and Cartmell \cite{cartmell:gat-contextual}.
+\end{remark}
 
 %\subsection{Cwfs with universe tower structures} 
 
@@ -884,23 +892,23 @@ The resulting models are {\em internal contextual cwfs} in a cwf.
 %\subsection{Removing cumulativity} Agda, cumulativity up to equivalence.
 %
 %\subsection{Cwfs with universe polymorphic tower structures} Here we need to extend the cwf-framework further to take into account contexts with level variables, etc.
-
+%\newpage
 \section{Related work}
 
 The first proof of initiality of a formal system with dependent types is due to Streicher \cite{streicher:semtt}. He proved that the formal system for the Calculus of Construction forms an initial object in a category of contextual categories with suitable extra structure. Recently, Brunerie et al \cite{brunerie:initiality} presented a formalized proof in the Agda system that a formal system for Martin-Löf type theory forms an initial object in a category of contextual categories with extra structure for
 the type formers.
 
-More generally, Voevodsky \cite{voevodsky:initiality} has outlined a new vision of the theory of syntax and semantics of dependent type theories. In this vision formal systems for dependent type theory are proved to be initial in suitable categories of models ({\em the initiality conjecture}). The above mentioned contributions by Streicher and Brunerie et al are two examples of such characterizations. However, Voevodsky's aim was to go further and characterize a whole class of type theories and prove uniform initiality results for them with the aim to form the basis for a general metatheory of dependent type theory. Our work can be viewed as a contribution to Voevodsky's programme, since we prove an initiality theorem for the whole class of finitely presented generalized algebraic theories. \footnote{Insert: A characterization of a more general class of dependent type theories and their initial models has been proposed by Uemura \cite{uemura:general-framework}.}
+More generally, Voevodsky \cite{voevodsky:initiality} has outlined a new vision of the theory of syntax and semantics of dependent type theories. In this vision formal systems for dependent type theory are proved to be initial in suitable categories of models ({\em the initiality conjecture}). The above-mentioned contributions by Streicher and Brunerie et al are two examples of such characterizations. However, Voevodsky's aim was to go further and characterize a whole class of type theories and prove a general initiality result for them with the aim to form the basis for a general metatheory of dependent type theory. Our work can be viewed as a contribution to Voevodsky's programme, since we prove an initiality theorem for the whole class of finitely presented generalized algebraic theories. A characterization of a more general class of dependent type theories and their initial models has been proposed by Uemura \cite{uemura:general-framework}. Another related contribution is Palmgren and Vickers' \cite{palmgrenvickers} construction of initial models of essentially algebraic theories.
 
+Altenkirch and Kaposi \cite{altenkirch:qiits} give several examples of {\em quotient inductive-inductive types (qiits)}. Their main example is a definition of dependent type theory with $\Pi$-types and a universe, as a simultaneous definition in the Agda system \cite{agda-wiki} of the data types $\Ctx$ of contexts, $\Sub(\Delta,\Gamma)$ of substitutions, $\Ty(\Gamma)$, and $\Tm(\Gamma,A)$ of terms. Their definition is {\em inductive-inductive} \cite{nordvallforsberg:iids}, since the index sets of $\Sub, \Ty,$ and $\Tm$ are generated simultaneously, and as a consequence are not indexed inductive definitions in the usual sense where the index sets are fixed in advance. Furthermore, it is a quotient inductive-inductive type since they also have constructors for identity types, as in a {\em higher inductive type}.
+There is a close relationship between this qiit and our initial internal cwf with $\Pi$-types and a universe. Like our definition, their qiit-definition uses cwf-combinators. Moreover, our sort symbols correspond to their formation rules (data type constructors), our operator symbols correspond to their introduction rules (constructors), and our equations correspond to their propositional identities. However, the fact that our equations are judgmental equalities while theirs are propositional identities is an important difference. As a consequence they need to use transport maps when moving between identical types. 
 
-Another related contribution is Palmgren and Vickers' \cite{palmgrenvickers} construction of
-an initial model of an essentially algebraic theory.
+%\footnote{Insert: Furthermore, Altenkirch et al \cite{altenkirch:thessaloniki} introduce a general schema for qiits and Kaposi, Kov{\'{a}}cs, and Altenkirch \cite{kaposi:qiits} construct initial algebras for them. For these constructions they work in cwfs with $\Pi$-types, intensional identity types, and a universe, while we work in plain cwfs. Although gats and qiits are related notions, neither is a generalization of the other. Gat is a basic dependently typed notion and independent of Martin-Löf type theory, whereas qiit is the latest in the series of more and more general notions of inductive type (inductive family, inductive-recursive type and family, inductive-inductive type, higher inductive type) extending intensional Martin-Löf type theory.
+%
+%Kaposi, Kov{\'{a}}cs, and Altenkirch \cite{kaposi:qiits} develop a general theory of qiits. This includes a notion of signature for a qiit, the notion of an algebra of such a signature, and a construction of initial algebras. There are obvious parallels with our work, but there are also fundamental differences:
+%}
 
-Altenkirch and Kaposi \cite{altenkirch:qiits} give several examples of {\em quotient inductive-inductive types (qiits)}. Their main example is a definition of dependent type theory with $\Pi$-types and a universe, as a simultaneous definition in the Agda system \cite{agda-wiki} of the data types $\Ctx$ of contexts, $\Sub(\Delta,\Gamma)$ of substitutions, $\Ty(\Gamma)$, and $\Tm(\Gamma,A)$ of terms. Their definition is {\em inductive-inductive} \cite{nordvallforsberg:iids}, since the index sets of $\Sub, \Ty,$ and $\Tm$ are generated simultaneously, and as a consequence are not indexed inductive definitions in the usual sense where the index sets are fixed in advance. Furthermore, it is a quotient inductive-inductive type since they also have constructors for identity types, as in {\em higher inductive types}.
-
-There is a close relationship with our initial internal cwf with $\Pi$-types and a universe. Like our definition, their qiit-definition uses cwf-combinators. Moreover, our sort symbols correspond to their formation rules (data type constructors), our operator symbols correspond to their introduction rules (constructors), and our equations correspond to their propositional identities. However, the fact that our equations are judgmental equalities while theirs are propositional identities is an important difference. As a consequence they need to use transport maps when moving between identical types. 
-
-\footnote{Insert: Furthermore, Altenkirch et al \cite{altenkirch:thessaloniki} introduce a general schema for qiits and Kaposi, Kov{\'{a}}cs, and Altenkirch \cite{kaposi:qiits} construct initial algebras for them. For these constructions they work in cwfs with $\Pi$-types, intensional identity types, and a universe, while we work in plain cwfs. Although gats and qiits are related notions, neither is a generalization of the other. Gat is a basic dependently typed notion and independent of Martin-Löf type theory, whereas qiit is the latest in the series of more and more general notions of inductive type (inductive family, inductive-recursive type and family, inductive-inductive type, higher inductive type) extending intensional Martin-Löf type theory. }
+Kaposi, Kov{\'{a}}cs, and Altenkirch \cite{kaposi:qiits} develop a general theory of qiits. This includes a notion of signature for a qiit, the notion of an algebra of such a signature, and a construction of initial algebras. For these constructions they work in cwfs with $\Pi$-types, identity types, and a universe. This is in contrast to our work which is based on plain cwfs without extra structure for type formers. Although gats and qiits are related notions, neither is a generalization of the other. Gat is a basic notion independent of Martin-Löf type theory, whereas qiit is the latest in a series of generalizations of inductive type (inductive family, inductive-recursive type and family, inductive-inductive type, higher inductive type) extending intensional Martin-Löf type theory.
 
 %Using the terminology of qiits, we here provide a definition of a class of valid qiits (in our modified sense) together with a class of models for each of them.
 
