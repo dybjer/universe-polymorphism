@@ -132,7 +132,7 @@ Like Cartmell, we have chosen to use the term {\em sort symbol} from many-sorted
 
 Another possible source of confusion is that cwfs appear on two different levels. In Section \ref{sec:def_cwf} we recall the definition of cwf in set-theoretic metalanguage, where we use $\Ty$ to denote the family of types indexed by contexts and $\Tm$ to denote the family of terms indexed by contexts and types. This notion of cwf is then used to define the semantic notions of signature and category of models of a gat. Then in Section \ref{gat-cwf} we define the gat of {\em internal cwfs}. This gat has sort symbols $\ty$ for {\em internal types} and $\tm$ for {\em internal terms} using lower case to highlight the difference from $\Ty$ and $\Tm$ in the model cwf. 
 
-Furthermore, we often use the same notation both on the semantic and the syntactic level. For example, in Section \ref{gat-sig-mod} the letter $S$ denotes a semantic sort symbol, and in Section \ref{initial-gat} it denotes a syntactic one.
+Furthermore, we often use the same notation both on the semantic and the syntactic level. For example, in Section \ref{gat-sig-mod},  where we are syntax independent, the letter $S$ denotes a semantic sort symbol, whereas in Section \ref{initial-gat}, where we construct the initial model, it denotes a syntactic sort symbol.
 
 \subsection*{To the memory of Martin Hofmann}
 
@@ -616,8 +616,8 @@ $$
 \Sigma_4 = (\Sigma_3, (1.\Mon, \Mon[\p], \comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}], \q))
 $$
 The uniform family of context $1.\Mon$ expresses that the equation has one variable of type $\Mon$, the uniform family of types $\Mon[\p]$ expresses that the two sides of the equation have type $\Mon$, and the uniform families of terms $\comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}]$ and $\q$ express the two sides of the equation.
-\item[Adding the right identity and associativity law]
-Finally we add the right identity equation and the associativity equation to get the signatures $\Sigma_5$ and $\Sigma_6$, but omit the details. 
+\item[Adding the right identity and the associativity laws]
+Finally we add the right identity equation and the associativity equation to get the signatures $\Sigma_5$ and $\Sigma_6$. We omit the details. 
 \end{description}
 We call the resulting syntax independent signature for internal monoids $\Sigma = \Sigma_6$. The category $\Cwf_\Sigma$ is the category of cwfs with an {\em internal monoid}. This is a cwf-version of the notion of internal monoid which can be defined in any category with finite products. Ordinary (small) monoids come out as internal monoids in $\Set$, the cwf of small sets.
 
@@ -656,11 +656,20 @@ Hence we can add the inference rule for the equation ($\idmon$ is a left identit
 \begin{eqnarray*}
 1.\Mon &\vdash& \comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}] = \q : \Mon[\p]
 \end{eqnarray*}
-\item[Adding the right identity and associativity law]
+\item[Adding the right identity and the associativity laws]
 We omit the details.
 \end{description}
+The resulting initial object $\T_\Sigma = \T_{\Sigma_6}$ is a system of grammar and inference rules for dependent type theory with an internal monoid. In this theory we can prove statements such as 
+$$
+\Gamma \vdash a : \Mon
+$$
+stating that $a$ is a well-formed monoid expression in the context $\Gamma$ and
+$$
+\Gamma \vdash a = a': \Mon
+$$
+stating that $a = a'$ is a derivable equation between monoid expressions in the context $\Gamma$. Note that both contexts and monoid expressions use cwf-combinators and are variable free. Of course, using dependent type theory for reasoning about monoid expressions is overkill; this could be done using only simple types.
 
-As already mentioned, the remaining examples of gats will only be presented using named variables, which are easier to read but more difficult to deal with semantically. Hopefully, it should be clear from the above how to construct the corresponding semantic signatures, categories of models, and initial models formally using cwf-combinators.
+The remaining examples will use dependent types in an essential way. However, for reasons of readability we will from now on only use ordinary notation with named variables. Hopefully, it is clear from the above how to formally construct the corresponding semantic signatures, categories of models, and initial models using cwf-combinators. For example, these constructions for the theory of internal categories are similar to the constructions for the theory of internal monoids.
 
 % In the remaining examples, we shall mainly use ordinary notation with variables.
 % % We have already said that.
