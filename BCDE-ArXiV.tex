@@ -81,7 +81,7 @@
 \maketitle
 
 \begin{abstract}
-We give a new syntax independent definition of the notion of a finitely presented generalized algebraic theory as an initial object in a category of categories with families (cwfs) with extra structure. To this end we define inductively how to build a valid signature $\Sigma$ for a generalized algebraic theory and the associated category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure and cwf-morphisms that preserve $\Sigma$-structure on the nose.  Our definition refers to {\em uniform families} of contexts, types, and terms, a purely semantic notion. Furthermore, we show how to syntactically construct initial cwfs with $\Sigma$-structures. This result can be viewed as a generalization of Birkhoff's completeness theorem for equational logic. It is obtained by extending Castellan, Clairambault, and Dybjer's construction of an initial cwf. We provide examples of generalized algebraic theories for monoids, categories, categories with families, and categories with families with extra structure for some type formers of dependent type theory. The models of these are internal monoids, internal categories, and internal categories with families (with extra structure) in a category with families. Finally, we show how to extend our definition to some generalized algebraic theories that are not finitely presented, such as the theory of contextual categories with families.
+We give a new syntax independent definition of the notion of a finitely presented generalized algebraic theory as an initial object in a category of categories with families (cwfs) with extra structure. To this end we define inductively how to build a valid signature $\Sigma$ for a generalized algebraic theory and the associated category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure and cwf-morphisms that preserve $\Sigma$-structure on the nose.  Our definition refers to the purely semantic notions of {\em uniform family} of contexts, types, and terms. Furthermore, we show how to syntactically construct initial cwfs with $\Sigma$-structures. This result can be viewed as a generalization of Birkhoff's completeness theorem for equational logic. It is obtained by extending Castellan, Clairambault, and Dybjer's construction of an initial cwf. We provide examples of generalized algebraic theories for monoids, categories, categories with families, and categories with families with extra structure for some type formers of dependent type theory. The models of these are internal monoids, internal categories, and internal categories with families (with extra structure) in a category with families. Finally, we show how to extend our definition to some generalized algebraic theories that are not finitely presented, such as the theory of contextual categories with families.
 \end{abstract}
 
 \section{Introduction}
@@ -92,7 +92,7 @@ Generalized algebraic theories (gats) were introduced by Cartmell in his PhD the
 
 Categories with families (cwfs) \cite{dybjer:torino} were introduced as a new notion of model of dependent type theory. Cwfs arise by reformulating the notion of category with attributes in Martin Hofmann's sense \cite{hofmann:csl}. The key point is that cwfs arise as models of a certain generalized algebraic theory closely related to Martin-Löf's substitution calculus \cite{martinlof:gbg92}. As such the notion of cwf becomes a useful intermediary between traditional syntactic systems for dependent type theory and a variety of categorical notions of model.
 
-The gat of cwfs is thus a kind of idealized formal system of dependent type theory. In contrast to Martin-Löf's substitution calculus, and other syntactic systems for dependent type theory, it is {\em not} formulated in terms of grammars and inference rules for the forms of judgment of type theory. Instead it is formulated in terms of the sort symbols (corresponding to the judgment forms), operator symbols (corresponding to the formation, introduction, and elimination rules), and equations (corresponding to the equality rules for the type formers) of the gat. Some of the general reasoning (about equality, substitution, and assumptions) is taken care of by the underlying machinery of dependent type theory. This makes it possible to abstract away from details in the formulation of grammars and inference rules. In contrast to the various syntactic systems, the gat of cwfs has a canonical flavour. 
+The gat of cwfs is thus a kind of idealized formal system of dependent type theory. In contrast to Martin-Löf's substitution calculus, and other syntactic systems for dependent type theory, it is {\em not} formulated in terms of grammars and inference rules for the forms of judgment of type theory. Instead it is formulated in terms of the sort symbols (corresponding to the judgment forms), operator symbols (corresponding to the formation, introduction, and elimination rules), and equations (corresponding to the equality rules for the type formers) of the gat. Some of the general reasoning (about equality, substitution, and assumptions) is taken care of by the underlying machinery of dependent types. This makes it possible to abstract away from details in the formulation of grammars and inference rules. In contrast to the various syntactic systems, the gat of cwfs has a canonical flavour. 
 %We may define dependent type theory in a syntax independent way as the initial object in a category of cwfs with extra structure for interpreting the type formers.
 %However, the reader may now object that this looks like a circular definition.
 %We learn what dependent type theory is if we already know what dependent type theory is!
@@ -107,7 +107,7 @@ In the other direction, the notion of gat relies on the notion of cwf, in the se
 
 In Section 2 we define the category $\Cwf$ of categories with families and morphisms preserving cwf-structure on the nose. Section 3 contains our main definition of a syntax independent notion of valid signature $\Sigma$ for a gat and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure. In Section 4 we construct an initial object $\T_\Sigma$ in $\Cwf_\Sigma$. In Section 5 we show several examples of gats: for monoids, categories, cwfs, and cwfs with extra structure for one universe. We point out that cwfs with extra structure for gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively. We also sketch how to extend our approach to some countably presented gats, and show the example of contextual cwfs, a variant of Cartmell's contextual categories \cite{cartmell:phd,cartmell:apal}. Finally, in Section 6 we discuss related work, for example relating to Voevodsky's initiality conjecture \cite{voevodsky:initiality} and Altenkirch and Kaposi's quotient inductive-inductive types \cite{altenkirch:qiits}.
 
-All our development can be formulated in a constructive set theory,
+Our development can be formulated in a constructive set theory,
 as described for instance by Aczel \cite{MR519801}, although the set theory
 we use for formulating the notion of cwf with a $\Sigma$-structure is probably
 much weaker. As emphasized by Voevodsky~\cite{voevodsky:initiality}, we study structures invariant
@@ -292,7 +292,7 @@ amounts to preservation of substitution, {i.e.}, for all
 $\gamma : \Delta \to \Gamma$ in $\C$, we have
 \[
 F(A[\gamma]) = F(A)[F(\gamma)] \qquad \qquad
-F(a[\gamma]) = F(a)[F\gamma]\,.
+F(a[\gamma]) = F(a)[F(\gamma)]\,.
 \]
 
 Last but not least, we turn to the preservation of context comprehension
@@ -567,7 +567,7 @@ This concludes the proof of the theorem. \qed
 
 \section{Examples of generalized algebraic theories}\label{sec:examples}
 
-We will now display the sort symbols, operator symbols, and equations for the generalized algebraic of internal monoids, internal categories and of internal cwfs. We will then show how to add operator symbols and equations when adding internal notions of $\Pi, \N$ and a universe closed under $\Pi$ and $\N$ to the gat of internal cwfs. The reason for prefacing these notions by the word ``internal" is that the models of the theories are internal monoids, categories, and cwfs in $\Cwf_\Sigma$ for the respective signatures for these theories. Moreover, internal monoids, categories, and cwfs in the cwf~$\Set$ are small monoids, categories, and cwfs, respectively. Note that our underlying notion of cwf in Section 2 is not small, and hence not an internal cwf in the cwf~$\Set$.
+We will now display the sort symbols, operator symbols, and equations for the generalized algebraic of internal monoids, internal categories and of internal cwfs. We will then show how to add operator symbols and equations when adding internal notions of $\Pi, \N$ and a universe closed under $\Pi$ and $\N$ to the gat of internal cwfs. The reason for prefacing these notions by the word ``internal" is that the models of the theories are internal monoids, categories, and cwfs in $\Cwf_\Sigma$ for the respective signatures for these theories. Moreover, internal monoids, categories, and cwfs in the cwf~$\Set$ are small monoids, categories, and cwfs, respectively. Note that the cwfs defined in Section 2 need not be small, and hence not internal cwfs in the cwf~$\Set$.
 
 
 We begin by using the recipe in Definition \ref{def:Cwfmor} to construct the semantic signature for internal monoids and its associated category of models, that is, of cwfs with an internal monoid. We then follow the recipe in Definition \ref{initial-gat} and construct the initial cwf with an internal monoid. 
@@ -590,7 +590,9 @@ x : \Mon &\vdash& \comp(x,\idmon) = x : \Mon\\
 x, y, z : \Mon &\vdash& \comp(\comp(x,y),z) = \comp(x,\comp(y,z)) : \Mon
 \end{eqnarray*}
 
-We now show how the corresponding semantic signature for monoids $\Sigma$ and its associated category of models $\Cwf_\Sigma$ are constructed step-wise in the sense of Definition \ref{def-sig-mod}. of a valid signature $\Sigma$ for internal monoids and its associated category of models $\Cwf_\Sigma$. As always, begin with the empty signature $\emptyset$ and its category of models $\Cwf_\emptyset = \Cwf$.
+We now show how the corresponding semantic signature for monoids $\Sigma$ and its associated category of models $\Cwf_\Sigma$ are constructed step-wise in the sense of Definition \ref{def-sig-mod}.
+
+As always, we begin with the empty signature $\emptyset$ and its category of models $\Cwf_\emptyset = \Cwf$.
 \begin{description}
 \item[Adding the sort symbol $\Mon$] Each cwf $\C$ has a chosen empty context (terminal object) $1_\C$. Since cwf-morphisms preserve empty contexts on the nose, $1 = (1_\C)$ is a uniform family of contexts in $\Cwf_\emptyset$. Hence we can introduce a new constant sort symbol $\Mon$ in the empty context. The resulting signature  is
 $$
@@ -832,7 +834,11 @@ and commutation with respect to substitution.
 where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
 
 \subsection{Internal cwfs with $\N$}
-We add four operator symbols $\N, 0, \s, \Rec$  in addition to the operator symbols for cwfs in Section 5.2 and 5.3, and equations for the induction principle $\Rec$ and commutativity with substitution, but omit the details.
+We add the operator symbol
+\begin{eqnarray*}
+\Gamma : \ctx &\vdash& \N_\Gamma : \ty(\Gamma) 
+\end{eqnarray*}
+in addition to the operator symbols for cwfs. We also add operator symbols for $0, \s, \Rec$ and the equations for $\Rec$ and for commutativity with substitution, but omit the details.
 
 \subsection{Internal cwfs with $\U_0$ closed under $\Pi$ and $\N$}\label{sec:u-example}
 We add four operator symbols  in addition to the operator symbols for cwfs with $\Pi$-types and $\N$ in Section 5.2 - 5.5:
