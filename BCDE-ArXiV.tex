@@ -92,20 +92,22 @@ Generalized algebraic theories (gats) were introduced by Cartmell in his PhD the
 
 Categories with families (cwfs) \cite{dybjer:torino} were introduced as a new notion of model of dependent type theory. Cwfs arise by reformulating the notion of category with attributes in Martin Hofmann's sense \cite{hofmann:csl}. The key point is that cwfs arise as models of a certain generalized algebraic theory closely related to Martin-Löf's substitution calculus \cite{martinlof:gbg92}. As such the notion of cwf becomes a useful intermediary between traditional syntactic systems for dependent type theory and a variety of categorical notions of model.
 
-The gat of cwfs is thus a kind of idealized formal system of dependent type theory. In contrast to Martin-Löf's substitution calculus, and other syntactic systems for dependent type theory, it is {\em not} formulated in terms of grammars and inference rules for the forms of judgment of type theory. Instead it is formulated in terms of the sort symbols (corresponding to the judgment forms), operator symbols (corresponding to the formation, introduction, and elimination rules), and equations (corresponding to the equality rules for the type formers) of the gat. Some of the general reasoning (about equality, substitution, and assumptions) is taken care of by the underlying machinery of dependent types. This makes it possible to abstract away from details in the formulation of grammars and inference rules. In contrast to the various syntactic systems, the gat of cwfs has a canonical flavour. 
+The gat of cwfs is thus a kind of idealized formal system of dependent type theory. In contrast to Martin-Löf's substitution calculus, and other syntactic systems for dependent type theory, it is {\em not} formulated in terms of grammars and inference rules for the forms of judgment of type theory. Instead it is formulated in terms of the sort symbols (corresponding to the judgment forms), operator symbols (corresponding to the formation, introduction, and elimination rules), and equations (corresponding to the equality rules for the type formers) of the gat. Some of the general reasoning (about equality, substitution, and assumptions) is taken care of by the underlying infrastructure of dependent types. This makes it possible to abstract away from details in the formulation of grammars and inference rules. In contrast to the various syntactic systems, the gat of cwfs has a canonical flavour. 
 %We may define dependent type theory in a syntax independent way as the initial object in a category of cwfs with extra structure for interpreting the type formers.
 %However, the reader may now object that this looks like a circular definition.
 %We learn what dependent type theory is if we already know what dependent type theory is!
 
 In this note we explore the interdependence between gats and cwfs. We already explained that cwfs can be defined as models of a gat. 
 %(This gat is presented in section \ref{gat-cwf}.) 
-In the other direction, the notion of gat relies on the notion of cwf, in the sense that the latter models the underlying infrastructure of dependent types. We shall here define a new finitely presented notion of gat and simultaneosly a general categorical notion of model. To this end we define what it means to be a valid signature $\Sigma$ for a gat and the associated category $\Cwf_\Sigma$ with extra structure for $\Sigma$. Our definition refers to {\em uniform families} of contexts, types, and terms in $\Cwf_\Sigma$, a purely semantic notion. Afterwards, we construct initial objects $\T_\Sigma \in \Cwf_\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of an initial object in the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
+In the other direction, the notion of gat relies on the notion of cwf, in the sense that the latter models the underlying infrastructure of dependent types. 
+
+%We shall here define a new finitely presented notion of gat and simultaneously a general categorical notion of model. To this end we define what it means to be a valid signature $\Sigma$ for a gat and the associated category $\Cwf_\Sigma$ with extra structure for $\Sigma$. Our definition refers to {\em uniform families} of contexts, types, and terms in $\Cwf_\Sigma$, a purely semantic notion. Afterwards, we construct initial objects $\T_\Sigma \in \Cwf_\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of an initial object in the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
 
 %Once one has the appropriate definition of gats in terms of cwfs, the details become natural and there are no surprises. The definition becomes canonical once we accept the abstract definition of dependent type theories as initial cwfs with extra structure.
 
 \subsection*{Plan of the paper}
 
-In Section 2 we define the category $\Cwf$ of categories with families and morphisms preserving cwf-structure on the nose. Section 3 contains our main definition of a syntax independent notion of valid signature $\Sigma$ for a gat and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure. In Section 4 we construct an initial object $\T_\Sigma$ in $\Cwf_\Sigma$. In Section 5 we show several examples of gats: for monoids, categories, cwfs, and cwfs with extra structure for one universe. We point out that cwfs with extra structure for gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively. We also sketch how to extend our approach to some countably presented gats, and show the example of contextual cwfs, a variant of Cartmell's contextual categories \cite{cartmell:phd,cartmell:apal}. Finally, in Section 6 we discuss related work, for example relating to Voevodsky's initiality conjecture \cite{voevodsky:initiality} and Altenkirch and Kaposi's quotient inductive-inductive types \cite{altenkirch:qiits}.
+In Section 2 we recall the definition of the category $\Cwf$ of categories with families and morphisms preserving cwf-structure on the nose. Section 3 contains our main definition of a syntax independent notion of valid signature $\Sigma$ for a gat and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure. In Section 4 we construct an initial object $\T_\Sigma$ in $\Cwf_\Sigma$. In Section 5 we show several examples of gats: for monoids, categories, cwfs, and cwfs with extra structure for one universe. We point out that cwfs with extra structure for gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively. We also sketch how to extend our approach to some countably presented gats, and show the example of contextual cwfs, a variant of Cartmell's contextual categories \cite{cartmell:phd,cartmell:apal}. Finally, in Section 6 we discuss related work, for example relating to Voevodsky's initiality conjecture \cite{voevodsky:initiality} and Altenkirch and Kaposi's quotient inductive-inductive types \cite{altenkirch:qiits}.
 
 Our development can be formulated in a constructive set theory,
 as described for instance by Aczel \cite{MR519801}, although the set theory
@@ -269,12 +271,10 @@ consists of
 
 \begin{itemize}
 
-\item A functor $F_\fun : \C \to \D$, preserving $1$ on the nose,
-that is, $F_\fun(1_{\C}) = 1_{\D}$;
-
-\item A natural transformation $F_\nt : T_\C \Rightarrow (T_\D \circ F_\fun)$,
-preserving context comprehension on the nose (explained below).
-
+\item A functor $F_\fun : \C \to \D$;
+\item A natural transformation $F_\nt : T_\C \Rightarrow (T_\D \circ F_\fun^\op)$;
+\item The terminal object is preserved on the nose: $F_\fun(1_{\C}) = 1_{\D}$;
+\item Context comprehension is preserved on the nose, see below.
 \end{itemize}
 
 Since $F_\nt$ is a natural transformation between $\Fam$-valued presheaves,
@@ -459,7 +459,7 @@ $$
 \qquad
 \Gamma \vdash_\Sigma a = a' : A
 $$
-where $\Gamma, \Gamma' \in \RawCtx_\Sigma, \gamma, \gamma' \in \RawSub_\Sigma, A, A' \in \RawTy_\Sigma,$ and $a,a' \in \RawTm_\Sigma$. Instances of these pers correspond to valid equality judgments of a variable free version of dependent type theory with explicit substitutions based on the cwf-combinators. The ordinary judgments will be defined as the reflexive instances of these equality judgments. For example $\Gamma \vdash_\Sigma$ (meaning ``$\Gamma$ is a valid context") is defined as the reflexive instance $\Gamma = \Gamma \vdash_\Sigma$.
+where $\Gamma, \Gamma' \in \RawCtx_\Sigma, \gamma, \gamma' \in \RawSub_\Sigma, A, A' \in \RawTy_\Sigma,$ and $a,a' \in \RawTm_\Sigma$. Instances of these pers correspond to valid equality judgments of a variable-free version of dependent type theory with explicit substitutions based on the cwf-combinators. The ordinary judgments will be defined as the reflexive instances of these equality judgments. For example $\Gamma \vdash_\Sigma$ (meaning ``$\Gamma$ is a valid context") is defined as the reflexive instance $\Gamma = \Gamma \vdash_\Sigma$.
 \item
 A cwf $\T_\Sigma$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T_\Sigma$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash_\Sigma$. We will show that $\T_\Sigma$ is a cwf with a $\Sigma$-structure, that is, an object of $\Cwf_\Sigma$.
 \item
@@ -618,6 +618,8 @@ $$
 \Sigma_4 = (\Sigma_3, (1.\Mon, \Mon[\p], \comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}], \q))
 $$
 The uniform family of context $1.\Mon$ expresses that the equation has one variable of type $\Mon$, the uniform family of types $\Mon[\p]$ expresses that the two sides of the equation have type $\Mon$, and the uniform families of terms $\comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}]$ and $\q$ express the two sides of the equation.
+$\Cwf_{\Sigma_4}$ is the full subcategory of $\Cwf_{\Sigma_3}$ with objects $\C$
+such that $(\comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}])_\C = \q_\C$.
 \item[Adding the right identity and the associativity laws]
 Finally we add the right identity equation and the associativity equation to get the signatures $\Sigma_5$ and $\Sigma_6$. We omit the details. 
 \end{description}
@@ -669,7 +671,7 @@ stating that $a$ is a well-formed monoid expression in the context $\Gamma$ and
 $$
 \Gamma \vdash a = a': \Mon
 $$
-stating that $a = a'$ is a derivable equation between monoid expressions in the context $\Gamma$. Note that both contexts and monoid expressions use cwf-combinators and are variable free. Of course, using dependent type theory for reasoning about monoid expressions is overkill; this could be done using only simple types.
+stating that $a = a'$ is a derivable equation between monoid expressions in the context $\Gamma$. Note that both contexts and monoid expressions use cwf-combinators and are variable-free. Of course, using dependent type theory for reasoning about monoid expressions is overkill; this could be done using only simple types.
 
 The remaining examples will use dependent types in an essential way. However, for reasons of readability we will from now on only use ordinary notation with named variables. Hopefully, it is clear from the above how to formally construct the corresponding semantic signatures, categories of models, and initial models using cwf-combinators. For example, these constructions for the theory of internal categories are similar to the constructions for the theory of internal monoids.
 
@@ -833,15 +835,15 @@ and commutation with respect to substitution.
 \end{eqnarray*}
 where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
 
-\subsection{Internal cwfs with $\N$}
-We add the operator symbol
+\subsection{Internal cwfs with $\Pi$ and $\N$}
+Furthermore, we add the operator symbol
 \begin{eqnarray*}
 \Gamma : \ctx &\vdash& \N_\Gamma : \ty(\Gamma) 
 \end{eqnarray*}
-in addition to the operator symbols for cwfs. We also add operator symbols for $0, \s, \Rec$ and the equations for $\Rec$ and for commutativity with substitution, but omit the details.
+We also add operator symbols for $0, \s, \Rec$ and the equations for $\Rec$ and for commutativity with substitution, but omit the details. Note that the type of the primitive recursion operator $\Rec$ relies on the signature for $\Pi$-types.
 
 \subsection{Internal cwfs with $\U_0$ closed under $\Pi$ and $\N$}\label{sec:u-example}
-We add four operator symbols  in addition to the operator symbols for cwfs with $\Pi$-types and $\N$ in Section 5.2 - 5.5:
+We add four more operator symbols
 \begin{eqnarray*}
 \Gamma : \ctx &\vdash& (\U_0)_\Gamma : \ty(\Gamma)\\
 \Gamma : \ctx, a : \tm(\Gamma,(\U_0)_\Gamma) &\vdash& {\Ta_0}(a) : \ty(\Gamma)\\
@@ -880,11 +882,12 @@ Also note that the gat for the universe is inevitably {\em \`a la Tarski} in the
 \subsection{A possible refinement to internal contextual cwfs}
 
 Our treatment can be adapted to some non finitely presented gats.
-If we have an increasing sequence of signatures $\Sigma_n$ we can consider the
-union of the theory $T_{\Sigma_n}$.
+If we have an increasing sequence of signatures $\Sigma_n$ we can consider their
+union.
+%of the theory $T_{\Sigma_n}$.
 For instance, we can describe a gat of contextual cwfs \cite{castellan:lambek} (similar to Cartmell's contextual categories and Voevodsky's $C$-systems) by
 the following stratification of the theory of cwfs. We replace the sort $\ctx$
-by a sequence of sorts $\ctx_0,\,\ctx_1,\,\dots$ where $\ctx_n$ represents the sort
+by a sequence of sorts $\ctx_0,\,\ctx_1,\,\dots ,$ where $\ctx_n$ represents the sort
 of contexts of length $n$ and a corresponding sequence of sorts
 $\ty_n(\Gamma)$ for $\Gamma$ in $\ctx_n$
 and $\tm_n(\Gamma,A)$ for $A$ in $\ty_n(\Gamma)$. Context extension $\Gamma.A$ is now in $\ctx_{n+1}$
