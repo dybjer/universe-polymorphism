@@ -436,7 +436,9 @@ Like Cartmell, we could consider gats with type equations, but we prefer not to 
 
 \section{The construction of an initial object in $\Cwf_\Sigma$}\label{initial-gat}
 
-We shall now show our main theorem. It can be viewed as a generalization of Birkhoff's completeness theorem for equational logic \cite{birkhoff}:
+In Section 3 we gave a {\em syntax independent specification} of a generalized algebraic theory as the initial object of the category $\Cwf_\Sigma$ of models of a (semantic) signature $\Sigma$. Now we show our main theorem: the {\em syntactic construction} of such an initial object $\T_\Sigma$. This construction is done in several steps. We first define the ``raw" syntactic expressions. Then we define four families of partial equivalence relations (pers) over those raw expressions, corresponding to the four equality judgments. The term model $\T_\Sigma$ is obtained by quotienting with these pers.
+
+This theorem can be viewed as a generalization of Birkhoff's completeness theorem for equational logic \cite{birkhoff}:
 \begin{theorem}
 The category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$,
 for every valid signature $\Sigma$.
@@ -447,7 +449,7 @@ The construction of $\T_\Sigma$ will be by induction on the construction of $\Si
 For each $\Sigma$ we will define the following.
 \begin{itemize}
 \item
-A grammar for raw contexts in $\RawCtx_\Sigma$, raw substitutions in $\RawSub_\Sigma$, raw types in $\RawTy_\Sigma$, and raw terms in $\RawTm_\Sigma$.
+A grammar for the {\em raw syntax}, that is, raw contexts in $\RawCtx_\Sigma$, raw substitutions in $\RawSub_\Sigma$, raw types in $\RawTy_\Sigma$, and raw terms in $\RawTm_\Sigma$.
 \item
 A system of inference rules that generate four families of partial equivalence relations (pers) by a mutual inductive definition:
 $$
@@ -459,7 +461,7 @@ $$
 \qquad
 \Gamma \vdash_\Sigma a = a' : A
 $$
-where $\Gamma, \Gamma' \in \RawCtx_\Sigma, \gamma, \gamma' \in \RawSub_\Sigma, A, A' \in \RawTy_\Sigma,$ and $a,a' \in \RawTm_\Sigma$. Instances of these pers correspond to valid equality judgments of a variable-free version of dependent type theory with explicit substitutions based on the cwf-combinators. The ordinary judgments will be defined as the reflexive instances of these equality judgments. For example $\Gamma \vdash_\Sigma$ (meaning ``$\Gamma$ is a valid context") is defined as the reflexive instance $\Gamma = \Gamma \vdash_\Sigma$.
+where $\Gamma, \Gamma' \in \RawCtx_\Sigma, \gamma, \gamma' \in \RawSub_\Sigma, A, A' \in \RawTy_\Sigma,$ and $a,a' \in \RawTm_\Sigma$. These pers correspond to valid equality judgments of a variable-free version of dependent type theory with explicit substitutions based on the cwf-combinators. The ordinary judgments will be defined as the reflexive instances of these equality judgments. For example $\Gamma \vdash_\Sigma$ (meaning ``$\Gamma$ is a valid context") is defined as the reflexive instance $\Gamma = \Gamma \vdash_\Sigma$.
 \item
 A cwf $\T_\Sigma$ is then constructed from the equivalence classes of derivable judgments. For example, the contexts in $\T_\Sigma$ are equivalence classes $[\Gamma]$, such that $\Gamma \vdash_\Sigma$. We will show that $\T_\Sigma$ is a cwf with a $\Sigma$-structure, that is, an object of $\Cwf_\Sigma$.
 \item
@@ -469,7 +471,7 @@ A $\Cwf_\Sigma$-morphism $\inte{-} : \T_\Sigma \to \C$ for every $\C \in \Cwf_\S
 We begin with the construction for the base case: the {\bf empty signature} $\emptyset$.
 \begin{itemize}
 \item
-We start with the following grammar for raw contexts, raw substitutions, raw types, and raw terms.
+We start with the {\em raw syntax}. This following grammar for raw contexts, raw substitutions, raw types, and raw terms.
 \begin{eqnarray*}
 \Gamma \in \RawCtx_\emptyset &::=& 1  \ |\ \Gamma\cext A\\
 \gamma \in \RawSub_\emptyset  \ &::=& \gamma \circ \gamma \ |\ \id_\Gamma \ |\ \langle\rangle_\Gamma \ |\ \p_{A} \ |\ \langle \gamma, a \rangle_A\\
@@ -623,7 +625,7 @@ such that $(\comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}])_\C = \q_\C$.
 \item[Adding the right identity and the associativity laws]
 Finally we add the right identity equation and the associativity equation to get the signatures $\Sigma_5$ and $\Sigma_6$. We omit the details. 
 \end{description}
-We call the resulting syntax independent signature for internal monoids $\Sigma = \Sigma_6$. The category $\Cwf_\Sigma$ is the category of cwfs with an {\em internal monoid}. This is a cwf-version of the notion of internal monoid which can be defined in any category with finite products. Ordinary (small) monoids come out as internal monoids in $\Set$, the cwf of small sets.
+We call the resulting signature for internal monoids $\Sigma = \Sigma_6$. The category $\Cwf_\Sigma$ is the category of cwfs with an {\em internal monoid}. This is a cwf-version of the notion of internal monoid which can be defined in any category with finite products. Ordinary (small) monoids come out as internal monoids in $\Set$, the cwf of small sets.
 
 We also sketch the construction of the initial object $\T_\Sigma$ of $\Cwf_\Sigma$ following the recipe for introducing sort symbols, operators symbols, and equations in Section \ref{initial-gat}. (We omit the index $\Sigma$ in $\vdash_\Sigma$.)
 %Note that these inference rules follow the principles of introducing sort symbols, operator symbols, and equations we displayed in Section 4 when building the initial cwf $\T_\Sigma$ for appropriate $\Sigma$.
@@ -663,7 +665,7 @@ Hence we can add the inference rule for the equation ($\idmon$ is a left identit
 \item[Adding the right identity and the associativity laws]
 We omit the details.
 \end{description}
-The resulting initial object $\T_\Sigma = \T_{\Sigma_6}$ is a system of grammar and inference rules for dependent type theory with an internal monoid. In this theory we can prove statements such as 
+The resulting initial object $\T_\Sigma = \T_{\Sigma_6}$ is generated by a system of grammar and inference rules for dependent type theory with an internal monoid. In this theory we can prove statements such as 
 $$
 \Gamma \vdash a : \Mon
 $$
@@ -671,8 +673,10 @@ stating that $a$ is a well-formed monoid expression in the context $\Gamma$ and
 $$
 \Gamma \vdash a = a': \Mon
 $$
-stating that $a = a'$ is a derivable equation between monoid expressions in the context $\Gamma$. Note that both contexts and monoid expressions use cwf-combinators and are variable-free. Of course, using dependent type theory for reasoning about monoid expressions is overkill; this could be done using only simple types.
+stating that $a = a'$ is a derivable equation between monoid expressions in the context $\Gamma$. Note that both contexts and monoid expressions use cwf-combinators and are variable-free. 
 
+This example illustrates that gats indeed generalise ordinary algebraic theories.
+%Of course, using dependent type theory for reasoning about monoid expressions is overkill; this could be done using only simple types.
 The remaining examples will use dependent types in an essential way. However, for reasons of readability we will from now on only use ordinary notation with named variables. Hopefully, it is clear from the above how to formally construct the corresponding semantic signatures, categories of models, and initial models using cwf-combinators. For example, these constructions for the theory of internal categories are similar to the constructions for the theory of internal monoids.
 
 % In the remaining examples, we shall mainly use ordinary notation with variables.
@@ -872,7 +876,7 @@ and the equations for preservation of substitution:
 %where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
 
 \begin{remark}\label{remark:typeequations}
-Note that all equations are between {\em terms} in the gat of cwfs with extra structure for $\N, \Pi,$ and $\U_0$; we do not need the extra generality of stipulating type equations as discussed in the introduction. For example, the equation $\Ta_0(\N^0_\Gamma) = \N_\Gamma$ is not an equation between {\em types}, but between {\em terms} of type $\ty(\Gamma)$.
+Note that all equations are between {\em terms} in the gat of cwfs with extra structure for $\N, \Pi,$ and $\U_0$; we do not need the extra generality of stipulating type equations as discussed in the introduction. For example, $\Ta_0(\N^0_\Gamma) = \N_\Gamma$ is an equation between {\em internal} types, that is, terms of type $\ty(\Gamma)$.
 \end{remark}
 
 \begin{remark}
@@ -962,7 +966,7 @@ Generalized algebraic presentations of contextual categories (C-systems) have be
 %\newpage
 \section{Related work}
 
-The first proof of initiality of a formal system with dependent types is due to Streicher \cite{streicher:semtt}. He proved that the formal system for the Calculus of Construction forms an initial object in a category of contextual categories with suitable extra structure. Recently, Brunerie et al \cite{brunerie:initiality} presented a formalized proof in the Agda system that a formal system for Martin-Löf type theory forms an initial object in a category of contextual categories with extra structure for
+Streicher \cite{streicher:semtt} constructs a term model of the Calculus of Constructions and remarks that it is an initial object in a category of contextual categories with suitable extra structure. Recently, Brunerie et al \cite{brunerie:initiality} presented a formalized proof in the Agda system that a formal system for Martin-Löf type theory forms an initial object in a category of contextual categories with extra structure for
 the type formers.
 
 More generally, Voevodsky \cite{voevodsky:initiality} has outlined a new vision of the theory of syntax and semantics of dependent type theories. In this vision formal systems for dependent type theory are proved to be initial in suitable categories of models ({\em the initiality conjecture}). The above-mentioned contributions by Streicher and Brunerie et al are two examples of such characterizations. However, Voevodsky's aim was to go further and characterize a whole class of type theories and prove a general initiality result for them with the aim to form the basis for a general metatheory of dependent type theory. Our work can be viewed as a contribution to Voevodsky's programme, since we prove an initiality theorem for the whole class of finitely presented generalized algebraic theories. A characterization of a more general class of dependent type theories and their initial models has been proposed by Uemura \cite{uemura:general-framework}. Another related contribution is Palmgren and Vickers' \cite{palmgrenvickers} construction of initial models of essentially algebraic theories.
@@ -981,6 +985,9 @@ Kaposi, Kov{\'{a}}cs, and Altenkirch \cite{kaposi:qiits} develop a general theor
 
 
 %Given that we have definition of a valid signature $\Sigma$ and a semantics for $\T_\Sigma$ we could ask whether we could add the construction of these to type theory. This would make most sense in extensional type theory, since we can then move seamlessly between propositional and judgmental equalities. It is however, not clear how to provide canonical form semantics in the sense of Martin-Löf's meaning explanations for this notion. However, although our development takes place in set theory, everything we do is constructive and could be formalized in CZF presumably.
+
+\subsection*{Acknowledgements} 
+We are grateful to the anonymous referees for constructive criticism and pointers to related work. We would also like to thank Andrej Bauer and John Cartmell for further feedback.
 
 \bibliographystyle{plain}
 \bibliography{refs}
