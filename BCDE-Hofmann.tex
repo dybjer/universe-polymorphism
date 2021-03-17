@@ -363,7 +363,7 @@ as follows:
   the gat $\Sigma' = (\Sigma,(\Gamma,A,f))$.
   An object of $\Cwf_{\Sigma'}$
   is a pair $(\C,f_{\C})$ where $\C$ is an object in $\Cwf_{\Sigma}$ and $f_{\C} \in \Tm_\C(\Gamma_\C,A_\C)$.
-  A morphism in $\Cwf_{\Sigma'}((\C,f_{\C}),(\D,f_{\D}))$ is a morphism $F \in \Cwf_{\Sigma}(\C,\D)$ such that $F(f_{\C}) = f_{\D}$
+  A morphism in $\Cwf_{\Sigma'}((\C,f_{\C}),(\D,f_{\D}))$ is a morphism $F \in \Cwf_{\Sigma}(\C,\D)$ such that $F(f_{\C}) = f_{\D}$.
 \item[Adding an equation]
   If $\Gamma$ is a uniform family of contexts,
   $A$ is a uniform family of types over $\Gamma$
@@ -471,14 +471,14 @@ A $\Cwf_\Sigma$-morphism $\inte{-} : \T_\Sigma \to \C$ for every $\C \in \Cwf_\S
 We begin with the construction for the base case: the {\bf empty signature} $\emptyset$.
 \begin{itemize}
 \item
-We start with the {\em raw syntax}. This following grammar for raw contexts, raw substitutions, raw types, and raw terms.
+We start with the {\em raw syntax}, specified by the following grammar for raw contexts, raw substitutions, raw types, and raw terms.
 \begin{eqnarray*}
 \Gamma \in \RawCtx_\emptyset &::=& 1  \ |\ \Gamma\cext A\\
 \gamma \in \RawSub_\emptyset  \ &::=& \gamma \circ \gamma \ |\ \id_\Gamma \ |\ \langle\rangle_\Gamma \ |\ \p_{A} \ |\ \langle \gamma, a \rangle_A\\
 A \in \RawTy_\emptyset  &::=& A[\gamma]\\
 a \in \RawTm_\emptyset  &::=& a[\gamma] \ |\ \qI_A
 \end{eqnarray*}
-These grammars generate a language of {\em cwf-combinators}.
+This grammar generates a language of {\em cwf-combinators}.
 \item
 The system of inference rules is displayed in \cite{castellan:tlca2015,castellan:lmcs}. It is a system of {\em general rules}, rules for dependent type theory which come before we introduce any sort symbols and operator symbols and equations (or any rules for the type formers of intuitionistic type theory). We do not have room here to display them, but note that they can be divided into four groups:
 \begin{itemize}
