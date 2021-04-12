@@ -137,7 +137,8 @@
 \begin{abstract}
 We present three versions of Martin-Löf type theory with a countable sequence of universes. The first version has an externally indexed sequence of universes \`a la Tarski and we present the rules with and without cumulativity. The second is a version where there is an internal notion of universe level. We add a new judgment $l\ \Level$ meaning that $l$ is a universe level, and $l = m$ meaning that $l$ and $m$ are equal universe levels, where level expressions are built up from level variables $\alpha$ by a successor operation $l^+$ and suprema $l \vee m$. In this way judgments can be indexed by level variables, and we obtain universe polymorphism similar to polymorphism the functional language ML. 
 
-We then extend this theory with rules for level-indexed product types $[\alpha]A$ meaning "$A$ is a type for all universe levels $\alpha$". The final theory is based on Voevodsky's proposal for a system with level constraints. We also propose a fast algorithm for solving such constraints. We survey the evolution of rules for universes in type theory. In particular, we discuss the relationship between our systems and a system with a minimal super universe.
+We then extend this theory with rules for level-indexed product types $[\alpha]A$ meaning "$A$ is a type for all universe levels $\alpha$". The final theory is based on Voevodsky's proposal for a system with level constraints. We discuss the (solved) decision problems for sup-semilattices with 
+successor that come with this approach. We survey the evolution of rules for universes in type theory. In particular, we discuss the relationship between our systems and a system with a minimal super universe.
 \end{abstract}
 
 
@@ -155,7 +156,7 @@ To deal with this duplication problem Huet \cite{Huet87} and Harper and Pollack 
 
 The need for universe polymorphism has increased with the advent of Voevodsky's univalent foundations, see for example \cite{VV}. This theory highlights the higher dimensional aspects of type theory, and higher universes become more important than before.
 
-The starting point for the present discussions was Escard\'o's \cite{escardo} development of univalent mathematics in the Agda system. His development is {\em universe polymorphic} and makes heavy use of quantification over Agda's type $\Level$ of universe levels. However, the Agda system is not a precisely defined logical system, and we would like to introduce several candidate systems in which Escard\'o's development can be carried out. We will also present a system similar to Voevodsky's universe polymorphic system \cite{VV}. (** MODIFY THIS STAMEMENT AND ALL OTHER REFERENCES TO VV **) In this system there are variables ranging over universe levels and each judgment is made relative to a list of equational constraints between universe level expressions. We will also present an algorithm for solving those constraints.
+The starting point for the present discussions was Escard\'o's \cite{escardo} development of univalent mathematics in the Agda system. His development is {\em universe polymorphic} and makes heavy use of quantification over Agda's type $\Level$ of universe levels. However, the Agda system is not a precisely defined logical system, and we would like to introduce several candidate systems in which Escard\'o's development can be carried out. We will also present a system similar to Voevodsky's universe polymorphic system \cite{VV}. (** MODIFY THIS STAMEMENT AND ALL OTHER REFERENCES TO VV **) In this system there are variables ranging over universe levels and each judgment is made relative to a list of equational constraints between universe level expressions.
 
 
 The {\em univalence axiom} states that for any two types $X,Y$ the canonical map
@@ -172,7 +173,9 @@ $$
 $$
 in Agda's notation.
 
-\paragraph{Plan.} We begin by providing some historical background about the evolution of universes in type theory. In particular, we shall discuss Palmgren's next universe operator and super universe, and point out that the super universe makes it possible to define an internally quantified sequence of universes. We shall also discuss how the rules for universes are formalized in terms of operations and equations extending the generalised algebraic theory of categories with families. Furthermore, we discuss the role of universes in Martin-Löf's logical framework and how this differs from Agda's logical framework. In Section \ref{sec:external} we state the rules for a basic version of Martin-Löf type theory with $\Pi, \Sigma, \NN$, an identity type former $\Id$, and an externally indexed sequence of universes $\UU_n, \T_n$ \`a la Tarski. We then add cumulativity rules for these universes. In Section \ref{sec:internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$, giving rise to a theory with level polymorphism. This is a kind of ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$. In Section \ref{sec:constraints} we present Voevodsky's proposal with constraints between level variables. We also propose a fast algorithm for solving those constraints; Voevodsky only pointed out that the solvability of the constraints is decidable, since they can be encoded in Presburger arithmetic.
+\paragraph{Plan.} We begin by providing some historical background about the evolution of universes in type theory. In particular, we shall discuss Palmgren's next universe operator and super universe, and point out that the super universe makes it possible to define an internally quantified sequence of universes. We shall also discuss how the rules for universes are formalized in terms of operations and equations extending the generalised algebraic theory of categories with families. Furthermore, we discuss the role of universes in Martin-Löf's logical framework and how this differs from Agda's logical framework. In Section \ref{sec:external} we state the rules for a basic version of Martin-Löf type theory with $\Pi, \Sigma, \NN$, an identity type former $\Id$, and an externally indexed sequence of universes $\UU_n, \T_n$ \`a la Tarski. We then add cumulativity rules for these universes. In Section \ref{sec:internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$, giving rise to a theory with level polymorphism. This is a kind of ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$. In Section \ref{sec:constraints} we present (a variation of) Voevodsky's proposal with constraints between level variables. 
+
+
 
 \section{A brief history of universes in type theory}\label{sec:history}
 
@@ -584,9 +587,7 @@ since the type $(l : \Level) \to \UA_l$ is well-formed in the present system.
 % and the
 % fact that if all universes are univalent then they all satisfy function extensionality.
 
-\section*{Rules for cumulativity}
-
-MOVE THIS TO AFTER THE ALGORITHM. 
+\section*{Rules for cumulativity} 
 
 These rules are also analogous to the rules for externally indexed universes.
 For the sake of completeness we give them explicitly.
@@ -771,12 +772,44 @@ $$
 $$
 Intuitively, we can use a term of type $[\psi]A$ only if all constraints in $\psi$ hold.
 
-\subsection{An algorithm for deciding the solvability of constraints}
+\subsection{A decision problem for sup-semilattices with successor}
 
+The type system in the previous (???) subsection gives rise to the following
+decision problem: given a context $\Gamma$ containing constraints $\phi_1,\ldots,\phi_n$,
+can one infer the constraint constraint $\psi$?
+
+Voevodsky considered a similar decision problem in \cite[Section 2]{VV}. 
+His universe levels are natural numbers, with 0, successor, and maximum.
+His constraints are equations between open terms in this vocabulary, 
+and for decidability he refers to Presburger Arithmetic,
+in which these constraints can easily be expressed.
+
+Although this is correct, we want to make a couple of remarks on Voevodsky's approach.
+The use of Presburger Arithmetic seems a bit of an overkill here.
+The only operations on universe levels that are directly motivated
+from type theory are a join operation and a compatible successor function.
+There is no need to assume a level 0, a well-founded total ordering,
+nor does one need that the successor function is injective.
+Since type theory is meant as a foundation of mathematics, it is,
+at least from a philosophical point of view, 
+not a good idea to base the concept of a universe level 
+on more mathematical notions than stricly necessary.
+
+We propose to apply Occam's Razor here. This means that universe levels
+are elements of an abstract sup-semilattice with a successor function
+that is compatible with the join operation. The logic is ordinary 
+equational logic.
+This approach allows for possible other interpretations of universe levels
+than natural numbers. At the same time the particular decision problem
+called the \emph{uniform word problem} has to be solved for this equational theory. 
+This has been done by Bezem and Coquand in \cite{bezem-coquand:lattices},
+proving the following theorem.
 
 \begin{theorem}\label{thm:P-solvability}
-Deciding solvability of a finite set of universe constraints is polynomial.
+The uniform word problem for sup-semilattices with a successor is decidable.
 \end{theorem}
+This theorem ensures that type checking remains decidable when
+typings depend on universe level constraints
 
 
 \section{Related work}
