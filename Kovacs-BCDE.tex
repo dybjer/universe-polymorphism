@@ -1,0 +1,147 @@
+\documentclass[11pt,a4paper]{article}
+%\ifx\pdfpageheight\undefined\PassOptionsToPackage{dvips}{graphicx}\else%
+%\PassOptionsToPackage{pdftex}{graphicx}
+\PassOptionsToPackage{pdftex}{color}
+%\fi
+
+%\usepackage{diagrams}
+
+%\usepackage[all]{xy}
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{latexsym}
+\usepackage{amssymb,amstext,amsmath,amsthm}
+\usepackage{epsf}
+\usepackage{epsfig}
+% \usepackage{isolatin1}
+\usepackage{a4wide}
+\usepackage{verbatim}
+\usepackage{proof}
+\usepackage{latexsym}
+%\usepackage{mytheorems}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}{Lemma}[theorem]
+\newtheorem{proposition}{Proposition}[theorem]
+
+\usepackage{float}
+\floatstyle{boxed}
+\restylefloat{figure}
+
+
+%%%%%%%%%copied from SymmetryBook by Marc
+
+% hyperref should be the package loaded last
+\usepackage[backref=page,
+            colorlinks,
+            citecolor=linkcolor,
+            linkcolor=linkcolor,
+            urlcolor=linkcolor,
+            unicode,
+            pdfauthor={CAS},
+            pdftitle={Symmetry},
+            pdfsubject={Mathematics},
+            pdfkeywords={type theory, group theory, univalence axiom}]{hyperref}
+% - except for cleveref!
+\usepackage[capitalize]{cleveref}
+%\usepackage{xifthen}
+\usepackage{xcolor}
+\definecolor{linkcolor}{rgb}{0,0,0.5}
+
+%%%%%%%%%
+\def\oge{\leavevmode\raise
+.3ex\hbox{$\scriptscriptstyle\langle\!\langle\,$}}
+\def\feg{\leavevmode\raise
+.3ex\hbox{$\scriptscriptstyle\,\rangle\!\rangle$}}
+
+%%%%%%%%%
+\newcommand\myfrac[2]{
+ \begin{array}{c}
+ #1 \\
+ \hline \hline
+ #2
+\end{array}}
+
+
+\newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}}%
+\newcommand*{\Resize}[2]{\resizebox{#1}{!}{$#2$}}
+
+\newcommand{\II}{\mathbb{I}}
+\newcommand{\refl}{\mathsf{refl}}
+\newcommand{\mkbox}[1]{\ensuremath{#1}}
+
+
+\newcommand{\Id}{\mathsf{Id}}
+\newcommand{\conv}{=}
+%\newcommand{\conv}{\mathsf{conv}}
+\newcommand{\lam}[2]{{\langle}#1{\rangle}#2}
+\def\NN{\mathsf{N}}
+\def\UU{\mathsf{U}}
+\def\JJ{\mathsf{J}}
+\def\Level{\mathsf{Level}}
+%\def\Type{\hbox{\sf Type}}
+\def\ZERO{\mathsf{0}}
+\def\SUCC{\mathsf{S}}
+
+\newcommand{\type}{\mathsf{type}}
+\newcommand{\N}{\mathsf{N}}
+\newcommand{\Set}{\mathsf{Set}}
+\newcommand{\El}{\mathsf{El}}
+%\newcommand{\U}{\mathsf{U}} clashes with def's in new packages
+\newcommand{\T}{\mathsf{T}}
+\newcommand{\Usuper}{\UU_{\mathrm{super}}}
+\newcommand{\Tsuper}{\T_{\mathrm{super}}}
+%\newcommand{\conv}{\mathrm{conv}}
+\newcommand{\idtoeq}{\mathsf{idtoeq}}
+\newcommand{\isEquiv}{\mathsf{isEquiv}}
+\newcommand{\ua}{\mathsf{ua}}
+\newcommand{\UA}{\mathsf{UA}}
+%\newcommand{\Level}{\mathrm{Level}}
+\def\Constraint{\mathsf{Constraint}}
+\def\Ordo{\mathcal{O}}
+
+\def\Ctx{\mathrm{Ctx}}
+\def\Ty{\mathrm{Ty}}
+\def\Tm{\mathrm{Tm}}
+
+\def\CComega{\mathrm{CC}^\omega}
+\setlength{\oddsidemargin}{0in} % so, left margin is 1in
+\setlength{\textwidth}{6.27in} % so, right margin is 1in
+\setlength{\topmargin}{0in} % so, top margin is 1in
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{9.19in} % so, foot margin is 1.5in
+\setlength{\footskip}{.8in}
+
+% Definition of \placetitle
+% Want to do an alternative which takes arguments
+% for the names, authors etc.
+
+\newcommand{\natrec}{\mathsf{natrec}}
+%\rightfooter{}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\sct}[1]{[\![#1]\!]}
+
+
+
+\begin{document}
+
+\title{Kov\'acs - related work}
+
+Andr\'as Kov\'acs has written a paper "Generalized Universe Hierarchies and First-Class Universe Levels" with similar aims as ours. 
+
+Both Kovacs' and our work takes as starting point the systems of universe hierarchies that can be found in proof assistants for dependent type theory. However, our work focuses on Agda, since this is the system used by Escardo in his library for univalent mathematics. In contrast, Kovacs' aim is to provide a unifying framework which can be instantiated to systems for current and future proof assistants. Kovacs mentions Agda and Coq in the abstract and introduction, and Lean and Idris in the related work section.
+
+A consequence is that Kovacs aims to be more general, Agda is an example rather than a guideline. To him, a system of universe levels is parametrized by any transitive well-founded relation of level inclusion. To us, a system of universe levels is parametrized by any sup-semilattice with a successor operation satisfying certain laws. Note that neither is a special case of the other, since we do not require that our sup-semilattices are well-founded. The exclusion of well-foundedness was motivated by the observation that it was never used in Escardo's library.
+
+Like us, Kovacs develops both systems with and without cumulativity. 
+
+A difference is that Kovacs works semantically while we present syntactic systems. However, in our accompanying paper we develop generalized algebraic theories extending the generalized algebraic theory of categories with families and this work is closely related to Kovacs' semantic framework of level-structured categories with families.
+
+Both Kovacs and we discuss the relationship to higher universes such as super universes, and also to general induction-recursion. However, Kovacs develops rigorous semantics in extensional type theory with induction-recursion, while we limit ourselves to some remarks concerning an interpretation in a superuniverse.
+
+Another similarity is that both Kovacs and we consider systems with special judgments about levels, although these systems are expressed semantically by Kovacs. There are several differences however, Kovacs considers systems with a type of levels, in our paper this is only considered when we suggest an interpretation in a superuniverse. On the other hand, we consider systems with level constraints, a la Voevodsky. This is not considered by Kovacs.
+
+Another difference is that Kovacs works in extensional type theory as metalanguage, whereas we work in constructive set theory. So extensional type theory is the language in which he expresses the notion of cwf with family diagrams, and also the language in which he develops the models. It seems that his notion of cwf has equations as propositional identities -- he does not work with setoids, it seems. This may be a problem when building models, in particular it's not clear how to build the initial model. 
+\end{document}
