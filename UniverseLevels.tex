@@ -746,6 +746,10 @@ $
 \beta \vee \alpha = \gamma \vee \alpha.
 $
 
+{\color{red}
+TODO Cite \cite{giraud:cohom-non-abel}, \cite{chambert-loir:universes-matter} 
+and \cite{waterhouse:sheaves}. Remark about $Set_\UU$.}
+
 \subsection{Rules for level constraints}%\label{ssec:VVsystem}
 
 A constraint is an equation $l = m$, where $l$ and $m$ are level expression. 
@@ -773,6 +777,11 @@ $$
 \frac{t:[\psi]A~~~~~~\psi}{t:A}
 $$
 Intuitively, we can use a term of type $[\psi]A$ only if all constraints in $\psi$ hold.
+
+{\color{red}
+TODO: state that decidability of type-checking requires (1) decidability of loop checking
+(since $\UU:\UU$ makes type checking undecidable) and (2) decidablity of whether $\psi$
+follows from the constraints in $\Gamma$.}
 
 \subsection{A decision problem for sup-semilattices with successor}
 
@@ -808,7 +817,8 @@ This has been done by Bezem and Coquand in \cite{bezem-coquand:lattices},
 proving the following theorem.
 
 \begin{theorem}\label{thm:P-solvability}
-The uniform word problem for sup-semilattices with a successor is decidable.
+For sup-semilattices with a successor, both the uniform word problem  
+and the problem of loop detection are decidable.
 \end{theorem}
 This theorem ensures that type checking remains decidable when
 typings depend on universe level constraints
