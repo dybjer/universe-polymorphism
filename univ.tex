@@ -295,7 +295,7 @@ and a code for the previous universe
 $${\UU^{n}}:\UU_{n + 1}$$
 $$\T_{n + 1}({\UU^{n}}) = \UU_{n}$$
 
-Note that $\UU_p, \T_p$ are given by separate inductive-recursive definition for each $p$. There is one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and also for $\UU^{p-1}$ provided $p \geq 1$.
+%% Note that $\UU_p, \T_p$ are given by separate inductive-recursive definition for each $p$. There is one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and also for $\UU^{p-1}$ provided $p \geq 1$.
 
 \subsection*{Rules for cumulativity}
 
@@ -510,12 +510,12 @@ To motivate why it may be useful to introduce the notion of judgment relative to
 %
 %Now  consider the theorem
 $$
-    (A : \UU_l) \to (B : \UU_m) \to (C : \UU_n) 
-    \to \Id\,\UU_{l \vee m}\, (A\times^{l \vee m} B)\,(C \times^{n \vee l} A)
-    \to \Id\,\UU_{m \vee l} \, (B\times^{m \vee l} A)\,(C \times^{n \vee l} A)
+    \Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
+    {~~\Id\,\UU_{l \vee m}\, (A\times^{l \vee m} B)\,(C \times^{n \vee l} A)
+    \to \Id\,\UU_{m \vee l} \, (B\times^{m \vee l} A)\,(C \times^{n \vee l} A)}
 %    \to A \times B =_\delta C \times A \to B \times A =_\epsilon C \times A
 $$
-It is well-formed provided $l \vee m = n \vee l$ and $m \vee l = n \vee l$. There are three maximally general solutions: 
+It is well-formed provided $l \vee m = n \vee l$. There are three maximally general solutions: 
 \begin{eqnarray*}
 &&l = \alpha, m = \beta, n = \alpha \vee \beta\\
 &&l = \alpha, m = \gamma \vee \alpha, n = \gamma\\
@@ -541,17 +541,13 @@ where $\alpha, \beta,$ and $\gamma$ are level variables.
 (Note the similarity with the Gustave function in stable domain theory.)
 In a system with level constraints, we could instead derive the type
 $$
-    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_\gamma) 
-    \to \Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
-    \to \Id\,\UU_{\alpha \vee \beta}\, (B\times A)\,(C \times A)
+    \Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
+    {~~\Id\,\UU_{l \vee m}\, (A\times B)\,(C \times A)
+    \to \Id\,\UU_{l \vee n}\, (B\times A)\,(C \times A)}
 $$
-which is valid under the constraints
+which is valid under the constraint
 $
-\alpha \vee \beta = \gamma \vee \alpha
-$
-and 
-$
-\beta \vee \alpha = \gamma \vee \alpha.
+l \vee m = l \vee n.
 $
 
 {\color{red}
@@ -572,6 +568,9 @@ We then have a new context extension $\Gamma,\psi$ if $\psi$ is a finite set of 
 New judgment form $\psi~(\Gamma)$ which expresses that the constraint set $\psi$
 holds in $\Gamma$. For instance we have $\alpha^+\leqslant\beta^+~(\alpha\leqslant\beta)$.
 
+In order to have decidable type checking, we require that the constraints in a given context
+should not be looping (which is decidable).
+
 In the system with constraints, we have judgments such as
 $$
 T_{\alpha^+}^{\beta}(\UU^{\alpha}):\UU_{\beta}~(\alpha~\beta~\Level,\alpha^+\leqslant\beta)
@@ -580,11 +579,9 @@ We introduce a new product operation
 $$
 \frac{t:A~(\psi)}{t:[\psi]A}
 $$
-with the elimination rule
-$$
-\frac{t:[\psi]A~~~~~~\psi}{t:A}
-$$
-Intuitively, we can use a term of type $[\psi]A$ only if all constraints in $\psi$ hold.
+with the rule $[\psi]A = A$ if $\psi = 1$.
+
+%Intuitively, we can use a term of type $[\psi]A$ only if all constraints in $\psi$ hold.
 
 {\color{red}
 TODO: state that decidability of type-checking requires (1) decidability of loop checking
