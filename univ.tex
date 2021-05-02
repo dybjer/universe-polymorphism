@@ -140,10 +140,9 @@
 \begin{abstract}
   We present three versions of dependent type theory with a countable sequence of universes.
   The first version has an externally indexed sequence of universes \`a la Tarski and we present the rules with and without cumulativity.
-  The second is a version where there is an internal notion of universe level. We add a new judgment $l\ \Level$ meaning that $l$ is a universe level, and $l = m$ meaning that $l$ and $m$ are equal universe levels, where level expressions are built up from level variables $\alpha$ by a successor operation $l^+$ and suprema $l \vee m$. In this way judgments can be indexed by level variables, and we obtain universe polymorphism similar to polymorphism the functional language ML. 
-  We then extend this theory with rules for level-indexed product types $[\alpha]A$ meaning "$A$ is a type for all universe levels $\alpha$".
-
-  The final theory extends a proposal by Voevodsky
+  The second is a version where there is an internal notion of universe level. We add a new judgment $l\ \Level$ meaning that $l$ is a universe level, and $l = m$ meaning that $l$ and $m$ are equal universe levels, where level expressions are built up from level variables $\alpha$ by a successor operation $l^+$ and suprema $l \vee m$. In this way judgments can be indexed by level variables, and we obtain universe polymorphism similar to polymorphism in the functional language ML. 
+  We then extend this theory with rules for level-indexed product types $[\alpha]A$ meaning ``$A$ is a type for all universe levels $\alpha$".
+The final theory extends a proposal by Voevodsky
   for a system with level constraints. We discuss the (solved) decision problems for sup-semilattices with 
 successor that come with this approach. 
 \end{abstract}
@@ -152,7 +151,9 @@ successor that come with this approach.
 \section{Introduction}\label{sec:intros}
 
 When representing mathematical reasoning using dependent types it is natural to introduce
-a sort for types, itself closed by dependent product, as was done in the system Automath \cite{deBruijn68}.
+a sort for types
+\footnote{PD: This sentence is not clear: what is a "sort"?}
+, itself closed by dependent product, as was done in the system Automath \cite{deBruijn68}.
 A little later, and independently, Martin-Löf introduced a dependent type system with
 a type of all types \cite{ML71}.
 After the discovery of Girard's Paradox \cite{Girard71}, this was replaced by a predicative
@@ -182,21 +183,19 @@ is an equivalence. Formally, the univalence axiom is an axiom scheme which is ad
 $$
 \ua_n : \UA_n
 $$
-for $n = 0,1,\ldots$, be a sequence of constants expressing the instances of the univalence axiom. We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and hence $\UA_n$ is in $\UU_{n+1}$. If we have universe polymorphism expressed as quantification over universe levels, as in the Agda system, then we can express univalence of all universes as one typing:
+for $n = 0,1,\ldots$, be a sequence of constants expressing the instances of the univalence axiom. We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and hence $\UA_n$ is in $\UU_{n+1}$. If we have a type of levels, as in the Agda system, we can express universe polymorphism as quantification over universe levels. Then we can express univalence of all universes as one typing:
 $$
 \ua : (l : \Level) \to \UA_l
 $$
 in Agda's notation.
 
 \paragraph{Plan.} We start by giving the rules for a basic version of dependent type theory with
-$\Pi, \Sigma, \NN$, an identity type former $\Id$.
+$\Pi, \Sigma, \NN$, and an identity type former $\Id$.
 We then explain how to add an externally indexed sequence of universes $\UU_n, \T_n$ \`a la Tarski with or without
 cumulativity rules.
 In Section \ref{sec:internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$, giving rise to a theory with level polymorphism. This is a kind of ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$.
 
-In Section \ref{sec:constraints} we present (a variation of) Voevodsky's proposal with constraints between level variables. 
-
-
+In Section \ref{sec:constraints} we present (a variation of) Voevodsky's proposal with constraints between level variables  \cite{VV}. 
 
 \section{Rules for a basic type theory}
 
@@ -265,7 +264,8 @@ with the conversion rule $\JJ(a,d)~a~(\refl~a) = d$.
 
 \section{Rules for an external sequence of universes}
 
-We will now present a complete set of rules for "universes as full reflections" in the style of the rules in Section \ref{sec:palmgren}.
+We will now present a complete\footnote{PD: Is this set of rules is complete? What about $A=A':\UU_n$ implies $\T_n(A) = T_n(A')$?} set of rules for "universes as full reflections". 
+%in the style of the rules in Section \ref{sec:palmgren}.
 We first present a version without cumulativity.
 $$
 \UU_n~\type~~~~~~
@@ -349,15 +349,13 @@ and $(l\vee m)^+ = l^+\vee m^+$. (We don't seem to need a $0$ element.)
 %As expressed in \cite{VV}, this is essentially a tropical (max-plus)
 %semiring, except that we don't actually seem to need a $0$ element.
 
-We have a new context extension operation adding a fresh level variable $\Gamma,\alpha~\Level$
-to a given context.
+We have a new context extension operation that adds a fresh level variable $\alpha$ to a context $\Gamma$ resulting in the extended context $\Gamma,\alpha~\Level$.
 $$
 \frac{}{\alpha~\Level~(\Gamma)}(\alpha~in~\Gamma)~~~~~~
 \frac{l~\Level~~~~~m~\Level}{l\vee m~\Level}~~~~~~
 \frac{l~\Level}{l^+~\Level}~~~~~~
 $$
-We also have rules that judgments are invariant under level equality. 
-This includes equality judgments, which have been left out for simplicity.
+We also have level equality judgments $l = m$ and rules expressing that judgments are invariant under level equality. 
 For example,
 $$
 \frac{a(l/\alpha) : A(l/\alpha)\ \ \ l = m}
@@ -432,7 +430,7 @@ then $a$ is convertible to a numeral.
 These rules are also analogous to the rules for externally indexed universes.
 For the sake of completeness we give them explicitly.
 
-(** Here we do not need the $\vee$-operation **)
+(** Here we do not need the $\vee$-operation **)\footnote{PD: But we use $\vee$ in the rules below.}
 
 We introduce an operation $T_{l}^{m}(A):\UU_{m}$ if $A:\UU_{l}$
 and $l\leqslant m$ (i.e., $m = l\vee m$).
@@ -448,7 +446,6 @@ The simplified equation would not give, e.g.,
 $T_{\alpha\vee\beta}^{\beta\vee\alpha}(A) = A$.
 
 We can then simplify the product and sum rules to
-
 $$
 \frac{A:\UU_{l}~~~~~~B:T_{l}(A)\rightarrow \UU_{l}}
      {\Pi^{l} A B:\UU_{l}}~~~~~~~~~
@@ -469,7 +466,7 @@ $$
 
 \paragraph{Interpreting the level-indexed system in the system with externally indexed universes.}
 
-A judgment in the level-indexed system can be interpreted in the the externally indexed system relative to an assignment $\rho$ of external natural numbers to level variables. We simply replace each level expression in the judgment by the corresponding natural number obtained by letting $l^+\,\rho = l\,\rho+1$ and $(l \vee m)\,\rho = \max(l\,\rho,m\,\rho)$.
+A judgment in the level-indexed system can be interpreted in the externally indexed system relative to an assignment $\rho$ of external natural numbers to level variables. We simply replace each level expression in the judgment by the corresponding natural number obtained by letting $l^+\,\rho = l\,\rho+1$ and $(l \vee m)\,\rho = \max(l\,\rho,m\,\rho)$.
 
 \subsection*{Rules for level-indexed products}
 
@@ -498,8 +495,7 @@ are constant.
 
 \section{A system with level constraints}\label{sec:constraints}
 
-
-TODO   can this be presented as GAT???
+\footnote{PD: We can postpone this question: TODO   can this be presented as GAT???}
 
 To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity:
 %[[The type constructor ``$\simeq$'' should be replaced by the identity type for this to work. I am not sure which notation for the identity type we want to use to formulate this example.]]
@@ -541,13 +537,13 @@ where $\alpha, \beta,$ and $\gamma$ are level variables.
 (Note the similarity with the Gustave function in stable domain theory.)
 In a system with level constraints, we could instead derive the type
 $$
-    \Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
-    {~~\Id\,\UU_{l \vee m}\, (A\times B)\,(C \times A)
-    \to \Id\,\UU_{l \vee n}\, (B\times A)\,(C \times A)}
+    \Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}
+    {~~\Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
+    \to \Id\,\UU_{\alpha \vee \gamma}\, (B\times A)\,(C \times A)}
 $$
 which is valid under the constraint
 $
-l \vee m = l \vee n.
+\alpha \vee \beta = \alpha \vee \gamma.
 $
 
 {\color{red}
@@ -592,7 +588,7 @@ follows from the constraints in $\Gamma$.}
 
 The type system in the previous (???) subsection gives rise to the following
 decision problem: given a context $\Gamma$ containing constraints $\phi_1,\ldots,\phi_n$,
-can one infer the constraint constraint $\psi$?
+can one infer the constraint $\psi$?
 
 Voevodsky considered a similar decision problem in \cite[Section 2]{VV}. 
 His universe levels are natural numbers, with 0, successor, and maximum.
