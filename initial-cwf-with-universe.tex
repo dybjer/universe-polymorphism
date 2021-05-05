@@ -1,0 +1,672 @@
+\documentclass{lmcs}
+%\usepackage{etex}
+\usepackage[utf8]{inputenc}
+
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{proof}
+\usepackage{mathpartir}
+\usepackage{mathrsfs}
+\usepackage{stmaryrd}
+\usepackage{cmll}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage[all]{xy}
+\usepackage{listings}
+\usepackage{todonotes}
+\usepackage{Guyboxes}
+\input{macros}
+\input{newmacros}
+\def\UU{\mathrm{U}}
+\def\Ta{\mathrm{T}}
+\def\Pihat{\hat{\Pi}}
+
+\newcommand{\intCtxU}[1]{\llbracket #1 \rrbracket^\RawCtx}
+\newcommand{\intSubU}[1]{\llbracket #1 \rrbracket^\RawSub}
+\newcommand{\intTyU}[1]{\llbracket #1 \rrbracket^\RawTy}
+\newcommand{\intTmU}[1]{\llbracket #1 \rrbracket^\RawTm}
+
+\title{Initial Categories with Families\\with Universe Structures 
+a la Tarski and a la Russell}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We define the notion of a $\Pi\UU$-cwf as a category with families with a $\Pi$-structure and a structure for a universe $\UU$ closed under $\Pi$. Then we construct syntax and inference rules for two systems of type theory with $\Pi$-types and $\UU$, one has a universe a la Tarski, the other a universe a la Russell. We prove that both systems yield initial $\Pi\UU$-cwfs in the category of $\Pi\UU$-cwfs and cwf-morphisms strictly preserving $\Pi$ and $\UU$-structure. It follows that the system a la Russell is isomorphic to the system a la Tarski in that category.
+ \end{abstract}
+
+%\tableofcontents
+\allowdisplaybreaks
+\section{Introduction}
+
+Martin-Löf type theory can be interpreted in categories with families (cwfs) with suitable extra structure for the type formers. Furthermore, appropriate versions of Martin-Löf type theory can be characterized  abstractly as free or initial such cwfs with extra structure. Such a construction has been worked out in detail for cwfs with structures for $\Pi, \Sigma$, and the extensional identity type former $\I$ \cite{castellan:tlca2015}. 
+
+In the present paper we extend that construction by introducing a notion of a universe structure on a cwf. For simplicity, we start with a cwf with a $\Pi$-structure and consider a universe which is closed under $\Pi$-types. A cwf with both $\Pi$ and $\UU$-structures is called a $\Pi\UU$-cwf. We then build an initial  $\Pi\UU$-cwf  following the recipe in \cite{castellan:tlca2015}. This results in syntax and inference rules for a universe a la Tarski. Finally, we modify this construction and build an initial  $\Pi\UU$-cwf  with syntax and inference rules for a universe a la Russell.
+
+It is straightforward to extend our definitions and constructions to a universe closed under other type formers too.
+
+$\Pi\UU$-cwfs can be presented as models of a certain generalized algebraic theory (gat) in the sense of Cartmell \cite{cartmell:phd}. Bezem, Coquand, Dybjer, and Escardo \cite{bezem:hofmann} have provided an alternative semantic definition of gats, and also shown a general construction of an initial object $\T_\Sigma$ in the category $\Cwf_\Sigma$ of models of an arbitrary gat $\Sigma$. We can apply this construction to the gat of $\Pi\UU$-cwfs. Note however, that $\T_\Sigma$ is an initial cwf with an {\em internal} $\Pi\UU$-cwf rather than an initial $\Pi\UU$-cwf, and that the general construction yields an internal cwf with a universe a la Tarski. There is an alternative construction of an internal cwf with a universe a la Russell, but we do not spell out the details here.
+
+\section{The category of $\Pi\UU$-cwfs}
+
+ A $\Pi \UU$-cwf $\C$ is a cwf with a $\Pi$-structure and a structure for a universe $\UU$ closed under $\Pi$. We have $(\UU_\C)_\Gamma \in \Ty_\C(\Gamma)$, $\Ta_\C(a) \in \Ty_\C(\Gamma)$ and $\Pihat_\C(a,b) \in \Tm_\C(\Gamma,(\UU_\C)_\Gamma)$ provided $\Gamma \in \Ctx_\C$ and $a  \in \Tm_\C(\Gamma,(\UU_\C)_\Gamma)$ and 
+$b \in \Tm_\C(\Gamma ._\C \Ta_\C(a),(\UU_\C)_\Gamma)$. Moreover, we have the equations
+\begin{eqnarray*}
+\Ta_\C(\Pihat_\C(a,b)) &= &\Pi_\C(\Ta_\C(a),\Ta_\C(b))\\
+\Ta(a)[\gamma] &=& \Ta(a[\gamma])\\
+\Pihat_\C(a,b)[\gamma] &=& \Pihat_\C(a[\gamma],b[\gamma^+])
+\end{eqnarray*}
+
+A strict $\Pi\UU$-cwf morphism is a strict cwf-morphism that preserves $\Pi$- and $\UU$-structure strictly.
+
+\section{An initial $\Pi\UU$-cwf a la Tarski}
+\label{sec:syntax}
+
+\subsection{Raw syntax}\label{sec:grammar}
+
+%This first construction is inspired by the generalised algebraic theory of $\Pi\UU$-cwfs, but here we define it as a usual logical system with a grammar and a collection of inference rules. 
+The grammar has four syntactic categories: contexts $\RawCtx$,
+substitutions $\RawSub$, types $\RawTy$ and terms $\RawTm$.
+\begin{eqnarray*}
+\Gamma \in \RawCtx &::=& 1  \ |\ \Gamma.A\\
+\gamma \in \RawSub \ &::=& \gamma \circ \gamma \ |\ \id_\Gamma \ |\ \langle\rangle_\Gamma \ |\ \p_{A} \ |\ \langle \gamma, a \rangle_A\\
+A \in \RawTy &::=& A[\gamma]   \ |\  \Pi(A,A)\ |\  \UU_\Gamma  \ |\  \Ta(a)\\
+a \in \RawTm &::=& a[\gamma] \ |\ \qI_A\ |\  \ap(A,A,a,a) |\ \lambda(A,a)\ |\ \hat{\Pi}(a,a)
+\end{eqnarray*}
+Note that the syntactic constructions have as few annotations as possible, only what is
+necessary to recover the domain and codomain of a substitution, the context of a type, and the type of a term. We first define the effect of these four functions on the pure cwf-combinators:
+\begin{align*}
+\dom(\gamma \circ \gamma') &= \dom(\gamma') \quad&\quad\quad & \cod(\gamma \circ \gamma') &=&\  \cod(\gamma)\\
+\dom(\id_\Gamma) &= \Gamma\quad& &\cod(\id_\Gamma) &=&\  \Gamma\\
+\dom(\langle\rangle_\Gamma) &= \Gamma\quad&&\cod(\langle\rangle_\Gamma) &=&\  1\\
+\dom(\p_{A}) &= \ctxof(A).A\quad&&\cod(\p_{A}) &=&\  \ctxof(A) \\
+\dom(\langle \gamma, a \rangle_A) &= \dom(\gamma)\quad&&\cod(\langle \gamma, a \rangle_A) &=&\  \cod(\gamma).A
+\end{align*}
+
+\begin{eqnarray*}
+\ctxof(A[\gamma]) &=& \dom(\gamma)\\
+&&\\
+\typeof(a[\gamma]) &=&\ (\typeof(a))[\gamma]\\
+\typeof(\qI_A) &=&\ A[\p_{A}]
+\end{eqnarray*}
+Clauses for $\Pi$:
+\begin{eqnarray*}
+\ctxof(\Pi(A,B)) &=& \ctxof(A)\\
+&&\\
+\typeof(\ap(A,B,c,a)) &=&\ B[\langle \id_{\ctxof(A)},a \rangle ]\\
+\quad \typeof(\lambda(A,c)) &=& \Pi(A,\typeof(c))
+\end{eqnarray*}
+Clauses for $\UU$:
+\begin{eqnarray*}
+\ctxof(\UU_\Gamma) &=& \Gamma\\
+\ctxof(\Ta(a)) &=& \ctxof(\typeof(a))\\
+&&\\
+\typeof(\Pihat(a,b))&=& \typeof(a)
+\end{eqnarray*}
+%We let $\UU_\Gamma = \UU [ \langle\rangle_\Gamma ]$.
+
+These functions will be used for defining the interpretation.
+
+\subsection{Inference rules}
+We simultaneously inductively define four families of partial equivalence relations (pers) for the
+four forms of equality judgments:
+\[
+\Gamma = \Gamma' \vdash \hspace{40pt} \Gamma \vdash A = A' \hspace{40pt}
+\Delta \vdash \gamma = \gamma' : \Gamma \hspace{40pt} \Gamma \vdash a = a' : A
+\]
+In the inference rules which generate these pers we will use the following abbreviations for the basic judgment forms:
+$\Gamma \vdash$ abbreviates $\Gamma = \Gamma \vdash$, 
+$\Gamma \vdash A$ abbreviates $\Gamma \vdash A = A$,
+$\Delta \vdash \gamma : \Gamma$ abbreviates  $\Delta \vdash \gamma = \gamma : \Gamma$, and 
+$\Gamma \vdash a : A$ abbreviates $\Gamma \vdash a = a : A
+$. The inferences rules are divided into four kinds: \emph{per-rules}, which axiomatise symmetry and
+transitivity of equality; \emph{preservation rules}, which express that equality preserves
+judgments; \emph{congruence rules} for operators with respect to equality, and \emph{conversion
+rules}.
+%Note that in most papers on type-theory, only conversion rules are
+%given, and the other are left implicit.
+
+\begin{figure}
+  \centering
+\boxit[Per-rules for the four forms of judgments]{
+  \begin{mathpar}
+    	\inferrule
+		{\Gamma = \Gamma' \vdash \\ \Gamma' = \Gamma'' \vdash} 
+		{\Gamma = \Gamma'' \vdash}
+	\and 
+	\inferrule
+		{\Gamma = \Gamma' \vdash} 
+		{\Gamma' = \Gamma \vdash}
+	\and 
+	\inferrule
+		{\Delta \vdash \gamma = \gamma' : \Gamma \\ 
+		 \Delta \vdash \gamma' = \gamma'' : \Gamma} 
+		{\Delta \vdash \gamma = \gamma'' : \Gamma}
+	\and 
+	\inferrule
+		{\Delta \vdash \gamma = \gamma' : \Gamma} 
+		{\Delta \vdash \gamma' = \gamma : \Gamma}
+	\and
+   	\inferrule
+		{\Gamma \vdash A = A' \\ 
+		 \Gamma \vdash A' = A''} 
+		{\Gamma \vdash A = A''}
+	\and 
+	\inferrule
+		{\Gamma \vdash A = A'} 
+		{\Gamma \vdash A' = A}
+	\and 
+	\inferrule
+		{\Gamma \vdash a = a' : A \\ 
+		 \Gamma \vdash a' = a'' : A} 
+		{\Gamma \vdash a = a'' : A}
+	\and 
+	\inferrule
+		{\Gamma \vdash a = a' : A}
+		{\Gamma \vdash a' = a : A}
+  \end{mathpar}}
+  \label{fig:cwf1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \label{fig:cwf2}
+\boxit[Preservation rules for judgments]{
+  \begin{mathpar}
+    	\inferrule
+		{{\Gamma} = {\Gamma}' \vdashS \\
+		 {\Delta} = {\Delta}' \vdashS \\
+		 {\Gamma} \vdashS \gamma = \gamma': {\Delta}} 
+		{{\Gamma}' \vdashS \gamma = \gamma' : {\Delta}'}
+	\and
+	\inferrule
+		{{\Gamma} = {\Gamma}' \vdashS \\ 
+		 {\Gamma} \vdashS A = A'}
+		{{\Gamma}' \vdashS A = A'}
+	\and 
+	\inferrule
+		{{\Gamma} = {\Gamma}' \vdashS \\ 
+		 \Gamma \vdash A = A' \\
+	         {\Gamma} \vdashS a = a' : A}
+		{{\Gamma}' \vdashS a = a' : A'}
+  \end{mathpar}
+}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \label{fig:cwf3}
+\boxit[Congruence rules for cwf-operators]{
+  \begin{mathpar}
+% Contextes
+    	\inferrule
+		{ } 
+		{1 = 1 \vdash }
+	\and
+	\inferrule
+		{\Gamma = \Gamma' \vdash \\ 
+		 \Gamma \vdash A = A'} 
+		{\Gamma.A = \Gamma'.A'\vdash} 
+	\and
+
+% Types
+	\inferrule
+		{\Gamma \vdash A=A' \\ 
+		 \Delta \vdash \gamma = \gamma' : \Gamma} 
+		{\Delta \vdash A[\gamma] = A'[\gamma']} 
+	\and
+
+% Substitutions
+
+	\inferrule
+		{\Gamma = \Gamma' \vdashS } 
+		{\Gamma \vdashS \id_\Gamma = \id_{\Gamma'} : \Gamma} 
+	\and
+    	\inferrule
+		{\Gamma = \Gamma' \vdashS}
+		{\Gamma \vdash \emptySub \Gamma = \emptySub {\Gamma'} : \emptyContext}
+	\and
+	\inferrule
+		{{\Gamma} \vdashS \delta = \delta' : {\Delta} \\ 
+		 {\Delta} \vdashS \gamma = \gamma': {\Theta} } 
+		{{\Gamma} \vdashS \gamma \circ \delta = \gamma' \circ \delta' : {\Theta}} 
+	\and
+	\inferrule
+    		{\Gamma \vdash A = A'}
+		{\Gamma.A \vdash \p_{A} = \p_{A'} : \Gamma}
+	\and
+	\inferrule
+		{\Gamma \vdash A = A' \\ 
+		 \Delta \vdash \gamma = \gamma' : \Gamma \\ 
+		 \Delta \vdash a = a' : A[\gamma]} 
+		{\Delta\vdash \langle \gamma,a \rangle_A = \langle \gamma',a' \rangle_{A'} : \Gamma.A} 
+	\and
+% Termes
+	\inferrule
+		{\Gamma \vdash a = a' : A \\
+		 \Delta \vdash \gamma = \gamma' : \Gamma} 
+		{\Delta \vdash a[\gamma] = a'[\gamma'] : A[\gamma]} 
+	\and 
+
+	\inferrule
+		{\Gamma \vdash A = A'}
+		{\Gamma.A \vdash \qI_{A} = \qI_{A'} : A[\p_A]} 
+    
+  \end{mathpar}
+}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \label{fig:cwf4}
+\boxit[Conversion rules for cwf-operators]{
+  \begin{mathpar}
+     	\inferrule
+		{\Delta \vdash \theta : \Theta \\ 
+		 \Gamma \vdash \delta : \Delta \\ 
+		 \Xi \vdash \gamma : \Gamma} 
+		{\Xi \vdash (\theta \circ \delta) \circ \gamma = \theta \circ (\delta \circ \gamma) : \Theta} 
+	\and
+    	\inferrule
+		{\Gamma \vdashS \gamma : \Delta} 
+		{\Gamma \vdash \gamma = \id_\Delta \circ \gamma : \Delta}
+	\and 
+	\inferrule
+		{\Gamma \vdashS \gamma : \Delta} 
+		{\Gamma \vdash \gamma = \gamma \circ \id_\Gamma : \Delta}
+	\and 
+	\inferrule
+		{\Gamma \vdash A \\ 
+		 \Delta \vdash \gamma : \Gamma \\ 
+		 \Theta \vdash \delta : \Delta} 
+		{\Theta \vdash A[\gamma \circ \delta] = (A[\gamma])[\delta]}
+	\and
+	\inferrule
+		{\Gamma \vdash A}
+		{\Gamma \vdash A[\id_\Gamma] = A}
+	\and
+	\inferrule
+		{\Gamma \vdash a : A \\ 
+		 \Delta \vdash \gamma : \Gamma \\ 
+		 \Theta \vdash \delta : \Delta} 
+		{\Theta \vdash a[\gamma \circ \delta] = (a[\gamma])[\delta] : (A[\gamma])[\delta]}
+	\and
+    	\inferrule
+		{\Gamma \vdash a : A}
+		{\Gamma \vdash a[\id_\Gamma] = a : A} 
+	\and 
+	\inferrule
+		{\Gamma \vdash \gamma : 1} 
+		{\Gamma \vdash \gamma = \emptySub{\Gamma} : 1} 
+	\and 
+	\inferrule
+		{\Gamma \vdash A \\ 
+		 \Delta \vdash \gamma : \Gamma \\ 
+		 \Delta \vdash a : A[\gamma]}
+		{\Delta \vdash \p_A \circ \langle \gamma,a \rangle_A = \gamma : \Gamma} 
+	\and
+	\inferrule
+		{\Gamma \vdash A \\ 
+		 \Delta \vdash \gamma : \Gamma \\
+		 \Delta \vdash a : A[\gamma]} 
+		{\Delta \vdash \qI_A[\langle \gamma,a \rangle_A] = a : A[\gamma]} 
+	\and 
+	\inferrule
+		{\Delta \vdash \gamma : \Gamma.A}
+		{\Delta \vdash \gamma = \langle \p_A \circ \gamma , \qI_A[\gamma] \rangle_A : \Gamma.A}
+  \end{mathpar}
+}
+
+\boxit[Rules for $\Pi$-types:]{
+\begin{mathpar}
+    \infer {\Gamma \vdash \Pi(A,B) = \Pi(A',B')} {\Gamma \vdash
+      A = A' & \Gamma.A \vdash B = B'}
+    \and
+    \infer{ \Gamma  \vdash   \lambda (A, b) =  \lambda (A', b') :  \Pi (A, B)}{ \Gamma   \vdash  A = A' 
+    &  
+    \Gamma .A  \vdash  b = b' : B} 
+    \and
+    \infer{ \Gamma   \vdash  \app(A, B, c, a) = \app(A', B', c', a') : B[\langle \id, a \rangle] }{ \Gamma   \vdash  A = A' &  \Gamma .A  \vdash  B = B' &  \Gamma   \vdash  c = c' :  \Pi (A, B) &  \Gamma   \vdash  a = a' : A} \and
+    \infer{ \Gamma   \vdash  \app(A, B,  \lambda (A, b), a) = b[\langle \id_\Gamma, a \rangle]  : B [\langle \id, a \rangle] }{ \Gamma   \vdash  c :  \Pi (A, B) &  \Gamma   \vdash  a : A} \and
+    \infer{ \Gamma   \vdash   c =  \lambda (\app(A,B,c[\p_A ], \qI_A)) :  \Pi (A, B)}{ \Gamma   \vdash  c :  \Pi (A, B)} \and
+    \infer{ \Delta   \vdash   \Pi (A, B) [\gamma]  =  \Pi (A [\gamma] , B[\langle \gamma \circ \p_{A[\gamma]}, \qI_{A[\gamma]}\rangle])}{ \Gamma   \vdash  A &  \Gamma .A  \vdash  B &  \Delta   \vdash   \gamma  :  \Gamma } \and
+    \infer{ \Delta   \vdash   \lambda (b)[\gamma]  =  \lambda (b [\langle \gamma \circ \p_{A[\gamma]}, \qI_{A[\gamma]}\rangle]) :  \Pi (A, B) [\gamma] }{ \Gamma   \vdash  c :  \Pi (A, B) & \Delta  \vdash   \gamma  :  \Gamma } \and
+    \infer{ \Delta   \vdash  \app(c, a) [\gamma]  = \app(c [\gamma] , a [\gamma] ) : B [\langle  \gamma , a [\gamma]  \rangle] }{ \Gamma   \vdash  c :  \Pi (A, B) &  \Gamma   \vdash  a : A & \Delta  \vdash   \gamma  :  \Gamma }
+  \end{mathpar}
+  }
+%  \caption{Inferences rules for $\Pi$-types}
+  \label{fig:pi}
+\end{figure}
+%\footnote{Note that the rules for $\Pi$ need to be completed. 
+%$\gamma^+ = \langle \gamma \circ \p_{A[\gamma]}, \qI_{A[\gamma]}\rangle$
+%}
+
+\begin{figure}
+\boxit[Rules for $\UU$:]{
+\begin{mathpar}
+\infer{\Gamma \vdash \UU_\Gamma}
+{\Gamma \vdash}
+\and
+\infer{\Gamma \vdash \Ta(a) = \Ta(a' )}
+{\Gamma \vdash a = a' : \UU_\Gamma}
+\and
+\infer{\Gamma \vdash \Pihat(a,b) = \Pihat(a',b') : \UU_\Gamma}
+{\Gamma \vdash a = a' : \UU_\Gamma\and\Gamma.\Ta(a) \vdash b = b' : \UU_{\Gamma.\Ta(a)}}
+\and
+\infer{\Gamma \vdash \Ta(\hat{\Pi}(a,b)) = \Pi(\Ta(a),\Ta(b))}
+{\Gamma \vdash a : \UU_\Gamma \and \Gamma . \Ta(a) \vdash b : \UU_{\Gamma . \Ta(a)}}
+\and
+\infer{ \Delta   \vdash   \Ta (a) [\gamma]  =  \Ta(a[\gamma] )}{ \Gamma   \vdash  a : \UU_\Gamma &  \Delta   \vdash   \gamma  :  \Gamma } 
+\and
+   \infer{ \Delta   \vdash   \Pihat (a, b) [\gamma] =  \Pihat (a [\gamma] , b [\gamma ^+]): \UU_\Delta}{ \Gamma   \vdash  a : \UU_\Gamma &  \Gamma .\Ta(a) \vdash  b : \UU_{\Gamma .\Ta(a)} &  \Delta   \vdash   \gamma  :  \Gamma } \
+ \end{mathpar}
+  }
+  \label{fig:uu}
+\end{figure}
+%$$
+%\frac{}
+%{1 \vdash \UU}
+%\hspace{3em}
+%\frac{\Gamma \vdash a = a' : \UU_\Gamma}
+%{\Gamma \vdash \Ta(a) = \Ta(a' )}
+%\hspace{3em}
+%\frac{\Gamma \vdash a = a' : \UU_\Gamma\hspace{3em}\Gamma.\Ta(a) \vdash b = b' : \UU_{\Gamma.\Ta(a)}}
+%{\Gamma \vdash \Pihat(a,b) = \Pihat(a',b') : \UU_\Gamma}
+%$$
+%We also have a new conversion rule
+%$$
+%\frac{\Gamma \vdash a : \UU\hspace{3em} \Gamma . \Ta(a) \vdash b : \UU}
+%{\Gamma \vdash \Ta(\hat{\Pi}(a,b)) = \Pi(\Ta(a),\Ta(b))}
+%$$
+%
+
+Note that our syntax is annotated in order to ensure that a raw term has a unique (up to judgmental
+equality) type given by the function $\typeof$, and that a type has a unique (up to judgemental equality) context given by the function
+$\ctxof$. Similarly, $\domain$ and $\codomain$ return the unique domain and codomain of a substitution.
+
+\begin{lem}\label{lemma:unique_typing}
+  We have the following:
+  \begin{itemize}
+  \item If $ \Gamma   \vdash  A$ is derivable, then $  \Gamma  = \ctxof (A)\vdash  $ is also derivable.
+  \item If $ \Gamma   \vdash  a : A$ is derivable, then $ \Gamma  = \ctxof (A)\vdash   $ and $
+\Gamma   \vdash A = \typeof (a)$ are derivable.
+  \item If $ \Delta   \vdash   \gamma  :  \Gamma $ is derivable, then $  \Delta  = \domain(
+\gamma )\vdash  $ and $ \Gamma  = \codomain( \gamma )\vdash   $ are derivable.
+  \end{itemize}
+\end{lem}
+
+\subsection{The syntactic $\Pi\UU$-cwf $\T$ a la Tarski}
+We can now define a term model as the syntactic cwf obtained by the well-formed contexts, substitutions, types, and terms, modulo judgmental equality. We use brackets for equivalence classes in this definition. (Note that brackets are also used for substitution in types and terms. However, this should not cause confusion since we will soon drop the equivalence class brackets.)
+
+\begin{defi}
+The term model $\T$ is given by:
+\begin{itemize}
+\item $\Ctx_\T = \{ {\Gamma}\ |\ \Gamma \vdashS \} /\!\! =^c$, where
+  ${\Gamma} =^c {\Gamma}'$ if ${\Gamma} = {\Gamma}' \vdashS$ is
+  derivable.
+\item
+  $\Sub_\T([{\Gamma}],[{\Delta}]) = \{ \gamma\ |\ \Gamma \vdashS \gamma
+  : {\Delta} \} /\!\! =^{\Gamma}_{\Delta}$
+  where $\gamma =^{\Gamma}_{\Delta} \gamma'$ iff
+  ${\Gamma} \vdashS \gamma = \gamma' : {\Delta}$ is derivable. Note that
+  this makes sense since it only depends on the equivalence class of
+  $\Gamma$ (morphisms and morphism equality are preserved by object
+  equality).
+\item $\Ty_\T([{\Gamma}]) = \{ A\ |\ \Gamma \vdashS A
+  \}/=^{\Gamma}$ where $A =^{\Gamma} B$ if $\Gamma \vdashS A =
+  B$.
+\item $\Tm_\T([{\Gamma}],[A]) = \{ a\ |\ \Gamma \vdashS a: A\} / =^{\Gamma}_A$ where $a =^{\Gamma}_A
+a'$ if $\Gamma \vdashS a = a' : A$. 
+\end{itemize}
+The $\Pi\UU$-cwf operations on $\T$ can now be defined in a straightforward way. For example, if $\Delta \vdash \theta : \Theta$, $\Gamma \vdash \delta : \Delta$, we define
+$
+[\theta ] \circ_\T [\delta] = [\theta \circ \delta],
+$
+which is well-defined since composition preserves equality.
+\end{defi}
+\subsection{Initiality of $\T$}
+\label{sec:freenessT}
+
+We shall show that $\T$ is an initial $\Pi\UU$-cwf in the sense that for an arbitrary $\Pi\UU$-cwf $\C$, there exists a unique strict $\Pi\UU$-cwf morphism $\T  \rightarrow  \C$. 
+
+We begin by defining four mutually recursive partial dependent interpretation functions, one for each syntactic category. Let $B$ is a partial family of sets indexed by $A$, that is, a set of pairs, such that $(x,Y), (x,Y') \in B$ implies $x \in A$ and $Y=Y'$. Then a {\em partial dependent function} $f :  (x \in A) \rightharpoonup B(x)$  is a set of pairs, such that $(x,y), (x,y') \in f$ implies that $x \in A$, $B(x)$ is defined and $y = y' \in B(x)$.
+
+Our four partial dependent interpretation functions are:
+\begin{eqnarray*}
+\intCtxU{-} &:& \RawCtx\ \rightharpoonup \Ctx_\C\\
+\intSubU{-}&:& (\gamma \in \RawSub)\ \rightharpoonup \
+\Sub_\C(\intCtxU{\domain(\gamma)}, \intCtxU{\codomain(\gamma)})\\
+\intTyU{-}&:& (A \in \RawTy)\ \rightharpoonup\ \Ty_\C(\intCtxU{\ctxof(A)})\\
+\intTmU{-}&:& (a \in\RawTm)\ \rightharpoonup\
+\Tm_\C (\intCtxU{\ctxof(\typeof(a))}, \intTyU{\typeof(a)})
+\end{eqnarray*}
+where $\RawCtx$ denotes the set of raw contexts, $\RawSub$ the set of raw substitutions, $\RawTy$ the set of raw types, and $\RawTm$ the set of raw terms as defined by the grammar in Section \ref{sec:grammar}). 
+%, and that $\Sub_\C$ is the set of all substitutions (arrows), $\Ty_\C$ is the set of all types, and $\Tm_\C$ is the set of all terms in $\C$. 
+We often skip the superscripts in these partial interpretation functions. The clauses for the pure cwf-combinators are
+\[
+\begin{array}{rclcrclcrcl}
+\inte{1} &=& 1_\C 						&&
+\inte{\gamma' \circ \gamma} &= & \inte{\gamma'} \circ_\C \inte{\gamma}&&
+\inte{ \langle  \rangle_ \Gamma  } &=&  (\langle  \rangle_\C) _{ \inte \Gamma  }
+\\
+\intCtx { \Gamma .A} &=& \ \inte \Gamma ._\C \inte{A}	&&
+\inte{\id_{\Gamma}} & = &\ {(\idC)}_{\inte{\Gamma}}	&&
+\inte {a[\gamma]} &=& \inte a[\inte \gamma]_\C
+\\
+%\inte {o} &=& o_\C					&&
+\inte{ \langle  \gamma , a \rangle_A } &=& \langle \inte \gamma , \inte a \rangle_\C&&
+\inte {\qI_A} &= & (\qI_\C)_{\inte A}
+\\
+\inte{A[\gamma]} &=& \inte A [\inte \gamma]_\C		&&
+\inte {\p_A} &= & (\p_\C)_{\inte A} 
+\end{array}
+\]
+Clauses for $\Pi$:
+\begin{eqnarray*}
+\inte{\Pi(A,B)} &=& \Pi_\C(\inte{A},\inte{B})\\
+\inte{\app(A,B,c,a)} &=& \app_\C(\inte{A},\inte{B},\inte{c},\inte{a})\\
+\inte{\lambda(A,b)} &=& \lambda_\C(\inte{A},\inte{b})
+\end{eqnarray*}
+Clauses for $\UU$:
+\begin{eqnarray*}
+\intTyU{\UU_\Gamma} &=& (\UU_\C)_{\intCtxU{\Gamma}}\\
+\intTyU{\Ta(a)} &=& \Ta_\C(\intTmU{a})\\
+\intTmU{\hat{\Pi}(a,b)}&=& \hat{\Pi}_\C(\intTmU{a},\intTmU{b})
+\end{eqnarray*}
+Partiality arises because, for instance, $\inte{\gamma'} \circ_\C {\inte{\gamma}}$ is only defined when $\inte{\gamma'}$ and $\inte{\gamma}$ are defined and $\dom(\inte{\gamma'}) = \cod(\inte{\gamma})$.
+However, we can prove by induction on the inference rules that the interpretation of equal well-formed contexts, equal well-typed substitutions, equal well-formed types, and equal well-typed terms are always defined and equal:
+\begin{lem}\hfill
+\label{lemma:interp_defined}
+  \begin{itemize}
+  %\item If $\Gamma \vdash$, then $\intCtx\Gamma$ is defined and in $\Ctx_\C$
+  \item If $\Gamma = \Gamma' \vdash$, then
+    both $\intCtx{\Gamma}$ and $\intCtx{\Gamma'}$ are defined in $\Ctx_\C$, and equal.
+  %\item If $\Delta \vdash \gamma : \Gamma$, then
+  %  $\inte{\gamma}$ is defined and in $\Sub_\C(\intCtx \Delta, \intCtx \Gamma)$
+  \item If $\Delta \vdash \gamma = \gamma' : \Gamma$, then
+    $\inte{\gamma} = \inte{\gamma'} \in \Sub_\C(\intCtx{\Delta},{\intCtx{\Gamma}})$ are defined and
+equal.
+  %\item If $\Gamma \vdash A$, then $\inte{A}$ is defined and in $\Ty_\C(\intCtx \Gamma)$.
+  \item If $\Gamma \vdash A = A'$, then
+    $\inte{A} = \inte{A'} \in \Ty_\C(\intCtx{\Gamma})$ are defined and equal.
+  %\item If $\Gamma \vdash a : A$, then $\inte{a}$ is defined and in $\Tm_\C(\intCtx{\Gamma}, \inte{A})$.
+  \item If $\Gamma \vdash a = a' : A$, then
+    $\inte{a} = \inte{a'} \in \Tm_\C(\intCtx{\Gamma},\inte{A})$ are defined and equal.
+  \end{itemize}
+\end{lem}
+
+It follows in particular that if we have $\Gamma \vdash$ (which abbreviates $\Gamma = \Gamma \vdash$), then $\intCtx{\Gamma}$ is defined -- and likewise for the other
+reflexive judgements.
+
+%$$\begin{aligned}
+%\inte{1_\Gamma} &=&& \text{id}_\C(\Gamma)  & && \intCtx { \Gamma .A} &=&& \ \inte \Gamma ._\C \inte{A} \\
+%\inte{\gamma' \circ \gamma} &= && \inte{\gamma'} \circ_\C
+%{\inte{\gamma}} & \quad && \inte{\id_{\Gamma}} & = &&\ {(\idC)}_{\inte{\Gamma}} \\
+%\inte{ \langle  \gamma , a \rangle_A } &=&& (\langle \inte \gamma , \inte a \rangle_\C)_{\inte A} & && \inte{ \langle  \rangle_ \Gamma  } &=&&  (\langle  \rangle_\C) _{ \inte \Gamma  }\\
+%\inte{A[\gamma]} &=& & \inte A [\inte \gamma]_\C& && \inte {a[\gamma]} &=&& \inte a[\inte \gamma]_\C \\
+%\inte {\p_A} &= && (\mathrm{p}_\C)_{\inte A} & && 
+%\inte {\qI_A} &= && (\mathrm{q}_\C)_{\inte A}\\
+%\inte {o} &=&& o_\C \\
+%\end{aligned}$$
+
+%Note that we explicitly index the operations in the model by $\C$. These indices will be omitted later on in the paper.
+%
+
+Hence, we can define total interpretation functions on the term model by restricting the partial 
+interpretation function to the well-formed contexts, etc, and then lift it to the quotient:
+\begin{eqnarray*}
+\iniCtx{-} &:& \Ctx_\T\ \arrow\ \Ctx_\C\\
+\iniSub{[\Gamma]}{[\Delta]}{-} &:&
+ \Sub_\T([\Gamma],{[\Delta]}) \ \arrow \
+ \Sub_\C(\iniCtx{[\Gamma]},{\iniCtx{[\Delta]}})\\
+\iniTy{[\Gamma]}{-} &:& \Ty_\T([\Gamma])\ \arrow\ \Ty_\C(\iniCtx{[\Gamma]})\\
+\iniTm{[\Gamma]}{[A]}{-} &:& \Tm_\T([\Gamma],[A])\ \arrow\ \Tm_\C(\iniCtx{[\Gamma]},\iniTy{[\Gamma]}{[A]})
+\end{eqnarray*}
+by
+\begin{eqnarray*}
+\iniCtx{[\Gamma]} &=& \inte{\Gamma}\\
+\iniSub{[\Gamma]}{[\Delta]}{[\gamma]} &=& \inte{\gamma}\\
+\iniTy{[\Gamma]}{[A]} &=& \inte{A}\\
+\iniTm{[\Gamma]}{[A]}{[a]} &=& \inte{a}
+\end{eqnarray*}
+which is well-defined by Lemma \ref{lemma:unique_typing}.
+
+The four total interpretation functions together defines a strict $\Pi\UU$-cwf
+morphism $\iniCtx{-} :\T  \rightarrow  \C$.
+
+To prove that it is unique, we assume that $F : \T \arrow \C$ is another strict $\Pi\UU$-cwf
+morphism, and prove by induction on the inference rules (the pers) that if $\Gamma = \Gamma' \vdash$
+then $F[\Gamma] = \iniCtx{[\Gamma]}$, etc.  
+
+For example, to show the case for 
+$$
+\frac{\Gamma \vdash}{\Gamma \vdash \UU_\Gamma}
+$$
+we use the induction hypothesis $F([\Gamma]) = \iniCtx{[\Gamma]}$ and derive 
+$$
+F([\UU_\Gamma]) = (\UU_\C)_{F([\Gamma])} = (\UU_\C)_{\iniCtx{[\Gamma]}} = \iniTy{1_\C}{[\UU_\Gamma]}
+$$
+
+To show the case for 
+$$
+\frac{\Gamma \vdash a = a' : \UU_\Gamma}
+{\Gamma \vdash \Ta(a) = \Ta(a' )}
+$$
+we assume the induction hypothesis 
+%$\Gamma \vdash a = a' : \UU_\Gamma$,
+ $F([a]) = \iniTm{\iniCtx{\Gamma}}{\iniTy{\iniCtx{\Gamma}}{\UU_\Gamma}}{[a]}$
+and derive
+%It follows for $\Gamma \vdash \Ta(a) = \Ta(a')$
+$$
+F([\Ta(a)]) = \Ta_\C(F([a])) = \Ta_\C(\iniTm{\iniCtx{\Gamma}}{\iniTy{\iniCtx{\Gamma}}{\UU_\Gamma}}{[a]}) = \Ta_\C(\intTmU{a}) = \intTyU{\Ta(a)} = \iniTy{\iniCtx{\Gamma}}{[\Ta(a)]}
+$$
+
+The $\Pihat$-case is similar. We have proved
+\begin{thm}\label{theom:initial_cwf}
+  $\T$ is an initial $\Pi\UU$-cwf.
+\end{thm}
+%Note that this is a systematic extension of the construction of a free cwf with a $\Pi$-structure in \cite{castellan:warsaw}.
+
+%It is in fact \emph{the} free cwf on one object up to isomorphism, since any two free cwfs are related by a unique
+%isomorphism.
+%
+%From now on we will uniformly drop the equivalence class brackets and for example write $\Gamma$ for $[\Gamma]$. There should be no risk of confusion, but we remark that proofs by induction on syntax and inference rules are on representatives rather than equivalence classes.
+
+\section{An initial $\Pi \UU$-cwf a la Russell}
+
+\subsection{Raw Syntax}
+To define a Russell-style initial $\Pi\UU$-cwf we start with a grammar with a common syntactic category $\RawTm$ for both types and terms:
+\begin{eqnarray*}
+\Gamma \in \RawCtx &::=& 1  \ |\ \Gamma.a\\
+\gamma \in \RawSub \ &::=& \gamma \circ \gamma \ |\ \id_\Gamma \ |\ \langle\rangle_\Gamma \ |\ \p_{a} \ |\ \langle \gamma, a \rangle_a\\
+a \in \RawTm &::=& a [\gamma] \ |\ \qI_a\  |\   \lambda(a,a) \ |\ 
+\ap(a,a,a,a) |\  \Pi(a,a)  \ |\  \UU_\Gamma
+\end{eqnarray*}
+There are two new clauses for $\ctxof$ and $\typeof$ for $\UU$:
+\begin{eqnarray*}
+\ctxof(\UU_\Gamma) &=& \Gamma\\
+\typeof(\Pi(a,b))&=& \typeof(a)
+\end{eqnarray*}
+
+\subsection{Inference rules}
+The inference rules for cwfs with $\Pi$-types are as before, except that they range over the new sets of raw contexts, substitutions, types, and terms. Moreover, we add the following new congruence rules:
+$$
+\frac{}
+{\Gamma \vdash \UU_\Gamma}
+\hspace{3em}
+\frac{\Gamma \vdash a = a' : \UU_\Gamma}
+{\Gamma \vdash a = a' }
+\hspace{3em}
+\frac{\Gamma \vdash a = a' : \UU_\Gamma
+\hspace{3em}
+\Gamma.\Ta(a) \vdash b = b' : \UU_{\Gamma.\Ta(a)}}
+{\Gamma \vdash \Pi(a,b) = \Pi(a',b') : \UU_\Gamma}
+$$
+We do not add any new conversion rules for Russell-style universes.
+
+\def\R{\mathcal{R}}
+\subsection{The syntactic $\Pi\UU$-cwf $\R$ a la Russell}
+The term model a la Russell is defined in the same way as the term model a la Tarski, but based on the grammar and inference rules a la Russell.
+
+\subsection{Initiality of $\R$}
+The interpretation functions are as before, except that both the type and the term interpretation functions range over $\RawTm$:
+\begin{eqnarray*}
+\intCtxU{-} &:& \RawCtx\ \rightharpoonup \Ctx_\C\\
+\intSubU{-}&:& (\gamma \in \RawSub)\ \rightharpoonup \
+\Sub_\C(\intCtxU{\domain(\gamma)}, \intCtxU{\codomain(\gamma)})\\
+\intTyU{-}&:& (A \in \RawTm)\ \rightharpoonup\ \Ty_\C(\intCtxU{\ctxof(A)})\\
+\intTmU{-}&:& (a \in\RawTm)\ \rightharpoonup\
+\Tm_\C (\intCtxU{\ctxof(\typeof(a))}, \intTyU{\typeof(a)})
+\end{eqnarray*}
+The new clauses for the interpretation function
+\begin{eqnarray*}
+\intTyU{\UU_\Gamma} &=& (\UU_\C)_{\intCtxU{\Gamma}}\\
+\intTyU{a} &=& \Ta_\C(\intTmU{a})\\
+\intTmU{\Pi(a,b)}&=& \hat{\Pi}_\C(\intTmU{a},\intTmU{b})
+\end{eqnarray*}
+Note that the results in the second and third line are only defined if $\intTmU{a} \in (\UU_\C)_\Gamma$ and $\intTmU{b} \in (\UU_\C)_{\Gamma.\Ta_\C(\intTmU{a})}$ in the two last clauses, where $\Gamma \in \Ctx_\C$.
+
+The proofs of Lemma \ref{lemma:interp_defined} and Theorem \ref{theom:initial_cwf} can easily be adapted to the Russell-style case. Just replace $\Ta(a)$ by $a$ and $\Pihat(a,b)$ by $\Pi(a,b)$.
+For example to prove the case for
+$$
+\frac{\Gamma \vdash a = a' : \UU_\Gamma}
+{\Gamma \vdash a = a' }
+$$
+we assume the induction hypothesis 
+%$\Gamma \vdash a = a' : \UU_\Gamma$,
+ $F^\Tm([a]) = \iniTm{\iniCtx{\Gamma}}{\iniTy{\iniCtx{\Gamma}}{\UU_\Gamma}}{[a]}$
+and show
+%It follows for $\Gamma \vdash \Ta(a) = \Ta(a')$
+$$
+F^\Ty([a]) = \Ta_\C(F^\Tm([a])) = \Ta_\C(\iniTm{\iniCtx{\Gamma}}{\iniTy{\iniCtx{\Gamma}}{\UU_\Gamma}}{[a]}) = \Ta_\C(\intTmU{a}) = \intTyU{a} = \iniTy{\iniCtx{\Gamma}}{[a]}
+$$
+%
+%
+%
+%$$
+%F([\UU]) = \UU_\C = \intTyU{\UU} = \iniTy{1_\C}{[\UU]}
+%$$
+%
+%Moreover, assume for the induction hypothesis $\Gamma \vdash a = a' : \UU_\Gamma$,
+% $F([a]) = \iniTm{\iniCtx{\Gamma}}{\iniTy{\iniCtx{\Gamma}}{\UU_\Gamma}}{[a]}$.
+%It follows for $\Gamma \vdash a = a'$
+%$$
+%F([a]) = \Ta_\C(F([a])) = \Ta_\C(\iniTm{\iniCtx{\Gamma}}{\iniTy{\iniCtx{\Gamma}}{\UU_\Gamma}}{[a]}) = \Ta_\C(\intTmU{a}) = \intTyU{a} = \iniTy{\iniCtx{\Gamma}}{[a]}
+%$$
+The $\Pihat$-case is obtained by a similar modfication. We thus prove:\footnote{We need to look over the notation, so the implicit arguments are more systematic.}
+
+\begin{thm}\label{theom:initial_cwf}
+  $\R$ is an initial $\Pi\UU$-cwf.
+\end{thm}
+
+
+\bibliographystyle{plain}
+\bibliography{refs}
+\end{document}
