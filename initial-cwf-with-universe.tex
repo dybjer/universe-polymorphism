@@ -60,9 +60,11 @@ $\Pi\UU$-cwfs can be presented as models of a certain generalized algebraic theo
 $b \in \Tm_\C(\Gamma ._\C \Ta_\C(a),(\UU_\C)_\Gamma)$. Moreover, we have the equations
 \begin{eqnarray*}
 \Ta_\C(\Pihat_\C(a,b)) &= &\Pi_\C(\Ta_\C(a),\Ta_\C(b))\\
-\Ta(a)[\gamma] &=& \Ta(a[\gamma])\\
+(\UU_\C)_\Gamma[\gamma] &=&( \UU_\C)_\Delta\\
+\Ta_\C(a)[\gamma] &=& \Ta_\C(a[\gamma])\\
 \Pihat_\C(a,b)[\gamma] &=& \Pihat_\C(a[\gamma],b[\gamma^+])
 \end{eqnarray*}
+where $\gamma \in \Sub_\C(\Delta,\Gamma)$.
 
 A strict $\Pi\UU$-cwf morphism is a strict cwf-morphism that preserves $\Pi$- and $\UU$-structure strictly.
 
@@ -363,6 +365,8 @@ rules}.
 \infer{\Gamma \vdash \Ta(\hat{\Pi}(a,b)) = \Pi(\Ta(a),\Ta(b))}
 {\Gamma \vdash a : \UU_\Gamma \and \Gamma . \Ta(a) \vdash b : \UU_{\Gamma . \Ta(a)}}
 \and
+\infer{ \Delta   \vdash   \UU_\Gamma [\gamma]  =  \UU_\Delta}{  \Delta   \vdash   \gamma  :  \Gamma } 
+\and
 \infer{ \Delta   \vdash   \Ta (a) [\gamma]  =  \Ta(a[\gamma] )}{ \Gamma   \vdash  a : \UU_\Gamma &  \Delta   \vdash   \gamma  :  \Gamma } 
 \and
    \infer{ \Delta   \vdash   \Pihat (a, b) [\gamma] =  \Pihat (a [\gamma] , b [\gamma ^+]): \UU_\Delta}{ \Gamma   \vdash  a : \UU_\Gamma &  \Gamma .\Ta(a) \vdash  b : \UU_{\Gamma .\Ta(a)} &  \Delta   \vdash   \gamma  :  \Gamma } \
@@ -609,7 +613,11 @@ $$
 \Gamma.\Ta(a) \vdash b = b' : \UU_{\Gamma.\Ta(a)}}
 {\Gamma \vdash \Pi(a,b) = \Pi(a',b') : \UU_\Gamma}
 $$
-We do not add any new conversion rules for Russell-style universes.
+We also have the following new conversion rule:
+$$
+\frac{  \Delta   \vdash   \gamma  :  \Gamma } 
+{ \Delta   \vdash   \UU_\Gamma [\gamma] = \UU_\Delta} 
+$$
 
 \def\R{\mathcal{R}}
 \subsection{The syntactic $\Pi\UU$-cwf $\R$ a la Russell}
