@@ -31,7 +31,7 @@
 \newcommand{\intTyU}[1]{\llbracket #1 \rrbracket^\RawTy}
 \newcommand{\intTmU}[1]{\llbracket #1 \rrbracket^\RawTm}
 
-\title{Initial Categories with Families\\with Universe Structures 
+\title{Initial Categories with Families\\ with Universe Structures 
 a la Tarski and a la Russell}
 
 \begin{document}
@@ -110,7 +110,7 @@ Clauses for $\UU$:
 \ctxof(\UU_\Gamma) &=& \Gamma\\
 \ctxof(\Ta(a)) &=& \ctxof(\typeof(a))\\
 &&\\
-\typeof(\Pihat(a,b))&=& \typeof(a)
+\typeof(\Pihat(a,b))&=&\UU_{\ctxof(  \typeof(a))}
 \end{eqnarray*}
 %We let $\UU_\Gamma = \UU [ \langle\rangle_\Gamma ]$.
 
@@ -139,6 +139,7 @@ rules}.
   \centering
 \boxit[Per-rules for the four forms of judgments]{
   \begin{mathpar}
+  \\
     	\inferrule
 		{\Gamma = \Gamma' \vdash \\ \Gamma' = \Gamma'' \vdash} 
 		{\Gamma = \Gamma'' \vdash}
@@ -182,6 +183,7 @@ rules}.
   \label{fig:cwf2}
 \boxit[Preservation rules for judgments]{
   \begin{mathpar}
+  \\
     	\inferrule
 		{{\Gamma} = {\Gamma}' \vdashS \\
 		 {\Delta} = {\Delta}' \vdashS \\
@@ -207,7 +209,8 @@ rules}.
   \label{fig:cwf3}
 \boxit[Congruence rules for cwf-operators]{
   \begin{mathpar}
-% Contextes
+% Contexts
+\\
     	\inferrule
 		{ } 
 		{1 = 1 \vdash }
@@ -270,6 +273,7 @@ rules}.
   \label{fig:cwf4}
 \boxit[Conversion rules for cwf-operators]{
   \begin{mathpar}
+  \\
      	\inferrule
 		{\Delta \vdash \theta : \Theta \\ 
 		 \Gamma \vdash \delta : \Delta \\ 
@@ -328,6 +332,7 @@ rules}.
 
 \boxit[Rules for $\Pi$-types:]{
 \begin{mathpar}
+\\
     \infer {\Gamma \vdash \Pi(A,B) = \Pi(A',B')} {\Gamma \vdash
       A = A' & \Gamma.A \vdash B = B'}
     \and
@@ -351,10 +356,11 @@ rules}.
 %}
 
 \begin{figure}
-\boxit[Rules for $\UU$:]{
+\boxit[Rules for a universe a la Tarski:]{
 \begin{mathpar}
-\infer{\Gamma \vdash \UU_\Gamma}
-{\Gamma \vdash}
+\\
+\infer{\Gamma \vdash \UU_\Gamma = \UU_{\Gamma'} }
+{\Gamma = \Gamma'\vdash}
 \and
 \infer{\Gamma \vdash \Ta(a) = \Ta(a' )}
 {\Gamma \vdash a = a' : \UU_\Gamma}
@@ -429,18 +435,27 @@ The term model $\T$ is given by:
 \item $\Tm_\T([{\Gamma}],[A]) = \{ a\ |\ \Gamma \vdashS a: A\} / =^{\Gamma}_A$ where $a =^{\Gamma}_A
 a'$ if $\Gamma \vdashS a = a' : A$. 
 \end{itemize}
-The $\Pi\UU$-cwf operations on $\T$ can now be defined in a straightforward way. For example, if $\Delta \vdash \theta : \Theta$, $\Gamma \vdash \delta : \Delta$, we define
-$
-[\theta ] \circ_\T [\delta] = [\theta \circ \delta],
-$
-which is well-defined since composition preserves equality.
+The $\Pi\UU$-cwf operations on $\T$ can now be defined in a straightforward way. 
+We only show the universe operations:
+\begin{eqnarray*}
+(\UU_\T)_{[\Gamma]^\Ctx} &= &[ \UU_\Gamma ]^\Ty \in \Ty_\T([\Gamma]^\Ctx)\\
+\Ta_\T([a]^\Tm) &=& [\Ta(a)]^\Ty \in \Ty_\T([\Gamma]^\Ctx)\\
+\Pihat_\T([a]^\Tm,[b]^\Tm) &=& [ \Pihat(a,b) ]^\Tm  \in \Tm_\T([\Gamma]^\Ctx,[\UU_\Gamma]^\Ty)
+\end{eqnarray*}
+where $[a]^\Tm \in \Tm_\T([\Gamma]^\Ctx,[\UU_\Gamma])$ and $[b]^\Tm \in \Tm_\T([\Gamma.a]^\Ctx,[\UU_{\Gamma.a}]^\Ty)$.
+
+%For example, if $\Delta \vdash \theta : \Theta$, $\Gamma \vdash \delta : \Delta$, we define
+%$
+%[\theta ] \circ_\T [\delta] = [\theta \circ \delta],
+%$
+These operations are well-defined since we have congruence rules among our inference rules.
 \end{defi}
 \subsection{Initiality of $\T$}
 \label{sec:freenessT}
 
 We shall show that $\T$ is an initial $\Pi\UU$-cwf in the sense that for an arbitrary $\Pi\UU$-cwf $\C$, there exists a unique strict $\Pi\UU$-cwf morphism $\T  \rightarrow  \C$. 
 
-We begin by defining four mutually recursive partial dependent interpretation functions, one for each syntactic category. Let $B$ is a partial family of sets indexed by $A$, that is, a set of pairs, such that $(x,Y), (x,Y') \in B$ implies $x \in A$ and $Y=Y'$. Then a {\em partial dependent function} $f :  (x \in A) \rightharpoonup B(x)$  is a set of pairs, such that $(x,y), (x,y') \in f$ implies that $x \in A$, $B(x)$ is defined and $y = y' \in B(x)$.
+We begin by defining four mutually recursive partial dependent interpretation functions, one for each syntactic category. Let $B$ be a {\em partial family of sets} indexed by $A$, that is, a set of pairs, such that $(x,Y), (x,Y') \in B$ implies $x \in A$ and $Y=Y'$. Then a {\em partial dependent function} $f :  (x \in A) \rightharpoonup B(x)$  is a set of pairs, such that $(x,y), (x,y') \in f$ implies that $x \in A$, $B(x)$ is defined and $y = y' \in B(x)$.
 
 Our four partial dependent interpretation functions are:
 \begin{eqnarray*}
@@ -484,7 +499,7 @@ Clauses for $\UU$:
 \intTyU{\Ta(a)} &=& \Ta_\C(\intTmU{a})\\
 \intTmU{\hat{\Pi}(a,b)}&=& \hat{\Pi}_\C(\intTmU{a},\intTmU{b})
 \end{eqnarray*}
-Partiality arises because, for instance, $\inte{\gamma'} \circ_\C {\inte{\gamma}}$ is only defined when $\inte{\gamma'}$ and $\inte{\gamma}$ are defined and $\dom(\inte{\gamma'}) = \cod(\inte{\gamma})$.
+Partiality arises because, for example, $\inte{\gamma'} \circ_\C {\inte{\gamma}}$ is only defined when $\inte{\gamma'}$ and $\inte{\gamma}$ are defined and $\dom(\inte{\gamma'}) = \cod(\inte{\gamma})$.
 However, we can prove by induction on the inference rules that the interpretation of equal well-formed contexts, equal well-typed substitutions, equal well-formed types, and equal well-typed terms are always defined and equal:
 \begin{lem}\hfill
 \label{lemma:interp_defined}
@@ -551,7 +566,7 @@ then $F[\Gamma] = \iniCtx{[\Gamma]}$, etc.
 
 For example, to show the case for 
 $$
-\frac{\Gamma \vdash}{\Gamma \vdash \UU_\Gamma}
+\frac{\Gamma = \Gamma' \vdash}{\Gamma \vdash \UU_\Gamma = \UU_{\Gamma'}}
 $$
 we use the induction hypothesis $F([\Gamma]) = \iniCtx{[\Gamma]}$ and derive 
 $$
@@ -600,31 +615,56 @@ There are two new clauses for $\ctxof$ and $\typeof$ for $\UU$:
 \end{eqnarray*}
 
 \subsection{Inference rules}
-The inference rules for cwfs with $\Pi$-types are as before, except that they range over the new sets of raw contexts, substitutions, types, and terms. Moreover, we add the following new congruence rules:
-$$
-\frac{}
-{\Gamma \vdash \UU_\Gamma}
-\hspace{3em}
-\frac{\Gamma \vdash a = a' : \UU_\Gamma}
-{\Gamma \vdash a = a' }
-\hspace{3em}
-\frac{\Gamma \vdash a = a' : \UU_\Gamma
-\hspace{3em}
-\Gamma.\Ta(a) \vdash b = b' : \UU_{\Gamma.\Ta(a)}}
-{\Gamma \vdash \Pi(a,b) = \Pi(a',b') : \UU_\Gamma}
-$$
-We also have the following new conversion rule:
-$$
-\frac{  \Delta   \vdash   \gamma  :  \Gamma } 
-{ \Delta   \vdash   \UU_\Gamma [\gamma] = \UU_\Delta} 
-$$
-
+The inference rules for cwfs with $\Pi$-types are as before, except that they range over the new sets of raw contexts, substitutions, and the combined syntactic category of raw types and terms. Moreover, we display the rules for a universe a la Russell in the box.
+%$$
+%\frac{}
+%{\Gamma \vdash \UU_\Gamma}
+%\hspace{3em}
+%\frac{\Gamma \vdash a = a' : \UU_\Gamma}
+%{\Gamma \vdash a = a' }
+%\hspace{3em}
+%\frac{\Gamma \vdash a = a' : \UU_\Gamma
+%\hspace{3em}
+%\Gamma.a \vdash b = b' : \UU_{\Gamma.a}}
+%{\Gamma \vdash \Pi(a,b) = \Pi(a',b') : \UU_\Gamma}
+%$$
+%We also have the following new conversion rule:
+%$$
+%\frac{  \Delta   \vdash   \gamma  :  \Gamma } 
+%{ \Delta   \vdash   \UU_\Gamma [\gamma] = \UU_\Delta} 
+%$$
+\begin{figure}
+\boxit[Rules for a universe a la Russell:]{
+\begin{mathpar}
+\\
+\infer{\Gamma \vdash \UU_\Gamma = \UU_{\Gamma'}}
+{\Gamma = \Gamma' \vdash}
+\and
+\infer{\Gamma \vdash a = a' }
+{\Gamma \vdash a = a' : \UU_\Gamma}
+\and
+\infer{\Gamma \vdash \Pi(a,b) = \Pi(a',b') : \UU_\Gamma}
+{\Gamma \vdash a = a' : \UU_\Gamma\and\Gamma.a \vdash b = b' : \UU_{\Gamma.a}}
+\and
+\infer{ \Delta   \vdash   \UU_\Gamma [\gamma]  =  \UU_\Delta}{  \Delta   \vdash   \gamma  :  \Gamma } 
+ \end{mathpar}
+  }
+  \label{fig:uu}
+\end{figure}
 \def\R{\mathcal{R}}
 \subsection{The syntactic $\Pi\UU$-cwf $\R$ a la Russell}
-The term model a la Russell is defined in the same way as the term model a la Tarski, but based on the grammar and inference rules a la Russell.
+The term model a la Russell is defined from the grammar and inference rules a la Russell in an analogous way that the term model a la Tarski is defined from the grammar and inference rules a la Tarski. The universe operations on $\R$ are defined as follows:
+\begin{eqnarray*}
+(\UU_\R)_{[\Gamma]^\Ctx} &= &[ \UU_\Gamma ]^\Ty \in \Ty_\R([\Gamma])\\
+\Ta_\R([a]^\Tm) &=& [a]^\Ty \in \Ty_\R([\Gamma])\\
+\Pihat_\R([a]^\Tm,[b]^\Tm) &=& [ \Pi(a,b) ]^\Tm  \in \Tm_\R([\Gamma],[\UU_\Gamma])
+\end{eqnarray*}
+where $[a]^\Tm \in \Tm_\R([\Gamma],[\UU_\Gamma])$ and $[b]^\Tm \in \Tm_\R([\Gamma.a],[\UU_{\Gamma.a}])$.
+
 
 \subsection{Initiality of $\R$}
-The interpretation functions are as before, except that both the type and the term interpretation functions range over $\RawTm$:
+The domain and codomain of the partial interpretation functions are as before, except that
+both the type and the term interpretation functions range over $\RawTm$:
 \begin{eqnarray*}
 \intCtxU{-} &:& \RawCtx\ \rightharpoonup \Ctx_\C\\
 \intSubU{-}&:& (\gamma \in \RawSub)\ \rightharpoonup \
@@ -674,6 +714,36 @@ The $\Pihat$-case is obtained by a similar modfication. We thus prove:\footnote{
   $\R$ is an initial $\Pi\UU$-cwf.
 \end{thm}
 
+\subsection{The isomorphism between $\T$ and $\R$}
+We can now look at the instances of the interpretation morphisms in both directions.
+
+Tarski to Russell: assume that $\iniCtx{[\Gamma]} = [ \Gamma^\R ], \iniTm{[\Gamma]}{[\UU_\Gamma]}{[a]} = [ a^\R ]$ and similarly for $b$. Then
+\begin{eqnarray*}
+\iniTy{[\Gamma]}{[\UU_\Gamma]} =
+ \intTyU{\UU_\Gamma} &=& (\UU_\T)_{\intCtxU{\Gamma}}
+ %= (\UU_\T)_{\iniCtx{[\Gamma]}} 
+ = [\UU_{\Gamma^\R}]
+ \\
+\iniTy{[\Gamma]}{[\Ta(a)]}= \intTyU{\Ta(a)} &=& \Ta_\T(\intTmU{a}) 
+%= \Ta_\T(\iniTm{[\Gamma]}{[A]}{[a]}) 
+= [a^\R]\\
+\iniTm{[\Gamma]}{[\UU_\Gamma]}{[\Pihat(a,b)]} = \intTmU{\Pihat(a,b)}&=& \Pihat_\T(\intTmU{a},\intTmU{b})
+= [\Pi(a^\R,b^\R)]
+\end{eqnarray*}
+
+Russell to Tarski: assume that $\iniCtx{[\Gamma]} = [ \Gamma^\T ], \iniTm{[\Gamma]}{[\UU_\Gamma]}{[a]} = [ a^\T ]$ and similarly for $b$. Then
+\begin{eqnarray*}
+\iniTy{[\Gamma]}{[\UU_\Gamma]} =
+ \intTyU{\UU_\Gamma} &=& (\UU_\T)_{\intCtxU{\Gamma}}
+ %= (\UU_\T)_{\iniCtx{[\Gamma]}} 
+ = [\UU_{\Gamma^\T}]
+ \\
+\iniTy{[\Gamma]}{[a]}= \intTyU{a} &=& \Ta_\T(\intTmU{a}) 
+%= \Ta_\T(\iniTm{[\Gamma]}{[A]}{[a]}) 
+= [\Ta(a^\T)]\\
+\iniTm{[\Gamma]}{[\UU_\Gamma]}{[\Pi(a,b)]} = \intTmU{\Pi(a,b)}&=& \hat{\Pi}_\T(\intTmU{a},\intTmU{b})
+= [\Pihat(a^\T,b^\T)]
+\end{eqnarray*}
 
 \bibliographystyle{plain}
 \bibliography{refs}
