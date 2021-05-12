@@ -62,25 +62,28 @@ $\Pi\UU$-tower-cwfs can be presented as models of a certain infinitary generaliz
 
  A $\Pi \UU$-tower-cwf is a cwf with a $\Pi$-structure and a structure for a tower of universes closed under $\Pi$.
  
- We have $\UU_{n,\Gamma} \in \Ty(\Gamma)$, $\Ta_n(a) \in \Ty(\Gamma)$ and $\Pihat^n(a,b) \in \Tm(\Gamma,\UU_{n,\Gamma})$ provided $n \in \N$, $\Gamma \in \Ctx$ and $a  \in \Tm(\Gamma,\UU_{n,\Gamma})$ and 
-$b \in \Tm(\Gamma . \Ta(a),\UU_{n,\Gamma})$. 
-We also have $\UUhat^n_{\Gamma} \in \Tm(\Gamma,\UU_{n+1,\Gamma})$.
-Moreover, we have the equations
+First, we have a family of $\Pi\UU$-cwfs indexed by $n \in \N$, that is, we have $\UU_{n,\Gamma} \in \Ty(\Gamma)$, $\Ta_n(a) \in \Ty(\Gamma)$ and $\Pihat^n(a,b) \in \Tm(\Gamma,\UU_{n,\Gamma})$ provided $\Gamma \in \Ctx$ and $a  \in \Tm(\Gamma,\UU_{n,\Gamma})$ and 
+$b \in \Tm(\Gamma . \Ta(a),\UU_{n,\Gamma})$ with the equations:
 \begin{eqnarray*}
 \Ta_n(\Pihat^n(a,b)) &= &\Pi(\Ta_n(a),\Ta_n(b))\\
 \Ta_n(\UUhat^n_{\Gamma}) &= &\UU_{n,\Gamma}\\
 \UU_{n,\Gamma}[\gamma] &=& \UU_{n,\Delta}\\
 \Ta_n(a)[\gamma] &=& \Ta_n(a[\gamma])\\
-\Pihat^n(a,b)[\gamma] &=& \Pihat^n(a[\gamma],b[\gamma^+])\\
-\UUhat^l_\Gamma[\gamma] &=& \UUhat^l_\Delta
-\end{eqnarray*}
-
-If we have a {\em cumulative} tower of universes we also have $\t_n(a) \in \Tm(\Gamma,\UU_{l+1,\Gamma})$ with the equations
-\begin{eqnarray*}
-\t_n(\Pihat^l(a,b)) &= &\Pihat^{n+1}(\t_n(a),\t_n(b))\\
-\t_n(a)[\gamma] &=& \t_n(a[\gamma])\\
+\Pihat^n(a,b)[\gamma] &=& \Pihat^n(a[\gamma],b[\gamma^+])
 \end{eqnarray*}
 where $\gamma \in \Sub(\Delta,\Gamma)$.
+
+Moreover, we have $\UUhat^n_{\Gamma} \in \Tm(\Gamma,\UU_{n+1,\Gamma})$ with the equation
+\begin{eqnarray*}
+\UUhat^n_\Gamma[\gamma] &=& \UUhat^n_\Delta
+\end{eqnarray*}
+
+If we have a {\em cumulative} tower of universes we also have $\t_n(a) \in \Tm(\Gamma,\UU_{n+1,\Gamma})$ with the equations
+\begin{eqnarray*}
+\t_n(\Pihat^n(a,b)) &= &\Pihat^{n+1}(\t_n(a),\t_n(b))\\
+\t_n(a)[\gamma] &=& \t_n(a[\gamma])\\
+\end{eqnarray*}
+
 
 Check typability with respect to order, cf the problem of Palmgren's typability of $\t_n$.
 
@@ -708,46 +711,6 @@ The proof that this is the unique $\Pi\UU$-tower-cwf morphism into $\C$ is simil
   $\R$ is an initial $\Pi\UU$-tower-cwf.
 \end{thm}
 
-\section{The category of $\Pi\UU$-level-indexed-cwfs}
-
-The notion of $\Pi\UU$-tower-cwf can be presented as the models of an infinitary gat; there are infinitely many operator symbols $\UU_n, \Ta_n, \UUhat^n$, and, with cumulativity, $\t_n$, one for each external natural number $n$.
-
-Levels themselves form a simple one-sorted algebraic theory. In the language of cwfs they form a certain unityped cwf with two operations. Cumulative  $\Pi\UU$-level-indexed-cwfs are cwfs indexed by the ucwf of levels.
-
-We can turn this into a finitary gat by introducing a new sort $\Level$ of universe levels. In this way we have only four operator symbols $\UU, \Ta, \UUhat$, and, with cumulativity, $\t$. Instead of the external indices $n$ above, they now take an extra internal index argument $l : \Level$. Moreover, the contexts, substitutions, types, and terms are now indexed by level arguments.
-
-The levels come with a unary operation $l^+$ returning the next universe level above $l$ and a binary operation $l \vee m$ returning the supremum of the levels $l$ and $m$. The levels form a $\vee$-semilattice, such that $\vee$ commutes with $-^+$.
- 
-We can thus introduce the notion of a {\em cumulative $\Pi\UU$-level-indexed-cwf} as a cwf with a $\Pi$-structure and a structure for a tower of level-indexed universes closed under $\Pi$. It is defined as a cwf with an extra set $\Level$ of levels with a unary operation $l^+ \in \Level$ and a binary operation $l \vee m \in \Level$ for $l, m \in \Level$. 
-\begin{eqnarray}
-semi-lattice&& equations\\
-(l \vee m)^+ &=& l^+ \vee m^+
-\end{eqnarray}
-
-The rest of the definition is obtained by copying the definition of cumulative $\Pi\UU$-tower-structures and replacing the external indices by the internal ones. We have $\UU_{l,\Gamma} \in \Ty(\Gamma)$, $\Ta_l(a) \in \Ty(\Gamma)$ and $\Pihat^l(a,b) \in \Tm(\Gamma,\UU_{l,\Gamma})$ provided $l \in \Level$, $\Gamma \in \Ctx$ and $a  \in \Tm(\Gamma,\UU_{l,\Gamma})$ and 
-$b \in \Tm(\Gamma . \Ta(a),\UU_{l,\Gamma})$. 
-We also have $\UUhat^l_{\Gamma} \in \Tm(\Gamma,\UU_{l+1,\Gamma})$.
-Moreover, we have the equations
-\begin{eqnarray*}
-\Ta_l(\Pihat^l(a,b)) &= &\Pi(\Ta_l(a),\Ta_l(b))\\
-\Ta_l(\UUhat^l_{\Gamma}) &= &\UU_{l,\Gamma}\\
-\UU_{l,\Gamma}[\gamma] &=& \UU_{l,\Delta}\\
-\Ta_l(a)[\gamma] &=& \Ta_l(a[\gamma])\\
-\Pihat^l(a,b)[\gamma] &=& \Pihat^l(a[\gamma],b[\gamma^+])\\
-\UUhat^l_\Gamma[\gamma] &=& \UUhat^l_\Delta
-\end{eqnarray*}
-In this case we describe a {\em cumulative} tower of universes so we also have $\t_l(a) \in \Tm(\Gamma,\UU_{l+1,\Gamma})$ with the equations
-\begin{eqnarray*}
-\t_l(\Pihat^l(a,b)) &= &\Pihat^{l+1}(\t_l(a),\t_l(b))\\
-\t_l(a)[\gamma] &=& \t_l(a[\gamma])\\
-\end{eqnarray*}
-where $\gamma \in \Sub(\Delta,\Gamma)$.
-
-Check typability with respect to order, cf the problem of Palmgren's typability of $\t_l$.
-
-A strict cumulative $\Pi\UU$-level-indexed-cwf morphism is a strict cwf-morphism that preserves $\Pi$- and level-indexed $\UU$-structure strictly.
-
-{\bf Remark.} In the non-cumulative case we have {\em doubly indexed} codes $\Pihat^{l,m}(a,b)$.
 \bibliographystyle{plain}
 \bibliography{refs}
 \end{document}
