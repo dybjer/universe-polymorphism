@@ -78,16 +78,17 @@ Moreover, we have $\UUhat^n_{\Gamma} \in \Tm(\Gamma,\UU_{n+1,\Gamma})$ with the 
 \UUhat^n_\Gamma[\gamma] &=& \UUhat^n_\Delta
 \end{eqnarray*}
 
-If we have a {\em cumulative} tower of universes we also have $\t_n(a) \in \Tm(\Gamma,\UU_{n+1,\Gamma})$ with the equations
+Finally, we consider here a cumulative tower and add the lifting operation $\t_n(a) \in \Tm(\Gamma,\UU_{n+1,\Gamma})$ with the equations
 \begin{eqnarray*}
 \t_n(\Pihat^n(a,b)) &= &\Pihat^{n+1}(\t_n(a),\t_n(b))\\
 \t_n(a)[\gamma] &=& \t_n(a[\gamma])\\
 \end{eqnarray*}
 
+{\bf Remark.} In the non-cumulative case we need doubly indexed codes $\Pihat^{m,n}$ for $\Pi$.
 
 Check typability with respect to order, cf the problem of Palmgren's typability of $\t_n$.
 
-A strict $\Pi\UU$-tower-cwf morphism is a strict cwf-morphism that preserves $\Pi$- and $\UU$-structure strictly.
+A strict $\Pi\UU$-tower-cwf morphism is a strict cwf-morphism that preserves $\Pi$- and universe-tower-structure strictly.
 
 {\bf Remark.} $\Pi\UU$-tower-cwfs are models of an infinitary generalized algebraic theory. It corresponds to Martin-Löf type theory with an external sequence of universes $\UU_n$ for $n \in \N$.
 
@@ -381,7 +382,7 @@ rules}.
 %}
 
 \begin{figure}
-\boxit[Rules for a tower of universes a la Tarski:]{
+\boxit[The nth universe a la Tarski has a universe structure:]{
 \begin{mathpar}
 \\
 \infer{\Gamma \vdash (\UU_n)_\Gamma = (\UU_n)_{\Gamma'}}
@@ -392,8 +393,6 @@ rules}.
 \and
 \infer{\Gamma \vdash \Pihat^n(a,b) = \Pihat^n(a',b') : (\UU_n)_\Gamma}
 {\Gamma \vdash a = a' : (\UU_n)_\Gamma\and\Gamma.a \vdash b = b' : (\UU_n)_{\Gamma.a}}
-\and
-\infer{\Gamma \vdash \UUhat^n_\Gamma =  \UUhat^n_{\Gamma'}: (\UU_{n+1})_\Gamma}{\Gamma = \Gamma' \vdash}
 \and
 \infer{\Gamma \vdash \Ta_n(\Pihat^n(a,b)) = \Pi(a,b)}
 {\Gamma \vdash a : (\UU_n)_\Gamma \and \Gamma . a \vdash b : (\UU_n)_{\Gamma . a}}
@@ -407,17 +406,26 @@ rules}.
 \infer{ \Delta   \vdash   \Ta_n (a) [\gamma]  =  \Ta_n(a[\gamma] )}{ \Gamma   \vdash  a : (\UU_n)_\Gamma &  \Delta   \vdash   \gamma  :  \Gamma } 
 \and
    \infer{ \Delta   \vdash   \Pihat^n (a, b) [\gamma] =  \Pihat^n (a [\gamma] , b [\gamma ^+]): (\UU_n)_\Delta}{ \Gamma   \vdash  a : (\UU_n)_\Gamma &  \Gamma .a \vdash  b : (\UU_n)_{\Gamma .a} &  \Delta   \vdash   \gamma  :  \Gamma }
+\end{mathpar}
+}
+\label{fig:uu}
+\end{figure}
+
+\begin{figure}
+\boxit[Rules for the code of a universe:]{
+\begin{mathpar}
+\\
+\infer{\Gamma \vdash \UUhat^n_\Gamma =  \UUhat^n_{\Gamma'}: (\UU_{n+1})_\Gamma}{\Gamma = \Gamma' \vdash}
 \and
 \infer{\UUhat^n_\Gamma[\gamma] = \UUhat^n_\Delta : (\UU_{n+1})_\Delta}
 {\Delta   \vdash   \gamma  :  \Gamma }
-
-
- \end{mathpar}
-  }
-  \label{fig:uu}
+\end{mathpar}
+}
+\label{fig:uu-code}
 \end{figure}
+
 \begin{figure}
-\boxit[Additional rules for cumulativity:]{
+\boxit[Rules for cumulativity:]{
 \begin{mathpar}
 \\
 \infer{\Gamma \vdash \t_n(a) = \t_n(a' ) :  (\UU_{n+1})_\Gamma}
@@ -430,26 +438,8 @@ rules}.
 
  \end{mathpar}
   }
-  \label{fig:uu}
+  \label{fig:uu-cumulativity}
 \end{figure}
-
-%$$
-%\frac{}
-%{1 \vdash \UU}
-%\hspace{3em}
-%\frac{\Gamma \vdash a = a' : \UU_\Gamma}
-%{\Gamma \vdash \Ta(a) = \Ta(a' )}
-%\hspace{3em}
-%\frac{\Gamma \vdash a = a' : \UU_\Gamma\hspace{3em}\Gamma.\Ta(a) \vdash b = b' : \UU_{\Gamma.\Ta(a)}}
-%{\Gamma \vdash \Pihat(a,b) = \Pihat(a',b') : \UU_\Gamma}
-%$$
-%We also have a new conversion rule
-%$$
-%\frac{\Gamma \vdash a : \UU\hspace{3em} \Gamma . \Ta(a) \vdash b : \UU}
-%{\Gamma \vdash \Ta(\hat{\Pi}(a,b)) = \Pi(\Ta(a),\Ta(b))}
-%$$
-%
-Note that all non-cumulative rules, except the two rules for $\UUhat^n$, are generic in $n$.
 
 Moreover, our syntax is annotated in order to ensure that a raw term has a unique (up to judgmental
 equality) type given by the function $\typeof$, and that a type has a unique (up to judgemental equality) context given by the function
@@ -645,7 +635,7 @@ There are two new clauses for $\ctxof$ and $\typeof$ for $\UU$:
 \subsection{Inference rules}
 The inference rules for cwfs with $\Pi$-types are as before, except that they range over the new sets of raw contexts, substitutions, types, and terms. Moreover, we add the following new rules for a tower of universes a la Russell:
 \begin{figure}
-\boxit[Rules for a tower of universes a la Russell:]{
+\boxit[The nth universe a la Russel has a universe structure:]{
 \begin{mathpar}
 \\
 \infer{\Gamma \vdash (\UU_n)_\Gamma = (\UU_n)_{\Gamma'}}
@@ -657,20 +647,30 @@ The inference rules for cwfs with $\Pi$-types are as before, except that they ra
 \infer{\Gamma \vdash \Pi(a,b) = \Pi(a',b') : (\UU_n)_\Gamma}
 {\Gamma \vdash a = a' : (\UU_n)_\Gamma\and\Gamma.a \vdash b = b' : (\UU_n)_{\Gamma.a}}
 \and
-\infer{\Gamma \vdash (\UU_n)_\Gamma =  (\UU_n)_{\Gamma'}: (\UU_{n+1})_\Gamma}{\Gamma = \Gamma' \vdash}
-\and
 \infer{(\UU_n)_\Gamma[\gamma] = (\UU_n)_\Delta}
 {\Delta   \vdash   \gamma  :  \Gamma }
 \and
    \infer{ \Delta   \vdash   \Pi(a, b) [\gamma] =  \Pi(a [\gamma] , b [\gamma ^+]): (\UU_n)_\Delta}{ \Gamma   \vdash  a : (\UU_n)_\Gamma &  \Gamma .a \vdash  b : (\UU_n)_{\Gamma .a} &  \Delta   \vdash   \gamma  :  \Gamma } \
-\and
-\infer{(\UU_n)_\Gamma[\gamma] = (\UU_n)_\Delta : (\UU_{n+1})_\Delta}
-{\Delta   \vdash   \gamma  :  \Gamma }\end{mathpar}
+\end{mathpar}
   }
   \label{fig:uu}
 \end{figure}
+
 \begin{figure}
-\boxit[Additional rule for cumulativity:]{
+\boxit[The nth universe is in the next:]{
+\begin{mathpar}
+\\
+\infer{\Gamma \vdash (\UU_n)_\Gamma =  (\UU_n)_{\Gamma'}: (\UU_{n+1})_\Gamma}{\Gamma = \Gamma' \vdash}
+\and
+\infer{(\UU_n)_\Gamma[\gamma] = (\UU_n)_\Delta : (\UU_{n+1})_\Delta}
+{\Delta   \vdash   \gamma  :  \Gamma }
+\end{mathpar}
+}
+\label{fig:uu-code}
+\end{figure}
+
+\begin{figure}
+\boxit[The rule for cumulativity:]{
 \begin{mathpar}
 \\
 \infer{\Gamma \vdash a = a'  :  (\UU_{n+1})_\Gamma}
