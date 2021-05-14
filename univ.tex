@@ -149,6 +149,30 @@ successor that come with this approach.
 
 
 \section{Introduction}\label{sec:intros}
+\newcommand{\ttt}[1]{\text{\tt #1}}
+
+The earliest record of the use of universes in type theory that we could
+find is in the paper \cite{deBruijn68} by de Bruijn on Automath.
+In this paper, types are called categories, but not all categories are types. 
+Automath has a special symbol \ttt{type} to make it possible to introduce
+new categories, and only categories introduced as such are types,
+not \ttt{type} itself. 
+One new type of category \ttt{type} is \ttt{bool}, 
+which is the category of all propositions. 
+Propositions may or may not be asserted
+and to this purpose there is a primitive notion \ttt{TRUE}
+of category \ttt{type}
+in the context of a free variable of type \ttt{bool}.
+By substitution one can form the type \ttt{TRUE(p)} for any proposition \ttt{p}. 
+In modern terminology we would call \ttt{type} a universe of
+types and \ttt{bool} a subuniverse \emph{à la Tarski} of 
+(codes of) propositions with a decoding function \ttt{TRUE}.
+At the very end, the paper discusses the possibility of adding a symbol
+\ttt{type*} and changing the category of \ttt{bool} from \ttt{type}
+to \ttt{type*}, disallowing functional abstraction with respect to \ttt{bool}.
+The possibility of functional abstraction with respect to \ttt{type} is
+mentioned and rejected.  
+
 
 When representing mathematical reasoning using dependent types it is natural to introduce
 a sort for types
