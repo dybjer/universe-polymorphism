@@ -149,20 +149,45 @@ successor that come with this approach.
 
 
 \section{Introduction}\label{sec:intros}
+\newcommand{\ttt}[1]{\text{\tt #1}}
 
-When representing mathematical reasoning using dependent types it is natural to introduce
-a sort for types
-\footnote{PD: This sentence is not clear: what is a "sort"?}
-, itself closed by dependent product, as was done in the system Automath \cite{deBruijn68}.
-A little later, and independently, Martin-Löf introduced a dependent type system with
-a type of all types \cite{ML71}.
-After the discovery of Girard's Paradox \cite{Girard71}, this was replaced by a predicative
-version \cite{ML72}, similar to the one used in Automath. Later, 
-Martin-L\"of introduced a countable sequence of universes  \cite{martinlof:predicative}
+The earliest record of the use of universes in type theory that we could
+find is in the paper \cite{deBruijn68} by de Bruijn on Automath.
+In this paper, types are called categories, but not all categories are types. 
+Automath has a special symbol \ttt{type} to make it possible to introduce
+new categories, and only categories \ttt{c} introduced as $\ttt{c}:\ttt{type}$
+are types, not \ttt{type} itself (so, not $\ttt{type}:\ttt{type}$). 
+One new type is $\ttt{bool}:\ttt{type}$, 
+which is the category of all propositions. 
+Propositions may or may not be asserted
+and to this purpose there is a primitive notion \ttt{TRUE}
+of category \ttt{type}
+in the context of a free variable of type \ttt{bool}.
+By substitution one can form the type \ttt{TRUE(p)} for any $\ttt{p}:\ttt{bool}$. 
+In modern terminology we would call \ttt{type} a universe of
+types and \ttt{bool} a subuniverse \emph{à la Tarski} of 
+(codes of) propositions with a decoding function \ttt{TRUE}.
+%At the very end, the paper discusses the possibility of adding a symbol
+%\ttt{type*} and changing the category of \ttt{bool} from \ttt{type}
+%to \ttt{type*}, disallowing functional abstraction with respect to \ttt{bool}.
+%The possibility of functional abstraction with respect to \ttt{type} is mentioned and rejected.  
+
+
+%When representing mathematical reasoning using dependent types it is natural to introduce
+%a sort for types
+%\footnote{PD: This sentence is not clear: what is a "sort"?}
+%, itself closed by dependent product, as was done in the system Automath \cite{deBruijn68}.
+A little later, and independently, Martin-Löf \cite{ML71} introduced a dependent 
+type system with a \emph{type} $V$ of all types (so $V:V$).
+After the discovery of Girard's Paradox \cite{Girard71}, this system was replaced by a predicative
+version \cite{ML72}, more similar to the one used in Automath \cite{deBruijn68}. 
+Later, Martin-L\"of \cite{martinlof:predicative} introduced a countable sequence of universes
 $$
 \UU_0 : \UU_1 : \UU_2 : \cdots
 $$
 We refer to the indices $0, 1, 2, \ldots$ as {\em universe levels}.
+
+{\color{red} Cite Lean \cite{moura:lean}?}
 
 Before the advent of univalent foundations, one expected only the first few universe
  levels to be relevant in practical formalisations. This suggests that it might be feasible for a user of type theory to explicitly assign universe levels to their types, and whenever necessary repeat definitions when they are needed on different levels. However, the number of copies of definitions does not only grow with the level, but also with the number of type arguments in the definition of a type former. (We remark that universes are more important in a predicative framework than in an impredicative one. Consider for example the formalisation of real numbers as Dedekind cuts, or domain elements as filters of formal neighbourhoods, which belong to $\UU_1$ since they are properties of elements in $\UU_0$.)
