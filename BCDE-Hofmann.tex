@@ -114,9 +114,9 @@ In the other direction, the notion of gat relies on the notion of cwf, in the se
 In Section 2 we recall the definition of the category $\Cwf$ of categories with families and morphisms preserving cwf-structure on the nose. Section 3 contains our main definition of a syntax independent notion of \FYI{presentation} $\Sigma$ of a gat and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure. In Section 4 we construct an initial object $\T_\Sigma$ in $\Cwf_\Sigma$. In Section 5 we show several examples of gats: for monoids, categories, cwfs, and cwfs with extra structure for one universe. We point out that cwfs with extra structure for gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively. We also sketch how to extend our approach to some countably presented gats, and show the example of contextual cwfs, a variant of Cartmell's contextual categories \cite{cartmell:phd,cartmell:apal}. Finally, in Section 6 we discuss related work, for example relating to Voevodsky's initiality conjecture \cite{voevodsky:initiality} and Altenkirch and Kaposi's quotient inductive-inductive types \cite{altenkirch:qiits}.
 
 Our development can be formulated in a constructive set theory,
-as described for instance by Aczel \cite{MR519801}, although the set theory
+as described for instance by Aczel \cite{MR519801,aczel:relate}, although the set theory
 we use for formulating the notion of cwf with a $\Sigma$-structure is probably
-much weaker. We will however need to make certain size distinctions, and therefore assume that our set theory comes with two Grothendieck universes $\V_0 \in \V_1$ of ``very small" and ``small" sets respectively. Sets that are not small are ``large". The very small sets will be used for the internal cwf of very small sets in Section \ref{sec:examples}.
+much weaker. We will however need to make certain size distinctions and assume that our set theory comes with two Grothendieck universes $\V_0 \in \V_1$ of ``tiny" and ``small" sets respectively. Sets that are not small are ``large". The tiny sets will be used for the internal cwf of tiny sets in Section \ref{sec:examples}.
 
 As emphasized by Voevodsky~\cite{voevodsky:initiality}, we study structures invariant
 under {\em isomorphisms} and not under {\em equivalences}, and it is actually misleading
@@ -420,8 +420,10 @@ This definition is {\em syntax independent}. In the next subsection we show how 
 
 We refer to Section \ref{monoids} where we show a simple instance of this definition: a \FYI{presentation} $\Sigma$ of internal monoids and its associated category of models $\Cwf_\Sigma$ of cwfs with an internal monoid. We also show how to construct the initial cwf with an internal monoid $\T_\Sigma$.
 
+\begin{remark}
 There is a bijective correspondence between contexts in $\T_\Sigma$ and uniform families of contexts
 indexed by $\C \in \Cwf_\Sigma$. To each context $[ \Gamma ]$ in $\T_\Sigma$ we associate the uniform family $(\inte{ [ \Gamma ] }_\C)$ where $\inte{-}_\C$ is the unique morphism from $\T_\Sigma$ to $\C$. To each family $(\Gamma_\C)$ indexed by $\C \in \Cwf_\Sigma$ we associate the context $\Gamma_{\T_\Sigma}$ in $\T_\Sigma$. Moreover, $\inte{ [ \Gamma ] }_{\T_\Sigma} = [ \Gamma ]$ since $\T_\Sigma$ is initial, and  $\inte{ {\Gamma_{\T_\Sigma}}}_\C  = \Gamma_\C$ because of uniformity and since $\inte{-}_\C$ is a morphism in $\Cwf_{\Sigma}$. For similar reasons there are bijective correspondences between types and terms in $\T_\Sigma$ and uniform families of types and terms.
+\end{remark}
 
 \begin{remark}
 Note that in general a \FYI{presentation} $\Sigma$ is a large set, since uniform families over $\Cwf_\Sigma$ are. However, because of the bijective correspondence these uniform families can be replaced by contexts, types, and terms in $\T_\Sigma$. This replacement will turn the semantic $\Sigma$ into a small syntactic version, where contexts, types, and terms are members of countable sets.
@@ -701,7 +703,7 @@ The remaining examples will use dependent types in an essential way. However, fo
 % In the remaining examples, we shall mainly use ordinary notation with variables.
 % % We have already said that.
 
-\subsection{Internal categories} The gat of categories was one of Cartmell's motivating examples. It has the following sort symbols, operator symbols, and equations. Again, note that in our case the models are internal categories in a cwf. To emphasize the difference between the internal notions of category and cwf and the external notions (introduced in Section 2), our notation for sort symbols in the gat of internal cwfs use lower case letters ($\Obj, \Hom, \ty, \tm$). This is in contrast to the upper case letters for the external versions ($\Ty, \Tm$). We will however overload notation for operator symbols, and for example use $\circ$ both for the cwf-combinator and for the operator symbol in the gat of internal categories.
+\subsection{Internal categories} The gat of categories was one of Cartmell's motivating examples. It has the following sort symbols, operator symbols, and equations. Again, note that the models are internal categories in a cwf. To emphasize the difference between the internal notions of category and cwf and the external notions (introduced in Section 2), our notation for sort symbols in the gat of internal cwfs use lower case letters ($\Obj, \Hom, \ty, \tm$). This is in contrast to the upper case letters for the external versions ($\Ty, \Tm$). We will however overload notation for operator symbols, and for example use $\circ$ both for the cwf-combinator and for the operator symbol in the gat of internal categories.
 
 Sort symbols:
 \begin{eqnarray*}
@@ -833,7 +835,7 @@ A cwf with extra structure supporting the generalized algebraic theory of cwfs i
 that is, it is a cwf in the ordinary sense (see Definition~\ref{def:Cwfobj})
 except that it has small sets of objects, morphisms, types, and terms.
 
-An example of a cwf with an internal cwf is provided by the cwf $\Set$ of small sets with an internal category of very small sets. We can make this precise if we work in set theory with two Grothendieck universes $\V_0 \in \V_1$. We call the members of $\V_1$ ``small sets" and the members of $\V_0$ ``very small sets". The category of contexts of the cwf $\Set$ is the usual category of small sets, by which we here mean that its objects are in $\V_1$. Moreover, the types are also the small sets in $\V_1$. To get an internal cwf, we interpret its sort of objects $\ctx$ as the small set $\V_0$ of very small sets, and the sorts of types $\ty(\Gamma)$ also as $\V_0$.
+An example of a cwf with an internal cwf is provided by the cwf $\Set$ of small sets with an internal category of tiny sets. As mentioned in the introduction we work in set theory with two Grothendieck universes $\V_0 \in \V_1$, where members of $\V_1$ are called ``small sets" and the members of $\V_0$ ``tiny sets". The category of contexts of the cwf $\Set$ is the usual category of small sets, by which we here mean that its objects are in $\V_1$. Moreover, the types are also the small sets in $\V_1$. To get an internal cwf, we interpret its sort of objects $\ctx$ as the small set $\V_0$ of tiny sets, and the sorts of types $\ty(\Gamma)$ also as $\V_0$.
 
 %Further examples of internal cwfs inside $\Set$ are provided by cwfs supporting \FYI{presentations} of generalized algebraic theories, as constructed in the previous section.
 
