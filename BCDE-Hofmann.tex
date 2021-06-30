@@ -839,6 +839,10 @@ An example of a cwf with an internal cwf is provided by the cwf $\Set$ of small 
 
 %Further examples of internal cwfs inside $\Set$ are provided by cwfs supporting \FYI{presentations} of generalized algebraic theories, as constructed in the previous section.
 
+\begin{remark}
+Note the important difference between the internal notion of cwf defined here and the external notion of cwf defined in Section \ref{sec:def_cwf}. 
+\end{remark}
+
 \subsection{Internal cwfs with $\Pi$-types}
 We add three operator symbols in addition to the operator symbols for cwfs in Section 5.2 and 5.3:
 \begin{eqnarray*}
@@ -859,6 +863,12 @@ and commutation with respect to substitution.
 \app(c,a) [ \gamma ] &=& \app(c[ \gamma ], a[ \gamma ] )
 \end{eqnarray*}
 where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
+
+\begin{remark}
+Cartmell \cite{cartmell:apal} defines a gat for $\Sigma$-types as follows. If we start with any gat with a constant sort symbol $A$ and  a sort symbol $B$ in context $x:A$, then we can extend it with a new constant sort symbol $\Sigma B$ and operator symbols and equations for the two projections and the pairing. In a similar way we could extend any such gat with a new constant sort symbol $\Pi B$ and operator symbols for $\lambda$ and $\app$ and the equations for $\beta$ and $\eta$. The reader should be aware of the difference between the resulting gats and our gat for cwfs with $\Pi$-types.
+
+Furthermore, just as we can extend the internal notion of cwf with $\Pi$-types we can extend the external notion of cwf defined in Section \ref{sec:def_cwf} with a structure for $\Pi$-types.
+\end{remark}
 
 \subsection{Internal cwfs with $\Pi$ and $\N$}
 Furthermore, we add the operator symbol
