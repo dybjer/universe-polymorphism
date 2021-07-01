@@ -589,13 +589,13 @@ This concludes the proof of the theorem. \qed
 
 \section{Examples of generalized algebraic theories}\label{sec:examples}
 
-We will now display the sort symbols, operator symbols, and equations for the generalized algebraic of internal monoids, internal categories and of internal cwfs. We will then show how to add operator symbols and equations when adding internal notions of $\Pi, \N$ and a universe closed under $\Pi$ and $\N$ to the generalized algebraic theory of internal cwfs. The reason for prefacing these notions by the word ``internal" is that the models of the theories are internal monoids, categories, and cwfs in $\Cwf_\Sigma$ for the respective \FYI{presentations} of these theories. Moreover, internal monoids, categories, and cwfs in the cwf~$\Set$ are small monoids, categories, and cwfs, respectively. Note that the cwfs defined in Section 2 need not be small, and hence not internal cwfs in the cwf~$\Set$.
+We will now display the sort symbols, operator symbols, and equations for the generalized algebraic of monoids, categories, and cwfs. We will then show how to add operator symbols and equations when extending cwfs with $\Pi$-types, natural numbers $\N$, and a universe closed under $\Pi$ and $\N$. The models of these theories are internal monoids, internal categories, and internal cwfs (possibly with extra structure for internal $\Pi, \N$, and universes) in $\Cwf_\Sigma$. Moreover, internal monoids, categories, and cwfs in the cwf~$\Set$ are small monoids, categories, and cwfs, respectively. Note that the ``external" cwfs defined in Section 2 need not be small, and hence not internal cwfs in the cwf~$\Set$.
 
-We begin by using the recipe in Definition \ref{def-sig-mod} to construct the \FYI{presentation of} internal monoids and its associated category of models, that is, of cwfs with an internal monoid. We then follow the recipe in Theorem \ref{initial-gat} and construct the initial cwf with an internal monoid.
+We begin by using the recipe in Definition \ref{def-sig-mod} to construct the \FYI{presentation of} monoids and its associated category of models, that is, of cwfs with an internal monoid. We then follow the recipe in Theorem \ref{initial-gat} and construct the initial cwf with an internal monoid.
 
-For ease of readability, we will only present the sort symbols, operator symbols, and equatio0ns in the remaining examples by using an informal notation with named variables, rather than the formal notations using cwf-combinators employed in Definitions \ref{def:Cwfmor} and \ref{initial-gat}.
+For ease of readability, we will only present the sort symbols, operator symbols, and equations in the remaining examples by using an informal notation with named variables, rather than the formal notations using cwf-combinators employed in Definitions \ref{def:Cwfmor} and \ref{initial-gat}.
 
-Our final example is the generalized algebraic theory of internal contextual cwfs, a variant of Cartmell's contextual categories. The contexts in such contextual cwfs come with a length $n$. We sketch how this can be axiomatized as a generalized algebraic theory with countably many sort symbols $\ctx_n, \sub_n, \ty_n, \tm_n$ for an external natural number $n$ (and similarly for the operator symbols and equations). We also indicate how our framework can be extended to cover such generalized algebraic theories.
+Our final example is the generalized algebraic theory of contextual cwfs, a variant of Cartmell's contextual categories. The contexts in such contextual cwfs come with a length $n$. We sketch how this can be axiomatized as a generalized algebraic theory with countably many sort symbols $\ctx_n, \sub_n, \ty_n, \tm_n$ for an external natural number $n$ (and similarly for the operator symbols and equations). We also indicate how our framework can be extended to cover such generalized algebraic theories.
 
 \subsection{Internal monoids}\label{monoids}
  The one-sorted algebraic theory of monoids has two operator symbols,
@@ -703,7 +703,7 @@ The remaining examples will use dependent types in an essential way. However, fo
 % In the remaining examples, we shall mainly use ordinary notation with variables.
 % % We have already said that.
 
-\subsection{Internal categories} The generalized algebraic theory of categories was one of Cartmell's motivating examples. It has the following sort symbols, operator symbols, and equations. Again, note that the models are internal categories in a cwf. To emphasize the difference between the internal notions of category and cwf and the external notions (introduced in Section 2), our notation for sort symbols in the generalized algebraic theory of internal cwfs use lower case letters ($\Obj, \Hom, \ty, \tm$). This is in contrast to the upper case letters for the external versions ($\Ty, \Tm$). We will however overload notation for operator symbols, and for example use $\circ$ both for the cwf-combinator and for the operator symbol in the generalized algebraic theory of internal categories.
+\subsection{Internal categories} The generalized algebraic theory of categories was one of Cartmell's motivating examples. It has the following sort symbols, operator symbols, and equations. Again, note that the models are cwfs with an internal category. To emphasize the difference between the internal notions of category and cwf and the external notions (introduced in Section 2), our notation for sort symbols in the generalized algebraic theory of internal cwfs use lower case letters ($\Obj, \Hom, \ty, \tm$). This is in contrast to the upper case letters for the external versions ($\Ty, \Tm$). We will however overload notation for operator symbols, and for example use $\circ$ both for the cwf-combinator and for the operator symbol in the generalized algebraic theory of internal categories.
 
 Sort symbols:
 \begin{eqnarray*}
@@ -755,7 +755,7 @@ An internal category in the cwf $\Set$ of small sets is a small category.
 
 \subsection{Internal cwfs}\label{gat-cwf}
 
-The generalized algebraic theory of internal cwfs is obtained by extending the generalized algebraic theory of internal categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of contexts to $\ctx$.
+The generalized algebraic theory of cwfs is obtained by extending the generalized algebraic theory of categories with new sort symbols, operator symbols, and equations for a family valued functor, a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of contexts to $\ctx$.
 
 \subsubsection{The extension with a family valued functor}
 \mbox{ }
@@ -839,9 +839,9 @@ An example of a cwf with an internal cwf is provided by the cwf $\Set$ of small 
 
 %Further examples of internal cwfs inside $\Set$ are provided by cwfs supporting \FYI{presentations} of generalized algebraic theories, as constructed in the previous section.
 
-\begin{remark}
-Note the difference between the internal notion of cwf defined here and the external notion of cwf defined in Section \ref{sec:def_cwf}. 
-\end{remark}
+%\begin{remark}
+%Note the difference between the internal notion of cwf defined here and the external notion of cwf defined in Section \ref{sec:def_cwf}. 
+%\end{remark}
 
 \subsection{Internal cwfs with $\Pi$-types}
 We add three operator symbols in addition to the operator symbols for cwfs in Section 5.2 and 5.3:
