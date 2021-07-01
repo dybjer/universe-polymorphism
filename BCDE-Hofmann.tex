@@ -91,27 +91,27 @@ To this end we simultaneously define how to \FYI{give a presentation} $\Sigma$ o
 
 Martin-Löf type theory can be characterized in a syntax independent way as the initial category with families (cwf)  with extra structure for the type formers \cite{castellan:tlca2015,castellan:lmcs}. The main contribution of this note is a similar syntax independent characterization of finitely presented generalized algebraic theories as initial cwfs with extra structure.
 
-Generalized algebraic theories (gats) were introduced by Cartmell in his PhD thesis \cite{cartmell:phd} as a dependently typed generalization of many sorted algebraic theories. Each gat is specified by \FYI{ (possibly infinite) sets of sort symbols, operator symbols, and equations}. Cartmell's definition of gats \cite{cartmell:phd,cartmell:apal} is based on a notion of {\em derived rule} expressed in terms of a traditional syntactic system for dependent type theory. He also defines a notion of model whereby sort symbols are interpreted as families of sets.
+Generalized algebraic theories were introduced by Cartmell in his PhD thesis \cite{cartmell:phd} as a dependently typed generalization of many sorted algebraic theories. Each generalized algebraic theory is specified by \FYI{ (possibly infinite) sets of sort symbols, operator symbols, and equations}. Cartmell's definition of generalized algebraic theories \cite{cartmell:phd,cartmell:apal} is based on a notion of {\em derived rule} expressed in terms of a traditional syntactic system for dependent type theory. He also defines a notion of model whereby sort symbols are interpreted as families of sets.
 
 Categories with families (cwfs) \cite{dybjer:torino} were introduced as a new notion of model of dependent type theory. Cwfs arise by reformulating the notion of category with attributes in Martin Hofmann's sense \cite{hofmann:csl}. The key point is that cwfs arise as models of a certain generalized algebraic theory closely related to Martin-Löf's substitution calculus \cite{martinlof:gbg92}. As such the notion of cwf becomes a useful intermediary between traditional syntactic systems for dependent type theory and a variety of categorical notions of model.
 
-The gat of cwfs can be seen as a kind of idealized formal system of dependent type theory. In contrast to Martin-Löf's substitution calculus, and other syntactic systems for dependent type theory, it is {\em not} formulated in terms of grammars and inference rules for the forms of judgment of type theory. Instead it is formulated in terms of the sort symbols (corresponding to the judgment forms), operator symbols (corresponding to the formation, introduction, and elimination rules), and equations (corresponding to the equality rules for the type formers) of the gat. Some of the general reasoning (about equality, substitution, and assumptions) is taken care of by the underlying infrastructure of dependent types. This makes it possible to abstract away from details in the formulation of grammars and inference rules.
-%In contrast to the various syntactic systems, the gat of cwfs has a canonical flavour.
+The generalized algebraic theory of cwfs can be seen as a kind of idealized formal system of dependent type theory. In contrast to Martin-Löf's substitution calculus, and other syntactic systems for dependent type theory, it is {\em not} formulated in terms of grammars and inference rules for the forms of judgment of type theory. Instead it is formulated in terms of the sort symbols (corresponding to the judgment forms), operator symbols (corresponding to the formation, introduction, and elimination rules), and equations (corresponding to the equality rules for the type formers) of the generalized algebraic theory. Some of the general reasoning (about equality, substitution, and assumptions) is taken care of by the underlying infrastructure of dependent types. This makes it possible to abstract away from details in the formulation of grammars and inference rules.
+%In contrast to the various syntactic systems, the generalized algebraic theory of cwfs has a canonical flavour.
 %We may define dependent type theory in a syntax independent way as the initial object in a category of cwfs with extra structure for interpreting the type formers.
 %However, the reader may now object that this looks like a circular definition.
 %We learn what dependent type theory is if we already know what dependent type theory is!
 
-In this note we explore the interdependence between gats and cwfs. We already explained that cwfs can be defined as models of a gat.
-%(This gat is presented in section \ref{gat-cwf}.)
-In the other direction, the notion of gat relies on the notion of cwf, in the sense that the latter models the underlying infrastructure of dependent types.
+In this note we explore the interdependence between generalized algebraic theories and cwfs. We already explained that cwfs can be defined as models of a generalized algebraic theory.
+%(This generalized algebraic theory is presented in section \ref{gat-cwf}.)
+In the other direction, the notion of generalized algebraic theory relies on the notion of cwf, in the sense that the latter models the underlying infrastructure of dependent types.
 
-%We shall here define a new finitely presented notion of gat and simultaneously a general categorical notion of model. To this end we define what it means to be a \FYI{presentation} $\Sigma$ of a gat and the associated category $\Cwf_\Sigma$ with extra structure for $\Sigma$. Our definition refers to {\em uniform families} of contexts, types, and terms in $\Cwf_\Sigma$, a purely semantic notion. Afterwards, we construct initial objects $\T_\Sigma \in \Cwf_\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of an initial object in the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
+%We shall here define a new finitely presented notion of generalized algebraic theory and simultaneously a general categorical notion of model. To this end we define what it means to be a \FYI{presentation} $\Sigma$ of a generalized algebraic theory and the associated category $\Cwf_\Sigma$ with extra structure for $\Sigma$. Our definition refers to {\em uniform families} of contexts, types, and terms in $\Cwf_\Sigma$, a purely semantic notion. Afterwards, we construct initial objects $\T_\Sigma \in \Cwf_\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of an initial object in the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
 
-%Once one has the appropriate definition of gats in terms of cwfs, the details become natural and there are no surprises. The definition becomes canonical once we accept the abstract definition of dependent type theories as initial cwfs with extra structure.
+%Once one has the appropriate definition of generalized algebraic theories in terms of cwfs, the details become natural and there are no surprises. The definition becomes canonical once we accept the abstract definition of dependent type theories as initial cwfs with extra structure.
 
 \subsection*{Plan of the paper}
 
-In Section 2 we recall the definition of the category $\Cwf$ of categories with families and morphisms preserving cwf-structure on the nose. Section 3 contains our main definition of a syntax independent notion of \FYI{presentation} $\Sigma$ of a gat and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure. In Section 4 we construct an initial object $\T_\Sigma$ in $\Cwf_\Sigma$. In Section 5 we show several examples of gats: for monoids, categories, cwfs, and cwfs with extra structure for one universe. We point out that cwfs with extra structure for gats of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively. We also sketch how to extend our approach to some countably presented gats, and show the example of contextual cwfs, a variant of Cartmell's contextual categories \cite{cartmell:phd,cartmell:apal}. Finally, in Section 6 we discuss related work, for example relating to Voevodsky's initiality conjecture \cite{voevodsky:initiality} and Altenkirch and Kaposi's quotient inductive-inductive types \cite{altenkirch:qiits}.
+In Section 2 we recall the definition of the category $\Cwf$ of categories with families and morphisms preserving cwf-structure on the nose. Section 3 contains our main definition of a syntax independent notion of \FYI{presentation} $\Sigma$ of a generalized algebraic theory and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure. In Section 4 we construct an initial object $\T_\Sigma$ in $\Cwf_\Sigma$. In Section 5 we show several examples of generalized algebraic theories: for monoids, categories, cwfs, and cwfs with extra structure for one universe. We point out that cwfs with extra structure for generalized algebraic theories of monoids, categories, cwfs are cwfs with an internal monoid, category, and cwf, respectively. We also sketch how to extend our approach to some countably presented generalized algebraic theories, and show the example of contextual cwfs, a variant of Cartmell's contextual categories \cite{cartmell:phd,cartmell:apal}. Finally, in Section 6 we discuss related work, for example relating to Voevodsky's initiality conjecture \cite{voevodsky:initiality} and Altenkirch and Kaposi's quotient inductive-inductive types \cite{altenkirch:qiits}.
 
 Our development can be formulated in a constructive set theory,
 as described for instance by Aczel \cite{MR519801,aczel:relate}, although the set theory
@@ -138,7 +138,7 @@ are constructed from sets.
 \subsection*{Remarks on terminology and notation}
 Like Cartmell, we have chosen to use the term {\em sort symbol} from many-sorted universal algebra. However, in our semantic notion of \FYI{presentation} sort symbols are interpreted as {\em type families} in a cwf. A cwf consists of a base category where the objects of the base category are (semantic) contexts and the morphisms are (semantic) substitutions. Moreover, we have a family-valued presheaf mapping contexts to families of (semantic) terms indexed by (semantic) types. Thus the reader should be aware of the mismatch between the word {\em sort} from universal algebra and the word {\em type} in the cwf semantics.
 
-Another possible source of confusion is that cwfs appear on two different levels. In Section \ref{sec:def_cwf} we recall the definition of cwf in set-theoretic metalanguage, where we use $\Ty$ to denote the family of types indexed by contexts and $\Tm$ to denote the family of terms indexed by contexts and types. This notion of cwf is then used to define the semantic notions of \FYI{presentation} and category of models of a gat. Then in Section \ref{gat-cwf} we define the gat of {\em internal cwfs}. This gat has sort symbols $\ty$ for {\em internal types} and $\tm$ for {\em internal terms} using lower case to highlight the difference from $\Ty$ and $\Tm$ in the model cwf.
+Another possible source of confusion is that cwfs appear on two different levels. In Section \ref{sec:def_cwf} we recall the definition of cwf in set-theoretic metalanguage, where we use $\Ty$ to denote the family of types indexed by contexts and $\Tm$ to denote the family of terms indexed by contexts and types. This notion of cwf is then used to define the semantic notions of \FYI{presentation} and category of models of a generalized algebraic theory. Then in Section \ref{gat-cwf} we define the generalized algebraic theory of {\em internal cwfs}. This generalized algebraic theory has sort symbols $\ty$ for {\em internal types} and $\tm$ for {\em internal terms} using lower case to highlight the difference from $\Ty$ and $\Tm$ in the model cwf.
 
 Furthermore, we often use the same notation both on the semantic and the syntactic level. For example, in Section \ref{gat-sig-mod},  where we are syntax independent, the letter $S$ denotes a semantic sort symbol, whereas in Section \ref{initial-gat}, where we construct the initial model, it denotes a syntactic sort symbol.
 
@@ -183,7 +183,7 @@ so-called $\Cwf$-semantics.
 The main novelty of this note is to use $\Cwf$ as a framework
 to formulate Cartmell's notion of generalized algebraic theory.
 Contexts, substitutions, types, and terms also make
-sense in relation to gats.
+sense in relation to generalized algebraic theories.
 % Note however that we use the term {\em ``sort symbol"} from universal algebra for what might have been called ``type symbol".
 
 \begin{definition}\label{def:Cwfobj}
@@ -387,7 +387,7 @@ Then we define $\Sigma'$ of length $n+1$ and the associated category $\Cwf_{\Sig
 \item[Adding a sort symbol]
   Let $\Gamma = (\Gamma_\C)$ be a uniform family of contexts indexed by $\C \in \Cwf_{\Sigma}$.
   Then we can extend $\Sigma$ with a new sort symbol $S$ relative to $\Gamma$, to obtain
-  the gat $\Sigma' = (\Sigma,(\Gamma,S))$.
+  the generalized algebraic theory $\Sigma' = (\Sigma,(\Gamma,S))$.
   The objects of $\Cwf_{\Sigma'}$ are pairs $(\C,S_{\C})$, where $\C$ is an object of $\Cwf_{\Sigma}$
   and $S_{\C} \in \Ty_\C(\Gamma_{\C})$.
   A morphism in $\Cwf_{\Sigma'}((\C,S_{\C}), (\D,S_{\D}))$
@@ -398,7 +398,7 @@ Then we define $\Sigma'$ of length $n+1$ and the associated category $\Cwf_{\Sig
   %both indexed by $\C \in \Cwf_{\Sigma}$,
   then we can extend $\Sigma$ with a new operator
   symbol $f$ relative to $\Gamma$ and $A$, to obtain
-  the gat $\Sigma' = (\Sigma,(\Gamma,A,f))$.
+  the generalized algebraic theory $\Sigma' = (\Sigma,(\Gamma,A,f))$.
   An object of $\Cwf_{\Sigma'}$
   is a pair $(\C,f_{\C})$ where $\C$ is an object in $\Cwf_{\Sigma}$ and $f_{\C} \in \Tm_\C(\Gamma_\C,A_\C)$.
   A morphism in $\Cwf_{\Sigma'}((\C,f_{\C}),(\D,f_{\D}))$ is a morphism $F \in \Cwf_{\Sigma}(\C,\D)$ such that $F(f_{\C}) = f_{\D}$.
@@ -408,7 +408,7 @@ Then we define $\Sigma'$ of length $n+1$ and the associated category $\Cwf_{\Sig
   and $a,a'$ are uniform families of terms in $A$,
   %all indexed by $\C \in \Cwf_{\Sigma}$,
   then we can extend $\Sigma$ with a new equation $a = a'$ relative to $\Gamma$ and $A$, to obtain
-  the gat $\Sigma' = (\Sigma,(\Gamma,A,a,a'))$.
+  the generalized algebraic theory $\Sigma' = (\Sigma,(\Gamma,A,a,a'))$.
   In this case,
   $\Cwf_{\Sigma'}$ is a full subcategory of $\Cwf_{\Sigma}$. An object $\C$ in
   $\Cwf_{\Sigma'}$ is an object $\C$ of $\Cwf_\Sigma$ such that $a_{\C} = a'_{\C}$.
@@ -430,11 +430,11 @@ Note that in general a \FYI{presentation} $\Sigma$ is a large set, since uniform
 \end{remark}
 
 \begin{remark}
-Cartmell's notion of gat \cite{cartmell:phd,cartmell:apal} also makes it possible to stipulate equations between type expressions. However, neither of our examples makes use of this extra generality. In particular,  in Section \ref{sec:examples} we present the gat of cwfs with extra structure for $\N, \Pi$ and a first universe $\U_0$ without needing type equations. The reason is that
+Cartmell's notion of generalized algebraic theory \cite{cartmell:phd,cartmell:apal} also makes it possible to stipulate equations between type expressions. However, neither of our examples makes use of this extra generality. In particular,  in Section \ref{sec:examples} we present the generalized algebraic theory of cwfs with extra structure for $\N, \Pi$ and a first universe $\U_0$ without needing type equations. The reason is that
 equations between types become equations between terms in our rendering
-of dependent type theory as a gat. See Remark \ref{remark:typeequations} in Section \ref{sec:u-example} for more explanation.
+of dependent type theory as a generalized algebraic theory. See Remark \ref{remark:typeequations} in Section \ref{sec:u-example} for more explanation.
 
-Like Cartmell, we could consider gats with type equations, but we prefer not to make such equations part of our notion.
+Like Cartmell, we could consider generalized algebraic theories with type equations, but we prefer not to make such equations part of our notion.
 
 
 %If we wish to extend our notion of \FYI{presentation} with this new possibility we could add the following clause:
@@ -443,7 +443,7 @@ Like Cartmell, we could consider gats with type equations, but we prefer not to 
 %If $\Gamma$ is a uniform family of contexts, and
 %  $A, A'$ are uniform families of types over $\Gamma$
 %  then we can extend $\Sigma$ with a new equation $A = A'$, to obtain
-%  the gat $\Sigma' = (\Sigma,(\Gamma,A,A'))$.
+%  the generalized algebraic theory $\Sigma' = (\Sigma,(\Gamma,A,A'))$.
 %  In this case,
 %  $\Cwf_{\Sigma'}$ is a full subcategory of $\Cwf_{\Sigma}$. An object $\C$ in
 %  $\Cwf_{\Sigma'}$ is an object $\C$ of $\Cwf_\Sigma$ such that $A_{\C} = A'_{\C}$.
@@ -589,13 +589,13 @@ This concludes the proof of the theorem. \qed
 
 \section{Examples of generalized algebraic theories}\label{sec:examples}
 
-We will now display the sort symbols, operator symbols, and equations for the generalized algebraic of internal monoids, internal categories and of internal cwfs. We will then show how to add operator symbols and equations when adding internal notions of $\Pi, \N$ and a universe closed under $\Pi$ and $\N$ to the gat of internal cwfs. The reason for prefacing these notions by the word ``internal" is that the models of the theories are internal monoids, categories, and cwfs in $\Cwf_\Sigma$ for the respective \FYI{presentations} of these theories. Moreover, internal monoids, categories, and cwfs in the cwf~$\Set$ are small monoids, categories, and cwfs, respectively. Note that the cwfs defined in Section 2 need not be small, and hence not internal cwfs in the cwf~$\Set$.
+We will now display the sort symbols, operator symbols, and equations for the generalized algebraic of internal monoids, internal categories and of internal cwfs. We will then show how to add operator symbols and equations when adding internal notions of $\Pi, \N$ and a universe closed under $\Pi$ and $\N$ to the generalized algebraic theory of internal cwfs. The reason for prefacing these notions by the word ``internal" is that the models of the theories are internal monoids, categories, and cwfs in $\Cwf_\Sigma$ for the respective \FYI{presentations} of these theories. Moreover, internal monoids, categories, and cwfs in the cwf~$\Set$ are small monoids, categories, and cwfs, respectively. Note that the cwfs defined in Section 2 need not be small, and hence not internal cwfs in the cwf~$\Set$.
 
 We begin by using the recipe in Definition \ref{def-sig-mod} to construct the \FYI{presentation of} internal monoids and its associated category of models, that is, of cwfs with an internal monoid. We then follow the recipe in Theorem \ref{initial-gat} and construct the initial cwf with an internal monoid.
 
 For ease of readability, we will only present the sort symbols, operator symbols, and equatio0ns in the remaining examples by using an informal notation with named variables, rather than the formal notations using cwf-combinators employed in Definitions \ref{def:Cwfmor} and \ref{initial-gat}.
 
-Our final example is the gat of internal contextual cwfs, a variant of Cartmell's contextual categories. The contexts in such contextual cwfs come with a length $n$. We sketch how this can be axiomatized as a gat with countably many sort symbols $\ctx_n, \sub_n, \ty_n, \tm_n$ for an external natural number $n$ (and similarly for the operator symbols and equations). We also indicate how our framework can be extended to cover such gats.
+Our final example is the generalized algebraic theory of internal contextual cwfs, a variant of Cartmell's contextual categories. The contexts in such contextual cwfs come with a length $n$. We sketch how this can be axiomatized as a generalized algebraic theory with countably many sort symbols $\ctx_n, \sub_n, \ty_n, \tm_n$ for an external natural number $n$ (and similarly for the operator symbols and equations). We also indicate how our framework can be extended to cover such generalized algebraic theories.
 
 \subsection{Internal monoids}\label{monoids}
  The one-sorted algebraic theory of monoids has two operator symbols,
@@ -696,14 +696,14 @@ $$
 $$
 stating that $a = a'$ is a derivable equation between monoid expressions in the context $\Gamma$. Note that both contexts and monoid expressions use cwf-combinators and are variable-free.
 
-%This example illustrates that gats indeed generalise ordinary algebraic theories.
+%This example illustrates that generalized algebraic theories indeed generalise ordinary algebraic theories.
 Of course, using dependent type theory for reasoning about monoid expressions is overkill; monoids form a single-sorted algebraic theory in the usual sense.
 The remaining examples will use dependent types in an essential way. However, for reasons of readability we will from now on only use ordinary notation with named variables. Hopefully, it is clear from the above how to formally construct the corresponding official \FYI{presentations}, categories of models, and initial models using cwf-combinators. For example, these constructions for the theory of internal categories are similar to the constructions for the theory of internal monoids.
 
 % In the remaining examples, we shall mainly use ordinary notation with variables.
 % % We have already said that.
 
-\subsection{Internal categories} The gat of categories was one of Cartmell's motivating examples. It has the following sort symbols, operator symbols, and equations. Again, note that the models are internal categories in a cwf. To emphasize the difference between the internal notions of category and cwf and the external notions (introduced in Section 2), our notation for sort symbols in the gat of internal cwfs use lower case letters ($\Obj, \Hom, \ty, \tm$). This is in contrast to the upper case letters for the external versions ($\Ty, \Tm$). We will however overload notation for operator symbols, and for example use $\circ$ both for the cwf-combinator and for the operator symbol in the gat of internal categories.
+\subsection{Internal categories} The generalized algebraic theory of categories was one of Cartmell's motivating examples. It has the following sort symbols, operator symbols, and equations. Again, note that the models are internal categories in a cwf. To emphasize the difference between the internal notions of category and cwf and the external notions (introduced in Section 2), our notation for sort symbols in the generalized algebraic theory of internal cwfs use lower case letters ($\Obj, \Hom, \ty, \tm$). This is in contrast to the upper case letters for the external versions ($\Ty, \Tm$). We will however overload notation for operator symbols, and for example use $\circ$ both for the cwf-combinator and for the operator symbol in the generalized algebraic theory of internal categories.
 
 Sort symbols:
 \begin{eqnarray*}
@@ -728,7 +728,7 @@ Equations:
 %In order to build $\Hom(\Delta,\Gamma)$ for two concrete contexts $\vdash \Delta : \Ctx$ and $\vdash \Gamma : \Ctx$ we need to apply $\Hom$ to the context morphism consisting of $\Delta$ and $\Gamma$ to yield $\Hom(\Delta,\Gamma)$. (There is more to say ...)
 Note that composition is officially an operator symbol with five arguments. In the official notation we should write $\gamma \circ_{\Xi,\Delta,\Gamma} \delta$, but we suppress the context arguments $\Xi,\Delta,\Gamma$. We will do so for some other operations too.
 
-The rendering of the gat of categories in cwf-combinator language and the proof that it indeed yields a \FYI{presentation} are similar to what they were for the gat of monoids. The inference rules for the two sort symbols in cwf-combinator language are
+The rendering of the generalized algebraic theory of categories in cwf-combinator language and the proof that it indeed yields a \FYI{presentation} are similar to what they were for the generalized algebraic theory of monoids. The inference rules for the two sort symbols in cwf-combinator language are
 \begin{eqnarray*}
 1 &\vdash& \Obj\\
 1.\Obj.\Obj[\p] &\vdash& \Hom
@@ -755,7 +755,7 @@ An internal category in the cwf $\Set$ of small sets is a small category.
 
 \subsection{Internal cwfs}\label{gat-cwf}
 
-The gat of internal cwfs is obtained by extending the gat of internal categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of contexts to $\ctx$.
+The generalized algebraic theory of internal cwfs is obtained by extending the generalized algebraic theory of internal categories with new sort symbols, operator symbols, and equations for a family valued functor, and then new operator symbols and equations for a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of contexts to $\ctx$.
 
 \subsubsection{The extension with a family valued functor}
 \mbox{ }
@@ -865,7 +865,7 @@ and commutation with respect to substitution.
 where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
 
 \begin{remark}
-Cartmell \cite{cartmell:apal} defines a gat for $\Sigma$-types as follows. If we start with any gat with a constant sort symbol $A$ and  a sort symbol $B$ in context $x:A$, then we can extend it with a new constant sort symbol $\Sigma B$ and operator symbols and equations for the two projections and the pairing. In a similar way we could extend any such gat with a new constant sort symbol $\Pi B$ and operator symbols for $\lambda$ and $\app$ and the equations for $\beta$ and $\eta$. The reader should be aware of the difference between the resulting gats and our gat for cwfs with $\Pi$-types.
+Cartmell \cite{cartmell:apal} defines a generalized algebraic theory for $\Sigma$-types as follows. If we start with any generalized algebraic theory with a constant sort symbol $A$ and  a sort symbol $B$ in context $x:A$, then we can extend it with a new constant sort symbol $\Sigma B$ and operator symbols and equations for the two projections and the pairing. In a similar way we could extend any such generalized algebraic theory with a new constant sort symbol $\Pi B$ and operator symbols for $\lambda$ and $\app$ and the equations for $\beta$ and $\eta$. The reader should be aware of the difference between the resulting generalized algebraic theories and our generalized algebraic theory for cwfs with $\Pi$-types.
 
 Furthermore, just as we can extend the internal notion of cwf with $\Pi$-types we can extend the external notion of cwf defined in Section \ref{sec:def_cwf} with a structure for $\Pi$-types.
 \end{remark}
@@ -907,20 +907,20 @@ and the equations for preservation of substitution:
 %where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
 
 \begin{remark}\label{remark:typeequations}
-Note that all equations are between {\em terms} in the gat of cwfs with extra structure for $\N, \Pi,$ and $\U_0$; we do not need the extra generality of stipulating type equations as discussed in the introduction. For example, $\Ta_0(\N^0_\Gamma) = \N_\Gamma$ is an equation between {\em internal} types, that is, terms of type $\ty(\Gamma)$.
+Note that all equations are between {\em terms} in the generalized algebraic theory of cwfs with extra structure for $\N, \Pi,$ and $\U_0$; we do not need the extra generality of stipulating type equations as discussed in the introduction. For example, $\Ta_0(\N^0_\Gamma) = \N_\Gamma$ is an equation between {\em internal} types, that is, terms of type $\ty(\Gamma)$.
 \end{remark}
 
 \begin{remark}
-Also note that the gat for the universe is inevitably {\em \`a la Tarski} in the sense that we distinguish between types and terms in a cwf and we must have an operation decoding a term into a type. However, Martin-Löf's distinction between {\em \`a la Russell} and {\em \`a la Tarski} \cite{martinlof:padova} is a distinction between two different formulation of the raw syntax and inference rules of type theory.
+Also note that the generalized algebraic theory for the universe is inevitably {\em \`a la Tarski} in the sense that we distinguish between types and terms in a cwf and we must have an operation decoding a term into a type. However, Martin-Löf's distinction between {\em \`a la Russell} and {\em \`a la Tarski} \cite{martinlof:padova} is a distinction between two different formulation of the raw syntax and inference rules of type theory.
 \end{remark}
 
 \subsection{A possible refinement to internal contextual cwfs}
 
-Our treatment can be adapted to some non finitely presented gats.
+Our treatment can be adapted to some non finitely presented generalized algebraic theories.
 If we have an increasing sequence of \FYI{presentations} $\Sigma_n$ we can consider their
 union.
 %of the theory $T_{\Sigma_n}$.
-For instance, we can describe a gat of contextual cwfs \cite{castellan:lambek} (similar to Cartmell's contextual categories and Voevodsky's $C$-systems) by
+For instance, we can describe a generalized algebraic theory of contextual cwfs \cite{castellan:lambek} (similar to Cartmell's contextual categories and Voevodsky's $C$-systems) by
 the following stratification of the theory of cwfs. We replace the sort $\ctx$
 by a sequence of sorts $\ctx_0,\,\ctx_1,\,\dots ,$ where $\ctx_n$ represents the sort
 of contexts of length $n$ and a corresponding sequence of sorts
@@ -947,7 +947,7 @@ Generalized algebraic presentations of contextual categories (C-systems) have be
 %The first formulation of intuitionistic type theory with an infinite sequence of universes is due to Martin-Löf
 %\cite{martinlof:predicative}. Rules for cumulativity (or lifting) were added in Martin-Löf \cite{martinlof:hannover}. Both formulations have an infinite sequence of universes indexed by external natural numbers, and as a consequence the theories have infinitely many rules.
 %
-%We shall now formalize a notion of finitary gat closely related to Martin-Löf's cumulative version. The external natural number indices will be represented by internal level indices in the gat. To this end we introduce a new sort symbol
+%We shall now formalize a notion of finitary generalized algebraic theory closely related to Martin-Löf's cumulative version. The external natural number indices will be represented by internal level indices in the generalized algebraic theory. To this end we introduce a new sort symbol
 %$$
 %\vdash \Level
 %$$
@@ -1007,14 +1007,14 @@ More generally, Voevodsky \cite{voevodsky:initiality} outlined a new vision of t
 Altenkirch and Kaposi \cite{altenkirch:qiits} gave several examples of {\em quotient inductive-inductive types (qiits)}. Their main example is a definition of dependent type theory with $\Pi$-types and a universe, as a simultaneous definition in the Agda system \cite{agda-wiki} of the data types $\Ctx$ of contexts, $\Sub(\Delta,\Gamma)$ of substitutions, $\Ty(\Gamma)$, and $\Tm(\Gamma,A)$ of terms. Their definition is {\em inductive-inductive} \cite{nordvallforsberg:iids}, since the index sets of $\Sub, \Ty,$ and $\Tm$ are generated simultaneously, and as a consequence are not indexed inductive definitions in the usual sense where the index sets are fixed in advance. Furthermore, it is a quotient inductive-inductive type since they also have constructors for identity types, as in a {\em higher inductive type}.
 There is a close relationship between this qiit and our initial internal cwf with $\Pi$-types and a universe. Like our definition, their qiit-definition uses cwf-combinators. Moreover, our sort symbols correspond to their formation rules (data type constructors), our operator symbols correspond to their introduction rules (constructors), and our equations correspond to their propositional identities. However, a differerence is that our equations are judgmental equalities while theirs are propositional. As a consequence they use transport maps when moving between identical types.
 
-%\footnote{Insert: Furthermore, Altenkirch et al \cite{altenkirch:thessaloniki} introduce a general schema for qiits and Kaposi, Kov{\'{a}}cs, and Altenkirch \cite{kaposi:qiits} construct initial algebras for them. For these constructions they work in cwfs with $\Pi$-types, intensional identity types, and a universe, while we work in plain cwfs. Although gats and qiits are related notions, neither is a generalization of the other. Gat is a basic dependently typed notion and independent of Martin-Löf type theory, whereas qiit is the latest in the series of more and more general notions of inductive type (inductive family, inductive-recursive type and family, inductive-inductive type, higher inductive type) extending intensional Martin-Löf type theory.
+%\footnote{Insert: Furthermore, Altenkirch et al \cite{altenkirch:thessaloniki} introduce a general schema for qiits and Kaposi, Kov{\'{a}}cs, and Altenkirch \cite{kaposi:qiits} construct initial algebras for them. For these constructions they work in cwfs with $\Pi$-types, intensional identity types, and a universe, while we work in plain cwfs. Although generalized algebraic theories and qiits are related notions, neither is a generalization of the other. Gat is a basic dependently typed notion and independent of Martin-Löf type theory, whereas qiit is the latest in the series of more and more general notions of inductive type (inductive family, inductive-recursive type and family, inductive-inductive type, higher inductive type) extending intensional Martin-Löf type theory.
 %
 %Kaposi, Kov{\'{a}}cs, and Altenkirch \cite{kaposi:qiits} develop a general theory of qiits. This includes a notion of signature for a qiit, the notion of an algebra of such a signature, and a construction of initial algebras. There are obvious parallels with our work, but there are also fundamental diffe\FYI{presentation} $\Sigma$rences:
 %}
 
-%Kaposi, Kov{\'{a}}cs, and Altenkirch \cite{kaposi:qiits} developed a general theory of qiits. This includes a notion of signature for a qiit, the notion of an algebra of such a signature, and a construction of initial algebras. For these constructions they work in cwfs with $\Pi$-types, identity types, and a universe. This is in contrast to our work which is based on plain cwfs without extra structure for type formers. Although gats and qiits are related notions, neither is a generalization of the other. Gat is a basic notion independent of Martin-Löf type theory, whereas qiit is the latest in a series of generalizations of inductive type (inductive family, inductive-recursive type and family, inductive-inductive type, higher inductive type) extending intensional Martin-Löf type theory.
+%Kaposi, Kov{\'{a}}cs, and Altenkirch \cite{kaposi:qiits} developed a general theory of qiits. This includes a notion of signature for a qiit, the notion of an algebra of such a signature, and a construction of initial algebras. For these constructions they work in cwfs with $\Pi$-types, identity types, and a universe. This is in contrast to our work which is based on plain cwfs without extra structure for type formers. Although generalized algebraic theories and qiits are related notions, neither is a generalization of the other. Gat is a basic notion independent of Martin-Löf type theory, whereas qiit is the latest in a series of generalizations of inductive type (inductive family, inductive-recursive type and family, inductive-inductive type, higher inductive type) extending intensional Martin-Löf type theory.
 
-The notion of qiit is the latest in a series of generalizations of inductive type (inductive family, inductive-recursive type and family, inductive-inductive type, higher inductive type) extending Martin-Löf type theory. Kaposi, Kov{\'{a}}cs, and Altenkirch \cite{kaposi:qiits} developed a general theory of qiits. This includes a notion of signature for a qiit, the notion of an algebra of such a signature, and a construction of initial algebras. In particular, they introduce a domain-specific type theory of signatures (and implement it in Agda), and define a signature for a qiit to be a context in this theory. It would be interesting to try to relate such signatures for qiits to the \FYI{presentations} of gats in our paper, but this is beyond the scope of the present paper.
+The notion of qiit is the latest in a series of generalizations of inductive type (inductive family, inductive-recursive type and family, inductive-inductive type, higher inductive type) extending Martin-Löf type theory. Kaposi, Kov{\'{a}}cs, and Altenkirch \cite{kaposi:qiits} developed a general theory of qiits. This includes a notion of signature for a qiit, the notion of an algebra of such a signature, and a construction of initial algebras. In particular, they introduce a domain-specific type theory of signatures (and implement it in Agda), and define a signature for a qiit to be a context in this theory. It would be interesting to try to relate such signatures for qiits to the \FYI{presentations} of generalized algebraic theories in our paper, but this is beyond the scope of the present paper.
 
 
 %Using the terminology of qiits, we here provide a definition of a class of valid qiits (in our modified sense) together with a class of models for each of them.
