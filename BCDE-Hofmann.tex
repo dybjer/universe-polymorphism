@@ -84,14 +84,14 @@
 \begin{abstract}
 We give a new syntax independent formulation of Cartmell's notion of finitely presented generalized algebraic theories as initial objects in categories of categories with families (cwfs) with extra structure.
 %Such a generalized algebraic theory is presented by a \FYI{presentation} consisting of a finite list of sort symbols, operator symbols, and equations.
-To this end we simultaneously define how to \FYI{give a presentation} $\Sigma$ of a generalized algebraic theory and the associated category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure and cwf-morphisms that preserve $\Sigma$-structure on the nose.  Our definition refers to the purely semantic notions of {\em uniform family} of contexts, types, and terms in $\Cwf_\Sigma$. Furthermore, we show how to syntactically construct initial cwfs with $\Sigma$-structures. This result can be viewed as a generalization of Birkhoff's completeness theorem for equational logic. It is obtained by extending Castellan, Clairambault, and Dybjer's construction of an initial cwf. We provide examples of generalized algebraic theories for monoids, categories, categories with families, and categories with families with extra structure for some type formers of Martin-Löf type theory. The models of these are internal monoids, internal categories, and internal categories with families (with extra structure) in a category with families. Finally, we show how to extend our definition to some generalized algebraic theories that are not finitely presented, such as the theory of contextual cwfs.
+To this end we simultaneously define the notion of a \FYI{presentation} $\Sigma$ of a generalized algebraic theory and the associated category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure and cwf-morphisms that preserve $\Sigma$-structure on the nose.  Our definition refers to the purely semantic notions of {\em uniform family} of contexts, types, and terms in $\Cwf_\Sigma$. Furthermore, we show how to syntactically construct initial cwfs with $\Sigma$-structures. This result can be viewed as a generalization of Birkhoff's completeness theorem for equational logic. It is obtained by extending Castellan, Clairambault, and Dybjer's construction of an initial cwf. We provide examples of generalized algebraic theories for monoids, categories, categories with families, and categories with families with extra structure for some type formers of Martin-Löf type theory. The models of these are internal monoids, internal categories, and internal categories with families (with extra structure) in a category with families. Finally, we show how to extend our definition to some generalized algebraic theories that are not finitely presented, such as the theory of contextual cwfs.
 \end{abstract}
 
 \section{Introduction}
 
 Martin-Löf type theory can be characterized in a syntax independent way as the initial category with families (cwf)  with extra structure for the type formers \cite{castellan:tlca2015,castellan:lmcs}. The main contribution of this note is a similar syntax independent characterization of finitely presented generalized algebraic theories as initial cwfs with extra structure.
 
-Generalized algebraic theories were introduced by Cartmell in his PhD thesis \cite{cartmell:phd} as a dependently typed generalization of many sorted algebraic theories. Each generalized algebraic theory is specified by \FYI{ (possibly infinite) sets of sort symbols, operator symbols, and equations}. Cartmell's definition of generalized algebraic theories \cite{cartmell:phd,cartmell:apal} is based on a notion of {\em derived rule} expressed in terms of a traditional syntactic system for dependent type theory. He also defines a notion of model whereby sort symbols are interpreted as families of sets.
+Generalized algebraic theories were introduced by Cartmell in his PhD thesis \cite{cartmell:phd} as a dependently typed generalization of many sorted algebraic theories. Each generalized algebraic theory is presented by \FYI{ (possibly infinite) sets of sort symbols, operator symbols, and equations}. Cartmell's definition of generalized algebraic theories \cite{cartmell:phd,cartmell:apal} is based on a notion of {\em derived rule} expressed in terms of a traditional syntactic system for dependent type theory. He also defines a notion of model whereby sort symbols are interpreted as families of sets.
 
 Categories with families (cwfs) \cite{dybjer:torino} were introduced as a new notion of model of dependent type theory. Cwfs arise by reformulating the notion of category with attributes in Martin Hofmann's sense \cite{hofmann:csl}. The key point is that cwfs arise as models of a certain generalized algebraic theory closely related to Martin-Löf's substitution calculus \cite{martinlof:gbg92}. As such the notion of cwf becomes a useful intermediary between traditional syntactic systems for dependent type theory and a variety of categorical notions of model.
 
@@ -353,7 +353,7 @@ or presentation for short. It is non-trivial to define what a presentation
 is and how it presents a generalized algebraic theory.
 This requires several steps.
 
-We first define how to \FYI{give a presentation} $\Sigma$ and the associated category $\Cwf_{\Sigma}$ of cwfs with a $\Sigma$-structure.
+We first define the notion of a \FYI{presentation} $\Sigma$ and the associated category $\Cwf_{\Sigma}$ of cwfs with a $\Sigma$-structure.
 Each object of $\Cwf_{\Sigma}$ is a cwf with extra structure and
 each morphism is a cwf-morphism preserving $\Sigma$-structure.
 %\footnote{PD: Add "We shall show that $\Cwf_\Sigma$ will be a large (but not very large) category for all \FYI{presentation}s $\Sigma$.}
@@ -374,9 +374,9 @@ Uniform families appear in Freyd's proof of the adjoint functor theorem \cite{fr
 \end{remark}
 
 \begin{definition}\label{def-sig-mod}
-We define how to \FYI{give a presentation} $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure and cwf-morphisms that preserve $\Sigma$-structure. The definition is by induction on the length of $\Sigma$. We have the following base case:
+We define the notion of a \FYI{presentation} $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure and cwf-morphisms that preserve $\Sigma$-structure. The definition is by induction on the length of $\Sigma$. We have the following base case:
 \begin{description}
-\item[The empty \FYI{presentation}] For \FYI{presentation} $\emptyset$ of length zero we define $\Cwf_\emptyset = \Cwf$.
+\item[The empty \FYI{presentation}] The only \FYI{presentation} of length zero is the empty one $\emptyset$. We let $\Cwf_\emptyset = \Cwf$.
 %\footnote{PD: Add "Note that a uniform family of contexts $(\Gamma_{\C})$ indexed by $\C \in \Cwf$ is a large set. Thus a \FYI{presentation} will also be a large set, since it is essentially a sequence of uniform families. As a consequence the set of all \FYI{presentations} is a very large set."}
 \end{description}
 Assume now that we have defined a \FYI{presentation} $\Sigma$ of length $n$ and the associated
