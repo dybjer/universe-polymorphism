@@ -117,7 +117,7 @@ In Section 2 we recall the definition of the category $\Cwf$ of small cwfs and m
 Our development can be formulated in a constructive set theory,
 as described for instance by Aczel \cite{MR519801,aczel:relate}, although the set theory
 we use for formulating the notion of cwf with a $\Sigma$-structure is probably
-much weaker. We will however need to make certain size distinctions. For the general theory we need to distinguish between small and large sets, and for this purpose we assume that our set theory comes with a Grothendieck universes $\V$ of {\em small sets}. Furthermore, in Section \ref{sec:examples} we provide the example of the small cwf $\Set'$ of tiny sets with an internal cwf of very tiny sets. This relies on our set theory having two more Grothendieck universes: $\V'$ of {\em tiny sets} and $\V''$ of {\em very tiny sets}, where $\V''  \in \V' \in \V$.
+much weaker. In the general theory we need to distinguish between small and large sets, and hence we assume that our set theory comes with a Grothendieck universes $\V$ of {\em small sets}. Furthermore, in Section \ref{sec:examples} we provide the example of the small cwf $\Set'$ of tiny sets with an internal cwf of very tiny sets. This relies on our set theory having two more Grothendieck universes: $\V'$ of {\em tiny sets} and $\V''$ of {\em very tiny sets}, where $\V''  \in \V' \in \V$.
 
 As emphasized by Voevodsky~\cite{voevodsky:initiality}, we study structures invariant
 under {\em isomorphisms} and not under {\em equivalences}, and it is actually misleading
@@ -137,7 +137,7 @@ are constructed from sets.
 %He is truly missed.
 
 \subsection*{Remarks on terminology and notation}
-Like Cartmell, we have chosen to use the term {\em sort symbol} from many-sorted universal algebra. However, in our semantic notion of \FYI{presentation} sort symbols are interpreted as {\em type families} in a cwf. A cwf consists of a base category where the objects of the base category are (semantic) contexts and the morphisms are (semantic) substitutions. Moreover, we have a family-valued presheaf mapping contexts to families of (semantic) terms indexed by (semantic) types. Thus the reader should be aware of the mismatch between the word {\em sort} from universal algebra and the word {\em type} in the cwf semantics.
+Like Cartmell, we have chosen to use the term {\em sort symbol} from many-sorted universal algebra. However, in our semantic notion of \FYI{presentation} sort symbols are interpreted by {\em type families} in a cwf. A cwf consists of a base category where the objects of the base category are (semantic) contexts and the morphisms are (semantic) substitutions. Moreover, we have a family-valued presheaf mapping contexts to families of (semantic) terms indexed by (semantic) types. Thus the reader should be aware of the mismatch between the word {\em sort} from universal algebra and the word {\em type} in the cwf semantics.
 
 Another possible source of confusion is that cwfs appear on two different levels. In Section \ref{sec:def_cwf} we recall the definition of cwf in set-theoretic metalanguage, where we use $\Ty$ to denote the family of types indexed by contexts and $\Tm$ to denote the family of terms indexed by contexts and types. This notion of cwf is then used to define the semantic notions of \FYI{presentation} and category of models of a generalized algebraic theory. Then in Section \ref{gat-cwf} we define the generalized algebraic theory of {\em internal cwfs}. This generalized algebraic theory has sort symbols $\ty$ for {\em internal types} and $\tm$ for {\em internal terms} using lower case to highlight the difference from $\Ty$ and $\Tm$ in the model cwf.
 
@@ -168,7 +168,7 @@ He is truly missed.
 
 \begin{definition}\label{def:catFam}
 $\Fam$ is a category whose objects are
-set-indexed families of sets, denoted as $(U_x)_{x\in X}$.
+set-indexed families of sets $(U_x)_{x\in X}$.
 A morphism of $\Fam$ with source $(U_x)_{x\in X}$ and target $(V_y)_{y\in Y}$
 consists of a re-indexing function $f: X\to Y$ together with a family
 $(g_x)_{x\in X}$ of functions $g_x : U_x \to V_{f(x)}$. %, for all $x\in X$.
@@ -185,7 +185,7 @@ suggesting the intended interpretation of this syntax in the
 so-called $\Cwf$-semantics.
 
 The main novelty of this note is to use $\Cwf$ as a framework
-to formulate Cartmell's notion of generalized algebraic theory.
+for defining a notion of finitely presented generalized algebraic theory.
 Contexts, substitutions, types, and terms also make
 sense in relation to generalized algebraic theories.
 % Note however that we use the term {\em ``sort symbol"} from universal algebra for what might have been called ``type symbol".
@@ -349,9 +349,9 @@ since $x_0 = x_1$. The same is true for an operator $w(y,z): W(y,z)$
 in the same context as $W(y,z)$. The equation $x_0 = x_1$ could come
 after the sorts $Y(x)$ and $Z(y,y')$, but has to come before $W(y,z)$.
 
-We now come to the main point of this note.
-For reasons as mentioned above we need a more general notion
-than that of signature in universal algebra.  
+%We now come to the main point of this note.
+For reasons mentioned above we need a more general notion
+than that of signature in universal algebra, encompassing not only the types of the sort and operator symbols, but also the equations.  
 We call this notion the \emph{presentation} of a generalized algebraic theory,
 or presentation for short. It is non-trivial to define what a presentation
 is and how it presents a generalized algebraic theory.
@@ -420,7 +420,7 @@ Then we define $\Sigma'$ of length $n+1$ and the associated category $\Cwf_{\Sig
 
 \end{definition}
 
-This definition is {\em syntax independent}. In the next subsection we show how to {\em syntactically} construct an {\em initial object} $\T_{\Sigma}$ in $\Cwf_{\Sigma}$ (for an arbitrary \FYI{presentation} $\Sigma$) in terms of grammars and inference rules. A context in $\T_{\Sigma}$ will be an equivalence class $[ \Gamma ]$ of raw contexts, and similarly for substitutions, types, and terms.
+This definition is {\em syntax independent}. In the next section we show how to {\em syntactically} construct an {\em initial object} $\T_{\Sigma}$ in $\Cwf_{\Sigma}$ (for an arbitrary \FYI{presentation} $\Sigma$) in terms of grammars and inference rules. A context in $\T_{\Sigma}$ will be an equivalence class $[ \Gamma ]$ of raw contexts, and similarly for substitutions, types, and terms.
 
 We refer to Section \ref{monoids} where we show a simple instance of this definition: a \FYI{presentation} $\Sigma$ of internal monoids and its associated category of models $\Cwf_\Sigma$ of cwfs with an internal monoid. We also show how to construct the initial cwf with an internal monoid $\T_\Sigma$.
 
@@ -462,7 +462,7 @@ Like Cartmell, we could consider generalized algebraic theories with type equati
 
 In Section 3 we gave a {\em syntax independent specification} of a generalized algebraic theory as the initial object of the category $\Cwf_\Sigma$ of models of a (semantic) \FYI{presentation} $\Sigma$. Now we show our main theorem: the {\em syntactic construction} of such an initial object $\T_\Sigma$. This construction is done in several steps. We first define the ``raw" syntactic expressions. Then we define four families of partial equivalence relations (pers) over those raw expressions, corresponding to the four equality judgments. The term model $\T_\Sigma$ is obtained by quotienting with these pers.
 
-This theorem can be viewed as a generalization of Birkhoff's completeness theorem for equational logic \cite{birkhoff}:
+The following theorem can be viewed as a generalization of Birkhoff's completeness theorem for equational logic \cite{birkhoff}.
 \begin{theorem}\label{initial-gat}
 The category $\Cwf_\Sigma$ has an initial object $\T_\Sigma$,
 for every \FYI{presentation} $\Sigma$ of a generalized algebraic theory.
@@ -1009,7 +1009,7 @@ Streicher \cite{streicher:semtt} defined {\em doctrines of constructions} (conte
 Recently, Brunerie et al \cite{brunerie:initiality} presented a formalized proof in the Agda system that a formal system for Martin-Löf type theory forms an initial object in a category of contextual categories with extra structure for
 the type formers.
 
-More generally, Voevodsky \cite{voevodsky:initiality} outlined a new vision of the theory of syntax and semantics of dependent type theories. In this vision formal systems for dependent type theory are proved to be initial in suitable categories of models ({\em the initiality conjecture}). The above-mentioned contributions by Streicher and Brunerie et al are two examples of such characterizations. However, Voevodsky's aim was to go further and characterize a whole class of type theories and prove a general initiality result for them with the aim to form the basis for a general metatheory of dependent type theory. Our work can be viewed as a contribution to Voevodsky's programme, since we prove an initiality theorem for the whole class of finitely presented generalized algebraic theories. A characterization of a more general class of dependent type theories and their initial models has been proposed by Uemura \cite{uemura:general-framework}. Another related contribution is Palmgren and Vickers' \cite{palmgrenvickers} construction of initial models of essentially algebraic theories.
+More generally, Voevodsky \cite{voevodsky:initiality} outlined a new vision of the theory of syntax and semantics of dependent type theories. In this vision formal systems for dependent type theory are proved to be initial in suitable categories of models ({\em the initiality conjecture}). The above-mentioned contributions by Streicher and Brunerie et al are two examples of such characterizations. However, Voevodsky's aim was to go further and characterize a whole class of type theories and prove a general initiality result for this class with the aim to form the basis for a general metatheory of dependent type theory. Our work can be viewed as a contribution to Voevodsky's programme, since we prove an initiality theorem for the whole class of finitely presented generalized algebraic theories. Another characterization of a general class of dependent type theories and their initial models has been proposed by Uemura \cite{uemura:general-framework}. Another related contribution is Palmgren and Vickers' \cite{palmgrenvickers} construction of initial models of essentially algebraic theories.
 
 Altenkirch and Kaposi \cite{altenkirch:qiits} gave several examples of {\em quotient inductive-inductive types (qiits)}. Their main example is a definition of dependent type theory with $\Pi$-types and a universe, as a simultaneous definition in the Agda system \cite{agda-wiki} of the data types $\Ctx$ of contexts, $\Sub(\Delta,\Gamma)$ of substitutions, $\Ty(\Gamma)$, and $\Tm(\Gamma,A)$ of terms. Their definition is {\em inductive-inductive} \cite{nordvallforsberg:iids}, since the index sets of $\Sub, \Ty,$ and $\Tm$ are generated simultaneously, and as a consequence are not indexed inductive definitions in the usual sense where the index sets are fixed in advance. Furthermore, it is a quotient inductive-inductive type since they also have constructors for identity types, as in a {\em higher inductive type}.
 There is a close relationship between this qiit and our initial internal cwf with $\Pi$-types and a universe. Like our definition, their qiit-definition uses cwf-combinators. Moreover, our sort symbols correspond to their formation rules (data type constructors), our operator symbols correspond to their introduction rules (constructors), and our equations correspond to their propositional identities. However, a differerence is that our equations are judgmental equalities while theirs are propositional. As a consequence they use transport maps when moving between identical types.
