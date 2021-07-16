@@ -117,7 +117,8 @@ In Section 2 we recall the definition of the category $\Cwf$ of small cwfs and m
 Our development can be formulated in a constructive set theory,
 as described for instance by Aczel \cite{MR519801,aczel:relate}, although the set theory
 we use for formulating the notion of cwf with a $\Sigma$-structure is probably
-much weaker. In the general theory we need to distinguish between small and large sets, and hence we assume that our set theory comes with a Grothendieck universes $\V$ of {\em small sets}. Furthermore, in Section \ref{sec:examples} we provide the example of the small cwf $\Set'$ of tiny sets with an internal cwf of very tiny sets. This relies on our set theory having two more Grothendieck universes: $\V'$ of {\em tiny sets} and $\V''$ of {\em very tiny sets}, where $\V''  \in \V' \in \V$.
+much weaker. In the general theory we need to distinguish between small and large sets, and hence we assume that our set theory comes with a Grothendieck universe $\V$ of {\em small sets}. Furthermore, in Section \ref{sec:examples} we provide an example of a small cwf with an internal cwf. For this purpose we need two more Grothendieck universes $\V'$ and $\V''$, where $\V''  \in \V' \in \V$.
+%provide the example of the small cwf $\Set'$ of tiny sets with an internal cwf of very tiny sets. This relies on our set theory having two more Grothendieck universes: $\V'$ and $\V''$, where $\V''  \in \V' \in \V$.
 
 As emphasized by Voevodsky~\cite{voevodsky:initiality}, we study structures invariant
 under {\em isomorphisms} and not under {\em equivalences}, and it is actually misleading
@@ -837,10 +838,7 @@ $\tuple{\gamma,a}=\tuple{\p\circ\delta, \q[\delta]} = \tuple{\p,\q}\circ\delta =
 However, the equation for surjective pairing is not left-linear and with
 a variable on one side, which is not good for rewriting.)
 
-If $\Sigma$ is the presentation of the generalized algebraic theory of cwfs, then $\Cwf_\Sigma$ is the category of small cwfs with an internal cwf. An example is the small cwf $\Set'$ of tiny cwfs with an internal cwf of very tiny sets. A tiny cwf 
-%is a cwf in the ordinary sense (see Definition~\ref{def:Cwfobj}) except that it 
-has tiny sets of objects, morphisms, types, and terms. As mentioned in the introduction, we assume two more Grothendieck universes $\V'$ of {\em tiny sets} and $\V''$ of {\em very tiny sets}, where $\V''  \in \V' \in \V$, and $\V$ is the set of small sets. %The contexts and types of $\Set'$ are tiny sets. 
-To get an internal cwf, we interpret its sort of objects $\ctx$ as the tiny set $\V''$ of very tiny sets, and the sorts of types $\ty(\Gamma)$ also as $\V''$.
+If $\Sigma$ is the presentation of the generalized algebraic theory of cwfs, then $\Cwf_\Sigma$ is the category of small cwfs with an internal cwf. As mentioned in the introduction, to give an example of such a cwf, we assume that our set theory comes with two more Grothendieck universes $\V'$ and $\V''$, where $\V''  \in \V' \in \V$, and $\V$ is the set of small sets used in the Definition~\ref{def:Cwfobj} of external cwfs. We now consider the $\V$-small cwf $\Set'$ of $\V'$-small sets. This has an internal cwf of $\V''$-small sets obtained by interpreting the sort of objects $\ctx$ as the $\V'$-small set $\V''$, and the sorts of types $\ty(\Gamma)$ also as $\V''$.
 
 %Further examples of internal cwfs inside $\Set$ are provided by cwfs supporting \FYI{presentations} of generalized algebraic theories, as constructed in the previous section.
 
