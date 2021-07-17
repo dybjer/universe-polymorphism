@@ -78,19 +78,52 @@
 
 \title[Generalized Algebraic Theories and Categories with Families]{On Generalized Algebraic Theories\\and Categories with Families}
 
-\author[P. Dybjer]
-{P\ls I\ls E\ls R\ls R\ls E\ns C\ls L\ls A\ls I\ls R\ls A\ls M\ls B\ls A\ls U\ls L\ls T$^1$%
-\thanks{}
-\ns and\ns P\ls E\ls T\ls E\ls R\ns
-D\ls Y\ls B\ls J\ls E\ls R$^2$\\
-$^1$ CNRS, ENS de Lyon, Inria, UCBL, Universit\'e de Lyon, 
-\addressbreak Laboratoire LIP, 46 All\'ee d'Italie, 69364 Lyon, France.
-\addressbreak \texttt{pierre.clairambault@ens-lyon.fr}\\
+\author[Bezem, Coquand, Dybjer, Escard\'o]
+{M\ls A\ls R\ls C\ns B\ls E\ls Z\ls E\ls  M$^1$%
+%\thanks{Thanks to ...},
+\ns T\ls H\ls I\ls E\ls R\ls R\ls Y\ns
+C\ls O\ls Q\ls U\ls A\ls N\ls D$^2$,
+\ns P\ls E\ls T\ls E\ls R\ns
+D\ls Y\ls B\ls J\ls E\ls R$^3$,
+\ns M\ls A\ls R\ls T\ls \'I\ls N\ns
+E\ls S\ls C\ls A\ls R\ls D\ls \'O$^4$
+\\
+$^1$ Department of Informatics, 
+\addressbreak University of Bergen, Norway.
+\addressbreak \texttt{Marc.Bezem@uib.no}\\
 $^2$ Department of Computer Science and Engineering, 
-\addressbreak Chalmers University of Technology, S-412 96 G\"oteborg, Sweden.
-\addressbreak \texttt{peterd@chalmers.se}
+\addressbreak University of G\"oteborg, 
+%S-412 96 G\"oteborg,
+Sweden.
+\addressbreak \texttt{coquand@cse.gu.se}\\
+$^3$ Department of Computer Science and Engineering, 
+\addressbreak Chalmers University of Technology, 
+%S-412 96 G\"oteborg, 
+Sweden.
+\addressbreak \texttt{peterd@chalmers.se}\\
+$^4$ School of Computer Science, 
+\addressbreak University of Birmingham, UK.
+\addressbreak \texttt{m.escardo@cs.bham.ac.uk}
 }
 
+%\author[Bezem, Coquand, Dybjer, Escard\'o]
+
+%{M\ls A\ls R\ls C\ns 
+%B\ls E\ls Z\ls E\ls  M^1$%
+%\thanks{}
+%\ns 
+%and
+%\ns P\ls E\ls T\ls E\ls R\ns
+%D\ls Y\ls B\ls J\ls E\ls R$^2$\\
+%$^1$ , 
+%Department of Informatics, University of Bergen.
+%\addressbreak Laboratoire LIP, 46 All\'ee d'Italie, 69364 Lyon, France.
+%\addressbreak \texttt{Marc.Bezem@uib.no}\\
+%$^2$ Department of Computer Science and Engineering, 
+%\addressbreak Chalmers University of Technology, S-412 96 G\"oteborg, Sweden.
+%\addressbreak \texttt{peterd@chalmers.se}
+%}
+%
 %\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
 
 \begin{document}
@@ -103,7 +136,7 @@ To this end we simultaneously define the notion of a \FYI{\em{presentation}} $\S
 
 \section{Introduction}
 
-Martin-Löf type theory can be characterized in a syntax independent way as the initial category with families (cwf)  with extra structure for the type formers \cite{castellan:tlca2015,castellan:lmcs}. The main contribution of this note is a similar syntax independent characterization of finitely presented generalized algebraic theories as initial cwfs with extra structure.
+Martin-Löf type theory can be characterized in a syntax independent way as the initial category with families (cwf)  with extra structure for the type formers \cite{castellan:tlca2015,castellan:lmcs}. The main contribution of this paper is a similar syntax independent characterization of finitely presented generalized algebraic theories as initial cwfs with extra structure.
 
 Generalized algebraic theories were introduced by Cartmell in his PhD thesis \cite{cartmell:phd} as a dependently typed generalization of many sorted algebraic theories. Each generalized algebraic theory is presented by (possibly infinite) sets of sort symbols, operator symbols, and equations. Cartmell's definition of generalized algebraic theories \cite{cartmell:phd,cartmell:apal} is based on a notion of {\em derived rule} expressed in terms of a traditional syntactic system for dependent type theory. He also defines a notion of model whereby sort symbols are interpreted as families of sets.
 
@@ -115,7 +148,7 @@ The generalized algebraic theory of cwfs can be seen as a kind of idealized form
 %However, the reader may now object that this looks like a circular definition.
 %We learn what dependent type theory is if we already know what dependent type theory is!
 
-In this note we explore the interdependence between generalized algebraic theories and cwfs. We already explained that cwfs can be defined as models of a generalized algebraic theory.
+In this paper we explore the interdependence between generalized algebraic theories and cwfs. We already explained that cwfs can be defined as models of a generalized algebraic theory.
 %(This generalized algebraic theory is presented in section \ref{gat-cwf}.)
 In the other direction, the notion of generalized algebraic theory relies on the notion of cwf, in the sense that the latter models the underlying infrastructure of dependent types.
 
@@ -147,7 +180,7 @@ In Section 2 we recall the definition of the category $\Cwf$ of small cwfs and m
 \subsection*{Remarks on terminology and notation}
 Like Cartmell, we have chosen to use the term {\em sort symbol} from many-sorted universal algebra. However, in our semantic notion of \FYI{presentation} sort symbols are interpreted by {\em type families} in a cwf. A cwf consists of a base category where the objects of the base category are (semantic) contexts and the morphisms are (semantic) substitutions. Moreover, we have a family-valued presheaf mapping contexts to families of (semantic) terms indexed by (semantic) types. Thus the reader should be aware of the mismatch between the word {\em sort} from universal algebra and the word {\em type} in the cwf semantics.
 
-Another possible source of confusion is that cwfs appear on two different levels. In Section \ref{sec:def_cwf} we recall the definition of cwf in set-theoretic metalanguage, where we use $\Ty$ to denote the family of types indexed by contexts and $\Tm$ to denotpapere family of terms indexed by contexts and types. This notion of cwf is then used to define the semantic notions of \FYI{presentation} and category of models of a generalized algebraic theory. Then in Section \ref{gat-cwf} we define the generalized algebraic theory of {\em internal cwfs}. This generalized algebraic theory has sort symbols $\ty$ for {\em internal types} and $\tm$ for {\em internal terms} using lower case to highlight the difference from $\Ty$ and $\Tm$ in the model cwf.
+Another possible source of confusion is that cwfs appear on two different levels. In Section \ref{sec:def_cwf} we recall the definition of cwf in set-theoretic metalanguage, where we use $\Ty$ to depaper the family of types indexed by contexts and $\Tm$ to denotpapere family of terms indexed by contexts and types. This notion of cwf is then used to define the semantic notions of \FYI{presentation} and category of models of a generalized algebraic theory. Then in Section \ref{gat-cwf} we define the generalized algebraic theory of {\em internal cwfs}. This generalized algebraic theory has sort symbols $\ty$ for {\em internal types} and $\tm$ for {\em internal terms} using lower case to highlight the difference from $\Ty$ and $\Tm$ in the model cwf.
 
 Furthermore, we often use the same notation both on the semantic and the syntactic level. 
 For example, in Section~\ref{gat-sig-mod}, where we are syntax
@@ -837,6 +870,7 @@ Operator symbols:
 \end{eqnarray*}
 
 Equations:
+%{\scriptsize 
 \begin{eqnarray*}
 \Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \p\circ\tuple{\gamma,a} = \gamma : \Hom(\Delta,\Gamma)\\
 \Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \q[\tuple{\gamma,a}] = a : \tm(\Delta,A[\gamma]) \\
@@ -846,6 +880,7 @@ Equations:
 \Gamma : \ctx, A:\ty(\Gamma) &\vdash&
 \id_{\Gamma\cext A} = \tuple{\p,\q} : \Hom(\Gamma\cext A,\Gamma\cext A)
 \end{eqnarray*}
+%}
 (If $\p\circ\delta = \gamma$ and $\q[\delta]=a$, we get
 $\tuple{\gamma,a}=\tuple{\p\circ\delta, \q[\delta]} = \tuple{\p,\q}\circ\delta =
 \delta$, the uniqueness requirement of the universal property.
