@@ -430,7 +430,7 @@ Uniform families appear in Freyd's proof of the adjoint functor theorem \cite{fr
 \begin{definition}\label{def-sig-mod}
 We define the notion of a \FYI{presentation} $\Sigma$ and the category $\Cwf_\Sigma$ of cwfs with a $\Sigma$-structure and cwf-morphisms that preserve $\Sigma$-structure. The definition is by induction on the length of $\Sigma$. We have the following base case:
 \begin{description}
-\item[The empty \FYI{presentation}] The only \FYI{presentation} of length zero is the empty one $\emptyset$. We let $\Cwf_\emptyset = \Cwf$.
+\item[The empty \FYI{presentation}.] The only \FYI{presentation} of length zero is the empty one $\emptyset$. We let $\Cwf_\emptyset = \Cwf$.
 %\footnote{PD: Add "Note that a uniform family of contexts $(\Gamma_{\C})$ indexed by $\C \in \Cwf$ is a large set. Thus a \FYI{presentation} will also be a large set, since it is essentially a sequence of uniform families. As a consequence the set of all \FYI{presentations} is a very large set."}
 \end{description}
 Assume now that we have defined a \FYI{presentation} $\Sigma$ of length $n$ and the associated
@@ -438,7 +438,7 @@ category $\Cwf_{\Sigma}$.
 %\footnote{PD: Add "Moreover, assume that we have shown that $\Cwf_{\Sigma}$ is a large but not very large category".}
 Then we define $\Sigma'$ of length $n+1$ and the associated category $\Cwf_{\Sigma'}$, where $\Sigma'$ is obtained from $\Sigma$ by adding a new sort symbol, or a new operator symbol, or a new equation, as follows.
 \begin{description}
-\item[Adding a sort symbol]
+\item[Adding a sort symbol.]
   Let $\Gamma = (\Gamma_\C)$ be a uniform family of contexts indexed by $\C \in \Cwf_{\Sigma}$.
   Then we can extend $\Sigma$ with a new sort symbol $S$ relative to $\Gamma$, to obtain
   the generalized algebraic theory $\Sigma' = (\Sigma,(\Gamma,S))$.
@@ -446,7 +446,7 @@ Then we define $\Sigma'$ of length $n+1$ and the associated category $\Cwf_{\Sig
   and $S_{\C} \in \Ty_\C(\Gamma_{\C})$.
   A morphism in $\Cwf_{\Sigma'}((\C,S_{\C}), (\D,S_{\D}))$
   is a morphism $F \in \Cwf_{\Sigma}(\C,\D)$ such that $F(S_\C) = S_\D$.
-\item[Adding an operator symbol]
+\item[Adding an operator symbol.]
   If $\Gamma$ is a uniform family of contexts and $A$ a uniform family of
   types over $\Gamma$,
   %both indexed by $\C \in \Cwf_{\Sigma}$,
@@ -456,7 +456,7 @@ Then we define $\Sigma'$ of length $n+1$ and the associated category $\Cwf_{\Sig
   An object of $\Cwf_{\Sigma'}$
   is a pair $(\C,f_{\C})$ where $\C$ is an object in $\Cwf_{\Sigma}$ and $f_{\C} \in \Tm_\C(\Gamma_\C,A_\C)$.
   A morphism in $\Cwf_{\Sigma'}((\C,f_{\C}),(\D,f_{\D}))$ is a morphism $F \in \Cwf_{\Sigma}(\C,\D)$ such that $F(f_{\C}) = f_{\D}$.
-\item[Adding an equation]
+\item[Adding an equation.]
   If $\Gamma$ is a uniform family of contexts,
   $A$ is a uniform family of types over $\Gamma$
   and $a,a'$ are uniform families of terms in $A$,
@@ -570,7 +570,7 @@ The definition of the interpretation morphism  $\inte{-} : \T_\emptyset \to \C$ 
 Assume now for the induction step that we have defined the grammar, the inference rules, $\T_\Sigma$ and the interpretation morphism $\inte{-} : \T_{\Sigma} \to \C$ in $\Cwf_\Sigma$.
 Let $\Sigma'$ be $\Sigma$ extended by a new sort symbol, a new operator symbol, or a new equation. We shall now explain how to define $\T_{\Sigma'}$.
 \begin{description}
-\item[Adding a sort symbol] If $\Gamma \vdash_\Sigma$, then we can introduce a new sort symbol $S$ in the context $\Gamma$ representing the sequence of types of the arguments of $S$.
+\item[Adding a sort symbol.] If $\Gamma \vdash_\Sigma$, then we can introduce a new sort symbol $S$ in the context $\Gamma$ representing the sequence of types of the arguments of $S$.
 \begin{enumerate}
 \item
 We add a new production for raw types
@@ -597,7 +597,7 @@ $$
 It follows  that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
 \end{enumerate}
 
-\item[Adding an operator symbol] If $\Gamma \vdash_\Sigma A$, then we can introduce a new operator symbol $f$, where the context $\Gamma$ represents the sequence of types of the arguments and $A$ is the type of the result.
+\item[Adding an operator symbol.] If $\Gamma \vdash_\Sigma A$, then we can introduce a new operator symbol $f$, where the context $\Gamma$ represents the sequence of types of the arguments and $A$ is the type of the result.
 \begin{enumerate}
 \item
 We add a new production for raw terms
@@ -622,7 +622,7 @@ $$
 It follows  that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
 \end{enumerate}
 
-\item[Adding an equation] If $\Gamma \vdash_\Sigma a : A$ and $\Gamma \vdash_\Sigma a' : A$ we can introduce a new equation $a = a'$.
+\item[Adding an equation.] If $\Gamma \vdash_\Sigma a : A$ and $\Gamma \vdash_\Sigma a' : A$ we can introduce a new equation $a = a'$.
 \begin{enumerate}
 \item
 $\T_\Sigma'$ has the same productions as $\T_\Sigma$.
@@ -670,25 +670,25 @@ We now show how the corresponding official (in the sense of Definition \ref{def-
 
 As always, we begin with the empty \FYI{presentation} $\emptyset$ and its category of models $\Cwf_\emptyset = \Cwf$.
 \begin{description}
-\item[Adding the sort symbol $\Mon$] Each cwf $\C$ has a chosen empty context (terminal object) $1_\C$. Since cwf-morphisms preserve empty contexts on the nose, $1 = (1_\C)$ is a uniform family of contexts in $\Cwf_\emptyset$. Hence we can introduce a new sort symbol $\Mon$ in the empty context. The resulting \FYI{presentation} is
+\item[Adding the sort symbol $\Mon$.] Each cwf $\C$ has a chosen empty context (terminal object) $1_\C$. Since cwf-morphisms preserve empty contexts on the nose, $1 = (1_\C)$ is a uniform family of contexts in $\Cwf_\emptyset$. Hence we can introduce a new sort symbol $\Mon$ in the empty context. The resulting \FYI{presentation} is
 $$
 \Sigma_1 = (\emptyset, (1,\Mon))
 $$
 The objects of $\Cwf_{\Sigma_1}$  are pairs $(\C,\Mon_\C)$, where $\C$ is a cwf and $\Mon_\C \in \Ty_\C(1_\C)$.
-\item[Adding the operator symbol for the identity]
+\item[Adding the operator symbol for the identity.]
 %Each $(\C,\Mon_\C) \in \Cwf_{\Sigma_1} $ has an empty context $1_\C$ and a type $\Mon_\C \in \Ty_\C(1_\C)$.
 Since, morphisms in $\Cwf_{\Sigma_1}$ preserve both empty contexts $1_\C$ and types $\Mon_\C$ on the nose, we have a uniform family of contexts $1 = (1_\C)$ and a uniform family of types $\Mon = (\Mon_\C)$ in $\Cwf_{\Sigma_1}$. Hence we can introduce a new operator symbol $e$ (the identity of the monoid).  The resulting \FYI{presentation} is
 $$
 \Sigma_2 = (\Sigma_1, (1,\Mon,e))
 $$
 The objects of $\Cwf_{\Sigma_2}$  are triples $(\C,\Mon_\C,e_\C)$, where $\C$ is a cwf, $\Mon_\C \in \Ty_\C(1_\C)$ and $e_\C \in \Tm_\C(1_\C,\Mon_\C)$.
-\item[Adding the operator symbol for composition]
+\item[Adding the operator symbol for composition.]
 Again using that cwf-morphisms preserve all cwf-structure and $\Mon_\C$, we deduce that we have a uniform family of contexts $1.\Mon.\Mon[\p]$ and a uniform family of types $\Mon[\p][\p]$ in $\Cwf_{\Sigma_2}$. Thus we can add a binary operator symbol $\comp$. The resulting \FYI{presentation} is
 $$
 \Sigma_3 = (\Sigma_2, (1.\Mon.\Mon[\p],\Mon[\p][\p],\comp))
 $$
 The objects of $\Cwf_{\Sigma_3}$  are quadruples $(\C,\Mon_\C,e_\C,*_\C)$, where $\C$ is a cwf, $\Mon_\C \in \Ty_\C(1_\C)$, $e_\C \in \Tm_\C(1_\C,\Mon_\C)$, and $*_\C \in \Tm_\C((1.\Mon.\Mon[\p])_\C,(\Mon[\p][\p])_\C)$.
-\item[Adding the left identity law]
+\item[Adding the left identity law.]
 Furthermore, we extend the \FYI{presentation} with the equations stating that $\idmon$ is a left identity as follows:
 $$
 \Sigma_4 = (\Sigma_3, (1.\Mon, \Mon[\p], \comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}], \q))
@@ -696,7 +696,7 @@ $$
 The uniform family of context $1.\Mon$ expresses that the equation has one variable of type $\Mon$, the uniform family of types $\Mon[\p]$ expresses that the two sides of the equation have type $\Mon$, and the uniform families of terms $\comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}]$ and $\q$ express the two sides of the equation.
 $\Cwf_{\Sigma_4}$ is the full subcategory of $\Cwf_{\Sigma_3}$ with objects $\C$
 such that $(\comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}])_\C = \q_\C$.
-\item[Adding the right identity and the associativity laws]
+\item[Adding the right identity and the associativity laws.]
 Finally we add the right identity equation and the associativity equation to get the \FYI{presentations} $\Sigma_5$ and $\Sigma_6$. We omit the details.
 \end{description}
 We define the \FYI{presentation of} monoids to be $\Sigma = \Sigma_6$. The category $\Cwf_\Sigma$ is the category of cwfs with an {\em internal monoid}. This is a cwf-version of the notion of internal monoid which can be defined in any category with finite products. Ordinary (small) monoids come out as internal monoids in $\Set$, the cwf of small sets.
@@ -706,7 +706,7 @@ We define the \FYI{presentation of} monoids to be $\Sigma = \Sigma_6$. The categ
 We also sketch the construction of the initial object $\T_\Sigma$ of $\Cwf_\Sigma$ following the recipe for introducing sort symbols, operators symbols, and equations in Section \ref{initial-gat}. (We omit the index $\Sigma$ in $\vdash_\Sigma$.)
 %Note that these inference rules follow the principles of introducing sort symbols, operator symbols, and equations we displayed in Section 4 when building the initial cwf $\T_\Sigma$ for appropriate $\Sigma$.
 \begin{description}
-\item[Adding the sort symbol $\Mon$]
+\item[Adding the sort symbol $\Mon$.]
 First, we have $1 \vdash$ for the empty \FYI{presentation}, so we can
 add a production for the sort symbol $\Mon$ and the inference rule:
 \begin{eqnarray*}
@@ -714,7 +714,7 @@ add a production for the sort symbol $\Mon$ and the inference rule:
 \end{eqnarray*}
 For later use we infer $1.\Mon \vdash$ and, using $\p:1.\Mon \to 1$, $1.\Mon\vdash\Mon[\p]$,
 so $1.\Mon.\Mon[\p] \vdash$.
-\item[Adding the operator symbol for identity]
+\item[Adding the operator symbol for identity.]
 We then add a production for the operator symbol $\idmon$ and the inference rule:
 \begin{eqnarray*}
 1 &\vdash& \idmon : \Mon
@@ -722,7 +722,7 @@ We then add a production for the operator symbol $\idmon$ and the inference rule
 Again for later use we infer $1.\Mon\vdash \idmon[\p] :\Mon[\p]$.
 Note that here $\p = \tuple{}$, the empty substitution $1.\Mon \to 1$,
 since there is only one substitution $1.\Mon \to 1$.
-\item[Adding the operator symbol for composition]
+\item[Adding the operator symbol for composition.]
 We then add a production for the binary operator symbol $\comp$.
 Using another $\p: 1.\Mon.\Mon[\p] \to 1.\Mon$ (note the different type),
 we can derive $1.\Mon.\Mon[\p] \vdash \Mon[\p][\p]$, so we can add the inference rule
@@ -730,7 +730,7 @@ we can derive $1.\Mon.\Mon[\p] \vdash \Mon[\p][\p]$, so we can add the inference
 1.\Mon.\Mon[\p] &\vdash& \comp : \Mon[\p][\p]
 \end{eqnarray*}
 Note that we project $\Mon$ on the right twice, reflecting that $\comp$ is binary.
-\item[Adding the left identity law]
+\item[Adding the left identity law.]
 We can derive $1.\Mon \vdash \q : \Mon[\p]$. With some effort,
 using previous inferences, we can  derive
 $1.\Mon \vdash \comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}] : \Mon[\p]$.
@@ -738,7 +738,7 @@ Hence we can add the inference rule for the equation ($\idmon$ is a left identit
 \begin{eqnarray*}
 1.\Mon &\vdash& \comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}] = \q : \Mon[\p]
 \end{eqnarray*}
-\item[Adding the right identity and the associativity laws]
+\item[Adding the right identity and the associativity laws.]
 We omit the details.
 \end{description}
 The resulting initial object $\T_\Sigma = \T_{\Sigma_6}$ is generated by a system of grammar and inference rules for dependent type theory with an internal monoid. In this theory we can prove statements such as
