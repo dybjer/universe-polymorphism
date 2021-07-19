@@ -712,8 +712,8 @@ add a production for the sort symbol $\Mon$ and the inference rule:
 \begin{eqnarray*}
 1 &\vdash& \Mon
 \end{eqnarray*}
-For later use we infer $1.\Mon \vdash$ and, using $\p:1.\Mon \to 1$, $1.\Mon\vdash\Mon[\p]$,
-so $1.\Mon.\Mon[\p] \vdash$.
+For later use we infer $1.\Mon \vdash$ and, using $\p :1.\Mon \to 1$, $1.\Mon\vdash\Mon[\p]$,
+so $1.\Mon.\Mon[\p] \vdash$. 
 \item[Adding the operator symbol for identity.]
 We then add a production for the operator symbol $\idmon$ and the inference rule:
 \begin{eqnarray*}
@@ -721,7 +721,7 @@ We then add a production for the operator symbol $\idmon$ and the inference rule
 \end{eqnarray*}
 Again for later use we infer $1.\Mon\vdash \idmon[\p] :\Mon[\p]$.
 Note that here $\p = \tuple{}$, the empty substitution $1.\Mon \to 1$,
-since there is only one substitution $1.\Mon \to 1$.
+since there is only one substitution $1.\Mon \to 1$. (Here and in the following we have dropped the indices and written $\p$ instead of the official $\p_\Mon$, $\tuple{}$ instead of $\tuple{}_{1.\Mon}$ as prescribed by the grammar for raw expressions.)
 \item[Adding the operator symbol for composition.]
 We then add a production for the binary operator symbol $\comp$.
 Using another $\p: 1.\Mon.\Mon[\p] \to 1.\Mon$ (note the different type),
@@ -786,11 +786,11 @@ Note that composition is officially an operator symbol with five arguments. In t
 The rendering of the generalized algebraic theory of categories in cwf-combinator language and the proof that it indeed yields a \FYI{presentation} are similar to what they were for the generalized algebraic theory of monoids. The inference rules for the two sort symbols in cwf-combinator language are
 \begin{eqnarray*}
 1 &\vdash& \Obj\\
-1.\Obj.\Obj[\p] &\vdash& \Hom
+1.\Obj.\Obj[\p_\Obj] &\vdash& \Hom
 \end{eqnarray*}
 and the operator symbols for identity
 \begin{eqnarray*}
-1.\Obj &\vdash& \idmon : \Hom[\tuple{\id_{1.\Obj},\q_{1,\Obj}}]
+1.\Obj &\vdash& \idmon : \Hom[\tuple{\id,\q}]
 \end{eqnarray*}
 We omit the verbose cwf-renderings of the operator symbol for composition and the equations.
 
