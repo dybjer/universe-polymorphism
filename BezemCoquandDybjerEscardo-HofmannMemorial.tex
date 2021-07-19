@@ -644,7 +644,8 @@ This concludes the proof of the theorem. %\qed
 
 \section{Examples of generalized algebraic theories}\label{sec:examples}
 
-We will now display the sort symbols, operator symbols, and equations for the generalized algebraic of monoids, categories, and cwfs. We will then show how to add operator symbols and equations when extending cwfs with $\Pi$-types, natural numbers $\N$, and a universe closed under $\Pi$ and $\N$. The models of these theories are internal monoids, internal categories, and internal cwfs (possibly with extra structure for internal $\Pi, \N$, and universes) in $\Cwf_\Sigma$. Moreover, internal monoids, categories, and cwfs in the cwf~$\Set$ are small monoids, categories, and cwfs, respectively. Note that the ``external" cwfs defined in Section 2 need not be small, and hence not internal cwfs in the cwf~$\Set$.
+We will now display the sort symbols, operator symbols, and equations for the generalized algebraic theories of monoids, categories, and cwfs. We will then show how to add operator symbols and equations when extending cwfs with $\Pi$-types, natural numbers $\N$, and a universe closed under $\Pi$ and $\N$. The models of these theories  (the objects of $\Cwf_\Sigma$ for the respective $\Sigma$) are small cwfs with internal monoids, internal categories, and internal cwfs (possibly with extra structure for internal $\Pi, \N$, and universes), respectively. 
+%Moreover, internal monoids, categories, and cwfs in the cwf~$\Set$ are small monoids, categories, and cwfs, respectively. Note that the ``external" cwfs defined in Section 2 need not be small, and hence not internal cwfs in the cwf~$\Set$.
 
 We begin by using the recipe in Definition \ref{def-sig-mod} to construct the \FYI{presentation of} monoids and its associated category of models, that is, of cwfs with an internal monoid. We then follow the recipe in Theorem \ref{initial-gat} and construct the initial cwf with an internal monoid.
 
@@ -699,7 +700,7 @@ such that $(\comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}])_\C = \q_\C$.
 \item[Adding the right identity and the associativity laws.]
 Finally we add the right identity equation and the associativity equation to get the \FYI{presentations} $\Sigma_5$ and $\Sigma_6$. We omit the details.
 \end{description}
-We define the \FYI{presentation of} monoids to be $\Sigma = \Sigma_6$. The category $\Cwf_\Sigma$ is the category of cwfs with an {\em internal monoid}. This is a cwf-version of the notion of internal monoid which can be defined in any category with finite products. Ordinary (small) monoids come out as internal monoids in $\Set$, the cwf of small sets.
+We define the \FYI{presentation of} monoids to be $\Sigma = \Sigma_6$. The category $\Cwf_\Sigma$ is the category of small cwfs with an {\em internal monoid}. This is a cwf-version of the notion of internal monoid which can be defined in any category with finite products. 
 
 %If we interpret the intial gat in a cwf C with families, then
 
@@ -796,7 +797,7 @@ We omit the verbose cwf-renderings of the operator symbol for composition and th
 
 A cwf with extra structure for the generalized algebraic theory of categories is a cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits. As shown by Martin Hofmann \cite{hofmann:csl,hofmann:cambridge}, every category with finite limits yields a category with attributes, and hence a cwf. However, not every cwf has finite limits. To achieve this we need more structure. As shown by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} the 2-category of categories with finite limits is biequivalent to the 2-category of democratic cwfs that support $\Sigma$-types and extensional identity types.
 
-An internal category in the cwf $\Set$ of small sets is a small category.
+%An internal category in the cwf $\Set$ of small sets is a small category.
 
 %\subsubsection{How to generate the \FYI{presentation} using the combinator language}
 %The \FYI{presentation of} the generalized algebraic theory of categories has sort symbols $\Obj$
@@ -889,6 +890,8 @@ However, the equation for surjective pairing is not left-linear and with
 a variable on one side, which is not good for rewriting.)
 
 If $\Sigma$ is the presentation of the generalized algebraic theory of cwfs, then $\Cwf_\Sigma$ is the category of small cwfs with an internal cwf. As mentioned in the introduction, to give an example of such a cwf, we assume that our set theory comes with two more Grothendieck universes $\V'$ and $\V''$, where $\V''  \in \V' \in \V$, and $\V$ is the set of small sets used in Definition~\ref{def:Cwfobj} of external cwfs. We now consider the $\V$-small cwf of $\V'$-small sets. This has an internal cwf of $\V''$-small sets obtained by interpreting the sort of objects $\ctx$ as the $\V'$-small set $\V''$ and the sorts of types $\ty(\Gamma)$ also as $\V''$.
+
+%Similarly, if $\Sigma$ is the presentation of the generalized algebraic theory of cwfs, the objects of $\Cwf_\Sigma$ are $\V$-small cwfs with an internal monoid. Examples are the $\V$-small cwf of $\V'$-small sets with an internal monoid. Such an internal monoid is a monoid in the usual sense where the carrier is $\V'$-small.
 
 %Further examples of internal cwfs inside $\Set$ are provided by cwfs supporting \FYI{presentations} of generalized algebraic theories, as constructed in the previous section.
 
