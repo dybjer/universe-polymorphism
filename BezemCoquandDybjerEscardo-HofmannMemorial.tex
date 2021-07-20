@@ -142,7 +142,7 @@ Generalized algebraic theories were introduced by Cartmell in his PhD thesis \ci
 
 Categories with families (cwfs) \cite{dybjer:torino} were introduced as a new notion of model of dependent type theory. Cwfs arise by reformulating the notion of category with attributes in Martin Hofmann's sense \cite{hofmann:csl}. The key point is that cwfs arise as models of a certain generalized algebraic theory closely related to Martin-Löf's substitution calculus \cite{martinlof:gbg92}. As such the notion of cwf becomes a useful intermediary between traditional syntactic systems for dependent type theory and a variety of categorical notions of model.
 
-The generalized algebraic theory of cwfs can be seen as a kind of idealized formal system of dependent type theory. In contrast to Martin-Löf's substitution calculus and other syntactic systems for dependent type theory, it is {\em not} formulated in terms of grammars and inference rules for the forms of judgment of type theory. Instead it is formulated in terms of the sort symbols (corresponding to the judgment forms), operator symbols (corresponding to the formation, introduction, and elimination rules), and equations (corresponding to the equality rules for the type formers) of the generalized algebraic theory. Some of the general reasoning (about equality, substitution, and assumptions) is taken care of by the underlying infrastructure of dependent types. This makes it possible to abstract away from details in the formulation of grammars and inference rules.
+The generalized algebraic theory of cwfs can be seen as a kind of idealized formal system for dependent type theory. In contrast to Martin-Löf's substitution calculus and other syntactic systems for dependent type theory, it is {\em not} formulated in terms of grammars and inference rules for the forms of judgment of type theory. Instead it is formulated in terms of the sort symbols (corresponding to the judgment forms), operator symbols (corresponding to the formation, introduction, and elimination rules), and equations (corresponding to the equality rules for the type formers) of the generalized algebraic theory. Some of the general reasoning (about equality, substitution, and assumptions) is taken care of by the underlying infrastructure of dependent types. This makes it possible to abstract away from details in the formulation of grammars and inference rules.
 %In contrast to the various syntactic systems, the generalized algebraic theory of cwfs has a canonical flavour.
 %We may define dependent type theory in a syntax independent way as the initial object in a category of cwfs with extra structure for interpreting the type formers.
 %However, the reader may now object that this looks like a circular definition.
@@ -155,7 +155,7 @@ In the other direction, the notion of generalized algebraic theory relies on the
 Our development can be formulated in a constructive set theory,
 as described for instance by Aczel \cite{MR519801,aczel:relate}, although the set theory
 we use for formulating the notion of cwf with a $\Sigma$-structure is probably
-much weaker. In the general theory we need to distinguish between small and large sets, and hence we assume that our set theory comes with a Grothendieck universe $\V$ of {\em small sets}. Furthermore, in Section \ref{sec:examples} we provide an example of a small cwf with an internal cwf. For this purpose we need two more Grothendieck universes $\V'$ and $\V''$, where $\V''  \in \V' \in \V$.
+much weaker. In the general theory we need to distinguish between small and large sets, and hence we assume that our set theory comes with a Grothendieck universe $\V$ of {\em small sets}. Furthermore, in order to give examples of small cwfs with internal monoids, categories and cwfs, we shall assume two more Grothendieck universes $\V'$ and $\V''$, where $\V''  \in \V' \in \V$.
 
 
 %We shall here define a new finitely presented notion of generalized algebraic theory and simultaneously a general categorical notion of model. To this end we define what it means to be a \FYI{presentation} $\Sigma$ of a generalized algebraic theory and the associated category $\Cwf_\Sigma$ with extra structure for $\Sigma$. Our definition refers to {\em uniform families} of contexts, types, and terms in $\Cwf_\Sigma$, a purely semantic notion. Afterwards, we construct initial objects $\T_\Sigma \in \Cwf_\Sigma$ by extending Castellan, Clairambault, and Dybjer's  construction of an initial object in the category $\Cwf$ of cwfs \cite{castellan:tlca2015,castellan:lmcs}.
@@ -178,9 +178,9 @@ In Section 2 we recall the definition of the category $\Cwf$ of small cwfs and m
 %He is truly missed.
 
 \subsection*{Remarks on terminology and notation}
-Like Cartmell, we have chosen to use the term {\em sort symbol} from many-sorted universal algebra. However, in our semantic notion of \FYI{presentation} sort symbols are interpreted by {\em type families} in a cwf. A cwf consists of a base category where the objects of the base category are (semantic) contexts and the morphisms are (semantic) substitutions. Moreover, we have a family-valued presheaf mapping contexts to families of (semantic) terms indexed by (semantic) types. Thus the reader should be aware of the mismatch between the word {\em sort} from universal algebra and the word {\em type} in the cwf semantics.
+Like Cartmell, we have chosen to use the term {\em sort symbol} from many-sorted universal algebra. However, in our semantic notion of \FYI{presentation} sort symbols are interpreted by {\em type families} in a cwf. A cwf consists of a base category where the objects are (semantic) contexts and the morphisms are (semantic) substitutions. Moreover, we have a family-valued presheaf mapping contexts to families of (semantic) terms indexed by (semantic) types. Thus the reader should be aware of the mismatch between the word {\em sort} from universal algebra and the word {\em type} in the cwf semantics.
 
-Another possible source of confusion is that cwfs appear on two different levels. In Section \ref{sec:def_cwf} we recall the definition of cwf in set-theoretic metalanguage, where we use $\Ty$ to depaper the family of types indexed by contexts and $\Tm$ to denotpapere family of terms indexed by contexts and types. This notion of cwf is then used to define the semantic notions of \FYI{presentation} and category of models of a generalized algebraic theory. Then in Section \ref{gat-cwf} we define the generalized algebraic theory of {\em internal cwfs}. This generalized algebraic theory has sort symbols $\ty$ for {\em internal types} and $\tm$ for {\em internal terms} using lower case to highlight the difference from $\Ty$ and $\Tm$ in the model cwf.
+Another possible source of confusion is that cwfs appear on two different levels. In Section \ref{sec:def_cwf} we recall the definition of cwf in set-theoretic metalanguage, where we use $\Ty$ to denote the family of types indexed by contexts and $\Tm$ to denote the family of terms indexed by contexts and types. This notion of cwf is then used to define the semantic notions of \FYI{presentation} and category of models of a generalized algebraic theory. Then in Section \ref{gat-cwf} we define the generalized algebraic theory of cwfs. This generalized algebraic theory has sort symbols $\ty$ for {\em internal types} and $\tm$ for {\em internal terms} using lower case to highlight the difference from $\Ty$ and $\Tm$ in the model cwf.
 
 Furthermore, we often use the same notation both on the semantic and the syntactic level. 
 For example, in Section~\ref{gat-sig-mod}, where we are syntax
@@ -475,7 +475,7 @@ Then we define $\Sigma'$ of length $n+1$ and the associated category $\Cwf_{\Sig
 
 This definition is {\em syntax independent}. In the next section we show how to {\em syntactically} construct an {\em initial object} $\T_{\Sigma}$ in $\Cwf_{\Sigma}$ (for an arbitrary \FYI{presentation} $\Sigma$) in terms of grammars and inference rules. A context in $\T_{\Sigma}$ will be an equivalence class $[ \Gamma ]$ of raw contexts, and similarly for substitutions, types, and terms.
 
-We refer to Section \ref{monoids} where we show a simple instance of this definition: a \FYI{presentation} $\Sigma$ of internal monoids and its associated category of models $\Cwf_\Sigma$ of cwfs with an internal monoid. We also show how to construct the initial cwf with an internal monoid $\T_\Sigma$.
+We refer to Section \ref{monoids} where we show a simple instance of this definition: a \FYI{presentation} $\Sigma$ of internal monoids and its associated category of models $\Cwf_\Sigma$ of cwfs with an internal monoid. We also show how to construct the initial cwf  $\T_\Sigma$ with an internal monoid.
 
 \begin{remark}
 There is a bijective correspondence between contexts in $\T_\Sigma$ and uniform families of contexts
@@ -628,7 +628,7 @@ It follows  that this is a morphism in $\Cwf_{\Sigma'}$ and that it is unique.
 \item[Adding an equation.] If $\Gamma \vdash_\Sigma a : A$ and $\Gamma \vdash_\Sigma a' : A$ we can introduce a new equation $a = a'$.
 \begin{enumerate}
 \item
-$\T_\Sigma'$ has the same productions as $\T_\Sigma$.
+$\T_{\Sigma'}$ has the same productions as $\T_\Sigma$.
 \item
 We add  the inference rule
 \begin{mathpar}
@@ -697,7 +697,7 @@ Furthermore, we extend the \FYI{presentation} with the equations stating that $\
 $$
 \Sigma_4 = (\Sigma_3, (1.\Mon, \Mon[\p], \comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}], \q))
 $$
-The uniform family of context $1.\Mon$ expresses that the equation has one variable of type $\Mon$, the uniform family of types $\Mon[\p]$ expresses that the two sides of the equation have type $\Mon$, and the uniform families of terms $\comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}]$ and $\q$ express the two sides of the equation.
+The uniform family of contexts $1.\Mon$ expresses that the equation has one variable of type $\Mon$, the uniform family of types $\Mon[\p]$ expresses that the two sides of the equation have type $\Mon$, and the uniform families of terms $\comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}]$ and $\q$ express the two sides of the equation.
 $\Cwf_{\Sigma_4}$ is the full subcategory of $\Cwf_{\Sigma_3}$ with objects $\C$
 such that $(\comp[\tuple{\tuple{\tuple{},\idmon[\tuple{}]},\q}])_\C = \q_\C$.
 \item[Adding the right identity and the associativity laws.]
@@ -762,7 +762,7 @@ The remaining examples will use dependent types in an essential way. However, fo
 % In the remaining examples, we shall mainly use ordinary notation with variables.
 % % We have already said that.
 
-\subsection{Internal categories} The generalized algebraic theory of categories was one of Cartmell's motivating examples. It has the following sort symbols, operator symbols, and equations. Again, note that the models are cwfs with an internal category. To emphasize the difference between the internal notions of category and cwf and the external notions (introduced in Section 2), our notation for sort symbols in the generalized algebraic theory of internal cwfs use lower case letters ($\Obj, \Hom, \ty, \tm$). This is in contrast to the upper case letters for the external versions ($\Ty, \Tm$). We will however overload notation for operator symbols, and for example use $\circ$ both for the cwf-combinator and for the operator symbol in the generalized algebraic theory of internal categories.
+\subsection{Internal categories} The generalized algebraic theory of categories was one of Cartmell's motivating examples. It has the following sort symbols, operator symbols, and equations.
 
 Sort symbols:
 \begin{eqnarray*}
@@ -798,7 +798,7 @@ and the operator symbols for identity
 \end{eqnarray*}
 We omit the verbose cwf-renderings of the operator symbol for composition and the equations.
 
-A cwf with extra structure for the generalized algebraic theory of categories is a cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits. As shown by Martin Hofmann \cite{hofmann:csl,hofmann:cambridge}, every category with finite limits yields a category with attributes, and hence a cwf. However, not every cwf has finite limits. To achieve this we need more structure. As shown by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} the 2-category of categories with finite limits is biequivalent to the 2-category of democratic cwfs that support $\Sigma$-types and extensional identity types.
+A small cwf with extra structure for the generalized algebraic theory of categories is a small cwf with an {\em internal category}. This is a cwf-based analogue of the usual notion of internal category in a category with finite limits. As shown by Martin Hofmann \cite{hofmann:csl,hofmann:cambridge}, every category with finite limits yields a category with attributes, and hence a cwf. However, not every cwf has finite limits. To achieve this we need more structure. As shown by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} the 2-category of categories with finite limits is biequivalent to the 2-category of democratic cwfs that support $\Sigma$-types and extensional identity types.
 
 An internal category in the $\V$-small cwf $\Set_{\V'}$ is a category in the usual sense with a $\V'$-small set of objects. For example, if $\V'' \in \V'$ is yet another Grothendieck universe, then $\Set_{\V''}$ is an internal category in $\Set_{\V'}$.
 
@@ -816,7 +816,7 @@ An internal category in the $\V$-small cwf $\Set_{\V'}$ is a category in the usu
 
 \subsection{Internal cwfs}\label{gat-cwf}
 
-The generalized algebraic theory of cwfs is obtained by extending the generalized algebraic theory of categories with new sort symbols, operator symbols, and equations for a family valued functor, a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of contexts to $\ctx$.
+The generalized algebraic theory of cwfs is obtained by extending the generalized algebraic theory of categories with new sort symbols, operator symbols, and equations for a family valued functor, a terminal object, and context comprehension. We here rename the sort $\Obj$ of objects of the category of contexts to $\ctx$. To emphasize the difference between the internal notion of cwf and the external notions (introduced in Section 2), our notation for sort symbols in the generalized algebraic theory of internal cwfs use lower case letters for the sort symbols. For example, we write  $\ty$ and $\tm$ in contrast to the upper case letters for the external notions $\Ty$ and $\Tm$. We will however overload notation for operator symbols, and for example use $\circ$ both for composition in a cwf and for the operator symbol in the generalized algebraic theory of cwfs.
 
 \subsubsection{The extension with a family valued functor.}
 \mbox{ }
@@ -894,7 +894,10 @@ $\tuple{\gamma,a}=\tuple{\p\circ\delta, \q[\delta]} = \tuple{\p,\q}\circ\delta =
 However, the equation for surjective pairing is not left-linear and with
 a variable on one side, which is not good for rewriting.)
 
-If $\Sigma$ is the presentation of the generalized algebraic theory of cwfs, then $\Cwf_\Sigma$ is the category of $\V$-small cwfs with an internal cwf. As mentioned in the introduction, to give an example of such a cwf, we assume that our set theory comes with two more Grothendieck universes $\V'$ and $\V''$, where $\V''  \in \V' \in \V$, and $\V$ is the set of small sets used in Definition~\ref{def:Cwfobj} of external cwfs. We now consider the $\V$-small cwf of $\V'$-small sets. This has an internal cwf of $\V''$-small sets obtained by interpreting the sort of objects $\ctx$ as the $\V'$-small set $\V''$ and the sorts of types $\ty(\Gamma)$ also as $\V''$.
+If $\Sigma$ is the presentation of the generalized algebraic theory of cwfs, then $\Cwf_\Sigma$ is the category of $\V$-small cwfs with an internal cwf. Again we assume two more Grothendieck universes $\V'$ and $\V''$, where $\V''  \in \V' \in \V$.
+%, and $\V$ is the set of small sets used in Definition~\ref{def:Cwfobj} of external cwfs. 
+%We now consider the $\V$-small cwf of $\V'$-small sets. 
+Then the $\V$-small cwf $\Set_{\V'}$ has an internal cwf of $\V''$-small sets obtained by interpreting the sort of objects $\ctx$ as the $\V'$-small set $\V''$ and the sorts of types $\ty(\Gamma)$ also as $\V''$.
 
 %Similarly, if $\Sigma$ is the presentation of the generalized algebraic theory of cwfs, the objects of $\Cwf_\Sigma$ are $\V$-small cwfs with an internal monoid. Examples are the $\V$-small cwf of $\V'$-small sets with an internal monoid. Such an internal monoid is a monoid in the usual sense where the carrier is $\V'$-small.
 
