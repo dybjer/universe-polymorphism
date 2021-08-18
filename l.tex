@@ -133,7 +133,7 @@
 \newcommand\lathy{{\cal L}}
 \newcommand\prvL{\vdash_{\lathy}}
 \newcommand\prvH{\vdash_{\cal H}}
-\newcommand\Ninf{\N^+}
+\newcommand\Ninf{\N^\infty}
 \newcommand\M{\mathsf{Maxgain}}
 \newcommand\upS[1]{\overline{S_{#1}}}
 \newcommand{\FYI}[1]{{\color{red}#1}}
@@ -162,8 +162,15 @@ Chalmers/University of Gothenburg, {\tt coquand@chalmers.se}}
 The \emph{uniform word problem} for an equational theory $T$ is
 to determine, given a finite set $E$ of relations between generators,
 whether a given relation is provable from $E$ in $T$.
-We prove the decidability of the uniform word problem for
-the theory of join-semilattices with a endomorphism.
+The theory of join-semilattices with an inflationary endomorphism
+is a special case of a certain description logic, that was shown
+to have an EXPTIME-complete uniform word problem by Hofmann \cite{Hofmann}
+and Baader \cite{Baader}.
+Here we show that the special case of one inflationary endomorphism
+has a uniform word problem that can be solved in PTIME. We also
+show that loop-checking can be done in PTIME.
+Our special case is relevant for dependent type theory with universes.
+
 We start from the equational definition of semilattices in which the
 join, denoted by $\vee$, is an associative, commutative, and idempotent
 binary operation. The endomorphism, denoted by ${\_}^+$,
@@ -178,37 +185,40 @@ For example, we can prove $(t^+)^+ \vee t = (t^+)^+$ in $\lathy$,
 for any term $t$. Also, we can infer $s^+ = (t^+)^+$
 from $s = t^+$, but not conversely. 
 As is customary, we let $s\geq t$ abbreviate $s\vee t = s$.
-\FYI{Throughout this paper we call a join-semilattice with a endomorphism
-just a semilattice.}
+\FYI{Throughout this paper we call a join-semilattice with an inflationary 
+endomorphism simply a \emph{semilattice}. 
+We call ${t}^+$ the \emph{successor} of $t$.}
 
 
 \section{Semilattice presentations and Horn clauses}\label{sec:latt-Horn}
 
+A \emph{semilattice presentation} consists of a
+set $V$ of \emph{generators} and a set $C$ of \emph{relations}.
+We will colloquially call the generators also variables, and the
+relations constraints.
 For any semilattice term $t$ and natural number $k$, 
 let $t+k$ denote the $k$-fold successor of $t$.
 Thus $t+0 = t$, and we may use $t+1$ and $t^+$ interchangeably. 
+A \emph{term over} $V$ is
+a term of the form $\jterm{x}{k}{m}$, 
+with all $x_i\in V$ and $k_i\in \N$.
+ 
 Since the endomorphism commutes with the join operation,
 every semilattice term $t$ is equal to a term of the
 form $\jterm{x}{k}{m}$, with all variables $x_i$ occurring in $t$
 and all $k_i\in \N$.
 
-A \emph{semilattice presentation} consists of a
-set $V$ of \emph{generators} and
-a set $C$ of \emph{relations}. A \emph{term over} $V$ is
-a term of the form $\jterm{x}{k}{m}$, 
-with all $x_i\in V$ and $k_i\in \N$.
-A relation is an equation $s=t$ with $s,t$ terms over $V$.
-We will colloquially call the generators also variables, and the
-relations constraints. A constraint like $x=y^+$ with $x,y\in V$
+A \emph{relation} is an equation $s=t$ with $s,t$ terms over $V$.
+A constraint like $x=y^+$ with $x,y\in V$
 expresses a relation between the generators $x$ and $y$ and 
 should not be read as an implicitly universally quantified axiom
 in which the $x$ and $y$ can be instantiated.
 
-The semilattice presented by $(V,C)$ consists of terms over $V$
+The semilattice \emph{presented by} $(V,C)$ consists of terms over $V$
 modulo provable equality from $C$. The latter will be denoted
 by $C\prvL s=t$. In the next section we will prove that
-$C\prvL s=t$ is decidable for finite semilattice presentations $(V,C)$.
-The results below hold for arbitrary semilattice presentations.
+$C\prvL s=t$ is decidable in polynomial time for finite semilattice presentations $(V,C)$.
+The results in this section hold for arbitrary semilattice presentations.
 
 We follow Lorenzen \cite[Section 2]{Lorenzen51} for an equivalent 
 characterisation of $C\prvL s=t$ using Horn clauses.
@@ -245,10 +255,10 @@ we would need all instances with $x$ a term over $V$.
 For this it suffices to have all predecessor clauses
 $x+k+1 \to x+k$ with $x\in V$ and all $k\in \N$.
 
-The axiom stating that successor and join commute is built-in
+The axiom stating that endomorphism and join commute is built-in
 in the notion of term over $V$ and does not require extra clauses.
 However, we should not forget the congruence axioms from
-equational logic. Congruence of the successor means that $s=t$
+equational logic. Congruence of the endomorphism means that $s=t$
 implies $s+1=t+1$. This requires that we close the set of clauses
 under \emph{shifting upwards}: if $A\to b$ is in the clause set,
 then so is $A+1\to b+1$, where $A+1$ is the set of atoms of
@@ -274,7 +284,8 @@ that is, using the Horn clauses in $S$ to generate atoms from $A$.
 We can also use this definition if $A$ is infinite.
 Then it is more customary to write $S,A \prvH b$.
 
-For $X$ a set of atoms, define $X^+ := \set{x^+\mid x\in X}$.
+For $X$ a set of atoms, define $X^+ := \set{x^+ \mid x\in X}$
+and $X+k := \set{x+k \mid x\in X}$ for all $k\in\N$.
 For $S$ a set of clauses, define 
 $S^+ := \set{X^+\to y^+ \mid \text{$X\to y$ in $S$}}$.
 The following lemma will be used later on.
@@ -314,7 +325,7 @@ if $s\equiv t$, as $\upS{C}$ is closed under shifting upwards.
 
 Now one can show that all axioms and rules are satisfied modulo $\equiv$. 
 For example, $\equiv$ is an equivalence relation and
-a congruence with respect to join and successor.
+a congruence with respect to join and endomorphism (successor).
 All semilattice axioms are satisfied, for example,
 the predecessor clauses prove $s\vee s^+ \equiv s^+$. 
 Moreover, for each constraint $s=t$ in $C$ 
@@ -326,7 +337,8 @@ In particular we have the only-if part of the theorem.
 
 \section{Decidability}
 
-In this section we prove the decidability of $\upS{C}\prvH A\to b$.
+In this section we first prove the decidability of $\upS{C}\prvH A\to b$.
+In the next section we show that our decision procedure is in PTIME. 
 By Theorem~\ref{thm:LvsH} this is sufficient for
 the decidability of $C\prvL s=t$. We recall a basic fact
 about Horn clauses: the models (as satisfying sets of atoms)
@@ -340,17 +352,29 @@ The \emph{gain} of a clause $\jbody{x}{k}{m}\to y+l$ is $l$
 minus the minimum of $\set{k_1, ... ,k_m}$.
 For example, predecessor clauses have gain $-1$.
 The gain of a clause is invariant under shifting.
-In this section we fix a constant $\M$ and consider
-finite semilattice presentations $(V,C)$ such that
-each clause in $S_C$ has a gain at most $\M$.
 
 Let $\Ninf$ be $\N$ extended with $\infty$, totally ordered
 by $n < \infty$ for all $n\in\N$. 
 Given a finite semilattice presentation $(V,C)$, we view
-a function $f: V\to\Ninf$ as specifying the set
+a function $f: V\to\Ninf$ as specifying the downward closed set
 of atoms $\set{v+k \mid v\in V,~k\in\N,~k \leq f(v)}$.
 We are interested in such sets as models of $\upS{C}$.
-%We shall prove the following theorem.
+A clause $A\to b$ with 
+$A = \jbody{x}{k}{m}$ and $b= y+l$, all $x_i,y \in V$,
+is satisfied by $f$ if $l\leq f(v)$ when all $k_i \leq f(x_i)$.
+
+\begin{lemma}\label{lem:f-sat}
+Given $f: V\to\Ninf$ and a clause $A\to b$, let $P$ be the problem whether or not
+$A+k\to b+k$ is satified by $f$ for all $k\in\N$. Then $P$ is decidable.
+\end{lemma}
+\begin{proof}
+Assume $A = \jbody{x}{k}{m}$ and $b= y+l$ with $x_i,y \in V$.
+Let $W$ consist of all variables $x_i$ in $A$ that satisfy $f(x_i)<\infty$.
+If $W$ is empty, then $P$ is equivalent to $f(y)=\infty$.
+Otherwise, let $k_0 = \min_{\set{i \mid x_i \in W}} (f(x_i)-k_i)$.
+If $k_0 < 0$, then $P$ holds. If $k_0 \geq 0$, 
+then $P$ is equivalent to $l+k_0 \leq f(y)$.
+\end{proof}
 
 Given a finite semilattice presentation $(V,C)$
 and a subset $W$ of $V$, we denote by $\upS{C}|W$ 
@@ -603,6 +627,7 @@ This completes the proof that $h$ respects equality in $L$.
 It should be clear that (1) and (2) exclude each other.
 \end{proof}
 
+\section{Complexity analysis}
 
 \section{Discussion}
 
