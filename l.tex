@@ -359,9 +359,10 @@ Given a finite semilattice presentation $(V,C)$, we view
 a function $f: V\to\Ninf$ as specifying the downward closed set
 of atoms $\set{v+k \mid v\in V,~k\in\N,~k \leq f(v)}$.
 We are interested in such sets as models of $\upS{C}$.
-A clause $A\to b$ with 
+\FYI{A clause $A\to b$ with 
 $A = \jbody{x}{k}{m}$ and $b= y+l$, all $x_i,y \in V$,
 is satisfied by $f$ if $l\leq f(v)$ when all $k_i \leq f(x_i)$.
+Predecessor clauses are of course satisfied by downward closure.
 
 \begin{lemma}\label{lem:f-sat}
 Given $f: V\to\Ninf$ and a clause $A\to b$, let $P$ be the problem whether or not
@@ -374,7 +375,7 @@ If $W$ is empty, then $P$ is equivalent to $f(y)=\infty$.
 Otherwise, let $k_0 = \min_{\set{i \mid x_i \in W}} (f(x_i)-k_i)$.
 If $k_0 < 0$, then $P$ holds. If $k_0 \geq 0$, 
 then $P$ is equivalent to $l+k_0 \leq f(y)$.
-\end{proof}
+\end{proof}}
 
 Given a finite semilattice presentation $(V,C)$
 and a subset $W$ of $V$, we denote by $\upS{C}|W$ 
@@ -383,8 +384,7 @@ and by $\upS{C}{\downarrow}W$
 the set of clauses in $\upS{C}$ with conclusion over $W$.
 
 \begin{theorem}\label{thm:main}
-Let  $(V,C)$ be a finite semilattice presentation
-such that each clause in $S_C$ has gain at most $\M$.
+Let  $(V,C)$ be a finite semilattice presentation.
 For any $f: V\to\Ninf$ we can compute
 the least $g \geq f$ that is a model of $\upS{C}$.
 \end{theorem}
@@ -392,8 +392,7 @@ the least $g \geq f$ that is a model of $\upS{C}$.
 We prepare the proof of this theorem with a lemma.
 
 \begin{lemma}\label{lem:secondary}
-Let  $(V,C)$ be a finite semilattice presentation
-such that each clause in $S_C$ has gain at most $\M$.
+Let  $(V,C)$ be a finite semilattice presentation.
 Let $W$ be a strict subset of $V$ such that 
 for any $f: W\to\Ninf$ we can compute
 the least $g \geq f$ that is a model of $\upS{C}|W$.
@@ -403,6 +402,8 @@ the least $h \geq f$ that is a model of $\upS{C}{\downarrow}W$.
 
 \begin{proof}
 Let conditions be as stated in the lemma.
+\FYI{Since $(V,C)$ is finite we can compute the number
+$\M$ such that each clause in $S_C$ has gain at most $\M$.}
 Let $f: V\to\Ninf$ with $f(V-W)\subseteq \N$ be given
 and denote its restriction to $W$ by $f_W$.
 By the definition of $\upS{C}{\downarrow}W$, any minimal $h\geq f$
@@ -414,31 +415,38 @@ Now we look at clauses in $\upS{C}{\downarrow}W - \upS{C}|W$.
 Such clauses are of the form $X,Y \to w+k$ with $X$ a non-empty
 set of atoms over $V-W$, and possibly empty $Y$ over $W$. 
 If $X = \ldots,x_i+k_i,\ldots$ is satisfied by $f$, 
-then by the definition of $\M$ we have
-\[
-k \leq\min_i(f(x_i)) + \M \leq \max(f(V-W)) + \M.
-\]								
-Using that $f(V-W)$ is a subset of $\N$, we do induction on 
+then by the definition of $\M$, using $f(V-W)\subseteq \N$,
+we have:
+\begin{equation}\label{eq:f-ub}
+k \leq\min_i(f(x_i)) + \M \leq \max(f(V-W)) + \M \in \N.
+\end{equation}
+\FYI{This inequality gives an upper bound on values that clauses 
+in $\upS{C}{\downarrow}W - \upS{C}|W$ can generate.} Define:
 \[
 M(g_f) := \sum_{w \in W}  \max(0, \max(f(V-W)) + \M - g_f(w)).
 \] 
 
-In the base case we have $M(g_f)=0$.
-Then $k\leq g_f(w)$ and all clauses in $\upS{C}{\downarrow}W$ are 
-satisfied by $g_f$.
-Hence we can take $h=g_f$ on $W$ and $h=f$ on $V-W$.
+\FYI{After these preparations we are ready to prove the lemma
+by induction on $M(g_f)$. More precisely, we prove for all $n\in\N$
+and $f: V\to\Ninf$ with $f(V-W)\subseteq \N$, if $M(g_f)=n$,
+then we can compute
+the least $h \geq f$ that is a model of $\upS{C}{\downarrow}W$.}
+
+In the base case $M(g_f)=0$ we have $k\leq g_f(w)$ for all $w\in W$
+and all clauses in $\upS{C}{\downarrow}W$ are satisfied by $g_f$.
+In this case we take $h=g_f$ on $W$ and $h=f$ on $V-W$ and we are done.
 
 For the induction step, let $M(g_f)>0$ and assume
-the lemma has been proved for smaller values of $M(g_f)$.
-We now make a case distinction that is decidable since
-the semilattice presentation $(V,C)$ is finite,
-and hence $S_C$ is finite (even though $\upS{C}$ is not).
+the lemma has been proved for smaller values of $M(\_)$.
+We now make a case distinction that is decidable
+by Lemma~\ref{lem:f-sat} since
+$S_C$ is finite (even though $\upS{C}$ is not).
 Thus we only have to check finitely many clauses.
 If all clauses in $\upS{C}{\downarrow}W - \upS{C}|W$ are satisfied 
 by $g_f$ we are again done, like in the base case.
-Otherwise, assume we can infer the value $g_f(w)+k+1$
-for $w\in W$, using values of $f$ on $V-W$ and values 
-of $g_f$ on $W$. Then we know that the term with $g_f(w)$
+Otherwise, one such clause gives value $g_f(w)+k+1$ for some $w\in W$ 
+and $k\in\N$, using values of $f$ on $V-W$ and values of $g_f$ on $W$. 
+Then we know by (\ref{eq:f-ub}) that the term with $g_f(w)$
 in the sum defining $M(g_f)$ is positive.
 Define $f' : V \to \Ninf$ by 
 \begin{align*}
