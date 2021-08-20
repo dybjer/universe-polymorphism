@@ -158,7 +158,7 @@ Chalmers/University of Gothenburg, {\tt coquand@chalmers.se}}
 \maketitle
 
 
-\section{Introduction}
+\section{Introduction}\ref{sec:intro}
 The \emph{uniform word problem} for an equational theory $T$ is
 to determine, given a finite set $E$ of relations between generators,
 whether a given relation is provable from $E$ in $T$.
@@ -185,7 +185,7 @@ For example, we can prove $(t^+)^+ \vee t = (t^+)^+$ in $\lathy$,
 for any term $t$. Also, we can infer $s^+ = (t^+)^+$
 from $s = t^+$, but not conversely. 
 As is customary, we let $s\geq t$ abbreviate $s\vee t = s$.
-\FYI{Throughout this paper we call a join-semilattice with an inflationary 
+\FYI{Throughout this note we call a join-semilattice with an inflationary 
 endomorphism simply a \emph{semilattice}. 
 We call ${t}^+$ the \emph{successor} of $t$.}
 
@@ -335,7 +335,7 @@ By soundness, if $C\prvL s=t$, then $s\equiv t$.
 In particular we have the only-if part of the theorem.
 \end{proof}
 
-\section{Decidability}
+\section{Decidability}\ref{sec:decidability}
 
 In this section we first prove the decidability of $\upS{C}\prvH A\to b$.
 In the next section we show that our decision procedure is in PTIME. 
@@ -420,7 +420,7 @@ we have:
 \begin{equation}\label{eq:f-ub}
 k \leq\min_i(f(x_i)) + \M \leq \max(f(V-W)) + \M \in \N.
 \end{equation}
-\FYI{This inequality gives an upper bound on values that clauses 
+\FYI{Inequality (\ref{eq:f-ub}) gives an upper bound on values that clauses 
 in $\upS{C}{\downarrow}W - \upS{C}|W$ can generate.} Define:
 \[
 M(g_f) := \sum_{w \in W}  \max(0, \max(f(V-W)) + \M - g_f(w)).
@@ -534,11 +534,8 @@ If $h(w) = \infty$ for some $w\in W$,
 then we simplify and apply the induction and are done 
 as described in the first paragraphs of the step case.
 Otherwise we have $h: V\to\N$.
-Like in the proof of Lemma~\ref{lem:secondary},
-we make a case distinction that is decidable since
-the semilattice presentation $(V,C)$ is finite,
-and hence $S_C$ is finite (even though $\upS{C}$ is not).
-Thus we only have to check finitely many clauses.
+We now make a case distinction that is decidable by 
+Lemma~\ref{lem:f-sat}, since $S_C$ is finite.
 If all clauses in $\upS{C}$ are satisfied by $h$ then we are done.
 Otherwise, we can infer in one step a value $h(y)+k+1$ 
 for some variable(s) $y$. Such $y$ must be in $V-W$ 
@@ -635,9 +632,55 @@ This completes the proof that $h$ respects equality in $L$.
 It should be clear that (1) and (2) exclude each other.
 \end{proof}
 
-\section{Complexity analysis}
+\section{Complexity analysis}\ref{sec:complexity}
 
-\section{Discussion}
+All proofs in this note are constructive, so that they in fact
+contain algorithms. In this section we shal argue
+that these algorithms are polynomial. 
+
+Let's define the input size. The size $|E|$ of logical expression $E$ is
+the number of symbols in $E$. The size $|f|$ of a function $f: V\to\Ninf$
+is taken to be the \emph{maximum of all its values} $<\infty$. %$|V|$ plus ?
+This choice for the size of $f$ implies that the complexity of some
+algorithms depending on $f$ is weakly polynomial. However, for the important
+Corollary~\ref{cor:decidability} and \ref{cor:loopchecking}
+the algorithms are strongly polynomial, that is, in PTIME.
+
+The algorithms are basically just forward reasoning. 
+However, since we have infinitely many Horn clauses, one has to take care
+to terminate, which is explained in the inductive proofs. 
+Moreover, termination should happen in a polynomial number of inferences,
+each taking at most polynomial time.
+
+In the following we list a complexity analysis of each of the results 
+in Section~\ref{sec:decidability}. The correspondence between semilattices
+and Horn clauses is well-known to be polynomial.
+
+\begin{itemize}
+
+\item The complexity of the test in Lemma~\ref{lem:f-sat}
+is clearly polynomial in $|A|$ and $|f|$.
+
+\item In Lemma~\ref{lem:secondary} one has to be careful:
+even with only one clause $x,y \to y+1$ and $f(y)=0$ one needs
+$f(x)$ inferences to arrive at the model $f(y)=f(x)+1$.
+This is polynomial in the value of $f(x)$, but not in its
+binary representation. 
+
+However, the inequality (\ref{eq:f-ub}) gives an upper bound on 
+values that can be generated, and $\max(f(V-W)) + \M <= |f| + \M$.
+Clearly $\M < |S_C|$.
+Inspection of the proof shows that the resulting $h$ can be
+computed in time polynomial in $|f|$ and $|S_C|$.
+
+\item The algorithm in the proof of Theorem~\ref{thm:main}
+is driven by the induction on $|V|$. In each step of the induction
+there is one application of Lemma~\ref{lem:secondary} ..
+
+
+\end{itemize}
+
+\section{Discussion}\ref{sec:discussion}
 
 \subsection{Motivation}
 
