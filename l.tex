@@ -632,51 +632,87 @@ This completes the proof that $h$ respects equality in $L$.
 It should be clear that (1) and (2) exclude each other.
 \end{proof}
 
-\section{Complexity analysis}\ref{sec:complexity}
+\section{Complexity analysis}\label{sec:complexity}
 
 All proofs in this note are constructive, so that they in fact
-contain algorithms. In this section we shal argue
+contain algorithms. In this section we shall show
 that these algorithms are polynomial. 
+The small-model property in the corollary below, 
+a refinement of the small-model property in \cite{BNR},
+will be instrumental.
 
 Let's define the input size. The size $|E|$ of logical expression $E$ is
 the number of symbols in $E$. The size $|f|$ of a function $f: V\to\Ninf$
 is taken to be the \emph{maximum of all its values} $<\infty$. %$|V|$ plus ?
 This choice for the size of $f$ implies that the complexity of some
-algorithms depending on $f$ is weakly polynomial. However, for the important
+algorithms depending on $f$ is weakly polynomial. 
+However, for the important
 Corollary~\ref{cor:decidability} and \ref{cor:loopchecking}
 the algorithms are strongly polynomial, that is, in PTIME.
+%The correspondence between semilattices and Horn clauses in 
+%Section~\ref{sec:latt-Horn} is well-known to be polynomial.
 
-The algorithms are basically just forward reasoning. 
-However, since we have infinitely many Horn clauses, one has to take care
+Our algorithms are essentially performing just forward reasoning. 
+However, since we have an infinite language, one has to take care
 to terminate, which is explained in the inductive proofs. 
-Moreover, termination should happen in a polynomial number of inferences,
-each taking at most polynomial time.
+Moreover, termination should happen in a polynomial number of reasoning
+steps, each taking at most polynomial time. We prepare 
+by the following lemma.
 
-In the following we list a complexity analysis of each of the results 
-in Section~\ref{sec:decidability}. The correspondence between semilattices
-and Horn clauses is well-known to be polynomial.
+
+\begin{lemma}\label{thm:compress-model}
+Let  $(V,C)$ be a finite semilattice presentation such that all
+clauses have maximal gain $\M$.
+Let $f: V\to\Ninf$ be a model of $\upS{C}$ such that $V$ can be
+partitioned as $V = L\cup H\cup I$ with $I= \set{v\in V \mid f(v)=\infty}$
+and $f(y)-f(x) > \M$ for all $x\in L$ and $y\in H$.
+Then $g: V\to\Ninf$ defined by $g(y)=f(y)-1$ for all $y in H$ and $g(x)=f(x)$
+for all $x\in L\cup I$ is also a model of $\upS{C}$.
+\end{lemma}
+
+
+\begin{corollary}\label{cor:small-model}
+For any $f$, the least $g\geq f$ that is a model of $\upS{C}$
+is bounded by $|f|+|V|*\M$.
+\end{corollary}
 
 \begin{itemize}
 
-\item The complexity of the test in Lemma~\ref{lem:f-sat}
+\item\label{it:f-sat} The complexity of the test in Lemma~\ref{lem:f-sat}
 is clearly polynomial in $|A|$ and $|f|$.
 
-\item In Lemma~\ref{lem:secondary} one has to be careful:
-even with only one clause $x,y \to y+1$ and $f(y)=0$ one needs
-$f(x)$ inferences to arrive at the model $f(y)=f(x)+1$.
+\item In Theorem~\ref{thm:main} our choice for the size of $f$ becomes clear:
+even with only one clause $x,y \to y+1$ in $S_C$ and $f(y)=0$ one needs
+in the worst case $f(x)$ steps to arrive at the model $f(y)=f(x)+1$.
 This is polynomial in the value of $f(x)$, but not in its
 binary representation. 
 
-However, the inequality (\ref{eq:f-ub}) gives an upper bound on 
-values that can be generated, and $\max(f(V-W)) + \M <= |f| + \M$.
-Clearly $\M < |S_C|$.
-Inspection of the proof shows that the resulting $h$ can be
-computed in time polynomial in $|f|$ and $|S_C|$.
+The algorithm in the proof of Theorem~\ref{thm:main}
+is driven by the induction on $|V|$. For the complexity analysis,
+we state (and prove in (\ref{it:mainThm}) below) the following invariant: 
+the \emph{finite} values of the resulting  $g$ are bounded by $|f|+|V|*\M$.
+Clearly, $\M < |S_C|$.
 
-\item The algorithm in the proof of Theorem~\ref{thm:main}
-is driven by the induction on $|V|$. In each step of the induction
-there is one application of Lemma~\ref{lem:secondary} ..
+\item\label{it:secondary} In Lemma~\ref{lem:secondary} we strengthen both 
+the condition (with $|g|\leq |f|+|W|*\M$ and the conclusion 
+(with $|h| \leq |f|+|V|*\M$).
+The invariant is maintained by the inequality (\ref{eq:f-ub}).
+There is one subtlety: the induction step is with $f'$ instead of $f$.
+However, $f'$ is inferred from $f$ so that they have the same minimal model
+and the upper bound $|f|+|V|*\M$ applies.
 
+\item\label{it:mainThm}
+
+In each step of the induction
+there is one application of Lemma~\ref{lem:secondary}, plus a
+polynomial amount of work around this application.
+Interestingly, we get that the \emph{finite} values of the resulting 
+$g$ are bounded by $|f|+|V|*\M$
+
+
+\item\label{it:mainThm}
+
+\item\label{it:mainThm}
 
 \end{itemize}
 
