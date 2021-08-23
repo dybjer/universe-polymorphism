@@ -687,29 +687,6 @@ in the worst case $f(x)$ steps to arrive at the model $f(y)=f(x)+1$.
 This is polynomial in the value of $f(x)$, but not in its
 binary representation. 
 
-The algorithm in the proof of Theorem~\ref{thm:main}
-is driven by the induction on $|V|$. For the complexity analysis,
-we state (and prove in (\ref{it:mainThm}) below) the following invariant: 
-the \emph{finite} values of the resulting  $g$ are bounded by $|f|+|V|*\M$.
-Clearly, $\M < |S_C|$.
-
-\item\label{it:secondary} In Lemma~\ref{lem:secondary} we strengthen both 
-the condition (with $|g|\leq |f|+|W|*\M$ and the conclusion 
-(with $|h| \leq |f|+|V|*\M$).
-The invariant is maintained by the inequality (\ref{eq:f-ub}).
-There is one subtlety: the induction step is with $f'$ instead of $f$.
-However, $f'$ is inferred from $f$ so that they have the same minimal model
-and the upper bound $|f|+|V|*\M$ applies.
-
-\item\label{it:mainThm}
-
-In each step of the induction
-there is one application of Lemma~\ref{lem:secondary}, plus a
-polynomial amount of work around this application.
-Interestingly, we get that the \emph{finite} values of the resulting 
-$g$ are bounded by $|f|+|V|*\M$
-
-
 \item\label{it:mainThm}
 
 \item\label{it:mainThm}
