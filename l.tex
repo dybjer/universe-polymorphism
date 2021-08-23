@@ -665,9 +665,9 @@ Let  $(V,C)$ be a finite semilattice presentation such that all
 clauses have maximal gain $\M$.
 Let $f: V\to\Ninf$ be a model of $\upS{C}$ such that $V$ can be
 partitioned as $V = L\cup H\cup I$ with $I= \set{v\in V \mid f(v)=\infty}$
-and $f(y)-f(x) > \M$ for all $x\in L$ and $y\in H$.
-Then $g: V\to\Ninf$ defined by $g(y)=f(y)-1$ for all $y in H$ and $g(x)=f(x)$
-for all $x\in L\cup I$ is also a model of $\upS{C}$.
+and $f(x)-f(y) > \M$ for all $x\in H$ and $y\in L$.
+Then $g: V\to\Ninf$ defined by $g(x)=f(x)-1$ for all $x \in H$ and $g(y)=f(y)$
+for all $y\in L\cup I$ is also a model of $\upS{C}$.
 \end{lemma}
 
 
@@ -799,15 +799,22 @@ In this model $y = x^+$ is false ($y\to x+1$ cannot be derived).
 \bibliography{refs}
 \begin{thebibliography}{99}
 
-\bibitem{Huet87}
-G\'erard Huet.
-\newblock\emph{Extending the calculus of constructions with {Type:Type}},
-\newblock unpublished manuscript, April 1987.
+\bibitem{BNR}
+M.A.~Bezem, R.~Nieuwenhuis and E.~Rodr\'iguez.
+\newblock{The Max-Atom Problem and its Relevance}.
+In I.~Cervesato, H.~Veith and A.~Voronkov, editors,
+\emph{Proceedings LPAR-15}, LNAI 5330,
+pages 47--62, Springer-Verlag, Berlin, 2008.
 
 \bibitem{HarperP91}
 Robert Harper and Robert Pollack.
 \newblock\emph{Type checking with universes},
 Theoretical Computer Science, 89, 107--136, 1991.
+
+\bibitem{Huet87}
+G\'erard Huet.
+\newblock\emph{Extending the calculus of constructions with {Type:Type}},
+\newblock unpublished manuscript, April 1987.
 
 \bibitem{Lorenzen51}
 Paul Lorenzen.
