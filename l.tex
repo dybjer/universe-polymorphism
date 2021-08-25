@@ -637,7 +637,7 @@ It should be clear that (1) and (2) exclude each other.
 All proofs in this note are constructive, so that they in fact
 contain algorithms. In this section we shall show
 that these algorithms are polynomial. 
-The small-model property in the corollary below, 
+The small-model property in Corollary~\ref{cor:small-model} below, 
 a refinement of the small-model property in \cite{BNR},
 will be instrumental.
 
@@ -669,29 +669,58 @@ and $f(x)-f(y) > \M$ for all $x\in H$ and $y\in L$.
 Then $g: V\to\Ninf$ defined by $g(x)=f(x)-1$ for all $x \in H$ and $g(y)=f(y)$
 for all $y\in L\cup I$ is also a model of $\upS{C}$.
 \end{lemma}
+\begin{proof}
+We only have to check clauses with conclusion over $H$.
+Let $\jbody{y}{k}{m} \to x+l$ be a clause in $\upS{C}$ with $y_i \in V$
+and $x\in H$. If the premiss is satisfied in $g$, and some $y_i\in L$, then
+\[
+g(x)+1 = f(x) > f(y_i)+\M = g(y_i)+\M \geq k_i+\M \geq l.
+\]
+Hence $g(x)\geq l$, so also the conclusion holds in $g$.
+If no $y_i\in L$, then we use that any clause $A\to b$ 
+that only mentions variables in $H\cup I$
+is satisfied in $g$ when $A^+ \to b^+$ is satisfied in $f$. 
+\end{proof}
 
-
+We immediately get the following small-model property.
 \begin{corollary}\label{cor:small-model}
 For any $f$, the least $g\geq f$ that is a model of $\upS{C}$
 is bounded by $|f|+|V|*\M$.
 \end{corollary}
 
+We analyse the complexity of various results in the following list.
+
 \begin{itemize}
 
 \item\label{it:f-sat} The complexity of the test in Lemma~\ref{lem:f-sat}
-is clearly polynomial in $|A|$ and $|f|$.
+is clearly polynomial in $|A\to b|$ and $|f|$.
 
 \item In Theorem~\ref{thm:main} our choice for the size of $f$ becomes clear:
-even with only one clause $x,y \to y+1$ in $S_C$ and $f(y)=0$ one needs
-in the worst case $f(x)$ steps to arrive at the model $f(y)=f(x)+1$.
+with only one clause $x,y \to y+1$ in $S_C$ and $f(y)=0$, forward reasoning
+takes in the worst case $f(x)$ steps to arrive at the model $f(y)=f(x)+1$.
 This is polynomial in the value of $f(x)$, but not in its
-binary representation. 
+binary representation.
 
-\item\label{it:mainThm}
-
-\item\label{it:mainThm}
+The proof of Theorem~\ref{thm:main} is intertwined with the
+proof of Lemma~\ref{thm:main}. In view of Corollary~\ref{cor:small-model}
+it suffices that there is a polynomial bound on the work done for each 
+forward inference and that there is steady progress in the global state encoded by
+functions $f: V\to\Ninf$, until the algorithm terminates.
+Both are easily verified by inspection of the proofs,
+using that the test in Lemma~\ref{lem:f-sat} is polynomial . 
+ 
+\item\label{it:Coros} In the statement of Corollary~\ref{cor:decidability}
+and \ref{cor:decidability} there is no function $f: V\to\Ninf$. 
+However, the proofs apply Theorem~\ref{thm:main} with such a function,
+satisfying $|f| \leq |A|$ and $|f| \leq |S_C|$, respectively.
+Hence both corollaries yield algorithms that are polynomial in the input size.
 
 \end{itemize}
+
+One may wonder what is the role of the assumption that the endomorphism
+is inflationary, leading to the predecessor axioms in $\upS{C}$. The first
+answer is that models of the predecessor axioms are downward closed,
+leading to an efficient representation of models by functions $f: V\to\Ninf$.
 
 \section{Discussion}\label{sec:discussion}
 
