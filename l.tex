@@ -830,10 +830,40 @@ and ${x+k \vee y+l} \equiv {x+k}$ if $k>l$
 (use $x+1\to y$).
 In this model $y = x^+$ is false ($y\to x+1$ cannot be derived).
 
+Another connection is with work on uniform word problems with
+endomorphisms. Both \cite{Baader,Hofmann} show that this problem is decidable
+but EXPTIME hard. We describe a PTIME algorithm in a special case: for
+only {\em one} endomorphism which is furthermore inflationary.
+It seems to be an open problem if there is a PTIME algorithm for
+one endomorphism without any extra assumption. A similar
+question can be asked in the case of a family endomorphisms
+that are all {\em inflationary}.
+
+It is simple to describe M. Hofmann \cite{Hofmann} algorithm with
+our notation. This provides a EXPTIME algorithm in the case where
+we take away the rule $a+1\to a$. The idea is to provide a cut-free
+derivation system. The search of a proof of $A\to a$ given a set $R$ of primitive
+rules can then be done by a search of cut-free proofs in this system.
+The derivations rules are the following.
+
+\begin{enumerate}
+\item $A\to a$ if $a$ is in $A$
+\item $A,B+1\to b+1$ if $B\to b$
+\item $A\to a$ if there is a primitive rule $c_1,\dots,c_n\to d$
+  and we have $A\to c_1,\dots,A\to c_n,A,d\to a$
+\end{enumerate}
+
+
+
 
 \bibliographystyle{plain}
 \bibliography{refs}
 \begin{thebibliography}{99}
+
+\bibitem{Baader}
+  Franz Baader, Sebastian Brandt and Carsten Lutz.
+  \newblock{Pushing the EL Envelope.}
+  \newblock{IJCAI 2005: 364-369.}
 
 \bibitem{BNR}
 M.A.~Bezem, R.~Nieuwenhuis and E.~Rodr\'iguez.
@@ -846,6 +876,11 @@ pages 47--62, Springer-Verlag, Berlin, 2008.
 Robert Harper and Robert Pollack.
 \newblock\emph{Type checking with universes},
 Theoretical Computer Science, 89, 107--136, 1991.
+
+\bibitem{Hofmann}
+  Martin Hofmann.
+  \newblock{Proof-theoretic approach to description logic.}
+  \newblock{LICS 2005: 229-237.}
 
 \bibitem{Huet87}
 G\'erard Huet.
