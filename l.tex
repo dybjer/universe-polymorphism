@@ -840,17 +840,17 @@ question can be asked in the case of a family endomorphisms
 that are all {\em inflationary}.
 
 It is simple to describe M. Hofmann \cite{Hofmann} algorithm with
-our notation. This provides a EXPTIME algorithm in the case where
-we take away the rule $a+1\to a$. The idea is to provide a cut-free
-derivation system. The search of a proof of $A\to a$ given a set $R$ of primitive
-rules can then be done by a search of cut-free proofs in this system.
-The derivations rules are the following.
+our notation. This is a EXPTIME algorithm in the case where
+we take away the rule $a+1\to a$. The idea is to provide a complete cut-free
+derivation system. The search of a cut-free
+proof of $A\to a$ given a set $R$ of primitive rules can then be done by a search of cut-free
+proofs in this system. The derivations rules are the following.
 
 \begin{enumerate}
 \item $A\to a$ if $a$ is in $A$
 \item $A,B+1\to b+1$ if $B\to b$
-\item $A\to a$ if there is a primitive rule $c_1,\dots,c_n\to d$
-  and we have $A\to c_1,\dots,A\to c_n,A,d\to a$
+\item $A\to a$ if there is a rule $c_1,\dots,c_n\to d$ in $R$ such that 
+  $A\to c_1,\dots,A\to c_n,A,d\to a$
 \end{enumerate}
 
 
