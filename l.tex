@@ -233,7 +233,7 @@ Let $(V,C)$ be a semilattice presentation.
 Let $s:= \jterm{x}{k}{m}$ and $t:= \jterm{y}{l}{n}$ be
 terms over $V$. From the constraint $s=t$
 we can prove $m+n$ inequalities which we write as
-Horn clauses by replacing join by conjunction (written as ``,'') and $\geq$
+Horn clauses by replacing join by conjunction (written as ``,'') and $\geqslant$
 by implication. \FYI{In this note all clauses are positive,
 propositional Horn clauses $A\to b$ with a non-empty body $A$ and conclusion $b$.
 The atoms are of the form $x+k$ with $x\in V$ and $k\in \N$. 
@@ -519,28 +519,31 @@ In such a case we can directly apply the induction hypothesis
 to the simplified semilattice presentation, and extend the
 function with values $\infty$ for all $v \in V-V'$.
 Otherwise we have $f: V\to\N$.
-We compute first the subset of variables $x\in V$ 
-whose value $f(x)$ can be improved in one step,
-by a clause $A\to x+k$ in $\upS{C}$ such that $A$ is
-satisfied by $f$, yielding the result $k$ for $x$. 
-Let $g(x)$ be the maximum of $f(x)$ and the results
-for $x$ as obtained in this way. Since $S_C$ is finite,
-$g$ is a function from $V$ to $\N$ whose values we can
-compute. Let $W$ be the subset of $V$ consisting of
-all $x$ such that $g(x) > f(x)$ and distinguish the
-following cases.
+\FYI{Since $S_C$ is finite, using Lemma~\ref{lem:f-sat},
+we can decide whether $f$ is a model of $\upS{C}$.
+If so, we are done. If not, we proceed as follows.
+For every $x\in V$ and $A\to x+l$ in $S_C$, consider the integer
+$k_0$ as in the proof of Lemma~\ref{lem:f-sat}.
+If $k_0 < 0$, then $A$ and all its upward shifts are false in $f$.
+If $k_0 \geqslant 0$, then we can infer the atom $x+l+k_0$.
+If moreover $l+k_0 > f(x)$, then this atom is new.
+Let $W$ be the (non-empty) subset of variables $x\in V$
+for which there is a clause in $S_C$ that yields a new atom,
+and let $g(x)$ be the maximum of $f(x)$ and the possible values $l+k_0$
+for $x$ obtained in this way.} Since $S_C$ is finite,
+$g \geqslant f$ is a function from $V$ to $\N$. 
 
-If $W$ is empty we are done since then $f$ itself 
-is a model of $\upS{C}$.
-
+We distinguish the cases $W=V$ and $W\subset V$.
 If $W = V$ we are done since then $h(x) = \infty$ for all 
 $x \in V$ is the least $h \geqslant f$ that is a model of $\upS{C}$.
-Proof: by using the predecessor clauses we can infer
-$x+f(x)+1$ from every $x+g(x)$ with $g(x)>f(x)$ as above,
-for every $x\in V$. By shifting upwards we can infer
-$x+f(x)+k$, and hence $x+k$, for every $k\in\N$ and $x\in V$.
+\FYI{Proof: if $W=V$, then $g(x)>f(x)$ and we can infer $x+g(x)$ 
+from $f$, for all $x\in V$.
+By using the predecessor clauses we hence also infer
+$x+f(x)+1$ from $f$ for every $x\in V$. Since $\upS{C}$
+is closed under shifting upwards, we can infer
+$x+f(x)+k$, and hence $x+k$, for every $k\in\N$ and $x\in V$.}
 
-The third case is that $W$ is a non-empty strict 
+The last case is that $W$ is a non-empty strict 
 subset of $V$, and we can apply the induction
 hypothesis to $W$ to satisfy the condition of 
 Lemma~\ref{lem:secondary}. We apply the conclusion of 
@@ -595,7 +598,7 @@ Another application of Theorem~\ref{thm:main} is loop checking.
 Given a finite semilattice presentation $(V,C)$, a \emph{loop} is a 
 term $t$ over $V$ such that $C\prvL t^+=t$. Let $L$ be the
 semilattice presented by $(V,C)$. Let $N$ be the semilattice $\N$ with
-the usual $\max$ and endomorphism.
+the usual $\max$ and successor function.
 
 \begin{corollary}\label{cor:loopchecking}
 Exactly one of the following two decidable cases holds:
@@ -661,7 +664,7 @@ a refinement of the small-model property in \cite{BNR},
 will be instrumental.
 
 Let's define the input size. The size $|E|$ of logical expression $E$ is
-the number of symbols in $E$. The size $|f|$ of a function $f: V\to\Ninf$
+the number of logical symbols in $E$. The size $|f|$ of a function $f: V\to\Ninf$
 is taken to be the \emph{maximum of all its values} $<\infty$. %$|V|$ plus ?
 This choice for the size of $f$ implies that the complexity of some
 algorithms depending on $f$ is weakly polynomial. 
@@ -882,6 +885,11 @@ $c_1,\dots,c_n\to d$ in $R$ are allowed in 3. A general cut rule
 is admissible. Deciding whether $A\to a$ follows from $R$
 can then be done by a top-down search of (cut-free) proofs in this system.
 
+\subsection*{Acknowledgements}
+We are grateful to the anonymous referees for constructive criticism and pointers to related work.
+We would also like to thank Franz Baader for updating us on related
+decidability results for description logics.
+
 
 \bibliographystyle{plain}
 \bibliography{refs}
@@ -939,12 +947,14 @@ manuscript,
 
 \section*{Answers to the referees}
 
-We thank ....
-title + done 
-endo inflat
-red
+We thank both reviewers for their constructive comments and the link with
+decidability results for description logics.
+The title has been changed to better reflect the content of the paper.
+The paper has been thoroughly reworked and a new section on complexity has been added.
 
-Points (1)--(8) in one referee report are all done.
+For your convenience, changes related to the points below are in red.
+The points (1)--(8) in one referee report are all done.
+Below we give short comments to the points in the other review.
 
 \subsection*{Detailed comments}
 
@@ -988,7 +998,12 @@ the general case is treated in the paragraph above the corollaries (now 3.4 and 
 
 \item[Page 4, line 3 and induction step] clarified in three lines in red. 
 
-\item[Page 4, induction step] clarified in three lines in red. 
+\item[Page 4, Thm. 3.1, induction step] Done.
+
+\item[Page 4 and 5] Done.
+
+\item[Page 4, line -4] No (!). We may need the whole set $W+n$ to infer each $w+n+1$.
+Example: $x,y\to x+1$, $x,y\to y+1$.
 
 \end{description}
 
