@@ -164,16 +164,24 @@ to determine, given a finite set $E$ of relations between generators,
 whether a given relation is provable from $E$ in $T$.
 The theory of join-semilattices with a finite set of endomorphisms
 was shown to have an EXPTIME-complete uniform word problem by 
-Hofmann \cite{Hofmann} and Baader \cite{Baader}.
-Here we show that the special case of one inflationary endomorphism
-has a uniform word problem that can be solved in PTIME. We also
-show that loop-checking can be done in PTIME.
-Our special case is relevant for dependent type theory with universes.
+Hofmann \cite{Hofmann} and Baader et al.\ \cite{Baader}.
+
+Here we show that the special case of one inflationary endomorphism,
+denoted by ${\_}^+$,
+has a uniform word problem that can be solved in PTIME. 
+
+A \emph{loop} is a term $t$ such that $t^+ \leqslant t$.
+We show that \emph{loop-checking}, i.e., whether or not a loop exists,
+is also decidable in PTIME.
+
+In our special case, both the uniform word problem and loop-checking are 
+relevant for dependent type theory with universes. Our decision procedure
+can be seen as forward reasoning with loop-detection on the fly.
 
 We start from the equational definition of semilattices in which the
 join, denoted by $\vee$, is an associative, commutative, and idempotent
-binary operation. The endomorphism, denoted by ${\_}^+$,
-satisfies the following two equational axioms:
+binary operation. 
+The endomorphism satisfies the following two equational axioms:
 
 \[
 x \vee x^+ = x^+ \quad \quad (x\vee y)^+ = x^+ \vee y^+
@@ -183,7 +191,7 @@ We denote the resulting theory by $\lathy$.
 For example, we can prove $(t^+)^+ \vee t = (t^+)^+$ in $\lathy$,
 for any term $t$. Also, we can infer $s^+ = (t^+)^+$
 from $s = t^+$, but not conversely. 
-As is customary, we let $s\geq t$ abbreviate $s\vee t = s$.
+As is customary, we let $s\geqslant t$ abbreviate $s\vee t = s$.
 \FYI{Throughout this note we call a join-semilattice with an inflationary 
 endomorphism simply a \emph{semilattice}. 
 We call ${t}^+$ the \emph{successor} of $t$.}
@@ -226,9 +234,11 @@ Let $s:= \jterm{x}{k}{m}$ and $t:= \jterm{y}{l}{n}$ be
 terms over $V$. From the constraint $s=t$
 we can prove $m+n$ inequalities which we write as
 Horn clauses by replacing join by conjunction (written as ``,'') and $\geq$
-by implication.\footnote{In this note all clauses are positive,
-propositional Horn clauses with a non-empty body,
-with abstract atoms of the form $x+k$ with $x\in V$ and $k\in \N$.} 
+by implication. \FYI{In this note all clauses are positive,
+propositional Horn clauses $A\to b$ with a non-empty body $A$ and conclusion $b$.
+The atoms are of the form $x+k$ with $x\in V$ and $k\in \N$. 
+We will express by $A\subseteq B$ that all atoms in $A$ also occur in $B$.}
+
 Thus we get the set $S_{s=t}$ consisting of the following Horn clauses:
 \begin{align*}
 \jbody{x}{k}{m} &\to y_1+l_1 \\
@@ -273,11 +283,17 @@ as well as all predecessor clauses for each $v\in V$.
 
 Given a set $S$ of Horn clauses,
 let $S\prvH A\to b$ denote provability from $S$.
-One convenient way to define this is by induction:
-$S\prvH A\to b$ if 
-(i) $b\in A$ or 
-(ii) $S\prvH A,c\to b$ for some $c$ such that there exists
-a clause $A'\to c$ in $S$ with $A'\subseteq A$.
+One convenient way to define this is by \FYI{two inference rules:
+\[
+\frac{~}{S\prvH A\to b}~~\text{$b\in A$}
+\quad\quad%\quad
+\frac{S\prvH A,c\to b}{S\prvH A\to b}~~\text{there exists $A'\to c$ in $S$ with $A'\subseteq A$}
+\]
+}
+%$S\prvH A\to b$ if 
+%(i) $b\in A$ (the base case), or 
+%(ii) $S\prvH A,c\to b$ for some $c$ such that there exists
+%a clause $A'\to c$ in $S$ with $A'\subseteq A$ (the induction step).
 This is the inductive way of defining forward reasoning,
 that is, using the Horn clauses in $S$ to generate atoms from $A$.
 We can also use this definition if $A$ is infinite.
@@ -305,26 +321,29 @@ We have the following theorem generalizing \cite[Theorem 3]{Lorenzen51}.
 \begin{theorem}\label{thm:LvsH}
 For all terms $\jbody{x}{k}{m},y+l$ over $V$ we have:
 \[
-C\prvL \jterm{x}{k}{m}\geq y+l 
+C\prvL \jterm{x}{k}{m}\geqslant y+l 
 \quad\text{iff}\quad
 \upS{C}\prvH \jbody{x}{k}{m}\to y+l.
 \]
 \end{theorem} 
 \begin{proof}
-The if-part is a simple induction on derivation of $\prvH$:
+The if-part is a straightforward \FYI{structural induction on the definition} of $\prvH$:
 all steps can easily be mimicked in semilattice theory.
 The converse implication is more interesting.
 For any set of Horn clauses $X,Y$, let $X \prvH Y$ mean
 that $X \prvH A\to b$ for all clauses $A\to b$ in $Y$.
 For any two terms $s,t$ over $V$, define $s\equiv t$ by
-$\upS{C} \prvH S_{s=t}$. We define $s\vee t$ in the obvious way,
-and $(\jterm{x}{k}{m})^+ := x_1+k_1+1 \vee\cdots\vee x_m+k_m+1$.
-The latter is well-defined, since we have $s^+\equiv t^+$ 
+$\upS{C} \prvH S_{s=t}$. \FYI{We have $s^+\equiv t^+$ 
 if $s\equiv t$, as $\upS{C}$ is closed under shifting upwards.
+We also have $s\vee r \equiv t\vee r$ and
+$r\vee s \equiv r\vee t$ if $s\equiv t$.}
 
-Now one can show that all axioms and rules are satisfied modulo $\equiv$. 
-For example, $\equiv$ is an equivalence relation and
-a congruence with respect to join and endomorphism (successor).
+Now we can define $s\vee t$ on terms over $V$ in the obvious way,
+and $(\jterm{x}{k}{m})^+ := x_1+k_1+1 \vee\cdots\vee x_m+k_m+1$.
+\FYI{Both are well-defined operations modulo the congruence $\equiv$.}
+
+Then one can show that all axioms and rules are satisfied modulo $\equiv$. 
+For example, 
 All semilattice axioms are satisfied, for example,
 the predecessor clauses prove $s\vee s^+ \equiv s^+$. 
 Moreover, for each constraint $s=t$ in $C$ 
@@ -356,11 +375,12 @@ Let $\Ninf$ be $\N$ extended with $\infty$, totally ordered
 by $n < \infty$ for all $n\in\N$. 
 Given a finite semilattice presentation $(V,C)$, we view
 a function $f: V\to\Ninf$ as specifying the downward closed set
-of atoms $\set{v+k \mid v\in V,~k\in\N,~k \leq f(v)}$.
+of atoms $\set{v+k \mid v\in V,~k\in\N,~k \leqslant f(v)}$.
+\FYI{Note that this set contains all atoms $v+k$ if $f(v)=infty$.}
 We are interested in such sets as models of $\upS{C}$.
 \FYI{A clause $A\to b$ with 
 $A = \jbody{x}{k}{m}$ and $b= y+l$, all $x_i,y \in V$,
-is satisfied by $f$ if $l\leq f(v)$ when all $k_i \leq f(x_i)$.
+is satisfied by $f$ if $l\leqslant f(v)$ when all $k_i \leqslant f(x_i)$.
 Predecessor clauses are of course satisfied by downward closure.
 
 \begin{lemma}\label{lem:f-sat}
@@ -372,8 +392,8 @@ Assume $A = \jbody{x}{k}{m}$ and $b= y+l$ with $x_i,y \in V$.
 Let $W$ consist of all variables $x_i$ in $A$ that satisfy $f(x_i)<\infty$.
 If $W$ is empty, then $P$ is equivalent to $f(y)=\infty$.
 Otherwise, let $k_0 = \min_{\set{i \mid x_i \in W}} (f(x_i)-k_i)$.
-If $k_0 < 0$, then $P$ holds. If $k_0 \geq 0$, 
-then $P$ is equivalent to $l+k_0 \leq f(y)$.
+If $k_0 < 0$, then $P$ holds. If $k_0 \geqslant 0$, 
+then $P$ is equivalent to $l+k_0 \leqslant f(y)$.
 \end{proof}}
 
 Given a finite semilattice presentation $(V,C)$
@@ -385,7 +405,7 @@ the set of clauses in $\upS{C}$ with conclusion over $W$.
 \begin{theorem}\label{thm:main}
 Let  $(V,C)$ be a finite semilattice presentation.
 For any $f: V\to\Ninf$ we can compute
-the least $g \geq f$ that is a model of $\upS{C}$.
+the least $g \geqslant f$ that is a model of $\upS{C}$.
 \end{theorem}
 
 We prepare the proof of this theorem with a lemma.
@@ -394,9 +414,9 @@ We prepare the proof of this theorem with a lemma.
 Let  $(V,C)$ be a finite semilattice presentation.
 Let $W$ be a strict subset of $V$ such that 
 for any $f: W\to\Ninf$ we can compute
-the least $g \geq f$ that is a model of $\upS{C}|W$.
+the least $g \geqslant f$ that is a model of $\upS{C}|W$.
 Then for any $f: V\to\Ninf$ with $f(V-W)\subseteq \N$ we can compute
-the least $h \geq f$ that is a model of $\upS{C}{\downarrow}W$.
+the least $h \geqslant f$ that is a model of $\upS{C}{\downarrow}W$.
 \end{lemma}
 
 \begin{proof}
@@ -405,10 +425,10 @@ Let conditions be as stated in the lemma.
 $\M$ such that each clause in $S_C$ has gain at most $\M$.}
 Let $f: V\to\Ninf$ with $f(V-W)\subseteq \N$ be given
 and denote its restriction to $W$ by $f_W$.
-By the definition of $\upS{C}{\downarrow}W$, any minimal $h\geq f$
+By the definition of $\upS{C}{\downarrow}W$, any minimal $h\geqslant f$
 that is a model of $\upS{C}{\downarrow}W$
 coincides with $f$ on $V-W$, so we focus on its values on $W$.
-By assumption we can compute the least $g_f \geq f_W$ that 
+By assumption we can compute the least $g_f \geqslant f_W$ that 
 is a model of $\upS{C}|W$.
 Now we look at clauses in $\upS{C}{\downarrow}W - \upS{C}|W$. 
 Such clauses are of the form $X,Y \to w+k$ with $X$ a non-empty
@@ -417,7 +437,7 @@ If $X = \ldots,x_i+k_i,\ldots$ is satisfied by $f$,
 then by the definition of $\M$, using $f(V-W)\subseteq \N$,
 we have:
 \begin{equation}\label{eq:f-ub}
-k \leq\min_i(f(x_i)) + \M \leq \max(f(V-W)) + \M \in \N.
+k \leq\min_i(f(x_i)) + \M \leqslant \max(f(V-W)) + \M \in \N.
 \end{equation}
 \FYI{Inequality (\ref{eq:f-ub}) gives an upper bound on values that clauses 
 in $\upS{C}{\downarrow}W - \upS{C}|W$ can generate.} Define:
@@ -429,14 +449,14 @@ M(g_f) := \sum_{w \in W}  \max(0, \max(f(V-W)) + \M - g_f(w)).
 by induction on $M(g_f)$. More precisely, we prove for all $n\in\N$
 and $f: V\to\Ninf$ with $f(V-W)\subseteq \N$, if $M(g_f)=n$,
 then we can compute
-the least $h \geq f$ that is a model of $\upS{C}{\downarrow}W$.}
+the least $h \geqslant f$ that is a model of $\upS{C}{\downarrow}W$.}
 
-In the base case $M(g_f)=0$ we have $k\leq g_f(w)$ for all $w\in W$
+In the base case $M(g_f)=0$ we have $k\leqslant g_f(w)$ for all $w\in W$
 and all clauses in $\upS{C}{\downarrow}W$ are satisfied by $g_f$.
 In this case we take $h=g_f$ on $W$ and $h=f$ on $V-W$ and we are done.
 
 For the induction step, let $M(g_f)>0$ and assume
-the lemma has been proved for smaller values of $M(\_)$.
+the result has been proved for smaller values of $M(\_)$.
 We now make a case distinction that is decidable
 by Lemma~\ref{lem:f-sat} since
 $S_C$ is finite (even though $\upS{C}$ is not).
@@ -453,11 +473,11 @@ f'(x)&= f(x)   \quad\quad\text{for $x$ in $V-W$,}\\
 f'(y)&= g_f(y) \quad\quad\text{for $y$ in $W-\set{w}$, and}\\ 
 f'(w)&= g_f(w)+k+1. 
 \end{align*}
-We have $g_{f'}(w) \geq f'(w) > g_f(w)$, so $M(g_{f'}) < M(g_f)$
+We have $g_{f'}(w) \geqslant f'(w) > g_f(w)$, so $M(g_{f'}) < M(g_f)$
 and we can apply the induction hypothesis to $f'$.
 The resulting $h$ for $f'$ also works for $f$,
 since every step in the sequence 
-$h \geq f' > g_f \geq f$
+$h \geqslant f' > g_f \geqslant f$
 is by adding atoms that can be inferred from $f$.
 \end{proof}
 
@@ -467,14 +487,14 @@ We now return to the proof of Theorem~\ref{thm:main}.
 Let  $(V,C)$ be a finite semilattice presentation
 such that each clause in $S_C$ has gain at most $\M$.
 By induction on $|V|$ we compute, for any $f: V\to\Ninf$,
-the least $g \geq f$ that is a model of $\upS{C}$.
+the least $g \geqslant f$ that is a model of $\upS{C}$.
 
 In the base case $|V|=0$ there is nothing to prove.
 
 For the induction step, let $|V|>0$ and assume the
 theorem has been proved for smaller values of $|V|$.
 Let $f: V\to\Ninf$. If $f(v)=\infty$ for some $v\in V$,
-then we can eliminate $v$ form $\upS{C}$. Recall that
+then we can eliminate $v$ from $\upS{C}$. Recall that
 $f(v)=\infty$ means that all atoms of the form $v+k$
 are true. This means that all clauses of the form
 $\ldots\to v+k$ can be left out from $\upS{C}$.
@@ -514,19 +534,19 @@ If $W$ is empty we are done since then $f$ itself
 is a model of $\upS{C}$.
 
 If $W = V$ we are done since then $h(x) = \infty$ for all 
-$x \in V$ is the least $h \geq f$ that is a model of $\upS{C}$.
+$x \in V$ is the least $h \geqslant f$ that is a model of $\upS{C}$.
 Proof: by using the predecessor clauses we can infer
 $x+f(x)+1$ from every $x+g(x)$ with $g(x)>f(x)$ as above,
 for every $x\in V$. By shifting upwards we can infer
 $x+f(x)+k$, and hence $x+k$, for every $k\in\N$ and $x\in V$.
 
-The third case is that $W$ is is a non-empty strict 
+The third case is that $W$ is a non-empty strict 
 subset of $V$, and we can apply the induction
 hypothesis to $W$ to satisfy the condition of 
 Lemma~\ref{lem:secondary}. We apply the conclusion of 
 the lemma to $g$, noting that $g(V-W)=f(V-W)$ is
 a subset of $\N$. Hence we can compute the least 
-$h\geq g$ that is a model of $\upS{C}{\downarrow}W$.
+$h\geqslant g$ that is a model of $\upS{C}{\downarrow}W$.
 This function $h$ coincides with $g$ and $f$ on $V-W$. 
 
 If $h(w) = \infty$ for some $w\in W$, 
@@ -553,7 +573,7 @@ From Theorem~\ref{thm:main} we get the decidability of $\upS{C}\prvH A\to b$
 when $A$ can be represented by a function $f: V\to\N$. If every
 variable $v$ in $V$ occurs in $A$, then $f(v)$ is simply
 the maximal $k$ such that $v+k \in A$. We can then simply check
-$\upS{C}\prvH A\to b$ by computing the least $g\geq f$ that is
+$\upS{C}\prvH A\to b$ by computing the least $g\geqslant f$ that is
 a model of $\upS{C}$ and check whether atom $b$ is satisfied by $g$.
 
 The decision method above for $\upS{C}\prvH A\to b$ only works
@@ -594,7 +614,7 @@ Proof of claim: if $W=V$, then $n=m$ and we are done,
 otherwise take $n= \max(g(V-W))+\M$. The idea of this choice of $n$ is 
 that variables in $V-W$ cannot play a role above $n$.
 In order to see this, define $f': V\to\N$ by $f'(x)=g(x)$ if $x\in V-W$
-and $f'(w)=n$ if $w\in W$. Then $g\geq f'\geq f$, so $g$ is also the minimal 
+and $f'(w)=n$ if $w\in W$. Then $g\geqslant f'\geqslant f$, so $g$ is also the minimal 
 model when starting from $f'$. Since $f'$ and $g$ coincide on $V-W$ we have
 that all clauses in $\upS{C}{\downarrow}(V-W)$ are satisfied by $f'$.
 By the particular choice of $n$, using same reasoning as in the proof of 
@@ -612,20 +632,20 @@ and $h(s\vee t) = \max(h(s),h(t))$.
 We have to make sure that definition of $h$ respects
 equality in $L$, that is, if $C\prvL s=t$, then $h(s)=h(t)$.
 For this it suffices to show $h(s)=h(t)$ for all $s=t$ in $C$.
-This can in turn be simplified to: $h(\jterm{x}{k}{m}) \geq h(y)+l$ 
+This can in turn be simplified to: $h(\jterm{x}{k}{m}) \geqslant h(y)+l$ 
 for every $\jbody{x}{k}{m} \to y+l$ in $S_C$.
 Easy calculations show that we must prove
-$\min(g(x_1)-k_1,\ldots,g(x_m)-k_m) \leq g(y)-l$.
+$\min(g(x_1)-k_1,\ldots,g(x_m)-k_m) \leqslant g(y)-l$.
 Wlog we assume that $g(x_1)-k_1$ is the minimum on the left.
 Since $\jbody{x}{k}{m} \to y+l$ in $S_C$ we know 
-that $g(x_1)\geq f(x_1)\geq k_1$. Shifting the clause
+that $g(x_1)\geqslant f(x_1)\geqslant k_1$. Shifting the clause
 upwards by $g(x_1)-k_1$ we get the clause
 $x_1+g(x_1),\ldots,x_m+k_m+g(x_1)-k_1 \to y+l+g(x_1)-k_1$
 in $S_C^+$. Due to the assumption that $g(x_1)-k_1$ is minimal,
 the body of this clause is satisfied by $g$.
 Since $g$ is a model of $S_C^+$ by Theorem~\ref{thm:main},
 the conclusion is also satisfied by $g$, that is,
-$g(y)\geq l+g(x_1)-k_1$, so $g(y)-l\geq g(x_1)-k_1$.
+$g(y)\geqslant l+g(x_1)-k_1$, so $g(y)-l\geqslant g(x_1)-k_1$.
 This completes the proof that $h$ respects equality in $L$.
 
 It should be clear that (1) and (2) exclude each other.
@@ -673,9 +693,9 @@ We only have to check clauses with conclusion over $H$.
 Let $\jbody{y}{k}{m} \to x+l$ be a clause in $\upS{C}$ with $y_i \in V$
 and $x\in H$. If the premiss is satisfied in $g$, and some $y_i\in L$, then
 \[
-g(x)+1 = f(x) > f(y_i)+\M = g(y_i)+\M \geq k_i+\M \geq l.
+g(x)+1 = f(x) > f(y_i)+\M = g(y_i)+\M \geqslant k_i+\M \geqslant l.
 \]
-Hence $g(x)\geq l$, so also the conclusion holds in $g$.
+Hence $g(x)\geqslant l$, so also the conclusion holds in $g$.
 If no $y_i\in L$, then we use that any clause $A\to b$ 
 that only mentions variables in $H\cup I$
 is satisfied in $g$ when $A^+ \to b^+$ is satisfied in $f$. 
@@ -683,7 +703,7 @@ is satisfied in $g$ when $A^+ \to b^+$ is satisfied in $f$.
 
 We immediately get the following small-model property.
 \begin{corollary}\label{cor:small-model}
-For any $f$, the least $g\geq f$ that is a model of $\upS{C}$
+For any $f$, the least $g\geqslant f$ that is a model of $\upS{C}$
 is bounded by $|f|+|V|*\M$.
 \end{corollary}
 
@@ -711,7 +731,7 @@ using that the test in Lemma~\ref{lem:f-sat} is polynomial .
 \item\label{it:Coros} In the statement of Corollary~\ref{cor:decidability}
 and \ref{cor:decidability} there is no function $f: V\to\Ninf$. 
 However, the proofs apply Theorem~\ref{thm:main} with such a function,
-satisfying $|f| \leq |A|$ and $|f| \leq |S_C|$, respectively.
+satisfying $|f| \leqslant |A|$ and $|f| \leqslant |S_C|$, respectively.
 Hence both corollaries yield algorithms that are polynomial in the input size.
 
 \end{itemize}
@@ -811,11 +831,17 @@ the minimal model is the function that is constant $\infty$.
 
 \subsection{Related work}
 
+\FYI{Voevodsky remarked in \cite{VV} that universe level expressions
+are exactly `linear' functions of universe level variables in the 
+tropical (max-plus) semiring, even though he 
+referred to Presburger Arithmetic for decidability.
+For tropical semirings, see the book \cite{Butcovic}.
+}
 
-In the literature one can find a considerable body of research 
-on efficient constraint solving in the same language as in this note,
-but interpreted in the integers or in the rational numbers.
-The latter are totally ordered, which makes the problem different.
+Some problems in tropical semirings are 
+formulated in the same language as in this note,
+but interpreted in the integer, rational, or real numbers.
+The latter are totally ordered, which makes these problems different.
 Consider, for example, the constraint $x\vee y = x^+$.
 When the ordering is total, this constraint implies $y = x^+$.
 However, if $x$ and $y$ are incomparable, there are models
@@ -823,7 +849,7 @@ of $x\vee y = x^+$ in which $y = x^+$ is false. The simplest
 such countermodel has three elements. The model of $x\vee y = x^+$
 as described in the proof of Theorem~\ref{thm:LvsH} is based
 on terms over $V=\set{x,y}$, modulo the congruence $\equiv$.
-This congruence gives ${x+k \vee y+l} \equiv {x+l+1}$ if $k\leq l$
+This congruence gives ${x+k \vee y+l} \equiv {x+l+1}$ if $k\leqslant l$
 (use $x,y \to x+1$),
 and ${x+k \vee y+l} \equiv {x+k}$ if $k>l$
 (use $x+1\to y$).
@@ -832,18 +858,17 @@ In this model $y = x^+$ is false ($y\to x+1$ cannot be derived).
 Another connection is with work on uniform word problems with
 endomorphisms. Both \cite{Baader,Hofmann} show that this problem is decidable
 but EXPTIME hard. We describe a PTIME algorithm in a special case: for
-only {\em one} endomorphism which is furthermore inflationary.
-It seems to be an open problem if there is a PTIME algorithm for
+only {\em one} endomorphism which is moreover \emph{inflationary}.
+It seems to be an open problem whether there is a PTIME algorithm for
 one endomorphism without any extra assumption. A similar
-question can be asked in the case of a family endomorphisms
-that are all {\em inflationary}.
+question can be asked in the case of finitely many endomorphisms
+that are all inflationary.
 
-It is simple to describe M. Hofmann \cite{Hofmann} algorithm with
+It is easy to describe Hofmann's \cite{Hofmann} algorithm with
 our notation. This is a EXPTIME algorithm in the case where
-we take away the rule $a+1\to a$. The idea is to provide a complete cut-free
-derivation system. The search of a cut-free
-proof of $A\to a$ given a set $R$ of primitive rules can then be done by a search of cut-free
-proofs in this system. The derivations rules are the following.
+we take away the predecessor clauses $a+1\to a$. 
+The idea is to provide a complete cut-free derivation system. 
+Given a set of clauses $R$, the derivations rules are the following.
 
 \begin{enumerate}
 \item $A\to a$ if $a$ is in $A$
@@ -851,8 +876,11 @@ proofs in this system. The derivations rules are the following.
 \item $A\to a$ if there is a rule $c_1,\dots,c_n\to d$ in $R$ such that 
   $A\to c_1,\dots,A\to c_n$ and $A,d\to a$.
 \end{enumerate}
-
-
+With the subformulas of an atom $a+k$ being all $a+i$ with $i\leqslant k$,
+one sees that the subformula property holds, since only rules
+$c_1,\dots,c_n\to d$ in $R$ are allowed in 3. A general cut rule
+is admissible. Deciding whether $A\to a$ follows from $R$
+can then be done by a top-down search of (cut-free) proofs in this system.
 
 
 \bibliographystyle{plain}
@@ -865,11 +893,16 @@ proofs in this system. The derivations rules are the following.
   \newblock{IJCAI 2005: 364-369.}
 
 \bibitem{BNR}
-M.A.~Bezem, R.~Nieuwenhuis and E.~Rodr\'iguez.
+Marc Bezem, Robert Nieuwenhuis and Enric Rodr\'iguez.
 \newblock{The Max-Atom Problem and its Relevance}.
 In I.~Cervesato, H.~Veith and A.~Voronkov, editors,
 \emph{Proceedings LPAR-15}, LNAI 5330,
 pages 47--62, Springer-Verlag, Berlin, 2008.
+
+\bibitem{Butcovic}
+Peter Butkovi\v{c}.
+\newblock\emph{Max-linear Systems: Theory and Algorithms},
+Springer-Verlag, 2010.
 
 \bibitem{HarperP91}
 Robert Harper and Robert Pollack.
@@ -878,8 +911,8 @@ Theoretical Computer Science, 89, 107--136, 1991.
 
 \bibitem{Hofmann}
   Martin Hofmann.
-  \newblock{Proof-theoretic approach to description logic.}
-  \newblock{LICS 2005: 229-237.}
+  \newblock\emph{Proof-theoretic approach to description logic.}
+  \newblock{LICS 2005: 229--237.}
 
 \bibitem{Huet87}
 G\'erard Huet.
@@ -901,6 +934,63 @@ manuscript,
 
 
 \end{thebibliography}
+
+\newpage
+
+\section*{Answers to the referees}
+
+We thank ....
+title + done 
+endo inflat
+red
+
+Points (1)--(8) in one referee report are all done.
+
+\subsection*{Detailed comments}
+
+The complexity analysis has been carried out in a new section,
+proving that the complexity is PTIME. 
+An example showing that our solution would have EXPTIME behaviour
+when the endomorphism is not inflationary has been added.
+The complexity of the problem in that case is unknown.
+Therefore the axiom $x^*\leqslant x$ is important.
+
+\subsection*{General remarks}
+
+Good point, done: `lattice' replaced by `semilattice' (with some more explanation)
+
+We changed terminology to `inflationary endomorphism'.
+For the application in type theory it is desirable to have as
+few axioms as possible, and all preferably equational.
+
+\subsection*{Concrete comments}
+
+\begin{description}
+\item[Page 2, 3rd para]: done
+
+\item[Page 2, definition of $\prvH$]: two inference rules displayed (no induction on length!)
+
+\item[Page 2, Thm 2.2]: if-part clarified, only-if part is subtle, as it takes place
+in $\FYI{nf}(T(V))/{\equiv}$. Please see if it became more clear. 
+
+Concerning the question about the generators $v+k$: no, that would require many more
+relations such as $(v+k)^+ = v+(k+1)$.
+
+\item[Page 3, Section 3, para 3] You are completely right here, both reviewers, both points. Corrected.
+
+\item[Page 3, Section 3] This has been clarified, and a lemma has been added for further
+clarification and for the complexity analysis.
+
+Concerning your question: No, this cannot happen, $v+0$ is true in any $f$. That is why
+the general case is treated in the paragraph above the corollaries (now 3.4 and 3.5).
+
+\item[Page 3, Thm. 3.1 and Lemma 3.2] Adressed in the new section on complexity.
+
+\item[Page 4, line 3 and induction step] clarified in three lines in red. 
+
+\item[Page 4, induction step] clarified in three lines in red. 
+
+\end{description}
 
 \end{document}
 
