@@ -164,7 +164,7 @@ to determine, given a finite set $E$ of relations between generators,
 whether a given relation is provable from $E$ in $T$.
 The theory of join-semilattices with a finite set of endomorphisms
 was shown to have an EXPTIME-complete uniform word problem by 
-Hofmann \cite{Hofmann} and Baader et al.\ \cite{Baader}.
+Baader et al.\ \cite{Baader} and Hofmann \cite{Hofmann}.
 
 Here we show that the special case of one inflationary endomorphism,
 denoted by ${\_}^+$,
@@ -376,7 +376,7 @@ by $n < \infty$ for all $n\in\N$.
 Given a finite semilattice presentation $(V,C)$, we view
 a function $f: V\to\Ninf$ as specifying the downward closed set
 of atoms $\set{v+k \mid v\in V,~k\in\N,~k \leqslant f(v)}$.
-\FYI{Note that this set contains all atoms $v+k$ if $f(v)=infty$.}
+\FYI{Note that this set contains all atoms $v+k$ if $f(v)=\infty$.}
 We are interested in such sets as models of $\upS{C}$.
 \FYI{A clause $A\to b$ with 
 $A = \jbody{x}{k}{m}$ and $b= y+l$, all $x_i,y \in V$,
@@ -385,7 +385,7 @@ Predecessor clauses are of course satisfied by downward closure.
 
 \begin{lemma}\label{lem:f-sat}
 Given $f: V\to\Ninf$ and a clause $A\to b$, let $P$ be the problem whether or not
-$A+k\to b+k$ is satified by $f$ for all $k\in\N$. Then $P$ is decidable.
+$A+k\to b+k$ is satisfied by $f$ for all $k\in\N$. Then $P$ is decidable.
 \end{lemma}
 \begin{proof}
 Assume $A = \jbody{x}{k}{m}$ and $b= y+l$ with $x_i,y \in V$.
@@ -729,7 +729,7 @@ it suffices that there is a polynomial bound on the work done for each
 forward inference and that there is steady progress in the global state encoded by
 functions $f: V\to\Ninf$, until the algorithm terminates.
 Both are easily verified by inspection of the proofs,
-using that the test in Lemma~\ref{lem:f-sat} is polynomial . 
+using that the test in Lemma~\ref{lem:f-sat} is polynomial. 
  
 \item\label{it:Coros} In the statement of Corollary~\ref{cor:decidability}
 and \ref{cor:decidability} there is no function $f: V\to\Ninf$. 
@@ -860,7 +860,7 @@ In this model $y = x^+$ is false ($y\to x+1$ cannot be derived).
 
 Another connection is with work on uniform word problems with
 endomorphisms. Both \cite{Baader,Hofmann} show that this problem is decidable
-but EXPTIME hard. We describe a PTIME algorithm in a special case: for
+but EXPTIME-complete. We describe a PTIME algorithm in a special case: for
 only {\em one} endomorphism which is moreover \emph{inflationary}.
 It seems to be an open problem whether there is a PTIME algorithm for
 one endomorphism without any extra assumption. A similar
@@ -868,7 +868,7 @@ question can be asked in the case of finitely many endomorphisms
 that are all inflationary.
 
 It is easy to describe Hofmann's \cite{Hofmann} algorithm with
-our notation. This is a EXPTIME algorithm in the case where
+our notation. This is an EXPTIME algorithm in the case where
 we take away the predecessor clauses $a+1\to a$. 
 The idea is to provide a complete cut-free derivation system. 
 Given a set of clauses $R$, the derivations rules are the following.
@@ -887,7 +887,7 @@ can then be done by a top-down search of (cut-free) proofs in this system.
 
 \subsection*{Acknowledgements}
 We are grateful to the anonymous referees for constructive criticism and pointers to related work.
-We would also like to thank Franz Baader for updating us on related
+We would also like to thank Franz Baader and Viorica Sofronie-Stokkermans for updating us on related
 decidability results for description logics.
 
 
@@ -963,7 +963,7 @@ proving that the complexity is PTIME.
 An example showing that our solution would have EXPTIME behaviour
 when the endomorphism is not inflationary has been added.
 The complexity of the problem in that case is unknown.
-Therefore the axiom $x^*\leqslant x$ is important.
+Therefore the axiom $x\leqslant x^+$ is important.
 
 \subsection*{General remarks}
 
