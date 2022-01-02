@@ -193,9 +193,9 @@ For example, we can prove $(t^+)^+ \vee t = (t^+)^+$ in $\lathy$,
 for any term $t$. Also, we can infer $s^+ = (t^+)^+$
 from $s = t^+$, but not conversely. 
 As is customary, we let $s\geqslant t$ abbreviate $s\vee t = s$.
-\FYI{Throughout this note we call a join-semilattice with an inflationary 
+Throughout this note we call a join-semilattice with an inflationary 
 endomorphism simply a \emph{semilattice}. 
-We call ${t}^+$ the \emph{successor} of $t$.}
+We call ${t}^+$ the \emph{successor} of $t$.
 
 
 \section{Semilattice presentations and Horn clauses}\label{sec:latt-Horn}
@@ -235,10 +235,11 @@ Let $s:= \jterm{x}{k}{m}$ and $t:= \jterm{y}{l}{n}$ be
 terms over $V$. From the constraint $s=t$
 we can prove $m+n$ inequalities which we write as
 Horn clauses by replacing join by conjunction (written as ``,'') and $\geqslant$
-by implication. \FYI{In this note all clauses are positive,
+by implication. In this note all clauses are
 propositional Horn clauses $A\to b$ with a non-empty body $A$ and conclusion $b$.
-The atoms are of the form $x+k$ with $x\in V$ and $k\in \N$. 
-We will express by $A\subseteq B$ that all atoms in $A$ also occur in $B$.}
+The atoms are of the form $x+k$ with $x\in V$ and $k\in \N$,
+and we will often call such Horn clauses simply \emph{clauses}.
+We will express by $A\subseteq B$ that all atoms in $A$ also occur in $B$.
 
 Thus we get the set $S_{s=t}$ consisting of the following Horn clauses:
 \begin{align*}
@@ -284,13 +285,13 @@ as well as all predecessor clauses for each $v\in V$.
 
 Given a set $S$ of Horn clauses,
 let $S\prvH A\to b$ denote provability from $S$.
-One convenient way to define this is by \FYI{two inference rules:
+One convenient way to define this is by two inference rules:
 \[
 \frac{~}{S\prvH A\to b}~~\text{$b\in A$}
 \quad\quad%\quad
 \frac{S\prvH A,c\to b}{S\prvH A\to b}~~\text{there exists $A'\to c$ in $S$ with $A'\subseteq A$}
 \]
-}
+
 %$S\prvH A\to b$ if 
 %(i) $b\in A$ (the base case), or 
 %(ii) $S\prvH A,c\to b$ for some $c$ such that there exists
@@ -328,24 +329,24 @@ C\prvL \jterm{x}{k}{m}\geqslant y+l
 \]
 \end{theorem} 
 \begin{proof}
-The if-part is a straightforward \FYI{structural induction on the definition} of $\prvH$:
+The if-part is a straightforward structural induction on the definition of $\prvH$:
 all steps can easily be mimicked in semilattice theory.
 The converse implication is more interesting.
 For any set of Horn clauses $X,Y$, let $X \prvH Y$ mean
 that $X \prvH A\to b$ for all clauses $A\to b$ in $Y$.
 For any two terms $s,t$ over $V$, define $s\equiv t$ by
-$\upS{C} \prvH S_{s=t}$. \FYI{We have $s^+\equiv t^+$ 
+$\upS{C} \prvH S_{s=t}$. We have $s^+\equiv t^+$ 
 if $s\equiv t$, as $\upS{C}$ is closed under shifting upwards.
 We also have $s\vee r \equiv t\vee r$ and
-$r\vee s \equiv r\vee t$ if $s\equiv t$.}
+$r\vee s \equiv r\vee t$ if $s\equiv t$.
 
 Now we can define $s\vee t$ on terms over $V$ in the obvious way,
 and $(\jterm{x}{k}{m})^+ := x_1+k_1+1 \vee\cdots\vee x_m+k_m+1$.
-\FYI{Both are well-defined operations modulo the congruence $\equiv$.}
+Both are well-defined operations modulo the congruence $\equiv$.
 
 Then one can show that all axioms and rules are satisfied modulo $\equiv$. 
 For example, 
-All semilattice axioms are satisfied, for example,
+all semilattice axioms are satisfied, for example,
 the predecessor clauses prove $s\vee s^+ \equiv s^+$. 
 Moreover, for each constraint $s=t$ in $C$ 
 we have $s\equiv t$, as $S_{s=t}$ is included in $\upS{C}$.
@@ -377,9 +378,9 @@ by $n < \infty$ for all $n\in\N$.
 Given a finite semilattice presentation $(V,C)$, we view
 a function $f: V\to\Ninf$ as specifying the downward closed set
 of atoms $\set{v+k \mid v\in V,~k\in\N,~k \leqslant f(v)}$.
-\FYI{Note that this set contains all atoms $v+k$ if $f(v)=\infty$.}
+Note that this set contains all atoms $v+k$ if $f(v)=\infty$.
 We are interested in such sets as models of $\upS{C}$.
-\FYI{A clause $A\to b$ with 
+A clause $A\to b$ with 
 $A = \jbody{x}{k}{m}$ and $b= y+l$, all $x_i,y \in V$,
 is satisfied by $f$ if $l\leqslant f(v)$ when all $k_i \leqslant f(x_i)$.
 Predecessor clauses are of course satisfied by downward closure.
@@ -395,7 +396,7 @@ If $W$ is empty, then $P$ is equivalent to $f(y)=\infty$.
 Otherwise, let $k_0 = \min_{\set{i \mid x_i \in W}} (f(x_i)-k_i)$.
 If $k_0 < 0$, then $P$ holds. If $k_0 \geqslant 0$, 
 then $P$ is equivalent to $l+k_0 \leqslant f(y)$.
-\end{proof}}
+\end{proof}
 
 Given a finite semilattice presentation $(V,C)$
 and a subset $W$ of $V$, we denote by $\upS{C}|W$ 
@@ -422,8 +423,8 @@ the least $h \geqslant f$ that is a model of $\upS{C}{\downarrow}W$.
 
 \begin{proof}
 Let conditions be as stated in the lemma.
-\FYI{Since $(V,C)$ is finite we can compute the number
-$\M$ such that each clause in $S_C$ has gain at most $\M$.}
+Since $(V,C)$ is finite we can compute the smallest number
+$\M\geqslant0$ such that each clause in $S_C$ has gain at most $\M$.
 Let $f: V\to\Ninf$ with $f(V-W)\subseteq \N$ be given
 and denote its restriction to $W$ by $f_W$.
 By the definition of $\upS{C}{\downarrow}W$, any minimal $h\geqslant f$
@@ -440,17 +441,17 @@ we have:
 \begin{equation}\label{eq:f-ub}
 k \leq\min_i(f(x_i)) + \M \leqslant \max(f(V-W)) + \M \in \N.
 \end{equation}
-\FYI{Inequality (\ref{eq:f-ub}) gives an upper bound on values that clauses 
-in $\upS{C}{\downarrow}W - \upS{C}|W$ can generate.} Define:
+Inequality (\ref{eq:f-ub}) gives an upper bound on values that clauses 
+in $\upS{C}{\downarrow}W - \upS{C}|W$ can generate. Define:
 \[
 M(g_f) := \sum_{w \in W}  \max(0, \max(f(V-W)) + \M - g_f(w)).
 \] 
 
-\FYI{After these preparations we are ready to prove the lemma
+After these preparations we are ready to prove the lemma
 by induction on $M(g_f)$. More precisely, we prove for all $n\in\N$
 and $f: V\to\Ninf$ with $f(V-W)\subseteq \N$, if $M(g_f)=n$,
 then we can compute
-the least $h \geqslant f$ that is a model of $\upS{C}{\downarrow}W$.}
+the least $h \geqslant f$ that is a model of $\upS{C}{\downarrow}W$.
 
 In the base case $M(g_f)=0$ we have $k\leqslant g_f(w)$ for all $w\in W$
 and all clauses in $\upS{C}{\downarrow}W$ are satisfied by $g_f$.
@@ -485,7 +486,7 @@ is by adding atoms that can be inferred from $f$.
 We now return to the proof of Theorem~\ref{thm:main}.
 
 \begin{proof}
-Let  $(V,C)$ be a finite semilattice presentation
+Let  $(V,C)$ be a finite semilattice presentation and $\M\geqslant0$
 such that each clause in $S_C$ has gain at most $\M$.
 By induction on $|V|$ we compute, for any $f: V\to\Ninf$,
 the least $g \geqslant f$ that is a model of $\upS{C}$.
@@ -520,7 +521,7 @@ In such a case we can directly apply the induction hypothesis
 to the simplified semilattice presentation, and extend the
 function with values $\infty$ for all $v \in V-V'$.
 Otherwise we have $f: V\to\N$.
-\FYI{Since $S_C$ is finite, using Lemma~\ref{lem:f-sat},
+Since $S_C$ is finite, using Lemma~\ref{lem:f-sat},
 we can decide whether $f$ is a model of $\upS{C}$.
 If so, we are done. If not, we proceed as follows.
 For every $x\in V$ and $A\to x+l$ in $S_C$, consider the integer
@@ -531,18 +532,18 @@ If moreover $l+k_0 > f(x)$, then this atom is new.
 Let $W$ be the (non-empty) subset of variables $x\in V$
 for which there is a clause in $S_C$ that yields a new atom,
 and let $g(x)$ be the maximum of $f(x)$ and the possible values $l+k_0$
-for $x$ obtained in this way.} Since $S_C$ is finite,
+for $x$ obtained in this way. Since $S_C$ is finite,
 $g \geqslant f$ is a function from $V$ to $\N$. 
 
 We distinguish the cases $W=V$ and $W\subset V$.
 If $W = V$ we are done since then $h(x) = \infty$ for all 
 $x \in V$ is the least $h \geqslant f$ that is a model of $\upS{C}$.
-\FYI{Proof: if $W=V$, then $g(x)>f(x)$ and we can infer $x+g(x)$ 
+Proof: if $W=V$, then $g(x)>f(x)$ and we can infer $x+g(x)$ 
 from $f$, for all $x\in V$.
 By using the predecessor clauses we hence also infer
 $x+f(x)+1$ from $f$ for every $x\in V$. Since $\upS{C}$
 is closed under shifting upwards, we can infer
-$x+f(x)+k$, and hence $x+k$, for every $k\in\N$ and $x\in V$.}
+$x+f(x)+k$, and hence $x+k$, for every $k\in\N$ and $x\in V$.
 
 The last case is that $W$ is a non-empty strict 
 subset of $V$, and we can apply the induction
@@ -598,8 +599,8 @@ For all $A,b,s,t$, $\upS{C}\prvH A\to b$ and $C\prvL s=t$ are decidable.
 Another application of Theorem~\ref{thm:main} is loop checking.
 Given a finite semilattice presentation $(V,C)$, a \emph{loop} is a 
 term $t$ over $V$ such that $C\prvL t^+=t$. Let $L$ be the
-semilattice presented by $(V,C)$. Let $N$ be the semilattice $\N$ with
-the usual $\max$ and successor function.
+semilattice presented by $(V,C)$. Let $N$ be the semilattice 
+with carrier $\N$ and with the usual $\max$ and successor function.
 
 \begin{corollary}\label{cor:loopchecking}
 Exactly one of the following two decidable cases holds:
@@ -684,8 +685,8 @@ by the following lemma.
 
 
 \begin{lemma}\label{thm:compress-model}
-Let  $(V,C)$ be a finite semilattice presentation such that all
-clauses have maximal gain $\M$.
+Let  $(V,C)$ be a finite semilattice presentation and $\M\geqslant0$
+such that all clauses have gain at most $\M$.
 Let $f: V\to\Ninf$ be a model of $\upS{C}$ such that $V$ can be
 partitioned as $V = L\cup H\cup I$ with $I= \set{v\in V \mid f(v)=\infty}$
 and $f(x)-f(y) > \M$ for all $x\in H$ and $y\in L$.
@@ -708,7 +709,7 @@ is satisfied in $g$ when $A^+ \to b^+$ is satisfied in $f$.
 We immediately get the following small-model property.
 \begin{corollary}\label{cor:small-model}
 For any $f$, the least $g\geqslant f$ that is a model of $\upS{C}$
-is bounded by $|f|+|V|*\M$.
+satifies $|g| \leqslant |f|+|V|*\M$.
 \end{corollary}
 
 We now analyse the complexity of various results point for point.
@@ -741,13 +742,14 @@ Hence both corollaries yield algorithms that are polynomial in the input size.
 \end{itemize}
 
 One may wonder what is the role of the assumption that the endomorphism
-is inflationary, leading to the predecessor axioms in $\upS{C}$. A first
-answer is that models of the predecessor axioms are downward closed,
+is inflationary, leading to the predecessor clauses in $\upS{C}$. A first
+answer is that models of the predecessor clauses are downward closed,
 leading to an efficient representation of models by functions $f: V\to\Ninf$.
 Moreover we have the following example.
 
 Let $p_i$ be the $i$-th prime number and consider clauses $x_i \to x_i + p_i$,
-and $x_1+1,\ldots,x_n+1 \to y+1$, and $y+1 \to y$ as the only predecessor axiom.
+and $x_1+1,\ldots,x_n+1 \to y+1$, and $y+1 \to y$ as the only predecessor clause.
+Include all the upward shifts of these clauses.
 Then we can infer $x_1,\ldots,x_n \to y$, but forward reasoning takes
 exponentially many steps. 
 
@@ -804,12 +806,12 @@ We denote functions with domain $V$ by a string of values, e.g., $00000$.
 
 First we compute the function $g_0 = 01300$ with the maximal values
 that can be obtained \emph{in one step} from $00000$. We have $W_0 = bc$.
-(We give indices to $g,W$ from the proof since the proof is inductive 
-and we'll need several local versions of these parameters.) 
+(We give indices to $W,g$ in the third paragraph of the induction step in the
+proof of Theorem~\ref{thm:main}, since we need to iterate the induction step.) 
 The proof of Theorem~\ref{thm:main} now invokes
 Lemma~\ref{lem:secondary} to compute the minimal model 
 above $g_0$ of all clauses in $S$ with conclusion over $W_0$,
-$a,b\to b+1$ and $b\to c+3$. Also the proof of the lemma is inductive,
+$a,b\to b+1$ and $b\to c+3$. Also the proof of Lemma~\ref{lem:secondary} is inductive,
 but we immediately get that this minimal model is $h_0 = 01400$.
 
 We now check whether $h_0$ is a model of $S_C$. It is not:
@@ -835,12 +837,12 @@ the minimal model is the function that is constant $\infty$.
 
 \subsection{Related work}
 
-\FYI{Voevodsky remarked in \cite{VV} that universe level expressions
+Voevodsky remarked in \cite{VV} that universe level expressions
 are exactly `linear' functions of universe level variables in the 
 tropical (max-plus) semiring, even though he 
 referred to Presburger Arithmetic for decidability.
 For tropical semirings, see the book \cite{Butcovic}.
-}
+
 
 Some problems in tropical semirings are 
 formulated in the same language as in this note,
@@ -944,6 +946,8 @@ manuscript,
 
 \end{thebibliography}
 
+\end{document}
+
 \newpage
 
 \section*{Answers to the referees}
@@ -1007,8 +1011,6 @@ the general case is treated in the paragraph above the corollaries (now 3.4 and 
 Example: $x,y\to x+1$, $x,y\to y+1$.
 
 \end{description}
-
-\end{document}
 
 \begin{example}~\label{exa:abcd}
 
