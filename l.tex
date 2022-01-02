@@ -1,6 +1,6 @@
 %
 %\documentclass[12pt,a4paper]{amsart}
-\documentclass[11pt,a4paper]{article}
+\documentclass[11pt,a4paper]{elsarticle}
 %\ifx\pdfpageheight\undefined\PassOptionsToPackage{dvips}{graphicx}\else%
 %\PassOptionsToPackage{pdftex}{graphicx}
 \PassOptionsToPackage{pdftex}{color}
@@ -144,20 +144,35 @@
 
 \begin{document}
 
+\begin{frontmatter}
+
 \title{Loop-checking and the uniform word problem
 for join-semilattices with an inflationary endomorphism}
 
-\author{Marc Bezem%
-\thanks{Department of Informatics, University of Bergen, {\tt Marc.Bezem@uib.no}}
-~and Thierry Coquand
-\thanks{Department of Computer Science and Engineering, 
+\author{Marc Bezem}
+\address{Department of Informatics, University of Bergen, {\tt Marc.Bezem@uib.no}}
+
+\author{Thierry Coquand}
+\address{Department of Computer Science and Engineering, 
 Chalmers/University of Gothenburg, {\tt coquand@chalmers.se}}
-}
-\date{}
 
 
-\maketitle
+\begin{abstract}
+We solve in polynomial time 
+two decision problems that occur in type checking when typings depend on
+universe level constraints.
 
+\end{abstract}
+
+
+\begin{keyword}
+Join-semilattices with one inflationary endomorphism\sep 
+Uniform word problem\sep 
+Loop-checking\sep
+Decidability
+\end{keyword}
+
+\end{frontmatter}
 
 \section{Introduction}\label{sec:intro}
 The \emph{uniform word problem} for an equational theory $T$ is
@@ -487,7 +502,7 @@ We now return to the proof of Theorem~\ref{thm:main}.
 
 \begin{proof}
 Let  $(V,C)$ be a finite semilattice presentation and $\M\geqslant0$
-such that each clause in $S_C$ has gain at most $\M$.
+the smallest number such that each clause in $S_C$ has gain at most $\M$.
 By induction on $|V|$ we compute, for any $f: V\to\Ninf$,
 the least $g \geqslant f$ that is a model of $\upS{C}$.
 
@@ -686,7 +701,7 @@ by the following lemma.
 
 \begin{lemma}\label{thm:compress-model}
 Let  $(V,C)$ be a finite semilattice presentation and $\M\geqslant0$
-such that all clauses have gain at most $\M$.
+the smallest number such that each clause in $S_C$ has gain at most $\M$.
 Let $f: V\to\Ninf$ be a model of $\upS{C}$ such that $V$ can be
 partitioned as $V = L\cup H\cup I$ with $I= \set{v\in V \mid f(v)=\infty}$
 and $f(x)-f(y) > \M$ for all $x\in H$ and $y\in L$.
@@ -709,7 +724,7 @@ is satisfied in $g$ when $A^+ \to b^+$ is satisfied in $f$.
 We immediately get the following small-model property.
 \begin{corollary}\label{cor:small-model}
 For any $f$, the least $g\geqslant f$ that is a model of $\upS{C}$
-satifies $|g| \leqslant |f|+|V|*\M$.
+satisfies $|g| \leqslant |f|+|V|*\M$.
 \end{corollary}
 
 We now analyse the complexity of various results point for point.
@@ -878,7 +893,7 @@ Given a set of clauses $R$, the derivations rules are the following.
 
 \begin{enumerate}
 \item $A\to a$ if $a$ is in $A$
-\item $A,B+1\to b+1$ if $B\to b$
+\item $A,(B+1)\to b+1$ if $B\to b$
 \item $A\to a$ if there is a rule $c_1,\dots,c_n\to d$ in $R$ such that 
   $A\to c_1,\dots,A\to c_n$ and $A,d\to a$.
 \end{enumerate}
@@ -894,7 +909,7 @@ We would also like to thank Franz Baader and Viorica Sofronie-Stokkermans for up
 decidability results for description logics.
 
 
-\bibliographystyle{plain}
+\bibliographystyle{elsarticle-num}
 \bibliography{refs}
 \begin{thebibliography}{99}
 
