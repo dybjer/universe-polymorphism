@@ -187,7 +187,7 @@ denoted by ${\_}^+$,
 has a uniform word problem that can be solved in PTIME. 
 
 A \emph{loop} is a term $t$ such that $t^+ \leqslant t$.
-We show that \emph{loop-checking}, i.e., whether or not a loop exists,
+We show that \emph{loop-checking}, i.e., testing whether or not a loop exists,
 is also decidable in PTIME.
 
 In our special case, both the uniform word problem and loop-checking are 
@@ -239,7 +239,7 @@ in which the $x$ and $y$ can be instantiated.
 
 The semilattice \emph{presented by} $(V,C)$ consists of terms over $V$
 modulo provable equality from $C$. The latter will be denoted
-by $C\prvL s=t$. In the next section we will prove that
+by $C\prvL s=t$. In the next sections we will prove that
 $C\prvL s=t$ is decidable in polynomial time for finite semilattice presentations $(V,C)$.
 The results in this section hold for arbitrary semilattice presentations.
 
@@ -397,7 +397,7 @@ Note that this set contains all atoms $v+k$ if $f(v)=\infty$.
 We are interested in such sets as models of $\upS{C}$.
 A clause $A\to b$ with 
 $A = \jbody{x}{k}{m}$ and $b= y+l$, all $x_i,y \in V$,
-is satisfied by $f$ if $l\leqslant f(v)$ when all $k_i \leqslant f(x_i)$.
+is satisfied by $f$ if $l\leqslant f(y)$ when all $k_i \leqslant f(x_i)$.
 Predecessor clauses are of course satisfied by downward closure.
 
 \begin{lemma}\label{lem:f-sat}
@@ -886,8 +886,8 @@ question can be asked in the case of finitely many endomorphisms
 that are all inflationary.
 
 It is easy to describe Hofmann's \cite{Hofmann} algorithm with
-our notation. This is an EXPTIME algorithm in the case where
-we take away the predecessor clauses $a+1\to a$. 
+our notation. This is an EXPTIME algorithm for the case without
+the predecessor clauses $a+1\to a$. 
 The idea is to provide a complete cut-free derivation system. 
 Given a set of clauses $R$, the derivations rules are the following.
 
@@ -963,129 +963,4 @@ manuscript,
 
 \end{document}
 
-\newpage
 
-\section*{Answers to the referees}
-
-We thank both reviewers for their constructive comments and the link with
-decidability results for description logics.
-The title has been changed to better reflect the content of the paper.
-The paper has been thoroughly reworked and a new section on complexity has been added.
-
-For your convenience, changes related to the points below are in red.
-The points (1)--(8) in one referee report are all done.
-Below we give short comments to the points in the other review.
-
-\subsection*{Detailed comments}
-
-The complexity analysis has been carried out in a new section,
-proving that the complexity is PTIME. 
-An example showing that our solution would have EXPTIME behaviour
-when the endomorphism is not inflationary has been added.
-The complexity of the problem in that case is unknown.
-Therefore the axiom $x\leqslant x^+$ is important.
-
-\subsection*{General remarks}
-
-Good point, done: `lattice' replaced by `semilattice' (with some more explanation)
-
-We changed terminology to `inflationary endomorphism'.
-For the application in type theory it is desirable to have as
-few axioms as possible, and all preferably equational.
-
-\subsection*{Concrete comments}
-
-\begin{description}
-\item[Page 2, 3rd para]: done
-
-\item[Page 2, definition of $\prvH$]: two inference rules displayed (no induction on length!)
-
-\item[Page 2, Thm 2.2]: if-part clarified, only-if part is subtle, as it takes place
-in $\FYI{nf}(T(V))/{\equiv}$. Please see if it became more clear. 
-
-Concerning the question about the generators $v+k$: no, that would require many more
-relations such as $(v+k)^+ = v+(k+1)$.
-
-\item[Page 3, Section 3, para 3] You are completely right here, both reviewers, both points. Corrected.
-
-\item[Page 3, Section 3] This has been clarified, and a lemma has been added for further
-clarification and for the complexity analysis.
-
-Concerning your question: No, this cannot happen, $v+0$ is true in any $f$. That is why
-the general case is treated in the paragraph above the corollaries (now 3.4 and 3.5).
-
-\item[Page 3, Thm. 3.1 and Lemma 3.2] Adressed in the new section on complexity.
-
-\item[Page 4, line 3 and induction step] clarified in three lines in red. 
-
-\item[Page 4, Thm. 3.1, induction step] Done.
-
-\item[Page 4 and 5] Done.
-
-\item[Page 4, line -4] No (!). We may need the whole set $W+n$ to infer each $w+n+1$.
-Example: $x,y\to x+1$, $x,y\to y+1$.
-
-\end{description}
-
-\begin{example}~\label{exa:abcd}
-
-Clauses: $a \to b+1$, $b \to c+1$, $c \to d+1$, with
-$V = a,b,c,d$
-
-\begin{enumerate}
-\item $W = b,c,d$, 
-recursive call with $b \to c+1$, $c \to d+1$
-
-\begin{enumerate}
-\item  $W = c,d$, 
-  recursive call with $c \to d+1$
-
-\begin{enumerate}
-\item  $W = d$,
-    recursive call with empty set of clauses
-\item     return $n(d) = 0$
-\end{enumerate}
-
-\item  return $n(c) = 0$,  $n(d) = 1$
-\end{enumerate}
-
-\item return $n(b) = 0$, $n(c) = 1$, $n(d) = 2$
-
-\item no new activated clauses,
-end result $n(a) = 0$, $n(b) = 1$, $n(c) = 2$, $n(d) = 3$
-\end{enumerate}
-
-\end{example}
-
-\begin{example}
-
-Clauses: $a \to b+1$, $b \to c+1$, $c \to d+1$, $d+1 \to e$, $e+1 \to f$, $f+1 \to g$,
-with $V = a,b,c,d,e,f,g$
-
-\begin{enumerate}
-\item $W = b,c,d$, 
-follows verbatim Example~\ref{exa:abcd} with
-result $n(b) = 1$, $n(c) = 2$, $n(d) = 3$
-
-\item only $d+1 \to e$ gets activated, we infer $e+1$ (this is inefficient, we could
-infer $e+2$ and thereafter $f+1$)
-
-\item $W = b,c,d,e$,
-recursive call with $b \to c+1$, $c \to d+1$, $d+1 \to e$,
-complete recomputation of
-result $n(b) = 1$, $n(c) = 2$, $n(d) = 3$, extended with $n(e) = 2$ (highly inefficient)
-
-\item only $e+1 \to f$ gets activated, we infer f+1
-
-\item $W = b,c,d,e,f$,
-recursive call with $b \to c+1$, $c \to d+1$, $d+1 \to e$, $e+1 \to f$,
-complete recomputation of
-result $n(b) = 1$, $n(c) = 2$, $n(d) = 3$, $n(e) = 2$, extended with $n(f) = 1$
-(highly inefficient)
-
-\item no new activated clauses,
-end result $n(a) = 0$, $n(g) = 0$, $n(b) = 1$, $n(c) = 2$, $n(d) = 3$, $n(e) = 2$, $n(f) = 1$
-
-\end{enumerate}
-
-\end{example}
