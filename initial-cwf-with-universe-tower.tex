@@ -63,7 +63,7 @@ $\Pi\UU$-tower-cwfs can be presented as models of a certain infinitary generaliz
  A $\Pi \UU$-tower-cwf is a cwf with a $\Pi$-structure and a structure for a tower of universes closed under $\Pi$.
  
 This means that we have a family of universe structures (in the sense of the paper about one universe) indexed by $n \in \N$, that is, we have $\UU_{n,\Gamma} \in \Ty(\Gamma)$, $\Ta_n(a) \in \Ty(\Gamma)$ and $\Pihat^n(a,b) \in \Tm(\Gamma,\UU_{n,\Gamma})$ provided $\Gamma \in \Ctx$ and $a  \in \Tm(\Gamma,\UU_{n,\Gamma})$ and 
-$b \in \Tm(\Gamma . \Ta(a),\UU_{n,\Gamma})$ with the equations:
+$b \in \Tm(\Gamma . \Ta_n(a),\UU_{n,\Gamma . \Ta_n(a)})$ with the equations:
 \begin{eqnarray*}
 \Ta_n(\Pihat^n(a,b)) &= &\Pi(\Ta_n(a),\Ta_n(b))\\
 \Ta_n(\UUhat^n_{\Gamma}) &= &\UU_{n,\Gamma}\\
@@ -705,7 +705,6 @@ $\intTmU{a} \in \Tm_\C(\intCtxU{\Gamma},((\UU_n)_\C)_{\intCtxU{\Gamma}}$ and
 $\intTmU{b} \in \Tm_\C(\intCtxU{\Gamma.a},((\UU_n)_\C)_{\intCtxU{\Gamma.a}}$.
 
 The proof that this is the unique $\Pi\UU$-tower-cwf morphism into $\C$ is similar to proof for a $\Pi\UU$-tower-cwf. 
-
 
 \begin{thm}\label{theom:initial_cwf}
   $\R$ is an initial $\Pi\UU$-tower-cwf.
