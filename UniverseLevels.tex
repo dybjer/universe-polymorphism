@@ -135,15 +135,15 @@
 \maketitle
 
 \begin{abstract}
-We present three versions of Martin-Löf type theory with a countable sequence of universes. The first version has an externally indexed sequence of universes \`a la Tarski and we present the rules with and without cumulativity. The second is a version where there is an internal notion of universe level. We add a new judgment $l\ \Level$ meaning that $l$ is a universe level, and $l = m$ meaning that $l$ and $m$ are equal universe levels, where level expressions are built up from level variables $\alpha$ by a successor operation $l^+$ and suprema $l \vee m$. In this way judgments can be indexed by level variables, and we obtain universe polymorphism similar to polymorphism the functional language ML. 
-We then extend this theory with rules for level-indexed product types $[\alpha]A$ meaning "$A$ is a type for all universe levels $\alpha$". The final theory is based on Voevodsky's proposal for a system with level constraints. We discuss the (solved) decision problems for sup-semilattices with 
+We present three versions of Martin-Löf type theory with a countable sequence of universes. The first version has an externally indexed sequence of universes \`a la Tarski and we present the rules with and without cumulativity. The second is a version where there is an internal notion of universe level. We add a new judgment $l\ \Level$ meaning that $l$ is a universe level, and $l = m$ meaning that $l$ and $m$ are equal universe levels, where level expressions are built up from level variables $\alpha$ by a successor operation $l^+$ and suprema $l \vee m$. In this way judgments can be indexed by level variables, and we obtain universe polymorphism similar to polymorphism the functional language ML.
+We then extend this theory with rules for level-indexed product types $[\alpha]A$ meaning "$A$ is a type for all universe levels $\alpha$". The final theory is based on Voevodsky's proposal for a system with level constraints. We discuss the (solved) decision problems for sup-semilattices with
 successor that come with this approach. We survey the evolution of rules for universes in type theory. In particular, we discuss the relationship between our systems and a system with a minimal super universe.
 \end{abstract}
 
 
 \section{Introduction}\label{sec:intros}
 
-This note records discussions between the authors concerning the appropriate setting for univalent mathematics in Martin Löf type theory. 
+This note records discussions between the authors concerning the appropriate setting for univalent mathematics in Martin Löf type theory.
 
 The first published version of Martin-Löf's theory \cite{martinlof:predicative} introduces a countable sequence of universes
 $$
@@ -172,7 +172,7 @@ $$
 $$
 in Agda's notation.
 
-\paragraph{Plan.} We begin by providing some historical background about the evolution of universes in type theory. In particular, we shall discuss Palmgren's next universe operator and super universe, and point out that the super universe makes it possible to define an internally quantified sequence of universes. We shall also discuss how the rules for universes are formalized in terms of operations and equations extending the generalised algebraic theory of categories with families. Furthermore, we discuss the role of universes in Martin-Löf's logical framework and how this differs from Agda's logical framework. In Section \ref{sec:external} we state the rules for a basic version of Martin-Löf type theory with $\Pi, \Sigma, \NN$, an identity type former $\Id$, and an externally indexed sequence of universes $\UU_n, \T_n$ \`a la Tarski. We then add cumulativity rules for these universes. In Section \ref{sec:internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$, giving rise to a theory with level polymorphism. This is a kind of ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$. In Section \ref{sec:constraints} we present (a variation of) Voevodsky's proposal with constraints between level variables. 
+\paragraph{Plan.} We begin by providing some historical background about the evolution of universes in type theory. In particular, we shall discuss Palmgren's next universe operator and super universe, and point out that the super universe makes it possible to define an internally quantified sequence of universes. We shall also discuss how the rules for universes are formalized in terms of operations and equations extending the generalised algebraic theory of categories with families. Furthermore, we discuss the role of universes in Martin-Löf's logical framework and how this differs from Agda's logical framework. In Section \ref{sec:external} we state the rules for a basic version of Martin-Löf type theory with $\Pi, \Sigma, \NN$, an identity type former $\Id$, and an externally indexed sequence of universes $\UU_n, \T_n$ \`a la Tarski. We then add cumulativity rules for these universes. In Section \ref{sec:internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$, giving rise to a theory with level polymorphism. This is a kind of ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$. In Section \ref{sec:constraints} we present (a variation of) Voevodsky's proposal with constraints between level variables.
 
 
 
@@ -183,13 +183,13 @@ in Agda's notation.
 Martin-Löf \cite{martinlof:predicative} introduced the above-mentioned version of his intuitionistic type theory with an external countable sequence of universes. In this theory the only judgment is  $\Gamma \vdash a : A$. Moreover, it has an untyped notion of conversion $a\ \conv\ a'$. There is no judgment $A\ \type$, since a type is an $A : \UU_n$ for some $n$. Universes are here \`a la Russell, that is, there is no notational distinction between an element $A : \UU_n$ and the type $A$. Moreover, there is no rule of cumulativity ensuring that $A : \UU_m$ implies $A : \UU_n$ for $m \leq n$.
 
 Martin-Löf \cite{martinlof:hannover} changed the judgment structure and added the judgment form $\Gamma \vdash A\ \type$
-%\footnote{We should be systematic with respect to notation: shall we show all the old notations or the notations we use nowadays?} 
+%\footnote{We should be systematic with respect to notation: shall we show all the old notations or the notations we use nowadays?}
 and replaced the untyped conversion judgments with typed equality judgments $\Gamma \vdash a = a' : A$ and $\Gamma \vdash A = A'$. There is still an external sequence of universes \`a la Russell. A cumulativity rule was also added.
 
 Martin-Löf \cite{martinlof:padova} gave an alternative formulation of the first universe $\UU_0$ \`a la Tarski with decoding $\T_0$, such that $\T_0(a)$ is a type if $a : \UU_0$. He briefly outlined how this formulation could be extended to $\UU_1, \UU_2$, etc.
 %\footnote{Did he discuss two universes?}.
 
-Palmgren \cite{palmgren:venice} then proposed two alternatives for rules for the external sequence of universes $\UU_n$ \`a la Tarski with decodings $\T_n$. 
+Palmgren \cite{palmgren:venice} then proposed two alternatives for rules for the external sequence of universes $\UU_n$ \`a la Tarski with decodings $\T_n$.
 Palmgren's second version of the external sequence is entitled ``universes as uniform constructions". Here the map $\T_0^1 : \UU_0 \to \UU_1$ is a constructor for the second universe $\UU_1$. However, this means that we do not have full reflection: $\UU_1$ contains canonical elements which have no counterpart as canonical types.
 
 The first version is entitled ``universes as full reflection" and was only outlined for the first and the second universe. We will give a full presentation of this theory in Section \ref{sec:external}. In this version there is a cumulativity map $\T_0^1 : \UU_0 \to \UU_1$ which is defined by recursion on the way the elements of $\UU_0$ are defined. For example, assume that $\pi_0$ and $\pi_1$ are the functions which represent the closure under $\Pi$ of $\UU_0$ and of $\UU_1$, respectively. Then one of the defining equations of $\T_0^1$ is
@@ -200,7 +200,7 @@ However, the right hand side of this equations is ill-typed, unless we stipulate
 $$
 \T_1\, (\T_0^1\, a) = \T_0\, a\ (*)
 $$
-Note however that this equation depends on $\T_0^1$ itself, the function we are in the process of defining! 
+Note however that this equation depends on $\T_0^1$ itself, the function we are in the process of defining!
 
 If we nevertheless allow the ill-typed equation above, it will follow that the second equation will be valid for all $a : \UU_0$, that is, it will be valid extensionally in a realizability model, for example, in the style of Allen \cite{allen}. In such a model each type is interpreted as a partial equivalence relation (per) on a set of untyped terms (the realizers). This per represents well-typed terms up to typed judgmental equality. Moreover, there is a per that represents well-formed types up to judgmental equality of types. The defining equations for $\T_0, \T_1,$ and $\T_0^1$ will all be valid in this model but it remains to prove that they are well-typed. The pers for $\UU_0$ and $\UU_1$ (together with their respective decoding maps $\T_0$ and  $\T_1$) have an informal inductive-recursive character, which will be represented as fixed points of monotone operators in set-theoretic metalanguage \cite{allen}. On this basis you can prove by induction on $\UU_0, \T_0$ that the two sides of the judgmental equality (*) are related by the per for equal well-formed types, and hence that the defining equation for $\T_0^1$ is well-typed.
 
@@ -233,7 +233,7 @@ $
 \T_1\, (\T_0^1\, a) = \T_0\, a
 $
 which we discussed above.
-For example, $\Pi$-formation is written 
+For example, $\Pi$-formation is written
 \begin{eqnarray*}
 \Pi&: &(\Gamma : \Ctx) \to (A : \Ty(\Gamma; B : \Ty(\Gamma.A)) \to\Ty(\Gamma)
 \end{eqnarray*}
@@ -393,6 +393,16 @@ with the conversion rule $\JJ(a,d)~a~(\refl~a) = d$.
 
 \subsection*{Rules for an external sequence of universes}
 
+TODO:
+\begin{enumerate}
+\item The rules for $\NN^n$ and $\UU^n$ are notationally inconsistent (because the superscript means which universes $\NN^n$ \emph{lives in}, where it means which universe $\UU^n$ \emph{is}), as well as semantically irregular (because $\UU^n$ is in \emph{one} universe, whereas $\NN^n$ is in all universes).
+\item We have a choice to solve the semantical irregularity: place both of them in one universe, or both of them in all universes.
+\item If we place both of them in one universe, it should be a metatheorem all types have a unique universe, and otherwise all type should havve a minimal universe.
+\item Add the Russell formulation.
+\item Remark that in this formulation(s), we need to add an annotation for the rules for application.
+\item Give a reference to Palmgrem, who was the first author to give rules for a hierarchy of universes \`a la Tarski.
+\end{enumerate}
+
 We will now present a complete set of rules for "universes as full reflections" in the style of the rules in Section \ref{sec:palmgren}. We first present a version without cumulativity.
 $$
 \UU_n~\type~~~~~~
@@ -518,7 +528,7 @@ $$
 \frac{l~\Level~~~~~m~\Level}{l\vee m~\Level}~~~~~~
 \frac{l~\Level}{l^+~\Level}~~~~~~
 $$
-We also have rules that judgments are invariant under level equality. 
+We also have rules that judgments are invariant under level equality.
 This includes equality judgments, which have been left out for simplicity.
 For example,
 $$
@@ -589,7 +599,7 @@ since the type $(l : \Level) \to \UA_l$ is well-formed in the present system.
 % and the
 % fact that if all universes are univalent then they all satisfy function extensionality.
 
-\section*{Rules for cumulativity} 
+\section*{Rules for cumulativity}
 
 These rules are also analogous to the rules for externally indexed universes.
 For the sake of completeness we give them explicitly.
@@ -605,8 +615,8 @@ and $T_{l}^{m}(\NN^{l}) = \NN^{m}$.
 We add $T_{l}^m(A) = A$ if $l = m$
 and $T_{m}^nT_{l}^m = T_l^n$ if $l\leqslant m\leqslant n$.
 Note that this cannot be simplified to $T_{l}^l(A) = A$
-like $T_{n}^n(A) = A$ in \cref{sec:internal}. 
-The simplified equation would not give, e.g., 
+like $T_{n}^n(A) = A$ in \cref{sec:internal}.
+The simplified equation would not give, e.g.,
 $T_{\alpha\vee\beta}^{\beta\vee\alpha}(A) = A$.
 
 We can then simplify the product and sum rules to
@@ -682,10 +692,10 @@ An example that uses level-indexed products is the following type which  express
 $$
 ([\alpha]\mathsf{IsUnivalent}\, \UU_\alpha)
 \to [\beta][\gamma] \mathsf{FunExt}\, \UU_\beta\, \UU_\gamma
-$$   
-               
+$$
+
 We conjecture that all functions in $[\alpha]\NN$ in our system
-are constant. 
+are constant.
 
 \paragraph{Interpreting the system with levels into extensional type theory with a super universe.} We can interpret the theory with rules for level-indexed products in extensional type theory with a (minimal) super universe, provided we add the rules for cumulativity. Levels will be interpreted by internal natural numbers $n : \NN$, and level-indexed products $[\alpha]A$ will be interpreted by ordinary indexed products $\Pi_{n : \NN}A$. Level application and level abstraction will be interpreted as ordinary application and abstraction.
 
@@ -706,12 +716,12 @@ To motivate why it may be useful to introduce the notion of judgment relative to
 %
 %Now  consider the theorem
 $$
-    (A : \UU_l) \to (B : \UU_m) \to (C : \UU_n) 
+    (A : \UU_l) \to (B : \UU_m) \to (C : \UU_n)
     \to \Id\,\UU_{l \vee m}\, (A\times^{l \vee m} B)\,(C \times^{n \vee l} A)
     \to \Id\,\UU_{m \vee l} \, (B\times^{m \vee l} A)\,(C \times^{n \vee l} A)
 %    \to A \times B =_\delta C \times A \to B \times A =_\epsilon C \times A
 $$
-It is well-formed provided $l \vee m = n \vee l$ and $m \vee l = n \vee l$. There are three maximally general solutions: 
+It is well-formed provided $l \vee m = n \vee l$ and $m \vee l = n \vee l$. There are three maximally general solutions:
 \begin{eqnarray*}
 &&l = \alpha, m = \beta, n = \alpha \vee \beta\\
 &&l = \alpha, m = \gamma \vee \alpha, n = \gamma\\
@@ -720,24 +730,24 @@ It is well-formed provided $l \vee m = n \vee l$ and $m \vee l = n \vee l$. Ther
 where $\alpha, \beta,$ and $\gamma$ are level variables.
 %
 %$$
-%    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_{\alpha \vee \beta}) 
+%    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_{\alpha \vee \beta})
 %    \to \Id\,\UU_{\alpha \vee \beta}\, (A\times^{\alpha \vee \beta} B)\,(C \times^{\alpha \vee \beta} A)
 %    \to \Id\,\UU_{\alpha \vee \beta}\, (B\times^{\alpha \vee \beta} A)\,(C \times^{\alpha \vee \beta} A)
 %$$
 %$$
-%    (A : \UU_\alpha) \to (B : \UU_{\gamma \vee \alpha}) \to (C : \UU_{\gamma}) 
+%    (A : \UU_\alpha) \to (B : \UU_{\gamma \vee \alpha}) \to (C : \UU_{\gamma})
 %    \to \Id\,\UU_{\gamma \vee \alpha}\, (A\times^{\gamma \vee \alpha} B)\,(C \times^{\gamma \vee \alpha} A)
 %    \to \Id\,\UU_{\gamma \vee \alpha}\, (B\times^{\gamma \vee \alpha} A)\,(C \times^{\gamma \vee \alpha} A)
 %$$
 %$$
-%    (A : \UU_{\beta \vee \gamma}) \to (B : \UU_{\beta}) \to (C : \UU_{\gamma}) 
+%    (A : \UU_{\beta \vee \gamma}) \to (B : \UU_{\beta}) \to (C : \UU_{\gamma})
 %    \to \Id\,\UU_{\beta \vee \gamma}\, (A\times^{\beta \vee \gamma} B)\,(C \times^{\beta \vee \gamma} A)
 %    \to \Id\,\UU_{\beta \vee \gamma}\, (B\times^{\beta \vee \gamma} A)\,(C \times^{\beta \vee \gamma} A)
 %$$
 (Note the similarity with the Gustave function in stable domain theory.)
 In a system with level constraints, we could instead derive the type
 $$
-    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_\gamma) 
+    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_\gamma)
     \to \Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
     \to \Id\,\UU_{\alpha \vee \beta}\, (B\times A)\,(C \times A)
 $$
@@ -745,18 +755,18 @@ which is valid under the constraints
 $
 \alpha \vee \beta = \gamma \vee \alpha
 $
-and 
+and
 $
 \beta \vee \alpha = \gamma \vee \alpha.
 $
 
 {\color{red}
-TODO Cite \cite{giraud:cohom-non-abel}, \cite{chambert-loir:universes-matter} 
+TODO Cite \cite{giraud:cohom-non-abel}, \cite{chambert-loir:universes-matter}
 and \cite{waterhouse:sheaves}. Remark about $Set_\UU$.}
 
 \subsection{Rules for level constraints}%\label{ssec:VVsystem}
 
-A constraint is an equation $l = m$, where $l$ and $m$ are level expression. 
+A constraint is an equation $l = m$, where $l$ and $m$ are level expression.
 %Thus we have
 %$$
 %\frac{l_1~m_1~\dots~l_k~m_k~\Level}{l_1 = m_1,\dots,l_k = m_k~\Constraint}
@@ -793,9 +803,9 @@ The type system in the previous (???) subsection gives rise to the following
 decision problem: given a context $\Gamma$ containing constraints $\phi_1,\ldots,\phi_n$,
 can one infer the constraint constraint $\psi$?
 
-Voevodsky considered a similar decision problem in \cite[Section 2]{VV}. 
+Voevodsky considered a similar decision problem in \cite[Section 2]{VV}.
 His universe levels are natural numbers, with 0, successor, and maximum.
-His constraints are equations between open terms in this vocabulary, 
+His constraints are equations between open terms in this vocabulary,
 and for decidability he refers to Presburger Arithmetic,
 in which these constraints can easily be expressed.
 
@@ -806,22 +816,22 @@ from type theory are a join operation and a compatible successor function.
 There is no need to assume a level 0, a well-founded total ordering,
 nor does one need that the successor function is injective.
 Since type theory is meant as a foundation of mathematics, it is,
-at least from a philosophical point of view, 
-not a good idea to base the concept of a universe level 
+at least from a philosophical point of view,
+not a good idea to base the concept of a universe level
 on more mathematical notions than stricly necessary.
 
 We propose to apply Occam's Razor here. This means that universe levels
 are elements of an abstract sup-semilattice with a successor function
-that is compatible with the join operation. The logic is ordinary 
+that is compatible with the join operation. The logic is ordinary
 equational logic.
 This approach allows for possible other interpretations of universe levels
 than natural numbers. At the same time the particular decision problem
-called the \emph{uniform word problem} has to be solved for this equational theory. 
+called the \emph{uniform word problem} has to be solved for this equational theory.
 This has been done by Bezem and Coquand in \cite{bezem-coquand:lattices},
 proving the following theorem.
 
 \begin{theorem}\label{thm:P-solvability}
-For sup-semilattices with a successor, both the uniform word problem  
+For sup-semilattices with a successor, both the uniform word problem
 and the problem of loop detection are decidable.
 \end{theorem}
 This theorem ensures that type checking remains decidable when
@@ -842,7 +852,7 @@ Huet \cite{Huet87} develops another algorithm for universe polymorphism in the C
 %used. The principal advantage of this approach over the one considered here
 %is that the consistency checking algorithm is significantly more efficient than
 %Chan's algorithm, reducing to an acyclicity check in a dependency graph of
-%universe levels. 
+%universe levels.
 %\end{quotation}
 
 Assaf \cite{Assaf14} considers an alternative version of the calculus of
@@ -852,7 +862,7 @@ of universes and by introducing additional equations to reflect equality. In par
 \paragraph{Acknowledgement.}
 The authors acknowledge the support of the Centre for Advanced Study (CAS)
 at the Norwegian Academy of Science and Letters
-in Oslo, Norway, which funded and hosted the research project Homotopy  
+in Oslo, Norway, which funded and hosted the research project Homotopy
 Type Theory and Univalent Foundations during the academic year 2018/19.
 \bibliographystyle{plain}
 \bibliography{refs}
