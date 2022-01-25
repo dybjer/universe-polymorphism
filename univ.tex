@@ -180,39 +180,58 @@ types and \ttt{bool} a subuniverse \emph{à la Tarski} of
 A little later, and independently, Martin-Löf \cite{ML71} introduced a dependent 
 type system with a \emph{type} $V$ of all types (so $V:V$).
 After the discovery of Girard's Paradox \cite{Girard71}, this system was replaced by a predicative
-version \cite{ML72}, more similar to the one used in Automath \cite{deBruijn68}. 
+version \cite{ML72}, more similar to the one used in Automath \cite{deBruijn68}.
 Later, Martin-L\"of \cite{martinlof:predicative} introduced a countable sequence of universes
 $$
 \UU_0 : \UU_1 : \UU_2 : \cdots
 $$
-We refer to the indices $0, 1, 2, \ldots$ as {\em universe levels}.
+We refer to the indices $0, 1, 2, \ldots$ as {\em universe levels}. The name ``universe'' was chosen
+in analogy with the notion of universes introduced by Grothendieck to represent category theory
+in set theory.
 
-{\color{red} Cite Lean \cite{moura:lean}?}
+
 
 Before the advent of univalent foundations, one expected only the first few universe
- levels to be relevant in practical formalisations. This suggests that it might be feasible for a user of type theory to explicitly assign universe levels to their types, and whenever necessary repeat definitions when they are needed on different levels. However, the number of copies of definitions does not only grow with the level, but also with the number of type arguments in the definition of a type former. (We remark that universes are more important in a predicative framework than in an impredicative one. Consider for example the formalisation of real numbers as Dedekind cuts, or domain elements as filters of formal neighbourhoods, which belong to $\UU_1$ since they are properties of elements in $\UU_0$.)
-
- To deal with this duplication problem Huet \cite{Huet87} and Harper and Pollack \cite{HarperP91} introduced {\em universe polymorphism}. However, the precise formulation and implementation of universe polymorphism has been a subject of much debate, and different proof assistants use different approaches.
- %This is a practical problem since universe level inference can be a costly operation, sometimes more costly than the usual type-checking.
-
- The need for universe polymorphism has increased with the advent of Voevodsky's univalent foundations, see for example \cite{VV}. One often wants to prove theorems uniformly for an arbitrary universe.
-%There is a connection between the dimension of a type and the level of a universe: for example, it is natural to consider the groupoid structure of the first universe, the 2-groupoid structure of the second universe, etc.\footnote{PD: I changed this paragraph. What do you think?}
-
-%The starting point for the present discussions was Escard\'o's \cite{escardo} development of univalent mathematics in the Agda system. His development is {\em universe polymorphic} and makes heavy use of quantification over Agda's type $\Level$ of universe levels. However, the Agda system is not a precisely defined logical system, and we would like to introduce several candidate systems in which Escard\'o's development can be carried out. We will also present a system similar to Voevodsky's universe polymorphic system \cite{VV}. (** MODIFY THIS STAMEMENT AND ALL OTHER REFERENCES TO VV **) In this system there are variables ranging over universe levels and each judgment is made relative to a list of equational constraints between universe level expressions.
+levels to be relevant in practical formalisations. This suggests that it might be feasible for a user of type theory to explicitly assign universe levels to their types, and whenever necessary repeat definitions when they are needed on different levels. However, the number of copies of definitions does not only grow with the level, but also with the number of type arguments in the definition of a type former.
+The need for universe polymorphism has increased with the advent of Voevodsky's univalent foundations,
+see for example \cite{VV}. One often wants to prove theorems uniformly for an arbitrary universe.
 
 The {\em univalence axiom} states that for any two types $X,Y$ the canonical map
 $$
 \idtoeq_{X,Y} : (X=Y)\to (X\simeq Y)
 $$
-is an equivalence. Formally, the univalence axiom is an axiom scheme which is added to Martin-Löf type theory. If we work in Martin-Löf type theory with a countable tower of universes, each type is a member of some universe $\UU_n$. Such a universe $\UU_n$ is {\em univalent} provided for all $X,Y : \UU_n$ the canonical map $\idtoeq_{X,Y}$ is an equivalence. Let $\UA_n$ be the type expressing the univalence of $\UU_n$, and
+is an equivalence.
+Formally, the univalence axiom is an axiom scheme which is added to Martin-Löf type theory. If we work in Martin-Löf type theory with a countable tower of universes, each type is a member of some universe $\UU_n$. Such a universe $\UU_n$ is {\em univalent} provided for all $X,Y : \UU_n$ the canonical map $\idtoeq_{X,Y}$ is an equivalence. Let $\UA_n$ be the type expressing the univalence of $\UU_n$, and
 $$
 \ua_n : \UA_n
 $$
-for $n = 0,1,\ldots$, be a sequence of constants expressing the instances of the univalence axiom. We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and hence $\UA_n$ is in $\UU_{n+1}$. If we have a type of levels, as in the Agda system, we can express universe polymorphism as quantification over universe levels. Then we can express univalence of all universes as one typing:
-$$
-\ua : (l : \Level) \to \UA_l
-$$
-in Agda's notation.
+for $n = 0,1,\ldots$, be a sequence of constants expressing the instances of the univalence axiom. We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and hence $\UA_n$ is in $\UU_{n+1}$.
+If we have a type of levels, as in the Agda or Lean system,
+we can express universe polymorphism as quantification over universe levels.
+%% Then we can express univalence of all universes as one typing:
+%% $$
+%% \ua : (l : \Level) \to \UA_l
+%% $$
+%% in Agda's notation.
+
+We remark that universes are more important in a predicative framework than in an impredicative one.
+Consider for example the formalisation of real numbers as Dedekind cuts, or domain elements as filters of formal neighbourhoods, which belong to $\UU_1$ since they are properties of elements in $\UU_0$.
+However, even in a system using an impredicative universe of propositions,
+such as the ones in \cite{Huet,moura:lean}, there is the need for the use of definitions parametric
+in universe levels.
+
+%{\color{red} Cite Lean \cite{moura:lean}?}
+
+ To deal with this duplication problem Huet \cite{Huet87} and, later,
+ Harper and Pollack \cite{HarperP91} introduced {\em universe polymorphism}.
+ However, the precise formulation and implementation of universe polymorphism has been a subject of
+ much debate, and different proof assistants use different approaches.
+ %This is a practical problem since universe level inference can be a costly operation, sometimes more costly than the usual type-checking.
+
+%There is a connection between the dimension of a type and the level of a universe: for example, it is natural to consider the groupoid structure of the first universe, the 2-groupoid structure of the second universe, etc.\footnote{PD: I changed this paragraph. What do you think?}
+
+%The starting point for the present discussions was Escard\'o's \cite{escardo} development of univalent mathematics in the Agda system. His development is {\em universe polymorphic} and makes heavy use of quantification over Agda's type $\Level$ of universe levels. However, the Agda system is not a precisely defined logical system, and we would like to introduce several candidate systems in which Escard\'o's development can be carried out. We will also present a system similar to Voevodsky's universe polymorphic system \cite{VV}. (** MODIFY THIS STAMEMENT AND ALL OTHER REFERENCES TO VV **) In this system there are variables ranging over universe levels and each judgment is made relative to a list of equational constraints between universe level expressions.
+
 
 \paragraph{Plan.} We start by giving the rules for a basic version of dependent type theory with
 $\Pi, \Sigma, \NN$, and an identity type former $\Id$.
@@ -257,7 +276,9 @@ $$
 \frac{c:\mysig{x}{A}{B}}{c.2:B(c.1/x)}
 $$
 
-We write $\conv$ for definitional equality (or conversion). The main conversion rules are
+We write $\conv$ for definitional equality (or conversion).
+The main conversion rules are\footnote{We omit systematically {\em congruence} rules
+  such as the rule that $c~a~\conv~c'~a'$ follows from $c~\conv~c'$ and $a~\conv~a'$.}
 $$
 \frac{ a:A~~~~~~ A~ \conv~ B}{ a:B}~~~~~~~~~
 \frac{ a ~\conv~a':A~~~~~~ A  ~\conv~ B}{ a ~\conv~a':B}
@@ -271,7 +292,7 @@ $$
 \frac{ a:A~~~~~~ b:B(a/x)}{ (a,b).1  ~\conv~ a:A}
 ~~~~~~~
 \frac{ a:A~~~~~~ b:B(a/x)}{ (a,b).2  ~\conv~ b:B(a/x)}~~~~~~
-\frac{ a.1 = a'.1:A~~~~~~~ a.2 = a'.2:B(t.1/x)}{ a = a' : \Sigma (x:A)B}
+\frac{ a.1 = a'.1:A~~~~~~~ a.2 = a'.2:B(t.1/x)}{ a = a' : \mysig{a}{A}{B}}
 $$
 
 We can introduce data types: the type of natural numbers $\NN$ has
@@ -289,7 +310,8 @@ with the conversion rule $\JJ(a,d)~a~(\refl~a) = d$.
 
 \section{Rules for an external sequence of universes}
 
-We will now present a complete\footnote{PD: Is this set of rules is complete? What about $A=A':\UU_n$ implies $\T_n(A) = T_n(A')$?} set of rules for "universes as full reflections". 
+We will now present a complete\footnote{We recall that congurence rules are implicit.}
+  %PD: Is this set of rules is complete? What about $A=A':\UU_n$ implies $\T_n(A) = T_n(A')$?} set of rules for "universes as full reflections". 
 %in the style of the rules in Section \ref{sec:palmgren}.
 We first present a version without cumulativity.
 $$
@@ -305,7 +327,7 @@ $$
 where $n$ and $m$ are external natural numbers, and $n \vee m$ is the maximum of $n$ and $m$. This means for example, that $\UU_n~\type$ is a {\em schema}, yielding one rule for each $n$.
 The conversion rules are
 $$
-\T_{n\vee m}~(\Pi^{n,m} A B) = \Pi {x}{\T_{n}(A)}{ \T_{m}(B~x)}~~~~~~~
+\T_{n\vee m}~(\Pi^{n,m} A B) = \mypi{x}{\T_{n}(A)}{ \T_{m}(B~x)}~~~~~~~
 \T_{n\vee m}~(\Sigma^{n,m} A B) = \mysig {x}{\T_{n}(A)}{ \T_{m}(B~x)}~~~~~~~
 $$
 Furthermore we have $$\NN^{n}:\UU_{n}$$
@@ -316,9 +338,9 @@ $$
 {\Id^n~A~a_0~a_1:\UU_n}
 $$
 $$\T_n(\Id^n~A~a_0~a_1) = \Id~\T_n(A)~a_0~a_1$$
-and a code for the previous universe
-$${\UU^{n}}:\UU_{n + 1}$$
-$$\T_{n + 1}({\UU^{n}}) = \UU_{n}$$
+and a code for the previous universe, for $n<l$
+$${\UU_n^{l}}:\UU_{l}$$
+$$\T_{l}({\UU_n^{l}}) = \UU_{n}$$
 
 %% Note that $\UU_p, \T_p$ are given by separate inductive-recursive definition for each $p$. There is one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and also for $\UU^{p-1}$ provided $p \geq 1$.
 
@@ -357,20 +379,68 @@ $$
 \T_{n}^{m}~(\Sigma^{n} A B) = \Sigma^{m} \T_{n}^{m}(A) (\mylam{x}{\T_{n}(A)}{\T_{n}^{m}(B~x)})~~~~~~
 $$
 
+\paragraph{Generalised algebraic presentation and Russell formulation}
+
+It is possible to formulate these rules in the form of a generalised algebraic theory, which provides
+a natural notion of {\em models} of type theory. As explained
+in \cite{streicher:semtt}, in order to see the present rules as presenting the {\em initial} model,
+it is enough to use a variation where application $c~a:B(a/x)$ for $c:\mypi{x}{A}B$ and $a:A$
+is annoted by the type family $A,B$ (and similarly for the pairing operation).
+
+\medskip
+
+Maybe surprisingly, there is another way to present this initial model, which is by using
+a {\em Russell} formulation (using the terminology introduced in \cite{martinlof:padova}) of
+universes.
+
+With this formulation, the version without cumulativity becomes
+
+$$
+\UU_n~\type~~~~~~
+\frac{A:\UU_{n}}{A~\type}
+$$
+$$
+\frac{A:\UU_{n}~~~~~~B:\UU_m(x:A)}
+     {\mypi{x}{A}{B}:\UU_{n\vee m}}~~~~~~~~~
+\frac{A:\UU_{n}~~~~~~B:\UU_m(x:A)}
+     {\mysig{x}{A}{B}:\UU_{n\vee m}}~~~~~~~~~
+$$
+$$\NN:\UU_{n}$$
+$$
+\frac{A:\UU_n~~~~~~a_0:A~~~~~~a_1:A}
+{\Id~A~a_0~a_1:\UU_n}
+$$
+and, for $n<l$
+$${\UU_n}:\UU_{l}$$
+$$\T_{l}({\UU_n^{l}}) = \UU_{n}$$
+
+
+For the version with cumulativity, we add the rule, for $n<l$
+$$
+\frac{A:\UU_{n}}{A:\UU_{l}}
+$$
+and the rules for products and sums can be simplified to
+$$
+\frac{A:\UU_{n}~~~~~~B:\UU_n(x:A)}
+     {\mypi{x}{A}{B}:\UU_{n}}~~~~~~~~~
+\frac{A:\UU_{n}~~~~~~B:\UU_n(x:A)}
+     {\mysig{x}{A}{B}:\UU_{n}}~~~~~~~~~
+$$
+
+ \section{A type theory with universe levels and polymorphism }\label{sec:internal}
 
 The problem with this approach is that we have to {\em duplicate} definitions that follow
 the same pattern. For instance, we have the identity function $\mylam{X}{\UU_n}{\mylam{x}{\T_n(X)}{x}}$
 of type $\mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}$ that can be defined for $n = 0,1,\dots$
-The systems in the next sections address this issue.
-
-\section{A type theory with universe levels and polymorphism }\label{sec:internal}
-
-We introduce {\em universe level} expressions: we write $\alpha,\beta,\dots$
+We address now this issue by introducing {\em universe level}
+expressions: we write $\alpha,\beta,\dots$
 for {\em level variables}, and $l,m,\dots$ for {\em level expressions} which are built from level variables
 by suprema $l \vee m$ and the next level operation $l^+$.
 Level expressions form a sup semilattice $l\vee m$
 with a next level operation $l^+$ such that $l \vee l^+ = l^+$
 and $(l\vee m)^+ = l^+\vee m^+$. (We don't seem to need a $0$ element.)
+We write $l\leqslant m$ for $l\vee m = m$ and $l<m$ for $l^+\leqslant m$.
+
 %As expressed in \cite{VV}, this is essentially a tropical (max-plus)
 %semiring, except that we don't actually seem to need a $0$ element.
 
@@ -411,9 +481,9 @@ $$
 {\Id^l~A~a_0~a_1:\UU_l}
 $$
 $$\T_l(\Id^l~A~a_0~a_1) = \Id~\T_l(A)~a_0~a_1$$
-and a code for the previous universe
-$${\UU^{l}}:\UU_{l + 1}$$
-$$\T_{l + 1}({\UU^{l}}) = \UU_{l}$$
+and a code for the previous universe, for $l = n^+\vee m$
+$${\UU_n^{l}}:\UU_{l}$$
+$$\T_{l}({\UU_n^{l}}) = \UU_{n}$$
 
 %
 %\medskip
@@ -471,12 +541,13 @@ and $l\leqslant m$ (i.e., $m = l\vee m$).
 We require $T_{m}(T_{l}^{m}(A)) = T_{l}(A)$
 and $T_{l}^{m}(\NN^{l}) = \NN^{m}$.
 
-We add $T_{l}^m(A) = A$ if $l = m$
+We add $T_{l}^l(A) = A$\footnote{Recall that the equality of universe levels is the one of
+  sup semilattice with the next operation.}
 and $T_{m}^nT_{l}^m = T_l^n$ if $l\leqslant m\leqslant n$.
-Note that this cannot be simplified to $T_{l}^l(A) = A$
-like $T_{n}^n(A) = A$ in \cref{sec:internal}. 
-The simplified equation would not give, e.g., 
-$T_{\alpha\vee\beta}^{\beta\vee\alpha}(A) = A$.
+%Note that this cannot be simplified to $T_{l}^l(A) = A$
+%like $T_{n}^n(A) = A$ in \cref{sec:internal}. 
+%The simplified equation would not give, e.g., 
+%$T_{\alpha\vee\beta}^{\beta\vee\alpha}(A) = A$.
 
 We can then simplify the product and sum rules to
 $$
@@ -503,7 +574,10 @@ A judgment in the level-indexed system can be interpreted in the externally inde
 
 \subsection*{Rules for level-indexed products}
 
-In Agda $\Level$ is a type, and it is thus possible to form level-indexed products of types. In our system $\Level$ is not a type, but if we want to be able to form level-indexed products we can extend the system with the following rules:
+In Agda $\Level$ is a type,
+and it is thus possible to form level-indexed products of types.
+In our system $\Level$ is not a type, but it is essential to be able to state operations polymorphic
+in the levels. In order to do this, we extend the system with the following rules:
 $$
 \frac{A~\type~(\alpha~\Level)}{[\alpha]A~\type}~~~~~~~
 \frac{t:[\alpha]A~~~~~l~\Level}
@@ -585,24 +659,28 @@ and \cite{waterhouse:sheaves}. Remark about $Set_\UU$.}
 
 \subsection{Rules for level constraints}%\label{ssec:VVsystem}
 
-A constraint is an equation $l = m$, where $l$ and $m$ are level expression. 
+A constraint is an equation $l = m$, where $l$ and $m$ are level expression.
+A list of constraints is {\em consistent} if it does not create a {\em loop}, i.e.
+a level expression $n$ such  that $n<n$ module this list of constraints.
+The main result of \cite{bezem-coquand:lattices} is that it is decidable if a list
+of constraint is consistent; furthermore, we can also decide if a given constraint
+is a consequence.
+
 %Thus we have
 %$$
 %\frac{l_1~m_1~\dots~l_k~m_k~\Level}{l_1 = m_1,\dots,l_k = m_k~\Constraint}
 %$$
 %We write $l\leqslant m$ for the constraint $l\vee m = m$.
 
-We then have a new context extension $\Gamma,\psi$ if $\psi$ is a finite set of constraints in $\Gamma$.
+We then have a new context extension $\Gamma,\psi$ if $\psi$ is a {\em consistent}
+finite set of constraints in $\Gamma$.
 
 New judgment form $\psi~(\Gamma)$ which expresses that the constraint set $\psi$
 holds in $\Gamma$. For instance we have $\alpha^+\leqslant\beta^+~(\alpha\leqslant\beta)$.
 
-In order to have decidable type checking, we require that the constraints in a given context
-should not be looping (which is decidable).
-
 In the system with constraints, we have judgments such as
 $$
-T_{\alpha^+}^{\beta}(\UU^{\alpha}):\UU_{\beta}~(\alpha~\beta~\Level,\alpha^+\leqslant\beta)
+T_{\alpha^+}^{\beta}(\UU^{\alpha}):\UU_{\beta}~(\alpha~\beta~\Level,\alpha<\beta)
 $$
 We introduce a new product operation
 $$
@@ -612,10 +690,10 @@ with the rule $[\psi]A = A$ if $\psi = 1$.
 
 %Intuitively, we can use a term of type $[\psi]A$ only if all constraints in $\psi$ hold.
 
-{\color{red}
-TODO: state that decidability of type-checking requires (1) decidability of loop checking
-(since $\UU:\UU$ makes type checking undecidable) and (2) decidablity of whether $\psi$
-follows from the constraints in $\Gamma$.}
+%% {\color{red}
+%% TODO: state that decidability of type-checking requires (1) decidability of loop checking
+%% (since $\UU:\UU$ makes type checking undecidable) and (2) decidablity of whether $\psi$
+%% follows from the constraints in $\Gamma$.}
 
 \subsection{A decision problem for sup-semilattices with successor}
 
