@@ -738,9 +738,16 @@ typings depend on universe level constraints
 
 \section{Related work}
 
-Harper and Pollack \cite{HarperP91} consider the system $\CComega$, the Calculus of Constructions with an sequence of universes \`a la Russell. They consider both an externally indexed version and a version with level expressions which are either numbers or variables, and with constraints of the form $l < m$ and $l \leq m$. Chan has an algorithm for solving those constraints in $\Ordo(c,v^3)$, where $c$ is the number of constraints and $v$ is the number of level variables. They also consider the level synthesis problem in a version with an anonymous universe Type.
+Huet \cite{Huet87} develops another algorithm for universe polymorphism
+in the Calculus of Constructions extended with a predicative system of universe \cite{coq86}.
+He drops the assumption that the universes form a linearly-ordered cumulative hierarchy indexed by the natural numbers.
+%, and on this basis develops a more efficient consistency checking algorithm than Chan's.
 
-Huet \cite{Huet87} develops another algorithm for universe polymorphism in the Calculus of Constructions. He drops the assumption that the universes form a linearly-ordered cumulative hierarchy indexed by the natural numbers, and on this basis develops a more efficient consistency checking algorithm than Chan's.
+Inspired by Huet's work, Harper and Pollack
+\cite{HarperP91} consider consider both an externally indexed version and a version
+with level expressions which are either numbers or variables, and with constraints of the form $l < m$ and $l \leq m$. They use an algorithm due to Chan
+for solving those constraints in $\Ordo(c,v^3)$, where $c$ is the number of constraints and $v$ is the number of level variables. They also consider the level synthesis problem in a version with an anonymous universe Type.
+
 %\begin{quotation}
 %(cut-and-paste from Harper and Pollack)
 %Huet, in an unpublished manuscript \cite{Huet87}, has independently developed an
