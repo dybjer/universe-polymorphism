@@ -725,8 +725,15 @@ $$
     \to \Id\,\UU_{\alpha \vee \gamma}\, (B\times A)\,(C \times A)}
 $$
 
-    It is now possible to instantiate this general operation to levels and use it
-    $u~l~m~n$ provided the levels $l,m,n$ satisfy the constraint $\psi$.
+    It is now possible to instantiate this general operation to levels $u~l~m~n$. This has type
+    $$[\psi(l,m,n)]\Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
+    {~~\Id\,\UU_{l \vee m}\, (A\times B)\,(C \times A)
+    \to \Id\,\UU_{l \vee n}\, (B\times A)\,(C \times A)}
+$$
+    If $\phi(l,m,n)$ holds, i.e. $l,m,n$ satisfy the constraint $\psi$, we can instantiate
+    further $u~l~m~n$ to $A:\UU_l,B:\UU_m,C:\UU_n$
+    $$u~l~m~n~A~B~C~:~    {~~\Id\,\UU_{l \vee m}\, (A\times B)\,(C \times A)
+    \to \Id\,\UU_{l \vee n}\, (B\times A)\,(C \times A)}$$
 
     We have thus complemented Voevodsky's proposal \cite{VV}: we can not only declare and define
     constants given universe levels satisfying some constraints, but we also provide a mechanism
