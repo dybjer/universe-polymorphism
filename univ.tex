@@ -25,6 +25,10 @@
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}{Lemma}[theorem]
 \newtheorem{proposition}{Proposition}[theorem]
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}{Remark}[theorem]
+\newtheorem{TODO}{TODO}[theorem]
 
 \usepackage{float}
 \floatstyle{boxed}
@@ -382,10 +386,14 @@ $$
 \paragraph{Generalised algebraic presentation and Russell formulation}
 
 It is possible to formulate these rules in the form of a generalised algebraic theory, which provides
-a natural notion of {\em models} of type theory. As explained
+a natural notion of {\em models} of type theory.
+
+\begin{remark} \label{app:annotation}
+As explained
 in \cite{streicher:semtt}, in order to see the present rules as presenting the {\em initial} model,
 it is enough to use a variation where application $c~a:B(a/x)$ for $c:\mypi{x}{A}B$ and $a:A$
 is annoted by the type family $A,B$ (and similarly for the pairing operation).
+\end{remark}
 
 \medskip
 
@@ -410,21 +418,35 @@ $$
 \frac{A:\UU_n~~~~~~a_0:A~~~~~~a_1:A}
 {\Id~A~a_0~a_1:\UU_n}
 $$
-and, for $n<l$, we add ${\UU_n}:\UU_{l}$.
+and, for $l<n$, we add ${\UU_l}:\UU_{n}$.
 
 \medskip
 
-For the version with cumulativity, we add the rules, for $n<l$
+For the version with cumulativity, we add the rules, for $l<n$
 $$
-\frac{A:\UU_{n}}{A:\UU_{l}}
+\frac{A:\UU_{l}}{A:\UU_{n}}
 $$
 and the rules for products and sums can be simplified to
 $$
-\frac{A:\UU_{n}~~~~~~B:\UU_n(x:A)}
-     {\mypi{x}{A}{B}:\UU_{n}}~~~~~~~~~
-\frac{A:\UU_{n}~~~~~~B:\UU_n(x:A)}
-     {\mysig{x}{A}{B}:\UU_{n}}~~~~~~~~~
+\frac{A:\UU_{l}~~~~~~B:\UU_l(x:A)}
+     {\mypi{x}{A}{B}:\UU_{l}}~~~~~~~~~
+\frac{A:\UU_{l}~~~~~~B:\UU_l(x:A)}
+     {\mysig{x}{A}{B}:\UU_{l}}~~~~~~~~~
 $$
+
+
+\begin{remark}
+  In this version \`a la Tarski, with or without cumulativity, terms have unique types, in the sense that if $t : A$ and $t : B$ then $A = B$, by induction on $t$. But for this to be valid, we need to annotate application as discussed in Remark~\ref{app:annotation}.
+  Even with annotated application, the following property is not elementary: if $\UU_n$ and $\UU_m$ are convertible then $n$ is equal to $m$. This kind of property is needed for showing the equivalence between the Tarski and the Russell formulation.
+\end{remark}
+
+\begin{remark} \label{uniqueness:without:cumulativity}
+  In a system without cumulativity, if we restrict $\NN$ to be of type $\UU_0$, and $\UU_n$ to be of type $\UU_{n+1}$ then well formed terms have unique types.
+\end{remark}
+
+\begin{remark}
+  It should be the case that that the above formulation \`a la Russell presents the initial CwF with extra extructure for the standard type formers and a hierarchy of universes, but the proof doesn't seem to be trivial, due to Remark~\ref{uniqueness:without:cumulativity}.
+\end{remark}
 
  \section{A type theory with universe levels and polymorphism }\label{sec:internal}
 
@@ -693,6 +715,13 @@ with the rule $[\psi]A = A$ if $\psi = 1$.
 %% TODO: state that decidability of type-checking requires (1) decidability of loop checking
 %% (since $\UU:\UU$ makes type checking undecidable) and (2) decidablity of whether $\psi$
 %% follows from the constraints in $\Gamma$.}
+
+\begin{TODO}
+  \begin{enumerate}
+  \item Complete the rules.
+    \item Add a remark saying that Voevodsky had all the rules in Section~\ref{} but not the above rules.
+   \end{enumerate}
+ \end{TODO}
 
 \subsection{A decision problem for sup-semilattices with successor}
 
