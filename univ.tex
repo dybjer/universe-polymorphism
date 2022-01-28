@@ -221,7 +221,7 @@ we can express universe polymorphism as quantification over universe levels.
 We remark that universes are more important in a predicative framework than in an impredicative one.
 Consider for example the formalisation of real numbers as Dedekind cuts, or domain elements as filters of formal neighbourhoods, which belong to $\UU_1$ since they are properties of elements in $\UU_0$.
 However, even in a system using an impredicative universe of propositions,
-such as the ones in \cite{Huet,moura:lean}, there is the need for the use of definitions parametric
+such as the ones in \cite{Huet87,moura:lean}, there is the need for the use of definitions parametric
 in universe levels.
 
 %{\color{red} Cite Lean \cite{moura:lean}?}
@@ -701,7 +701,7 @@ holds in $\Gamma$. For instance we have $\alpha^+\leqslant\beta^+~(\alpha\leqsla
 
 In the system with constraints, we have judgments such as
 $$
-T_{\alpha^+}^{\beta}(\UU^{\alpha}):\UU_{\beta}~(\alpha~\beta~\Level,\alpha<\beta)
+\UU^{\alpha}:\UU_{\beta}~(\alpha~\beta~\Level,\alpha<\beta)
 $$
 We introduce a new product operation
 $$
@@ -709,6 +709,28 @@ $$
 $$
 with the rule $[\psi]A = A$ if $\psi = 1$.
 
+\medskip
+
+Here is an example showing how such a system can be used. With univalence, we can build a term $t$
+$$
+t:    \Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}
+    {~~\Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
+    \to \Id\,\UU_{\alpha \vee \gamma}\, (B\times A)\,(C \times A)}
+$$
+    under the constraint  $\psi$ which is $\alpha \vee \beta = \alpha \vee \gamma$.
+
+    We can then define $u = \lam{\alpha~\beta~\gamma}t$ which is of type
+    $$[\alpha~\beta~\gamma][\psi]\Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}
+    {~~\Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
+    \to \Id\,\UU_{\alpha \vee \gamma}\, (B\times A)\,(C \times A)}
+$$
+
+    It is now possible to instantiate this general operation to levels and use it
+    $u~l~m~n$ provided the levels $l,m,n$ satisfy the constraint $\psi$.
+
+    We have thus complemented Voevodsky's proposal \cite{VV}: we can not only declare and define
+    constants given universe levels satisfying some constraints, but we also provide a mechanism
+    to {\em instantiate} these constants.
 %Intuitively, we can use a term of type $[\psi]A$ only if all constraints in $\psi$ hold.
 
 %% {\color{red}
@@ -719,7 +741,9 @@ with the rule $[\psi]A = A$ if $\psi = 1$.
 \begin{TODO}
   \begin{enumerate}
   \item Complete the rules.
-    \item Add a remark saying that Voevodsky had all the rules in Section~\ref{} but not the above rules.
+  \item Add a remark saying that Voevodsky had all the rules for declaring level universes and
+    constraints but not the above rules for instantiating operations defined using these levels
+    supposed to satisfy these constraints.
    \end{enumerate}
  \end{TODO}
 
