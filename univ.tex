@@ -334,17 +334,17 @@ $$
 \T_{n\vee m}~(\Pi^{n,m} A B) = \mypi{x}{\T_{n}(A)}{ \T_{m}(B~x)}~~~~~~~
 \T_{n\vee m}~(\Sigma^{n,m} A B) = \mysig {x}{\T_{n}(A)}{ \T_{m}(B~x)}~~~~~~~
 $$
-Furthermore we have $$\NN^{n}:\UU_{n}$$
-$$\T_{n}(\NN^{n}) = \NN$$
+Furthermore we have $$\NN^{0}:\UU_{0}$$
+$$\T_{0}(\NN^{0}) = \NN$$
 and
 $$
 \frac{A:\UU_n~~~~~~a_0:\T_n(A)~~~~~~a_1:\T_n(A)}
 {\Id^n~A~a_0~a_1:\UU_n}
 $$
 $$\T_n(\Id^n~A~a_0~a_1) = \Id~\T_n(A)~a_0~a_1$$
-and a code for the previous universe, for $l<n$
-$${\UU_l^{n}}:\UU_{n}$$
-$$\T_{n}({\UU_l^{n}}) = \UU_{l}$$
+and a code for the previous universe
+$${\UU^{l+1}}:\UU_{l+1}$$
+$$\T_{l+1}({\UU^{l+1}}) = \UU_{l}$$
 
 %% Note that $\UU_p, \T_p$ are given by separate inductive-recursive definition for each $p$. There is one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and also for $\UU^{p-1}$ provided $p \geq 1$.
 
@@ -359,11 +359,11 @@ $$
 We can also formulate the side condition as an equation $m = n \vee m$.
 We require for all $n,m$
 \[
-\T_m(\T_{n}^{m}(A)) = \T_{n}(A) \quad\text{and}\quad T_{n}^{m}(\NN^{n}) = \NN^{m}.
+\T_m(\T_{n}^{m}(A)) = \T_{n}(A) \quad\text{and}\quad \T_{n}^{m}(\NN^{n}) = \NN^{m}.
 \]
 We add for all $n,m,p$ with $m\leqslant n\leqslant p$
 $$
-T_{n}^n(A) = A \quad\text{and}\quad T_{n}^p\T_{m}^n = T_m^p.
+\T_{n}^n(A) = A \quad\text{and}\quad \T_{n}^p\T_{m}^n = \T_m^p.
 $$
 We can then simplify the product and sum rules to
 $$
@@ -413,18 +413,18 @@ $$
 \frac{A:\UU_{n}~~~~~~B:\UU_m(x:A)}
      {\mysig{x}{A}{B}:\UU_{n\vee m}}~~~~~~~~~
 $$
-$$\NN:\UU_{n}$$
+$$\NN:\UU_{0}$$
 $$
 \frac{A:\UU_n~~~~~~a_0:A~~~~~~a_1:A}
 {\Id~A~a_0~a_1:\UU_n}
 $$
-and, for $l<n$, we add ${\UU_l}:\UU_{n}$.
+and we have ${\UU_l}:\UU_{l+1}$.
 
 \medskip
 
-For the version with cumulativity, we add the rules, for $l<n$
+For the version with cumulativity, we add the rules
 $$
-\frac{A:\UU_{l}}{A:\UU_{n}}
+\frac{A:\UU_{l}}{A:\UU_{l+1}}
 $$
 and the rules for products and sums can be simplified to
 $$
@@ -711,6 +711,26 @@ with the rule $[\psi]A = A$ if $\psi = 1$.
 
 \medskip
 
+If we now build a term $t$ of type $A$ in a context using labels $\alpha_1,\dots,\alpha_m$
+and constraint $\psi$ and variables $x_1:A_1,\dots,x_n:A_n$ we can introduce a constant
+$$
+c~=~ \lam{\alpha_1~\dots~\alpha_m}\lambda_{x_1~\dots~x_n}t ~:~
+[\alpha_1~\dots~\alpha_m][\psi]\Pi_{x_1:A_1~\dots~x_n:A_n}A
+$$
+We can then instantiate this constant $c~l_1~\dots~l_m~u_1~\dots~u_n$, but only if the levels
+$l_1~\dots~l_m$ satisfy the constraint $\psi$.
+
+    We have thus complemented Voevodsky's proposal \cite{VV}: we can not only declare and define
+    constants assuming universe levels satisfying some constraints, but we also provide a mechanism
+    to {\em instantiate} these constants.
+
+    
+
+\medskip
+
+
+
+
 Here is an example showing how such a system can be used. With univalence, we can build a term $t$
 $$
 t:    \Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}
@@ -735,9 +755,6 @@ $$
     $$u~l~m~n~A~B~C~:~    {~~\Id\,\UU_{l \vee m}\, (A\times B)\,(C \times A)
     \to \Id\,\UU_{l \vee n}\, (B\times A)\,(C \times A)}$$
 
-    We have thus complemented Voevodsky's proposal \cite{VV}: we can not only declare and define
-    constants given universe levels satisfying some constraints, but we also provide a mechanism
-    to {\em instantiate} these constants.
 %Intuitively, we can use a term of type $[\psi]A$ only if all constraints in $\psi$ hold.
 
 %% {\color{red}
