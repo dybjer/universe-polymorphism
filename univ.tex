@@ -556,36 +556,36 @@ For the sake of completeness we give them explicitly.
 (** Here we do not need the $\vee$-operation **)
 \footnote{PD: But we use $\vee$ in the rules below.}
 
-We introduce an operation $T_{l}^{m}(A):\UU_{m}$ if $A:\UU_{l}$
+We introduce an operation $\T_{l}^{m}(A):\UU_{m}$ if $A:\UU_{l}$
 and $l\leqslant m$ (i.e., $m = l\vee m$).
 
-We require $T_{m}(T_{l}^{m}(A)) = T_{l}(A)$
-and $T_{l}^{m}(\NN^{l}) = \NN^{m}$.
+We require $\T_{m}(\T_{l}^{m}(A)) = \T_{l}(A)$
+and $\T_{l}^{m}(\NN^{l}) = \NN^{m}$.
 
-We add $T_{l}^l(A) = A$\footnote{Recall that the equality of universe levels is the one of
+We add $\T_{l}^l(A) = A$\footnote{Recall that the equality of universe levels is the one of
   sup semilattice with the next operation.}
-and $T_{m}^nT_{l}^m = T_l^n$ if $l\leqslant m\leqslant n$.
-%Note that this cannot be simplified to $T_{l}^l(A) = A$
-%like $T_{n}^n(A) = A$ in \cref{sec:internal}.
+and $\T_{m}^n\T_{l}^m = \T_l^n$ if $l\leqslant m\leqslant n$.
+%Note that this cannot be simplified to $\T_{l}^l(A) = A$
+%like $\T_{n}^n(A) = A$ in \cref{sec:internal}.
 %The simplified equation would not give, e.g.,
-%$T_{\alpha\vee\beta}^{\beta\vee\alpha}(A) = A$.
+%$\T_{\alpha\vee\beta}^{\beta\vee\alpha}(A) = A$.
 
 We can then simplify the product and sum rules to
 $$
-\frac{A:\UU_{l}~~~~~~B:T_{l}(A)\rightarrow \UU_{l}}
+\frac{A:\UU_{l}~~~~~~B:\T_{l}(A)\rightarrow \UU_{l}}
      {\Pi^{l} A B:\UU_{l}}~~~~~~~~~
-\frac{A:\UU_{l}~~~~~~B:T_{l}(A)\rightarrow \UU_{l}}
+\frac{A:\UU_{l}~~~~~~B:\T_{l}(A)\rightarrow \UU_{l}}
      {\Sigma^{l} A B:\UU_{l}}~~~~~~~~~
 $$
 with conversion rules
 $$
-T_{l}~(\Pi^{l} A B) = \mypi{x}{T_{l}(A)}{ T_{l}(B~x)}~~~~~~~
-T_{l}~(\Sigma^{l} A B) =  \mysig{x}{T_{l}(A)}{ T_{l}(B~x)}~~~~~~~
+\T_{l}~(\Pi^{l} A B) = \mypi{x}{\T_{l}(A)}{ \T_{l}(B~x)}~~~~~~~
+\T_{l}~(\Sigma^{l} A B) =  \mysig{x}{\T_{l}(A)}{ \T_{l}(B~x)}~~~~~~~
 $$
 and
 $$
-T_{l}^{m}~(\Pi^{l} A B) = \Pi^{m} T_{l}^{m}(A) (\mylam {x}{T_{l}(A)}{T_{l}^{m}(B~x)})~~~~~~
-T_{l}^{m}~(\Sigma^{l} A B) = \Sigma^{m} T_{l}^{m}(A) (\mylam {x}{T_{l}(A)}{T_{l}^{m}(B~x)})~~~~~~
+\T_{l}^{m}~(\Pi^{l} A B) = \Pi^{m} \T_{l}^{m}(A) (\mylam {x}{\T_{l}(A)}{\T_{l}^{m}(B~x)})~~~~~~
+\T_{l}^{m}~(\Sigma^{l} A B) = \Sigma^{m} \T_{l}^{m}(A) (\mylam {x}{\T_{l}(A)}{\T_{l}^{m}(B~x)})~~~~~~
 $$
 
 
