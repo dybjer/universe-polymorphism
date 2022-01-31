@@ -621,9 +621,7 @@ are constant.
 
 %In intensional type theory we will not be able to justify all the laws for level expressions as definitional equalities. For example, we do not have $\max(m,n)=\max(n,m)$ definitionally.
 
-\section{A system with level constraints}\label{sec:constraints}
-
-\footnote{PD: We can postpone this question: TODO   can this be presented as GAT???}
+\section{A system with level constraints}\label{sec:constraints}\footnote{PD: We can postpone this question: TODO   can this be presented as GAT???}
 
 To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity:
 %[[The type constructor ``$\simeq$'' should be replaced by the identity type for this to work. I am not sure which notation for the identity type we want to use to formulate this example.]]
@@ -674,11 +672,28 @@ $
 \alpha \vee \beta = \alpha \vee \gamma.
 $
 
+\subsection{Rules for level constraints}%\label{ssec:VVsystem}
+
 {\color{red}
 TODO Cite \cite{giraud:cohom-non-abel}, \cite{chambert-loir:universes-matter}
 and \cite{waterhouse:sheaves}. Remark about $Set_\UU$.}
 
-\subsection{Rules for level constraints}%\label{ssec:VVsystem}
+Voevodsky \cite{VV} suggested to {\em introduce} universe levels with constraint. This corresponds
+to mathematical practice: for instance, at the beginning of the book \cite{giraud:cohom-non-abel},
+the author introduces two universes $U$ and $V$ with the constraint that $U$ is a member of $V$.
+In our setting this will correspond to introducing two levels $\alpha$ and $\beta$ with the
+constraint $\alpha<\beta$. To be explicit about universes can be important, as shown by the
+example in \cite{chambert-loir:universes-matter,waterhouse:sheaves}.
+
+Voevodsky however does not describe a mechanism to {\em eliminate}
+such levels, and this is what we present next.
+
+
+
+\medskip
+
+
+
 
 A constraint is an equation $l = m$, where $l$ and $m$ are level expression.
 A list of constraints is {\em consistent} if it does not create a {\em loop}, i.e.
