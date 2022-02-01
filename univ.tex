@@ -243,7 +243,7 @@ We then explain how to add an externally indexed sequence of universes $\UU_n, \
 cumulativity rules.
 In Section \ref{sec:internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$, giving rise to a theory with level polymorphism. This is a kind of ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$.
 
-In Section \ref{sec:constraints} we present (a variation of) Voevodsky's proposal with constraints between level variables  \cite{VV}.
+In Section \ref{sec:constraints} we present (a variation of) Voevodsky's proposal with constraints between level variables  \cite{VV}, complementing his proposal with a way to eliminate constants introduced with level variables and constraints.
 
 \section{Rules for a basic type theory}
 
@@ -314,10 +314,11 @@ with the conversion rule $\JJ(a,d)~a~(\refl~a) = d$.
 
 \section{Rules for an external sequence of universes}
 
-We will now present a complete\footnote{We recall that congurence rules are implicit.}
+
   %PD: Is this set of rules is complete? What about $A=A':\UU_n$ implies $\T_n(A) = T_n(A')$?} set of rules for "universes as full reflections".
 %in the style of the rules in Section \ref{sec:palmgren}.
-We first present a version without cumulativity.
+We first present a version without
+cumulativity\footnote{We recall that congurence rules are implicit.}.
 $$
 \UU_n~\type~~~~~~
 \frac{A:\UU_{n}}{\T_{n}(A)~\type}
@@ -621,9 +622,9 @@ are constant.
 
 %In intensional type theory we will not be able to justify all the laws for level expressions as definitional equalities. For example, we do not have $\max(m,n)=\max(n,m)$ definitionally.
 
-\section{A system with level constraints}\label{sec:constraints}\footnote{PD: We can postpone this question: TODO   can this be presented as GAT???}
+\section{A system with level constraints}\label{sec:constraints}
 
-To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity:
+To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity\cite{We use Russell's style notation}:
 %[[The type constructor ``$\simeq$'' should be replaced by the identity type for this to work. I am not sure which notation for the identity type we want to use to formulate this example.]]
 %$$
 %    (A : \UU_l) \to (B : \UU_m) \to A \times B \simeq B \times A
@@ -631,10 +632,16 @@ To motivate why it may be useful to introduce the notion of judgment relative to
 %Here we get the constraint is that $l \vee m = m \vee l$, which holds for arbitrary levels $l, m$.
 %
 %Now  consider the theorem
+%% $$
+%%     \Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
+%%     {~~\Id\,\UU_{l \vee m}\, (A\times^{l \vee m} B)\,(C \times^{n \vee l} A)
+%%     \to \Id\,\UU_{m \vee l} \, (B\times^{m \vee l} A)\,(C \times^{n \vee l} A)}
+%% %    \to A \times B =_\delta C \times A \to B \times A =_\epsilon C \times A
+%% $$
 $$
     \Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
-    {~~\Id\,\UU_{l \vee m}\, (A\times^{l \vee m} B)\,(C \times^{n \vee l} A)
-    \to \Id\,\UU_{m \vee l} \, (B\times^{m \vee l} A)\,(C \times^{n \vee l} A)}
+    {~~\Id\,\UU_{l \vee m}\, (A\times B)\,(C \times A)
+    \to \Id\,\UU_{m \vee l} \, (B\times A)\,(C \times A)}
 %    \to A \times B =_\delta C \times A \to B \times A =_\epsilon C \times A
 $$
 It is well-formed provided $l \vee m = n \vee l$. There are three maximally general solutions:
@@ -643,7 +650,8 @@ It is well-formed provided $l \vee m = n \vee l$. There are three maximally gene
 &&l = \alpha, m = \gamma \vee \alpha, n = \gamma\\
 &&l = \beta \vee \gamma, m = \beta, n = \gamma
 \end{eqnarray*}
-where $\alpha, \beta,$ and $\gamma$ are level variables.
+where $\alpha, \beta,$ and $\gamma$ are level
+variables\footnote{Note the similarity with the Gustave function in stable domain theory.}
 %
 %$$
 %    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_{\alpha \vee \beta})
@@ -660,7 +668,7 @@ where $\alpha, \beta,$ and $\gamma$ are level variables.
 %    \to \Id\,\UU_{\beta \vee \gamma}\, (A\times^{\beta \vee \gamma} B)\,(C \times^{\beta \vee \gamma} A)
 %    \to \Id\,\UU_{\beta \vee \gamma}\, (B\times^{\beta \vee \gamma} A)\,(C \times^{\beta \vee \gamma} A)
 %$$
-(Note the similarity with the Gustave function in stable domain theory.)
+
 In a system with level constraints, we could instead derive the type
 $$
     \Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}
@@ -675,8 +683,14 @@ $
 \subsection{Rules for level constraints}%\label{ssec:VVsystem}
 
 {\color{red}
-TODO Cite \cite{giraud:cohom-non-abel}, \cite{chambert-loir:universes-matter}
-and \cite{waterhouse:sheaves}. Remark about $Set_\UU$.}
+  Remark about $Set_\UU$.}
+
+A constraint is an equation $l = m$, where $l$ and $m$ are level expression.
+A list of constraints is {\em consistent} if it does not create a {\em loop}, i.e.
+a level expression $n$ such  that $n<n$ module this list of constraints.
+The main result of \cite{bezem-coquand:lattices} is that it is decidable if a list
+of constraint is consistent; furthermore, we can also decide if a given constraint
+is a consequence.
 
 Voevodsky \cite{VV} suggested to {\em introduce} universe levels with constraint. This corresponds
 to mathematical practice: for instance, at the beginning of the book \cite{giraud:cohom-non-abel},
@@ -695,20 +709,13 @@ such levels, and this is what we present next.
 
 
 
-A constraint is an equation $l = m$, where $l$ and $m$ are level expression.
-A list of constraints is {\em consistent} if it does not create a {\em loop}, i.e.
-a level expression $n$ such  that $n<n$ module this list of constraints.
-The main result of \cite{bezem-coquand:lattices} is that it is decidable if a list
-of constraint is consistent; furthermore, we can also decide if a given constraint
-is a consequence.
-
 %Thus we have
 %$$
 %\frac{l_1~m_1~\dots~l_k~m_k~\Level}{l_1 = m_1,\dots,l_k = m_k~\Constraint}
 %$$
 %We write $l\leqslant m$ for the constraint $l\vee m = m$.
 
-We then have a new context extension $\Gamma,\psi$ if $\psi$ is a {\em consistent}
+We  have a new context extension $\Gamma,\psi$ if $\psi$ is a {\em consistent}
 finite set of constraints in $\Gamma$.
 
 New judgment form $\psi~(\Gamma)$ which expresses that the constraint set $\psi$
@@ -718,7 +725,7 @@ In the system with constraints, we have judgments such as
 $$
 \UU^{\alpha}:\UU_{\beta}~(\alpha~\beta~\Level,\alpha<\beta)
 $$
-We introduce a new product operation
+We introduce a ``restriction'' operation
 $$
 \frac{t:A~(\psi)}{t:[\psi]A}
 $$
@@ -748,17 +755,17 @@ $l_1~\dots~l_m$ satisfy the constraint $\psi$.
 
 Here is an example showing how such a system can be used. With univalence, we can build a term $t$
 $$
-t:    \Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}
+t~:~    \Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}[\alpha \vee \beta = \alpha \vee \gamma]
     {~~\Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
     \to \Id\,\UU_{\alpha \vee \gamma}\, (B\times A)\,(C \times A)}
 $$
-    under the constraint  $\psi$ which is $\alpha \vee \beta = \alpha \vee \gamma$.
 
     We can then define $u = \lam{\alpha~\beta~\gamma}t$ which is of type
     $$[\alpha~\beta~\gamma][\psi]\Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}
     {~~\Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
     \to \Id\,\UU_{\alpha \vee \gamma}\, (B\times A)\,(C \times A)}
 $$
+    where $\psi$ is $\alpha \vee \beta = \alpha \vee \gamma$.
 
     It is now possible to instantiate this general operation to levels $u~l~m~n$. This has type
     $$[\psi(l,m,n)]\Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
@@ -783,6 +790,7 @@ $$
   \item Add a remark saying that Voevodsky had all the rules for declaring level universes and
     constraints but not the above rules for instantiating operations defined using these levels
     supposed to satisfy these constraints.
+  \item PD: We can postpone this question: TODO   can this be presented as GAT???
    \end{enumerate}
  \end{TODO}
 
