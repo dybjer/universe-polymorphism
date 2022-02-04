@@ -847,8 +847,16 @@ Inspired by Huet's work, Harper and Pollack
 with level expressions which are either numbers or variables, and with constraints of the form $l < m$ and $l \leq m$. They use an algorithm due to Chan
 for solving those constraints in $\Ordo(c,v^3)$, where $c$ is the number of constraints and $v$ is the number of level variables. They also consider the level synthesis problem in a version with an anonymous universe Type.
 
-The sup operation on universe levels, also used in Agda and in Voevodsky's
-proposal \cite{VV}, seems to appear first in the unpublished note \cite{herbelin05}.
+This "implicit"
+approach to universe polymorphisms however is problematic w.r.t. modularity, as pointed
+out in \cite{Courant02}: as expressed in \cite{Simpson04},
+one can prove $A\rightarrpw B$ in one file, and $B\rightarrow C$ in one other file, while
+$A\rightarrow C$ is not valid. In order to cope with this issue, J. Courant \cite{Courant02}
+suggested to have explicit level universes, with a sup operation (see also \cite{herbelin05}).
+This approach is now followed in Agda and in Voevodsky's proposal \cite{VV}. Our system complements
+\cite{Courant02,VV} by handling constraints on universe levels and having instantiation operations.
+%The sup operation on universe levels, also used in Agda and in Voevodsky's
+%proposal \cite{VV}, seems to appear first in the unpublished note \cite{herbelin05}.
 
 %\begin{quotation}
 %(cut-and-paste from Harper and Pollack)
