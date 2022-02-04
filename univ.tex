@@ -25,6 +25,10 @@
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}{Lemma}[theorem]
 \newtheorem{proposition}{Proposition}[theorem]
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}{Remark}[theorem]
+\newtheorem{TODO}{TODO}[theorem]
 
 \usepackage{float}
 \floatstyle{boxed}
@@ -140,11 +144,11 @@
 \begin{abstract}
   We present three versions of dependent type theory with a countable sequence of universes.
   The first version has an externally indexed sequence of universes \`a la Tarski and we present the rules with and without cumulativity.
-  The second is a version where there is an internal notion of universe level. We add a new judgment $l\ \Level$ meaning that $l$ is a universe level, and $l = m$ meaning that $l$ and $m$ are equal universe levels, where level expressions are built up from level variables $\alpha$ by a successor operation $l^+$ and suprema $l \vee m$. In this way judgments can be indexed by level variables, and we obtain universe polymorphism similar to polymorphism in the functional language ML. 
+  The second is a version where there is an internal notion of universe level. We add a new judgment $l\ \Level$ meaning that $l$ is a universe level, and $l = m$ meaning that $l$ and $m$ are equal universe levels, where level expressions are built up from level variables $\alpha$ by a successor operation $l^+$ and suprema $l \vee m$. In this way judgments can be indexed by level variables, and we obtain universe polymorphism similar to polymorphism in the functional language ML.
   We then extend this theory with rules for level-indexed product types $[\alpha]A$ meaning ``$A$ is a type for all universe levels $\alpha$".
 The final theory extends a proposal by Voevodsky
-  for a system with level constraints. We discuss the (solved) decision problems for sup-semilattices with 
-successor that come with this approach. 
+  for a system with level constraints. We discuss the (solved) decision problems for sup-semilattices with
+successor that come with this approach.
 \end{abstract}
 
 
@@ -153,31 +157,31 @@ successor that come with this approach.
 
 The earliest record of the use of universes in type theory that we could
 find is in the paper \cite{deBruijn68} by de Bruijn on Automath.
-In this paper, types are called categories, but not all categories are types. 
+In this paper, types are called categories, but not all categories are types.
 Automath has a special symbol \ttt{type} to make it possible to introduce
 new categories, and only categories \ttt{c} introduced as $\ttt{c}:\ttt{type}$
-are types, not \ttt{type} itself (so, not $\ttt{type}:\ttt{type}$). 
-One new type is $\ttt{bool}:\ttt{type}$, 
-which is the category of all propositions. 
+are types, not \ttt{type} itself (so, not $\ttt{type}:\ttt{type}$).
+One new type is $\ttt{bool}:\ttt{type}$,
+which is the category of all propositions.
 Propositions may or may not be asserted
 and to this purpose there is a primitive notion \ttt{TRUE}
 of category \ttt{type}
 in the context of a free variable of type \ttt{bool}.
-By substitution one can form the type \ttt{TRUE(p)} for any $\ttt{p}:\ttt{bool}$. 
+By substitution one can form the type \ttt{TRUE(p)} for any $\ttt{p}:\ttt{bool}$.
 In modern terminology we would call \ttt{type} a universe of
-types and \ttt{bool} a subuniverse \emph{à la Tarski} of 
+types and \ttt{bool} a subuniverse \emph{à la Tarski} of
 (codes of) propositions with a decoding function \ttt{TRUE}.
 %At the very end, the paper discusses the possibility of adding a symbol
 %\ttt{type*} and changing the category of \ttt{bool} from \ttt{type}
 %to \ttt{type*}, disallowing functional abstraction with respect to \ttt{bool}.
-%The possibility of functional abstraction with respect to \ttt{type} is mentioned and rejected.  
+%The possibility of functional abstraction with respect to \ttt{type} is mentioned and rejected.
 
 
 %When representing mathematical reasoning using dependent types it is natural to introduce
 %a sort for types
 %\footnote{PD: This sentence is not clear: what is a "sort"?}
 %, itself closed by dependent product, as was done in the system Automath \cite{deBruijn68}.
-A little later, and independently, Martin-Löf \cite{ML71} introduced a dependent 
+A little later, and independently, Martin-Löf \cite{ML71} introduced a dependent
 type system with a \emph{type} $V$ of all types (so $V:V$).
 After the discovery of Girard's Paradox \cite{Girard71}, this system was replaced by a predicative
 version \cite{ML72}, more similar to the one used in Automath \cite{deBruijn68}.
@@ -217,7 +221,7 @@ we can express universe polymorphism as quantification over universe levels.
 We remark that universes are more important in a predicative framework than in an impredicative one.
 Consider for example the formalisation of real numbers as Dedekind cuts, or domain elements as filters of formal neighbourhoods, which belong to $\UU_1$ since they are properties of elements in $\UU_0$.
 However, even in a system using an impredicative universe of propositions,
-such as the ones in \cite{Huet,moura:lean}, there is the need for the use of definitions parametric
+such as the ones in \cite{Huet87,moura:lean}, there is the need for the use of definitions parametric
 in universe levels.
 
 %{\color{red} Cite Lean \cite{moura:lean}?}
@@ -239,7 +243,7 @@ We then explain how to add an externally indexed sequence of universes $\UU_n, \
 cumulativity rules.
 In Section \ref{sec:internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$, giving rise to a theory with level polymorphism. This is a kind of ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$.
 
-In Section \ref{sec:constraints} we present (a variation of) Voevodsky's proposal with constraints between level variables  \cite{VV}. 
+In Section \ref{sec:constraints} we present (a variation of) Voevodsky's proposal with constraints between level variables  \cite{VV}, complementing his proposal with a way to eliminate constants introduced with level variables and constraints.
 
 \section{Rules for a basic type theory}
 
@@ -310,10 +314,11 @@ with the conversion rule $\JJ(a,d)~a~(\refl~a) = d$.
 
 \section{Rules for an external sequence of universes}
 
-We will now present a complete\footnote{We recall that congurence rules are implicit.}
-  %PD: Is this set of rules is complete? What about $A=A':\UU_n$ implies $\T_n(A) = T_n(A')$?} set of rules for "universes as full reflections". 
+
+  %PD: Is this set of rules is complete? What about $A=A':\UU_n$ implies $\T_n(A) = T_n(A')$?} set of rules for "universes as full reflections".
 %in the style of the rules in Section \ref{sec:palmgren}.
-We first present a version without cumulativity.
+We first present a version without
+cumulativity\footnote{We recall that congurence rules are implicit.}.
 $$
 \UU_n~\type~~~~~~
 \frac{A:\UU_{n}}{\T_{n}(A)~\type}
@@ -330,17 +335,17 @@ $$
 \T_{n\vee m}~(\Pi^{n,m} A B) = \mypi{x}{\T_{n}(A)}{ \T_{m}(B~x)}~~~~~~~
 \T_{n\vee m}~(\Sigma^{n,m} A B) = \mysig {x}{\T_{n}(A)}{ \T_{m}(B~x)}~~~~~~~
 $$
-Furthermore we have $$\NN^{n}:\UU_{n}$$
-$$\T_{n}(\NN^{n}) = \NN$$
+Furthermore we have $$\NN^{0}:\UU_{0}$$
+$$\T_{0}(\NN^{0}) = \NN$$
 and
 $$
 \frac{A:\UU_n~~~~~~a_0:\T_n(A)~~~~~~a_1:\T_n(A)}
 {\Id^n~A~a_0~a_1:\UU_n}
 $$
 $$\T_n(\Id^n~A~a_0~a_1) = \Id~\T_n(A)~a_0~a_1$$
-and a code for the previous universe, for $n<l$
-$${\UU_n^{l}}:\UU_{l}$$
-$$\T_{l}({\UU_n^{l}}) = \UU_{n}$$
+and a code for the previous universe
+$${\UU^{l+1}}:\UU_{l+1}$$
+$$\T_{l+1}({\UU^{l+1}}) = \UU_{l}$$
 
 %% Note that $\UU_p, \T_p$ are given by separate inductive-recursive definition for each $p$. There is one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and also for $\UU^{p-1}$ provided $p \geq 1$.
 
@@ -355,11 +360,11 @@ $$
 We can also formulate the side condition as an equation $m = n \vee m$.
 We require for all $n,m$
 \[
-\T_m(\T_{n}^{m}(A)) = \T_{n}(A) \quad\text{and}\quad T_{n}^{m}(\NN^{n}) = \NN^{m}.
+\T_m(\T_{n}^{m}(A)) = \T_{n}(A) \quad\text{and}\quad \T_{n}^{m}(\NN^{n}) = \NN^{m}.
 \]
 We add for all $n,m,p$ with $m\leqslant n\leqslant p$
 $$
-T_{n}^n(A) = A \quad\text{and}\quad T_{n}^p\T_{m}^n = T_m^p.
+\T_{n}^n(A) = A \quad\text{and}\quad \T_{n}^p\T_{m}^n = \T_m^p.
 $$
 We can then simplify the product and sum rules to
 $$
@@ -382,10 +387,14 @@ $$
 \paragraph{Generalised algebraic presentation and Russell formulation}
 
 It is possible to formulate these rules in the form of a generalised algebraic theory, which provides
-a natural notion of {\em models} of type theory. As explained
+a natural notion of {\em models} of type theory.
+
+\begin{remark} \label{app:annotation}
+As explained
 in \cite{streicher:semtt}, in order to see the present rules as presenting the {\em initial} model,
 it is enough to use a variation where application $c~a:B(a/x)$ for $c:\mypi{x}{A}B$ and $a:A$
 is annoted by the type family $A,B$ (and similarly for the pairing operation).
+\end{remark}
 
 \medskip
 
@@ -405,26 +414,40 @@ $$
 \frac{A:\UU_{n}~~~~~~B:\UU_m(x:A)}
      {\mysig{x}{A}{B}:\UU_{n\vee m}}~~~~~~~~~
 $$
-$$\NN:\UU_{n}$$
+$$\NN:\UU_{0}$$
 $$
 \frac{A:\UU_n~~~~~~a_0:A~~~~~~a_1:A}
 {\Id~A~a_0~a_1:\UU_n}
 $$
-and, for $n<l$, we add ${\UU_n}:\UU_{l}$.
+and we have ${\UU_l}:\UU_{l+1}$.
 
 \medskip
 
-For the version with cumulativity, we add the rules, for $n<l$
+For the version with cumulativity, we add the rules
 $$
-\frac{A:\UU_{n}}{A:\UU_{l}}
+\frac{A:\UU_{l}}{A:\UU_{l+1}}
 $$
 and the rules for products and sums can be simplified to
 $$
-\frac{A:\UU_{n}~~~~~~B:\UU_n(x:A)}
-     {\mypi{x}{A}{B}:\UU_{n}}~~~~~~~~~
-\frac{A:\UU_{n}~~~~~~B:\UU_n(x:A)}
-     {\mysig{x}{A}{B}:\UU_{n}}~~~~~~~~~
+\frac{A:\UU_{l}~~~~~~B:\UU_l(x:A)}
+     {\mypi{x}{A}{B}:\UU_{l}}~~~~~~~~~
+\frac{A:\UU_{l}~~~~~~B:\UU_l(x:A)}
+     {\mysig{x}{A}{B}:\UU_{l}}~~~~~~~~~
 $$
+
+
+\begin{remark}
+  In this version \`a la Tarski, with or without cumulativity, terms have unique types, in the sense that if $t : A$ and $t : B$ then $A = B$, by induction on $t$. But for this to be valid, we need to annotate application as discussed in Remark~\ref{app:annotation}.
+  Even with annotated application, the following property is not elementary: if $\UU_n$ and $\UU_m$ are convertible then $n$ is equal to $m$. This kind of property is needed for showing the equivalence between the Tarski and the Russell formulation.
+\end{remark}
+
+\begin{remark} \label{uniqueness:without:cumulativity}
+  In a system without cumulativity, if we restrict $\NN$ to be of type $\UU_0$, and $\UU_n$ to be of type $\UU_{n+1}$ then well formed terms have unique types.
+\end{remark}
+
+\begin{remark}
+  It should be the case that that the above formulation \`a la Russell presents the initial CwF with extra extructure for the standard type formers and a hierarchy of universes, but the proof doesn't seem to be trivial, due to Remark~\ref{uniqueness:without:cumulativity}.
+\end{remark}
 
  \section{A type theory with universe levels and polymorphism }\label{sec:internal}
 
@@ -449,7 +472,7 @@ $$
 \frac{l~\Level~~~~~m~\Level}{l\vee m~\Level}~~~~~~
 \frac{l~\Level}{l^+~\Level}~~~~~~
 $$
-We also have level equality judgments $l = m$ and rules expressing that judgments are invariant under level equality. 
+We also have level equality judgments $l = m$ and rules expressing that judgments are invariant under level equality.
 For example,
 $$
 \frac{a(l/\alpha) : A(l/\alpha)\ \ \ l = m}
@@ -534,36 +557,36 @@ For the sake of completeness we give them explicitly.
 (** Here we do not need the $\vee$-operation **)
 \footnote{PD: But we use $\vee$ in the rules below.}
 
-We introduce an operation $T_{l}^{m}(A):\UU_{m}$ if $A:\UU_{l}$
+We introduce an operation $\T_{l}^{m}(A):\UU_{m}$ if $A:\UU_{l}$
 and $l\leqslant m$ (i.e., $m = l\vee m$).
 
-We require $T_{m}(T_{l}^{m}(A)) = T_{l}(A)$
-and $T_{l}^{m}(\NN^{l}) = \NN^{m}$.
+We require $\T_{m}(\T_{l}^{m}(A)) = \T_{l}(A)$
+and $\T_{l}^{m}(\NN^{l}) = \NN^{m}$.
 
-We add $T_{l}^l(A) = A$\footnote{Recall that the equality of universe levels is the one of
+We add $\T_{l}^l(A) = A$\footnote{Recall that the equality of universe levels is the one of
   sup semilattice with the next operation.}
-and $T_{m}^nT_{l}^m = T_l^n$ if $l\leqslant m\leqslant n$.
-%Note that this cannot be simplified to $T_{l}^l(A) = A$
-%like $T_{n}^n(A) = A$ in \cref{sec:internal}. 
-%The simplified equation would not give, e.g., 
-%$T_{\alpha\vee\beta}^{\beta\vee\alpha}(A) = A$.
+and $\T_{m}^n\T_{l}^m = \T_l^n$ if $l\leqslant m\leqslant n$.
+%Note that this cannot be simplified to $\T_{l}^l(A) = A$
+%like $\T_{n}^n(A) = A$ in \cref{sec:internal}.
+%The simplified equation would not give, e.g.,
+%$\T_{\alpha\vee\beta}^{\beta\vee\alpha}(A) = A$.
 
 We can then simplify the product and sum rules to
 $$
-\frac{A:\UU_{l}~~~~~~B:T_{l}(A)\rightarrow \UU_{l}}
+\frac{A:\UU_{l}~~~~~~B:\T_{l}(A)\rightarrow \UU_{l}}
      {\Pi^{l} A B:\UU_{l}}~~~~~~~~~
-\frac{A:\UU_{l}~~~~~~B:T_{l}(A)\rightarrow \UU_{l}}
+\frac{A:\UU_{l}~~~~~~B:\T_{l}(A)\rightarrow \UU_{l}}
      {\Sigma^{l} A B:\UU_{l}}~~~~~~~~~
 $$
 with conversion rules
 $$
-T_{l}~(\Pi^{l} A B) = \mypi{x}{T_{l}(A)}{ T_{l}(B~x)}~~~~~~~
-T_{l}~(\Sigma^{l} A B) =  \mysig{x}{T_{l}(A)}{ T_{l}(B~x)}~~~~~~~
+\T_{l}~(\Pi^{l} A B) = \mypi{x}{\T_{l}(A)}{ \T_{l}(B~x)}~~~~~~~
+\T_{l}~(\Sigma^{l} A B) =  \mysig{x}{\T_{l}(A)}{ \T_{l}(B~x)}~~~~~~~
 $$
 and
 $$
-T_{l}^{m}~(\Pi^{l} A B) = \Pi^{m} T_{l}^{m}(A) (\mylam {x}{T_{l}(A)}{T_{l}^{m}(B~x)})~~~~~~
-T_{l}^{m}~(\Sigma^{l} A B) = \Sigma^{m} T_{l}^{m}(A) (\mylam {x}{T_{l}(A)}{T_{l}^{m}(B~x)})~~~~~~
+\T_{l}^{m}~(\Pi^{l} A B) = \Pi^{m} \T_{l}^{m}(A) (\mylam {x}{\T_{l}(A)}{\T_{l}^{m}(B~x)})~~~~~~
+\T_{l}^{m}~(\Sigma^{l} A B) = \Sigma^{m} \T_{l}^{m}(A) (\mylam {x}{\T_{l}(A)}{\T_{l}^{m}(B~x)})~~~~~~
 $$
 
 
@@ -590,10 +613,10 @@ An example that uses level-indexed products is the following type which  express
 $$
 ([\alpha]\mathsf{IsUnivalent}\, \UU_\alpha)
 \to [\beta][\gamma] \mathsf{FunExt}\, \UU_\beta\, \UU_\gamma
-$$   
-               
+$$
+
 We conjecture that all functions in $[\alpha]\NN$ in our system
-are constant. 
+are constant.
 
 %\paragraph{Interpreting the system with levels into extensional type theory with a super universe.} We can interpret the theory with rules for level-indexed products in extensional type theory with a (minimal) super universe, provided we add the rules for cumulativity. Levels will be interpreted by internal natural numbers $n : \NN$, and level-indexed products $[\alpha]A$ will be interpreted by ordinary indexed products $\Pi_{n : \NN}A$. Level application and level abstraction will be interpreted as ordinary application and abstraction.
 
@@ -601,9 +624,7 @@ are constant.
 
 \section{A system with level constraints}\label{sec:constraints}
 
-\footnote{PD: We can postpone this question: TODO   can this be presented as GAT???}
-
-To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity:
+To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity\footnote{We use Russell's style notation}:
 %[[The type constructor ``$\simeq$'' should be replaced by the identity type for this to work. I am not sure which notation for the identity type we want to use to formulate this example.]]
 %$$
 %    (A : \UU_l) \to (B : \UU_m) \to A \times B \simeq B \times A
@@ -611,36 +632,43 @@ To motivate why it may be useful to introduce the notion of judgment relative to
 %Here we get the constraint is that $l \vee m = m \vee l$, which holds for arbitrary levels $l, m$.
 %
 %Now  consider the theorem
+%% $$
+%%     \Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
+%%     {~~\Id\,\UU_{l \vee m}\, (A\times^{l \vee m} B)\,(C \times^{n \vee l} A)
+%%     \to \Id\,\UU_{m \vee l} \, (B\times^{m \vee l} A)\,(C \times^{n \vee l} A)}
+%% %    \to A \times B =_\delta C \times A \to B \times A =_\epsilon C \times A
+%% $$
 $$
     \Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
-    {~~\Id\,\UU_{l \vee m}\, (A\times^{l \vee m} B)\,(C \times^{n \vee l} A)
-    \to \Id\,\UU_{m \vee l} \, (B\times^{m \vee l} A)\,(C \times^{n \vee l} A)}
+    {~~\Id\,\UU_{l \vee m}\, (A\times B)\,(C \times A)
+    \to \Id\,\UU_{m \vee l} \, (B\times A)\,(C \times A)}
 %    \to A \times B =_\delta C \times A \to B \times A =_\epsilon C \times A
 $$
-It is well-formed provided $l \vee m = n \vee l$. There are three maximally general solutions: 
+It is well-formed provided $l \vee m = n \vee l$. There are three maximally general solutions:
 \begin{eqnarray*}
 &&l = \alpha, m = \beta, n = \alpha \vee \beta\\
 &&l = \alpha, m = \gamma \vee \alpha, n = \gamma\\
 &&l = \beta \vee \gamma, m = \beta, n = \gamma
 \end{eqnarray*}
-where $\alpha, \beta,$ and $\gamma$ are level variables.
+where $\alpha, \beta,$ and $\gamma$ are level
+variables\footnote{Note the similarity with the Gustave function in stable domain theory.}
 %
 %$$
-%    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_{\alpha \vee \beta}) 
+%    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_{\alpha \vee \beta})
 %    \to \Id\,\UU_{\alpha \vee \beta}\, (A\times^{\alpha \vee \beta} B)\,(C \times^{\alpha \vee \beta} A)
 %    \to \Id\,\UU_{\alpha \vee \beta}\, (B\times^{\alpha \vee \beta} A)\,(C \times^{\alpha \vee \beta} A)
 %$$
 %$$
-%    (A : \UU_\alpha) \to (B : \UU_{\gamma \vee \alpha}) \to (C : \UU_{\gamma}) 
+%    (A : \UU_\alpha) \to (B : \UU_{\gamma \vee \alpha}) \to (C : \UU_{\gamma})
 %    \to \Id\,\UU_{\gamma \vee \alpha}\, (A\times^{\gamma \vee \alpha} B)\,(C \times^{\gamma \vee \alpha} A)
 %    \to \Id\,\UU_{\gamma \vee \alpha}\, (B\times^{\gamma \vee \alpha} A)\,(C \times^{\gamma \vee \alpha} A)
 %$$
 %$$
-%    (A : \UU_{\beta \vee \gamma}) \to (B : \UU_{\beta}) \to (C : \UU_{\gamma}) 
+%    (A : \UU_{\beta \vee \gamma}) \to (B : \UU_{\beta}) \to (C : \UU_{\gamma})
 %    \to \Id\,\UU_{\beta \vee \gamma}\, (A\times^{\beta \vee \gamma} B)\,(C \times^{\beta \vee \gamma} A)
 %    \to \Id\,\UU_{\beta \vee \gamma}\, (B\times^{\beta \vee \gamma} A)\,(C \times^{\beta \vee \gamma} A)
 %$$
-(Note the similarity with the Gustave function in stable domain theory.)
+
 In a system with level constraints, we could instead derive the type
 $$
     \Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}
@@ -652,11 +680,10 @@ $
 \alpha \vee \beta = \alpha \vee \gamma.
 $
 
-{\color{red}
-TODO Cite \cite{giraud:cohom-non-abel}, \cite{chambert-loir:universes-matter} 
-and \cite{waterhouse:sheaves}. Remark about $Set_\UU$.}
-
 \subsection{Rules for level constraints}%\label{ssec:VVsystem}
+
+{\color{red}
+  Remark about $Set_\UU$.}
 
 A constraint is an equation $l = m$, where $l$ and $m$ are level expression.
 A list of constraints is {\em consistent} if it does not create a {\em loop}, i.e.
@@ -665,13 +692,30 @@ The main result of \cite{bezem-coquand:lattices} is that it is decidable if a li
 of constraint is consistent; furthermore, we can also decide if a given constraint
 is a consequence.
 
+Voevodsky \cite{VV} suggested to {\em introduce} universe levels with constraint. This corresponds
+to mathematical practice: for instance, at the beginning of the book \cite{giraud:cohom-non-abel},
+the author introduces two universes $U$ and $V$ with the constraint that $U$ is a member of $V$.
+In our setting this will correspond to introducing two levels $\alpha$ and $\beta$ with the
+constraint $\alpha<\beta$. To be explicit about universes can be important, as shown by the
+example in \cite{chambert-loir:universes-matter,waterhouse:sheaves}.
+
+Voevodsky however does not describe a mechanism to {\em eliminate}
+such levels, and this is what we present next.
+
+
+
+\medskip
+
+
+
+
 %Thus we have
 %$$
 %\frac{l_1~m_1~\dots~l_k~m_k~\Level}{l_1 = m_1,\dots,l_k = m_k~\Constraint}
 %$$
 %We write $l\leqslant m$ for the constraint $l\vee m = m$.
 
-We then have a new context extension $\Gamma,\psi$ if $\psi$ is a {\em consistent}
+We  have a new context extension $\Gamma,\psi$ if $\psi$ is a {\em consistent}
 finite set of constraints in $\Gamma$.
 
 New judgment form $\psi~(\Gamma)$ which expresses that the constraint set $\psi$
@@ -679,13 +723,59 @@ holds in $\Gamma$. For instance we have $\alpha^+\leqslant\beta^+~(\alpha\leqsla
 
 In the system with constraints, we have judgments such as
 $$
-T_{\alpha^+}^{\beta}(\UU^{\alpha}):\UU_{\beta}~(\alpha~\beta~\Level,\alpha<\beta)
+\UU_{\alpha}:\UU_{\beta}~(\alpha~\beta~\Level,\alpha<\beta)
 $$
-We introduce a new product operation
+We introduce a ``restriction'' operation
 $$
 \frac{t:A~(\psi)}{t:[\psi]A}
 $$
 with the rule $[\psi]A = A$ if $\psi = 1$.
+
+\medskip
+
+If we now build a term $t$ of type $A$ in a context using labels $\alpha_1,\dots,\alpha_m$
+and constraint $\psi$ and variables $x_1:A_1,\dots,x_n:A_n$ we can introduce a constant
+$$
+c~=~ \lam{\alpha_1~\dots~\alpha_m}\lambda_{x_1~\dots~x_n}t ~:~
+[\alpha_1~\dots~\alpha_m][\psi]\Pi_{x_1:A_1~\dots~x_n:A_n}A
+$$
+We can then instantiate this constant $c~l_1~\dots~l_m~u_1~\dots~u_n$, but only if the levels
+$l_1~\dots~l_m$ satisfy the constraint $\psi$.
+
+    We have thus complemented Voevodsky's proposal \cite{VV}: we can not only declare and define
+    constants assuming universe levels satisfying some constraints, but we also provide a mechanism
+    to {\em instantiate} these constants.
+
+    
+
+\medskip
+
+
+
+
+Here is an example showing how such a system can be used. With univalence, we can build a term $t$
+$$
+t~:~    \Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}[\alpha \vee \beta = \alpha \vee \gamma]
+    {~~\Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
+    \to \Id\,\UU_{\alpha \vee \gamma}\, (B\times A)\,(C \times A)}
+$$
+
+    We can then define $u = \lam{\alpha~\beta~\gamma}t$ which is of type
+    $$[\alpha~\beta~\gamma][\psi]\Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}
+    {~~\Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
+    \to \Id\,\UU_{\alpha \vee \gamma}\, (B\times A)\,(C \times A)}
+$$
+    where $\psi$ is $\alpha \vee \beta = \alpha \vee \gamma$.
+
+    It is now possible to instantiate this general operation to levels $u~l~m~n$. This has type
+    $$[\psi(l,m,n)]\Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
+    {~~\Id\,\UU_{l \vee m}\, (A\times B)\,(C \times A)
+    \to \Id\,\UU_{l \vee n}\, (B\times A)\,(C \times A)}
+$$
+    If $\psi(l,m,n)$ holds, i.e. $l,m,n$ satisfy the constraint $\psi$, we can instantiate
+    further $u~l~m~n$ to $A:\UU_l,B:\UU_m,C:\UU_n$
+    $$u~l~m~n~A~B~C~:~    {~~\Id\,\UU_{l \vee m}\, (A\times B)\,(C \times A)
+    \to \Id\,\UU_{l \vee n}\, (B\times A)\,(C \times A)}$$
 
 %Intuitively, we can use a term of type $[\psi]A$ only if all constraints in $\psi$ hold.
 
@@ -694,15 +784,25 @@ with the rule $[\psi]A = A$ if $\psi = 1$.
 %% (since $\UU:\UU$ makes type checking undecidable) and (2) decidablity of whether $\psi$
 %% follows from the constraints in $\Gamma$.}
 
+\begin{TODO}
+  \begin{enumerate}
+  \item Complete the rules.
+  \item Add a remark saying that Voevodsky had all the rules for declaring level universes and
+    constraints but not the above rules for instantiating operations defined using these levels
+    supposed to satisfy these constraints.
+  \item PD: We can postpone this question: TODO   can this be presented as GAT???
+   \end{enumerate}
+ \end{TODO}
+
 \subsection{A decision problem for sup-semilattices with successor}
 
-The type system in the previous (???) subsection gives rise to the following
+The type system in the previous subsection gives rise to the following
 decision problem: given a context $\Gamma$ containing constraints $\phi_1,\ldots,\phi_n$,
 can one infer the constraint $\psi$?
 
-Voevodsky considered a similar decision problem in \cite[Section 2]{VV}. 
+Voevodsky considered a similar decision problem in \cite[Section 2]{VV}.
 His universe levels are natural numbers, with 0, successor, and maximum.
-His constraints are equations between open terms in this vocabulary, 
+His constraints are equations between open terms in this vocabulary,
 and for decidability he refers to Presburger Arithmetic,
 in which these constraints can easily be expressed.
 
@@ -713,22 +813,22 @@ from type theory are a join operation and a compatible successor function.
 There is no need to assume a level 0, a well-founded total ordering,
 nor does one need that the successor function is injective.
 Since type theory is meant as a foundation of mathematics, it is,
-at least from a philosophical point of view, 
-not a good idea to base the concept of a universe level 
+at least from a philosophical point of view,
+not a good idea to base the concept of a universe level
 on more mathematical notions than stricly necessary.
 
 We propose to apply Occam's Razor here. This means that universe levels
 are elements of an abstract sup-semilattice with a successor function
-that is compatible with the join operation. The logic is ordinary 
+that is compatible with the join operation. The logic is ordinary
 equational logic.
 This approach allows for possible other interpretations of universe levels
 than natural numbers. At the same time the particular decision problem
-called the \emph{uniform word problem} has to be solved for this equational theory. 
+called the \emph{uniform word problem} has to be solved for this equational theory.
 This has been done by Bezem and Coquand in \cite{bezem-coquand:lattices},
 proving the following theorem.
 
 \begin{theorem}\label{thm:P-solvability}
-For sup-semilattices with a successor, both the uniform word problem  
+For sup-semilattices with a successor, both the uniform word problem
 and the problem of loop detection are decidable.
 \end{theorem}
 This theorem ensures that type checking remains decidable when
@@ -738,7 +838,7 @@ typings depend on universe level constraints
 \section{Related work}
 
 Huet \cite{Huet87} develops another algorithm for universe polymorphism
-in the Calculus of Constructions extended with a predicative system of universe \cite{coq86}.
+in the Calculus of Constructions extended with a predicative system of universes.
 He drops the assumption that the universes form a linearly-ordered cumulative hierarchy indexed by the natural numbers.
 %, and on this basis develops a more efficient consistency checking algorithm than Chan's.
 
@@ -746,6 +846,17 @@ Inspired by Huet's work, Harper and Pollack
 \cite{HarperP91} consider consider both an externally indexed version and a version
 with level expressions which are either numbers or variables, and with constraints of the form $l < m$ and $l \leq m$. They use an algorithm due to Chan
 for solving those constraints in $\Ordo(c,v^3)$, where $c$ is the number of constraints and $v$ is the number of level variables. They also consider the level synthesis problem in a version with an anonymous universe Type.
+
+This "implicit"
+approach to universe polymorphisms however is problematic w.r.t. modularity, as pointed
+out in \cite{Courant02}: as expressed in \cite{Simpson04},
+one can prove $A\rightarrow B$ in one file, and $B\rightarrow C$ in one other file, while
+$A\rightarrow C$ is not valid. In order to cope with this issue, J. Courant \cite{Courant02}
+suggested to have explicit level universes, with a sup operation (see also \cite{herbelin05}).
+This approach is now followed in Agda and in Voevodsky's proposal \cite{VV}. Our system complements
+\cite{Courant02,VV} by handling constraints on universe levels and having instantiation operations.
+%The sup operation on universe levels, also used in Agda and in Voevodsky's
+%proposal \cite{VV}, seems to appear first in the unpublished note \cite{herbelin05}.
 
 %\begin{quotation}
 %(cut-and-paste from Harper and Pollack)
@@ -756,17 +867,18 @@ for solving those constraints in $\Ordo(c,v^3)$, where $c$ is the number of cons
 %used. The principal advantage of this approach over the one considered here
 %is that the consistency checking algorithm is significantly more efficient than
 %Chan's algorithm, reducing to an acyclicity check in a dependency graph of
-%universe levels. 
+%universe levels.
 %\end{quotation}
 
 Assaf \cite{Assaf14} considers an alternative version of the calculus of
 constructions where subtyping is explicit. This new system avoids problems related to coercions and dependent types by using the Tarski style
 of universes and by introducing additional equations to reflect equality. In particular he adds an explicit cumulativity map $\T^0_1 : \UU_0 \to \UU_1$. He argues that "full reflection" is necessary to achieve the expressivity of Russell style. He introduces the explicit cumulative calculus of constructions (CC$\uparrow$) which is closely related to our system of externally indexed Tarski style universes.
+This is analysed further in the PhD thesis of F. Thir\'e \cite{Thire20}.
 
 \paragraph{Acknowledgement.}
 The authors acknowledge the support of the Centre for Advanced Study (CAS)
 at the Norwegian Academy of Science and Letters
-in Oslo, Norway, which funded and hosted the research project Homotopy  
+in Oslo, Norway, which funded and hosted the research project Homotopy
 Type Theory and Univalent Foundations during the academic year 2018/19.
 \bibliographystyle{plain}
 \bibliography{refs}
