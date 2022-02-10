@@ -164,13 +164,14 @@ are types, not \ttt{type} itself (so, not $\ttt{type}:\ttt{type}$).
 One new type is $\ttt{bool}:\ttt{type}$,
 which is the category of all propositions.
 Propositions may or may not be asserted
-and to this purpose there is a primitive notion \ttt{TRUE}
+and to this purpose there is a primitive notion\footnote{PD: category?} \ttt{TRUE}
 of category \ttt{type}
 in the context of a free variable of type \ttt{bool}.
 By substitution one can form the type \ttt{TRUE(p)} for any $\ttt{p}:\ttt{bool}$.
 In modern terminology we would call \ttt{type} a universe of
 types and \ttt{bool} a subuniverse \emph{à la Tarski} of
 (codes of) propositions with a decoding function \ttt{TRUE}.
+\footnote{PD: this seems similar to Per's view of type theory in 1985, just before he introduced the logical framework. Then he talked about "the category of types" and "the category of objects of a type". Among the types he had a universe U which could be formulated a la Tarski with T(a) the type of elements of a : U. How was  \ttt{TRUE(p)} defined? Is it similar to T(a)?}
 %At the very end, the paper discusses the possibility of adding a symbol
 %\ttt{type*} and changing the category of \ttt{bool} from \ttt{type}
 %to \ttt{type*}, disallowing functional abstraction with respect to \ttt{bool}.
@@ -184,7 +185,7 @@ types and \ttt{bool} a subuniverse \emph{à la Tarski} of
 A little later, and independently, Martin-Löf \cite{ML71} introduced a dependent
 type system with a \emph{type} $V$ of all types (so $V:V$).
 After the discovery of Girard's Paradox \cite{Girard71}, this system was replaced by a predicative
-version \cite{ML72}, more similar to the one used in Automath \cite{deBruijn68}.
+version \cite{ML72}\footnote{PD: in that paper there were just two levels: "types" and "small types" (in the universe).}, more similar to the one used in Automath \cite{deBruijn68}.
 Later, Martin-L\"of \cite{martinlof:predicative} introduced a countable sequence of universes
 $$
 \UU_0 : \UU_1 : \UU_2 : \cdots
@@ -239,7 +240,7 @@ in universe levels.
 
 \paragraph{Plan.} We start by giving the rules for a basic version of dependent type theory with
 $\Pi, \Sigma, \NN$, and an identity type former $\Id$.
-We then explain how to add an externally indexed sequence of universes $\UU_n, \T_n$ \`a la Tarski with or without
+We then explain how to add an externally indexed countable sequence of universes $\UU_n, \T_n$ \`a la Tarski with or without
 cumulativity rules.
 In Section \ref{sec:internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$, giving rise to a theory with level polymorphism. This is a kind of ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$.
 
@@ -283,6 +284,7 @@ $$
 We write $\conv$ for definitional equality (or conversion).
 The main conversion rules are\footnote{We omit systematically {\em congruence} rules
   such as the rule that $c~a~\conv~c'~a'$ follows from $c~\conv~c'$ and $a~\conv~a'$.}
+  \footnote{PD: We omit various other rules too.}
 $$
 \frac{ a:A~~~~~~ A~ \conv~ B}{ a:B}~~~~~~~~~
 \frac{ a ~\conv~a':A~~~~~~ A  ~\conv~ B}{ a ~\conv~a':B}
@@ -344,8 +346,10 @@ $$
 $$
 $$\T_n(\Id^n~A~a_0~a_1) = \Id~\T_n(A)~a_0~a_1$$
 and a code for the previous universe
-$${\UU^{l+1}}:\UU_{l+1}$$
-$$\T_{l+1}({\UU^{l+1}}) = \UU_{l}$$
+$${\UU^{n+1}}:\UU_{n+1}$$
+$$\T_{n+1}({\UU^{n+1}}) = \UU_{n}
+\footnote{PD: wouldn't it be more natural to let $\UU^n$ be the code for $\UU_{n}$?}
+$$
 
 %% Note that $\UU_p, \T_p$ are given by separate inductive-recursive definition for each $p$. There is one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and also for $\UU^{p-1}$ provided $p \geq 1$.
 
@@ -361,6 +365,7 @@ We can also formulate the side condition as an equation $m = n \vee m$.
 We require for all $n,m$
 \[
 \T_m(\T_{n}^{m}(A)) = \T_{n}(A) \quad\text{and}\quad \T_{n}^{m}(\NN^{n}) = \NN^{m}.
+\footnote{PD: should we not justify the fact that we can have those two rules together? Especially since Erik Palmgren in his work on universe operators has two versions, where the first rule is only admitted in the "uniform constructions" version and the second one in the "full reflection" version. The split arises because in the "uniform constructions" version the cumulativity maps are constructors, whereas in the "full reflection" case they are implicit operations computed by case analysis on the codes. My preferred way to justify both is to take the "full reflections" approach, but note that the rule $\T_m(\T_{n}^{m}(A)) = \T_{n}(A)$ is still valid in the "standard model" (the meaning explanations). Here this rule comes out as an extensional equality, but the rule $\T_{n}^{m}(\NN^{n}) = \NN^{m}$ comes out as a definitional equality. Interestingly, it seems that the resulting system is still normalizing and has decidable judgments. }
 \]
 We add for all $n,m,p$ with $m\leqslant n\leqslant p$
 $$
@@ -425,16 +430,15 @@ and we have ${\UU_l}:\UU_{l+1}$.
 
 For the version with cumulativity, we add the rules
 $$
-\frac{A:\UU_{l}}{A:\UU_{l+1}}
+\frac{A:\UU_{n}}{A:\UU_{n+1}}
 $$
 and the rules for products and sums can be simplified to
 $$
-\frac{A:\UU_{l}~~~~~~B:\UU_l(x:A)}
-     {\mypi{x}{A}{B}:\UU_{l}}~~~~~~~~~
-\frac{A:\UU_{l}~~~~~~B:\UU_l(x:A)}
-     {\mysig{x}{A}{B}:\UU_{l}}~~~~~~~~~
+\frac{A:\UU_{n}~~~~~~B:\UU_n(x:A)}
+     {\mypi{x}{A}{B}:\UU_{n}}~~~~~~~~~
+\frac{A:\UU_{n}~~~~~~B:\UU_n(x:A)}
+     {\mysig{x}{A}{B}:\UU_{n}}~~~~~~~~~
 $$
-
 
 \begin{remark}
   In this version \`a la Tarski, with or without cumulativity, terms have unique types, in the sense that if $t : A$ and $t : B$ then $A = B$, by induction on $t$. But for this to be valid, we need to annotate application as discussed in Remark~\ref{app:annotation}.
