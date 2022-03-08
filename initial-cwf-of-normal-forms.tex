@@ -1,0 +1,772 @@
+\documentclass{lmcs}
+%\usepackage{etex}
+\usepackage[utf8]{inputenc}
+
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{proof}
+\usepackage{mathpartir}
+\usepackage{mathrsfs}
+\usepackage{stmaryrd}
+\usepackage{cmll}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage[all]{xy}
+\usepackage{listings}
+\usepackage{todonotes}
+\usepackage{Guyboxes}
+\input{macros}
+\input{newmacros}
+\def\UU{\mathrm{U}}
+\def\Ta{\mathrm{T}}
+\def\Pihat{\hat{\Pi}}
+\def\UUhat{\hat{\UU}}
+\def\Level{\mathrm{Level}}
+\def\t{\mathrm{t}}
+\def\RawNe{\texttt{Ne}}
+\def\var{\mathrm{var}}
+\def\Ctx{\mathrm{Ctx}}
+\def\Ty{\mathrm{Ty}}
+\def\Tm{\mathrm{Tm}}
+\def\Ne{\mathrm{Ne}}
+\def\Obj{\mathrm{obj}}
+\def\Hom{\mathrm{hom}}
+\def\id{\mathrm{id}}
+\def\lHom{\mathrm{lhom}}
+\def\lctx{\mathrm{lctx}}
+\def\lty{\mathrm{level}}
+\def\ltm{\mathrm{ltm}}
+\def\lid{\mathrm{lid}}
+\def\lp{\mathrm{lp}}
+\def\lq{\mathrm{lq}}
+\def\s{\mathrm{s}}
+
+\newcommand{\ctx}{\mathrm{ctx}}
+\newcommand{\sub}{\mathrm{sub}}
+\newcommand{\ty}{\mathrm{ty}}
+\newcommand{\tm}{\mathrm{tm}}
+%\newcommand{\hom}{\mathrm{hom}}
+%\newcommand{\tuple}[1]{\langle #1 \rangle}
+\def\CComega{\mathrm{CC}^\omega}
+\def\p{\mathrm{p}}
+\def\q{\mathrm{q}}
+\def\app{\mathsf{app}}
+\def\U{\mathsf{U}}
+\def\T{\mathcal{T}}
+%\newcommand{\Ta}{\mathrm{T}}
+\newcommand{\ta}{\mathrm{t}}
+
+\newcommand{\natrec}{\mathsf{natrec}}
+%\rightfooter{}
+%\newcommand{\set}[1]{\{#1\}}
+\newcommand{\sct}[1]{[\![#1]\!]}
+\def\R{\mathcal{R}}
+
+\def\L{{\mathcal{L}}}
+\def\F{\mathcal{C}}
+\def\CwF{\mathrm{CwF}}
+
+
+
+
+
+\newcommand{\intCtxU}[1]{\llbracket #1 \rrbracket^\RawCtx}
+\newcommand{\intSubU}[1]{\llbracket #1 \rrbracket^\RawSub}
+\newcommand{\intTyU}[1]{\llbracket #1 \rrbracket^\RawTy}
+\newcommand{\intTmU}[1]{\llbracket #1 \rrbracket^\RawTm}
+\newcommand{\intNeU}[1]{\llbracket #1 \rrbracket^\RawNe}
+
+\title{Initial Categories with Families\\with Universe Tower Structures}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We define the notion of a cumulative $\Pi\UU$-tower-cwf as a category with families with a $\Pi$-structure and a structure for a tower of universes $\UU$ closed under $\Pi$. Then we construct two initial cumulative $\Pi\UU$-tower-cwfs: one formulated a la Tarski and the other formulated a la Russell. It follows that the system a la Russell is isomorphic to the system a la Tarski in the category of cumulative $\Pi\UU$-tower-cwf. (** We should also consider the non-cumulative case **)
+ \end{abstract}
+
+%\tableofcontents
+\allowdisplaybreaks
+\section{Introduction}
+
+We consider type theory with $\Pi$ types and an external countable cumulative tower of universes $\UU_n$. We formulate a generalized algebraic theory and initial models with normal forms a la Tarski and normal forms a la Russell.
+
+\section{The generalized algebraic theory of $\Pi\UU$-tower-cwfs}
+
+\subsection{The generalized algebraic theory of categories}
+\hspace{1em}
+
+Sort symbols:
+\begin{eqnarray*}
+&\vdash& \Obj\\
+\Delta, \Gamma : \Obj &\vdash& \Hom(\Delta,\Gamma)\\
+\end{eqnarray*}
+
+Operator symbols:
+\begin{eqnarray*}
+\Gamma : \Obj &\vdash& \id_\Gamma : \Hom(\Gamma,\Gamma)\\
+\Xi,\Delta,\Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta) &\vdash&
+\gamma \circ \delta : \Hom(\Xi,\Gamma)
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+\Delta, \Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma) &\vdash& \id_\Gamma \circ \gamma = \gamma : \Hom(\Delta,\Gamma)\\
+\Delta, \Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma) &\vdash& \gamma \circ \id_\Delta = \gamma : \Hom(\Delta,\Gamma)\\
+\Theta, \Xi,\Delta,\Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta), \xi : \Hom(\Theta,\Xi) &\vdash&
+(\gamma \circ \delta) \circ \xi = \gamma \circ (\delta \circ \xi): \Hom(\Theta,\Gamma)
+\end{eqnarray*}
+Note: officially $\circ$ has five arguments rather than two.
+
+\subsection{Adding a family valued functor}
+\hspace{1em}
+
+Sort symbols ($\ctx = \Obj$):
+\begin{eqnarray*}
+\Gamma : \ctx &\vdash& \ty(\Gamma)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \tm(\Gamma,A)
+\end{eqnarray*}
+
+Operator symbols:
+\begin{eqnarray*}
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma) &\vdash&
+A[\gamma] : \ty(\Delta)\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Gamma,A) &\vdash&  a[\gamma] : \tm(\Delta,A[\gamma])
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& A[\id_\Gamma] = A : \ty(\Gamma)\\
+\Gamma : \ctx, A:\ty(\Gamma), a:\tm(\Gamma,A) &\vdash& a[\id_\Gamma] = a : \tm(\Gamma,A)\\
+\Xi,\Delta,\Gamma : \ctx, \delta : \Hom(\Xi,\Delta), \gamma : \Hom(\Delta,\Gamma),
+A:\ty(\Gamma) &\vdash& A[\gamma\circ\delta] = A[\gamma][\delta]: \ty(\Xi)\\
+\Xi,\Delta,\Gamma : \ctx, \delta : \Hom(\Xi,\Delta), \gamma : \Hom(\Delta,\Gamma),
+A:\ty(\Gamma), a:\tm(\Gamma,A) &\vdash&
+a[\gamma\circ\delta] = a[\gamma][\delta]: \tm(\Xi,A[\gamma\circ\delta])
+\end{eqnarray*}
+We have dropped some of the official arguments here too, and will do so in the following as well.
+
+\subsection{Adding a terminal object}
+\hspace{1em}
+
+%Sort symbols: none
+Operator symbols:
+\begin{eqnarray*}
+&\vdash& 1 : \ctx\\
+\Gamma : \ctx &\vdash& \tuple{}_\Gamma : \Hom(\Gamma,1)
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+ &\vdash& \id_1 = \tuple{}_1 : \Hom(1,1)\\
+\Gamma,\Delta : \ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash&
+\tuple{}_\Gamma\circ\gamma = \tuple{}_\Delta : \Hom(\Delta,1)
+\end{eqnarray*}
+
+%(The latter two equations are better for term rewriting than the
+%obvious single one expressing the uniqueness of $\tuple{}_\Gamma$.)
+
+\subsection{Adding context comprehension}
+\hspace{1em}
+%No new sorts are added.
+
+Operator symbols:
+\begin{eqnarray*}
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \Gamma\cext A : \ctx\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \tuple{\gamma,a} : \Hom(\Delta,\Gamma\cext A)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \p: \Hom(\Gamma\cext A,\Gamma)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \q: \tm(\Gamma\cext A,A[\p])
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \p\circ\tuple{\gamma,a} = \gamma : \Hom(\Delta,\Gamma)\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \q[\tuple{\gamma,a}] = a : \tm(\Delta,A[\gamma]) \\
+\Gamma,\Delta,\Xi : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]), \delta : \Hom(\Xi,\Delta) &\vdash&
+\tuple{\gamma,a} \circ \delta = \tuple{\gamma\circ\delta,a[\delta]} :
+\Hom(\Xi,\Gamma\cext A) \\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash&
+\id_{\Gamma\cext A} = \tuple{\p,\q} : \Hom(\Gamma\cext A,\Gamma\cext A)
+\end{eqnarray*}
+
+\subsection{Adding $\Pi$-types}
+\hspace{1em}
+%We add three operator symbols in addition to the operator symbols for cwfs in Section 5.2 and 5.3:
+
+Operator symbols:
+\begin{eqnarray*}
+\Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A)&\vdash& \Pi(A,B) : \ty(\Gamma)\\
+\Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A), b : \tm(\Gamma.A, B) &\vdash& \lambda(b) : \tm(\Gamma,\Pi(A,B))\\
+\Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A), c :  \tm(\Gamma,\Pi(A,B)), a : \tm(\Gamma, A) &\vdash& \app(c,a) : \tm(\Gamma, B[\tuple{\id,a}])
+\end{eqnarray*}
+
+Equations (omitting the context and type of the equalities):
+ \begin{eqnarray*}
+ \app(\lambda(b),a) &=& b[\tuple{\id,a}]\\
+ \lambda(\app(c[\p],\q)) &=& c
+ \end{eqnarray*}
+ 
+ Equations for commutativity of operator symbols wrt substitution:
+ \begin{eqnarray*}
+\Pi(A,B)[ \gamma ] &=& \Pi(A [ \gamma ], B[ \gamma^+ ])\\
+\lambda(b) [ \gamma ] &=& \lambda(b[\gamma^+ ])\\
+\app(c,a) [ \gamma ] &=& \app(c[ \gamma ], a[ \gamma ] )
+\end{eqnarray*}
+where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
+
+\subsection{Adding a universe closed under $\Pi$}
+\hspace{1em}
+
+Operator symbols:
+\begin{eqnarray*}
+\Gamma : \ctx &\vdash& \U_\Gamma : \ty(\Gamma)\\
+\Gamma : \ctx, a : \tm(\Gamma,\U_\Gamma) &\vdash& {\Ta}(a) : \ty(\Gamma)\\
+%\Gamma : \ctx &\vdash& (\N^0)_\Gamma : \tm(\Gamma,\U_\Gamma) \\
+\Gamma : \ctx,
+a : \tm(\Gamma,\U_\Gamma),
+b :  \tm(\Gamma \cdot \Ta(a), \U_\Gamma))
+&\vdash&
+ \Pi^0(a,b) : \tm(\Gamma,\U_\Gamma)
+\end{eqnarray*}
+%$\U_\Gamma$ is the universe (a type) relative to the context $\Gamma$; $\Ta$ is the decoding operation mapping a term in the universe to the corresponding type; $\N^0$ is the code for $\N$ in the universe, and $\Pi^0$ forms codes for $\Pi$-types in the universe. (Note that we have dropped the context argument of $\Ta$ and $\Pi^0$.)
+
+Equation:
+\begin{eqnarray*}
+%\Ta(\N^0_\Gamma) &=& \N_\Gamma\\
+\Ta(\Pi^0(a,b)) &=& \Pi(\Ta(a),\Ta(b))
+\end{eqnarray*}
+
+ Equations for commutativity of operator symbols wrt substitution:
+ \begin{eqnarray*}
+{\U}_\Gamma [ \gamma ] &=& {\U}_\Delta\\
+\Ta(a) [ \gamma ] &=& \Ta(a[ \gamma ] )\\
+%\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
+\Pi^0(a,b)[ \gamma ] &=& \Pi^0(a [ \gamma ], b[ \gamma^+ ])
+\end{eqnarray*}
+
+\subsection{Adding an external countable non-cumulative tower of universes closed under $\Pi$}
+
+An infinitary theory! $n, n'$ are external natural numbers. (** Note that this is for the non-cumulative case, the Russell and Tarski constructions are for the cumulative case **)
+
+Operator symbols:
+\begin{eqnarray*}
+\Gamma : \ctx &\vdash& (\U_n)_\Gamma : \ty(\Gamma)\\
+\Gamma : \ctx, a : \tm(\Gamma,(\U_n)_\Gamma) &\vdash& {\Ta_n}(a) : \ty(\Gamma)\\
+%\Gamma : \ctx &\vdash& (\N^0)_\Gamma : \tm(\Gamma,(\U_0)_\Gamma) \\
+\Gamma : \ctx,
+a : \tm(\Gamma,(\U_n)_\Gamma),
+b :  \tm(\Gamma \cdot \Ta_n(a), (\U_{n'})_\Gamma))
+&\vdash&
+ \Pihat^{n,n'}(a,b) : \tm(\Gamma,(\U_{\max(n,n')})_\Gamma)\\
+\Gamma : \ctx&\vdash&\UU^n_\Gamma: \tm(\Gamma,(\UU_{n+1})_\Gamma)
+\end{eqnarray*}
+%$(\U_0)_\Gamma$ is the universe (a type) relative to the context $\Gamma$; $\Ta_0$ is the decoding operation mapping a term in the universe to the corresponding type; $\N^0$ is the code for $\N$ in the universe, and $\Pi^0$ forms codes for $\Pi$-types in the universe. (Note that we have dropped the context argument of $\Ta_0$ and $\Pi^0$.)
+
+Equations:
+\begin{eqnarray*}
+%\Ta_n(\N^n_\Gamma) &=& \N_\Gamma\\
+\Ta_{\max(n,n')}(\Pihat^{n,n'}(a,b)) &=& \Pi(\Ta_n(a),\Ta_{n'}(b))\\
+\Ta_{n+1}(\UU^n_\Gamma) &=& (\UU_n)_\Gamma
+\end{eqnarray*}
+
+ Equations for commutativity of operator symbols wrt substitution:
+ \begin{eqnarray*}
+{(\U_n)}_\Gamma [ \gamma ] &=& {(\U_n)}_\Delta\\
+\Ta_n(a) [ \gamma ] &=& \Ta_n(a[ \gamma ] )\\
+%\N^n_\Gamma [ \gamma ] &=&\N^n_\Delta\\
+\Pihat^{n,n'}(a,b)[ \gamma ] &=& \Pihat^{n,n'}(a [ \gamma ], b[ \gamma^+ ])\\
+\UU^n_\Gamma [ \gamma ] &=& \UU^n_\Delta
+\end{eqnarray*}
+
+\subsection{Adding an external countable cumulative tower of universes closed under $\Pi$}
+
+In the cumulative case $\Pihat^n$ is singly indexed.
+
+Rules for cumulativity
+\begin{eqnarray*}
+\Gamma : \ctx, a : \Tm(\Gamma,(\UU_{n})_\Gamma &\vdash& \t_n(a) : \Tm(\Gamma,(\UU_{n+1})_\Gamma)
+\end{eqnarray*}
+
+\begin{eqnarray*}
+\t_n(\Pihat^n(a,b)) &=& \Pihat^{n+1}(\t_n(a),\t_n(b))\\ 
+\Ta_{n+1}(\t_n(a)) &=& \Ta_n(a)
+\end{eqnarray*}
+
+{\bf Meaning explanations ("standard model").} If we want to justify the rules for cumulativity, $\t_n(a)$ either has to be a canonical form ($\t_n$ is a constructor) or $\t_n$ is defined by induction on $\UU_n$, see Palmgren. In the latter case the rule 
+$$\t_n(\Pihat^n(a,b)) = \Pihat^{n+1}(\t_n(a),\t_n(b))$$ is a definitional equality, but in the former case it is not valid, since the head construtors are different. The rule 
+$$\Ta_{n+1}(\t_n(ne)) = \Ta_n(ne)$$ on the other hand, is a definitional equality in the former case. It is also satisfied in the latter case, but now only as an extensional equality. They should also be satisfied in the model in {\bf Set} (also constructively).
+
+{\bf Model of normal forms.}
+We shall prove that both rules are satisfied in both the Tarski and the Russell model of normal forms. 
+
+We first focus on the case with $\beta$-rules only (and not $\eta$). For the purpose of relating the Tarski and Russell-style models we introduce lifting functions
+\begin{eqnarray*}
+\t^n_m &=& \t_{n-1} \circ \cdots \circ \t_m : \UU_m \to \UU_n\\
+\UUhat^n_m &=& \t^n_{m+1}(\UUhat_m) : \UU_n
+\end{eqnarray*}
+
+With $\eta$-expanded normal forms we will need lifting functions such as
+$$
+i_{k,m,n} : \Pi(A_1,\ldots, \Pi(A_k,\UU_m)\cdots)\to \Pi(A_1,\ldots, \Pi(A_k,\UU_n)\cdots)
+$$
+defined by $i_{k,m,n}(c)  = \lambda^k(\t^n_m(\ap^k(c,\q)))$. (** roughly **) ).
+
+(** We briefly looked the addition of other type formers such as $\Sigma$, $\N$, etc. We should check this. **)
+
+\section{An initial $\Pi\UU$-tower-cwf of normal forms a la Tarski}
+\label{sec:syntax}
+
+
+\subsection{Raw syntax}\label{sec:grammar}
+
+%This first construction is inspired by the generalised algebraic theory of $\Pi\UU$-tower-cwfs, but here we define it as a usual logical system with a grammar and a collection of inference rules. 
+The grammar has five syntactic categories of raw normal expressions: contexts $\RawCtx$,
+substitutions $\RawSub$, normal types $\RawTy$, normal terms $\RawTm$ and neutral terms $\RawNe$.
+\begin{eqnarray*}
+\Gamma \in \RawCtx &::=& 1  \ |\ \Gamma.A\\
+\gamma \in \RawSub \ &::=&  \langle\rangle \ |\ \langle \gamma, a \rangle\\
+A \in \RawTy &::=& \Pi(A,A)\ |\  \UU_{n} \ |\ \Ta_n(ne) \\ 
+a \in \RawTm &::=& ne \ |\  \lambda(a)\ |\ \Pihat^n(a,a)\ |\ \UUhat^n_m \ |\  \t^n_m(ne) \\
+ne \in \RawNe &::=& \var(i)  \ |\  \ap(ne,a)
+\end{eqnarray*}
+Note that $\t^n_m(ne)$ cannot be neutral if we have the equation $\Ta_{n}(\t^n_m(ne)) = \Ta_m(ne)$, because then these are distinct normal forms.
+
+We can define all the $\Pi\UU$-tower-cwf-operations on this raw syntax, including hereditary substitution, using normalization by evaluation. Note that the inference rules refer to these operations.
+
+However, $\eta$-expansion depends on the type and will be considered later.
+
+\subsection{Inference rules}
+We have inference rules for the four forms of judgment:
+\begin{eqnarray*}
+&&\Gamma \vdash\\
+&&\Delta \vdash \gamma : \Gamma\\
+&&\Gamma \vdash A\\
+&&\Gamma \vdash a : A
+\end{eqnarray*}
+and an auxiliary form of judgment for type inference of neutral terms:
+\begin{eqnarray*}
+&&\Gamma \vdash ne \Rightarrow A
+\end{eqnarray*}
+
+These inference rules (see the boxed displays) are introductory clauses for inductive definitions of predicates on raw experessions. 
+We do not need inference rules for equality judgments, since they are syntactic equalities.
+
+\begin{figure}[!htb]
+  \centering
+  \label{fig:cwf3}
+\boxit[Normal forms for pure cwf-structure]{
+  \begin{mathpar}
+% Contextes
+\\
+    	\inferrule
+		{} 
+		{1 \vdash }
+	\and
+	\inferrule
+		{%\Gamma \vdash \\ 
+		 \Gamma \vdash A} 
+		{\Gamma.A \vdash} 
+	\and
+    	\inferrule
+		{\Gamma \vdashS}
+		{\Gamma \vdash \emptySub{} : \emptyContext}
+	\and
+
+	\inferrule
+		{\Gamma \vdash A \\ 
+		 \Delta \vdash \gamma : \Gamma \\ 
+		 \Delta \vdash a : A[\gamma]} 
+		{\Delta\vdash \langle \gamma,a \rangle : \Gamma.A} 
+	\and
+	\inferrule{\Gamma \vdash ne \Rightarrow A}
+	{\Gamma \vdash ne : A}
+	\and
+	\inferrule
+	{\Gamma \vdash A}
+	{\Gamma.A \vdash \var(0) \Rightarrow A[\p]}
+	\and
+	\inferrule
+	{\Gamma \vdash A \and \Gamma \vdash \var(i) : B}
+	{\Gamma.A \vdash \var(i+1) \Rightarrow B[\p]}
+
+  \end{mathpar}
+}
+\end{figure}
+
+\begin{figure}[!htb]
+\boxit[$\beta$-normal forms for $\Pi$-types]{
+\begin{mathpar}
+\\
+    \infer {\Gamma \vdash \Pi(A,B)} 
+    {\Gamma.A \vdash B}
+    \and
+    \infer{ \Gamma  \vdash   \lambda (b) :  \Pi (A, B)}
+    { \Gamma .A  \vdash  b : B} 
+    \and
+    \infer{ \Gamma   \vdash  \ap(ne, a) \Rightarrow B[\langle \id, a \rangle] }{  %\Gamma .A  \vdash  B & 
+     \Gamma   \vdash  ne \Rightarrow \Pi (A, B) &  \Gamma   \vdash  a : A} 
+    
+  \end{mathpar}
+  }
+%  \caption{Inferences rules for $\Pi$-types}
+  \label{fig:pi}
+\end{figure}
+%\footnote{Note that the rules for $\Pi$ need to be completed. 
+%$\gamma^+ = \langle \gamma \circ \p_{A[\gamma]}, \qI_{A[\gamma]}\rangle$
+%}
+
+
+\begin{figure}[!htb]
+\boxit[The nth universe a la Tarski has a universe structure]{
+\begin{mathpar}
+\\
+\infer{\Gamma \vdash \UU_n}
+{\Gamma  \vdash}
+\and
+\infer{\Gamma \vdash  \Ta_n(ne) }
+{\Gamma \vdash ne  \Rightarrow \UU_n}
+\and
+\infer{\Gamma \vdash \Pihat^n(a,b) : \UU_n}
+{\Gamma \vdash a : \UU_n\and\Gamma.\Ta_n(a) \vdash b : \UU_n}
+%\and
+%\infer{(\UU_n)_\Gamma[\gamma] = (\UU_n)_\Delta}
+%{\Delta   \vdash   \gamma  :  \Gamma }
+%\and
+%   \infer{ \Delta   \vdash   \Pi(a, b) [\gamma] =  \Pi(a [\gamma] , b [\gamma ^+]): (\UU_n)_\Delta}{ \Gamma   \vdash  a : (\UU_n)_\Gamma &  \Gamma .a \vdash  b : (\UU_n)_{\Gamma .a} &  \Delta   \vdash   \gamma  :  \Gamma } \
+\end{mathpar}
+  }
+  \label{fig:uu}
+\end{figure}
+
+\begin{figure}[!htb]
+\boxit[The $m$-th universe a la Tarski is in the $n$-th ($m < n$)]{
+\begin{mathpar}
+\\
+\infer{\Gamma \vdash \hat{\UU}^n_m : \UU_n}{\Gamma \vdash}
+\end{mathpar}
+}
+\label{fig:uu-code}
+\end{figure}
+\begin{figure}[!htb]
+\boxit[Cumulativity a la Tarski ($m \leq n$)
+]{
+\begin{mathpar}
+\\
+\infer{\Gamma \vdash \t^n_m(ne)  :  \UU_{n}}
+{\Gamma \vdash ne \Rightarrow \UU_m}
+ \end{mathpar}
+  }
+  \label{fig:uu}
+\end{figure}
+\footnote{
+This old rule with $\t_n(ne) : \UU_{n+1}$ does not suffice, since it cannot be iterated.
+}
+
+In this system, not only the neutral terms, but all normal tems $a$ in a well-formed context $\Gamma$ has a unique type. This is computed by a type-inference algorithm $$\typeof : \RawCtx \to \RawTm \to \RawTy$$ such that $\Gamma \vdash$ implies $\typeof(\Gamma,a) = A$ iff $\Gamma \vdash a : A$. 
+
+\subsection{The syntactic $\Pi\UU$-tower-cwf $\T$ of normal forms a la  Tarski}
+
+\begin{eqnarray*}
+\Ctx_ \T &=& \{ \Gamma \ |\ \Gamma \vdash \}\\
+\Sub_ \T(\Delta,\Gamma) &=&  \{ \gamma \ |\ \Delta \vdash \gamma : \Gamma  \}\\
+\Ty_ \T(\Gamma) &=&  \{ A \ |\ \Gamma \vdash A  \}\\
+\Tm_ \T(\Gamma,A) &=&  \{ a \ |\ \Gamma \vdash a : A  \}
+\end{eqnarray*}
+We also define the well-typed neutral terms
+\begin{eqnarray*}
+\Ne_\T(\Gamma,A) &=&  \{ ne \ |\ \Gamma \vdash ne \Rightarrow A  \} \subseteq \Tm_ \T(\Gamma,A) 
+\end{eqnarray*}
+
+We have already defined all the untyped $\Pi\UU$-tower-cwf-combinators using normalization of the raw expressions. In order to prove that they yield a $\Pi\UU$-tower-cwf, we need to prove that they yield well-typed normal forms and that they satisfy all equations of  $\Pi\UU$-tower-cwfs. 
+
+Furthermore, we can prove that $\Gamma \vdash A$ implies $\Gamma \vdash$, $\Gamma \vdash a : A$ implies $\Gamma \vdash A$, $\Delta \vdash \gamma : \Gamma$ implies $\Delta, \Gamma \vdash$, and $\Gamma \vdash ne : A$  implies $\Gamma \vdash A$.
+
+%This algorithm relies on an algorithm $istype(\Gamma,A)$ which checks whether a raw type $A$ is well-typed with respect to the context $\Gamma$, and an algorithm $iscontext(\Gamma)$ which checks whether $\Gamma \vdash$.
+
+
+\subsection{Initiality of $ \T$}
+We have total interpretation functions for each of the syntactic categories:
+\begin{eqnarray*}
+\intCtxU{-} &:& \Ctx_\T \to \Ctx_\C\\
+\intSubU{-}_{\Delta,\Gamma}&:& 
+\Sub_\T(\Delta, \Gamma)
+\to
+\Sub_\C(\intCtxU{\Delta}, \intCtxU{\Gamma})\\
+\intTyU{-}_\Gamma&:& \Ty_\T(\Gamma) \to \Ty_\C(\intCtxU{\Gamma})\\
+\intTmU{-}_{\Gamma,A} &:& \Tm_\T(\Gamma,A) \to
+\Tm_\C (\intCtxU{\Gamma}, \intTyU{A})
+\end{eqnarray*}
+and for the neutral terms
+\begin{eqnarray*}
+\intNeU{-}_{\Gamma,A} &:& \Ne_\T(\Gamma,A) \to \Tm_\C (\intCtxU{\Gamma}, \intTyU{A})
+\end{eqnarray*}
+where the type $A$ is computed by type-inference from $\Gamma$ and the neutral term.
+
+We first define partial interpretation functions by induction on raw expression, and then prove that they are total on the subsets of well-typed expressions. 
+
+We begin with the interpretation of neutral terms:
+\begin{eqnarray*}
+\intNeU{\var(0)}_{\Gamma.A,A[\p]} &=& (\qI_{\C})_{\intCtxU{\Gamma},\intTyU{A}}\\
+\intNeU{\var(n+1)}_{\Gamma.A,B[\p]} &=& \inte{\var(n)}_{\Gamma,B}[\p_\C]_\C\\
+\intNeU{\ap(ne,a)}_{\Gamma,B[\langle \id,a \rangle]} &=& \ap_\C(\intNeU{ne}_{\Gamma,\Pi(A,B)},\intTmU{a}_{\Gamma,A})
+\end{eqnarray*}
+Note that $A$ in the third clause and $B$ in the second and third clause is computed by type-inference.
+
+We then interpret the normal contexts, substitutions, types, and terms:
+\begin{eqnarray*}
+\intCtxU{1} &=& 1_\C\\
+\intCtxU { \Gamma .A} &=& \intCtxU \Gamma ._\C \intCtxU{A}\\
+%\end{eqnarray*}
+%\inte{\id}_\Gamma & = & {(\idC)}_{\inte{\Gamma}}\\
+%\begin{eqnarray*}
+\intSubU{ \langle  \rangle }_{\Delta,1} &=& \langle \rangle_\C\\
+\intSubU{ \langle  \gamma , a \rangle }_{\Delta,\Gamma.A} &=& \langle \intSubU{\gamma}_{\Delta,\Gamma} , \intSubU{a}_{\Delta,A[\gamma]} \rangle_\C\\
+%\end{eqnarray*}
+%where in the last clause $\Gamma = 1.A_1. \cdots . A_i . \cdots . A_n$, $A = A_i[\p^{n-i}]$, and $(\pi_i^n)_\C = q[p] \cdots [p]$ (check!). We utilize the type inforence function.
+%\begin{eqnarray*}
+\intTyU{\Pi(A,B)}_\Gamma&=& \Pi_\C(\intTyU{A}_\Gamma,\intTyU{B}_{\Gamma.A})\\
+%\end{eqnarray*}
+%\begin{eqnarray*}
+\intTmU{\lambda(b)}_{\Gamma,\Pi(A,B)} &=& \lambda_\C(\intTmU{b}_{\Gamma.A, B})\\
+\intTmU{ne}_{\Gamma,A} &=& \intNeU{ne}_{\Gamma,A}
+\end{eqnarray*}
+
+The clauses for the tower of universes are as follows:
+\begin{eqnarray*}
+\intTyU{\UU_n}_\Gamma &=& ((\UU_n)_\C)_{\intCtxU{\Gamma}}\\ %\in \Ty_\C(\intCtxU{\Gamma})\\
+\intTyU{\Ta_n(ne)}_\Gamma &=& (\Ta_n)_\C(\intNeU{ne}_{\Gamma,\UU_n})\\% \in \Ty_\C(\intCtxU{\Gamma})\\
+\intTmU{\Pihat^n(a,b)}_{\Gamma,\UU_n}&=& \Pihat^n_\C(\intTmU{a}_{\Gamma,\UU_n},\intTmU{b}_{\Gamma.\Ta_n(a),\UU_n})\\% \in \Tm_\C(\intCtxU{\Gamma},((\UU_n)_\C)_{\intCtxU{\Gamma}})\\
+\intTmU{\hat{\UU}^n_m}_{\Gamma,\UU_{n+1}} &=& ((\UUhat^n_m)_\C)_{\intCtxU{\Gamma}}\\% \in \Tm_\C(\intCtxU{\Gamma},((\UU_{n+1})_\C)_{\intCtxU{\Gamma}})\\
+\intTmU{\t^n_m(ne)}_{\Gamma,\UU_{n+1}} &=& 
+(\t^n_m)_\C(\intTmU{ne}_{\Gamma,\UU_n})%& \in \Tm_\C(\intCtxU{\Gamma},(\UU_{n+1})_\C)
+\end{eqnarray*}
+where $\UUhat^n_m$ and $\t^n_m$ are defined in the section on generalized algebraic theories \ref{}.
+
+Note that all clauses say intuitively that the expressions in normal forms are interpreted by their "intended meaning" in an arbitrary $\Pi\UU$-tower cwf $\C$. One can view this as an injection of normal forms into the language of $\Pi\UU$-tower-cwf-combinators followed by the "obvious" initial map into $\C$. In particular the doubly indexed normal form constructs $\UUhat^n_m$ and $\t^n_m$ are interpreted by iterating the singly indexed $\Pi\UU$-tower-cwf-combinators, $\UUhat_m$ and $\t_m$.
+
+%provided
+%$\intTmU{a} \in \Tm_\C(\intCtxU{\Gamma},((\UU_n)_\C)_{\intCtxU{\Gamma}})$ and 
+%$\intTmU{b} \in \Tm_\C(\intCtxU{\Gamma.a},((\UU_n)_\C)_{\intCtxU{\Gamma.a}})$.
+We need to prove that this is a $\Pi\UU$-tower-cwf morphism and that it is the unique one into $\C$. (This is the correctness proof of the normalization algorithm.) The latter part ("completeness") is direct, since there is a unique structure-preserving way to interpret each syntactic construction of well-typed normal forms. For the former part ("soundness") we need in particular to prove that
+\begin{eqnarray*}
+\intTyU{A[\gamma]} &=& \intTyU{A}[\intSubU{\gamma}]_\C\\
+\intTmU{a[\gamma]} &=& \intTmU{a}[\intSubU{\gamma}]_\C
+\end{eqnarray*}
+
+(** The idea is to use a standard nbe-proof, like Coquand 2018 or Abel et al 2007, but extend it to explicit substitutions and add an interpretation of substitution in types and terms. The normal form of $a [ \gamma ]$ is $nf (i a [ i \gamma ]')$, where $i$ is the injection of normal forms and $-[-]'$ is the explicit substitution operation. **)
+
+\begin{thm}\label{theom:initial_cwf}
+  $\T$ is an initial $\Pi\UU$-tower-cwf.
+\end{thm}
+
+{\bf Remark.} What about $\eta$?
+
+\section{An initial $\Pi\UU$-tower-cwf a la  Russell}
+
+\subsection{Raw syntax of normal and neutral terms}
+
+It seems that we need normal terms to construct an initial model a la Russell. (* It is only for neutral terms that we have type inference *) Then we do not need annotations on $\app(A,B,c,a)$. There is a difference between the cumulative and the non-cumulative system. For the non-cumulative system we have uniqueness of types. For the cumulative system we have least types.
+\begin{eqnarray*}
+\Gamma \in \RawCtx &::=& 1  \ |\ \Gamma.a\\
+\gamma \in \RawSub \ &::=& \langle\rangle \ | \langle \gamma, a \rangle\\
+a \in \RawTm &::=& ne  \ |\ \lambda(a) \ |\ \Pi(a,a)  \ |\  \UU_n\\
+ne \in \RawNe &::=& \var(i)   \ |\ \ap(ne,a) 
+\end{eqnarray*}
+We can then define operations for all the operations of $\Pi\UU$-tower cwfs in terms of the normalization algorithm. (** This algorithm should be a slight modification of the algorithm for a la Tarski **). In the sequel we will use notations for these. We will also be able to derive typing rules for these operations, e g $\Gamma \vdash \id_\Gamma : \Gamma$ (we need the subscript, because $\id_1 = \langle\rangle, \id_{\Gamma.A} = ?$, etc.)
+
+\subsection{Inference rules}
+
+Can we prove $\Gamma \vdash A$ implies $\Gamma \vdash$, etc? Since the inference rules rely on defined $\Pi\UU$-tower cwfs, these have to be defined first.
+
+\begin{figure}[!htb]
+\boxit[The nth universe a la Russell has a universe structure]{
+\begin{mathpar}
+\\
+\infer{\Gamma \vdash \UU_n}
+{\Gamma  \vdash}
+\and
+\infer{\Gamma \vdash  ne }
+{\Gamma \vdash ne  \Rightarrow \UU_n}
+\and
+\infer{\Gamma \vdash \Pi(a,b) : \UU_n}
+{\Gamma \vdash a : \UU_n\and\Gamma.a \vdash b : \UU_n}
+%\and
+%\infer{(\UU_n)_\Gamma[\gamma] = (\UU_n)_\Delta}
+%{\Delta   \vdash   \gamma  :  \Gamma }
+%\and
+%   \infer{ \Delta   \vdash   \Pi(a, b) [\gamma] =  \Pi(a [\gamma] , b [\gamma ^+]): (\UU_n)_\Delta}{ \Gamma   \vdash  a : (\UU_n)_\Gamma &  \Gamma .a \vdash  b : (\UU_n)_{\Gamma .a} &  \Delta   \vdash   \gamma  :  \Gamma } \
+\end{mathpar}
+  }
+  \label{fig:uu}
+\end{figure}
+
+\begin{figure}[!htb]
+\boxit[The $m$-th universe a la Russell is in the $n$-th ($m < n$)]{
+\begin{mathpar}
+\\
+\infer{\Gamma \vdash \UU_m : \UU_n}{\Gamma \vdash}
+\end{mathpar}
+}
+\label{fig:uu-code}
+\end{figure}
+\begin{figure}[!htb]
+\boxit[Cumulativity a la Russell ($m \leq n$)
+]{
+\begin{mathpar}
+\\
+\infer{\Gamma \vdash ne  :  \UU_{n}}
+{\Gamma \vdash ne \Rightarrow \UU_m}
+ \end{mathpar}
+  }
+  \label{fig:uu}
+\end{figure}
+\footnote{
+This old rule with $ne : \UU_{n+1}$ does not suffice, since it cannot be iterated.
+}
+The Russell-rules for universes are in one-to-one correspondence with the Tarski-rules, and are obtained by stripping the Tarski-annotations.
+
+%As for a la Tarski we have type-inference for neutral term $$\typeof : \RawCtx \to \RawNe \to \RawTy$$. 
+%\begin{eqnarray*}
+%\typeof(\Gamma.A, \var(0)) &=& A[\p]\\
+%\typeof(\Gamma.A,\var(i+1)) &=& \typeof(\Gamma.A,\var(i)) [\p]\\
+%\typeof(\Gamma,\app(c,a))&=&B[\tuple{ \id,a} ]
+%\end{eqnarray*}
+%where $\typeof(\Gamma,c) = \Pi(A,B)$ in the last clause. 
+%
+%However, we do not have uniqueness of types for a la Russell because of the cumulativity rule. This states that if $m \leq n$, and $\Gamma \vdash ne \Rightarrow \UU_m$, then $\Gamma \vdash ne : \UU_n$. Hence in the interpretation function (and translation to a la Tarski) we need to insert $\t^n_m$ in front of such terms.
+%
+%(** What about the following? **) Note also that without cumulativity there is a one-to-one correspondence between derivations a la Tarski and a la Russell, and type-inference for normal terms is defined by
+%\begin{eqnarray*}
+%\typeof(\Gamma.A,\lambda(b)) &=& \Pi(A,\typeof(\Gamma,b))\\
+%\typeof(\Pi(A,B)) &=& \UU_{\max(m,n)}\\
+%\typeof(\Gamma,\UU_n) &=& \UU_{n+1}
+%\end{eqnarray*}
+%where in the clause for $\Pi$, we have $\typeof(A) = \UU_m, \typeof(B) = \UU_n$.
+%
+%{\bf Lemma.} (In the presence of $\eta$) We have a type inference function which returns the least type in the following subtype relation. First we have $\typeof(\Gamma,a) =  \UU_n$ 
+%iff $\Gamma \vdash a : \UU_m \mathrm{\ for\ all\ }m \geq n$.
+%More generally, we have
+%$$\typeof(\Gamma,a) =  \Pi(A_1,\ldots, \Pi(A_k,\UU_n)\cdots)$$ 
+%iff $$\Gamma \vdash a : \Pi(A_1,\ldots, \Pi(A_k,\UU_m)\cdots)\mathrm{\ for\ all\ }m \geq n.$$
+%When we prove the "if" direction, we use the following inference rules: If $k=0$ we insert 
+%$\t^{m-n}$ liftings. If $k=1$, we map $c$ to $c\,x$ to $c\,(\t^{m-n}\,x)$ to $\lambda x.c\,(\t^{m-n}\,x)$.
+%
+%What if $\typeof(\Gamma,a) \neq \Pi(A_1,\ldots, \Pi(A_k,\UU_n)\cdots)$ for all $k, n$? E g $x : \UU_0, y : x \vdash y$? In variable free notation $\UU_0.(\q.1) \vdash \q :\ ?$ Is it the case that $\typeof$ returns the unique type then?
+
+\def\R{\mathcal{R}}
+
+\subsection{The syntactic $\Pi\UU$-tower-cwf $\R$ of normal forms a la Russell}
+
+We define:
+\begin{eqnarray*}
+\Ctx_\R &=& \{ \Gamma \ |\ \Gamma \vdash \}\\
+\Sub_\R(\Delta,\Gamma) &=&  \{ \gamma \ |\ \Delta \vdash \gamma : \Gamma  \}\\
+\Ty_\R(\Gamma) &=&  \{ A \ |\ \Gamma \vdash A  \}\\
+\Tm_\R(\Gamma,A) &=&  \{ a \ |\ \Gamma \vdash a : A  \}
+\end{eqnarray*}
+and the auxiliary:
+\begin{eqnarray*}
+\Ne_\R(\Gamma,A) &=&  \{ ne \ |\ \Gamma \vdash ne \Rightarrow A  \}
+\end{eqnarray*}
+\subsection{Initiality of $ \R$}
+
+We have total interpretation functions for each of the syntactic categories:
+\begin{eqnarray*}
+\intCtxU{-} &:& \Ctx_\R \to \Ctx_\C\\
+\intSubU{-}_{\Delta,\Gamma}&:& 
+\Sub_\R(\Delta, \Gamma)
+\to
+\Sub_\C(\intCtxU{\Delta}, \intCtxU{\Gamma})\\
+\intTyU{-}_\Gamma&:& \Ty_\R(\Gamma) \to \Ty_\C(\intCtxU{\Gamma})\\
+\intTmU{-}_{\Gamma,A} &:& \Tm_\R(\Gamma,A) \to
+\Tm_\C (\intCtxU{\Gamma}, \intTyU{A})
+%\intNeU{-}_{\Gamma,A} &:& \Ne_\R(\Gamma,A) \to
+%\Tm_\C (\intCtxU{\Gamma}, \intTyU{A})
+\end{eqnarray*}
+and for the neutral terms
+\begin{eqnarray*}
+\intNeU{-}_{\Gamma,A} &:& \Ne_\R(\Gamma,A) \to \Tm_\C (\intCtxU{\Gamma}, \intTyU{A})
+\end{eqnarray*}
+where the type $A$ is computed by type-inference from $\Gamma$ and the neutral term.
+
+The interpretation clauses for the $\Pi$-cwf-clauses are the same for a la Russell and a la Tarski.
+
+The clauses for the tower of universes a la Russell are as follows. Note that they are the same as for a la Tarski, but with the Tarski-annotations removed.
+\begin{eqnarray*}
+\intTyU{\UU_n}_\Gamma &=& ((\UU_n)_\C)_{\intCtxU{\Gamma}}\\ %\in \Ty_\C(\intCtxU{\Gamma})\\
+\intTyU{ne}_\Gamma &=& (\Ta_n)_\C(\intNeU{ne}_{\Gamma,\UU_n})
+\end{eqnarray*}
+where $\typeof(\Gamma,ne) = \UU_n$ (that is, $\Gamma \vdash ne \Rightarrow \UU_n$).
+\begin{eqnarray*}
+% \in \Ty_\C(\intCtxU{\Gamma})\\
+\intTmU{\Pi(a,b)}_{\Gamma,\UU_n}&=& \Pihat^n_\C(\intTmU{a}_{\Gamma,\UU_n},\intTmU{b}_{\Gamma.a,\UU_n})\\% \in \Tm_\C(\intCtxU{\Gamma},((\UU_n)_\C)_{\intCtxU{\Gamma}})\\
+\intTmU{\UU_m}_{\Gamma,\UU_n} &=& ((\UUhat^n_m)_\C)_{\intCtxU{\Gamma}}
+\end{eqnarray*}
+where $m < n$.
+\begin{eqnarray*}
+\intTmU{ne}_{\Gamma,\UU_n} &=& 
+(\t^n_m)_\C(\intNeU{ne}_{\Gamma,\UU_m})%& \in \Tm_\C(\intCtxU{\Gamma},(\UU_{n+1})_\C)
+\end{eqnarray*}
+where $m \leq n$ and $\typeof(\Gamma,ne) = \UU_m$ (that is, $\Gamma \vdash ne \Rightarrow \UU_m$). Recall that $\UUhat^n_m$ and $\t^n_m$ are defined in the section on generalized algebraic theories \ref{}.
+
+Note that all clauses say intuitively that the expressions in normal forms are interpreted by their "intended meaning" in an arbitrary $\Pi\UU$-tower cwf $\C$. One can view this as an injection of normal forms into the language of $\Pi\UU$-tower-cwf-combinators followed by the "obvious" initial map into $\C$. A crucial differences between the Russell-interpretation and the Tarski-interpretation is that in the clauses for neutrals the coercions are implicit and we need to insert the constructs $\UUhat^n_m$ and $\t^n_m$ which are defined by iterating the singly indexed $\Pi\UU$-tower-cwf-combinators, $\UUhat_m$ and $\t_m$.
+
+We need to prove that this is indeed a $\Pi\UU$-tower-cwf morphism and that it is the unique one into $\C$.
+\begin{thm}\label{theom:initial_cwf}
+  $\R$ is an initial $\Pi\UU$-tower-cwf.
+\end{thm}
+
+%{\bf Remark.} What about $\eta$? With $\eta$ we have the conversions Previously $\intTmU{\var(0)}_{\Gamma.A,B}$ was defined provided $B = A[\p]$. Now it can be the case that $B$ is a higher type (in the ordering above). In this case we need to insert lifting $c \mapsto \lambda x.\t^{n-m}(\ap(c,x))$. \begin{eqnarray*}
+%\intTmU{\var(0)}_{\Gamma.A,C} &=& i_{k,m,n}((\qI_{\C})_{\intCtxU{\Gamma},\intTyU{A}})
+%\end{eqnarray*}
+%where $\typeof(\Gamma,\var(0)) = \Pi(A_1,\ldots, \Pi(A_k,\UU_m)\cdots)$ and $C = \Pi(A_1,\ldots, \Pi(A_k,\UU_n)\cdots) = A[\p]$ and $m \geq n$, and $i_{k,m,n} : \Pi(A_1,\ldots, \Pi(A_k,\UU_m)\cdots) \to B = \Pi(A_1,\ldots, \Pi(A_k,\UU_n)\cdots)$.
+%
+
+\section{The $\Pi\UU$-cwf (only $\beta$) isomorphism between $\T$ and $\R$}
+
+We can now look at the instances of the interpretation morphisms in both directions.
+We only present the clauses for universes.
+
+\subsection{Tarski to Russell.} 
+\begin{eqnarray*}
+\intTyU{\UU_n}_\Gamma &=& \UU_n \in \Ty_\R(\intCtxU{\Gamma})\\
+\intTyU{\Ta_n(ne)}_\Gamma &=& \intNeU{ne}_{\Gamma,\UU_n}\in 
+\Ne_\R(\intCtxU{\Gamma},\UU_n) \subseteq \Ty_\R(\intCtxU{\Gamma})\\
+\intTmU{\Pihat^n(a,b)}_{\Gamma,\UU_n}
+&=& \Pi(\intTmU{a}_{\Gamma,\UU_n},\intTmU{b}_{\Gamma.\Ta_n(a),\UU_n})
+\in \Tm_\R(\intCtxU{\Gamma},\UU_n)\\
+\intTmU{\UUhat^n_m}_{\Gamma,\UU_n} &=& \UU_m \in \Tm_\R(\intCtxU{\Gamma},\UU_n)\\
+\intTmU{\t^n_m(ne)}_{\Gamma,\UU_n} &=& 
+\intNeU{ne}_{\Gamma,\UU_{m}} \in \Ne_\R(\intCtxU{\Gamma},\UU_{m}) \subseteq \Tm_\R(\intCtxU{\Gamma},\UU_n)
+\end{eqnarray*}
+Note that the interpretation morphism is a pure stripping of raw expressions. It is independent of the subscripts.
+
+\subsection{Russell to Tarski} 
+
+We first consider two cases for neutrals:
+\begin{eqnarray*}
+\intTyU{ne}_\Gamma &=& \Ta_n(\intNeU{ne}_{\Gamma,\UU_n})\\
+\intTmU{ne}_{\Gamma,\UU_{n}} &=& 
+\t_m^n(\intNeU{ne}_{\Gamma,\UU_m})
+\end{eqnarray*}
+where $\typeof(\Gamma,ne) = \UU_n$ in the first clause and $\typeof(\Gamma,ne) = \UU_m$ and $m \leq n$ in the second clause. 
+\begin{eqnarray*}
+\intTyU{\UU_n}_\Gamma &=& \UU_n\\ 
+\intTmU{\Pi(a,b)}_{\Gamma,\UU_n}&=& \Pihat^n(\intTmU{a}_{\Gamma,\UU_n},\intTmU{b}_{\Gamma.a,\UU_n})\\
+\intTmU{\UU_m}_{\Gamma,\UU_{n}} &=& \UUhat_m^n
+\end{eqnarray*}
+Note that this interpretation morphism makes use of the subscripts.
+
+{\bf Theorem.} The interpretation morphisms form an isomorphism of $\Pi\UU$-tower-cwfs.
+
+{\bf Proof.} Both $\T$ and $\R$ are initial and hence isomorphic. For a direct proof, we note that it is easy to see that we have an isomorphism, but to show that it preserves $\Pi\UU$-tower-cwf structure, we need to inspect the hereditary substitution (and all other operation) for both a la Russell and a la Tarski.
+
+\bibliographystyle{plain}
+\bibliography{refs}
+\end{document}
