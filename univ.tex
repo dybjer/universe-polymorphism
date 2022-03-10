@@ -756,6 +756,13 @@ c~=~\lam{\alpha~\beta}\lambda_{Y:\UU_{\beta}}\Id~{\UU_{\beta}}~Y~ (\Sigma_{X:\UU
    [\alpha~\beta][\alpha<\beta]\UU_{\beta} \rightarrow \UU_{\beta^+}
 $$
 
+   We can instantiate this constant $c$ on two levels $l$ and $m$, and this will be of type
+   $$[l<m]\UU_{m} \rightarrow \UU_{m^+}$$
+   and this only can be used further if $l<m$ holds in the current context.
+
+   \medskip
+
+
 In the current system of Agda, the constraint $\alpha<\beta$ is represented indirectly by
 writing $\beta$ on the form $\gamma\vee \alpha^+$.
 
@@ -776,41 +783,36 @@ $l_1~\dots~l_m$ satisfy the constraint $\psi$.
 
     
 
-\medskip
+%% Here is an example showing how such a system can be used. With univalence, we can build a term $t$
+%% $$
+%% t~:~    \Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}[\alpha \vee \beta = \alpha \vee \gamma]
+%%     {~~\Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
+%%     \to \Id\,\UU_{\alpha \vee \gamma}\, (B\times A)\,(C \times A)}
+%% $$
 
+%%     We can then define $u = \lam{\alpha~\beta~\gamma}t$ which is of type
+%%     $$[\alpha~\beta~\gamma][\psi]\Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}
+%%     {~~\Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
+%%     \to \Id\,\UU_{\alpha \vee \gamma}\, (B\times A)\,(C \times A)}
+%% $$
+%%     where $\psi$ is $\alpha \vee \beta = \alpha \vee \gamma$.
 
+%%     It is now possible to instantiate this general operation to levels $u~l~m~n$. This has type
+%%     $$[\psi(l,m,n)]\Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
+%%     {~~\Id\,\UU_{l \vee m}\, (A\times B)\,(C \times A)
+%%     \to \Id\,\UU_{l \vee n}\, (B\times A)\,(C \times A)}
+%% $$
+%%     If $\psi(l,m,n)$ holds, i.e. $l,m,n$ satisfy the constraint $\psi$, we can instantiate
+%%     further $u~l~m~n$ to $A:\UU_l,B:\UU_m,C:\UU_n$
+%%     $$u~l~m~n~A~B~C~:~    {~~\Id\,\UU_{l \vee m}\, (A\times B)\,(C \times A)
+%%     \to \Id\,\UU_{l \vee n}\, (B\times A)\,(C \times A)}$$
 
+%% %Intuitively, we can use a term of type $[\psi]A$ only if all constraints in $\psi$ hold.
 
-Here is an example showing how such a system can be used. With univalence, we can build a term $t$
-$$
-t~:~    \Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}[\alpha \vee \beta = \alpha \vee \gamma]
-    {~~\Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
-    \to \Id\,\UU_{\alpha \vee \gamma}\, (B\times A)\,(C \times A)}
-$$
-
-    We can then define $u = \lam{\alpha~\beta~\gamma}t$ which is of type
-    $$[\alpha~\beta~\gamma][\psi]\Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}
-    {~~\Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
-    \to \Id\,\UU_{\alpha \vee \gamma}\, (B\times A)\,(C \times A)}
-$$
-    where $\psi$ is $\alpha \vee \beta = \alpha \vee \gamma$.
-
-    It is now possible to instantiate this general operation to levels $u~l~m~n$. This has type
-    $$[\psi(l,m,n)]\Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
-    {~~\Id\,\UU_{l \vee m}\, (A\times B)\,(C \times A)
-    \to \Id\,\UU_{l \vee n}\, (B\times A)\,(C \times A)}
-$$
-    If $\psi(l,m,n)$ holds, i.e. $l,m,n$ satisfy the constraint $\psi$, we can instantiate
-    further $u~l~m~n$ to $A:\UU_l,B:\UU_m,C:\UU_n$
-    $$u~l~m~n~A~B~C~:~    {~~\Id\,\UU_{l \vee m}\, (A\times B)\,(C \times A)
-    \to \Id\,\UU_{l \vee n}\, (B\times A)\,(C \times A)}$$
-
-%Intuitively, we can use a term of type $[\psi]A$ only if all constraints in $\psi$ hold.
-
-%% {\color{red}
-%% TODO: state that decidability of type-checking requires (1) decidability of loop checking
-%% (since $\UU:\UU$ makes type checking undecidable) and (2) decidablity of whether $\psi$
-%% follows from the constraints in $\Gamma$.}
+%% %% {\color{red}
+%% %% TODO: state that decidability of type-checking requires (1) decidability of loop checking
+%% %% (since $\UU:\UU$ makes type checking undecidable) and (2) decidablity of whether $\psi$
+%% %% follows from the constraints in $\Gamma$.}
 
 \begin{TODO}
   \begin{enumerate}
