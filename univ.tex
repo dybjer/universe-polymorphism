@@ -159,11 +159,11 @@
 \newcommand{\ttt}[1]{\text{\tt #1}}
 
 The system of simple type theory, as introduced by Church \cite{church:formulation},
-is very elegant and is the basis of several
+is elegant and the basis of several
 proof assistants. It however has some unnatural limitation: it is not possible in this system to talk
-about an arbitrary type, or about an arbitrary structure, and it is not possible to formulate the collection
+about an arbitrary type, or about an arbitrary structure. It is also not possible to formulate the collection
 of e.g. all groups, as needed in category theory. In order to address these limitations, Martin-L\"of
-\cite{ML71,ML71a} introduces a system with a type $V$ of all types. A function $A\rightarrow V$ in this system can
+\cite{ML71,ML71a} introduced a system with a type $V$ of all types. A function $A\rightarrow V$ in this system can
 then be seen as a family of types over a given type $A$, and it is natural in such a system to refine
 the operations of simple type theory, exponential and cartesian product, by the operations of dependent products
 and sums. After the discovery of Girard's paradox \cite{Girard71}, Martin-L\"of \cite{ML72}
