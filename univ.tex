@@ -703,15 +703,16 @@ In our setting this will correspond to introducing two levels $\alpha$ and $\bet
 constraint $\alpha<\beta$. To be explicit about universes can be important, as shown by the
 example in \cite{chambert-loir:universes-matter,waterhouse:sheaves}.
 
+Note that $\alpha<\beta$ holds if, and only if, $\beta$ is of the form $\gamma\vee\alpha^+$. We can thus
+for this example avoid to have to declare a constraint by writing systematically $\gamma\vee\alpha^+$.
+This is what is done currently in the system Agda. However, this is a rather indirect way to express what is
+going on. Furthermore, the example at the beginning of this section shows that this can lead to an artificial duplication
+of definitions.
+
 Voevodsky however does not describe a mechanism to {\em eliminate}
 such levels, and this is what we present next.
 
-
-
 \medskip
-
-
-
 
 %Thus we have
 %$$
@@ -723,7 +724,9 @@ We  have a new context extension $\Gamma,\psi$ if $\psi$ is a {\em consistent}
 finite set of constraints in $\Gamma$.
 
 New judgment form $\psi~(\Gamma)$ which expresses that the constraint set $\psi$
-holds in $\Gamma$. For instance we have $\alpha^+\leqslant\beta^+~(\alpha\leqslant\beta)$.
+holds in $\Gamma$. 
+As shown in \cite{bezem-coquand:lattices}, this is a decidable judgement.
+For instance we have $\alpha^+\leqslant\beta^+~(\alpha\leqslant\beta)$.
 
 We recall that we have the following rule
 $$
