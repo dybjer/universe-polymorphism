@@ -725,10 +725,16 @@ finite set of constraints in $\Gamma$.
 New judgment form $\psi~(\Gamma)$ which expresses that the constraint set $\psi$
 holds in $\Gamma$. For instance we have $\alpha^+\leqslant\beta^+~(\alpha\leqslant\beta)$.
 
-In the system with constraints, we have judgments such as
+We recall that we have the following rule
 $$
-\UU_{\alpha}:\UU_{\beta}~(\alpha~\beta~\Level,\alpha<\beta)
+\frac{l~m~\Level~~~~~~l<m}{\UU_l:\UU_m}
 $$
+but now $l<m$ may hold since it is implied by the constraints in the context $\Gamma$.
+
+%% In the system with constraints, we have judgments such as
+%% $$
+%% \UU_{\alpha}:\UU_{\beta}~(\alpha~\beta~\Level,\alpha<\beta)
+%% $$
 We introduce a ``restriction'' operation
 $$
 \frac{t:A~(\psi)}{t:[\psi]A}
@@ -737,7 +743,21 @@ with the rule $[\psi]A = A$ if $\psi = 1$.
 
 \medskip
 
-If we now build a term $t$ of type $A$ in a context using labels $\alpha_1,\dots,\alpha_m$
+Here is a simple example of the use of this system. In order to represent set theory in type
+theory, we can use a type $V$ satisfying the following equality $V =_{\UU_{\beta}} \Sigma_{X:\UU_{\alpha}}X\rightarrow V$.
+This equation makes only sense modulo the constraint $\alpha<\beta$.
+
+We can define in our system a constant
+$$
+c~=~\lam{\alpha~\beta}\lambda_{Y:\UU_{\beta}}~Y =_{\UU_{\beta}} \Sigma_{X:\UU_{\alpha}}X\rightarrow Y~~:~~[\alpha~\beta][\alpha<\beta]\UU_{\beta^+}
+$$
+
+In the current system of Agda, the constraint $\alpha<\beta$ is represented indirectly by
+writing $\beta$ on the form $\gamma\vee \alpha^+$.
+
+\medskip
+
+In general, if we  build a term $t$ of type $A$ in a context using labels $\alpha_1,\dots,\alpha_m$
 and constraint $\psi$ and variables $x_1:A_1,\dots,x_n:A_n$ we can introduce a constant
 $$
 c~=~ \lam{\alpha_1~\dots~\alpha_m}\lambda_{x_1~\dots~x_n}t ~:~
