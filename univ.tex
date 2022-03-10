@@ -744,12 +744,12 @@ with the rule $[\psi]A = A$ if $\psi = 1$.
 \medskip
 
 Here is a simple example of the use of this system. In order to represent set theory in type
-theory, we can use a type $V$ satisfying the following equality $V =_{\UU_{\beta}} \Sigma_{X:\UU_{\alpha}}X\rightarrow V$.
+theory, we can use a type $V$ satisfying the following equality $\Id~{\UU_{\beta}}~V~(\Sigma_{X:\UU_{\alpha}}X\rightarrow V)$.
 This equation makes only sense modulo the constraint $\alpha<\beta$.
 
 We can define in our system a constant
 $$
-c~=~\lam{\alpha~\beta}\lambda_{Y:\UU_{\beta}}~Y =_{\UU_{\beta}} \Sigma_{X:\UU_{\alpha}}X\rightarrow Y~~:~~
+c~=~\lam{\alpha~\beta}\lambda_{Y:\UU_{\beta}}\Id~{\UU_{\beta}}~Y~ (\Sigma_{X:\UU_{\alpha}}X\rightarrow Y)~~:~~
    [\alpha~\beta][\alpha<\beta]\UU_{\beta} \rightarrow \UU_{\beta^+}
 $$
 
