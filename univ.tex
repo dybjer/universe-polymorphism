@@ -213,7 +213,10 @@ $$
 We refer to the indices $0, 1, 2, \ldots$ as {\em universe levels}. 
 
 Before the advent of univalent foundations, one expected only the first few universe
-levels to be relevant in practical formalisations. This suggests that it might be feasible for a user of type theory to explicitly assign universe levels to their types, and whenever necessary repeat definitions when they are needed on different levels. However, the number of copies of definitions does not only grow with the level, but also with the number of type arguments in the definition of a type former.
+levels to be relevant in practical formalisations. This suggests that it might be feasible
+for a user of type theory to explicitly assign universe levels to their types, and whenever necessary
+repeat definitions when they are needed on different levels. However, the number of copies of definitions
+does not only grow with the level, but also with the number of type arguments in the definition of a type former.
 The need for universe polymorphism has increased with the advent of Voevodsky's univalent foundations,
 see for example \cite{VV}. One often wants to prove theorems uniformly for an arbitrary universe.
 
@@ -254,8 +257,6 @@ This approach is now followed in Agda and in Voevodsky's proposal \cite{VV}.
 
 Our system complements
 \cite{Courant02,VV} by handling constraints on universe levels and having instantiation operations.
- 
-
 
  %This is a practical problem since universe level inference can be a costly operation, sometimes more costly than the usual type-checking.
 
@@ -429,9 +430,10 @@ is annoted by the type family $A,B$ (and similarly for the pairing operation).
 
 \medskip
 
-Maybe surprisingly, there is another way to present this initial model, which is by using
+There is another way to present this initial model, which is by using
 a {\em Russell} formulation (using the terminology introduced in \cite{martinlof:padova}) of
-universes.
+universes). One expects all these formulations to be equivalent; for preliminary results in this
+direction see \cite{Assaf14,Thire20}.
 
 With this formulation, the version without cumulativity becomes
 
