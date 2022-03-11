@@ -380,107 +380,6 @@ $$
 
 %% Note that $\UU_p, \T_p$ are given by separate inductive-recursive definition for each $p$. There is one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and also for $\UU^{p-1}$ provided $p \geq 1$.
 
-\subsection*{Rules for cumulativity}
-
-With cumulativity, we introduce an operation
-$$
-\frac{A:\UU_{n}}
-{\T_{n}^{m}(A):\UU_{m}}
-n\leqslant m
-$$
-We can also formulate the side condition as an equation $m = n \vee m$.
-We require for all $n,m$
-\[
-\T_m(\T_{n}^{m}(A)) = \T_{n}(A) \quad\text{and}\quad \T_{n}^{m}(\NN^{n}) = \NN^{m}.
-\footnote{PD: should we not justify the fact that we can have those two rules together? Especially since Erik Palmgren in his work on universe operators has two versions, where the first rule is only admitted in the "uniform constructions" version and the second one in the "full reflection" version. The split arises because in the "uniform constructions" version the cumulativity maps are constructors, whereas in the "full reflection" case they are implicit operations computed by case analysis on the codes. My preferred way to justify both is to take the "full reflections" approach, but note that the rule $\T_m(\T_{n}^{m}(A)) = \T_{n}(A)$ is still valid in the "standard model" (the meaning explanations). Here this rule comes out as an extensional equality, but the rule $\T_{n}^{m}(\NN^{n}) = \NN^{m}$ comes out as a definitional equality. Interestingly, it seems that the resulting system is still normalizing and has decidable judgments. }
-\]
-We add for all $n,m,p$ with $m\leqslant n\leqslant p$
-$$
-\T_{n}^n(A) = A \quad\text{and}\quad \T_{n}^p\T_{m}^n = \T_m^p.
-$$
-We can then simplify the product and sum rules to
-$$
-\frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{n}}
-     {\Pi^{n} A B:\UU_{n}}~~~~~~~~~
-\frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{n}}
-     {\Sigma^{n} A B:\UU_{n}}~~~~~~~~~
-$$
-with conversion rules
-$$
-\T_{n}~(\Pi^{n} A B) = \mypi{x}{\T_{n}(A)}{ \T_{n}(B~x)}~~~~~~~
-\T_{n}~(\Sigma^{n} A B) = \mysig{x}{\T_{n}(A)}{ \T_{n}(B~x)}~~~~~~~
-$$
-and
-$$
-\T_{n}^{m}~(\Pi^{n} A B) = \Pi^{m} \T_{n}^{m}(A) (\mylam{x}{\T_{n}(A)}{\T_{n}^{m}(B~x)})~~~~~~
-\T_{n}^{m}~(\Sigma^{n} A B) = \Sigma^{m} \T_{n}^{m}(A) (\mylam{x}{\T_{n}(A)}{\T_{n}^{m}(B~x)})~~~~~~
-$$
-
-\paragraph{Generalised algebraic presentation and Russell formulation}
-
-It is possible to formulate these rules in the form of a generalised algebraic theory, which provides
-a natural notion of {\em models} of type theory.
-
-\begin{remark} \label{app:annotation}
-As explained
-in \cite{streicher:semtt}, in order to see the present rules as presenting the {\em initial} model,
-it is enough to use a variation where application $c~a:B(a/x)$ for $c:\mypi{x}{A}B$ and $a:A$
-is annoted by the type family $A,B$ (and similarly for the pairing operation).
-\end{remark}
-
-\medskip
-
-There is another way to present this initial model, which is by using
-a {\em Russell} formulation (using the terminology introduced in \cite{martinlof:padova}) of
-universes). One expects all these formulations to be equivalent; for preliminary results in this
-direction see \cite{Assaf14,Thire20}.
-
-With this formulation, the version without cumulativity becomes
-
-$$
-\UU_n~\type~~~~~~
-\frac{A:\UU_{n}}{A~\type}
-$$
-$$
-\frac{A:\UU_{n}~~~~~~B:\UU_m(x:A)}
-     {\mypi{x}{A}{B}:\UU_{n\vee m}}~~~~~~~~~
-\frac{A:\UU_{n}~~~~~~B:\UU_m(x:A)}
-     {\mysig{x}{A}{B}:\UU_{n\vee m}}~~~~~~~~~
-$$
-$$\NN:\UU_{0}$$
-$$
-\frac{A:\UU_n~~~~~~a_0:A~~~~~~a_1:A}
-{\Id~A~a_0~a_1:\UU_n}
-$$
-and we have ${\UU_l}:\UU_{l+1}$.
-
-\medskip
-
-For the version with cumulativity, we add the rules
-$$
-\frac{A:\UU_{n}}{A:\UU_{n+1}}
-$$
-and the rules for products and sums can be simplified to
-$$
-\frac{A:\UU_{n}~~~~~~B:\UU_n(x:A)}
-     {\mypi{x}{A}{B}:\UU_{n}}~~~~~~~~~
-\frac{A:\UU_{n}~~~~~~B:\UU_n(x:A)}
-     {\mysig{x}{A}{B}:\UU_{n}}~~~~~~~~~
-$$
-
-\begin{remark}
-  In this version \`a la Tarski, with or without cumulativity, terms have unique types, in the sense that if $t : A$ and $t : B$ then $A = B$, by induction on $t$. But for this to be valid, we need to annotate application as discussed in Remark~\ref{app:annotation}.
-  Even with annotated application, the following property is not elementary: if $\UU_n$ and $\UU_m$ are convertible then $n$ is equal to $m$. This kind of property is needed for showing the equivalence between the Tarski and the Russell formulation.
-\end{remark}
-
-\begin{remark} \label{uniqueness:without:cumulativity}
-  In a system without cumulativity, if we restrict $\NN$ to be of type $\UU_0$, and $\UU_n$ to be of type $\UU_{n+1}$ then well formed terms have unique types.
-\end{remark}
-
-\begin{remark}
-  It should be the case that that the above formulation \`a la Russell presents the initial CwF with extra extructure for the standard type formers and a hierarchy of universes, but the proof doesn't seem to be trivial, due to Remark~\ref{uniqueness:without:cumulativity}.
-\end{remark}
-
  \section{A type theory with universe levels and polymorphism }\label{sec:internal}
 
 The problem with this approach is that we have to {\em duplicate} definitions that follow
@@ -535,7 +434,7 @@ $$
 {\Id^l~A~a_0~a_1:\UU_l}
 $$
 $$\T_l(\Id^l~A~a_0~a_1) = \Id~\T_l(A)~a_0~a_1$$
-and a code for the previous universe, for $l = n^+\vee m$
+and, for $n<l$
 $${\UU_n^{l}}:\UU_{l}$$
 $$\T_{l}({\UU_n^{l}}) = \UU_{n}$$
 
@@ -574,52 +473,6 @@ then $a$ is convertible to a numeral.
 % and the
 % fact that if all universes are univalent then they all satisfy function extensionality.
 
-\section*{Rules for cumulativity}
-
-
-(** Comments about groups **)
-(** comments about Id depending on the universe **)
-
-
-
-
-These rules are also analogous to the rules for externally indexed universes.
-For the sake of completeness we give them explicitly.
-
-(** Here we do not need the $\vee$-operation **)
-\footnote{PD: But we use $\vee$ in the rules below.}
-
-We introduce an operation $\T_{l}^{m}(A):\UU_{m}$ if $A:\UU_{l}$
-and $l\leqslant m$ (i.e., $m = l\vee m$).
-
-We require $\T_{m}(\T_{l}^{m}(A)) = \T_{l}(A)$
-and $\T_{l}^{m}(\NN^{l}) = \NN^{m}$.
-
-We add $\T_{l}^l(A) = A$\footnote{Recall that the equality of universe levels is the one of
-  sup semilattice with the next operation.}
-and $\T_{m}^n\T_{l}^m = \T_l^n$ if $l\leqslant m\leqslant n$.
-%Note that this cannot be simplified to $\T_{l}^l(A) = A$
-%like $\T_{n}^n(A) = A$ in \cref{sec:internal}.
-%The simplified equation would not give, e.g.,
-%$\T_{\alpha\vee\beta}^{\beta\vee\alpha}(A) = A$.
-
-We can then simplify the product and sum rules to
-$$
-\frac{A:\UU_{l}~~~~~~B:\T_{l}(A)\rightarrow \UU_{l}}
-     {\Pi^{l} A B:\UU_{l}}~~~~~~~~~
-\frac{A:\UU_{l}~~~~~~B:\T_{l}(A)\rightarrow \UU_{l}}
-     {\Sigma^{l} A B:\UU_{l}}~~~~~~~~~
-$$
-with conversion rules
-$$
-\T_{l}~(\Pi^{l} A B) = \mypi{x}{\T_{l}(A)}{ \T_{l}(B~x)}~~~~~~~
-\T_{l}~(\Sigma^{l} A B) =  \mysig{x}{\T_{l}(A)}{ \T_{l}(B~x)}~~~~~~~
-$$
-and
-$$
-\T_{l}^{m}~(\Pi^{l} A B) = \Pi^{m} \T_{l}^{m}(A) (\mylam {x}{\T_{l}(A)}{\T_{l}^{m}(B~x)})~~~~~~
-\T_{l}^{m}~(\Sigma^{l} A B) = \Sigma^{m} \T_{l}^{m}(A) (\mylam {x}{\T_{l}(A)}{\T_{l}^{m}(B~x)})~~~~~~
-$$
 
 
 \paragraph{Interpreting the level-indexed system in the system with externally indexed universes.}
@@ -784,7 +637,11 @@ c~=~\lam{\alpha~\beta}\lambda_{Y:\UU_{\beta}}\Id~{\UU_{\beta}}~Y~ (\Sigma_{X:\UU
    [\alpha~\beta][\alpha<\beta]\UU_{\beta} \rightarrow \UU_{\beta^+}
 $$
 
-   We can instantiate this constant $c$ on two levels $l$ and $m$, and this will be of type
+   This is because $\Sigma_{X:\UU_{\alpha}}X\rightarrow Y$ has type $\UU_{\beta}$ in the context
+
+   $$\alpha:\Level,~\beta:\Level,~\alpha<\beta,~Y:\UU_{\beta}$$
+
+   We can further instantiate this constant $c$ on two levels $l$ and $m$, and this will be of type
    $$[l<m]\UU_{m} \rightarrow \UU_{m^+}$$
    and this only can be used further if $l<m$ holds in the current context.
 
@@ -895,6 +752,9 @@ typings depend on universe level constraints
 
 \section{Related work}
 
+(** Comments about groups **)
+(** comments about Id depending on the universe **)
+
 Huet \cite{Huet87} develops another algorithm for universe polymorphism
 in the Calculus of Constructions extended with a predicative system of universes.
 He drops the assumption that the universes form a linearly-ordered cumulative hierarchy indexed by the natural numbers.
@@ -940,5 +800,157 @@ in Oslo, Norway, which funded and hosted the research project Homotopy
 Type Theory and Univalent Foundations during the academic year 2018/19.
 \bibliographystyle{plain}
 \bibliography{refs}
+
+\newpage
+
+\section*{Appendix 1: formulation with cumulativity}
+
+%% \subsection*{Rules for cumulativity}
+
+%% With cumulativity, we introduce an operation
+%% $$
+%% \frac{A:\UU_{n}}
+%% {\T_{n}^{m}(A):\UU_{m}}
+%% n\leqslant m
+%% $$
+%% We can also formulate the side condition as an equation $m = n \vee m$.
+%% We require for all $n,m$
+%% \[
+%% \T_m(\T_{n}^{m}(A)) = \T_{n}(A) \quad\text{and}\quad \T_{n}^{m}(\NN^{n}) = \NN^{m}.
+%% \footnote{PD: should we not justify the fact that we can have those two rules together? Especially since Erik Palmgren in his work on universe operators has two versions, where the first rule is only admitted in the "uniform constructions" version and the second one in the "full reflection" version. The split arises because in the "uniform constructions" version the cumulativity maps are constructors, whereas in the "full reflection" case they are implicit operations computed by case analysis on the codes. My preferred way to justify both is to take the "full reflections" approach, but note that the rule $\T_m(\T_{n}^{m}(A)) = \T_{n}(A)$ is still valid in the "standard model" (the meaning explanations). Here this rule comes out as an extensional equality, but the rule $\T_{n}^{m}(\NN^{n}) = \NN^{m}$ comes out as a definitional equality. Interestingly, it seems that the resulting system is still normalizing and has decidable judgments. }
+%% \]
+%% We add for all $n,m,p$ with $m\leqslant n\leqslant p$
+%% $$
+%% \T_{n}^n(A) = A \quad\text{and}\quad \T_{n}^p\T_{m}^n = \T_m^p.
+%% $$
+%% We can then simplify the product and sum rules to
+%% $$
+%% \frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{n}}
+%%      {\Pi^{n} A B:\UU_{n}}~~~~~~~~~
+%% \frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{n}}
+%%      {\Sigma^{n} A B:\UU_{n}}~~~~~~~~~
+%% $$
+%% with conversion rules
+%% $$
+%% \T_{n}~(\Pi^{n} A B) = \mypi{x}{\T_{n}(A)}{ \T_{n}(B~x)}~~~~~~~
+%% \T_{n}~(\Sigma^{n} A B) = \mysig{x}{\T_{n}(A)}{ \T_{n}(B~x)}~~~~~~~
+%% $$
+%% and
+%% $$
+%% \T_{n}^{m}~(\Pi^{n} A B) = \Pi^{m} \T_{n}^{m}(A) (\mylam{x}{\T_{n}(A)}{\T_{n}^{m}(B~x)})~~~~~~
+%% \T_{n}^{m}~(\Sigma^{n} A B) = \Sigma^{m} \T_{n}^{m}(A) (\mylam{x}{\T_{n}(A)}{\T_{n}^{m}(B~x)})~~~~~~
+%% $$
+
+
+
+
+%% These rules are also analogous to the rules for externally indexed universes.
+%% For the sake of completeness we give them explicitly.
+
+%% (** Here we do not need the $\vee$-operation **)
+%% \footnote{PD: But we use $\vee$ in the rules below.}
+
+We introduce an operation $\T_{l}^{m}(A):\UU_{m}$ if $A:\UU_{l}$
+and $l\leqslant m$ (i.e., $m = l\vee m$).
+
+We require $\T_{m}(\T_{l}^{m}(A)) = \T_{l}(A)$
+and $\T_{l}^{m}(\NN^{l}) = \NN^{m}$.
+
+We add $\T_{l}^l(A) = A$\footnote{Recall that the equality of universe levels is the one of
+  sup semilattice with the next operation.}
+and $\T_{m}^n\T_{l}^m = \T_l^n$ if $l\leqslant m\leqslant n$.
+%Note that this cannot be simplified to $\T_{l}^l(A) = A$
+%like $\T_{n}^n(A) = A$ in \cref{sec:internal}.
+%The simplified equation would not give, e.g.,
+%$\T_{\alpha\vee\beta}^{\beta\vee\alpha}(A) = A$.
+
+We can then simplify the product and sum rules to
+$$
+\frac{A:\UU_{l}~~~~~~B:\T_{l}(A)\rightarrow \UU_{l}}
+     {\Pi^{l} A B:\UU_{l}}~~~~~~~~~
+\frac{A:\UU_{l}~~~~~~B:\T_{l}(A)\rightarrow \UU_{l}}
+     {\Sigma^{l} A B:\UU_{l}}~~~~~~~~~
+$$
+with conversion rules
+$$
+\T_{l}~(\Pi^{l} A B) = \mypi{x}{\T_{l}(A)}{ \T_{l}(B~x)}~~~~~~~
+\T_{l}~(\Sigma^{l} A B) =  \mysig{x}{\T_{l}(A)}{ \T_{l}(B~x)}~~~~~~~
+$$
+and
+$$
+\T_{l}^{m}~(\Pi^{l} A B) = \Pi^{m} \T_{l}^{m}(A) (\mylam {x}{\T_{l}(A)}{\T_{l}^{m}(B~x)})~~~~~~
+\T_{l}^{m}~(\Sigma^{l} A B) = \Sigma^{m} \T_{l}^{m}(A) (\mylam {x}{\T_{l}(A)}{\T_{l}^{m}(B~x)})~~~~~~
+$$
+
+\section*{Appendix 2: formulation \`a la Russell}
+
+\paragraph{Generalised algebraic presentation and Russell formulation}
+
+It is possible to formulate these rules in the form of a generalised algebraic theory, which provides
+a natural notion of {\em models} of type theory.
+
+\begin{remark} \label{app:annotation}
+As explained
+in \cite{streicher:semtt}, in order to see the present rules as presenting the {\em initial} model,
+it is enough to use a variation where application $c~a:B(a/x)$ for $c:\mypi{x}{A}B$ and $a:A$
+is annoted by the type family $A,B$ (and similarly for the pairing operation).
+\end{remark}
+
+\medskip
+
+There is another way to present this initial model, which is by using
+a {\em Russell} formulation (using the terminology introduced in \cite{martinlof:padova}) of
+universes). One expects all these formulations to be equivalent; for preliminary results in this
+direction see \cite{Assaf14,Thire20}.
+
+With this formulation, the version without cumulativity becomes
+
+$$
+\frac{A:\UU_{n}}{A~\type}
+$$
+$$
+\frac{A:\UU_{n}~~~~~~B:\UU_m(x:A)}
+     {\mypi{x}{A}{B}:\UU_{n\vee m}}~~~~~~~~~
+\frac{A:\UU_{n}~~~~~~B:\UU_m(x:A)}
+     {\mysig{x}{A}{B}:\UU_{n\vee m}}~~~~~~~~~
+$$
+$$\frac{l~\Level}{\NN:\UU_{l}}$$
+$$
+\frac{A:\UU_n~~~~~~a_0:A~~~~~~a_1:A}
+{\Id~A~a_0~a_1:\UU_n}
+$$
+$$
+\frac{l<n}{{\UU_l}:\UU_{n}}
+$$
+
+\medskip
+
+For the version with cumulativity, we add the rules
+$$
+\frac{l\leqslant n~~~~~~~A:\UU_{l}}{A:\UU_{n}}
+$$
+and the rules for products and sums can be simplified to
+$$
+\frac{A:\UU_{n}~~~~~~B:\UU_n(x:A)}
+     {\mypi{x}{A}{B}:\UU_{n}}~~~~~~~~~
+\frac{A:\UU_{n}~~~~~~B:\UU_n(x:A)}
+     {\mysig{x}{A}{B}:\UU_{n}}~~~~~~~~~
+$$
+
+\begin{remark}
+  In this version \`a la Tarski, with or without cumulativity, terms have unique types, in the sense that if $t : A$ and $t : B$ then $A = B$, by induction on $t$. But for this to be valid, we need to annotate application as discussed in Remark~\ref{app:annotation}.
+  Even with annotated application, the following property is not elementary: if $\UU_n$ and $\UU_m$ are convertible then $n$ is equal to $m$. This kind of property is needed for showing the equivalence between the Tarski and the Russell formulation.
+\end{remark}
+
+\begin{remark} \label{uniqueness:without:cumulativity}
+  In a system without cumulativity, if we restrict $\NN$ to be of type $\UU_0$, and $\UU_n$ to be of type $\UU_{n+1}$ then well formed terms have unique types.
+\end{remark}
+
+\begin{remark}
+  It should be the case that that the above formulation \`a la Russell presents the initial CwF with extra extructure for the standard type formers and a hierarchy of universes, but the proof doesn't seem to be trivial, due to Remark~\ref{uniqueness:without:cumulativity}.
+\end{remark}
+
+
+
 
 \end{document}
