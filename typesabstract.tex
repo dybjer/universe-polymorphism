@@ -135,7 +135,7 @@
 
 \begin{document}
 
-\title{Type Theories with Universe Level Judgements}
+\title{Type Theories with Universe Level Judgments}
 
 \author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
 \date{}
@@ -145,89 +145,79 @@
 \section*{}\label{sec:intros}
 \newcommand{\ttt}[1]{\text{\tt #1}}
 
-  The goal of this work is to refine a proposal of Voevodsky \cite{VV} for handling universes in type theory.
-  We recall first the version of type theory with an externally indexed sequence of universes \`a la Tarski and
-  with and without cumulativity.
+  The goal of this work is to refine a proposal of Voevodsky \cite{VV} 
+  for handling universes in type theory.
+  We recall first the version of type theory with an externally indexed 
+  sequence of universes \`a la Tarski and with and without cumulativity.
   We introduce then an internal notion of universe level.
-  We add a new judgment $l\ \Level$ meaning that $l$ is a universe level, and $l = m$ meaning that $l$ and $m$ are equal universe levels, where level expressions are built up from level variables $\alpha$ by a successor operation $l^+$ and suprema $l \vee m$.
-  %In this way judgments can be indexed by level variables, and we obtain universe polymorphism similar to polymorphism in the functional language ML.
-  We then extend this theory with rules for level-indexed product types $[\alpha]A$ meaning ``$A$ is a type for all universe levels $\alpha$".
-  The final theory extends a proposal by Voevodsky
-  for a system with level constraints. We discuss the (solved) decision problems for sup-semilattices with
-  successor that come with this approach.
+  We add two new judgment forms: $l\ \Level$ meaning that $l$ is a universe level, 
+  and $l = m$ meaning that $l$ and $m$ are equal universe levels, 
+  where level expressions are built up from level variables $\alpha$ 
+  using a successor operation $l^+$ and 
+  a join (supremum, maximum) operation $l \vee m$.
+  
+  We then extend the type theory with formation rules for level-indexed product 
+  types $[\alpha]A$ meaning ``$A$ is a type for all universe levels $\alpha$".
+  Furthermore, introduction and elimination rules for such types are given,
+  as well as some new computational rules.
+  The final theory extends a proposal by Voevodsky for a system with level constraints. 
+  We shortly discuss the decision problems for sup-semilattices with
+  successor that come with this approach, problems that can be solved in polynomial time.
 
 The system of simple type theory, as introduced by Church \cite{church:formulation},
-is elegant and the basis of several
-proof assistants. It however has some unnatural limitation: it is not possible in this system to talk
-about an arbitrary type, or about an arbitrary structure. It is also not possible to formulate the collection
-of e.g. all groups, as needed in category theory. In order to address these limitations, Martin-L\"of
-\cite{ML71,ML71a} introduced a system with a type $V$ of all types. A function $A\rightarrow V$ in this system can
-then be seen as a family of types over a given type $A$, and it is natural in such a system to refine
-the operations of simple type theory, exponential and cartesian product, by the operations of dependent products
-and sums. After the discovery of Girard's paradox \cite{Girard71}, Martin-L\"of \cite{ML72}
-introduced a distinction between
-{\em small} and {\em large} type, similar to the distinction introduced in category theory between large and small sets,
+is elegant and forms the basis of several proof assistants. 
+However, it has some unnatural limitations: it is not possible in this system to talk
+about an arbitrary type, or about an arbitrary structure. 
+It is also not possible to form the collection of e.g.\ all groups, 
+as needed in category theory. In order to address these limitations, 
+Martin-L\"of \cite{ML71,ML71a} introduced a system with a type $V$ of all types. 
+A function $A\rightarrow V$ in this system can then be seen as a family of types 
+over a given type $A$, and it is natural in such a system to refine
+the operations of simple type theory, exponential and cartesian product, 
+to operations of dependent products and sums. 
+After the discovery of Girard's paradox in \cite{Girard71}, 
+Martin-L\"of \cite{ML72} introduced a distinction between
+{\em small} and {\em large} types, similar to the distinction introduced 
+in category theory between large and small sets,
 and the type $V$ became the (large) type of small types.
-The name ``universe'' for such a type was chosen
-in analogy with the notion of universes introduced by Grothendieck to represent category theory
-in set theory.
+The name ``universe'' for such a type was chosen in analogy with the notion of 
+universes introduced by Grothendieck to represent category theory in set theory.
 
-
-%% The earliest record of the use of universes in type theory that we could
-%% find is in the paper \cite{deBruijn68} by de Bruijn on Automath.
-%% In this paper, types are called categories, but not all categories are types.
-%% Automath has a special symbol\footnote{PD: category?} \ttt{type} to make it possible to introduce
-%% new categories, and only categories \ttt{c} introduced as $\ttt{c}:\ttt{type}$
-%% are types, not \ttt{type} itself (so, not $\ttt{type}:\ttt{type}$).
-%% One new type is $\ttt{bool}:\ttt{type}$,
-%% which is the category of all propositions.
-%% Propositions may or may not be asserted
-%% and to this purpose there is a primitive notion\footnote{PD: category?} \ttt{TRUE}
-%% of category \ttt{type}
-%% in the context of a free variable of type \ttt{bool}.
-%% By substitution one can form the type \ttt{TRUE(p)} for any $\ttt{p}:\ttt{bool}$.
-%% In modern terminology we would call \ttt{type} a universe of
-%% types and \ttt{bool} a subuniverse \emph{à la Tarski} of
-%% (codes of) propositions with a decoding function \ttt{TRUE}.
-%% \footnote{PD: this seems similar to Per's view of type theory in 1985, just before he introduced the logical framework. Then he talked about "the category of types" and "the category of objects of a type". Among the types he had a universe U which could be formulated a la Tarski with T(a) the type of elements of a : U. How was  \ttt{TRUE(p)} defined? Is it similar to T(a)?}
-%At the very end, the paper discusses the possibility of adding a symbol
-%\ttt{type*} and changing the category of \ttt{bool} from \ttt{type}
-%to \ttt{type*}, disallowing functional abstraction with respect to \ttt{bool}.
-%The possibility of functional abstraction with respect to \ttt{type} is mentioned and rejected.
-
-
-%When representing mathematical reasoning using dependent types it is natural to introduce
-%a sort for types
-%\footnote{PD: This sentence is not clear: what is a "sort"?}
-%, itself closed by dependent product, as was done in the system Automath \cite{deBruijn68}.
-%% A little later, and independently, Martin-Löf \cite{ML71} introduced a dependent
-%% type system with a \emph{type} $V$ of all types (so $V:V$).
-%% After the discovery of Girard's Paradox \cite{Girard71}, this system was replaced by a predicative
-%% version \cite{ML72}\footnote{PD: in that paper there were just two levels: "types" and "small types" (in the universe).}, more similar to the one used in Automath \cite{deBruijn68}.
-Later, Martin-L\"of \cite{martinlof:predicative} introduced a countable sequence of universes
+Later, Martin-L\"of \cite{martinlof:predicative} introduced a countable tower of universes
 $$
 \UU_0 : \UU_1 : \UU_2 : \cdots
 $$
 We refer to the indices $0, 1, 2, \ldots$ as {\em universe levels}. 
 
-Before the advent of univalent foundations, one expected only the first few universe
-levels to be relevant in practical formalisations. This suggests that it might be feasible
-for a user of type theory to explicitly assign universe levels to their types, and whenever necessary
-repeat definitions when they are needed on different levels. However, the number of copies of definitions
-does not only grow with the level, but also with the number of type arguments in the definition of a type former.
-The need for universe polymorphism has increased with the advent of Voevodsky's univalent foundations,
-see for example \cite{VV}. One often wants to prove theorems uniformly for an arbitrary universe.
+Before the advent of univalent foundations, most type theorists expected only the first few 
+universe levels to be relevant in practical formalisations. 
+This included the expectation that it might be feasible for a user of type theory to 
+explicitly assign universe levels to their types, simply adding updated versions of earlier
+definitions when they were needed at different levels.
+However, the number of copies of definitions does not only grow with the level, 
+but also with the number of \emph{occurrences of type arguments} 
+in the definition of a type former. (The latter growth could be exponential!)
+
+With the advent of Voevodsky's univalent foundations, the need for universe polymorphism 
+has only increased, see for example \cite{VV}. 
+One often wants to prove theorems uniformly for any arbitrary universe(s).
 
 The {\em univalence axiom} states that for any two types $X,Y$ the canonical map
 $$
 \idtoeq_{X,Y} : (X=Y)\to (X\simeq Y)
 $$
 is an equivalence.
-Formally, the univalence axiom is an axiom scheme which is added to Martin-Löf type theory. If we work in Martin-Löf type theory with a countable tower of universes, each type is a member of some universe $\UU_n$. Such a universe $\UU_n$ is {\em univalent} provided for all $X,Y : \UU_n$ the canonical map $\idtoeq_{X,Y}$ is an equivalence. Let $\UA_n$ be the type expressing the univalence of $\UU_n$, and
+Formally, the univalence axiom is an axiom scheme which is added to Martin-Löf type theory. 
+If we work in Martin-Löf type theory with a countable tower of universes, 
+each type is a member of some universe $\UU_n$. 
+Such a universe $\UU_n$ is {\em univalent} provided for all $X,Y : \UU_n$ the 
+canonical map $\idtoeq_{X,Y}$ is an equivalence. 
+Let $\UA_n$ be the type expressing the univalence of $\UU_n$, and
 $$
 \ua_n : \UA_n
 $$
-for $n = 0,1,\ldots$, be a sequence of constants expressing the instances of the univalence axiom. We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and hence $\UA_n$ is in $\UU_{n+1}$.
+for $n = 0,1,\ldots$, be a sequence of constants expressing the instances of the univalence axiom. 
+We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and hence $\UA_n$ is in $\UU_{n+1}$.
 If we have a type of levels, as in the Agda or Lean system,
 we can express universe polymorphism as quantification over universe levels.
 %% Then we can express univalence of all universes as one typing:
@@ -237,10 +227,12 @@ we can express universe polymorphism as quantification over universe levels.
 %% in Agda's notation.
 
 We remark that universes are more important in a predicative framework than in an impredicative one.
-Consider for example the formalisation of real numbers as Dedekind cuts, or domain elements as filters of formal neighbourhoods, which belong to $\UU_1$ since they are properties of elements in $\UU_0$.
+Consider for example the formalisation of real numbers as Dedekind cuts, 
+or domain elements as filters of formal neighbourhoods, 
+which belong to $\UU_1$ since they are properties of elements in $\UU_0$.
 However, even in a system using an impredicative universe of propositions,
-such as the ones in \cite{Huet87,moura:lean}, there is the need for the use of definitions parametric
-in universe levels.
+such as the ones in \cite{Huet87,moura:lean}, there is a need for the use of definitions 
+parametric in universe levels.
 
 %{\color{red} Cite Lean \cite{moura:lean}?}
 
@@ -262,6 +254,36 @@ Our system complements
 
 %The starting point for the present discussions was Escard\'o's \cite{escardo} development of univalent mathematics in the Agda system. His development is {\em universe polymorphic} and makes heavy use of quantification over Agda's type $\Level$ of universe levels. However, the Agda system is not a precisely defined logical system, and we would like to introduce several candidate systems in which Escard\'o's development can be carried out. We will also present a system similar to Voevodsky's universe polymorphic system \cite{VV}. (** MODIFY THIS STAMEMENT AND ALL OTHER REFERENCES TO VV **) In this system there are variables ranging over universe levels and each judgment is made relative to a list of equational constraints between universe level expressions.
 
+An example that uses level-indexed products is the following type which  expresses the theorem that univalence for universes of arbitrary level implies function extensionality for functions between universes of arbitrary levels.
+$$
+([\alpha]\mathsf{IsUnivalent}\, \UU_\alpha)
+\to [\beta][\gamma] \mathsf{FunExt}\, \UU_\beta\, \UU_\gamma
+$$
+
+We can define in our system a constant
+$$
+c~=~\lam{\alpha~\beta}\lambda_{Y:\UU_{\beta}}\Id~{\UU_{\beta}}~Y~ (\Sigma_{X:\UU_{\alpha}}X\rightarrow Y)~~:~~
+   [\alpha~\beta][\alpha<\beta]\UU_{\beta} \rightarrow \UU_{\beta^+}
+$$
+
+   This is because $\Sigma_{X:\UU_{\alpha}}X\rightarrow Y$ has type $\UU_{\beta}$ in the context
+
+   $$\alpha:\Level,~\beta:\Level,~\alpha<\beta,~Y:\UU_{\beta}$$
+
+   We can further instantiate this constant $c$ on two levels $l$ and $m$, and this will be of type
+   $$[l<m]\UU_{m} \rightarrow \UU_{m^+}$$
+   and this only can be used further if $l<m$ holds in the current context.
+
+   \medskip
+
+
+In the current system of Agda, the constraint $\alpha<\beta$ is represented indirectly by
+writing $\beta$ on the form $\gamma\vee \alpha^+$ and $c$ is defined as
+$$
+c~=~\lam{\alpha~\gamma}\lambda_{Y:\UU_{\alpha^+\vee\gamma}}\Id~{\UU_{\alpha^+\vee\gamma}}~Y~ (\Sigma_{X:\UU_{\alpha}}X\rightarrow Y)~~:~~
+   [\alpha~\gamma]\UU_{\alpha^+\vee\gamma} \rightarrow \UU_{\alpha^{++}\vee\gamma^+}
+$$
+   which arguably is less readable.
 
 \paragraph{Plan.} We start by giving the rules for a basic version of dependent type theory with
 $\Pi, \Sigma, \NN$, and an identity type former $\Id$.
