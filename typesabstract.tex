@@ -1,0 +1,277 @@
+%\documentclass[12pt,a4paper]{amsart}
+\documentclass[11pt,a4paper]{article}
+%\ifx\pdfpageheight\undefined\PassOptionsToPackage{dvips}{graphicx}\else%
+%\PassOptionsToPackage{pdftex}{graphicx}
+\PassOptionsToPackage{pdftex}{color}
+%\fi
+
+%\usepackage{diagrams}
+
+%\usepackage[all]{xy}
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{latexsym}
+\usepackage{amssymb,amstext,amsmath,amsthm}
+\usepackage{epsf}
+\usepackage{epsfig}
+% \usepackage{isolatin1}
+\usepackage{a4wide}
+\usepackage{verbatim}
+\usepackage{proof}
+\usepackage{latexsym}
+%\usepackage{mytheorems}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}{Lemma}[theorem]
+\newtheorem{proposition}{Proposition}[theorem]
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}{Remark}[theorem]
+\newtheorem{TODO}{TODO}[theorem]
+
+\usepackage{float}
+\floatstyle{boxed}
+\restylefloat{figure}
+
+
+%%%%%%%%%copied from SymmetryBook by Marc
+
+% hyperref should be the package loaded last
+\usepackage[backref=page,
+            colorlinks,
+            citecolor=linkcolor,
+            linkcolor=linkcolor,
+            urlcolor=linkcolor,
+            unicode,
+            pdfauthor={CAS},
+            pdftitle={Symmetry},
+            pdfsubject={Mathematics},
+            pdfkeywords={type theory, group theory, univalence axiom}]{hyperref}
+% - except for cleveref!
+\usepackage[capitalize]{cleveref}
+%\usepackage{xifthen}
+\usepackage{xcolor}
+\definecolor{linkcolor}{rgb}{0,0,0.5}
+
+%%%%%%%%%
+\def\oge{\leavevmode\raise
+.3ex\hbox{$\scriptscriptstyle\langle\!\langle\,$}}
+\def\feg{\leavevmode\raise
+.3ex\hbox{$\scriptscriptstyle\,\rangle\!\rangle$}}
+
+%%%%%%%%%
+\newcommand\myfrac[2]{
+ \begin{array}{c}
+ #1 \\
+ \hline \hline
+ #2
+\end{array}}
+
+
+\newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}}%
+\newcommand*{\Resize}[2]{\resizebox{#1}{!}{$#2$}}
+
+\newcommand{\II}{\mathbb{I}}
+\newcommand{\refl}{\mathsf{refl}}
+\newcommand{\mkbox}[1]{\ensuremath{#1}}
+
+
+\newcommand{\Id}{\mathsf{Id}}
+\newcommand{\conv}{=}
+%\newcommand{\conv}{\mathsf{conv}}
+\newcommand{\lam}[2]{{\langle}#1{\rangle}#2}
+\def\NN{\mathsf{N}}
+\def\UU{\mathsf{U}}
+\def\JJ{\mathsf{J}}
+\def\Level{\mathsf{Level}}
+%\def\Type{\hbox{\sf Type}}
+\def\ZERO{\mathsf{0}}
+\def\SUCC{\mathsf{S}}
+
+\newcommand{\type}{\mathsf{type}}
+\newcommand{\mypi}[3]{\Pi_{#1:#2}#3}
+\newcommand{\mylam}[3]{\lambda_{#1:#2}#3}
+\newcommand{\mysig}[3]{\Sigma_{#1:#2}#3}
+\newcommand{\N}{\mathsf{N}}
+\newcommand{\Set}{\mathsf{Set}}
+\newcommand{\El}{\mathsf{El}}
+%\newcommand{\U}{\mathsf{U}} clashes with def's in new packages
+\newcommand{\T}{\mathsf{T}}
+\newcommand{\Usuper}{\UU_{\mathrm{super}}}
+\newcommand{\Tsuper}{\T_{\mathrm{super}}}
+%\newcommand{\conv}{\mathrm{conv}}
+\newcommand{\idtoeq}{\mathsf{idtoeq}}
+\newcommand{\isEquiv}{\mathsf{isEquiv}}
+\newcommand{\ua}{\mathsf{ua}}
+\newcommand{\UA}{\mathsf{UA}}
+%\newcommand{\Level}{\mathrm{Level}}
+\def\Constraint{\mathsf{Constraint}}
+\def\Ordo{\mathcal{O}}
+
+\def\Ctx{\mathrm{Ctx}}
+\def\Ty{\mathrm{Ty}}
+\def\Tm{\mathrm{Tm}}
+
+\def\CComega{\mathrm{CC}^\omega}
+\setlength{\oddsidemargin}{0in} % so, left margin is 1in
+\setlength{\textwidth}{6.27in} % so, right margin is 1in
+\setlength{\topmargin}{0in} % so, top margin is 1in
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{9.19in} % so, foot margin is 1.5in
+\setlength{\footskip}{.8in}
+
+% Definition of \placetitle
+% Want to do an alternative which takes arguments
+% for the names, authors etc.
+
+\newcommand{\natrec}{\mathsf{natrec}}
+%\rightfooter{}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\sct}[1]{[\![#1]\!]}
+
+
+
+\begin{document}
+
+\title{Type Theories with Universe Level Judgements}
+
+\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
+\date{}
+\maketitle
+
+
+\section*{}\label{sec:intros}
+\newcommand{\ttt}[1]{\text{\tt #1}}
+
+  The goal of this work is to refine a proposal of Voevodsky \cite{VV} for handling universes in type theory.
+  We recall first the version of type theory with an externally indexed sequence of universes \`a la Tarski and
+  with and without cumulativity.
+  We introduce then an internal notion of universe level.
+  We add a new judgment $l\ \Level$ meaning that $l$ is a universe level, and $l = m$ meaning that $l$ and $m$ are equal universe levels, where level expressions are built up from level variables $\alpha$ by a successor operation $l^+$ and suprema $l \vee m$.
+  %In this way judgments can be indexed by level variables, and we obtain universe polymorphism similar to polymorphism in the functional language ML.
+  We then extend this theory with rules for level-indexed product types $[\alpha]A$ meaning ``$A$ is a type for all universe levels $\alpha$".
+  The final theory extends a proposal by Voevodsky
+  for a system with level constraints. We discuss the (solved) decision problems for sup-semilattices with
+  successor that come with this approach.
+
+The system of simple type theory, as introduced by Church \cite{church:formulation},
+is elegant and the basis of several
+proof assistants. It however has some unnatural limitation: it is not possible in this system to talk
+about an arbitrary type, or about an arbitrary structure. It is also not possible to formulate the collection
+of e.g. all groups, as needed in category theory. In order to address these limitations, Martin-L\"of
+\cite{ML71,ML71a} introduced a system with a type $V$ of all types. A function $A\rightarrow V$ in this system can
+then be seen as a family of types over a given type $A$, and it is natural in such a system to refine
+the operations of simple type theory, exponential and cartesian product, by the operations of dependent products
+and sums. After the discovery of Girard's paradox \cite{Girard71}, Martin-L\"of \cite{ML72}
+introduced a distinction between
+{\em small} and {\em large} type, similar to the distinction introduced in category theory between large and small sets,
+and the type $V$ became the (large) type of small types.
+The name ``universe'' for such a type was chosen
+in analogy with the notion of universes introduced by Grothendieck to represent category theory
+in set theory.
+
+
+%% The earliest record of the use of universes in type theory that we could
+%% find is in the paper \cite{deBruijn68} by de Bruijn on Automath.
+%% In this paper, types are called categories, but not all categories are types.
+%% Automath has a special symbol\footnote{PD: category?} \ttt{type} to make it possible to introduce
+%% new categories, and only categories \ttt{c} introduced as $\ttt{c}:\ttt{type}$
+%% are types, not \ttt{type} itself (so, not $\ttt{type}:\ttt{type}$).
+%% One new type is $\ttt{bool}:\ttt{type}$,
+%% which is the category of all propositions.
+%% Propositions may or may not be asserted
+%% and to this purpose there is a primitive notion\footnote{PD: category?} \ttt{TRUE}
+%% of category \ttt{type}
+%% in the context of a free variable of type \ttt{bool}.
+%% By substitution one can form the type \ttt{TRUE(p)} for any $\ttt{p}:\ttt{bool}$.
+%% In modern terminology we would call \ttt{type} a universe of
+%% types and \ttt{bool} a subuniverse \emph{à la Tarski} of
+%% (codes of) propositions with a decoding function \ttt{TRUE}.
+%% \footnote{PD: this seems similar to Per's view of type theory in 1985, just before he introduced the logical framework. Then he talked about "the category of types" and "the category of objects of a type". Among the types he had a universe U which could be formulated a la Tarski with T(a) the type of elements of a : U. How was  \ttt{TRUE(p)} defined? Is it similar to T(a)?}
+%At the very end, the paper discusses the possibility of adding a symbol
+%\ttt{type*} and changing the category of \ttt{bool} from \ttt{type}
+%to \ttt{type*}, disallowing functional abstraction with respect to \ttt{bool}.
+%The possibility of functional abstraction with respect to \ttt{type} is mentioned and rejected.
+
+
+%When representing mathematical reasoning using dependent types it is natural to introduce
+%a sort for types
+%\footnote{PD: This sentence is not clear: what is a "sort"?}
+%, itself closed by dependent product, as was done in the system Automath \cite{deBruijn68}.
+%% A little later, and independently, Martin-Löf \cite{ML71} introduced a dependent
+%% type system with a \emph{type} $V$ of all types (so $V:V$).
+%% After the discovery of Girard's Paradox \cite{Girard71}, this system was replaced by a predicative
+%% version \cite{ML72}\footnote{PD: in that paper there were just two levels: "types" and "small types" (in the universe).}, more similar to the one used in Automath \cite{deBruijn68}.
+Later, Martin-L\"of \cite{martinlof:predicative} introduced a countable sequence of universes
+$$
+\UU_0 : \UU_1 : \UU_2 : \cdots
+$$
+We refer to the indices $0, 1, 2, \ldots$ as {\em universe levels}. 
+
+Before the advent of univalent foundations, one expected only the first few universe
+levels to be relevant in practical formalisations. This suggests that it might be feasible
+for a user of type theory to explicitly assign universe levels to their types, and whenever necessary
+repeat definitions when they are needed on different levels. However, the number of copies of definitions
+does not only grow with the level, but also with the number of type arguments in the definition of a type former.
+The need for universe polymorphism has increased with the advent of Voevodsky's univalent foundations,
+see for example \cite{VV}. One often wants to prove theorems uniformly for an arbitrary universe.
+
+The {\em univalence axiom} states that for any two types $X,Y$ the canonical map
+$$
+\idtoeq_{X,Y} : (X=Y)\to (X\simeq Y)
+$$
+is an equivalence.
+Formally, the univalence axiom is an axiom scheme which is added to Martin-Löf type theory. If we work in Martin-Löf type theory with a countable tower of universes, each type is a member of some universe $\UU_n$. Such a universe $\UU_n$ is {\em univalent} provided for all $X,Y : \UU_n$ the canonical map $\idtoeq_{X,Y}$ is an equivalence. Let $\UA_n$ be the type expressing the univalence of $\UU_n$, and
+$$
+\ua_n : \UA_n
+$$
+for $n = 0,1,\ldots$, be a sequence of constants expressing the instances of the univalence axiom. We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and hence $\UA_n$ is in $\UU_{n+1}$.
+If we have a type of levels, as in the Agda or Lean system,
+we can express universe polymorphism as quantification over universe levels.
+%% Then we can express univalence of all universes as one typing:
+%% $$
+%% \ua : (l : \Level) \to \UA_l
+%% $$
+%% in Agda's notation.
+
+We remark that universes are more important in a predicative framework than in an impredicative one.
+Consider for example the formalisation of real numbers as Dedekind cuts, or domain elements as filters of formal neighbourhoods, which belong to $\UU_1$ since they are properties of elements in $\UU_0$.
+However, even in a system using an impredicative universe of propositions,
+such as the ones in \cite{Huet87,moura:lean}, there is the need for the use of definitions parametric
+in universe levels.
+
+%{\color{red} Cite Lean \cite{moura:lean}?}
+
+ To deal with this duplication problem Huet \cite{Huet87} and, later,
+ Harper and Pollack \cite{HarperP91} introduced {\em universe polymorphism}.
+ This "implicit"
+ approach to universe polymorphisms however is problematic w.r.t. modularity, as pointed
+ out in \cite{Courant02,Simpson04}: one can prove $A\rightarrow B$ in one file, and $B\rightarrow C$ in one other file, while
+$A\rightarrow C$ is not valid. In order to cope with this issue, J. Courant \cite{Courant02}
+suggested to have explicit level universes, with a sup operation (see also \cite{herbelin05}).
+This approach is now followed in Agda and in Voevodsky's proposal \cite{VV}.
+
+Our system complements
+\cite{Courant02,VV} by handling constraints on universe levels and having instantiation operations.
+
+ %This is a practical problem since universe level inference can be a costly operation, sometimes more costly than the usual type-checking.
+
+%There is a connection between the dimension of a type and the level of a universe: for example, it is natural to consider the groupoid structure of the first universe, the 2-groupoid structure of the second universe, etc.\footnote{PD: I changed this paragraph. What do you think?}
+
+%The starting point for the present discussions was Escard\'o's \cite{escardo} development of univalent mathematics in the Agda system. His development is {\em universe polymorphic} and makes heavy use of quantification over Agda's type $\Level$ of universe levels. However, the Agda system is not a precisely defined logical system, and we would like to introduce several candidate systems in which Escard\'o's development can be carried out. We will also present a system similar to Voevodsky's universe polymorphic system \cite{VV}. (** MODIFY THIS STAMEMENT AND ALL OTHER REFERENCES TO VV **) In this system there are variables ranging over universe levels and each judgment is made relative to a list of equational constraints between universe level expressions.
+
+
+\paragraph{Plan.} We start by giving the rules for a basic version of dependent type theory with
+$\Pi, \Sigma, \NN$, and an identity type former $\Id$.
+We then explain how to add an externally indexed countable sequence of universes $\UU_n, \T_n$ \`a la Tarski with or without
+cumulativity rules.
+In Section \ref{sec:internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$, giving rise to a theory with level polymorphism. This is a kind of ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$.
+
+In Section \ref{sec:constraints} we present (a variation of) Voevodsky's proposal with constraints between level variables  \cite{VV}, complementing his proposal with a way to eliminate constants introduced with level variables and constraints.
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}
