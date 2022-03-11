@@ -653,9 +653,10 @@ In the current system of Agda, the constraint $\alpha<\beta$ is represented indi
 writing $\beta$ on the form $\gamma\vee \alpha^+$ and $c$ is defined as
 $$
 c~=~\lam{\alpha~\gamma}\lambda_{Y:\UU_{\alpha^+\vee\gamma}}\Id~{\UU_{\alpha^+\vee\gamma}}~Y~ (\Sigma_{X:\UU_{\alpha}}X\rightarrow Y)~~:~~
-   [\alpha~\gamma]\UU_{\alpha^+\vee\gamma} \rightarrow \UU_{\alpha^+\vee\gamma^+}
+   [\alpha~\gamma]\UU_{\alpha^+\vee\gamma} \rightarrow \UU_{\alpha^{++}\vee\gamma^+}
 $$
-
+   which arguably is less readable.
+   
 \medskip
 
 In general, if we  build a term $t$ of type $A$ in a context using labels $\alpha_1,\dots,\alpha_m$
