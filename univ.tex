@@ -462,7 +462,8 @@ we can derive $A = B : \UU_l$ from $\T_l(A) = \T_l(B)$.
  Voevodsky \cite[Rule 20 on p. 17]{VV} adds this as an internal rule, but then the system is not
  generalized algebraic anymore, since the embedding rule gives rise to a conditional equation.
 
-We conjecture that if $a : \NN$ in a context with only level variables
+ We expect that normalisation to hold for this system.
+ This implies decidable type-checking. This also implies that if $a : \NN$ in a context with only level variables
 then $a$ is convertible to a numeral.
 
 %% As we mentioned in the introduction, we have now got a system in which we can express univalence of all universes as one typing
@@ -536,7 +537,7 @@ It is well-formed provided $l \vee m = n \vee l$. There are three maximally gene
 &&l = \beta \vee \gamma, m = \beta, n = \gamma
 \end{eqnarray*}
 where $\alpha, \beta,$ and $\gamma$ are level
-variables\footnote{Note the similarity with the Gustave function in stable domain theory.}
+variables\footnote{Note the similarity with the Gustave function in stable domain theory.}.
 %
 %$$
 %    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_{\alpha \vee \beta})
@@ -585,7 +586,7 @@ constraint $\alpha<\beta$. To be explicit about universes can be important, as s
 example in \cite{chambert-loir:universes-matter,waterhouse:sheaves}.
 
 Note that $\alpha<\beta$ holds if, and only if, $\beta$ is of the form $\gamma\vee\alpha^+$. We can thus
-for this example avoid to have to declare a constraint by writing systematically $\gamma\vee\alpha^+$.
+for this example avoid to have to declare a constraint by writing systematically $\gamma\vee\alpha^+$ for $\beta$.
 This is what is done currently in the system Agda. However, this is a rather indirect way to express what is
 going on. Furthermore, the example at the beginning of this section shows that this can lead to an artificial duplication
 of definitions.
@@ -649,7 +650,11 @@ $$
 
 
 In the current system of Agda, the constraint $\alpha<\beta$ is represented indirectly by
-writing $\beta$ on the form $\gamma\vee \alpha^+$.
+writing $\beta$ on the form $\gamma\vee \alpha^+$ and $c$ is defined as
+$$
+c~=~\lam{\alpha~\gamma}\lambda_{Y:\UU_{\alpha^+\vee\gamma}}\Id~{\UU_{\alpha^+\vee\gamma}}~Y~ (\Sigma_{X:\UU_{\alpha}}X\rightarrow Y)~~:~~
+   [\alpha~\gamma]\UU_{\alpha^+\vee\gamma} \rightarrow \UU_{\alpha^+\vee\gamma^+}
+$$
 
 \medskip
 
@@ -747,7 +752,7 @@ For sup-semilattices with a successor, both the uniform word problem
 and the problem of loop detection are decidable.
 \end{theorem}
 This theorem ensures that type checking remains decidable when
-typings depend on universe level constraints
+typings depend on universe level constraints, provided we have the expected property of normalisation.
 
 
 \section{Related work}
