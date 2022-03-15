@@ -171,7 +171,7 @@
   meta-properties of both system, and using the technique presented in \cite{Streicher:semtt},
   we show that any Russell judgement can be lifted in a unique way to a Tarski judgement.
 
-  We think our statements are ``formalised ready'', since we tried to be precise about treatment of variables and substitions.
+  We think our statements are ready for formalisation, since we try to be precise about the treatment of variables and substitions.
 
 
 \section{Annotated type theory $T_1$ with Tarski style universes}
@@ -340,7 +340,7 @@ $$
 
 \medskip
 
-We have an operation which removes the annotation from $T_1$ to $T_2$.
+We have an operation which removes the annotations from $T_1$ to $T_2$.
 $$
 |\UU_n| = \UU_n~~~~~~~~|\Pi~A~B| = \Pi~|A|~|B|~~~~~~~~~|\T_n(a)| = |a|
 $$
@@ -363,7 +363,7 @@ $$
 
 
 \begin{lemma}
-  If $\Gamma\vdash t:A$ and $\Gamma\vdash u:A$ and $|t| = |u|$ is $\beta$-normal then $\Gamma\vdash t = u:A$.
+  If $\Gamma\vdash t:A$ and $\Gamma\vdash u:A$ and $|t| = |u|$\footnote{syntactic identity; proof by induction on $\Gamma\vdash t:A$ and $\Gamma\vdash u:A$?} is $\beta$-normal then $\Gamma\vdash t = u:A$.
   If $\Gamma\vdash t:A$ and $\Gamma\vdash u:B$ and $|t| = |u|$ is neutral then
   \begin{itemize}
     \item either $A = B$
@@ -395,9 +395,9 @@ One should not expect however to have $xs:\List~\UU_1~(xs:\List~\UU_0)$.
 
 \section{Initial models}
 
-It is possible to present type theory with cumulative hierarchy of universe as a generalised algebraic theory.
-The system $T_1$ can be used to present the initial/term model of this theory, following the method presented in \cite{Streicher:semtt}
-(method which was formalised in the work \cite{brunerie:initiality}).
+It is possible to present type theory with a cumulative hierarchy of universe as a generalised algebraic theory.
+The system $T_1$ can be used to present the initial/term model of this theory, following the method presented in \cite{Streicher:semtt}.
+(This method was formalised in the work \cite{brunerie:initiality}.)
 Our result shows that Russell's system $T_2$ can be used as well to present this initial/term model.
 
 
