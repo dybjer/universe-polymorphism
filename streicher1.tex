@@ -85,6 +85,9 @@
 \def\UU{\mathsf{U}}
 \def\JJ{\mathsf{J}}
 \def\Level{\mathsf{Level}}
+\def\List{\mathsf{List}}
+\def\Cons{\mathsf{Cons}}
+\def\Nil{\mathsf{Nil}}
 %\def\Type{\hbox{\sf Type}}
 \def\ZERO{\mathsf{0}}
 \def\SUCC{\mathsf{S}}
@@ -159,127 +162,25 @@
 \maketitle
 
 \begin{abstract}
-  We first explain what is a model of type theory with a cumulative hieararchy of universes.
-  We present three versions of dependent type theory, that all can be used as a presentation of the initial model.
 \end{abstract}
 
 \section{Introduction}\label{sec:intros}
 
+  We present two type systems with a cumulative hiearchy of universes, one annotated Tarski style version and
+  one Russell style version. There is a natural forgetful map from the Tarski version to the Russell version. Modulo some (known)
+  meta-properties of both system, and using the technique presented in \cite{Streicher:semtt},
+  we show that any Russell judgement can be lifted in a unique way to a Tarski judgement.
 
-\section{Model of type theory}
-
-\subsection{What is a model of type theory?}
-
-\subsection{Definition}
-
- We present a formal system, which at the same time can be thought of  describing  the
-syntax of basic dependent type theory, with \EMP{explicit substitutions} and
-a \EMP{name-free} (de Bruijn index) presentation, and defining what is a model
-of type theory.
-
- A model of type theory consists of one set of \EMP{contexts}. If
-$\Gamma$ and $\Delta$ are contexts they determine a set $\Delta\rightarrow\Gamma$
-of \EMP{substitutions}. If $\Gamma$ is a context, it determines a set
-$\Type(\Gamma)$ of \EMP{types} in the context $\Gamma$. Finally, if
-$A$ is in $\Type(\Gamma)$ then this determines a set
-$\Elem(\Gamma,A)$ of elements of type $A$ in the context $\Gamma$.
-
- This describes the \EMP{sort} of type theory. We describe now the \EMP{operations}
-and the equations they have to satisfy. For any context $\Gamma$
-we have an identity substitution $\id:\Gamma\rightarrow\Gamma$.
-We also have a composition operator $\sigma\delta:\Theta\rightarrow\Gamma$ if
-$\delta:\Theta\rightarrow\Delta$ and $\sigma:\Delta\rightarrow\Gamma$. 
-The equations are
-$$\sigma~ \id = \id~ \sigma = \sigma~~~~~~~~(\theta\sigma)\delta = \theta(\sigma\delta)$$
-
-We have a terminal context $1$ and for, any context $\Gamma$, a map
-$():\Gamma\rightarrow 1$. Furthermore $\sigma = ()$ if
-$\sigma:\Gamma\rightarrow 1$.
-
- If $A$ in $\Type(\Gamma)$ and $\sigma:\Delta\rightarrow\Gamma$
- we should have $A\sigma$ in $\Type(\Delta)$
-Furthermore 
-$$A~\id = A~~~~~~(A\sigma)\delta = A(\sigma\delta)$$
-If $a$ in $\Elem(\Gamma,A)$ and $\sigma:\Delta\rightarrow\Gamma$
-we should have $a\sigma$ in $\Elem(\Delta,A\sigma)$.
-Furthermore 
-$$a~\id = a~~~~~~(a\sigma)\delta = a(\sigma\delta)$$
-
- We have a \EMP{context extension} operation: if $A$ in $\Type(\Gamma)$ we have
-a new context $\Gamma.A$. Furthermore there is a projection
-$\pp:\Gamma.A\rightarrow \Gamma$ and a special element
-$\qq$ in $\Elem(\Gamma.A,A\pp)$. If $\sigma: \Delta\rightarrow \Gamma$ and
-$A$ in $\Type(\Gamma)$ and $a$ in $\Elem(\Delta,A\sigma)$
-we have
-an extension operation $(\sigma,a):\Delta\rightarrow \Gamma.A$.
-We should have 
-$$\pp (\sigma,a) = \sigma~~~~~~~~~\qq (\sigma,a) = a~~~~~~~~~
-(\sigma,a)\delta = (\sigma\delta,a\delta)~~~~~~~~~~(\pp,\qq) = \id$$
-
- If $a$ in $\Elem(\Gamma,A)$ we write $[a]= (\id,a):\Gamma\rightarrow \Gamma.A$.
- Thus if $B$ in $\Type(\Gamma.A)$ and $a$ in $\Elem(\Gamma,A)$
- we have $B[a]$ in $\Type(\Gamma)$.
- If furthermore $b$ in $\Elem(\Gamma.A,B)$ we have $b[a]$ in $\Elem(\Gamma,B[a])$.
-
- If $\sigma:\Delta\rightarrow\Gamma$ and $A$ in $\Type(\Gamma)$
- we define $\sigma^+:\Delta.A\sigma\rightarrow\Gamma.A$ to be
- $(\sigma\pp,\qq)$.
-
- The extension operation can then be defined as $(\sigma,u) = [u]\sigma^+$.
- Thus instead of the extension operation, we could have chosen the operations
- $[u]$ and $\sigma^+$ as primitive, like in \cite{Ehrhard}. Our argument is independent of this choice
- of primitive operations.
-
- We suppose furthermore one operation $\Pi~A~B$ such that
-$\Pi~A~B$ in $\Type(\Gamma)$ if $A$ in $\Type(\Gamma)$ and $B$ in $\Type(\Gamma.A)$.
-We should have $(\Pi~A~B)\sigma = \Pi~(A\sigma)~(B\sigma^+)$.
-
-We have an abstraction operation $\lambda b$ in $\Elem(\Gamma,\Pi~A~B)$
-for $b$ in $\Elem(\Gamma.A,B)$
-and an application operation $c~a$ in $\Elem(\Gamma,B[a])$
-for $c$ in $\Elem(\Gamma,\Pi~A~B)$ and $a$ in $\Elem(\Gamma,A)$.
-These operations should satisfy the equations
-$$
-{(\lambda b)}~{a} = b[a],~~~~~~c = \lambda (c\pp~\qq),~~~~~
-(\lambda b)\sigma = \lambda (b\sigma^+),~~~~
-({c}~{a})\sigma = {c\sigma}~{(a\sigma)}
-$$
-
-
-\subsection{Cumulative hierarchy of universes}
-
-We have a family of constants $\UU_n$ in $\Type(\Gamma)$ with $\UU_n\sigma = \UU_n$ and
-$\T_n(a)$ in $\Type(\Gamma)$ for $a$ in $\Elem(\Gamma,\UU_n)$.
-
-We also have $\Pi^n(a,b)$ in $\Elem(\Gamma,\UU_n)$ if $a$ in $\Elem(\Gamma,\UU_n)$ and
-$b$ in $\Elem(\Gamma.\T_n(a),\UU_n)$. We have
-$\T_n(\Pi^n(a,b)) = \Pi~\T_n(a)~\T_n(b)$.
-
-We have $\sT_n^m(a)$ in $\Elem(\Gamma,\UU_m)$ if $n\leqslant m$ and $a$ in $\Elem(\Gamma,\UU_n)$
-with $\T_m(\sT_n^m(a)) = \T_n(a)$ in $\Type(\Gamma)$
-and $\sT_n^m(\Pi^n(a,b)) = \Pi^m(\sT_n^m(a),\sT_n^m(b))$.
-
-Finally we have $\UU^m_n$ in $\Elem(\Gamma,\UU_m)$ with $\T_m(\UU^m_n) = \UU_n$ in $\Type(\Gamma)$ if
-$n<m$.
-
-
-\subsection{Initial/Term model}
-
-We have a syntactic version $T_0$ which presents the initial model, like for equational theory.
-
-The term model presents remarkable properties: e.g. we have that $\Pi~A~B = \Pi~C~D$ implies
-$A = B$ in $\Type(\Gamma)$ and $C = D$ in $\Type(\Gamma.A)$. This is not the case for an arbitrary model; for instance
-we always have the trivial model where all sorts have exactly one element.
+  We think our statements are ``formalised ready'', since we tried to be precise about treatment of variables and substitions.
 
 
 \section{Annotated type theory $T_1$ with Tarski style universes}
 
-We now present the system $T_1$ with implicit substitutions. The connection between $T_0$ and $T_1$ is elementary and $T_1$ can
-be used to present the initial model as well as $T_0$.
+We now present the system $T_1$ with Tarski style universes. 
 
 The syntax for types is
 $$
-A,B~::=~\Pi_{A}B~|~\UU_n~|~\T_n a
+A,B~::=~\Pi~{A}~B~|~\UU_n~|~\T_n a
 $$
 and the syntax for terms, with $v_i$ de Bruijn index
 $$
@@ -288,31 +189,43 @@ $$
 
 \medskip
 
-Renaming and substitutions are now \EMP{defined} operations. They are defined by the syntax
+Renaming and substitutions are now \EMP{defined} operations. 
 $$
-r~::=~\pp~|~r^+~~~~~~~~~\sigma~::=~[a]~|~\sigma^+
+r~::=~\pp~|~r^+~~~~~~~~~\sigma~::=~[a]~|~\sigma^+~~~~~~~~~~\alpha~::=~r~|~\sigma
 $$
-and we define first $ar,~Ar$ by induction on $a,A$ and then $a\sigma,~A\sigma$ by induction on $a,A$. The main clauses are
+and we define first the renaming operations $ar,~Ar$ by induction on $a,A$ and then the substitution operations
+$a\sigma,~A\sigma$ by induction on $a,A$. The actions on variables are
 $$
-v_i\pp = v_{i+1}~~~~~~v_0r^+ = v_0\sigma^+ = v_0~~~~~~v_0[a] = a~~~~~~~~~~v_{i+1}r^+ = (v_ir)\pp~~~~~~~v_{i+1}\sigma^+ = (v_i\sigma)\pp
+v_i\pp = v_{i+1}~~~~~~v_0[a] = a~~~~~~~~~~v_0\alpha^+ = v_0~~~~~~v_{i+1}\alpha^+ = (v_i\alpha)\pp
 $$
+We can then define $A\alpha$ (resp. $a\alpha$) by induction on $A$ (resp. $a$).
+
+For instance $(\Pi~A~B)\alpha = \Pi~(A\alpha)~(B\alpha^+)$
+and $\APP(A,B,c,a)\alpha = \APP(A\alpha,B\alpha^+,c\alpha,a\alpha)$.
+
+\begin{lemma}
+  We have $(B[a])\alpha = B\alpha^+[a\alpha]$ and $(b[a])\alpha = b\alpha^+[a\alpha]$.
+\end{lemma}
 
 
 \medskip
 
+The type system describes how to derive judgements of the form $\Gamma\vdash J$ where $J$ is of the form
+$A~\type$ or $a:A$ or $A=B$ or $a=b : A$.
 
+\medskip
 
 $$
 \frac{\Gamma\vdash A}{\Gamma.A\vdash}~~~~~~\frac{}{()\vdash}~~~~~~~
-\frac{\Gamma\vdash}{\Gamma.A\vdash v_0:A\pp}~~~~~~~
+\frac{\Gamma\vdash A}{\Gamma.A\vdash v_0:A\pp}~~~~~~~
 \frac{\Gamma\vdash v_i:A}{\Gamma.B\vdash v_{i+1}:A\pp}~~~~~~~
 $$
 The judgment $\Gamma\vdash A$ expresses that $A$ is a type in context $\Gamma$.
 We may write it $A~\type~(\Gamma)$ and may omit the global context $\Gamma$.
 $$
-\frac{A~\type~~~~~~B~\type~(A)}{\Pi_AB~\type}~~~~~~~~~
-\frac{b:B~(A)}{\LAM(A,B,b):\Pi_AB}~~~~~~~~
-\frac{c:\Pi_AB~~~~~~a:A}
+\frac{A~\type~~~~~~B~\type~(A)}{\Pi~A~B~\type}~~~~~~~~~
+\frac{b:B~(A)}{\LAM(A,B,b):\Pi~A~B}~~~~~~~~
+\frac{c:\Pi~A~B~~~~~~a:A}
      {\APP(A,B,c,a):B[a]}
 $$
 
@@ -326,51 +239,70 @@ $$
 $$
 \frac{b:B~(A)~~~~~~~~ a:A}{ \APP(A,B,\LAM(A,B,b),a)  ~\conv~ b[a]:B[a]}
 ~~~~~~~
-\frac{f\pp~v_0 = g\pp~v_0:B~(A)}{ f = g : \Pi_AB}
+\frac{f\pp~v_0 = g\pp~v_0:B~(A)}{ f = g : \Pi~A~B}
 $$
 
-\section{Rules for an external sequence of universes}
 
 $$
 \UU_n~\type~~~~~~
 \frac{A:\UU_{n}}{\T_{n}(A)~\type}~~~~~~
-{\UU^{k}_l}:\UU_{k}~~~~~~~~~\T_{k}({\UU^{k}_l}) = \UU_{l}
+\frac{}{\UU^{k}_l:\UU_{k}}k<l~~~~~~~~~\frac{}{\T_{k}({\UU^{k}_l}) = \UU_{l}}k<l
 ~~~~~~~~~\frac{A:\UU_{n}}
 {\sT_{n}^{m}(A):\UU_{m}}
 n\leqslant m
 $$
-We require for all $n,m$
+We require for $n\leqslant m$
 \[
 \T_m(\sT_{n}^{m}(A)) = \T_{n}(A) 
 \]
-We add for all $n,m,p$ with $m\leqslant n\leqslant p$
+We add for $m\leqslant n\leqslant p$
 $$
 \sT_{n}^n(a) = a \quad\text{and}\quad \sT_{n}^p\sT_{m}^n = \sT_m^p.
 $$
 $$
-\frac{a:\UU_{n}~~~~~~b:\T_{n}(A)\rightarrow \UU_{n}}
+\frac{a:\UU_{n}~~~~~~b:\UU_n~(\T_{n}(a))}
      {\Pi^{n} a b:\UU_{n}}~~~~~~~~~
 $$
 with conversion rules
 $$
-\T_{n}~(\Pi^{n} a b) = \Pi_{\T_{n}(a)}{\T_{n}(b)}~~~~~~~
+\T_{n}~(\Pi^{n} a b) = \Pi~{\T_{n}(a)}~{\T_{n}(b)}~~~~~~~
 $$
 and
 $$
 \sT_{n}^{m}~(\Pi^{n} a b) = \Pi^{m} \sT_{n}^{m}(a) \sT_{n}^{m}(b)~~~~~~
 $$
 
+ We define $\alpha:\Delta\rightarrow\Gamma$ by induction on $\alpha$.
+We have $\pp:\Gamma.A\rightarrow\Gamma$ and $[a]:\Gamma\rightarrow \Gamma.A$ and
+$\alpha^+:\Delta.A\alpha\rightarrow\Gamma.A$ if $\alpha:\Delta\rightarrow\Gamma$.
+
+\begin{lemma}
+  The following rule is admissible: if $\Gamma\vdash J$ and $\alpha:\Delta\rightarrow\Gamma$
+  then $\Delta\vdash J\alpha$.
+\end{lemma}
+
+Assuming $\Pi$ one-to-one, we can then show closure under $\beta$-reduction.
+
+\begin{lemma}
+  If $\APP(A,B,\LAM(A',B',b),a):T$ then $b[a]:T$.
+\end{lemma}
+
+\begin{proof}
+  Using $\Pi$ one-to-one, we get $A=A'$ and $B=B'~(A)$. We then have $b:B~(A)$ and $T = B[a]$.
+  We deduce $b[a]:B[a]$ by substitution and $b[a]:T$ by the type equality rule.
+\end{proof}
+
 \section{Rules for a type theory $T_2$ with Russell style universes}
 
 The syntax is now for types and terms
 $$
-A,B,a,b~::=~v_i~|~c~a~|~\lambda b~|~\Pi_{A}B~|~\UU_n
+A,B,a,b~::=~v_i~|~c~a~|~\lambda b~|~\Pi~{A}~B~|~\UU_n
 $$
 
 $$
-\frac{A~\type~~~~~~B~\type~(A)}{\Pi_AB~\type}~~~~~~~~~
-\frac{b:B~(A)}{\lambda b:\Pi_AB}~~~~~~~~
-\frac{c:\Pi_AB~~~~~~a:A}
+\frac{A~\type~~~~~~B~\type~(A)}{\Pi~A~B~\type}~~~~~~~~~
+\frac{b:B~(A)}{\lambda b:\Pi~A~B}~~~~~~~~
+\frac{c:\Pi~A~B~~~~~~a:A}
      {c~a:B[a]}
 $$
 
@@ -383,23 +315,52 @@ $$
 $$
 $$
 \frac{A:\UU_{n}~~~~~~B:\UU_n(A)}
-     {\Pi_AB:\UU_{n}}$$
+     {\Pi~A~B:\UU_{n}}$$
+
+The main conversion rules are
+$$
+\frac{ a:A~~~~~~ A~ \conv~ B}{ a:B}~~~~~~~~~
+\frac{ a ~\conv~a':A~~~~~~ A  ~\conv~ B}{ a ~\conv~a':B}
+$$
+$$
+\frac{b:B~(A)~~~~~~~~ a:A}{ (\lambda b)~a  ~\conv~ b[a]:B[a]}
+~~~~~~~
+\frac{f\pp~v_0 ~\conv~ g\pp~v_0:B~(A)}{ f ~\conv~ g : \Pi~A~B}
+$$
+
+
 
 \medskip
 
-
      Note that the system $T_2$ is \EMP{not} closed under $\eta$-reduction. For instance, in a context
-     $x:\UU_1\rightarrow\UU_1$ we have $\lambda_yx~y:\UU_0\rightarrow\UU_2$ but we do \EMP{not} have
+     $$x:\UU_1\rightarrow\UU_1$$
+     we have $\lambda_yx~y:\UU_0\rightarrow\UU_2$ but we do \EMP{not} have
      $x:\UU_0\rightarrow\UU_2$.
 
 
 \medskip
 
+We have an operation which removes the annotation from $T_1$ to $T_2$.
+$$
+|\UU_n| = \UU_n~~~~~~~~|\Pi~A~B| = \Pi~|A|~|B|~~~~~~~~~|\T_n(a)| = |a|
+$$
+$$
+|\APP(A,B,c,a)| = |c|~|a|~~~~~~~~~|v_i| = v_i~~~~~~~~~|\LAM(A,B,b)| = |b|~~~~~~~~|\sT_k^n(a)| = |a|
+$$
+The following remark has a direct proof.
 
-We clearly have a stripping function from $T_1$ to $T_2$. We define $|M|$ where we forget the annotations.
-We have $M:A$ in $T_1$ implies $|M|:|A|$ in $T_2$.
+\begin{lemma}
+  If $\Gamma\vdash J$ in $T_1$ then $|\Gamma|\vdash |J|$ in $T_2$.
+\end{lemma}
+
 
 \section{Equivalence between $T_1$ and $T_2$}
+
+We can describe neutral and $\beta$-normal forms for the non annotated terms.
+$$
+k~::=~v_i~|~k~n~~~~~~~~~~~n~::=~\UU_k~|~\Pi~n~n~|~\lambda n~|~k
+$$
+
 
 \begin{lemma}
   If $\Gamma\vdash t:A$ and $\Gamma\vdash u:A$ and $|t| = |u|$ is $\beta$-normal then $\Gamma\vdash t = u:A$.
@@ -416,7 +377,28 @@ We have $M:A$ in $T_1$ implies $|M|:|A|$ in $T_2$.
   in the system $T_1$ such that $|\Gamma_1| = \Gamma$ and $|J_1| = J$.
 \end{theorem}
 
+\section{Addition of data types}
 
+The proof extends to the corresponding systems with data types.
+
+For the case of the list types $\List~A$ with constructors $\Nil$ and $\Cons$, we can define in the Russell system
+$$
+f~:~\List~\UU_0~\rightarrow~\List~\UU_1~~~~~~~~~~~
+f~\Nil = \Nil~~~~~~f~(\Cons~x~xs) = \Cons~x~(f~xs)
+$$
+which can be lifted to in the Tarski version
+$$
+f~:~\List~\UU_0~\rightarrow~\List~\UU_1~~~~~~~~~~~
+f~\Nil = \Nil~~~~~~f~(\Cons~x~xs) = \Cons~(\sT_0^1 x)~(f~xs)
+$$
+One should not expect however to have $xs:\List~\UU_1~(xs:\List~\UU_0)$.
+
+\section{Initial models}
+
+It is possible to present type theory with cumulative hierarchy of universe as a generalised algebraic theory.
+The system $T_1$ can be used to present the initial/term model of this theory, following the method presented in \cite{Streicher:semtt}
+(method which was formalised in the work \cite{brunerie:initiality}).
+Our result shows that Russell's system $T_2$ can be used as well to present this initial/term model.
 
 
 
