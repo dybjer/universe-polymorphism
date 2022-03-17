@@ -161,8 +161,8 @@
 \date{}
 \maketitle
 
-\begin{abstract}
-\end{abstract}
+%\begin{abstract}
+%\end{abstract}
 
 \section{Introduction}\label{sec:intros}
 
@@ -171,8 +171,8 @@
   meta-properties of both system, and using the technique presented in \cite{Streicher:semtt},
   we show that any Russell judgement can be lifted in a unique way to a Tarski judgement.
 
-  We think our statements are ``formalised ready'', since we tried to be precise about treatment of variables and substitions.
-
+  We think our statements are ``formalised ready'', since we tried to be precise about treatment of variables and
+  substitutions.
 
 \section{Annotated type theory $T_1$ with Tarski style universes}
 
@@ -189,7 +189,7 @@ $$
 
 \medskip
 
-Renaming and substitutions are now \EMP{defined} operations. 
+Renaming and substitutions are \EMP{defined} operations. 
 $$
 r~::=~\pp~|~r^+~~~~~~~~~\sigma~::=~[a]~|~\sigma^+~~~~~~~~~~\alpha~::=~r~|~\sigma
 $$
@@ -218,7 +218,7 @@ $A~\type$ or $a:A$ or $A=B$ or $a=b : A$.
 $$
 \frac{\Gamma\vdash A}{\Gamma.A\vdash}~~~~~~\frac{}{()\vdash}~~~~~~~
 \frac{\Gamma\vdash A}{\Gamma.A\vdash v_0:A\pp}~~~~~~~
-\frac{\Gamma\vdash v_i:A}{\Gamma.B\vdash v_{i+1}:A\pp}~~~~~~~
+\frac{\Gamma\vdash v_i:A~~~~~~~\Gamma\vdash B}{\Gamma.B\vdash v_{i+1}:A\pp}~~~~~~~
 $$
 The judgment $\Gamma\vdash A$ expresses that $A$ is a type in context $\Gamma$.
 We may write it $A~\type~(\Gamma)$ and may omit the global context $\Gamma$.
@@ -255,9 +255,9 @@ We require for $n\leqslant m$
 \[
 \T_m(\sT_{n}^{m}(A)) = \T_{n}(A) 
 \]
-We add for $m\leqslant n\leqslant p$
+We add  $\sT_{n}^n(a) = a$ and, for $m\leqslant n\leqslant p$
 $$
-\sT_{n}^n(a) = a \quad\text{and}\quad \sT_{n}^p\sT_{m}^n = \sT_m^p.
+ \sT_{n}^p(\sT_{m}^n(a)) = \sT_m^p(a)
 $$
 $$
 \frac{a:\UU_{n}~~~~~~b:\UU_n~(\T_{n}(a))}
@@ -270,11 +270,12 @@ $$
 and
 $$
 \sT_{n}^{m}~(\Pi^{n} a b) = \Pi^{m} \sT_{n}^{m}(a) \sT_{n}^{m}(b)~~~~~~
+\sT_{n}^{m}~(\UU^{n}_k) = \UU^m_k
 $$
 
  We define $\alpha:\Delta\rightarrow\Gamma$ by induction on $\alpha$.
 We have $\pp:\Gamma.A\rightarrow\Gamma$ and $[a]:\Gamma\rightarrow \Gamma.A$ and
-$\alpha^+:\Delta.A\alpha\rightarrow\Gamma.A$ if $\alpha:\Delta\rightarrow\Gamma$.
+$\alpha^+:\Delta.A\alpha\rightarrow\Gamma.A$ if $\alpha:\Delta\rightarrow\Gamma$ and $\Gamma\vdash A~\type$.
 
 \begin{lemma}
   The following rule is admissible: if $\Gamma\vdash J$ and $\alpha:\Delta\rightarrow\Gamma$
@@ -314,7 +315,7 @@ $$
 {\UU_l}:\UU_{l+1}
 $$
 $$
-\frac{A:\UU_{n}~~~~~~B:\UU_n(A)}
+\frac{A:\UU_{n}~~~~~~B:\UU_n~(A)}
      {\Pi~A~B:\UU_{n}}$$
 
 The main conversion rules are
@@ -330,13 +331,6 @@ $$
 
 
 
-\medskip
-
-     Note that the system $T_2$ is \EMP{not} closed under $\eta$-reduction. For instance, in a context
-     $$x:\UU_1\rightarrow\UU_1$$
-     we have $\lambda_yx~y:\UU_0\rightarrow\UU_2$ but we do \EMP{not} have
-     $x:\UU_0\rightarrow\UU_2$.
-
 
 \medskip
 
@@ -345,7 +339,8 @@ $$
 |\UU_n| = \UU_n~~~~~~~~|\Pi~A~B| = \Pi~|A|~|B|~~~~~~~~~|\T_n(a)| = |a|
 $$
 $$
-|\APP(A,B,c,a)| = |c|~|a|~~~~~~~~~|v_i| = v_i~~~~~~~~~|\LAM(A,B,b)| = |b|~~~~~~~~|\sT_k^n(a)| = |a|
+|\APP(A,B,c,a)| = |c|~|a|~~~~~~|v_i| = v_i~~~~~~|\LAM(A,B,b)| = \lambda |b|~~~~~|\sT_k^n(a)| = |a|
+~~~~~~~|\UU^n_l| = \UU_l
 $$
 The following remark has a direct proof.
 
@@ -391,7 +386,18 @@ $$
 f~:~\List~\UU_0~\rightarrow~\List~\UU_1~~~~~~~~~~~
 f~\Nil = \Nil~~~~~~f~(\Cons~x~xs) = \Cons~(\sT_0^1 x)~(f~xs)
 $$
-One should not expect however to have $xs:\List~\UU_1~(xs:\List~\UU_0)$.
+and is extensionally the identity function.
+In the Russell system, in the context  $xs:\List~\UU_0$,
+we do have $f~xs:\List~\UU_1$ but we do \EMP{not} have $xs:\List~\UU_1$
+
+\medskip
+
+     Similarly, the system $T_2$ is \EMP{not} closed under $\eta$-reduction. In the context
+     $$x:\UU_1\rightarrow\UU_1$$, we have $\lambda_yx~y:\UU_0\rightarrow\UU_2$ but we do \EMP{not} have
+     $x:\UU_0\rightarrow\UU_2$.
+
+
+
 
 \section{Initial models}
 
