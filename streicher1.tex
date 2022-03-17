@@ -166,13 +166,19 @@
 
 \section{Introduction}\label{sec:intros}
 
-  We present two type systems with a cumulative hiearchy of universes, one annotated Tarski style version and
-  one Russell style version. There is a natural forgetful map from the Tarski version to the Russell version. Modulo some (known)
+There are two different ways to formulate the notion of universe in type theory, introduced in \cite{martinlof:padova}:
+Russell style universe, like in \cite{martinlof:hannover}, where a universe is seen as a type of types,
+and Tarski style, where each universe is seen as a type of names of types and comes with a decoding function.
+Some recent works \cite{Assaf14,Thire20} show the equivalence between these two formulations, but these arguments
+do not apply to formulation of type theory with conversion judgements.
+
+The goal of this work is to prove such an equivalence, where type theory is formulated as conversion judgements.
+In order to do this, we adopt Streicher's argument presented in \cite{Streicher:semtt}. This argument was
+based on basic properties of such a type system (such as subject reduction), that are known to be provable
+for systems with a predicative hieararchy of universes \cite{coquand:sophia,abel:neworleans,abel:wroclaw,coq18} and
+ There is a natural forgetful map from the Tarski version to the Russell version. Modulo the (known)
   meta-properties of both system, and using the technique presented in \cite{Streicher:semtt},
   we show that any Russell judgement can be lifted in a unique way to a Tarski judgement.
-
-  We think our statements are ``formalised ready'', since we tried to be precise about treatment of variables and
-  substitutions.
 
 \section{Annotated type theory $T_1$ with Tarski style universes}
 
@@ -231,7 +237,8 @@ $$
 
 We write $\conv$ for definitional equality (or conversion).
 The main conversion rules are\footnote{We omit systematically {\em congruence} rules
-  such as the rule that $c~a~\conv~c'~a'$ follows from $c~\conv~c'$ and $a~\conv~a'$.}
+such as the rule that $\APP(A,B,c,a)~\conv~\APP(A',B',c',a')$ follows from
+$A~\conv~A'$ and $B~\conv~B'$ and $c~\conv~c'$ and $a~\conv~a'$.}
 $$
 \frac{ a:A~~~~~~ A~ \conv~ B}{ a:B}~~~~~~~~~
 \frac{ a ~\conv~a':A~~~~~~ A  ~\conv~ B}{ a ~\conv~a':B}
@@ -353,7 +360,7 @@ The following remark has a direct proof.
 
 We can describe neutral and $\beta$-normal forms for the non annotated terms.
 $$
-k~::=~v_i~|~k~n~~~~~~~~~~~n~::=~\UU_k~|~\Pi~n~n~|~\lambda n~|~k
+k~::=~v_i~|~k~n~~~~~~~~~~~n~::=~\UU_l~|~\Pi~n~n~|~\lambda n~|~k
 $$
 
 
