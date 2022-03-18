@@ -406,8 +406,8 @@ $$
 We also have level equality judgments $l = m$ and rules expressing that judgments are invariant under level equality.
 For example,
 $$
-\frac{a(l/\alpha) : A(l/\alpha)\ \ \ l = m}
-{a(m/\alpha) : A(m/\alpha)}
+\frac{a(l/\alpha) : A(l/\alpha)}
+{a(m/\alpha) : A(m/\alpha)}{l=m}
 $$
 We can  now add rules for level-indexed universes:
 $$
@@ -926,14 +926,14 @@ $$
 {\Id~A~a_0~a_1:\UU_n}
 $$
 $$
-\frac{l<n}{{\UU_l}:\UU_{n}}
+\frac{}{{\UU_l}:\UU_{n}}{l<n}
 $$
 
 \medskip
 
 For the version with cumulativity, we add the rules
 $$
-\frac{l\leqslant n~~~~~~~A:\UU_{l}}{A:\UU_{n}}
+\frac{A:\UU_{l}}{A:\UU_{n}{}l\leqslant n}
 $$
 and the rules for products and sums can be simplified to
 $$
