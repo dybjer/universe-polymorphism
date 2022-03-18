@@ -45,9 +45,9 @@
             urlcolor=linkcolor,
             unicode,
             pdfauthor={CAS},
-            pdftitle={Symmetry},
+            pdftitle={Universes},
             pdfsubject={Mathematics},
-            pdfkeywords={type theory, group theory, univalence axiom}]{hyperref}
+            pdfkeywords={type theory, universes}]{hyperref}
 % - except for cleveref!
 \usepackage[capitalize]{cleveref}
 %\usepackage{xifthen}
@@ -137,21 +137,23 @@
 
 \title{Type Theories with Universe Level Judgements}
 
-\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
+\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'{\i}n Escard\'o}
 \date{}
 \maketitle
 
 \begin{abstract}
-  The goal of this paper is to refine a proposal of Voevodsky \cite{VV} for handling universes in type theory.
-  We recall first the version of type theory with an externally indexed sequence of universes \`a la Tarski and
-  with and without cumulativity.
-  We introduce then an internal notion of universe level.
-  We add a new judgment $l\ \Level$ meaning that $l$ is a universe level, and $l = m$ meaning that $l$ and $m$ are equal universe levels, where level expressions are built up from level variables $\alpha$ by a successor operation $l^+$ and suprema $l \vee m$.
-  %In this way judgments can be indexed by level variables, and we obtain universe polymorphism similar to polymorphism in the functional language ML.
-  We then extend this theory with rules for level-indexed product types $[\alpha]A$ meaning ``$A$ is a type for all universe levels $\alpha$".
-  The final theory extends a proposal by Voevodsky
-  for a system with level constraints. We discuss the (solved) decision problems for sup-semilattices with
-  successor that come with this approach.
+
+  The goal of this paper is to refine Voevodsky's proposal for a type
+  theory with universe polymorphism \cite{VV}. In his system judgments
+  can depend on constraints between universe levels. We first recall a
+  version of type theory with an externally indexed sequence of
+  universes \`a la Tarski. We then add judgments $l\ \Level$ for internal
+  universe levels and judgments $l = m$ meaning that $l$ and $m$ are equal
+  universe levels. Level expressions are built up from level
+  variables $\alpha$ by a successor operation $l^+$ and suprema
+  $l \vee m$.  We then extend this theory with rules for level-indexed
+  product types.  Finally, we add constraints \`a la Voevodsky.
+
 \end{abstract}
 
 
@@ -210,7 +212,7 @@ Later, Martin-L\"of \cite{martinlof:predicative} introduced a countable sequence
 $$
 \UU_0 : \UU_1 : \UU_2 : \cdots
 $$
-We refer to the indices $0, 1, 2, \ldots$ as {\em universe levels}. 
+We refer to the indices $0, 1, 2, \ldots$ as {\em universe levels}.
 
 Before the advent of univalent foundations, one expected only the first few universe
 levels to be relevant in practical formalisations. This suggests that it might be feasible
@@ -606,7 +608,7 @@ We  have a new context extension $\Gamma,\psi$ if $\psi$ is a {\em consistent}
 finite set of constraints in $\Gamma$.
 
 New judgment form $\psi~(\Gamma)$ which expresses that the constraint set $\psi$
-holds in $\Gamma$. 
+holds in $\Gamma$.
 As shown in \cite{bezem-coquand:lattices}, this is a decidable judgement.
 For instance we have $\alpha^+\leqslant\beta^+~(\alpha\leqslant\beta)$.
 
@@ -656,7 +658,7 @@ c~=~\lam{\alpha~\gamma}\lambda_{Y:\UU_{\alpha^+\vee\gamma}}\Id~{\UU_{\alpha^+\ve
    [\alpha~\gamma]\UU_{\alpha^+\vee\gamma} \rightarrow \UU_{\alpha^{++}\vee\gamma^+}
 $$
    which arguably is less readable.
-   
+
 \medskip
 
 In general, if we  build a term $t$ of type $A$ in a context using labels $\alpha_1,\dots,\alpha_m$
@@ -672,7 +674,7 @@ $l_1~\dots~l_m$ satisfy the constraint $\psi$.
     constants assuming universe levels satisfying some constraints, but we also provide a mechanism
     to {\em instantiate} these constants.
 
-    
+
 
 %% Here is an example showing how such a system can be used. With univalence, we can build a term $t$
 %% $$
