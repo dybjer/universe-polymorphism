@@ -166,7 +166,7 @@ The name ``universe'' for such a type was chosen in analogy with the notion of
 universes introduced by Grothendieck to represent category theory in set theory.
 
 Later, Martin-L\"of \cite{martinlof:predicative} introduced a countable tower 
-of universes $\UU_0 : \UU_1 : \UU_2 : \cdots$
+of universes $\UU_0 : \UU_1 : \UU_2 : \cdots$.
 We refer to the indices $0, 1, 2, \ldots$ as {\em universe levels}. 
 
 Before the advent of univalent foundations, most type theorists expected only the first few 
@@ -180,7 +180,7 @@ but also with the number of type arguments in the definition of a type former.
 
  To deal with this problem Huet \cite{Huet87} and, later,
  Harper and Pollack \cite{HarperP91} introduced {\em universe polymorphism}.
- This "implicit" approach to universe polymorphisms is, however, problematic 
+ Their "implicit" approach to universe polymorphisms is, however, problematic 
  w.r.t.\ modularity, as pointed out in \cite{Courant02,Simpson04}: 
  one can prove $A\rightarrow B$ in one file, and $B\rightarrow C$ in one other file, while
 $A\rightarrow C$ is not valid. In order to cope with this issue, J. Courant \cite{Courant02}
@@ -201,10 +201,10 @@ each type is a member of some universe $\UU_n$.
 Such a universe $\UU_n$ is {\em univalent} provided for all $X,Y : \UU_n$ the 
 canonical map $\idtoeq_{X,Y}$ is an equivalence. 
 Let $\UA_n$ be the type expressing the univalence of $\UU_n$, and let
-$\ua_n : \UA_n$ for $n = 0,1,\ldots$, be a sequence of constants postulating 
+$\ua_n : \UA_n$ for $n = 0,1,\ldots$ be a sequence of constants postulating 
 the respective instances of the univalence axiom. 
 We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and hence $\UA_n$ is in $\UU_{n+1}$.
-If we have a type of levels, as in the Agda or Lean system,
+If we have a type of levels, as in Agda \cite{Agda} or Lean \cite{moura:lean},
 we can express universe polymorphism as quantification over universe levels.
 
 We remark that universes are more important in a predicative framework 
@@ -250,7 +250,7 @@ $$
 $$
 
 We also present (a variation of) Voevodsky's proposal \cite{VV} with level constraints,
-complementing his proposal with a way to eliminate 
+complementing his proposal with a way to instantiate universe polymorphic
 constants introduced with level variables and constraints.
   We shortly discuss the decision problems for sup-semilattices with
   successor that come with this approach. These problems can be solved 
@@ -272,7 +272,8 @@ which only can be used if $l<m$ holds in the current context.
 
    \medskip
 
-In the current system of Agda, the constraint $\alpha<\beta$ is represented indirectly by
+In the current system of Agda \cite{Agda}, 
+the constraint $\alpha<\beta$ is represented indirectly by
 writing $\beta$ in the form $\gamma\vee \alpha^+$ and $c$ is defined as
 $$
 c~:\equiv~\lam{\alpha~\gamma}\lambda_{Y:\UU_{\alpha^+\vee\gamma}}\Id~{\UU_{\alpha^+\vee\gamma}}~Y~ (\Sigma_{X:\UU_{\alpha}}X\rightarrow Y)~~:~~
