@@ -44,7 +44,7 @@
             linkcolor=linkcolor,
             urlcolor=linkcolor,
             unicode,
-            pdfauthor={CAS},
+            pdfauthor={BCDE},
             pdftitle={Universes},
             pdfsubject={Mathematics},
             pdfkeywords={type theory, universes}]{hyperref}
@@ -275,16 +275,15 @@ In Section \ref{sec:internal} we introduce the notion of universe level, and let
 
 In Section \ref{sec:constraints} we present (a variation of) Voevodsky's proposal with constraints between level variables  \cite{VV}, complementing his proposal with a way to eliminate constants introduced with level variables and constraints.
 
-\section{Rules for a basic type theory}
-
-We begin by listing some rules for a basic type theory with $\Pi, \Sigma, \N,$ and $\Id$, such as the rules of context formation and assumption:
-$$
-\frac{\Gamma\vdash A}{\Gamma,x:A\vdash}~~~~~~\frac{}{()\vdash}~~~~~~~
-\frac{\Gamma\vdash}{\Gamma\vdash x:A}~(x\!:\! A~in~\Gamma)
-$$
+\paragraph{Notational conventions.}
+When presenting typing rules, we use the following simplifications.
 The judgment $\Gamma\vdash A$ expresses that $A$ is a type in context $\Gamma$.
-We may write it $A~\type~(\Gamma)$ and may omit the global context $\Gamma$.
-For instance, the rules
+We may write it $A~\type~(\Gamma)$ and may omit the global context $\Gamma$,
+or the part of the context that is the same for all hypotheses and for the
+conclusion of the rule. 
+Hypotheses that could be obtained from other
+hypotheses through inversion lemmas are often left out. 
+For instance, the rules for $\Pi$
 $$
 %\frac{\Gamma,x:A\vdash B}{\Gamma\vdash \Pi (x:A) B}~~~~~~~~~
 \frac{\Gamma\vdash A~~~~~~\Gamma,x:A\vdash B}{\Gamma\vdash \mypi{x}{A}{B}}~~~~~~~~~
@@ -292,16 +291,29 @@ $$
 \frac{\Gamma\vdash c:\mypi{x}{A}{B}~~~~~~\Gamma\vdash a:A}
      {\Gamma\vdash c~a:B(a/x)}
 $$
-can be written
+can be written (note that we have left out $A~\type$ in the first rule)
 $$
 %\frac{\Gamma,x:A\vdash B}{\Gamma\vdash \Pi (x:A) B}~~~~~~~~~
-\frac{A~\type~~~~~~B~\type~(x:A)}{\mypi{x}{A}{B}~\type}~~~~~~~~~
+\frac{B~\type~(x:A)}{\mypi{x}{A}{B}~\type}~~~~~~~~~
 \frac{b:B~(x:A)}{\mylam{x}{A}{b}:\mypi{x}{A}{B}}~~~~~~~~
 \frac{c:\mypi{x}{A}{B}~~~~~~a:A}
      {c~a:B(a/x)}
 $$
 
-We also have
+Universe levels and constraints are written as side conditions of rules,
+even if they are judgments.
+ 
+
+\section{Rules for a basic type theory}
+
+We begin by listing some rules for a basic type theory with $\Pi, \Sigma, \N,$ and $\Id$, such as the rules of context formation and assumption:
+$$
+\frac{\Gamma\vdash A}{\Gamma,x:A\vdash}~~~~~~\frac{}{()\vdash}~~~~~~~
+\frac{\Gamma\vdash}{\Gamma\vdash x:A}~(x\!:\! A~\text{in}~\Gamma)
+$$
+
+The rules for $\Pi$ are the ones we used as example in the previous section.
+For $\Sigma$ we have:
 $$
 %\frac{\Gamma,x:A\vdash B}{\Gamma\vdash \mypi{x}{A}{B}}~~~~~~~~~
 \frac{A~\type~~~~~~B~\type~(x:A)}{\mysig{x}{A}{B}~\type}~~~~~~~~~
