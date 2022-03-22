@@ -80,7 +80,7 @@
 \newcommand{\Id}{\mathsf{Id}}
 \newcommand{\conv}{=}
 %\newcommand{\conv}{\mathsf{conv}}
-\newcommand{\lam}[2]{{\langle}#1{\rangle}#2}
+\newcommand{\lam}[1]{{\langle}#1{\rangle}}
 \def\NN{\mathsf{N}}
 \def\UU{\mathsf{U}}
 \def\JJ{\mathsf{J}}
@@ -636,9 +636,9 @@ but now $l<m$ may hold since it is implied by the constraints in the context $\G
 %% $$
 We introduce a ``restriction'' operation
 $$
-\frac{A~\type~(\psi)}{[\psi]A~\type}~~~~~~~~~~~~~~~~~\frac{t:A~(\psi)}{t:[\psi]A}
+\frac{A~\type~(\psi)}{[\psi]A~\type}~~~~~~~~~~~~~~~~~\frac{\lam{\psi}{t}:A~(\psi)}{t:[\psi]A}
 $$
-with the rule $[\psi]A = A$ if $\psi = 1$.
+with the rule $[\psi]A = A$ and $\lam{\psi}{t}$ if $\psi = 1$.
 
 \medskip
 
@@ -648,7 +648,7 @@ This equation is only well-typed modulo the constraint $\alpha<\beta$.
 
 We can define in our system a constant
 $$
-c~=~\lam{\alpha~\beta}\lambda_{Y:\UU_{\beta}}\Id~{\UU_{\beta}}~Y~ (\Sigma_{X:\UU_{\alpha}}X\rightarrow Y)~~:~~
+c~=~\lam{\alpha~\beta}\lam{\alpha<\beta}\lambda_{Y:\UU_{\beta}}\Id~{\UU_{\beta}}~Y~ (\Sigma_{X:\UU_{\alpha}}X\rightarrow Y)~~:~~
    [\alpha~\beta][\alpha<\beta]\UU_{\beta} \rightarrow \UU_{\beta^+}
 $$
 
