@@ -162,7 +162,7 @@
 
 The system of simple type theory, as introduced by Church \cite{church:formulation},
 is elegant and the basis of several
-proof assistants. It however has some unnatural limitation: it is not possible in this system to talk
+proof assistants. It however has an unnatural limitation: it is not possible in this system to talk
 about an arbitrary type, or about an arbitrary structure. It is also not possible to formulate the collection
 of e.g. all groups, as needed in category theory. In order to address these limitations, Martin-L\"of
 \cite{ML71,ML71a} introduced a system with a type $V$ of all types. A function $A\rightarrow V$ in this system can
@@ -254,11 +254,18 @@ in universe levels.
  approach to universe polymorphisms however is problematic with respect to modularity, as pointed
  out in \cite{Courant02,Simpson04}: one can prove $A\rightarrow B$ in one file, and $B\rightarrow C$ in one other file, while
 $A\rightarrow C$ is not valid. In order to cope with this issue, J. Courant \cite{Courant02}
-introduced explicit universe levels, with a sup operation (see also \cite{herbelin05}).
+introduced explicit universe levels, with a binary supremum operation (see also \cite{herbelin05}).
 This approach is now followed in Agda and in Voevodsky's proposal \cite{VV}.
 
-Our system complements
-\cite{Courant02,VV} by handling constraints on universe levels and having instantiation operations.
+In this work we propose a system that refines
+Courant's \cite{Courant02} and Voevodsky's \cite{VV} systems as follows:
+  \begin{enumerate}
+  \item
+    We generalize levels from the natural numbers to an arbitrary join semilattice with successor.
+  \item We add the instantiation rule.
+  \item We add level-indexed products and the constraint restriction operation.
+\end{enumerate}
+
 
  %This is a practical problem since universe level inference can be a costly operation, sometimes more costly than the usual type-checking.
 
@@ -272,7 +279,7 @@ $\Pi, \Sigma, \NN$, and an identity type former $\Id$.
 We then explain how to add an externally indexed countable sequence of universes $\UU_n, \T_n$ \`a la Tarski without
 cumulativity rules. (In the appendix we present a system with cumulativity.)
 In Section \ref{sec:internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$. This gives rise to a type theory with level polymorphism. This is similar to ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$.
-
+%
 In Section \ref{sec:constraints} we present (a variation of) Voevodsky's proposal with constraints between level variables  \cite{VV}, complementing his proposal with a way to eliminate constants introduced with level variables and constraints.
 
 \paragraph{Notational conventions.}
@@ -280,9 +287,9 @@ When presenting typing rules, we use the following simplifications.
 The judgment $\Gamma\vdash A$ expresses that $A$ is a type in context $\Gamma$.
 We may write $A~\type~(\Gamma)$ and may omit the global context $\Gamma$,
 or the part of the context that is the same for all hypotheses and for the
-conclusion of the rule. 
+conclusion of the rule.
 Hypotheses that could be obtained from other
-hypotheses through inversion lemmas are often left out. 
+hypotheses through inversion lemmas are often left out.
 For instance, the rules for $\Pi$
 $$
 %\frac{\Gamma,x:A\vdash B}{\Gamma\vdash \Pi (x:A) B}~~~~~~~~~
@@ -302,7 +309,7 @@ $$
 
 Universe levels and constraints are written as side conditions of rules,
 in spite of the fact that these side conditions are official judgments of the theory.
- 
+
 
 \section{Rules for a basic type theory}
 
@@ -733,11 +740,13 @@ $l_1~\dots~l_m$ satisfy the constraint $\psi$.
   \item Add a remark saying that Voevodsky had all the rules for declaring level universes and
     constraints but not the above rules for instantiating operations defined using these levels
     supposed to satisfy these constraints.
-  \item Differences between the present system and Voevodsky's:
-  \begin{itemize}
-\item Voevodsky's levels are natural numbers with $0,l^+, l\vee m$.
-\item Voevodsky does not have the instantiation rule
-\item Voevodsky does not have level-indexed products and the constraint restriction operator??
+  % % Done in the introduction:
+  % \item Differences between the present system and Voevodsky's:
+  % \begin{itemize}
+  % \item
+  %   We generalize Voevodsky's levels from the natural numbers to an arbitrary join semilattice with successor.
+  % \item We add the instantiation rule.
+  % \item We add level-indexed products and the constraint restriction operation.
 \end{itemize}
 
 %  \item PD: We can postpone this question: TODO   can this be presented as GAT???
