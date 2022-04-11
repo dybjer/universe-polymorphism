@@ -103,6 +103,7 @@
 %\newcommand{\conv}{\mathrm{conv}}
 \newcommand{\idtoeq}{\mathsf{idtoeq}}
 \newcommand{\isEquiv}{\mathsf{isEquiv}}
+\newcommand{\Equiv}{\mathsf{Equiv}}
 \newcommand{\ua}{\mathsf{ua}}
 \newcommand{\UA}{\mathsf{UA}}
 %\newcommand{\Level}{\mathrm{Level}}
@@ -330,24 +331,58 @@ $$
 $$
 
 We write $\conv$ for definitional equality (or conversion).
-The main conversion rules are\footnote{We omit systematically {\em congruence} rules
-  such as the rule that $c~a~\conv~c'~a'$ follows from $c~\conv~c'$ and $a~\conv~a'$.}
-  \footnote{PD: We omit some other general rules for equality reasoning, but since we say "The main conversion rules" we don't need to specify all rules. }
+The conversion rules are presented in Figure \ref{conv-basic}.
+
+\begin{figure}
+  \caption{Conversion rules for basic type theory}\label{conv-basic}
 $$
 \frac{ a:A~~~~~~ A~ \conv~ B}{ a:B}~~~~~~~~~
 \frac{ a ~\conv~a':A~~~~~~ A  ~\conv~ B}{ a ~\conv~a':B}
 $$
 $$
-\frac{b:B~(x:A)~~~~~~~~ a:A}{ (\mylam {x}{A}{b})~a  ~\conv~ b(a/x):B(a/x)}
+\frac{A~=~B~~~~~A~=~C}{B~=~C}~~~~~~~~~\frac{A~\type}{A~=~A}~~~~~~~~~
+\frac{a~=~b:A~~~~~a~=~c:A}{b~=~c:A}~~~~~~~~~\frac{a:A}{a~=~a:A}
+$$
+$$
+\frac{A~=~A'~~~~~~B~=~B'~(x:A)}{\mypi{x}{A}{B}~=~\mypi{x}{A'}{B'}}~~~~~~~~
+\frac{c~=~c':\mypi{x}{A}{B}~~~~~~a~=~a':A}{c~a~=~c'~a':B(a/x)}
+$$
+$$
+\frac{b:B~(x:A)~~~~~~~~ a:A}{ \mylam{x}{A}{b}~a  ~\conv~ b(a/x):B(a/x)}
 ~~~~~~~
 \frac{f~x = g~x:B~(x:A)}{ f = g : \mypi{x}{A}{B}}
 $$
 $$
-\frac{ a:A~~~~~~ b:B(a/x)}{ (a,b).1  ~\conv~ a:A}
-~~~~~~~
-\frac{ a:A~~~~~~ b:B(a/x)}{ (a,b).2  ~\conv~ b:B(a/x)}~~~~~~
-\frac{ a.1 = a'.1:A~~~~~~~ a.2 = a'.2:B(t.1/x)}{ a = a' : \mysig{a}{A}{B}}
+\frac{A~=~A'~~~~~~B~=~B'~(x:A)}{\mysig{x}{A}{B}~=~\mysig{x}{A'}{B'}}~~~~~~~~
+\frac{c~=~c':\mysig{x}{A}{B}}{c.1~=~c'.1:A}~~~~~~~~
+\frac{c~=~c':\mysig{x}{A}{B}}{c.2~=~c'.2:B(c.1/x)}~~~~~~~~
 $$
+$$
+\frac{a:A~~~~~b:B(a/x)}{ (a,b).1 ~\conv~ a:A}~~~~~~~~~~
+\frac{a:A~~~~~b:B(a/x)}{ (a,b).2 ~\conv~ b:B(a/x)}~~~~~~~~~~
+\frac{c.1~=~ c'.1:A~~~~~~c.2~=c'.2:B(c.1/x)}{ c~=~ c' : \mysig{x}{A}{B}}
+$$
+\end{figure}
+
+
+%% The main conversion rules are\footnote{We omit systematically {\em congruence} rules
+%%   such as the rule that $c~a~\conv~c'~a'$ follows from $c~\conv~c'$ and $a~\conv~a'$.}
+%%   \footnote{PD: We omit some other general rules for equality reasoning, but since we say "The main conversion rules" we don't need to specify all rules. }
+%% $$
+%% \frac{ a:A~~~~~~ A~ \conv~ B}{ a:B}~~~~~~~~~
+%% \frac{ a ~\conv~a':A~~~~~~ A  ~\conv~ B}{ a ~\conv~a':B}
+%% $$
+%% $$
+%% \frac{b:B~(x:A)~~~~~~~~ a:A}{ (\mylam {x}{A}{b})~a  ~\conv~ b(a/x):B(a/x)}
+%% ~~~~~~~
+%% \frac{f~x = g~x:B~(x:A)}{ f = g : \mypi{x}{A}{B}}
+%% $$
+%% $$
+%% \frac{ a:A~~~~~~ b:B(a/x)}{ (a,b).1  ~\conv~ a:A}
+%% ~~~~~~~
+%% \frac{ a:A~~~~~~ b:B(a/x)}{ (a,b).2  ~\conv~ b:B(a/x)}~~~~~~
+%% \frac{ a.1 = a'.1:A~~~~~~~ a.2 = a'.2:B(t.1/x)}{ a = a' : \mysig{a}{A}{B}}
+%% $$
 
 We can introduce data types: the type of natural numbers $\NN$ has
 constructors $\ZERO:\NN$ and $\SUCC:\NN\rightarrow\NN$ and elimination rules
@@ -367,8 +402,7 @@ with the conversion rule $\JJ(a,d)~a~(\refl~a) = d$.
 
   %PD: Is this set of rules is complete? What about $A=A':\UU_n$ implies $\T_n(A) = T_n(A')$?} set of rules for "universes as full reflections".
 %in the style of the rules in Section \ref{sec:palmgren}.
-We first present a version without
-cumulativity\footnote{We recall that congurence rules are implicit.}.
+We present a version without cumulativity. The version with cumulativity is presented in the Appendix.
 $$
 \UU_n~\type~~~~~~
 \frac{A:\UU_{n}}{\T_{n}(A)~\type}
@@ -476,16 +510,17 @@ $$\T_{l}({\UU_n^{l}}) = \UU_{n}$$
 %\medskip
 %
 
-The following rule should be admissible:
+ We expect that normalisation holds for this system.
+ This implies decidable type-checking. This also implies that if $a : \NN$ in a context with only level variables
+then $a$ is convertible to a numeral.
+
+Another consequence should be that the following rule is admissible:
 we can derive $A = B : \UU_l$ from $\T_l(A) = \T_l(B)$.
  It expresses that $\T_l$ is an embedding from the collection of elements of $\UU_l$
  to the collection of types.
  Voevodsky \cite[Rule 20 on p. 17]{VV} adds this as an internal rule, but then the system is not
  generalized algebraic anymore, since the embedding rule gives rise to a conditional equation.
 
- We expect that normalisation holds for this system.
- This implies decidable type-checking. This also implies that if $a : \NN$ in a context with only level variables
-then $a$ is convertible to a numeral.
 
 %% As we mentioned in the introduction, we have now got a system in which we can express univalence of all universes as one typing
 %% $$
@@ -886,9 +921,6 @@ Type Theory and Univalent Foundations during the academic year 2018/19.
 %% \T_{n}^{m}~(\Sigma^{n} A B) = \Sigma^{m} \T_{n}^{m}(A) (\mylam{x}{\T_{n}(A)}{\T_{n}^{m}(B~x)})~~~~~~
 %% $$
 
-
-
-
 %% These rules are also analogous to the rules for externally indexed universes.
 %% For the sake of completeness we give them explicitly.
 
@@ -925,6 +957,21 @@ and
 $$
 \T_{l}^{m}~(\Pi^{l} A B) = \Pi^{m} \T_{l}^{m}(A) (\mylam {x}{\T_{l}(A)}{\T_{l}^{m}(B~x)})~~~~~~
 \T_{l}^{m}~(\Sigma^{l} A B) = \Sigma^{m} \T_{l}^{m}(A) (\mylam {x}{\T_{l}(A)}{\T_{l}^{m}(B~x)})~~~~~~
+$$
+
+We also have a family $\Id^l~A~a~b:\UU_l$ for $A:\UU_l$ and $a:\T_l(A)$ and $b:\T_l(B)$
+with the judgmental equalities $\T_l^m(\Id^l~A~a~b) = \Id^m~\T_l^m(A)~a~b$
+and $\T_l(\Id^l~A~a~b) = \Id~\T_l(A)~a~b$.
+
+\medskip
+
+We can then define for $A$ and $B$ in $\UU_l$
+%the exponential $A\rightarrow^l B:\UU_l$ as $\Pi^l~A~(\lambda_{x:\T_l(A)}B)$ and
+the type $\Equiv^l~A~B:\UU_l$ such that
+$\T_l(\Equiv^l~A~B) = \Equiv~\T_l(A)~\T_l(B)$. For $m>l$, a consequence of univalence
+for $\UU_m$ and $\UU_l$ is that we can build an element of
+$$
+\Id~\UU_m~(\Equiv^m~\T^m_l(A)~\T^m_l(B))~(\Id^m~\UU^m_l~A~B)
 $$
 
 \section*{Appendix 2: formulation \`a la Russell}
@@ -965,22 +1012,28 @@ $$
 {\Id~A~a_0~a_1:\UU_n}
 $$
 $$
-\frac{}{{\UU_l}:\UU_{n}}{~~~~l<n}
+\frac{}{{\UU_l}:\UU_{n}}{~~~l<n}
 $$
 
 \medskip
 
 For the version with cumulativity, we add the rules
 $$
-\frac{A:\UU_{l}}{A:\UU_{n}{}l\leqslant n}
+\frac{A:\UU_{l}}{A:\UU_{n}}{~~~l\leqslant n}
 $$
 and the rules for products and sums can be simplified to
 $$
-\frac{A:\UU_{n}~~~~~~B:\UU_n(x:A)}
+\frac{A:\UU_{n}~~~~~~B:\UU_n~(x:A)}
      {\mypi{x}{A}{B}:\UU_{n}}~~~~~~~~~
-\frac{A:\UU_{n}~~~~~~B:\UU_n(x:A)}
+\frac{A:\UU_{n}~~~~~~B:\UU_n~(x:A)}
      {\mysig{x}{A}{B}:\UU_{n}}~~~~~~~~~
 $$
+
+     For $m>l$ the consequence of univalence for $\UU_m$ and $\UU_l$ mentionned above can now be written
+     simply as
+     $$\Id~\UU_m~(\Equiv~A~B)~(\Id~\UU_l~A~B)$$
+
+
 
 \begin{remark}
   In this version \`a la Tarski, with or without cumulativity, terms have unique types, in the sense that if $t : A$ and $t : B$ then $A = B$, by induction on $t$. But for this to be valid, we need to annotate application as discussed in Remark~\ref{app:annotation}.
