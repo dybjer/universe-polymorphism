@@ -767,6 +767,12 @@ Note that this interpretation morphism makes use of the subscripts.
 
 {\bf Proof.} Both $\T$ and $\R$ are initial and hence isomorphic. For a direct proof, we note that it is easy to see that we have an isomorphism, but to show that it preserves $\Pi\UU$-tower-cwf structure, we need to inspect the hereditary substitution (and all other operation) for both a la Russell and a la Tarski.
 
+\section{How to construct a model of normal forms from the "glued" normalization model}
+
+We refer to Coquand (TCS 2018). We have the term model $M_0$ and the model $M^*_0$.
+
+The model of normal forms has $\Tm(A) = Norm(A)$, the normal forms of type $A$. How do we define the operations? E g let $a$ be a normal term and $\gamma$ be a normal substitution, then the result of the operation $a[\gamma]$ is $nf(a[\gamma])$. The question is how do we get the decorations in the term model? We have an evaluation function
+
 \bibliographystyle{plain}
 \bibliography{refs}
 \end{document}
