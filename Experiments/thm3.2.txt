@@ -1,0 +1,63 @@
+Pseudocode for Thm.3.2.
+
+Main call thm32(V,{},C,f). The second argument keeps track of the variables
+that have been increased since the main call.
+
+thm32(V,U,C,f) := let (W,f') = forward(V,C,f) in 
+  if W = {} then f (* = f' in this case *)
+  elsif U+W = V then (fun _ => infty)
+  else match simplify(V,C,f') with
+  | Some(V',C',g) => f' \/ thm32(V',(U+W)iV',C',g)
+  | None => (* f' values all finite, so lem33 terminates *)
+    let g = lem33(V,U+W,C,f') (* footnote (1) *) in
+      let (W',g') = forward(V,C,g) in
+        if W' = {} then g (* = g' in this case *)
+        else thm32(V,U+W+W',C,g') (* footnote (2) *)
+endall
+
+Notations: + for union, i for intersection, \/ for pointwise maximum,
+even if one of the functions is not defined.
+
+Termination measure: primary on V, secondary on V-U. Still difficult: 
+footnotes (1) and (2), to be dealt with below.
+
+Auxiliary functions.
+
+forward(V,C,f) := (W,f') with f' the (cumulative) result of one application
+  each Horn clause in C, with W the set of variables that have changed.
+  
+simplify(V,C,f) := None if f(v) < infty for all v in V, otherwise
+  Some(V',C',f') in which all v in V with f(v)=infty have been "eliminated"
+  (better: some clauses disregarded, and some atoms disregarded)
+  
+lem33(V,W,C,f) := let g = thm32(W,{},C|W,f) in
+  let (W',g') = forward(V,C>W,f \/ g) in
+    if W' = {} then f \/ g
+    else lem33(V,W,C,f \/ g')
+endall
+
+Notations: C>W (C|W) = clauses in C with conclusion (+ body) over W.
+
+Termination arguments.
+
+Footnote (1): lem33(V,W,C,f) terminates since W<V in thm32(W,_,C|W,_), 
+and only variables in W are increased (possibly to infty!), while
+f(V-W) stays the same subset of N, bounding the effect of clauses
+in C>W - C|W by the inequality (1) from the TCS-note. 
+For this reason the simplify-call before calling lem33 is essential,
+and lem33(V,W,C,f) yields the minimal model of C>W above f.
+This is important for the next point.
+
+Footnote (2): in view of the above, non-empty W' is disjoint from U+W,
+so that so that the secondary termination measure applies 
+to thm32(V,U+W+W',C,g').
+
+Remark. One may break out of all these recursions at the "elsif"
+above to signal a loop early on. NB only detects low-hanging loops.
+ 
+
+
+
+     
+
+
