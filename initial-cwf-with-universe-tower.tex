@@ -1,4 +1,3 @@
-
 \documentclass{lmcs}
 %\usepackage{etex}
 \usepackage[utf8]{inputenc}
@@ -80,9 +79,10 @@ Moreover, we have $\UUhat^n_{\Gamma} \in \Tm(\Gamma,\UU_{n+1,\Gamma})$ with the 
 
 Finally, we consider here a cumulative tower and add the lifting operation $\t_n(a) \in \Tm(\Gamma,\UU_{n+1,\Gamma})$ with the equations
 \begin{eqnarray*}
-\t_n(\Pihat^n(a,b)) &= &\Pihat^{n+1}(\t_n(a),\t_n(b))\\
+\t_n(\Pihat^n(a,b)) &= &\Pihat^{n+1}(\t_n(a),\t_n(b))?? is this right?\\
 \t_n(a)[\gamma] &=& \t_n(a[\gamma])\\
 \end{eqnarray*}
+What about $\Ta_{n+1}(\t_n(a)) = \Ta_n(a)$? It's like this in one of the Palmgren versions, where $\t_n$ is a constructor.
 
 {\bf Remark.} In the non-cumulative case we need doubly indexed codes $\Pihat^{m,n}$ for $\Pi$.
 
@@ -94,7 +94,6 @@ A strict $\Pi\UU$-tower-cwf morphism is a strict cwf-morphism that preserves $\P
 
 \section{An initial $\Pi\UU$-tower-cwf a la Tarski}
 \label{sec:syntax}
-
 \subsection{Raw syntax}\label{sec:grammar}
 
 %This first construction is inspired by the generalised algebraic theory of $\Pi\UU$-tower-cwfs, but here we define it as a usual logical system with a grammar and a collection of inference rules. 
@@ -616,20 +615,35 @@ $$
 
 There are three more rules for cumulativity, but we don't display the derivations here.
 
+\newpage
 \section{An initial $\Pi\UU$-tower-cwf a la Russell}
 
+\subsection{Raw syntax of normal and neutral terms}
+
+It seems that we need normal terms to construct an initial model a la Russell. Then we do not need annotations on $\app(A,B,c,a)$. There is a difference between the cumulative and the non-cumulative system.
+\begin{eqnarray*}
+\Gamma \in \RawCtx &::=& 1  \ |\ \Gamma.a\\
+\gamma \in \RawSub \ &::=& \langle\rangle_\Gamma \ | \langle \gamma, a \rangle_a\\
+a \in \RawTm &::=& ne  \ |\ \lambda(a,a) \ |\ \Pi(a,a)  \ |\  {(\UU_n)}_\Gamma\\
+ne \in Ne &::=& var(i)   \ |\ \ap(ne,a) 
+\end{eqnarray*}
+
+
 \subsection{Raw Syntax}
+
 To define a Russell-style initial $\Pi\UU$-tower-cwf we start with a grammar with a common syntactic category $\RawTm$ for both types and terms:
 \begin{eqnarray*}
 \Gamma \in \RawCtx &::=& 1  \ |\ \Gamma.a\\
 \gamma \in \RawSub \ &::=& \gamma \circ \gamma \ |\ \id_\Gamma \ |\ \langle\rangle_\Gamma \ |\ \p_{a} \ |\ \langle \gamma, a \rangle_a\\
 a \in \RawTm &::=& a [\gamma] \ |\ \qI_a\  |\   \lambda(a,a) \ |\ 
-\ap(a,a,a,a) |\  \Pi(a,a)  \ |\  \UU_\Gamma
+\ap(a,a,a,a) |\  \Pi(a,a)  \ |\  {(\UU_n)}_\Gamma
 \end{eqnarray*}
-There are two new clauses for $\ctxof$ and $\typeof$ for $\UU$:
+There are three new clauses for $\ctxof$ and $\typeof$ for $\UU$:
 \begin{eqnarray*}
-\ctxof(\UU_\Gamma) &=& \Gamma\\
-\typeof(\Pi(a,b))&=& \typeof(a)
+\ctxof({(\UU_n)}_\Gamma) &=& \Gamma\\
+\typeof(\Pi(a,b))&=& \typeof(a)\\
+\typeof({(\UU_n)}_\Gamma) &=& {(\UU_{n+1})}_\Gamma\\
+(\typeof(\N_\Gamma) &=& {(\UU_{0})}_\Gamma)
 \end{eqnarray*}
 
 \subsection{Inference rules}
@@ -700,15 +714,66 @@ The new clauses for the interpretation function for the tower of universes
 \intTmU{\Pi(a,b)}&=& \Pihat^n_\C(\intTmU{a},\intTmU{b}) \in \Tm_\C(\intCtxU{\Gamma},((\UU_n)_\C)_{\intCtxU{\Gamma}})\\
 \intTmU{(\UU_n)_\Gamma} &=& (\UUhat^n_\C)_{\intCtxU{\Gamma}} \in \Tm_\C(\intCtxU{\Gamma},((\UU_{n+1})_\C)_{\intCtxU{\Gamma}})
 \end{eqnarray*}
-where 
-$\intTmU{a} \in \Tm_\C(\intCtxU{\Gamma},((\UU_n)_\C)_{\intCtxU{\Gamma}}$ and 
-$\intTmU{b} \in \Tm_\C(\intCtxU{\Gamma.a},((\UU_n)_\C)_{\intCtxU{\Gamma.a}}$.
+provided
+$\intTmU{a} \in \Tm_\C(\intCtxU{\Gamma},((\UU_n)_\C)_{\intCtxU{\Gamma}})$ and 
+$\intTmU{b} \in \Tm_\C(\intCtxU{\Gamma.a},((\UU_n)_\C)_{\intCtxU{\Gamma.a}})$.
 
-The proof that this is the unique $\Pi\UU$-tower-cwf morphism into $\C$ is similar to proof for a $\Pi\UU$-tower-cwf. 
+The proof that this is the unique $\Pi\UU$-tower-cwf morphism into $\C$ is similar to proof for the  $\Pi\UU$-tower-cwf $\T$.
 
 \begin{thm}\label{theom:initial_cwf}
   $\R$ is an initial $\Pi\UU$-tower-cwf.
 \end{thm}
+
+\subsection{The $\Pi\UU$-cwf isomorphism between $\T$ and $\R$}
+We can now look at the instances of the interpretation morphisms in both directions.
+
+{\bf Tarski to Russell.} Assume that $\Gamma$ is a Tarski style context $\Gamma^\R$ is the corresponding Russell style context, so that $\intCtx{\Gamma}^\Ctx = [ \Gamma^\R ]$. Similarly, let $a$ and $b$ be Tarski style terms and $a^\R$ and $b^\R$ are the corresponding Russell style terms. Then
+\begin{eqnarray*}
+ \intTyU{(\UU_n)_\Gamma} &=& ((\UU_n)_\R)_{\intCtxU{\Gamma}}
+ = [(\UU_n)_{\Gamma^\R}]\\
+\intTyU{\Ta_n(a)} &=& (\Ta_n)_\R(\intTmU{a}) 
+%= \Ta_\T(\iniTm{[\Gamma]}{[A]}{[a]}) 
+= [a^\R]\\
+%\intTyU{a[\gamma]}&=& \Ta_\R(\intTmU{a[\gamma]}) = [ a^\R [ \gamma^\R ] ]\\
+\intTyU{\qI_{(\UU_n)_\Gamma)}}&=& (\Ta_n)_\R(\intTmU{\qI_{(\UU_n)_\Gamma}}) = [ (\qI_{(\UU_n)_{\Gamma^\R}} ]\\
+\intTyU{\lambda(A,b)}&=& (\Ta_n)_\R(\intTmU{\lambda(A,b)}) = [ \lambda(A^\R ,b^\R ) ]\\
+\intTyU{\app(A,B,c,a)}&=& (\Ta_n)_\R(\intTmU{\app(A,B,c,a}) = [ \app(A^\R ,B^\R ,c^\R ,a^\R ) ]\\
+\intTmU{\Pihat^n(a,b)}&=& \Pihat^n_\R(\intTmU{a},\intTmU{b})
+= [\Pi(a^\R,b^\R)]
+\end{eqnarray*}
+provided in the fourth clause $\typeof(\lambda(A,b)) = (\UU_n)_\Gamma$ for some $\Gamma$ and in the fifth clause $\typeof(\app(A,B,c,a)) = (\UU_n)_\Gamma$ for some $\Gamma$.
+
+The other clauses for the raw expressions remain the same.
+
+{\bf Russell to Tarski.} 
+Assume instead that $\Gamma$ is a Russell style context $\Gamma^\T$ is the corresponding Tarski style context, so that $\intCtx{\Gamma}^\Ctx = [ \Gamma^\T ]$. Similarly, let $a$ and $b$ be Russell style terms and $a^\T$ and $b^\T$ are the corresponding Tarski style terms. Then
+\begin{eqnarray*}
+\intTyU{\UU_\Gamma} &=& [ \UU_{\Gamma^\T} ]\\
+\intTmU{\Pi(a,b)}&=& \hat{\Pi}_\T(\intTmU{a},\intTmU{b}) = [ \hat{\Pi}(a^\T,b^\T) ]\\
+%\intTyU{a[\gamma]}&=& \Ta_\T(\intTmU{a[\gamma]}) = [ \Ta(a^\T [ \gamma^\T ] )]\\
+\intTyU{\qI_{(\UU_\Gamma)}}&=& \Ta_\T(\intTmU{\qI_{(\UU_\Gamma)}}) = [ \Ta(\qI_{(\UU_{\Gamma^\T})}) ]\\
+\intTyU{\lambda(A,b)}&=& \Ta_\T(\intTmU{\lambda(A,b)}) = [ \Ta(\lambda(A^\T ,b^\T )) ]\\
+\intTyU{\app(A,B,c,a)}&=& \Ta_\T(\intTmU{\app(A,B,c,a}) = [ \Ta(\app(A^\T ,B^\T ,c^\T ,a^\T )) ]
+\end{eqnarray*}
+The other clauses for the raw expressions remain the same.
+
+%\begin{lemma}
+{\bf Lemma.}
+It follows that
+\begin{eqnarray*}
+\intTyU{a} &=& [ \Ta(a^\T) ]
+\end{eqnarray*}
+whenever $a^\T \in  \Tm_\T([\Gamma^\T],[\UU_{\Gamma^\T}])$. 
+%\end{lemma}
+
+%\begin{theorem}
+{\bf Theorem.} The interpretation morphisms form an isomorphism of $\Pi\UU$-cwfs. 
+
+If $\Gamma$ is a Tarski-style context, then $[ \Gamma^{\R\T} ] = [ \Gamma ]$, etc. 
+
+If $\Gamma$ is a Russell-style context, then $[ \Gamma^{\T\R} ] = [ \Gamma ]$, etc.
+%\end{theorem}
+
 
 \bibliographystyle{plain}
 \bibliography{refs}

@@ -11,6 +11,12 @@ Peter Aczel.
   volume~96 of {\em Stud. Logic Foundations Math.}, pages 55--66.
   North-Holland, Amsterdam-New York, 1978.
 
+\bibitem{aczel:relate}
+Peter Aczel.
+\newblock On relating type theories and set theories.
+\newblock In T.~Altenkirch, B.~Reus, and W.~Naraschewski, editors, {\em Types
+  for Proofs and Programs}, pages 33--46. Springer, 1998.
+
 \bibitem{altenkirch:qiits}
 Thorsten Altenkirch and Ambrus Kaposi.
 \newblock Type theory in type theory using quotient inductive types.
@@ -18,6 +24,13 @@ Thorsten Altenkirch and Ambrus Kaposi.
   Proceedings of the 43rd Annual {ACM} {SIGPLAN-SIGACT} Symposium on Principles
   of Programming Languages, {POPL} 2016, St. Petersburg, FL, USA, January 20 -
   22, 2016}, pages 18--29. {ACM}, 2016.
+
+\bibitem{awodey:impredicative}
+Steve Awodey, Jonas Frey, and Sam Speight.
+\newblock Impredicative encodings of (higher) inductive types.
+\newblock In {\em Proceedings of the 33rd Annual ACM/IEEE Symposium on Logic in
+  Computer Science (LICS '18)}. Association for Computing Machinery, New York,
+  NY, USA, 2018.
 
 \bibitem{birkhoff}
 Garret Birkhoff.
@@ -41,6 +54,13 @@ John Cartmell.
 \newblock Generalized algebraic theories and contextual categories.
 \newblock {\em Annals of Pure and Applied Logic}, 32:209--243, 1986.
 
+\bibitem{cartmell:gat-contextual}
+John Cartmell.
+\newblock Generalised algebraic axiomatisations of contextual categories.
+\newblock
+  \url{https://www.researchgate.net/publication/325763538_Generalised_Algebraic_Axiomatisations_of_Contextual_Categories},
+  2018.
+
 \bibitem{castellan:tlca2015}
 Simon Castellan, Pierre Clairambault, and Peter Dybjer.
 \newblock Undecidability of equality in the free locally cartesian closed
@@ -59,7 +79,10 @@ Simon Castellan, Pierre Clairambault, and Peter Dybjer.
 Simon Castellan, Pierre Clairambault, and Peter Dybjer.
 \newblock Categories with families: Unityped, simply typed, and dependently
   typed.
-\newblock {\em CoRR}, abs/1904.00827, 2019.
+\newblock In Claudia Casadio and Philip~J. Scott, editors, {\em Joachim Lambek:
+  the interplay of mathematics, logic, and linguistics}, Outstanding
+  Contributions to Logic, Editor-in-Chief: Sven-Ove Hansson. Springer, 2021.
+\newblock To appear. Preliminary version in ArXiv, abs/1904.04097.
 
 \bibitem{ClairambaultD11}
 Pierre Clairambault and Peter Dybjer.
@@ -75,6 +98,11 @@ Pierre Clairambault and Peter Dybjer.
   {Martin-L{\"{o}}f} type theories.
 \newblock {\em Mathematical Structures in Computer Science}, 24(6), 2014.
 
+\bibitem{curien-garner-hofmann}
+Pierre{-}Louis Curien, Richard Garner, and Martin Hofmann.
+\newblock Revisiting the categorical interpretation of dependent type theory.
+\newblock {\em Theor. Comput. Sci.}, 546:99--119, 2014.
+
 \bibitem{dybjer:torino}
 Peter Dybjer.
 \newblock Internal type theory.
@@ -89,6 +117,11 @@ Fredrik~Nordvall Forsberg and Anton Setzer.
   Brno, Czech Republic, August 23-27, 2010. Proceedings}, volume 6247 of {\em
   Lecture Notes in Computer Science}, pages 454--468. Springer, 2010.
 
+\bibitem{freyd:abelian}
+Peter Freyd.
+\newblock {\em Abelian Categories}.
+\newblock Harper and Row, New York, 1964.
+
 \bibitem{hofmann:csl}
 Martin Hofmann.
 \newblock On the interpretation of type theory in locally cartesian closed
@@ -96,11 +129,34 @@ Martin Hofmann.
 \newblock In Leszek Pacholski and Jerzy Tiuryn, editors, {\em CSL}, volume 933
   of {\em Lecture Notes in Computer Science}. Springer, 1994.
 
+\bibitem{hofmann:conservativity}
+Martin Hofmann.
+\newblock Conservativity of equality reflection over intensional type theory.
+\newblock In Stefano Berardi and Mario Coppo, editors, {\em Types for Proofs
+  and Programs, International Workshop TYPES'95, Torino, Italy, June 5-8, 1995,
+  Selected Papers}, volume 1158 of {\em Lecture Notes in Computer Science},
+  pages 153--164. Springer, 1995.
+
 \bibitem{hofmann:cambridge}
 Martin Hofmann.
 \newblock Syntax and semantics of dependent types.
 \newblock In Andrew Pitts and Peter Dybjer, editors, {\em Semantics and Logics
   of Computation}. Cambridge University Press, 1996.
+
+\bibitem{hofmann:phd}
+Martin Hofmann.
+\newblock {\em Extensional constructs in intensional type theory}.
+\newblock {CPHC/BCS} distinguished dissertations. Springer, 1997.
+
+\bibitem{hofmann:groupoid}
+Martin Hofmann and Thomas Streicher.
+\newblock A groupoid model refutes uniqueness of identity proofs.
+\newblock In {\em LICS 1994}, pages 208--212. IEEE Press, 1994.
+
+\bibitem{kaposi:qiits}
+Ambrus Kaposi, Andr{\'{a}}s Kov{\'{a}}cs, and Thorsten Altenkirch.
+\newblock Constructing quotient inductive-inductive types.
+\newblock {\em Proc. {ACM} Program. Lang.}, 3({POPL}):2:1--2:24, 2019.
 
 \bibitem{martinlof:padova}
 Per Martin-L{\"o}f.
@@ -117,10 +173,33 @@ Erik Palmgren and Steven~J. Vickers.
 \newblock Partial {Horn} logic and cartesian categories.
 \newblock {\em Ann. Pure Appl. Log.}, 145(3):314--353, 2007.
 
+\bibitem{reynolds:impredicative}
+John~C. Reynolds.
+\newblock Polymorphism is not set-theoretic.
+\newblock In Gilles Kahn, David~B. MacQueen, and Gordon~D. Plotkin, editors,
+  {\em Semantics of Data Types, International Symposium, Sophia-Antipolis,
+  France, June 27-29, 1984, Proceedings}, volume 173 of {\em Lecture Notes in
+  Computer Science}, pages 145--156. Springer, 1984.
+
+\bibitem{plotkin-reynolds}
+John~C. Reynolds and Gordon~D. Plotkin.
+\newblock On functors expressible in the polymorphic typed lambda calculus.
+\newblock {\em Inf. Comput.}, 105(1):1--29, 1993.
+
 \bibitem{streicher:semtt}
 Thomas Streicher.
 \newblock {\em Semantics of Type Theory}.
 \newblock {Birkh\"auser}, 1991.
+
+\bibitem{uemura:general-framework}
+Taichi Uemura.
+\newblock A general framework for the semantics of type theory.
+\newblock ArXiv, abs/1904.04097, 2019.
+
+\bibitem{voevodsky:c-systems}
+Vladimir Voevodsky.
+\newblock Subsystems and regular quotients of {C}-systems.
+\newblock ArXiv, abs/1406.7413, 2014.
 
 \bibitem{voevodsky:initiality}
 Vladimir Voevodsky.

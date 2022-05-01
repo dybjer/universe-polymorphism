@@ -39,13 +39,13 @@ a la Tarski and a la Russell}
 \maketitle
 
 \begin{abstract}
-We define the notion of a $\Pi\UU$-cwf as a category with families with a $\Pi$-structure and a structure for a universe $\UU$ closed under $\Pi$. Then we construct syntax and inference rules for two systems of type theory with $\Pi$-types and $\UU$, one has a universe a la Tarski, the other a universe a la Russell. We prove that both systems yield initial $\Pi\UU$-cwfs in the category of $\Pi\UU$-cwfs and cwf-morphisms strictly preserving $\Pi$ and $\UU$-structure. It follows that the system a la Russell is isomorphic to the system a la Tarski in that category.
+We define the notion of a $\Pi\UU$-cwf as a category with families with a $\Pi$-structure and a structure for a universe $\UU$ closed under $\Pi$. Then we construct syntax and inference rules for two systems of type theory with $\Pi$-types and $\UU$, one has a universe a la Tarski, the other a universe a la Russell. We prove that both systems yield initial $\Pi\UU$-cwfs in the category of $\Pi\UU$-cwfs and cwf-morphisms strictly preserving $\Pi$ and $\UU$-structure. We also show the translation isomorphism between the system a la Russell and the system a la Tarski in that category.
  \end{abstract}
 
 %\tableofcontents
 \allowdisplaybreaks
 \section{Introduction}
-
+\footnote{From discussion 220120: say something about history of Russell and Tarski, and that it has generally been thought that Tarski is the more basic version. Here we show that they are isomorphic.}
 Martin-Löf type theory can be interpreted in categories with families (cwfs) with suitable extra structure for the type formers. Furthermore, appropriate versions of Martin-Löf type theory can be characterized  abstractly as free or initial such cwfs with extra structure. Such a construction has been worked out in detail for cwfs with structures for $\Pi, \Sigma$, and the extensional identity type former $\I$ \cite{castellan:tlca2015}. 
 
 In the present paper we extend that construction by introducing a notion of a universe structure on a cwf. For simplicity, we start with a cwf with a $\Pi$-structure and consider a universe closed under $\Pi$-types. A cwf with both $\Pi$ and $\UU$-structures is called a $\Pi\UU$-cwf. We then build an initial  $\Pi\UU$-cwf  following the recipe in \cite{castellan:tlca2015}. This results in syntax and inference rules for a universe a la Tarski. Finally, we modify this construction and build an initial  $\Pi\UU$-cwf  with syntax and inference rules for a universe a la Russell.
@@ -344,7 +344,7 @@ rules}.
     \infer{ \Gamma   \vdash  \app(A, B,  \lambda (A, b), a) = b[\langle \id_\Gamma, a \rangle]  : B [\langle \id, a \rangle] }{ \Gamma   \vdash  c :  \Pi (A, B) &  \Gamma   \vdash  a : A} \and
     \infer{ \Gamma   \vdash   c =  \lambda (\app(A,B,c[\p_A ], \qI_A)) :  \Pi (A, B)}{ \Gamma   \vdash  c :  \Pi (A, B)} \and
     \infer{ \Delta   \vdash   \Pi (A, B) [\gamma]  =  \Pi (A [\gamma] , B[\langle \gamma \circ \p_{A[\gamma]}, \qI_{A[\gamma]}\rangle])}{ \Gamma   \vdash  A &  \Gamma .A  \vdash  B &  \Delta   \vdash   \gamma  :  \Gamma } \and
-    \infer{ \Delta   \vdash   \lambda (b)[\gamma]  =  \lambda (b [\langle \gamma \circ \p_{A[\gamma]}, \qI_{A[\gamma]}\rangle]) :  \Pi (A, B) [\gamma] }{ \Gamma   \vdash  c :  \Pi (A, B) & \Delta  \vdash   \gamma  :  \Gamma } \and
+    \infer{ \Delta   \vdash   \lambda (b)[\gamma]  =  \lambda (b [\langle \gamma \circ \p_{A[\gamma]}, \qI_{A[\gamma]}\rangle]) :  \Pi (A, B) [\gamma] }{ \Gamma.A   \vdash  b :  B & \Delta  \vdash   \gamma  :  \Gamma } \and
     \infer{ \Delta   \vdash  \app(c, a) [\gamma]  = \app(c [\gamma] , a [\gamma] ) : B [\langle  \gamma , a [\gamma]  \rangle] }{ \Gamma   \vdash  c :  \Pi (A, B) &  \Gamma   \vdash  a : A & \Delta  \vdash   \gamma  :  \Gamma }
   \end{mathpar}
   }
@@ -402,7 +402,7 @@ equality) type given by the function $\typeof$, and that a type has a unique (up
 $\ctxof$. Similarly, $\domain$ and $\codomain$ return the unique domain and codomain of a substitution.
 
 \begin{lem}\label{lemma:unique_typing}
-  We have the following:
+  We have the following (note that the converse is also true? E g $\ctxof (A)\vdash A$ is derivable.)
   \begin{itemize}
   \item If $ \Gamma   \vdash  A$ is derivable, then $  \Gamma  = \ctxof (A)\vdash  $ is also derivable.
   \item If $ \Gamma   \vdash  a : A$ is derivable, then $ \Gamma  = \ctxof (A)\vdash   $ and $
@@ -413,7 +413,8 @@ $\ctxof$. Similarly, $\domain$ and $\codomain$ return the unique domain and codo
 \end{lem}
 
 \subsection{The syntactic $\Pi\UU$-cwf $\T$ a la Tarski}
-We can now define a term model as the syntactic cwf obtained by the well-formed contexts, substitutions, types, and terms, modulo judgmental equality. We use brackets for equivalence classes in this definition. (Note that brackets are also used for substitution in types and terms. However, this should not cause confusion since we will soon drop the equivalence class brackets.)
+We can now define a term model as the syntactic cwf obtained by the well-formed contexts, substitutions, types, and terms, modulo judgmental equality. We use brackets for equivalence classes in this definition. We have four families of equivalence relations: 
+$[-]^\RawCtx, [-]^\RawSub_{\Delta,\Gamma},[-]^\RawTy_{\Gamma},[-]^\RawTm_{\Gamma,A}$, but we will often leave out both sub- and superscripts. (Note that brackets are also used for substitution in types and terms. However, this should not cause confusion since we will soon drop the equivalence class brackets.)
 
 \begin{defi}
 The term model $\T$ is given by:
@@ -442,7 +443,7 @@ We only show the universe operations:
 \Ta_\T([a]^\Tm) &=& [\Ta(a)]^\Ty \in \Ty_\T([\Gamma]^\Ctx)\\
 \Pihat_\T([a]^\Tm,[b]^\Tm) &=& [ \Pihat(a,b) ]^\Tm  \in \Tm_\T([\Gamma]^\Ctx,[\UU_\Gamma]^\Ty)
 \end{eqnarray*}
-where $[a]^\Tm \in \Tm_\T([\Gamma]^\Ctx,[\UU_\Gamma])$ and $[b]^\Tm \in \Tm_\T([\Gamma.a]^\Ctx,[\UU_{\Gamma.a}]^\Ty)$.
+where in the second and third line $\Gamma = \ctxof(\typeof(a))$, $[a]^\Tm \in \Tm_\T([\Gamma]^\Ctx,[\UU_\Gamma])$ and $[b]^\Tm \in \Tm_\T([\Gamma.a]^\Ctx,[\UU_{\Gamma.a}]^\Ty)$.
 
 %For example, if $\Delta \vdash \theta : \Theta$, $\Gamma \vdash \delta : \Delta$, we define
 %$
@@ -457,7 +458,18 @@ We shall show that $\T$ is an initial $\Pi\UU$-cwf in the sense that for an arbi
 
 We begin by defining four mutually recursive partial dependent interpretation functions, one for each syntactic category. Let $B$ be a {\em partial family of sets} indexed by $A$, that is, a set of pairs, such that $(x,Y), (x,Y') \in B$ implies $x \in A$ and $Y=Y'$. Then a {\em partial dependent function} $f :  (x \in A) \rightharpoonup B(x)$  is a set of pairs, such that $(x,y), (x,y') \in f$ implies that $x \in A$, $B(x)$ is defined and $y = y' \in B(x)$.
 
-Our four partial dependent interpretation functions are:
+Our four partial dependent interpretation functions are:\footnote{Modify after discussion with Thierry! Change to
+\begin{eqnarray*}
+\intSubU{-}_{\Delta,\Gamma} &:&  (\gamma \in \RawSub)\ \rightharpoonup
+\Sub_\C(\intCtxU{\Delta}, \intCtxU{\Gamma})\\
+\intTyU{-}_\Gamma&:& (A \in \RawTy)\ \rightharpoonup\ \Ty_\C(\intCtxU{\Gamma})\\
+\intTmU{-}_{\Gamma,A}&:& (a \in\RawTm)\ \rightharpoonup\
+\Tm_\C (\intCtxU{\Gamma}, \intTyU{A})
+\end{eqnarray*}
+As a consequence, we don't need $\ctxof$, etc. Lemma 3.1 needs to be modified.
+}
+
+
 \begin{eqnarray*}
 \intCtxU{-} &:& \RawCtx\ \rightharpoonup \Ctx_\C\\
 \intSubU{-}&:& (\gamma \in \RawSub)\ \rightharpoonup \
@@ -471,27 +483,27 @@ where $\RawCtx$ denotes the set of raw contexts, $\RawSub$ the set of raw substi
 We often skip the superscripts in these partial interpretation functions. The clauses for the pure cwf-combinators are
 \[
 \begin{array}{rclcrclcrcl}
-\inte{1} &=& 1_\C 						&&
-\inte{\gamma' \circ \gamma} &= & \inte{\gamma'} \circ_\C \inte{\gamma}&&
-\inte{ \langle  \rangle_ \Gamma  } &=&  (\langle  \rangle_\C) _{ \inte \Gamma  }
+\intCtxU{1} &=& 1_\C 						&&
+\intSubU{\gamma' \circ \gamma} &= & \intSubU{\gamma'} \circ_\C \intSubU{\gamma}&&
+\intSubU{ \langle  \rangle_ \Gamma  } &=&  (\langle  \rangle_\C) _{ \intCtxU \Gamma  }
 \\
-\intCtx { \Gamma .A} &=& \ \inte \Gamma ._\C \inte{A}	&&
-\inte{\id_{\Gamma}} & = &\ {(\idC)}_{\inte{\Gamma}}	&&
-\inte {a[\gamma]} &=& \inte a[\inte \gamma]_\C
+\intCtxU{ \Gamma .A} &=& \ \intCtxU \Gamma ._\C \intTyU{A}	&&
+\intSubU{\id_{\Gamma}} & = &\ {(\idC)}_{\intCtxU{\Gamma}}	&&
+\intTmU{a[\gamma]} &=& \intTmU a[\intSubU \gamma]_\C
 \\
 %\inte {o} &=& o_\C					&&
-\inte{ \langle  \gamma , a \rangle_A } &=& \langle \inte \gamma , \inte a \rangle_\C&&
-\inte {\qI_A} &= & (\qI_\C)_{\inte A}
+\intSubU{ \langle  \gamma , a \rangle_A } &=& \langle \intSubU \gamma , \intTmU a \rangle_\C&&
+\intTmU {\qI_A} &= & (\qI_\C)_{\intTyU A}
 \\
-\inte{A[\gamma]} &=& \inte A [\inte \gamma]_\C		&&
-\inte {\p_A} &= & (\p_\C)_{\inte A} 
+\intTyU{A[\gamma]} &=& \intTyU A [\intSubU \gamma]_\C		&&
+\intSubU {\p_A} &= & (\p_\C)_{\intTyU A} 
 \end{array}
 \]
 Clauses for $\Pi$:
 \begin{eqnarray*}
-\inte{\Pi(A,B)} &=& \Pi_\C(\inte{A},\inte{B})\\
-\inte{\app(A,B,c,a)} &=& \app_\C(\inte{A},\inte{B},\inte{c},\inte{a})\\
-\inte{\lambda(A,b)} &=& \lambda_\C(\inte{A},\inte{b})
+\intTyU{\Pi(A,B)} &=& \Pi_\C(\intTyU{A},\intTyU{B})\\
+\intTmU{\app(A,B,c,a)} &=& \app_\C(\intTyU{A},\intTyU{B},\intTmU{c},\intTmU{a})\\
+\intTmU{\lambda(A,b)} &=& \lambda_\C(\intTyU{A},\intTmU{b})
 \end{eqnarray*}
 Clauses for $\UU$:
 \begin{eqnarray*}
@@ -601,21 +613,40 @@ The $\Pihat$-case is similar. We have proved
 \section{An initial $\Pi \UU$-cwf a la Russell}
 
 \subsection{Raw Syntax}
-To define a Russell-style initial $\Pi\UU$-cwf we start with a grammar with a common syntactic category $\RawTm$ for both types and terms:
+To define a Russell-style initial $\Pi\UU$-cwf we start with a grammar with a common syntactic category $\RawTy\RawTm$ for both types and terms:
 \begin{eqnarray*}
 \Gamma \in \RawCtx &::=& 1  \ |\ \Gamma.a\\
 \gamma \in \RawSub \ &::=& \gamma \circ \gamma \ |\ \id_\Gamma \ |\ \langle\rangle_\Gamma \ |\ \p_{a} \ |\ \langle \gamma, a \rangle_a\\
-a \in \RawTm &::=& a [\gamma] \ |\ \qI_a\  |\   \lambda(a,a) \ |\ 
+a \in \RawTy\RawTm &::=& a [\gamma] \ |\ \qI_a\  |\   \lambda(a,a) \ |\ 
 \ap(a,a,a,a) |\  \Pi(a,a)  \ |\  \UU_\Gamma
 \end{eqnarray*}
-There are two new clauses for $\ctxof$ and $\typeof$ for $\UU$:
+Note that $a [\gamma],\qI_a,\lambda(a,a),\ap(a,a,a,a)$ and $\Pi(a,a)$ can be typable both as a term and a type. Since they can be members of $\UU_\Gamma$, they can also be types.
+
+Since we have a common syntactic category $\RawTy\RawTm$ for raw types and raw terms, we need to redefine
+$\ctxof$ and $\typeof$ on this syntactic category:
 \begin{eqnarray*}
+\ctxof(A[\gamma]) &=& \dom(\gamma)\\
+\ctxof(\qI_A) &=& \ctxof(A).A\\
+\ctxof(\Pi(A,B)) &=& \ctxof(A)\\
+\ctxof(\lambda(A,c)) &=& \ctxof(A)\\
+\ctxof(\ap(A,B,c,a)) &=&\ctxof(A)\\
 \ctxof(\UU_\Gamma) &=& \Gamma\\
-\typeof(\Pi(a,b))&=& \typeof(a)
 \end{eqnarray*}
+\begin{eqnarray*}
+\typeof(a[\gamma]) &=& (\typeof(a))[\gamma]\\
+\typeof(\qI_A) &=& A[\p_{A}]\\
+\typeof(\Pi(a,b))&=& \UU_{\ctxof(\typeof(a))}\\
+\typeof(\lambda(A,c)) &=& \Pi(A,\typeof(c))\\
+\typeof(\ap(A,B,c,a)) &=& B[\langle \id_{\ctxof(A)},a \rangle ]
+\end{eqnarray*}
+Note that both functions are structurally recursive and partial. Do we have $\ctxof(A) = \Gamma$ implies $\Gamma \vdash A$, etc? Is this a type-checking algorithm? No, it's not because the converse implication does not hold, because of the type-equality rule. It's a type-inference algorithm only.
+
 
 \subsection{Inference rules}
-The inference rules for cwfs with $\Pi$-types are as before, except that they range over the new sets of raw contexts, substitutions, and the combined syntactic category of raw types and terms. Moreover, we display the rules for a universe a la Russell in the box.
+The inference rules for cwfs with $\Pi$-types are as before, except that they range over the new sets of raw contexts, substitutions, and the combined syntactic category of raw types and terms. 
+
+Moreover, we display the rules for a universe a la Russell in the box. They are obtained from the rules for a universe a la Tarski by removing $\Ta$ everywhere, and by replacing $\Pihat$ by $\Pi$ as elements of a universe. As a consequence the fourth and sixth rule a la Tarski become derivable from the second rule. Hence the system a la Russell has five rules compared to the seven of the system a la Tarski.
+
 %$$
 %\frac{}
 %{\Gamma \vdash \UU_\Gamma}
@@ -646,21 +677,33 @@ The inference rules for cwfs with $\Pi$-types are as before, except that they ra
 \infer{\Gamma \vdash \Pi(a,b) = \Pi(a',b') : \UU_\Gamma}
 {\Gamma \vdash a = a' : \UU_\Gamma\and\Gamma.a \vdash b = b' : \UU_{\Gamma.a}}
 \and
-\infer{ \Delta   \vdash   \UU_\Gamma [\gamma]  =  \UU_\Delta}{  \Delta   \vdash   \gamma  :  \Gamma } 
+\infer{ \Delta   \vdash   \UU_\Gamma [\gamma]  =  \UU_\Delta}{  \Delta   \vdash   \gamma  :  \Gamma }
+\and
+\frac
+{ \Gamma   \vdash  a : \UU_\Gamma \hspace{2em} \Gamma .a \vdash  b : \UU_{\Gamma .a} \hspace{2em} \Delta   \vdash   \gamma  :  \Gamma }
+{ \Delta   \vdash   \Pi(a, b) [\gamma] =  \Pi(a [\gamma] , b [\gamma ^+]):\UU_\Delta}
  \end{mathpar}
   }
   \label{fig:uu}
 \end{figure}
 \def\R{\mathcal{R}}
+
 \subsection{The syntactic $\Pi\UU$-cwf $\R$ a la Russell}
+
 The term model a la Russell is defined from the grammar and inference rules a la Russell in an analogous way that the term model a la Tarski is defined from the grammar and inference rules a la Tarski. The universe operations on $\R$ are defined as follows:
 \begin{eqnarray*}
 (\UU_\R)_{[\Gamma]^\Ctx} &= &[ \UU_\Gamma ]^\Ty \in \Ty_\R([\Gamma])\\
 \Ta_\R([a]^\Tm) &=& [a]^\Ty \in \Ty_\R([\Gamma])\\
 \Pihat_\R([a]^\Tm,[b]^\Tm) &=& [ \Pi(a,b) ]^\Tm  \in \Tm_\R([\Gamma],[\UU_\Gamma])
 \end{eqnarray*}
-where $[a]^\Tm \in \Tm_\R([\Gamma],[\UU_\Gamma])$ and $[b]^\Tm \in \Tm_\R([\Gamma.a],[\UU_{\Gamma.a}])$.
+where in the second and third rule $\Gamma = \ctxof(\typeof(a))$, $[a]^\Tm \in \Tm_\R([\Gamma],[\UU_\Gamma])$ and $[b]^\Tm \in \Tm_\R([\Gamma.a],[\UU_{\Gamma.a}])$.
 
+It may be worth while writing out the indices on the equivalence classes:
+\begin{eqnarray*}
+(\UU_\R)_{[\Gamma]^\Ctx} &= &[ \UU_\Gamma ]_\Gamma^\Ty \in \Ty_\R([\Gamma]^\Ctx)\\
+\Ta_\R([a]_{\Gamma,\UU_\Gamma}^\Tm) &=& [a]_\Gamma^\Ty \in \Ty_\R([\Gamma]^\Ctx)\\
+\Pihat_\R([a]_{\Gamma,\UU_\Gamma}^\Tm,[b]_{\Gamma.a,\UU_{\Gamma.a}}^\Tm) &=& [ \Pi(a,b) ]_{\Gamma,\UU_\Gamma}^\Tm  \in \Tm_\R([\Gamma]^\Ctx,[\UU_\Gamma]_\Gamma^\Ty)
+\end{eqnarray*}
 
 \subsection{Initiality of $\R$}
 The domain and codomain of the partial interpretation functions are as before, except that
@@ -673,23 +716,54 @@ both the type and the term interpretation functions range over $\RawTm$:
 \intTmU{-}&:& (a \in\RawTm)\ \rightharpoonup\
 \Tm_\C (\intCtxU{\ctxof(\typeof(a))}, \intTyU{\typeof(a)})
 \end{eqnarray*}
-The new clauses for the interpretation function
+We have six new clauses (one for terms and five for types) for the interpretation function for the universe a la Russell. The first one is the same as for the universe a la Tarski:
 \begin{eqnarray*}
-\intTyU{\UU_\Gamma} &=& (\UU_\C)_{\intCtxU{\Gamma}}\\
-\intTyU{a} &=& \Ta_\C(\intTmU{a})\\
-\intTmU{\Pi(a,b)}&=& \hat{\Pi}_\C(\intTmU{a},\intTmU{b})
+\intTyU{\UU_\Gamma} &=& (\UU_\C)_{\intCtxU{\Gamma}}
 \end{eqnarray*}
-Note that the results in the second and third line are only defined if $\intTmU{a} \in (\UU_\C)_\Gamma$ and $\intTmU{b} \in (\UU_\C)_{\Gamma.\Ta_\C(\intTmU{a})}$ in the two last clauses, where $\Gamma \in \Ctx_\C$.
+The second one is for terms and similar to the corresponding clause for a la Tarski, but the raw syntax is now $\Pi(a,b)$ rather than $\hat{\Pi}(a,b)$:
+\begin{eqnarray}
+\intTmU{\Pi(a,b)}&=& \hat{\Pi}_\C(\intTmU{a},\intTmU{b}) \in \Tm_\C (\intCtxU{\Gamma}, \intTyU{\UU_\Gamma})
+\end{eqnarray}
+This is defined provided $\intTmU{a} \in \Tm_\C (\intCtxU{\Gamma}, \intTyU{\UU_\Gamma})$ and  $\intTmU{b} \in \Tm_\C (\intCtxU{\Gamma.a}, \intTyU{\UU_{\Gamma.a}})$, where $\Gamma = \ctxof(\typeof(a))$. %(Note that $\intTyU{\Pi(A,B)} = \Ta_\C(\intTmU{\Pi(A,B)})$ follows.)
 
-The proofs of Lemma \ref{lemma:interp_defined} and Theorem \ref{theom:initial_cwf} can easily be adapted to the Russell-style case. Just replace $\Ta(a)$ by $a$ and $\Pihat(a,b)$ by $\Pi(a,b)$.
-For example to prove the case for
+Everything that can be a term can also be a type: 
+\begin{eqnarray}
+%\intTyU{a[\gamma]}&=& \Ta_\C(\intTmU{a[\gamma]})\\
+\intTyU{\qI_{(\UU_\Gamma)}}&=& \Ta_\C(\intTmU{\qI_{(\UU_\Gamma)}})\\
+\intTyU{\lambda(A,b)}&=& \Ta_\C(\intTmU{\lambda(A,b)})\\
+\intTyU{\app(A,B,c,a}&=& \Ta_\C(\intTmU{\app(A,B,c,a})
+\end{eqnarray}
+
+%\begin{lemma}
+{\bf Lemma.}
+It follows that
+\begin{eqnarray*}
+\intTyU{a} &=& \Ta_\C(\intTmU{a})
+\end{eqnarray*}
+whenever $\intTmU{a} \in  \Tm_\C(\Gamma,(\UU_\C)_{\intCtxU{\Gamma}})$. 
+%\end{lemma}
+
+The proof is by induction on $a$. We have five clauses (4.1-4.5). First 4.1:
+$$
+\intTyU{\Pi(a,b)} = \Pi_\C(\intTyU{a},\intTyU{b}) = \Pi_\C(\Ta_\C(\intTmU{a}),\Ta_\C(\intTmU{b})) = \Ta_\C(\Pihat_\C(\intTmU{a},\intTmU{b})) = \Ta_\C(\intTmU{\Pi(a,b)})
+$$ 
+where we have used the induction hypothesis for the second equality.
+
+4.2 - 4.5 follow by definition.
+\qed
+
+The proof of Lemma \ref{lemma:interp_defined} can be adapted to the Russell-style case. Just replace $\Ta(a)$ by $a$ and $\Pihat(a,b)$ by $\Pi(a,b)$. 
+We can thus define a strict $\Pi\UU$-cwf-morphism $\R \to \C$ in a similar way as for a la Tarski. 
+
+To prove that this is unique we also proceed as before, but with respect to the inference rules a la Russell. For example to prove the case for
 $$
 \frac{\Gamma \vdash a = a' : \UU_\Gamma}
 {\Gamma \vdash a = a' }
 $$
 we assume the induction hypothesis 
 %$\Gamma \vdash a = a' : \UU_\Gamma$,
- $F^\Tm([a]) = \iniTm{\iniCtx{\Gamma}}{\iniTy{\iniCtx{\Gamma}}{\UU_\Gamma}}{[a]}$
+ $F^\Tm([a]) = \iniTm{\iniCtx{\Gamma}}{\iniTy{\iniCtx{\Gamma}}{\UU_\Gamma}}{[a]} 
+ = \iniTm{\iniCtx{\Gamma}}{\iniTy{\iniCtx{\Gamma}}{\UU_\Gamma}}{[a']} = F^\Tm([a'])$
 and show
 %It follows for $\Gamma \vdash \Ta(a) = \Ta(a')$
 $$
@@ -708,43 +782,138 @@ $$
 %$$
 %F([a]) = \Ta_\C(F([a])) = \Ta_\C(\iniTm{\iniCtx{\Gamma}}{\iniTy{\iniCtx{\Gamma}}{\UU_\Gamma}}{[a]}) = \Ta_\C(\intTmU{a}) = \intTyU{a} = \iniTy{\iniCtx{\Gamma}}{[a]}
 %$$
-The $\Pihat$-case is obtained by a similar modfication. We thus prove:\footnote{We need to look over the notation, so the implicit arguments are more systematic.}
+The $\Pihat$-case is obtained by a similar modfication. 
+
+:\footnote{We need to look over the notation, so the implicit arguments are more systematic.}
 
 \begin{thm}\label{theom:initial_cwf}
   $\R$ is an initial $\Pi\UU$-cwf.
 \end{thm}
 
-\subsection{The isomorphism between $\T$ and $\R$}
+\subsection{The $\Pi\UU$-cwf isomorphism between $\T$ and $\R$}
 We can now look at the instances of the interpretation morphisms in both directions.
 
-Tarski to Russell: assume that $\iniCtx{[\Gamma]} = [ \Gamma^\R ], \iniTm{[\Gamma]}{[\UU_\Gamma]}{[a]} = [ a^\R ]$ and similarly for $b$. Then
+{\bf Tarski to Russell.} Assume that $\Gamma$ is a Tarski style context $\Gamma^\R$ is the corresponding Russell style context, so that $\intCtx{\Gamma}^\Ctx = [ \Gamma^\R ]$. Similarly, let $a$ and $b$ be Tarski style terms and $a^\R$ and $b^\R$ are the corresponding Russell style terms. Then
 \begin{eqnarray*}
-\iniTy{[\Gamma]}{[\UU_\Gamma]} =
- \intTyU{\UU_\Gamma} &=& (\UU_\T)_{\intCtxU{\Gamma}}
- %= (\UU_\T)_{\iniCtx{[\Gamma]}} 
- = [\UU_{\Gamma^\R}]
- \\
-\iniTy{[\Gamma]}{[\Ta(a)]}= \intTyU{\Ta(a)} &=& \Ta_\T(\intTmU{a}) 
+ \intTyU{\UU_\Gamma} &=& (\UU_\R)_{\intCtxU{\Gamma}}
+ = [\UU_{\Gamma^\R}]\\
+\intTyU{\Ta(a)} &=& \Ta_\R(\intTmU{a}) 
 %= \Ta_\T(\iniTm{[\Gamma]}{[A]}{[a]}) 
 = [a^\R]\\
-\iniTm{[\Gamma]}{[\UU_\Gamma]}{[\Pihat(a,b)]} = \intTmU{\Pihat(a,b)}&=& \Pihat_\T(\intTmU{a},\intTmU{b})
+%\intTyU{a[\gamma]}&=& \Ta_\R(\intTmU{a[\gamma]}) = [ a^\R [ \gamma^\R ] ]\\
+\intTyU{\qI_{(\UU_\Gamma)}}&=& \Ta_\R(\intTmU{\qI_{(\UU_\Gamma)}}) = [ \qI_{(\UU_{\Gamma^\R})} ]\\
+\intTyU{\lambda(A,b)}&=& \Ta_\R(\intTmU{\lambda(A,b)}) = [ \lambda(A^\R ,b^\R ) ]\\
+\intTyU{\app(A,B,c,a)}&=& \Ta_\R(\intTmU{\app(A,B,c,a}) = [ \app(A^\R ,B^\R ,c^\R ,a^\R ) ]\\
+\intTmU{\Pihat(a,b)}&=& \Pihat_\R(\intTmU{a},\intTmU{b})
 = [\Pi(a^\R,b^\R)]
 \end{eqnarray*}
+The other clauses for the raw expressions remain the same.
 
-Russell to Tarski: assume that $\iniCtx{[\Gamma]} = [ \Gamma^\T ], \iniTm{[\Gamma]}{[\UU_\Gamma]}{[a]} = [ a^\T ]$ and similarly for $b$. Then
+{\bf Russell to Tarski.} 
+Assume instead that $\Gamma$ is a Russell style context $\Gamma^\T$ is the corresponding Tarski style context, so that $\intCtx{\Gamma}^\Ctx = [ \Gamma^\T ]$. Similarly, let $a$ and $b$ be Russell style terms and $a^\T$ and $b^\T$ are the corresponding Tarski style terms. Then
 \begin{eqnarray*}
-\iniTy{[\Gamma]}{[\UU_\Gamma]} =
- \intTyU{\UU_\Gamma} &=& (\UU_\T)_{\intCtxU{\Gamma}}
- %= (\UU_\T)_{\iniCtx{[\Gamma]}} 
- = [\UU_{\Gamma^\T}]
- \\
-\iniTy{[\Gamma]}{[a]}= \intTyU{a} &=& \Ta_\T(\intTmU{a}) 
-%= \Ta_\T(\iniTm{[\Gamma]}{[A]}{[a]}) 
-= [\Ta(a^\T)]\\
-\iniTm{[\Gamma]}{[\UU_\Gamma]}{[\Pi(a,b)]} = \intTmU{\Pi(a,b)}&=& \hat{\Pi}_\T(\intTmU{a},\intTmU{b})
-= [\Pihat(a^\T,b^\T)]
+\intTyU{\UU_\Gamma} &=& [ \UU_{\Gamma^\T} ]\\
+\intTmU{\Pi(a,b)}&=& \hat{\Pi}_\T(\intTmU{a},\intTmU{b}) = [ \hat{\Pi}(a^\T,b^\T) ]\\
+%\intTyU{a[\gamma]}&=& \Ta_\T(\intTmU{a[\gamma]}) = [ \Ta(a^\T [ \gamma^\T ] )]\\
+\intTyU{\qI_{(\UU_\Gamma)}}&=& \Ta_\T(\intTmU{\qI_{(\UU_\Gamma)}}) = [ \Ta(\qI_{(\UU_{\Gamma^\T})}) ]\\
+\intTyU{\lambda(A,b)}&=& \Ta_\T(\intTmU{\lambda(A,b)}) = [ \Ta(\lambda(A^\T ,b^\T )) ]\\
+\intTyU{\app(A,B,c,a)}&=& \Ta_\T(\intTmU{\app(A,B,c,a}) = [ \Ta(\app(A^\T ,B^\T ,c^\T ,a^\T )) ]
+\end{eqnarray*}
+The other clauses for the raw expressions remain the same.
+
+%\begin{lemma}
+{\bf Lemma.}
+It follows that
+\begin{eqnarray*}
+\intTyU{a} &=& [ \Ta(a^\T) ]
+\end{eqnarray*}
+whenever $a^\T \in  \Tm_\T([\Gamma^\T],[\UU_{\Gamma^\T}])$. 
+%\end{lemma}
+
+%\begin{theorem}
+{\bf Theorem.} The interpretation morphisms form an isomorphism of $\Pi\UU$-cwfs. 
+
+If $\Gamma$ is a Tarski-style context, then $[ \Gamma^{\R\T} ] = [ \Gamma ]$, etc. 
+
+If $\Gamma$ is a Russell-style context, then $[ \Gamma^{\T\R} ] = [ \Gamma ]$, etc.
+%\end{theorem}
+
+\section{Syntactic isomorphism between Tarski- and Russell-style systems}
+
+The isomorphism between the two initial $\Pi\UU$-cwfs yields four partial translation functions back and forth between Tarski- and Russell-style syntax. Let $\Gamma^\R$ be the Russell-translation of the Tarski context $\Gamma$ and $\Gamma^\T$ be the Tarski-translation of the Russell context $\Gamma$, and similarly for the types, terms, and substitutions. Then these translation functions preserve the four partial equivalence relations and are inverse to each other in the following sense:
+ \begin{itemize}
+\item $\Gamma = \Gamma' \vdash_\T$ implies $\Gamma^\R = \Gamma'^\R\vdash_\R$;
+Proof by induction on derivations: check that each Tarski rule is translated into a derived Russell rule.
+\item $\Gamma = \Gamma' \vdash_\R$ implies $\Gamma^\T = \Gamma'^\T \vdash_\T$;
+Proof by induction on derivations: check that each Russell rule is translated into a derived Tarski rule.
+\item $\Gamma \vdash_\T$ implies $\Gamma^{\R\T} = \Gamma \vdash_\T$;
+Proof by induction on derivations: prove that $\Gamma = \Gamma' \vdash_\T$ implies $\Gamma^{\R\T} = \Gamma'^{\R\T} = \Gamma \vdash_\T$
+\item $\Gamma \vdash_\R$ implies $\Gamma^{\T\R} \equiv \Gamma$; similar.
+\item similarly for the types, terms, and substitutions.
+\end{itemize}
+{\bf Proof?}
+
+We can define similar syntactic isomorphisms between systems with fewer annotations, even systems that do not yield initial $\Pi\UU$-cwfs. For example, we can define the raw syntax for Tarski-style $\Pi\UU$-cwf-combinators without annotations as follows:
+\begin{eqnarray*}
+\Gamma \in \RawCtx &::=& 1  \ |\ \Gamma.A\\
+\gamma \in \RawSub \ &::=& \gamma \circ \gamma \ |\ \id \ |\ \langle\rangle \ |\ \p \ |\ \langle \gamma, a \rangle\\
+A \in \RawTy &::=& A[\gamma]   \ |\  \Pi(A,A)\ |\  \UU  \ |\  \Ta(a)\\
+a \in \RawTm &::=& a[\gamma] \ |\ \qI\ |\  \ap(a,a) |\ \lambda(a)\ |\ \hat{\Pi}(a,a)
+\end{eqnarray*}
+The raw syntax of the corresponding Russell-style system without annotations has the same productions for $\RawCtx$ and $\RawSub$. The productions for the common syntactic category of types and terms are
+\begin{eqnarray*}
+%\Gamma \in \RawCtx &::=& 1  \ |\ \Gamma.a\\
+%\gamma \in \RawSub \ &::=& \gamma \circ \gamma \ |\ \id_\Gamma \ |\ \langle\rangle_\Gamma \ |\ \p_{a} \ |\ \langle \gamma, a \rangle_a\\
+a \in \RawTy\RawTm &::=& a [\gamma] \ |\ \qI\  |\   \lambda(a) \ |\ 
+\ap(a,a) |\  \Pi(a,a)  \ |\  \UU
 \end{eqnarray*}
 
+We display the translation functions on types and terms, and remark that the translation functions on contexts and substitution preserve all operations.
+
+{\bf Tarski to Russell.} 
+
+On types $(-)^\R : \RawTy \to \RawTy\RawTm$:
+\begin{eqnarray*}
+A[\gamma]^\R&=& A^\R[\gamma^\R]\\
+\Pi(A,B)^\R&=& \Pi(A^\R,B^\R)\\
+\UU^\R&=& \UU\\
+\Ta(a)^\R &=& a^\R
+\end{eqnarray*}
+
+On terms $(-)^\R : \RawTm \to \RawTy\RawTm$::
+\begin{eqnarray*}
+a[\gamma]^\R&=& a^\R[\gamma^\R]\\
+\qI^\R &=& \qI\\
+\app(c,a)^\R &=& \app(c^\R,a^\R)\\
+\lambda(a)^\R &=& \lambda(a^\R)\\
+\Pihat(a,b)^R &=& \Pi(a^\R,b^\R)
+\end{eqnarray*}
+
+Note that these functions are total.
+
+{\bf Russell to Tarski.} 
+
+Into types $(-)^\T : \RawTy\RawTm \to \RawTy$: 
+\begin{eqnarray*}
+A[\gamma]^\T&=& A^\T[\gamma^\T]\\
+%a[\gamma]^\T&=& \Ta(a^\T[\gamma^\T])\texttt{ ambiguous}\\
+\qI^\T&=& \Ta(\qI)\\
+\Pi(A,B)^\T&=& \Pi(A^\T,B^\T)\\
+\app(A,B,c,a)^\T &=& \Ta(\app(A^\T,B^\T,c^\T,a^\T))\\
+\lambda(A,a)^\T &=& \Ta(\lambda(A^\T,a^\T))\\
+\UU^\T &=& \UU
+\end{eqnarray*}
+
+Into terms $(-)^\T : \RawTy\RawTm \to \RawTm$: 
+\begin{eqnarray*}
+a[\gamma]^\T&=& a^\T[\gamma^\T]\\
+\qI^\T&=& \qI\\
+\Pi(a,b)^\T&=& \Pihat(a^\T,b^\T)\\
+\app(c,a)^\T &=& \app(c^\T,a^\T)\\
+\lambda(a)^\T &=& \lambda(a^\T)
+\end{eqnarray*}
+
+Note that the function into terms $(-)^\T : \RawTy\RawTm \to \RawTm$ is partial: there is no clause for $\UU^\T$. Hence the function into types is also partial.
 \bibliographystyle{plain}
 \bibliography{refs}
 \end{document}
