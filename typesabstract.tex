@@ -204,7 +204,7 @@ Let $\UA_n$ be the type expressing the univalence of $\UU_n$, and let
 $\ua_n : \UA_n$ for $n = 0,1,\ldots$ be a sequence of constants postulating 
 the respective instances of the univalence axiom. 
 We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and hence $\UA_n$ is in $\UU_{n+1}$.
-If we have a type of levels, as in Agda \cite{Agda} or Lean \cite{moura:lean},
+If we have a type of levels, as in Agda \cite{agda-manual} or Lean \cite{moura:lean},
 we can express universe polymorphism as quantification over universe levels.
 
 We remark that universes are more important in a predicative framework 
@@ -215,6 +215,10 @@ which belong to $\UU_1$ since they are properties of elements in $\UU_0$.
 However, even in a system using an impredicative universe of propositions,
 such as the ones in \cite{Huet87,moura:lean}, there is a need for the use of 
 definitions parametric in universe levels.
+
+   \medskip
+   
+   Say something about universe polymorphism in Coq \cite{SozeauTabareau:coq}.
 
 \paragraph{Our contribution.}
   The goal of this work is to complement the proposals by Courant \cite{Courant02}
@@ -272,7 +276,7 @@ which only can be used if $l<m$ holds in the current context.
 
    \medskip
 
-In the current system of Agda \cite{Agda}, 
+In the current system of Agda \cite{agda-manual}, 
 the constraint $\alpha<\beta$ is represented indirectly by
 writing $\beta$ in the form $\gamma\vee \alpha^+$ and $c$ is defined as
 $$
