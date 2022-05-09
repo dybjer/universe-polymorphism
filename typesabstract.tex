@@ -1,80 +1,10 @@
-%\documentclass[12pt,a4paper]{amsart}
-\documentclass[11pt,a4paper]{article}
-%\ifx\pdfpageheight\undefined\PassOptionsToPackage{dvips}{graphicx}\else%
-%\PassOptionsToPackage{pdftex}{graphicx}
-\PassOptionsToPackage{pdftex}{color}
-%\fi
 
-%\usepackage{diagrams}
+\documentclass{easychair}
 
-%\usepackage[all]{xy}
 \usepackage{url}
 \usepackage[utf8]{inputenc}
-\usepackage{verbatim}
 \usepackage{latexsym}
 \usepackage{amssymb,amstext,amsmath,amsthm}
-\usepackage{epsf}
-\usepackage{epsfig}
-% \usepackage{isolatin1}
-\usepackage{a4wide}
-\usepackage{verbatim}
-\usepackage{proof}
-\usepackage{latexsym}
-%\usepackage{mytheorems}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{corollary}{Corollary}[theorem]
-\newtheorem{lemma}{Lemma}[theorem]
-\newtheorem{proposition}{Proposition}[theorem]
-\theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{remark}{Remark}[theorem]
-\newtheorem{TODO}{TODO}[theorem]
-
-\usepackage{float}
-\floatstyle{boxed}
-\restylefloat{figure}
-
-
-%%%%%%%%%copied from SymmetryBook by Marc
-
-% hyperref should be the package loaded last
-\usepackage[backref=page,
-            colorlinks,
-            citecolor=linkcolor,
-            linkcolor=linkcolor,
-            urlcolor=linkcolor,
-            unicode,
-            pdfauthor={CAS},
-            pdftitle={Symmetry},
-            pdfsubject={Mathematics},
-            pdfkeywords={type theory, group theory, univalence axiom}]{hyperref}
-% - except for cleveref!
-\usepackage[capitalize]{cleveref}
-%\usepackage{xifthen}
-\usepackage{xcolor}
-\definecolor{linkcolor}{rgb}{0,0,0.5}
-
-%%%%%%%%%
-\def\oge{\leavevmode\raise
-.3ex\hbox{$\scriptscriptstyle\langle\!\langle\,$}}
-\def\feg{\leavevmode\raise
-.3ex\hbox{$\scriptscriptstyle\,\rangle\!\rangle$}}
-
-%%%%%%%%%
-\newcommand\myfrac[2]{
- \begin{array}{c}
- #1 \\
- \hline \hline
- #2
-\end{array}}
-
-
-\newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}}%
-\newcommand*{\Resize}[2]{\resizebox{#1}{!}{$#2$}}
-
-\newcommand{\II}{\mathbb{I}}
-\newcommand{\refl}{\mathsf{refl}}
-\newcommand{\mkbox}[1]{\ensuremath{#1}}
 
 
 \newcommand{\Id}{\mathsf{Id}}
@@ -106,44 +36,44 @@
 \newcommand{\ua}{\mathsf{ua}}
 \newcommand{\UA}{\mathsf{UA}}
 %\newcommand{\Level}{\mathrm{Level}}
-\def\Constraint{\mathsf{Constraint}}
-\def\Ordo{\mathcal{O}}
-
-\def\Ctx{\mathrm{Ctx}}
-\def\Ty{\mathrm{Ty}}
-\def\Tm{\mathrm{Tm}}
-
-\def\CComega{\mathrm{CC}^\omega}
-\setlength{\oddsidemargin}{0in} % so, left margin is 1in
-\setlength{\textwidth}{6.27in} % so, right margin is 1in
-\setlength{\topmargin}{0in} % so, top margin is 1in
-\setlength{\headheight}{0in}
-\setlength{\headsep}{0in}
-\setlength{\textheight}{9.19in} % so, foot margin is 1.5in
-\setlength{\footskip}{.8in}
-
-% Definition of \placetitle
-% Want to do an alternative which takes arguments
-% for the names, authors etc.
-
 \newcommand{\natrec}{\mathsf{natrec}}
-%\rightfooter{}
 \newcommand{\set}[1]{\{#1\}}
 \newcommand{\sct}[1]{[\![#1]\!]}
+\newcommand{\ttt}[1]{\text{\tt #1}}
 
 
-
-\begin{document}
 
 \title{Type Theories with Universe Level Judgments}
 
-\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'in Escard\'o}
-\date{}
+\author{
+  Marc Bezem\inst{1}
+\and
+  Thierry Coquand\inst{3}
+\and
+  Peter Dybjer\inst{3}
+\and
+  Mart\'in Escard\'o\inst{2}
+}
+
+\institute{
+  University of Bergen, Norway
+\and
+  University of Birmingham, United Kingdom
+\and
+  Chalmers University of Technology,
+  Gothenburg, Sweden
+}
+
+\titlerunning{}
+\authorrunning{}
+
+
+\begin{document}
 \maketitle
+%\date{}
 
 
-\section*{}\label{sec:intros}
-\newcommand{\ttt}[1]{\text{\tt #1}}
+%\section*{}\label{sec:intros}
 
 \paragraph{History and state of the art.} 
 The system of simple type theory, as introduced by Church \cite{church:formulation},
@@ -178,8 +108,9 @@ However, the number of copies of definitions does not only grow with the level,
 but also with the number of type arguments in the definition of a type former. 
 (The latter growth can be exponential!)
 
- To deal with this problem Huet \cite{Huet87} and, later,
- Harper and Pollack \cite{HarperP91} introduced {\em universe polymorphism}.
+ To deal with this problem Huet \cite{Huet87} and
+ Harper and Pollack \cite{HarperP91} and, in Coq, Sozeau and Tabareau 
+ \cite{SozeauTabareau:coq} introduced {\em universe polymorphism}.
  Their "implicit" approach to universe polymorphisms is, however, problematic 
  w.r.t.\ modularity, as pointed out in \cite{Courant02,Simpson04}: 
  one can prove $A\rightarrow B$ in one file, and $B\rightarrow C$ in one other file, while
@@ -215,10 +146,6 @@ which belong to $\UU_1$ since they are properties of elements in $\UU_0$.
 However, even in a system using an impredicative universe of propositions,
 such as the ones in \cite{Huet87,moura:lean}, there is a need for the use of 
 definitions parametric in universe levels.
-
-   \medskip
-   
-   Say something about universe polymorphism in Coq \cite{SozeauTabareau:coq}.
 
 \paragraph{Our contribution.}
   The goal of this work is to complement the proposals by Courant \cite{Courant02}
