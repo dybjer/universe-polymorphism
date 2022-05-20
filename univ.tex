@@ -26,9 +26,11 @@
 \newtheorem{lemma}{Lemma}[theorem]
 \newtheorem{proposition}{Proposition}[theorem]
 \theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{remark}{Remark}[theorem]
+%\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{remark}{Remark}[theorem]
 \newtheorem{TODO}{TODO}[theorem]
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
 
 \usepackage{float}
 \floatstyle{boxed}
@@ -73,48 +75,61 @@
 \newcommand*{\Resize}[2]{\resizebox{#1}{!}{$#2$}}
 
 \newcommand{\II}{\mathbb{I}}
-\newcommand{\refl}{\mathsf{refl}}
+%\newcommand{\refl}{\mathsf{refl}} conflicts with above
 \newcommand{\mkbox}[1]{\ensuremath{#1}}
 
 
-\newcommand{\Id}{\mathsf{Id}}
 \newcommand{\conv}{=}
 %\newcommand{\conv}{\mathsf{conv}}
 \newcommand{\lam}[1]{{\langle}#1{\rangle}}
-\def\NN{\mathsf{N}}
-\def\UU{\mathsf{U}}
-\def\JJ{\mathsf{J}}
-\def\Level{\mathsf{Level}}
-%\def\Type{\hbox{\sf Type}}
-\def\ZERO{\mathsf{0}}
-\def\SUCC{\mathsf{S}}
+
+\newcommand{\Id}{\mathsf{Id}}
+\newcommand{\NN}{\mathsf{N}}
+\newcommand{\UU}{\mathsf{U}}
+\newcommand{\JJ}{\mathsf{J}}
+\newcommand{\Level}{\mathsf{Level}}
+%\newcommand{\Type{\hbox{\sf Type}}
+\newcommand{\ZERO}{\mathsf{0}}
+\newcommand{\SUCC}{\mathsf{S}}
 
 \newcommand{\type}{\mathsf{type}}
+\newcommand{\const}{\mathsf{const}}
 \newcommand{\mypi}[3]{\Pi_{#1:#2}#3}
 \newcommand{\mylam}[3]{\lambda_{#1:#2}#3}
+\newcommand{\app}[2]{{#1\,#2}} % many applications still hard-coded with ~
+\newcommand{\Sapp}[1]{\app{\SUCC}{#1}} 
+\newcommand{\sapp}[2]{{#1(#2)}} % strict app for Id, refl, J, natrec, not S (!)
+\newcommand{\Idapp}[3]{\sapp{\Id_#1}{#2,#3}}
+\newcommand{\NRapp}[2]{\sapp{\natrec}{#1,#2}}
+\newcommand{\Rfapp}[1]{{\refl_#1}}
+\newcommand{\Japp}[2]{\sapp{\JJ}{#1,#2}}
 \newcommand{\mysig}[3]{\Sigma_{#1:#2}#3}
 \newcommand{\N}{\mathsf{N}}
 \newcommand{\Set}{\mathsf{Set}}
 \newcommand{\El}{\mathsf{El}}
-%\newcommand{\U}{\mathsf{U}} clashes with def's in new packages
 \newcommand{\T}{\mathsf{T}}
 \newcommand{\Usuper}{\UU_{\mathrm{super}}}
 \newcommand{\Tsuper}{\T_{\mathrm{super}}}
-%\newcommand{\conv}{\mathrm{conv}}
 \newcommand{\idtoeq}{\mathsf{idtoeq}}
 \newcommand{\isEquiv}{\mathsf{isEquiv}}
 \newcommand{\Equiv}{\mathsf{Equiv}}
 \newcommand{\ua}{\mathsf{ua}}
 \newcommand{\UA}{\mathsf{UA}}
+\newcommand{\natrec}{\mathsf{natrec}}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\sct}[1]{[\![#1]\!]}
+\newcommand{\refl}{\mathsf{refl}}
+\newcommand{\ttt}[1]{\text{\tt #1}}
+
 %\newcommand{\Level}{\mathrm{Level}}
-\def\Constraint{\mathsf{Constraint}}
-\def\Ordo{\mathcal{O}}
+\newcommand{\Constraint}{\mathsf{Constraint}}
+\newcommand{\Ordo}{\mathcal{O}}
 
-\def\Ctx{\mathrm{Ctx}}
-\def\Ty{\mathrm{Ty}}
-\def\Tm{\mathrm{Tm}}
+\newcommand{\Ctx}{\mathrm{Ctx}}
+\newcommand{\Ty}{\mathrm{Ty}}
+\newcommand{\Tm}{\mathrm{Tm}}
 
-\def\CComega{\mathrm{CC}^\omega}
+\newcommand{\CComega}{\mathrm{CC}^\omega}
 \setlength{\oddsidemargin}{0in} % so, left margin is 1in
 \setlength{\textwidth}{6.27in} % so, right margin is 1in
 \setlength{\topmargin}{0in} % so, top margin is 1in
@@ -126,11 +141,6 @@
 % Definition of \placetitle
 % Want to do an alternative which takes arguments
 % for the names, authors etc.
-
-\newcommand{\natrec}{\mathsf{natrec}}
-%\rightfooter{}
-\newcommand{\set}[1]{\{#1\}}
-\newcommand{\sct}[1]{[\![#1]\!]}
 
 
 
@@ -159,7 +169,6 @@
 
 
 \section{Introduction}\label{sec:intros}
-\newcommand{\ttt}[1]{\text{\tt #1}}
 
 The system of simple type theory, as introduced by Church \cite{church:formulation},
 is elegant and the basis of several
@@ -290,51 +299,51 @@ We may write $A~\type~(\Gamma)$ and may omit the global context $\Gamma$,
 or the part of the context that is the same for all hypotheses and for the
 conclusion of the rule.
 Hypotheses that could be obtained from other
-hypotheses through inversion lemmas are often left out.
-For instance, the rules for $\Pi$
-$$
-%\frac{\Gamma,x:A\vdash B}{\Gamma\vdash \Pi (x:A) B}~~~~~~~~~
-\frac{\Gamma\vdash A~~~~~~\Gamma,x:A\vdash B}{\Gamma\vdash \mypi{x}{A}{B}}~~~~~~~~~
-\frac{\Gamma,x:A\vdash b:B}{\Gamma\vdash \mylam{x}{A}{b}:\mypi{x}{A}{B}}~~~~~~~~
-\frac{\Gamma\vdash c:\mypi{x}{A}{B}~~~~~~\Gamma\vdash a:A}
-     {\Gamma\vdash c~a:B(a/x)}
-$$
-can be written (note that we have left out $A~\type$ in the first rule)
-$$
-%\frac{\Gamma,x:A\vdash B}{\Gamma\vdash \Pi (x:A) B}~~~~~~~~~
-\frac{B~\type~(x:A)}{\mypi{x}{A}{B}~\type}~~~~~~~~~
-\frac{b:B~(x:A)}{\mylam{x}{A}{b}:\mypi{x}{A}{B}}~~~~~~~~
-\frac{c:\mypi{x}{A}{B}~~~~~~a:A}
-     {c~a:B(a/x)}
-$$
+hypotheses through inversion lemmas are often left out,
+for example, the hypothesis $A~\type$ in the first rule for $\Pi$ and $\Sigma$
+in \cref{fig:PiSig}.
+Rules with the same hypotheses may be written as one rule with several conclusions.
 
-Universe levels and constraints are written as side conditions of rules,
+??Universe levels and constraints are written as side conditions of rules,
 in spite of the fact that these side conditions are official judgments of the theory.
 
 
 \section{Rules for a basic type theory}
 
-We begin by listing some rules for a basic type theory with $\Pi, \Sigma, \N,$ and $\Id$, such as the rules of context formation and assumption:
+We begin by listing the rules for a basic type theory
+with $\Pi, \Sigma, \N,$ and $\Id$.
+We write $\conv$ for definitional equality (or conversion).
+
+
+\begin{figure}[h]
+  \caption{Rules for context formation and assumption}\label{fig:context}
 $$
-\frac{\Gamma\vdash A}{\Gamma,x:A\vdash}~~~~~~\frac{}{()\vdash}~~~~~~~
+\frac{}{()\vdash}~~~~~~~\frac{\Gamma\vdash A~\type}{\Gamma,x:A\vdash}~~~~~~
 \frac{\Gamma\vdash}{\Gamma\vdash x:A}~(x\!:\! A~\text{in}~\Gamma)
 $$
+\end{figure}
 
-The rules for $\Pi$ are the ones we used as example in the previous section.
-For $\Sigma$ we have:
+\begin{figure}[h]
+  \caption{Rules for $\Pi$ and $\Sigma$}\label{fig:PiSig}
 $$
-%\frac{\Gamma,x:A\vdash B}{\Gamma\vdash \mypi{x}{A}{B}}~~~~~~~~~
-\frac{A~\type~~~~~~B~\type~(x:A)}{\mysig{x}{A}{B}~\type}~~~~~~~~~
+%\frac{\Gamma,x:A\vdash B}{\Gamma\vdash \Pi (x:A) B}~~~~~~~~~
+\frac{B~\type~(x:A)}{\mypi{x}{A}{B}~\type}~~~~~~~~~
+\frac{b:B~(x:A)}{\mylam{x}{A}{b}:\mypi{x}{A}{B}}~~~~~~~~
+\frac{c:\mypi{x}{A}{B}~~~~~~a:A}
+     {\app{c}{a}:B(a/x)}
+$$
+
+$$
+%\frac{\Gamma,x:A\vdash B}{\Gamma\vdash \mysig{x}{A}{B}}~~~~~~~~~
+\frac{B~\type~(x:A)}{\mysig{x}{A}{B}~\type}~~~~~~~~~
 \frac{a:A~~~~~~b:B(a/x)}{(a,b):\mysig{x}{A}{B}}~~~~~~~~
 \frac{c:\mysig{x}{A}{B}}{c.1:A}~~~~~~~
 \frac{c:\mysig{x}{A}{B}}{c.2:B(c.1/x)}
 $$
+\end{figure}
 
-We write $\conv$ for definitional equality (or conversion).
-The conversion rules are presented in Figure \ref{conv-basic}.
-
-\begin{figure}
-  \caption{Conversion rules for basic type theory}\label{conv-basic}
+\begin{figure}[h]
+  \caption{Conversion rules for $\Pi$ and $\Sigma$}\label{fig:convPiSig}
 $$
 \frac{ a:A~~~~~~ A~ \conv~ B}{ a:B}~~~~~~~~~
 \frac{ a ~\conv~a':A~~~~~~ A  ~\conv~ B}{ a ~\conv~a':B}
@@ -364,38 +373,73 @@ $$
 $$
 \end{figure}
 
+By now we have introduced several parametrized syntactic constructs
+for types and terms: $\mylam{x}{A}{b}$, $\app{c}{a}$,
+$(a,b).2$, and so on. More are to come. Conversion rules for
+$\Pi$ and $\Sigma$ been given in \cref{fig:convPiSig},
+and those rules imply that $=$ is an equivalence.
+We want that $=$ is a congruence for all syntactic constructs.%
+\footnote{Congruence for $\mylam{x}{A}{b}$ and $(a,b)$ is
+implied by the rules in \cref{fig:convPiSig} in a clever way.}
+Instead of giving tedious congruence rules for 
+each addition to the syntax, we formulate the following schema.
+Here $\const(t_1,\ldots,t_n)$ stands for a syntactic construct
+$\const$ parametrized by $t_1,\ldots,t_n$.
 
-%% The main conversion rules are\footnote{We omit systematically {\em congruence} rules
-%%   such as the rule that $c~a~\conv~c'~a'$ follows from $c~\conv~c'$ and $a~\conv~a'$.}
-%%   \footnote{PD: We omit some other general rules for equality reasoning, but since we say "The main conversion rules" we don't need to specify all rules. }
-%% $$
-%% \frac{ a:A~~~~~~ A~ \conv~ B}{ a:B}~~~~~~~~~
-%% \frac{ a ~\conv~a':A~~~~~~ A  ~\conv~ B}{ a ~\conv~a':B}
-%% $$
-%% $$
-%% \frac{b:B~(x:A)~~~~~~~~ a:A}{ (\mylam {x}{A}{b})~a  ~\conv~ b(a/x):B(a/x)}
-%% ~~~~~~~
-%% \frac{f~x = g~x:B~(x:A)}{ f = g : \mypi{x}{A}{B}}
-%% $$
-%% $$
-%% \frac{ a:A~~~~~~ b:B(a/x)}{ (a,b).1  ~\conv~ a:A}
-%% ~~~~~~~
-%% \frac{ a:A~~~~~~ b:B(a/x)}{ (a,b).2  ~\conv~ b:B(a/x)}~~~~~~
-%% \frac{ a.1 = a'.1:A~~~~~~~ a.2 = a'.2:B(t.1/x)}{ a = a' : \mysig{a}{A}{B}}
-%% $$
-
-We can introduce data types: the type of natural numbers $\NN$ has
-constructors $\ZERO:\NN$ and $\SUCC:\NN\rightarrow\NN$ and elimination rules
+\begin{figure}[h!]
+  \caption{General schema for congruence rules}\label{fig:congr}
 $$
-\frac{P~\type~(x:\NN)~~~~a:P(\ZERO/x)~~~~~g:\mypi{x}{\NN}{P\rightarrow P(\SUCC~x/x)}}{\natrec(a,g):\mypi{x}{\NN}{P}}
+\frac{t_1 = t'_1 : T_1 ~~\ldots~~ t_n = t'_n : T_n}
+{\const(t_1,\ldots,t_n) = \const(t'_1,\ldots,t'_n) : T}
 $$
-with conversion rules $\natrec(a,g)~\ZERO = a$ and $\natrec(a,g)~(\SUCC~x) = g~x~(\natrec(a,g)~x)$.
-%\footnote{change to version with $\natrec(a,g,n)$?}
+\end{figure}
 
-We also have a type $\Id~A~a_0~a_1$ for $a_0:A$ and $a_1:A$ with $\refl~a:\Id~A~a~a$
-and the elimination rule
-$$\frac{a:A~~~~~C~\type~(x:A,p:\Id~A~a~x)~~~~~d:C(a/x,\refl~a/p)}{\JJ (a,d):\mypi{x}{A}{\mypi{p}{\Id~A~a~x}{C}}}$$
-with the conversion rule $\JJ(a,d)~a~(\refl~a) = d$.
+We now introduce the type of natural numbers $\NN$ as an example of an
+inductive data type, with the eliminator $\NRapp{a}{g}$ as an example of a 
+parametrized syntactic construct.
+
+\begin{figure}[h]
+  \caption{Rules for $\NN$ and conversion rules for $\natrec$}\label{fig:typeN}
+$$
+\frac{}{\NN~\type}~~~~~~~\frac{}{\ZERO:\NN}~~~~~~~
+\frac{n:\NN}{\Sapp{n} : \NN}~~~~~~
+\frac{P~\type~(x:\NN)~~~~a:P(\ZERO/x)~~~~~
+g:\mypi{x}{\NN}{(P\to P(\Sapp{x}/x))}}
+{\NRapp{a}{g}:\mypi{x}{\NN}{P}}
+$$
+$$
+\frac{\NRapp{a}{g}:\mypi{x}{\NN}{P}}{\app{\NRapp{a}{g}}{\ZERO} = a: P(\ZERO/x)}
+~~~~~~~
+\frac{\NRapp{a}{g}:\mypi{x}{\NN}{P}~~~~~n:\NN}
+{\app{\NRapp{a}{g}}{(\app{\SUCC}{n})} = g~n~(\NRapp{a}{g}~n): P(\Sapp{n}/x) } 
+$$
+\end{figure}
+
+We also have (based) identity types $\Idapp{A}{a_0}{a_1}$ for $A~\type$, 
+$a_0:A$ and $a_1:A$, with the constructor $\Rfapp{a}$ and the eliminator 
+$\Japp{a}{d}$, all examples of parametrized syntactic constructs
+with congruence rules as in \cref{fig:congr}.
+
+\begin{figure}[h!]
+  \caption{Rules for $\Id$ and conversion rules for $\JJ$}\label{fig:typeId}
+$$
+\frac{a_0:A ~~~~ a_1:A}{\Idapp{A}{a_0}{a_1}~\type}~~~~~~~
+\frac{a:A}{\Rfapp{a}:\Idapp{A}{a}{a}}
+$$
+$$
+\frac{a:A~~~~~C~\type~(x:A,p:\Idapp{A}{a}{x})~~~~~d:C(a/x,\Rfapp{a}/p)}
+{\Japp{a}{d}:\mypi{x}{A}{\mypi{p}{\Idapp{A}{a}{x}}}{C}~~~~~~~~
+ \Japp{a}{d}~a~\Rfapp{a} = d : C(a/x,\Rfapp{a}/p)}
+$$
+\end{figure}
+
+
+
+
+
+
+
+\clearpage
 
 \section{Rules for an external sequence of universes}
 
