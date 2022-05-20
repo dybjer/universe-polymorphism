@@ -435,7 +435,14 @@ $$
 
 %% Note that $\UU_p, \T_p$ are given by separate inductive-recursive definition for each $p$. There is one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and also for $\UU^{p-1}$ provided $p \geq 1$.
 
+Note that the universe levels in the above theory are {\em external} natural numbers. Thus the typing of the identity function 
+$$\mylam{X}{\UU_n}{\mylam{x}{\T_n(X)}{x}} : \mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}$$ 
+is a {\em schema}  depending on the external natural number $n$. It has infinitely many instances obtained by letting  $n = 0,1,\dots$. 
+
+In the following section we present a type theory with {\em internal} universe level expressions. This theory has finitely many inference rules.
+
  \section{A type theory with universe levels and polymorphism }\label{sec:internal}
+
 
 The problem with this approach is that we have to {\em duplicate} definitions that follow
 the same pattern. For instance, we have the identity function $\mylam{X}{\UU_n}{\mylam{x}{\T_n(X)}{x}}$
