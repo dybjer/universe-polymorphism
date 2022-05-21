@@ -15,7 +15,7 @@
 \usepackage{amssymb,amstext,amsmath,amsthm}
 \usepackage{epsf}
 \usepackage{epsfig}
-% \usepackage{isolatin1}
+\usepackage{float}
 \usepackage{a4wide}
 \usepackage{verbatim}
 \usepackage{proof}
@@ -374,31 +374,36 @@ $$
 \end{figure}
 
 By now we have introduced several parametrized syntactic constructs
-for types and terms: $\mylam{x}{A}{b}$, $\app{c}{a}$,
-$(a,b).2$, and so on. More are to come. Conversion rules for
-$\Pi$ and $\Sigma$ been given in \cref{fig:convPiSig},
-and those rules imply that $=$ is an equivalence.
-We want that $=$ is a congruence for all syntactic constructs.%
-\footnote{Congruence for $\mylam{x}{A}{b}$ and $(a,b)$ is
-implied by the rules in \cref{fig:convPiSig} in a clever way.}
+for types and terms, such as $\mypi{x}{A}{B}$,
+$\mylam{x}{A}{b}$, $\app{c}{a}$, $(a,b).2$.
+Conversion rules for $\Pi$ and $\Sigma$ are given in \cref{fig:convPiSig},
+and those rules imply that $=$ is a congruence.%
+\footnote{Some cases of congruence are subtle. Exercise:
+show congruence of $=$ for $\mylam{x}{A}{b}$ and $(a,b)$.}
+
+We want that $=$ is a congruence for all syntactic constructs
+that are to follow.
 Instead of giving tedious congruence rules for 
-each addition to the syntax, we formulate the following schema.
-Here $\const(t_1,\ldots,t_n)$ stands for a syntactic construct
-$\const$ parametrized by $t_1,\ldots,t_n$.
+each addition to the syntax, we formulate a schema in \cref{fig:congr}.
+Here $\const(A_1,\ldots,A_m,t_1,\ldots,t_n)$ stands for a syntactic 
+construct $\const$ parametrized by $A_1,\ldots,A_m,t_1,\ldots,t_n$.
 
 \begin{figure}[h!]
   \caption{General schema for congruence rules}\label{fig:congr}
 $$
-\frac{t_1 = t'_1 : T_1 ~~\ldots~~ t_n = t'_n : T_n}
-{\const(t_1,\ldots,t_n) = \const(t'_1,\ldots,t'_n) : T}
+\frac{A_1 = A'_1~\type~~\ldots~~ A_m = A'_m~\type  ~~~~
+t_1 = t'_1 : T_1 ~~\ldots~~  t_n = t'_n : T_n}
+{\const(A_1,\ldots,A_m,t_1,\ldots,t_n) = 
+\const(A'_1,\ldots,A'_m,t'_1,\ldots,t'_n) : T \text{~~(or $~\type$)}}
 $$
 \end{figure}
 
-We now introduce the type of natural numbers $\NN$ as an example of an
-inductive data type, with the eliminator $\NRapp{a}{g}$ as an example of a 
-parametrized syntactic construct.
+We now introduce the type of natural numbers $\NN$ with constructors 
+$\ZERO:\NN$ and $\SUCC: \NN\to\NN$, an example of an
+inductive data type, with the eliminator $\NRapp{a}{g}$. 
+We rely on \cref{fig:congr} for congruence.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \caption{Rules for $\NN$ and conversion rules for $\natrec$}\label{fig:typeN}
 $$
 \frac{}{\NN~\type}~~~~~~~\frac{}{\ZERO:\NN}~~~~~~~
@@ -415,15 +420,15 @@ $$
 $$
 \end{figure}
 
-We also have (based) identity types $\Idapp{A}{a_0}{a_1}$ for $A~\type$, 
+We also have (based) identity types $\Idapp{A}{a_0}{a_1}$ for all $A~\type$, 
 $a_0:A$ and $a_1:A$, with the constructor $\Rfapp{a}$ and the eliminator 
 $\Japp{a}{d}$, all examples of parametrized syntactic constructs
 with congruence rules as in \cref{fig:congr}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
   \caption{Rules for $\Id$ and conversion rules for $\JJ$}\label{fig:typeId}
 $$
-\frac{a_0:A ~~~~ a_1:A}{\Idapp{A}{a_0}{a_1}~\type}~~~~~~~
+\frac{A~\type ~~~~ a_0:A ~~~~ a_1:A}{\Idapp{A}{a_0}{a_1}~\type}~~~~~~~
 \frac{a:A}{\Rfapp{a}:\Idapp{A}{a}{a}}
 $$
 $$
@@ -434,35 +439,48 @@ $$
 \end{figure}
 
 
-
-
-
-
-
-\clearpage
-
 \section{Rules for an external sequence of universes}
 
 
   %PD: Is this set of rules is complete? What about $A=A':\UU_n$ implies $\T_n(A) = T_n(A')$?} set of rules for "universes as full reflections".
 %in the style of the rules in Section \ref{sec:palmgren}.
-We present a version without cumulativity. The version with cumulativity is presented in the Appendix.
+We present an external sequence of universes of codes of types, together
+with the decoding functions. (Without cumulativity, 
+the version with cumulativity is presented in the Appendix.)
+
+\begin{figure}[H]
+  \caption{Rules and conversion rules for all universes $\UU_m$ and their codes $\UU^{n}_{m}~(n>m)$}\label{fig:typeU}
 $$
-\UU_n~\type~~~~~~
-\frac{A:\UU_{n}}{\T_{n}(A)~\type}
+\frac{}{\UU_m~\type}~~~~~~
+\frac{A:\UU_{m}}{\T_{m}(A)~\type}~~~~~~
+\frac{}{\UU^{n}_{m}:\UU_{n}}~~~~~~
+\frac{}{\T_{n}({\UU^{n}_{m}}) = \UU_{m}}
+$$ 
+%\footnote{PD: wouldn't it be more natural to let $\UU^n$ be the code for $\UU_{n}$?}
+\end{figure}
+
+Here and below $m$ and $n$, as super and subscripts of $\UU$ and $\T$,
+are external natural numbers, and $n \vee m$ is the 
+maximum of $n$ and $m$. This means, for example, that $\UU_m~\type$ is 
+a \emph{schema}, yielding one rule for each $m$.
+
+Next we define how $\Pi$ and $\Sigma$ are `relativized' to
+codes of types, and how they are decoded.
+
+\begin{figure}[H]
+  \caption{Rules and conversion rules for $\Pi$ and $\Sigma$ for codes of types}\label{fig:PiSigU}
+$$
+\frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{m}}
+     {\Pi^{n,m} A B:\UU_{n\vee m}~~~~~~~~~
+      \T_{n\vee m}~(\Pi^{n,m} A B) = \mypi{x}{\T_{n}(A)}{ \T_{m}(B~x)}}
 $$
 $$
 \frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{m}}
-     {\Pi^{n,m} A B:\UU_{n\vee m}}~~~~~~~~~
-\frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{m}}
-     {\Sigma^{n,m} A B:\UU_{n\vee m}}~~~~~~~~~
+     {\Sigma^{n,m} A B:\UU_{n\vee m}~~~~~~~~~
+     \T_{n\vee m}~(\Sigma^{n,m} A B) = \mysig {x}{\T_{n}(A)}{ \T_{m}(B~x)}}
 $$
-where $n$ and $m$ are external natural numbers, and $n \vee m$ is the maximum of $n$ and $m$. This means for example, that $\UU_n~\type$ is a {\em schema}, yielding one rule for each $n$.
-The conversion rules are
-$$
-\T_{n\vee m}~(\Pi^{n,m} A B) = \mypi{x}{\T_{n}(A)}{ \T_{m}(B~x)}~~~~~~~
-\T_{n\vee m}~(\Sigma^{n,m} A B) = \mysig {x}{\T_{n}(A)}{ \T_{m}(B~x)}~~~~~~~
-$$
+\end{figure}
+
 Furthermore we have $$\NN^{0}:\UU_{0}$$
 $$\T_{0}(\NN^{0}) = \NN$$
 and
@@ -471,11 +489,7 @@ $$
 {\Id^n~A~a_0~a_1:\UU_n}
 $$
 $$\T_n(\Id^n~A~a_0~a_1) = \Id~\T_n(A)~a_0~a_1$$
-and a code for the previous universes, for $n>m$
-$${\UU^{n}_{m}}:\UU_{n}$$
-$$\T_{n}({\UU^{n}_{m}}) = \UU_{m}
-%\footnote{PD: wouldn't it be more natural to let $\UU^n$ be the code for $\UU_{n}$?}
-$$
+
 
 %% Note that $\UU_p, \T_p$ are given by separate inductive-recursive definition for each $p$. There is one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and also for $\UU^{p-1}$ provided $p \geq 1$.
 
