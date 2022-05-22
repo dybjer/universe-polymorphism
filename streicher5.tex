@@ -1,0 +1,454 @@
+%\documentclass[12pt,a4paper]{amsart}
+\documentclass[11pt,a4paper]{article}
+%\ifx\pdfpageheight\undefined\PassOptionsToPackage{dvips}{graphicx}\else%
+%\PassOptionsToPackage{pdftex}{graphicx}
+\PassOptionsToPackage{pdftex}{color}
+%\fi
+
+%\usepackage{diagrams}
+
+%\usepackage[all]{xy}
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{latexsym}
+\usepackage{amssymb,amstext,amsmath,amsthm}
+\usepackage{epsf}
+\usepackage{epsfig}
+% \usepackage{isolatin1}
+\usepackage{a4wide}
+\usepackage{verbatim}
+\usepackage{proof}
+\usepackage{latexsym}
+%\usepackage{mytheorems}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}{Lemma}[theorem]
+\newtheorem{proposition}{Proposition}[theorem]
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}{Remark}[theorem]
+\newtheorem{TODO}{TODO}[theorem]
+
+\usepackage{float}
+\floatstyle{boxed}
+\restylefloat{figure}
+
+
+%%%%%%%%%copied from SymmetryBook by Marc
+
+% hyperref should be the package loaded last
+%% \usepackage[backref=page,
+%%             colorlinks,
+%%             citecolor=linkcolor,
+%%             linkcolor=linkcolor,
+%%             urlcolor=linkcolor,
+%%             unicode,
+%%             pdfauthor={CAS},
+%%             pdftitle={Symmetry},
+%%             pdfsubject={Mathematics},
+%%             pdfkeywords={type theory, group theory, univalence axiom}]{hyperref}
+% - except for cleveref!
+\usepackage[capitalize]{cleveref}
+%\usepackage{xifthen}
+\usepackage{xcolor}
+\definecolor{linkcolor}{rgb}{0,0,0.5}
+
+%%%%%%%%%
+\def\oge{\leavevmode\raise
+.3ex\hbox{$\scriptscriptstyle\langle\!\langle\,$}}
+\def\feg{\leavevmode\raise
+.3ex\hbox{$\scriptscriptstyle\,\rangle\!\rangle$}}
+
+%%%%%%%%%
+\newcommand\myfrac[2]{
+ \begin{array}{c}
+ #1 \\
+ \hline \hline
+ #2
+\end{array}}
+
+
+\newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}}%
+\newcommand*{\Resize}[2]{\resizebox{#1}{!}{$#2$}}
+
+\newcommand{\II}{\mathbb{I}}
+\newcommand{\refl}{\mathsf{refl}}
+\newcommand{\mkbox}[1]{\ensuremath{#1}}
+
+
+\newcommand{\Id}{\mathsf{Id}}
+\newcommand{\conv}{=}
+%\newcommand{\conv}{\mathsf{conv}}
+\newcommand{\lam}[2]{{\langle}#1{\rangle}#2}
+\def\NN{\mathsf{N}}
+\def\UU{\mathsf{U}}
+\def\JJ{\mathsf{J}}
+\def\Level{\mathsf{Level}}
+\def\List{\mathsf{List}}
+\def\Cons{\mathsf{Cons}}
+\def\Nil{\mathsf{Nil}}
+%\def\Type{\hbox{\sf Type}}
+\def\ZERO{\mathsf{0}}
+\def\SUCC{\mathsf{S}}
+
+\newcommand{\type}{\mathsf{type}}
+\newcommand{\LAM}{\lambda}
+\newcommand{\APP}{\mathsf{app}}
+\newcommand{\mypi}[3]{\Pi_{#1:#2}#3}
+\newcommand{\mylam}[3]{\lambda_{#1:#2}#3}
+\newcommand{\mysig}[3]{\Sigma_{#1:#2}#3}
+\newcommand{\N}{\mathsf{N}}
+\newcommand{\Set}{\mathsf{Set}}
+\newcommand{\El}{\mathsf{El}}
+%\newcommand{\U}{\mathsf{U}} clashes with def's in new packages
+\newcommand{\T}{\mathsf{T}}
+\newcommand{\sT}{\mathsf{t}}
+\newcommand{\Usuper}{\UU_{\mathrm{super}}}
+\newcommand{\Tsuper}{\T_{\mathrm{super}}}
+%\newcommand{\conv}{\mathrm{conv}}
+\newcommand{\idtoeq}{\mathsf{idtoeq}}
+\newcommand{\isEquiv}{\mathsf{isEquiv}}
+\newcommand{\ua}{\mathsf{ua}}
+\newcommand{\UA}{\mathsf{UA}}
+%\newcommand{\Level}{\mathrm{Level}}
+\def\Constraint{\mathsf{Constraint}}
+\def\Ordo{\mathcal{O}}
+
+\newcommand{\Con}{\mathsf{ Con}}
+\newcommand{\Elem}{\mathsf{Elem}}
+\newcommand{\Type}{\mathsf{Type}}
+\newcommand{\id}{\mathsf{id}}
+\newcommand{\pp}{\mathsf{p}}
+\newcommand{\qq}{\mathsf{q}}
+
+\def\Ctx{\mathrm{Ctx}}
+\def\Ty{\mathrm{Ty}}
+\def\Tm{\mathrm{Tm}}
+
+\def\CComega{\mathrm{CC}^\omega}
+\setlength{\oddsidemargin}{0in} % so, left margin is 1in
+\setlength{\textwidth}{6.27in} % so, right margin is 1in
+\setlength{\topmargin}{0in} % so, top margin is 1in
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{9.19in} % so, foot margin is 1.5in
+\setlength{\footskip}{.8in}
+
+% Definition of \placetitle
+% Want to do an alternative which takes arguments
+% for the names, authors etc.
+
+\newcommand{\natrec}{\mathsf{natrec}}
+%\rightfooter{}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\sct}[1]{[\![#1]\!]}
+%\usepackage{diagrams}
+\usepackage{color}
+\newcommand\coloremph[2][red]{\textcolor{#1}{\emph{#2}}}
+\newcommand\norm[1]{\left\lVert #1 \right\rVert}
+\newcommand\greenemph[2][green]{\textcolor{#1}{\emph{#2}}}
+\newcommand{\EMP}[1]{\emph{\textcolor{red}{#1}}}
+
+
+
+
+\begin{document}
+
+\title{Type Theory with a Cumulative Hierarchy of Universes}
+
+\author{}
+\date{}
+\maketitle
+
+%\begin{abstract}
+%\end{abstract}
+
+\section{Introduction}\label{sec:intros}
+
+ There are two different ways to formulate the notion of universe in type theory. Martin-Löf's first versions \cite{martinlof:72,martinlof:predicative,martinlof:hannover,martinlof:padova} were formulated \`a la Russell, where a universe is seen as a type of types. Later \cite{martinlof:padova}, an alternative version \`a la Tarski, where a universe is seen as a type of names of types and comes with a decoding function, was also introduced.
+ 
+Some recent works \cite{Assaf14,Thire20} show the equivalence between these two formulations, but these arguments do not apply to formulation of type theory with typed equality judgements \cite{martinlof:hannover,martinlof:padova}. In this paper we show the equivalence for this case, using a method due to Streicher  \cite{Streicher:semtt} that seems simpler
+and more transparent than the one in \cite{Assaf14,Thire20}.
+
+Streicher's argument relies
+on  basic properties of such a type system (such as subject reduction and normalization). Such properties were assumed
+in \cite{Streicher:semtt}, but they are now known to be provable
+for systems with a predicative hierarchy of universes \cite{coquand:sophia,abel:wroclaw,coq18}.
+
+The argument is as follows. There is a natural forgetful map from the Tarski version to the Russell version. Modulo the (known) meta-properties of both system, one can show that any Russell judgement can be lifted in a unique way to a Tarski judgement.
+
+\section{An annotated type theory with Tarski style universes}
+
+We now present the system $T_1$ with an external hierarchy of Tarski style universes $\UU_n$ with decoding maps $\T_n$. For simplicity we only consider closure under $\Pi$-types.
+
+The syntax for types is
+$$
+A,B~::=~\Pi~{A}~B~|~\UU_n~|~\T_n a
+$$
+and the syntax for terms is
+$$
+a,b~::=~v_i~|~\APP(A,B,c,a)~|~\LAM(A,B,b)~|~\Pi^n~ a~b~|~\UU^k_n~|~\sT^k_n a~
+$$
+We remark that $v_i$ is a variable with de Bruijn index $i$. Applications $\APP(A,B,c,a)$ and abstractions $\LAM(A,B,b)$ are annotated with the argument type $A$ and the result type family $B$. Moreover, $\Pi^n~ a~b$ are codes for $\Pi$-types in $\UU_n$, $\UU^k_n$ is the code for $\UU_k$ in $\UU_n$, where $k < n$, and $\sT^k_n a$ is the lifting of an element $a$ in $\UU_k$ to $\UU_n$. We thus consider a cumulative hierarchy of universes.
+
+\medskip
+
+We define renamings $r$ and substitutions $\sigma$:
+$$
+r~::=~\pp~|~r^+~~~~~~~~~\sigma~::=~[a]~|~\sigma^+~~~~~~~~~~\alpha~::=~r~|~\sigma
+$$
+We first define the action of a renaming on types $Ar$ and terms $ar$ and then the action of a substitution on types $A\sigma$ and terms $a\sigma$ by induction on $A$ and $a$. 
+
+The actions on variables are
+$$
+v_i\pp = v_{i+1}~~~~~~v_0[a] = a~~~~~~~~~~v_0\alpha^+ = v_0~~~~~~v_{i+1}\alpha^+ = (v_i\alpha)\pp
+$$
+We can then define $A\alpha$ (resp. $a\alpha$) by induction on $A$ (resp. $a$).
+For instance, $(\Pi~A~B)\alpha = \Pi~(A\alpha)~(B\alpha^+)$
+and $\APP(A,B,c,a)\alpha = \APP(A\alpha,B\alpha^+,c\alpha,a\alpha)$.
+
+\begin{lemma}
+  We have $(B[a])\alpha = B\alpha^+[a\alpha]$ and $(b[a])\alpha = b\alpha^+[a\alpha]$.
+\end{lemma}
+
+
+\medskip
+
+The type system describes how to derive judgements of the form $\Gamma\vdash J$ where $J$ is of the form
+$A~\type$ or $a:A$ or $A=B$ or $a=b : A$.
+
+\medskip
+
+$$
+\frac{\Gamma\vdash A}{\Gamma.A\vdash}~~~~~~\frac{}{()\vdash}~~~~~~~
+\frac{\Gamma\vdash A}{\Gamma.A\vdash v_0:A\pp}~~~~~~~
+\frac{\Gamma\vdash v_i:A~~~~~~~\Gamma\vdash B}{\Gamma.B\vdash v_{i+1}:A\pp}~~~~~~~
+$$
+The judgment $\Gamma\vdash A$ expresses that $A$ is a type in context $\Gamma$.
+We may write it $A~\type~(\Gamma)$ and may omit the global context $\Gamma$.
+The typing rules are shown in Figure \ref{type-Tarski}.
+
+\begin{figure}
+  \caption{Typing rules for Tarski-style}\label{type-Tarski}
+$$
+  \frac{A~\type}{v_0:A\pp~(A)}~~~~~~\frac{v_i:A~~~~B~\type}{v_{i+1}:A\pp~(B)}
+~~~~~~~~
+\frac{b:B~(A)}{\LAM(A,B,b):\Pi~A~B}~~~~~~~~
+\frac{c:\Pi~A~B~~~~~~a:A}
+     {\APP(A,B,c,a):B[a]}
+$$
+$$
+\frac{}{\UU_n~\type}~~~~~~
+\frac{a:\UU_{n}}{\T_{n}(a)~\type}~~~~~~
+\frac{}{\UU^{k}_l:\UU_{k}}k<l
+~~~~~~~~~\frac{a:\UU_{n}}{\sT_{n}^{m}(a):\UU_{m}}n<m
+$$
+$$
+     \frac{A~\type~~~~~~B~\type~(A)}{\Pi~A~B~\type}~~~~~~~
+\frac{a:\UU_{n}~~~~~~b:\UU_n~(\T_{n}(a))}
+     {\Pi^{n} a b:\UU_{n}}~~~~~~~~~
+$$
+\end{figure}
+
+We write $\conv$ for definitional equality (or conversion).
+The main conversion rules are shown in Figure \ref{conv-Tarski}.
+
+\begin{figure}
+  \caption{Conversion rules for Tarski-style}\label{conv-Tarski}
+$$
+\frac{ a:A~~~~~~ A~ \conv~ B}{ a:B}~~~~~~~~~
+\frac{ a ~\conv~a':A~~~~~~ A  ~\conv~ B}{ a ~\conv~a':B}
+$$
+$$
+\frac{a~=~a':\UU_n}{\T_n(a)~=~\T_n(a')}~~~~~~
+\frac{a~=~a':\UU_n}{\sT_n^m(a)~=~\sT_n^m(a'):\UU_m}n<m
+$$
+$$
+\frac{A~=~B~~~~~A~=~C}{B~=~C}~~~~~~~~~\frac{A~\type}{A~=~A}~~~~~~~~~
+\frac{a~=~b:A~~~~~a~=~c:A}{b~=~c:A}~~~~~~~~~\frac{a:A}{a~=~a:A}
+$$
+$$
+\frac{A~=~A'~~~~~~B~=~B'~(A)}{\Pi~A~B~=~\Pi~A'~B'}~~~~~~~~
+\frac{c~=~c':\Pi~A~B~~~~~~a~=~a':A~~~~~~A~=~A'~~~~~~~~B~=~B'}{\APP(A,B,c,a)~=~\APP(A',B',c',a'):B[a]}
+$$
+%$$
+%\frac{A~=~A'~~~~~~B~=~B'~(A)~~~~~b~=~b':B~(A)}{\LAM(A,B,b)~=~\LAM(A',B',b'):\Pi~A~B}
+%$$
+$$
+\frac{b:B~(A)~~~~~~~~ a:A}{ \APP(A,B,\LAM(A,B,b),a)  ~\conv~ b[a]:B[a]}
+~~~~~~~
+\frac{f\pp~v_0 = g\pp~v_0:B~(A)}{ f = g : \Pi~A~B}
+$$
+$$
+\frac{a:\UU_n}{\T_m(\sT_{n}^{m}(a)) = \T_{n}(a)}n<m~~~~~~
+\frac{}{\sT_{m}^p(\sT_{n}^m(a)) = \sT_n^p(a)}{n<m<p}
+$$
+$$
+\frac{}{\sT_{n}^{m}~(\UU^{n}_k) = \UU^m_k}k<n<m~~~~~~~~~~\frac{}{\T_{k}({\UU^{k}_l}) = \UU_{l}}k<l
+$$
+$$
+\frac{a:\UU_n~~~~~~b:\UU_n~(\T_n(a))}{\T_{n}~(\Pi^{n} a b) = \Pi~{\T_{n}(a)}~{\T_{n}(b)}}
+~~~~~~~~\frac{a:\UU_n~~~~~~b:\UU_n~(\T_n(a))}{\sT_{n}^{m}~(\Pi^{n} a b) = \Pi^{m} \sT_{n}^{m}(a) \sT_{n}^{m}(b)}n< m~
+$$
+\end{figure}
+
+
+ We define $\alpha:\Delta\rightarrow\Gamma$ by induction on $\alpha$.
+We have $\pp:\Gamma.A\rightarrow\Gamma$ and $[a]:\Gamma\rightarrow \Gamma.A$ and
+$\alpha^+:\Delta.A\alpha\rightarrow\Gamma.A$ if $\alpha:\Delta\rightarrow\Gamma$ and $\Gamma\vdash A~\type$.
+
+\begin{lemma}\label{subst}
+  The following rule is admissible: if $\Gamma\vdash J$ and $\alpha:\Delta\rightarrow\Gamma$
+  then $\Delta\vdash J\alpha$.
+\end{lemma}
+
+Using the techniques developped in \cite{coquand:sophia,abel:neworleans,abel:wroclaw} or \cite{coq18},
+we can also show that $\Pi$ one-to-one. An important consequence is closure under $\beta$-reduction.
+
+\begin{lemma}
+  If $\APP(A,B,\LAM(A',B',b),a):T$ then $b[a]:T$.
+\end{lemma}
+
+\begin{proof}
+  We first get that $\LAM(A',B',b)$ has to be of type $\Pi~A~B$ and then that $\Pi~A~B~\conv~\Pi~A'~B'$.
+  Using $\Pi$ one-to-one, we get $A=A'$ and $B=B'~(A)$. We then have $b:B~(A)$ and $T = B[a]$.
+  We deduce $b[a]:B[a]$ by substitution and Lemma \ref{subst} and $b[a]:T$ by the type equality rule.
+\end{proof}
+
+\section{Rules for a type theory $T_2$ with Russell style universes}
+
+The syntax is now for types and terms
+$$
+A,B,a,b~::=~v_i~|~c~a~|~\lambda~A~ b~|~\Pi~{A}~B~|~\UU_n
+$$
+
+The typing and conversion rules are in Figures \ref{type-Russell} and \ref{conv-Russell}.
+
+\begin{figure}
+  \caption{Typing rules for Russell-style}\label{type-Russell}
+$$
+  \frac{A~\type}{v_0:A\pp~(A)}~~~~~~\frac{v_n:A~~~~B~\type}{v_{n+1}:A\pp~(B)}
+~~~~~~~\frac{b:B~(A)}{\lambda~A~ b:\Pi~A~B}~~~~~~~~
+\frac{c:\Pi~A~B~~~~~~a:A}{c~a:B[a]}~~~~~~
+$$     
+$$
+\frac{}{\UU_n~\type}~~~~~~
+\frac{A:\UU_{n}}{A~\type}
+~~~~~~\frac{A:\UU_{n}}{A:\UU_{n+1}}
+~~~~~~~
+\frac{}{\UU_l:\UU_{l+1}}
+$$
+$$
+\frac{A~\type~~~~~~B~\type~(A)}{\Pi~A~B~\type}~~~~~~~
+\frac{A:\UU_{n}~~~~~~B:\UU_n~(A)}
+     {\Pi~A~B:\UU_{n}}$$
+\end{figure}
+
+\begin{figure}
+  \caption{Conversion rules for Russell-style}\label{conv-Russell}
+$$
+\frac{ a:A~~~~~~ A~ \conv~ B}{ a:B}~~~~~~~~~
+\frac{ a ~\conv~a':A~~~~~~ A  ~\conv~ B}{ a ~\conv~a':B}
+$$
+$$
+\frac{A~=~B~~~~~A~=~C}{B~=~C}~~~~~~~~~\frac{A~\type}{A~=~A}~~~~~~~~~
+\frac{a~=~b:A~~~~~a~=~c:A}{b~=~c:A}~~~~~~~~~\frac{a:A}{a~=~a:A}
+$$
+$$
+\frac{A~=~A'~~~~~~B~=~B'~(A)}{\Pi~A~B~=~\Pi~A'~B'}~~~~~~~~
+\frac{c~=~c':\Pi~A~B~~~~~~a~=~a':A}{c~a~=~c'~a':B[a]}
+$$
+$$
+%\frac{A~=~A'~~~~~~b~=~b':B~(A)}{\LAM~A~ b~=~\LAM~A'~ b':\Pi~A~B}~~~~~~~~
+\frac{b:B~(A)~~~~~~~~ a:A}{ (\LAM~A~ b)~a  ~\conv~ b[a]:B[a]}
+~~~~~~~
+\frac{f\pp~v_0 = g\pp~v_0:B~(A)}{ f = g : \Pi~A~B}
+$$
+\end{figure}
+
+
+
+
+
+\medskip
+
+We have an operation which removes the annotation from $T_1$ to $T_2$.
+$$
+|\UU_n| = \UU_n~~~~~~~~|\Pi~A~B| = \Pi~|A|~|B|~~~~~~~~~|\T_n(a)| = |a|
+$$
+$$
+|\APP(A,B,c,a)| = |c|~|a|~~~~~~|v_i| = v_i~~~~~~|\LAM(A,B,b)| = \lambda~|A|~|b|~~~~~|\sT_k^n(a)| = |a|
+~~~~~~~|\UU^n_l| = \UU_l
+$$
+The following remark has a direct proof.
+
+\begin{lemma}
+  If $\Gamma\vdash J$ in $T_1$ then $|\Gamma|\vdash |J|$ in $T_2$.
+\end{lemma}
+
+
+\section{Equivalence between $T_1$ and $T_2$}
+
+%% We can describe neutral and $\beta$-normal forms for the non annotated terms.
+%% $$
+%% k~::=~v_i~|~k~n~~~~~~~~~~~n~::=~\UU_l~|~\Pi~n~n~|~\lambda n~|~k
+%% $$
+
+
+\begin{lemma}
+  If $\Gamma\vdash t:A$ and $\Gamma\vdash u:A$ then $\Gamma\vdash t = u:A$.
+  If $\Gamma\vdash t:A$ and $\Gamma\vdash u:B$ and $|t| = |u|$ then
+  \begin{itemize}
+    \item either $A = B$
+      and $\Gamma\vdash t = u:A$
+    \item or $A = \UU_k$ and $B = \UU_l$ and $\sT_k^m(t) = \sT_l^m(u):\UU_m$ with $m = max(k,l)$.
+  \end{itemize}
+\end{lemma}
+
+\begin{theorem}
+  If $\Gamma\vdash J$ in the system $T_2$ then there exists a unique, up to conversion, judgement $\Gamma_1\vdash J_1$
+  in the system $T_1$ such that $|\Gamma_1| = \Gamma$ and $|J_1| = J$.
+\end{theorem}
+
+\section{Addition of data types}
+
+The proof extends to the corresponding systems with data types.
+
+For the case of the list types $\List~A$ with constructors $\Nil$ and $\Cons$, we can define in the Russell system
+$$
+f~:~\List~\UU_0~\rightarrow~\List~\UU_1~~~~~~~~~~~
+f~\Nil = \Nil~~~~~~f~(\Cons~x~xs) = \Cons~x~(f~xs)
+$$
+which can be lifted to in the Tarski version
+$$
+f~:~\List~\UU_0~\rightarrow~\List~\UU_1~~~~~~~~~~~
+f~\Nil = \Nil~~~~~~f~(\Cons~x~xs) = \Cons~(\sT_0^1 x)~(f~xs)
+$$
+and is extensionally the identity function.
+In the Russell system, in the context  $xs:\List~\UU_0$,
+we do have $f~xs:\List~\UU_1$ but we do \EMP{not} have $xs:\List~\UU_1$
+
+\medskip
+
+     Similarly, the system $T_2$ is \EMP{not} closed under $\eta$-reduction. In the context
+     $x:\UU_1\rightarrow\UU_1$, 
+     we have $\lambda_{y:\UU_0}x~y:\UU_0\rightarrow\UU_2$ but we do \EMP{not} have
+     $x:\UU_0\rightarrow\UU_2$.
+
+
+
+
+\section{Initial models}
+
+It is possible to present type theory with cumulative hierarchy of universe as a generalised algebraic theory.
+The system $T_1$ can be used to present the initial/term model of this theory, following the method presented in \cite{Streicher:semtt}
+(method which was formalised in the work \cite{brunerie:initiality}).
+Our result shows that Russell's system $T_2$ can be used as well to present this initial/term model.
+
+
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}
