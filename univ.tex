@@ -318,7 +318,8 @@ We write $\conv$ for definitional equality (or conversion).
 \begin{figure}[h]
   \caption{Rules for context formation and assumption}\label{fig:context}
 $$
-\frac{}{()\vdash}~~~~~~~\frac{\Gamma\vdash A~\type}{\Gamma,x:A\vdash}~~~~~~
+\frac{}{()\vdash}~~~~~~~
+\frac{\Gamma\vdash A~\type}{\Gamma,x:A\vdash}~(x~\text{fresh})~~~~~~
 \frac{\Gamma\vdash}{\Gamma\vdash x:A}~(x\!:\! A~\text{in}~\Gamma)
 $$
 \end{figure}
@@ -459,7 +460,7 @@ $$
 %\footnote{PD: wouldn't it be more natural to let $\UU^n$ be the code for $\UU_{n}$?}
 \end{figure}
 
-Here and below $m$ and $n$, as super and subscripts of $\UU$ and $\T$,
+Here and below $m$ and $n$, as super- and subscripts of $\UU$ and $\T$,
 are external natural numbers, and $n \vee m$ is the 
 maximum of $n$ and $m$. This means, for example, that $\UU_m~\type$ is 
 a \emph{schema}, yielding one rule for each $m$.
@@ -481,15 +482,16 @@ $$
 $$
 \end{figure}
 
-Furthermore we have $$\NN^{0}:\UU_{0}$$
-$$\T_{0}(\NN^{0}) = \NN$$
-and
+\begin{figure}[H]
+\caption{Rules and conversion rules for codes of $\N$ and $\Id$}\label{fig:NIdSigU}
 $$
-\frac{A:\UU_n~~~~~~a_0:\T_n(A)~~~~~~a_1:\T_n(A)}
-{\Id^n~A~a_0~a_1:\UU_n}
+\frac{}{\NN^{0}:\UU_{0}}~~~~~~\frac{}{\T_{0}(\NN^{0}) = \NN}
 $$
-$$\T_n(\Id^n~A~a_0~a_1) = \Id~\T_n(A)~a_0~a_1$$
-
+$$
+\frac{A:\UU_n~~~~a_0:\T_n(A)~~~~a_1:\T_n(A)}
+{\Id^n~A~a_0~a_1:\UU_n ~~~~~~~~~ \T_n(\Id^n~A~a_0~a_1) = \Id~\T_n(A)~a_0~a_1 }
+$$
+\end{figure}
 
 %% Note that $\UU_p, \T_p$ are given by separate inductive-recursive definition for each $p$. There is one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and also for $\UU^{p-1}$ provided $p \geq 1$.
 
