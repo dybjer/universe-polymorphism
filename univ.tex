@@ -84,6 +84,7 @@
 \newcommand{\lam}[1]{{\langle}#1{\rangle}}
 
 \newcommand{\Id}{\mathsf{Id}}
+\newcommand{\id}{\mathsf{id}}
 \newcommand{\NN}{\mathsf{N}}
 \newcommand{\UU}{\mathsf{U}}
 \newcommand{\JJ}{\mathsf{J}}
@@ -456,6 +457,7 @@ $$
 \frac{A:\UU_{m}}{\T_{m}(A)~\type}~~~~~~
 \frac{}{\UU^{n}_{m}:\UU_{n}}~~~~~~
 \frac{}{\T_{n}({\UU^{n}_{m}}) = \UU_{m}}
+\belowdisplayshortskip 0pt
 $$ 
 %\footnote{PD: wouldn't it be more natural to let $\UU^n$ be the code for $\UU_{n}$?}
 \end{figure}
@@ -479,6 +481,7 @@ $$
 \frac{A:\UU_{n}~~~~~~B:\T_{n}(A)\rightarrow \UU_{m}}
      {\Sigma^{n,m} A B:\UU_{n\vee m}~~~~~~~~~
      \T_{n\vee m}~(\Sigma^{n,m} A B) = \mysig {x}{\T_{n}(A)}{ \T_{m}(B~x)}}
+\belowdisplayshortskip -1pt
 $$
 \end{figure}
 
@@ -490,6 +493,7 @@ $$
 $$
 \frac{A:\UU_n~~~~a_0:\T_n(A)~~~~a_1:\T_n(A)}
 {\Id^n~A~a_0~a_1:\UU_n ~~~~~~~~~ \T_n(\Id^n~A~a_0~a_1) = \Id~\T_n(A)~a_0~a_1 }
+%\belowdisplayshortskip 2pt
 $$
 \end{figure}
 
@@ -504,33 +508,80 @@ In the following section we present a type theory with {\em internal} universe l
  \section{A type theory with universe levels and polymorphism }\label{sec:internal}
 
 
-The problem with this approach is that we have to {\em duplicate} definitions that follow
-the same pattern. For instance, we have the identity function $\mylam{X}{\UU_n}{\mylam{x}{\T_n(X)}{x}}$
-of type $\mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}$ that can be defined for $n = 0,1,\dots$
-We address this issue by introducing {\em universe level}
+The problem with the type system with an external sequence of universes
+is that we have to \emph{duplicate} definitions that follow
+the same pattern. For instance, we have the identity function 
+$\id_n := \mylam{X}{\UU_n}{\mylam{x}{\T_n(X)}{x}}$
+of type $\mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}$ that 
+may have to be defined (and type-checked) for several $n$.
+We address this issue by introducing \emph{universe level}
 expressions: we write $\alpha,\beta,\dots$
-for {\em level variables}, and $l,m,\dots$ for {\em level expressions} which are built from level variables
+for \emph{level variables}, and $l,m,\dots$ for \emph{level expressions} which are built from level variables
 by suprema $l \vee m$ and the next level operation $l^+$.
-Level expressions form a sup semilattice $l\vee m$
+Level expressions form a sup-semilattice $l\vee m$
 with a next level operation $l^+$ such that $l \vee l^+ = l^+$
 and $(l\vee m)^+ = l^+\vee m^+$. (We don't seem to need a $0$ element.)
 We write $l\leqslant m$ for $l\vee m = m$ and $l<m$ for $l^+\leqslant m$.
+See \cite{bezem-coquand:lattices} for more details.
 
 %As expressed in \cite{VV}, this is essentially a tropical (max-plus)
 %semiring, except that we don't actually seem to need a $0$ element.
 
-We have a new context extension operation that adds a fresh level variable $\alpha$ to a context $\Gamma$ resulting in the extended context $\Gamma,\alpha~\Level$.
+We have a new context extension operation that adds a fresh level variable
+$\alpha$ to a context, a rule for assumption, and typing rules
+for level expressions.
+
+\begin{figure}[H]
+  \caption{Rules for typing level expressions, extending
+  \cref{fig:context}}\label{fig:contextL}
 $$
-\frac{}{\alpha~\Level~(\Gamma)}(\alpha~in~\Gamma)~~~~~~
+\frac{\Gamma\vdash}{\Gamma,\alpha~\Level}~(\alpha~\text{fresh})~~~~~~
+\frac{\Gamma\vdash}{\Gamma\vdash\alpha~\Level}(\alpha~\text{in}~\Gamma)~~~~~~
 \frac{l~\Level~~~~~m~\Level}{l\vee m~\Level}~~~~~~
-\frac{l~\Level}{l^+~\Level}~~~~~~
+\frac{l~\Level}{l^+~\Level}
+\belowdisplayshortskip 0pt
 $$
-We also have level equality judgments $l = m$ and rules expressing that judgments are invariant under level equality.
-For example,
+\end{figure}
+
+We also have level equality judgments $l = m$ and want to enforce
+that judgments are invariant under level equality. To this end
+we first add the following rule.
+Here, $\mathbb{F}_\Gamma$ is the free sup-semilattice with $\_^+$
+and generators in $\Gamma$, see \cite{bezem-coquand:lattices}.%
+\footnote{
+In this way we avoid cluttering the type system with many
+rules of lattice theory. This can be compared to the practice
+in modal logic, where all (classical) propositional tautologies
+are postulated as axioms of modal propositional logic, allowing to focus
+on the axioms for the modal operators. (In the next section we will
+also have to consider \emph{hypothetical} level equality judgments.) 
+}
+\begin{figure}[H]
+  \caption{Rule for level equality}\label{fig:leveleq}
 $$
-\frac{a(l/\alpha) : A(l/\alpha)}
-{a(m/\alpha) : A(m/\alpha)}{~~~l=m}
+\frac{\Gamma\vdash l~\Level~~~~~\Gamma\vdash m~\Level}
+     {\Gamma\vdash l=m} {~~~\mathbb{F}_\Gamma \models l=m}
+\belowdisplayshortskip 1pt
 $$
+\end{figure}
+
+Next, we add rules that level equality implies definitional equality.
+One can view these rules as additional congruence rules, conceptually
+taking the union of level equality and definitional equality. 
+
+\begin{figure}[H]
+  \caption{Congruence rule for level equality}\label{fig:levelcongruence}
+$$
+\frac{l=m ~~~~~ A~\type~(\alpha~\Level)}{A(l/\alpha) = A(m/\alpha)}
+~~~~~ \frac{l=m ~~~~~ a:A~(\alpha~\Level)}{a(l/\alpha) = a(m/\alpha)}
+\belowdisplayshortskip 0pt
+$$
+\end{figure}
+
+It then follows from the rules of our basic type theory that
+judgments are invariant under level equality: if $l=m$ and
+${a(l/\alpha) : A(l/\alpha)}$, then ${a(m/\alpha) : A(m/\alpha)}$
+
 We can  now add rules for level-indexed universes:
 $$
 \frac{l~\Level}{\UU_{l}~\type}~~~~~~
@@ -1002,7 +1053,7 @@ We require $\T_{m}(\T_{l}^{m}(A)) = \T_{l}(A)$
 and $\T_{l}^{m}(\NN^{l}) = \NN^{m}$.
 
 We add $\T_{l}^l(A) = A$\footnote{Recall that the equality of universe levels is the one of
-  sup semilattice with the next operation.}
+  sup-semilattice with the next operation.}
 and $\T_{m}^n\T_{l}^m = \T_l^n$ if $l\leqslant m\leqslant n$.
 %Note that this cannot be simplified to $\T_{l}^l(A) = A$
 %like $\T_{n}^n(A) = A$ in \cref{sec:internal}.
