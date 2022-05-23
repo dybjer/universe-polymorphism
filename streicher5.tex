@@ -190,11 +190,11 @@ and the syntax for terms is
 $$
 a,b~::=~v_i~|~\APP(A,B,c,a)~|~\LAM(A,B,b)~|~\Pi^n~ a~b~|~\UU^k_n~|~\sT^k_n a~
 $$
-We remark that $v_i$ is a variable with de Bruijn index $i$. Applications $\APP(A,B,c,a)$ and abstractions $\LAM(A,B,b)$ are annotated with the argument type $A$ and the result type family $B$. Moreover, $\Pi^n~ a~b$ are codes for $\Pi$-types in $\UU_n$, $\UU^k_n$ is the code for $\UU_k$ in $\UU_n$, where $k < n$, and $\sT^k_n a$ is the lifting of an element $a$ in $\UU_k$ to $\UU_n$. We thus consider a cumulative hierarchy of universes.
+Here $v_i$ is a variable with de Bruijn index $i$. In this system, applications $\APP(A,B,c,a)$ and abstractions $\LAM(A,B,b)$ are annotated with the argument type $A$ and the result type family $B$. Moreover, $\Pi^n~ a~b$ are codes for $\Pi$-types in $\UU_n$, $\UU^k_n$ is the code for $\UU_k$ in $\UU_n$, where $k < n$, and $\sT^k_n a$ is the lifting of an element $a$ in $\UU_k$ to $\UU_n$. We thus consider a cumulative hierarchy of universes.
 
 \medskip
 
-We define renamings $r$ and substitutions $\sigma$:
+We define renamings (weakenings?) $r$ and (one place?) substitutions $\sigma$:
 $$
 r~::=~\pp~|~r^+~~~~~~~~~\sigma~::=~[a]~|~\sigma^+~~~~~~~~~~\alpha~::=~r~|~\sigma
 $$
@@ -202,7 +202,7 @@ We first define the action of a renaming on types $Ar$ and terms $ar$ and then t
 
 The actions on variables are
 $$
-v_i\pp = v_{i+1}~~~~~~v_0[a] = a~~~~~~~~~~v_0\alpha^+ = v_0~~~~~~v_{i+1}\alpha^+ = (v_i\alpha)\pp
+v_i\pp = v_{i+1}~~~~~v_0\alpha^+ = v_0~~~v_{i+1}\alpha^+ = (v_i\alpha)\pp~~~~~v_0[a] = a~~~v_{i+1}[a] = v_i\footnote{PD: added}
 $$
 We can then define $A\alpha$ (resp. $a\alpha$) by induction on $A$ (resp. $a$).
 For instance, $(\Pi~A~B)\alpha = \Pi~(A\alpha)~(B\alpha^+)$
@@ -215,19 +215,23 @@ and $\APP(A,B,c,a)\alpha = \APP(A\alpha,B\alpha^+,c\alpha,a\alpha)$.
 
 \medskip
 
-The type system describes how to derive judgements of the form $\Gamma\vdash J$ where $J$ is of the form
+The type system describes how to derive judgements of the form $\Gamma\vdash$ and $\Gamma\vdash J$ where $J$ is of the form
 $A~\type$ or $a:A$ or $A=B$ or $a=b : A$.
 
 \medskip
 
+
+The judgment $\Gamma\vdash$ expresses that $\Gamma$ is a well-formed context. $\Gamma\vdash A$ expresses that $A$ is a type in context $\Gamma$.
+We may write it $A~\type~(\Gamma)$ and may omit the global context $\Gamma$.
+
+First, we have the following general typing rules. These are common to the present system and the Russell-style system to be presented later:
 $$
 \frac{\Gamma\vdash A}{\Gamma.A\vdash}~~~~~~\frac{}{()\vdash}~~~~~~~
 \frac{\Gamma\vdash A}{\Gamma.A\vdash v_0:A\pp}~~~~~~~
 \frac{\Gamma\vdash v_i:A~~~~~~~\Gamma\vdash B}{\Gamma.B\vdash v_{i+1}:A\pp}~~~~~~~
 $$
-The judgment $\Gamma\vdash A$ expresses that $A$ is a type in context $\Gamma$.
-We may write it $A~\type~(\Gamma)$ and may omit the global context $\Gamma$.
-The typing rules are shown in Figure \ref{type-Tarski}.
+The typing rules for $\Pi$-types and universes are shown in Figure \ref{type-Tarski}.
+\footnote{PD: I propose to restructure the rules a little. First, we can show the general rules which are common to both systems. Then the rules for annotated $\Pi$-types. And finally, the rules for Tarski-style universes. Then we only need to show the rules for non-annotated $\Pi$-types and the rules for Russell-style universes in the following section.}
 
 \begin{figure}
   \caption{Typing rules for Tarski-style}\label{type-Tarski}
@@ -241,8 +245,8 @@ $$
 $$
 \frac{}{\UU_n~\type}~~~~~~
 \frac{a:\UU_{n}}{\T_{n}(a)~\type}~~~~~~
-\frac{}{\UU^{k}_l:\UU_{k}}k<l
-~~~~~~~~~\frac{a:\UU_{n}}{\sT_{n}^{m}(a):\UU_{m}}n<m
+\frac{}{\UU^{k}_n:\UU_{k}}k<n
+~~~~~~~~~\frac{a:\UU_{k}}{\sT_{k}^{n}(a):\UU_{n}}k<n
 $$
 $$
      \frac{A~\type~~~~~~B~\type~(A)}{\Pi~A~B~\type}~~~~~~~
@@ -303,7 +307,7 @@ $\alpha^+:\Delta.A\alpha\rightarrow\Gamma.A$ if $\alpha:\Delta\rightarrow\Gamma$
   then $\Delta\vdash J\alpha$.
 \end{lemma}
 
-Using the techniques developped in \cite{coquand:sophia,abel:neworleans,abel:wroclaw} or \cite{coq18},
+Using the techniques developed in \cite{coquand:sophia,abel:wroclaw,coq18},
 we can also show that $\Pi$ one-to-one. An important consequence is closure under $\beta$-reduction.
 
 \begin{lemma}
@@ -322,6 +326,7 @@ The syntax is now for types and terms
 $$
 A,B,a,b~::=~v_i~|~c~a~|~\lambda~A~ b~|~\Pi~{A}~B~|~\UU_n
 $$
+Note that the application $c~a$ is not annotated by types, and that the abstraction $\lambda~A~ b$ only has one type argument, not two.
 
 The typing and conversion rules are in Figures \ref{type-Russell} and \ref{conv-Russell}.
 
@@ -397,14 +402,17 @@ The following remark has a direct proof.
 
 
 \begin{lemma}
-  If $\Gamma\vdash t:A$ and $\Gamma\vdash u:A$ then $\Gamma\vdash t = u:A$.
+ % If $\Gamma\vdash t:A$ and $\Gamma\vdash u:A$ then $\Gamma\vdash t = u:A$.
   If $\Gamma\vdash t:A$ and $\Gamma\vdash u:B$ and $|t| = |u|$ then
   \begin{itemize}
-    \item either $A = B$
+    \item either $\Gamma\vdash A = B$
       and $\Gamma\vdash t = u:A$
-    \item or $A = \UU_k$ and $B = \UU_l$ and $\sT_k^m(t) = \sT_l^m(u):\UU_m$ with $m = max(k,l)$.
+    \item or $\Gamma\vdash A = \UU_k$ and $\Gamma\vdash B = \UU_l$ and $\Gamma\vdash \sT_k^m(t) = \sT_l^m(u):\UU_m$ with $m = \max(k,l)$.
   \end{itemize}
 \end{lemma}
+
+The proof relies on the normalization property. First, it follows that $|\Gamma | \vdash |t|:|A|$ and $|\Gamma | \vdash |u|:|B|$. Then by normalization, $| t |$ and $| u |$ have a common normal form $v$  and by subject reduction
+$|\Gamma | \vdash v : |A|$ and $|\Gamma | \vdash v : |B|$. By inspecting the types of normal forms we conclude that either $|\Gamma | \vdash |A| = |B|$ or $|\Gamma | \vdash |A| = \UU_k$ and $|\Gamma | \vdash |B| = \UU_l$ and $|\Gamma | \vdash v :\UU_m$ with $m = \max(k,l)$. In the first case,  $|A|$ and $|B|$ have a common normal form $V$ and there is $V_1$ such that $| V_1 |  = V$. Hence, $\Gamma \vdash V_1 = A = B$ (why?). In the second case, $A = \UU_k$ and $B = \UU_l$ and $\sT_k^m(t) = \sT_l^m(u):\UU_m$.
 
 \begin{theorem}
   If $\Gamma\vdash J$ in the system $T_2$ then there exists a unique, up to conversion, judgement $\Gamma_1\vdash J_1$
