@@ -101,6 +101,7 @@
 \newcommand{\Sapp}[1]{\app{\SUCC}{#1}} 
 \newcommand{\sapp}[2]{{#1(#2)}} % strict app for Id, refl, J, natrec, not S (!)
 \newcommand{\Idapp}[3]{\sapp{\Id_#1}{#2,#3}}
+\newcommand{\Idnapp}[4]{\sapp{\Id_#1^#4}{#2,#3}}
 \newcommand{\NRapp}[2]{\sapp{\natrec}{#1,#2}}
 \newcommand{\Rfapp}[1]{{\refl_#1}}
 \newcommand{\Japp}[2]{\sapp{\JJ}{#1,#2}}
@@ -455,8 +456,7 @@ the version with cumulativity is presented in the Appendix.)
 $$
 \frac{}{\UU_m~\type}~~~~~~
 \frac{A:\UU_{m}}{\T_{m}(A)~\type}~~~~~~
-\frac{}{\UU^{n}_{m}:\UU_{n}}~~~~~~
-\frac{}{\T_{n}({\UU^{n}_{m}}) = \UU_{m}}
+\frac{}{\UU^{n}_{m}:\UU_{n}~~~~~~\T_{n}({\UU^{n}_{m}}) = \UU_{m}}{~(n>m)}
 \belowdisplayshortskip 0pt
 $$ 
 %\footnote{PD: wouldn't it be more natural to let $\UU^n$ be the code for $\UU_{n}$?}
@@ -484,16 +484,18 @@ $$
 \belowdisplayshortskip -1pt
 $$
 \end{figure}
-
+%
+NB\footnote{$\NN^{0}:\UU_{n}$ would spoil uniqueness of types.
+However, why not $\NN^{n}:\UU_{n}$ and $\T_{n}(\NN^{n}) = \NN$?}
 \begin{figure}[H]
-\caption{Rules and conversion rules for codes of $\N$ and $\Id$}\label{fig:NIdSigU}
+\caption{Rules and conversion rules for codes of $\N$ and $\Id$}\label{fig:NIdU}
 $$
 \frac{}{\NN^{0}:\UU_{0}}~~~~~~\frac{}{\T_{0}(\NN^{0}) = \NN}
 $$
 $$
 \frac{A:\UU_n~~~~a_0:\T_n(A)~~~~a_1:\T_n(A)}
-{\Id^n~A~a_0~a_1:\UU_n ~~~~~~~~~ \T_n(\Id^n~A~a_0~a_1) = \Id~\T_n(A)~a_0~a_1 }
-%\belowdisplayshortskip 2pt
+{\Idnapp{A}{a_0}{a_1}{n}:\UU_n ~~~~~~~~~ \T_n(\Idnapp{A}{a_0}{a_1}{n}) = \Idapp{{\T_n(A)}}{a_0}{a_1} }
+\belowdisplayshortskip 1pt
 $$
 \end{figure}
 
@@ -580,14 +582,28 @@ $$
 
 It then follows from the rules of our basic type theory that
 judgments are invariant under level equality: if $l=m$ and
-${a(l/\alpha) : A(l/\alpha)}$, then ${a(m/\alpha) : A(m/\alpha)}$
+${a(l/\alpha) : A(l/\alpha)}$, then ${a(m/\alpha) : A(m/\alpha)}$.
 
-We can  now add rules for level-indexed universes:
+We can  now add rules for internally indexed universes:
+\begin{figure}[H]
+  \caption{Rules and conversion rule for universes $\UU_l$ and their codes}\label{fig:typeUl}
 $$
-\frac{l~\Level}{\UU_{l}~\type}~~~~~~
+\frac{l~\Level}{\UU_l~\type}~~~~~~
 \frac{A:\UU_{l}}{\T_{l}(A)~\type}~~~~~~
+\frac{m<l}{\UU^{l}_{m}:\UU_{l}~~~~~~\T_{l}({\UU^{l}_{m}}) = \UU_{m}}
+\belowdisplayshortskip 0pt
 $$
-The remaining rules are completely analogous to the rules for externally indexed universes with external numbers replaced by internal levels. In this way we avoid having to duplicate definitions for different universe levels.
+\end{figure}
+
+The remaining rules are completely analogous to the rules in
+\cref{fig:PiSigU} and \cref{fig:NIdU}
+for externally indexed universes with external numbers replaced 
+by internal levels. There is even no need to add hypotheses
+like $m~\Level$ since they can be obtained from other hypotheses 
+through inversion lemmas. 
+
+\begin{remark}
+Old material that has possibly become obsolete (see previous para).
 $$
 \frac{A:\UU_{l}~~~~~~B:\T_{l}(A)\rightarrow \UU_{m}}
      {\Pi^{l,m} A B:\UU_{l\vee m}}~~~~~~~~~
@@ -599,7 +615,11 @@ $$
 \T_{l\vee m}~(\Pi^{l,m} A B) = \mypi{x}{\T_{l}(A)}{ \T_{m}(B~x)}~~~~~~~
 \T_{l\vee m}~(\Sigma^{l,m} A B) = \mysig{x}{\T_{l}(A)}{ \T_{m}(B~x)}~~~~~~~
 $$
-Furthermore we have $$\NN^{l}:\UU_{l}$$
+
+{\bf Here is a minor problem: we only have externally} 
+$\NN^{0}:\UU_{0}$.
+
+ $$\NN^{l}:\UU_{l}$$
 $$\T_{l}(\NN^{l}) = \NN$$
 and
 $$
@@ -607,7 +627,12 @@ $$
 {\Id^l~A~a_0~a_1:\UU_l}
 $$
 $$\T_l(\Id^l~A~a_0~a_1) = \Id~\T_l(A)~a_0~a_1$$
-and, for $n<l$
+
+{\bf The following is not duplicated from the rules for externally indexed 
+universes with external numbers and is placed in \cref{fig:typeUl} 
+to stress the fact
+that the side-condition $n<l$ is upgraded to a level judgement.}
+
 $${\UU_n^{l}}:\UU_{l}$$
 $$\T_{l}({\UU_n^{l}}) = \UU_{n}$$
 
@@ -627,13 +652,15 @@ $$\T_{l}({\UU_n^{l}}) = \UU_{n}$$
 %
 %\medskip
 %
+{\bf End remark}
+\end{remark}
 
  We expect that normalisation holds for this system.
  This implies decidable type-checking. This also implies that if $a : \NN$ in a context with only level variables
 then $a$ is convertible to a numeral.
 
 Another consequence should be that the following rule is admissible:
-we can derive $A = B : \UU_l$ from $\T_l(A) = \T_l(B)$.
+we can derive $A = B : \UU_l$ from $\T_l(A) = \T_l(B)$. {\bf Conjecture?}
  It expresses that $\T_l$ is an embedding from the collection of elements of $\UU_l$
  to the collection of types.
  Voevodsky \cite[Rule 20 on p. 17]{VV} adds this as an internal rule, but then the system is not
