@@ -98,15 +98,15 @@
 \newcommand{\mypi}[3]{\Pi_{#1:#2}#3}
 \newcommand{\mylam}[3]{\lambda_{#1:#2}#3}
 \newcommand{\app}[2]{{#1\,#2}} % many applications still hard-coded with ~
-\newcommand{\Sapp}[1]{\app{\SUCC}{#1}} 
+\newcommand{\Sapp}[1]{\sapp{\SUCC}{#1}} 
 \newcommand{\sapp}[2]{{#1(#2)}} % strict app for Id, refl, J, natrec, not S (!)
-\newcommand{\Idapp}[3]{\sapp{\Id_#1}{#2,#3}}
-\newcommand{\Idnapp}[4]{\sapp{\Id_#1^#4}{#2,#3}}
-\newcommand{\NRapp}[2]{\sapp{\natrec}{#1,#2}}
-\newcommand{\Rfapp}[1]{{\refl_#1}}
-\newcommand{\Japp}[2]{\sapp{\JJ}{#1,#2}}
+\newcommand{\Idapp}[3]{\sapp{\Id}{#1,#2,#3}}
+\newcommand{\Idnapp}[4]{\sapp{\Id^#4}{#1,#2,#3}}
+\newcommand{\NRapp}[4]{\sapp{\RR}{#1,#2,#3,#4}}
+\newcommand{\Rfapp}[1]{\sapp{\refl}{#1}}
+\newcommand{\Japp}[3]{\sapp{\JJ}{#1,#2,#3}}
 \newcommand{\mysig}[3]{\Sigma_{#1:#2}#3}
-\newcommand{\N}{\mathsf{N}}
+\newcommand{\RR}{\mathsf{R}}
 \newcommand{\Set}{\mathsf{Set}}
 \newcommand{\El}{\mathsf{El}}
 \newcommand{\T}{\mathsf{T}}
@@ -260,14 +260,17 @@ in universe levels.
 
 %{\color{red} Cite Lean \cite{moura:lean}?}
 
- To deal with these problems Huet \cite{Huet87} and, later,
- Harper and Pollack \cite{HarperP91} introduced {\em universe polymorphism}.
- Their ``implicit"
- approach to universe polymorphisms however is problematic with respect to modularity, as pointed
- out in \cite{Courant02,Simpson04}: one can prove $A\rightarrow B$ in one file, and $B\rightarrow C$ in one other file, while
-$A\rightarrow C$ is not valid. In order to cope with this issue, J. Courant \cite{Courant02}
-introduced explicit universe levels, with a binary supremum operation (see also \cite{herbelin05}).
-This approach is now followed in Agda and in Voevodsky's proposal \cite{VV}.
+ To deal with this problem Huet \cite{Huet87} and
+ Harper and Pollack \cite{HarperP91} and, in Coq, Sozeau and Tabareau 
+ \cite{SozeauTabareau:coq} introduced \emph{universe polymorphism}.
+ Their "implicit" approach to universe polymorphisms is, however, 
+ problematic w.r.t.\ modularity, as pointed out in \cite{Courant02,Simpson04}: 
+ one can prove $A\rightarrow B$ in one file, and $B\rightarrow C$ in 
+ one other file, while $A\rightarrow C$ is not valid. 
+ In order to cope with this issue, J. Courant \cite{Courant02}
+ suggested to have explicit level universes, with a sup operation
+ (see also \cite{herbelin05}).
+ This approach is now followed in Agda and in Voevodsky's proposal \cite{VV}.
 
 In this work we propose a system that refines
 Courant's \cite{Courant02} and Voevodsky's \cite{VV} systems as follows:
@@ -296,14 +299,7 @@ In Section \ref{sec:constraints} we present (a variation of) Voevodsky's proposa
 
 \paragraph{Notational conventions.}
 When presenting typing rules, we use the following simplifications.
-The judgment $\Gamma\vdash A$ expresses that $A$ is a type in context $\Gamma$.
-We may write $A~\type~(\Gamma)$ and may omit the global context $\Gamma$,
-or the part of the context that is the same for all hypotheses and for the
-conclusion of the rule.
-Hypotheses that could be obtained from other
-hypotheses through inversion lemmas are often left out,
-for example, the hypothesis $A~\type$ in the first rule for $\Pi$ and $\Sigma$
-in \cref{fig:PiSig}.
+
 Rules with the same hypotheses may be written as one rule with several conclusions.
 
 ??Universe levels and constraints are written as side conditions of rules,
@@ -313,18 +309,37 @@ in spite of the fact that these side conditions are official judgments of the th
 \section{Rules for a basic type theory}
 
 We begin by listing the rules for a basic type theory
-with $\Pi, \Sigma, \N,$ and $\Id$.
-We write $\conv$ for definitional equality (or conversion).
+with $\Pi, \Sigma, \NN,$ and $\Id$. Point of departure is
+the system described by Abel et al.\ in \cite{abel18},
+which has $\Pi$ and $\NN$ and one universe, since a
+significant part of its metatheory has been formalized in Agda.
+However, for better readability we use named variables instead 
+of de Bruijn indices. We also add $\Sigma$ and $\Id$, and,
+in the next sections, several indexed universes.
 
+The judgment $\Gamma\vdash$ expresses that $\Gamma$ is a context.
+The judgment $\Gamma\vdash A$ expresses that $A$ is a type in context $\Gamma$.
+The judgment $\Gamma\vdash a:A$ expresses that $A$ is a type
+and $a$ is a term of type $A$ in context $\Gamma$.
 
 \begin{figure}[h]
   \caption{Rules for context formation and assumption}\label{fig:context}
 $$
 \frac{}{()\vdash}~~~~~~~
-\frac{\Gamma\vdash A~\type}{\Gamma,x:A\vdash}~(x~\text{fresh})~~~~~~
+\frac{\Gamma\vdash A}{\Gamma,x:A\vdash}~(x~\text{fresh})~~~~~~
 \frac{\Gamma\vdash}{\Gamma\vdash x:A}~(x\!:\! A~\text{in}~\Gamma)
+\belowdisplayshortskip 0pt
 $$
 \end{figure}
+
+We may also write $A~\type~(\Gamma)$ for $\Gamma\vdash A$,
+and may omit the global context $\Gamma$,
+or the part of the context that is the same for all hypotheses and for the
+conclusion of the rule.
+Hypotheses that could be obtained from other
+hypotheses through inversion lemmas are often left out,
+for example, the hypothesis $A~\type$ in the first rule for $\Pi$ and $\Sigma$
+in \cref{fig:PiSig}.
 
 \begin{figure}[h]
   \caption{Rules for $\Pi$ and $\Sigma$}\label{fig:PiSig}
@@ -335,18 +350,23 @@ $$
 \frac{c:\mypi{x}{A}{B}~~~~~~a:A}
      {\app{c}{a}:B(a/x)}
 $$
-
 $$
 %\frac{\Gamma,x:A\vdash B}{\Gamma\vdash \mysig{x}{A}{B}}~~~~~~~~~
 \frac{B~\type~(x:A)}{\mysig{x}{A}{B}~\type}~~~~~~~~~
 \frac{a:A~~~~~~b:B(a/x)}{(a,b):\mysig{x}{A}{B}}~~~~~~~~
 \frac{c:\mysig{x}{A}{B}}{c.1:A}~~~~~~~
 \frac{c:\mysig{x}{A}{B}}{c.2:B(c.1/x)}
+\belowdisplayshortskip -1pt
 $$
 \end{figure}
 
+ 
+We write $\conv$ for definitional equality (or conversion).
+The following rules express that conversion is an equivalence
+relation and that judgments are invariant under conversion.
+
 \begin{figure}[h]
-  \caption{Conversion rules for $\Pi$ and $\Sigma$}\label{fig:convPiSig}
+  \caption{General rules for conversion}\label{fig:conversion}
 $$
 \frac{ a:A~~~~~~ A~ \conv~ B}{ a:B}~~~~~~~~~
 \frac{ a ~\conv~a':A~~~~~~ A  ~\conv~ B}{ a ~\conv~a':B}
@@ -354,7 +374,12 @@ $$
 $$
 \frac{A~=~B~~~~~A~=~C}{B~=~C}~~~~~~~~~\frac{A~\type}{A~=~A}~~~~~~~~~
 \frac{a~=~b:A~~~~~a~=~c:A}{b~=~c:A}~~~~~~~~~\frac{a:A}{a~=~a:A}
+\belowdisplayshortskip 1pt
 $$
+\end{figure}
+
+\begin{figure}[H]
+  \caption{Conversion rules for $\Pi$ and $\Sigma$}\label{fig:convPiSig}
 $$
 \frac{A~=~A'~~~~~~B~=~B'~(x:A)}{\mypi{x}{A}{B}~=~\mypi{x}{A'}{B'}}~~~~~~~~
 \frac{c~=~c':\mypi{x}{A}{B}~~~~~~a~=~a':A}{c~a~=~c'~a':B(a/x)}
@@ -373,13 +398,14 @@ $$
 \frac{a:A~~~~~b:B(a/x)}{ (a,b).1 ~\conv~ a:A}~~~~~~~~~~
 \frac{a:A~~~~~b:B(a/x)}{ (a,b).2 ~\conv~ b:B(a/x)}~~~~~~~~~~
 \frac{c.1~=~ c'.1:A~~~~~~c.2~=c'.2:B(c.1/x)}{ c~=~ c' : \mysig{x}{A}{B}}
+\belowdisplayshortskip 0pt
 $$
 \end{figure}
 
 By now we have introduced several parametrized syntactic constructs
 for types and terms, such as $\mypi{x}{A}{B}$,
 $\mylam{x}{A}{b}$, $\app{c}{a}$, $(a,b).2$.
-Conversion rules for $\Pi$ and $\Sigma$ are given in \cref{fig:convPiSig},
+Conversion rules for $\Pi$ and $\Sigma$ were given in \cref{fig:convPiSig}.
 and those rules imply that $=$ is a congruence.%
 \footnote{Some cases of congruence are subtle. Exercise:
 show congruence of $=$ for $\mylam{x}{A}{b}$ and $(a,b)$.}
@@ -398,12 +424,13 @@ $$
 t_1 = t'_1 : T_1 ~~\ldots~~  t_n = t'_n : T_n}
 {\const(A_1,\ldots,A_m,t_1,\ldots,t_n) = 
 \const(A'_1,\ldots,A'_m,t'_1,\ldots,t'_n) : T \text{~~(or $~\type$)}}
+\belowdisplayshortskip -1pt
 $$
 \end{figure}
 
 We now introduce the type of natural numbers $\NN$ with constructors 
 $\ZERO:\NN$ and $\SUCC: \NN\to\NN$, an example of an
-inductive data type, with the eliminator $\NRapp{a}{g}$. 
+inductive data type, with the eliminator $\NRapp{P}{a}{g}{n}$. 
 We rely on \cref{fig:congr} for congruence.
 
 \begin{figure}[H]
@@ -413,19 +440,19 @@ $$
 \frac{n:\NN}{\Sapp{n} : \NN}~~~~~~
 \frac{P~\type~(x:\NN)~~~~a:P(\ZERO/x)~~~~~
 g:\mypi{x}{\NN}{(P\to P(\Sapp{x}/x))}}
-{\NRapp{a}{g}:\mypi{x}{\NN}{P}}
+{\NRapp{P}{a}{g}{n}:P(n/x)}
 $$
 $$
-\frac{\NRapp{a}{g}:\mypi{x}{\NN}{P}}{\app{\NRapp{a}{g}}{\ZERO} = a: P(\ZERO/x)}
+\frac{\NRapp{P}{a}{g}{n}:P(n/x)}{\NRapp{P}{a}{g}{\ZERO} = a: P(\ZERO/x)}
 ~~~~~~~
-\frac{\NRapp{a}{g}:\mypi{x}{\NN}{P}~~~~~n:\NN}
-{\app{\NRapp{a}{g}}{(\app{\SUCC}{n})} = g~n~(\NRapp{a}{g}~n): P(\Sapp{n}/x) } 
+\frac{\NRapp{P}{a}{g}{n}:P(n/x)~~~~~n:\NN}
+{\NRapp{P}{a}{g}{\Sapp{n}} = g~n~\NRapp{P}{a}{g}{n}: P(\Sapp{n}/x) } 
 $$
 \end{figure}
 
 We also have (based) identity types $\Idapp{A}{a_0}{a_1}$ for all $A~\type$, 
 $a_0:A$ and $a_1:A$, with the constructor $\Rfapp{a}$ and the eliminator 
-$\Japp{a}{d}$, all examples of parametrized syntactic constructs
+$\Japp{C}{a}{d}$, all examples of parametrized syntactic constructs
 with congruence rules as in \cref{fig:congr}.
 
 \begin{figure}[H]
@@ -436,8 +463,8 @@ $$
 $$
 $$
 \frac{a:A~~~~~C~\type~(x:A,p:\Idapp{A}{a}{x})~~~~~d:C(a/x,\Rfapp{a}/p)}
-{\Japp{a}{d}:\mypi{x}{A}{\mypi{p}{\Idapp{A}{a}{x}}}{C}~~~~~~~~
- \Japp{a}{d}~a~\Rfapp{a} = d : C(a/x,\Rfapp{a}/p)}
+{\Japp{C}{a}{d}:\mypi{x}{A}{\mypi{p}{\Idapp{A}{a}{x}}}{C}~~~~~~~~
+ \Japp{C}{a}{d}~a~\Rfapp{a} = d : C(a/x,\Rfapp{a}/p)}
 $$
 \end{figure}
 
@@ -488,7 +515,7 @@ $$
 NB\footnote{$\NN^{0}:\UU_{n}$ would spoil uniqueness of types.
 However, why not $\NN^{n}:\UU_{n}$ and $\T_{n}(\NN^{n}) = \NN$?}
 \begin{figure}[H]
-\caption{Rules and conversion rules for codes of $\N$ and $\Id$}\label{fig:NIdU}
+\caption{Rules and conversion rules for codes of $\NN$ and $\Id$}\label{fig:NIdU}
 $$
 \frac{}{\NN^{0}:\UU_{0}}~~~~~~\frac{}{\T_{0}(\NN^{0}) = \NN}
 $$
@@ -631,7 +658,7 @@ $$\T_l(\Id^l~A~a_0~a_1) = \Id~\T_l(A)~a_0~a_1$$
 {\bf The following is not duplicated from the rules for externally indexed 
 universes with external numbers and is placed in \cref{fig:typeUl} 
 to stress the fact
-that the side-condition $n<l$ is upgraded to a level judgement.}
+that the side-condition $n<l$ is upgraded to a level judgment.}
 
 $${\UU_n^{l}}:\UU_{l}$$
 $$\T_{l}({\UU_n^{l}}) = \UU_{n}$$
@@ -808,7 +835,7 @@ finite set of constraints in $\Gamma$.
 
 We have a new judgment form $\psi~(\Gamma)$ that expresses that the constraint set $\psi$
 holds in $\Gamma$.
-As shown in \cite{bezem-coquand:lattices}, this is a decidable judgement.
+As shown in \cite{bezem-coquand:lattices}, this is a decidable judgment.
 For instance we have $\alpha^+\leqslant\beta^+~(\alpha\leqslant\beta)$.
 
 We recall that we have the following rule
