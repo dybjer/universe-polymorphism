@@ -104,7 +104,7 @@
 \newcommand{\Idnapp}[4]{\sapp{\Id^#4}{#1,#2,#3}}
 \newcommand{\NRapp}[4]{\sapp{\RR}{#1,#2,#3,#4}}
 \newcommand{\Rfapp}[1]{\sapp{\refl}{#1}}
-\newcommand{\Japp}[3]{\sapp{\JJ}{#1,#2,#3}}
+\newcommand{\Japp}[6]{\sapp{\JJ}{#1,#2,#3,#4,#5,#6}}
 \newcommand{\mysig}[3]{\Sigma_{#1:#2}#3}
 \newcommand{\RR}{\mathsf{R}}
 \newcommand{\Set}{\mathsf{Set}}
@@ -297,15 +297,6 @@ In Section \ref{sec:internal} we introduce the notion of universe level, and let
 %
 In Section \ref{sec:constraints} we present (a variation of) Voevodsky's proposal with constraints between level variables  \cite{VV}, complementing his proposal with a way to eliminate constants introduced with level variables and constraints.
 
-\paragraph{Notational conventions.}
-When presenting typing rules, we use the following simplifications.
-
-Rules with the same hypotheses may be written as one rule with several conclusions.
-
-??Universe levels and constraints are written as side conditions of rules,
-in spite of the fact that these side conditions are official judgments of the theory.
-
-
 \section{Rules for a basic type theory}
 
 We begin by listing the rules for a basic type theory
@@ -428,43 +419,48 @@ t_1 = t'_1 : T_1 ~~\ldots~~  t_n = t'_n : T_n}
 $$
 \end{figure}
 
-We now introduce the type of natural numbers $\NN$ with constructors 
-$\ZERO:\NN$ and $\SUCC: \NN\to\NN$, an example of an
-inductive data type, with the eliminator $\NRapp{P}{a}{g}{n}$. 
+We now introduce the type of natural numbers $\NN$ with 
+the usual constructors $\ZERO,\SUCC$ and eliminator $\RR$, 
+as an example of an inductive data type. 
 We rely on \cref{fig:congr} for congruence.
+Rules with the same hypotheses are written as one rule with 
+several conclusions.\footnote%
+{You may dislike this, as well as the order of the rules.}
 
 \begin{figure}[H]
-  \caption{Rules for $\NN$ and conversion rules for $\natrec$}\label{fig:typeN}
+  \caption{Rules and conversion rules for the datatype $\NN$}\label{fig:typeN}
 $$
-\frac{}{\NN~\type}~~~~~~~\frac{}{\ZERO:\NN}~~~~~~~
+\frac{}{\NN~\type~~~~\ZERO:\NN}~~~~~
 \frac{n:\NN}{\Sapp{n} : \NN}~~~~~~
 \frac{P~\type~(x:\NN)~~~~a:P(\ZERO/x)~~~~~
 g:\mypi{x}{\NN}{(P\to P(\Sapp{x}/x))}}
-{\NRapp{P}{a}{g}{n}:P(n/x)}
+{\NRapp{P}{a}{g}{\ZERO} = a: P(\ZERO/x) }
 $$
 $$
-\frac{\NRapp{P}{a}{g}{n}:P(n/x)}{\NRapp{P}{a}{g}{\ZERO} = a: P(\ZERO/x)}
-~~~~~~~
-\frac{\NRapp{P}{a}{g}{n}:P(n/x)~~~~~n:\NN}
-{\NRapp{P}{a}{g}{\Sapp{n}} = g~n~\NRapp{P}{a}{g}{n}: P(\Sapp{n}/x) } 
+\frac{P~\type~(x:\NN)~~~~a:P(\ZERO/x)~~~~~
+g:\mypi{x}{\NN}{(P\to P(\Sapp{x}/x))}~~~~~n:\NN}
+{\NRapp{P}{a}{g}{n}:P(n/x)~~~~~~\NRapp{P}{a}{g}{\Sapp{n}} = g~n~\NRapp{P}{a}{g}{n}: P(\Sapp{n}/x) }
+%\belowdisplayshortskip 0pt
 $$
 \end{figure}
 
-We also have (based) identity types $\Idapp{A}{a_0}{a_1}$ for all $A~\type$, 
-$a_0:A$ and $a_1:A$, with the constructor $\Rfapp{a}$ and the eliminator 
-$\Japp{C}{a}{d}$, all examples of parametrized syntactic constructs
+We also add identity types $\Idapp{A}{a_0}{a_1}$ for all $A~\type$, 
+$a_0:A$ and $a_1:A$, with constructor $\Rfapp{a}$ and (based) eliminator 
+$\Japp{A}{a}{C}{d}{x}{p}$, all examples of parametrized syntactic constructs
 with congruence rules as in \cref{fig:congr}.
 
 \begin{figure}[H]
-  \caption{Rules for $\Id$ and conversion rules for $\JJ$}\label{fig:typeId}
+  \caption{Rules and conversion rule for identity types}\label{fig:typeId}
 $$
 \frac{A~\type ~~~~ a_0:A ~~~~ a_1:A}{\Idapp{A}{a_0}{a_1}~\type}~~~~~~~
 \frac{a:A}{\Rfapp{a}:\Idapp{A}{a}{a}}
 $$
 $$
-\frac{a:A~~~~~C~\type~(x:A,p:\Idapp{A}{a}{x})~~~~~d:C(a/x,\Rfapp{a}/p)}
-{\Japp{C}{a}{d}:\mypi{x}{A}{\mypi{p}{\Idapp{A}{a}{x}}}{C}~~~~~~~~
- \Japp{C}{a}{d}~a~\Rfapp{a} = d : C(a/x,\Rfapp{a}/p)}
+\frac{a:A~~~~C~\type~(x:A,p:\Idapp{A}{a}{x})~~~~d:C(a/x,\Rfapp{a}/p)
+~~~~x:A~~~~p:\Idapp{A}{a}{x}}
+{\Japp{A}{a}{C}{d}{x}{p}: C ~~~~~~~~
+ \Japp{A}{a}{C}{d}{a}{\Rfapp{a}} = d : C(a/x,\Rfapp{a}/p)}
+\belowdisplayshortskip 0pt
 $$
 \end{figure}
 
