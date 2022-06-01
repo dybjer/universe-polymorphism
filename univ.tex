@@ -507,13 +507,11 @@ $$
 \belowdisplayshortskip -1pt
 $$
 \end{figure}
-%
-NB\footnote{$\NN^{0}:\UU_{n}$ would spoil uniqueness of types.
-However, why not $\NN^{n}:\UU_{n}$ and $\T_{n}(\NN^{n}) = \NN$?}
+
 \begin{figure}[H]
 \caption{Rules and conversion rules for codes of $\NN$ and $\Id$}\label{fig:NIdU}
 $$
-\frac{}{\NN^{0}:\UU_{0}}~~~~~~\frac{}{\T_{0}(\NN^{0}) = \NN}
+\frac{}{\NN^{n}:\UU_{n}}~~~~~~\frac{}{\T_{n}(\NN^{n}) = \NN}
 $$
 $$
 \frac{A:\UU_n~~~~a_0:\T_n(A)~~~~a_1:\T_n(A)}
@@ -524,11 +522,16 @@ $$
 
 %% Note that $\UU_p, \T_p$ are given by separate inductive-recursive definition for each $p$. There is one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and also for $\UU^{p-1}$ provided $p \geq 1$.
 
-Note that the universe levels in the above theory are {\em external} natural numbers. Thus the typing of the identity function 
-$$\mylam{X}{\UU_n}{\mylam{x}{\T_n(X)}{x}} : \mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}$$ 
-is a {\em schema}  depending on the external natural number $n$. It has infinitely many instances obtained by letting  $n = 0,1,\dots$. 
+Note that the universe levels in the above theory are 
+\emph{external} natural numbers. 
+Thus the typing of the identity function 
+$$\mylam{X}{\UU_n}{\mylam{x}{\T_n(X)}{x}} : 
+      \mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}$$ 
+is a \emph{schema}  depending on the external natural number $n$. 
+It has infinitely many instances obtained by letting  $n = 0,1,\dots$. 
 
-In the following section we present a type theory with {\em internal} universe level expressions. This theory has finitely many inference rules.
+In the following section we present a type theory with \emph{internal} 
+universe level expressions. This theory has finitely many inference rules.
 
  \section{A type theory with universe levels and polymorphism }\label{sec:internal}
 
@@ -541,7 +544,8 @@ of type $\mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}$ that
 may have to be defined (and type-checked) for several $n$.
 We address this issue by introducing \emph{universe level}
 expressions: we write $\alpha,\beta,\dots$
-for \emph{level variables}, and $l,m,\dots$ for \emph{level expressions} which are built from level variables
+for \emph{level variables}, and $l,m,\dots$ for 
+\emph{level expressions} which are built from level variables
 by suprema $l \vee m$ and the next level operation $l^+$.
 Level expressions form a sup-semilattice $l\vee m$
 with a next level operation $l^+$ such that $l \vee l^+ = l^+$
@@ -598,7 +602,8 @@ taking the union of level equality and definitional equality.
   \caption{Congruence rule for level equality}\label{fig:levelcongruence}
 $$
 \frac{l=m ~~~~~ A~\type~(\alpha~\Level)}{A(l/\alpha) = A(m/\alpha)}
-~~~~~ \frac{l=m ~~~~~ a:A~(\alpha~\Level)}{a(l/\alpha) = a(m/\alpha)}
+~~~~~~~ 
+\frac{l=m ~~~~~ a:A~(\alpha~\Level)}{a(l/\alpha) = a(m/\alpha): A(l/\alpha)}
 \belowdisplayshortskip 0pt
 $$
 \end{figure}
@@ -607,7 +612,8 @@ It then follows from the rules of our basic type theory that
 judgments are invariant under level equality: if $l=m$ and
 ${a(l/\alpha) : A(l/\alpha)}$, then ${a(m/\alpha) : A(m/\alpha)}$.
 
-We can  now add rules for internally indexed universes:
+We will now add rules for internally indexed universes.
+Note that $m<l$ is shorthand for the level judgment $l= m^+ \vee l$.
 \begin{figure}[H]
   \caption{Rules and conversion rule for universes $\UU_l$ and their codes}\label{fig:typeUl}
 $$
@@ -625,58 +631,6 @@ by internal levels. There is even no need to add hypotheses
 like $m~\Level$ since they can be obtained from other hypotheses 
 through inversion lemmas. 
 
-\begin{remark}
-Old material that has possibly become obsolete (see previous para).
-$$
-\frac{A:\UU_{l}~~~~~~B:\T_{l}(A)\rightarrow \UU_{m}}
-     {\Pi^{l,m} A B:\UU_{l\vee m}}~~~~~~~~~
-\frac{A:\UU_{l}~~~~~~B:\T_{l}(A)\rightarrow \UU_{m}}
-     {\Sigma^{l,m} A B:\UU_{l\vee m}}~~~~~~~~~
-$$
-with conversion rules
-$$
-\T_{l\vee m}~(\Pi^{l,m} A B) = \mypi{x}{\T_{l}(A)}{ \T_{m}(B~x)}~~~~~~~
-\T_{l\vee m}~(\Sigma^{l,m} A B) = \mysig{x}{\T_{l}(A)}{ \T_{m}(B~x)}~~~~~~~
-$$
-
-{\bf Here is a minor problem: we only have externally} 
-$\NN^{0}:\UU_{0}$.
-
- $$\NN^{l}:\UU_{l}$$
-$$\T_{l}(\NN^{l}) = \NN$$
-and
-$$
-\frac{A:\UU_l~~~~~~a_0:\T_l(A)~~~~~~a_1:\T_l(A)}
-{\Id^l~A~a_0~a_1:\UU_l}
-$$
-$$\T_l(\Id^l~A~a_0~a_1) = \Id~\T_l(A)~a_0~a_1$$
-
-{\bf The following is not duplicated from the rules for externally indexed 
-universes with external numbers and is placed in \cref{fig:typeUl} 
-to stress the fact
-that the side-condition $n<l$ is upgraded to a level judgment.}
-
-$${\UU_n^{l}}:\UU_{l}$$
-$$\T_{l}({\UU_n^{l}}) = \UU_{n}$$
-
-%
-%\medskip
-%
-%We also have ${\UU^{l}}:\UU_{l^+}$ with
-%$\T_{l^+}({\UU^{l}}) = \UU_{l}$.
-%
-%\medskip
-%
-%For data types, we introduce $\NN^{l}:\UU_{l}$ with the conversion rule
-%$\T_{l}(\NN^{l}) = \NN$.
-%
-%We have $\Id^l~A~a_0~a_1:\UU_l$ for $A:\UU_l$ and $a_0:\T_l(A)$ and $a_1:\T_l(A)$
-%with $\T_l(\Id^l~A~a_0~a_1) = \Id~\T_l(A)~a_0~a_1$.
-%
-%\medskip
-%
-{\bf End remark}
-\end{remark}
 
  We expect that normalisation holds for this system.
  This implies decidable type-checking. This also implies that if $a : \NN$ in a context with only level variables
