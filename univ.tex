@@ -103,7 +103,7 @@
 \newcommand{\Idapp}[3]{\sapp{\Id}{#1,#2,#3}}
 \newcommand{\Idnapp}[4]{\sapp{\Id^#4}{#1,#2,#3}}
 \newcommand{\NRapp}[4]{\sapp{\RR}{#1,#2,#3,#4}}
-\newcommand{\Rfapp}[1]{\sapp{\refl}{#1}}
+\newcommand{\Rfapp}[2]{\sapp{\refl}{#1,#2}}
 \newcommand{\Japp}[6]{\sapp{\JJ}{#1,#2,#3,#4,#5,#6}}
 \newcommand{\mysig}[3]{\Sigma_{#1:#2}#3}
 \newcommand{\RR}{\mathsf{R}}
@@ -444,22 +444,22 @@ g:\mypi{x}{\NN}{(P\to P(\Sapp{x}/x))}~~~~~n:\NN}
 $$
 \end{figure}
 
-We also add identity types $\Idapp{A}{a_0}{a_1}$ for all $A~\type$, 
-$a_0:A$ and $a_1:A$, with constructor $\Rfapp{a}$ and (based) eliminator 
-$\Japp{A}{a}{C}{d}{x}{p}$, all examples of parametrized syntactic constructs
+We also add identity types $\Idapp{A}{a}{a'}$ for all $A~\type$, 
+$a:A$ and $a':A$, with constructor $\Rfapp{A}{a}$ and (based) eliminator 
+$\Japp{A}{a}{C}{d}{a'}{q}$, all examples of parametrized syntactic constructs
 with congruence rules as in \cref{fig:congr}.
 
 \begin{figure}[H]
   \caption{Rules and conversion rule for identity types}\label{fig:typeId}
 $$
-\frac{A~\type ~~~~ a_0:A ~~~~ a_1:A}{\Idapp{A}{a_0}{a_1}~\type}~~~~~~~
-\frac{a:A}{\Rfapp{a}:\Idapp{A}{a}{a}}
+\frac{A~\type ~~~~ a:A ~~~~ a':A}{\Idapp{A}{a}{a'}~\type}~~~~~~~
+\frac{a:A}{\Rfapp{A}{a}:\Idapp{A}{a}{a}}
 $$
 $$
-\frac{a:A~~~~C~\type~(x:A,p:\Idapp{A}{a}{x})~~~~d:C(a/x,\Rfapp{a}/p)
-~~~~x:A~~~~p:\Idapp{A}{a}{x}}
-{\Japp{A}{a}{C}{d}{x}{p}: C ~~~~~~~~
- \Japp{A}{a}{C}{d}{a}{\Rfapp{a}} = d : C(a/x,\Rfapp{a}/p)}
+\frac{a:A~~~~C~\type~(x:A,p:\Idapp{A}{a}{x})~~~~d:C(a/x,\Rfapp{A}{a}/p)
+~~~~a':A~~~~q:\Idapp{A}{a}{a'}}
+{\Japp{A}{a}{C}{d}{a'}{q}: C(a'/x,q/p) ~~~~~~~~
+ \Japp{A}{a}{C}{d}{a}{\Rfapp{A}{a}} = d : C(a/x,\Rfapp{A}{a}/p)}
 \belowdisplayshortskip 0pt
 $$
 \end{figure}
