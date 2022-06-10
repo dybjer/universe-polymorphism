@@ -1,0 +1,15 @@
+3c3
+< module Universes where
+---
+> module Universes-new where
+8c8
+<           ; lzero to 𝓤₀       -- Our first universe is called 𝓤₀
+---
+>           ; lzero to not-used -- We don't use the first universe or any specifica universe anymore
+20,23d19
+< 𝓤₁ = 𝓤₀ ⁺
+< 𝓤₂ = 𝓤₁ ⁺
+< 𝓤₃ = 𝓤₂ ⁺
+< 
+31d26
+< 

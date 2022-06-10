@@ -1,0 +1,1182 @@
+3c3
+< module HoTT-UF-Agda where
+---
+> module HoTT-UF-Agda-new where
+5c5
+< open import Universes public
+---
+> open import Universes-new public
+8c8
+<  𝓤 𝓥 𝓦 𝓣 : Universe
+---
+>  𝓤 𝓥 𝓦 𝓣 𝓤₀ : Universe
+10c10
+< data 𝟙 : 𝓤₀ ̇  where
+---
+> data 𝟙 {𝓤₀} : 𝓤₀ ̇  where
+13c13
+< 𝟙-induction : (A : 𝟙 → 𝓤 ̇ ) → A ⋆ → (x : 𝟙) → A x
+---
+> 𝟙-induction : (A : 𝟙 {𝓥} → 𝓤 ̇ ) → A ⋆ → (x : 𝟙) → A x
+16c16
+< 𝟙-recursion : (B : 𝓤 ̇ ) → B → (𝟙 → B)
+---
+> 𝟙-recursion : (B : 𝓤 ̇ ) → B → (𝟙 {𝓥} → B)
+19c19
+< !𝟙' : (X : 𝓤 ̇ ) → X → 𝟙
+---
+> !𝟙' : (X : 𝓤 ̇ ) → X → 𝟙 {𝓥}
+22c22
+< !𝟙 : {X : 𝓤 ̇ } → X → 𝟙
+---
+> !𝟙 : {X : 𝓤 ̇ } → X → 𝟙 {𝓥}
+25c25
+< data 𝟘 : 𝓤₀ ̇  where
+---
+> data 𝟘 {𝓤₀} : 𝓤₀ ̇  where
+27c27
+< 𝟘-induction : (A : 𝟘 → 𝓤 ̇ ) → (x : 𝟘) → A x
+---
+> 𝟘-induction : (A : 𝟘 {𝓥} → 𝓤 ̇ ) → (x : 𝟘) → A x
+30c30
+< 𝟘-recursion : (A : 𝓤 ̇ ) → 𝟘 → A
+---
+> 𝟘-recursion : (A : 𝓤 ̇ ) → 𝟘 {𝓥} → A
+33c33
+< !𝟘 : (A : 𝓤 ̇ ) → 𝟘 → A
+---
+> !𝟘 : (A : 𝓤 ̇ ) → 𝟘 {𝓥} → A
+37c37
+< is-empty X = X → 𝟘
+---
+> is-empty X = X → 𝟘 {universe-of X}
+40c40
+< ¬ X = X → 𝟘
+---
+> ¬ X = X → 𝟘 {universe-of X}
+42c42
+< data ℕ : 𝓤₀ ̇  where
+---
+> data ℕ {𝓤₀} : 𝓤₀ ̇  where
+44c44
+<  succ : ℕ → ℕ
+---
+>  succ : ℕ {𝓤₀} → ℕ
+48,49c48,49
+< ℕ-induction : (A : ℕ → 𝓤 ̇ )
+<             → A 0
+---
+> ℕ-induction : (A : ℕ {𝓤₀} → 𝓤 ̇ )
+>             → A zero
+56c56
+<   h 0        = a₀
+---
+>   h zero     = a₀
+62c62
+<             → ℕ → X
+---
+>             → ℕ {𝓤₀} → X
+69c69
+<             → ℕ → X
+---
+>             → ℕ {𝓤₀} → X
+75c75
+<   _+_  _×_ : ℕ → ℕ → ℕ
+---
+>   _+_  _×_ : ℕ {𝓤} → ℕ {𝓤} → ℕ {𝓤}
+77c77
+<   x + 0      = x
+---
+>   x + zero      = x
+80c80
+<   x × 0      = 0
+---
+>   x × zero      = zero
+88c88
+<   _+_  _×_ : ℕ → ℕ → ℕ
+---
+>   _+_  _×_ : ℕ {𝓤₀} → ℕ {𝓤₀} → ℕ {𝓤₀}
+98c98
+<     h = ℕ-iteration ℕ 0 (x +_)
+---
+>     h = ℕ-iteration ℕ zero (x +_)
+105,107c105,107
+<   _≤_ _≥_ : ℕ → ℕ → 𝓤₀ ̇
+<   0      ≤ y      = 𝟙
+<   succ x ≤ 0      = 𝟘
+---
+>   _≤_ _≥_ : ℕ {𝓤} → ℕ {𝓤} → 𝓤 ̇
+>   zero      ≤ y      = 𝟙
+>   succ x ≤ zero      = 𝟘
+131c131
+< 𝟚 = 𝟙 + 𝟙
+---
+> 𝟚 {𝓤₀} = 𝟙 {𝓤₀} + 𝟙 {𝓤₀}
+136c136
+< 𝟚-induction : (A : 𝟚 → 𝓤 ̇ ) → A ₀ → A ₁ → (n : 𝟚) → A n
+---
+> 𝟚-induction : (A : 𝟚 {𝓤₀} → 𝓤 ̇ ) → A ₀ → A ₁ → (n : 𝟚) → A n
+140c140
+< 𝟚-induction' : (A : 𝟚 → 𝓤 ̇ ) → A ₀ → A ₁ → (n : 𝟚) → A n
+---
+> 𝟚-induction' : (A : 𝟚 {𝓤₀} → 𝓤 ̇ ) → A ₀ → A ₁ → (n : 𝟚) → A n
+313c313
+< contrapositive f v a = v (f a)
+---
+> contrapositive f v a = 𝟘-recursion _ (v (f a))
+353,354c353,359
+< 𝟙-is-not-𝟘 : 𝟙 ≢ 𝟘
+< 𝟙-is-not-𝟘 p = Id→Fun p ⋆
+---
+> 𝟙-is-not-𝟘 : ∀ {𝓤₀} → 𝟙 ≢ 𝟘
+> 𝟙-is-not-𝟘 {𝓤₀} p = II
+>  where
+>   I : 𝟘 {𝓤₀}
+>   I = Id→Fun p ⋆
+>   II : 𝟘 {𝓤₀ ⁺}
+>   II = 𝟘-recursion (𝟘 {𝓤₀ ⁺}) I
+356,357c361,362
+< ₁-is-not-₀ : ₁ ≢ ₀
+< ₁-is-not-₀ p = 𝟙-is-not-𝟘 q
+---
+> ₁-is-not-₀ : ∀ {𝓤₀} → ₁ ≢ ₀
+> ₁-is-not-₀ {𝓤₀} p = II
+359c364
+<   f : 𝟚 → 𝓤₀ ̇
+---
+>   f : 𝟚 {𝓤₀} → 𝓤₀ ̇
+366,367c371,375
+< ₁-is-not-₀[not-an-MLTT-proof] : ¬(₁ ≡ ₀)
+< ₁-is-not-₀[not-an-MLTT-proof] ()
+---
+>   I : 𝟘 {𝓤₀ ⁺}
+>   I = 𝟙-is-not-𝟘 q
+> 
+>   II : 𝟘 {𝓤₀}
+>   II = 𝟘-recursion (𝟘 {𝓤₀}) I
+375c383
+< 𝟚-has-decidable-equality : has-decidable-equality 𝟚
+---
+> 𝟚-has-decidable-equality : has-decidable-equality (𝟚 {𝓤₀})
+381c389
+< not-zero-is-one : (n : 𝟚) → n ≢ ₀ → n ≡ ₁
+---
+> not-zero-is-one : (n : 𝟚 {𝓤₀}) → n ≢ ₀ → n ≡ ₁
+386c394
+< inl-inr-disjoint-images {𝓤} {𝓥} {X} {Y} p = 𝟙-is-not-𝟘 q
+---
+> inl-inr-disjoint-images {𝓤} {𝓥} {X} {Y} p = II
+394a403,408
+>   I : 𝟘 {𝓤 ⁺}
+>   I = 𝟙-is-not-𝟘 q
+> 
+>   II : 𝟘 {𝓤 ⊔ 𝓥}
+>   II = 𝟘-recursion 𝟘 I
+> 
+404,405c418,419
+<  is-prime : ℕ → 𝓤₀ ̇
+<  is-prime n = (n ≥ 2) × ((x y : ℕ) → x * y ≡ n → (x ≡ 1) + (x ≡ n))
+---
+>  is-prime : ℕ {𝓤₀} → 𝓤₀ ̇
+>  is-prime n = (n ≥ succ (succ zero)) × ((x y : ℕ) → x * y ≡ n → (x ≡ succ zero) + (x ≡ n))
+410c424
+<                                            × is-prime (p ∔ 2)
+---
+>                                            × is-prime (p ∔ (succ (succ zero)))
+412,413c426,427
+< positive-not-zero : (x : ℕ) → succ x ≢ 0
+< positive-not-zero x p = 𝟙-is-not-𝟘 (g p)
+---
+> positive-not-zero : (x : ℕ {𝓤₀}) → succ x ≢ zero
+> positive-not-zero {𝓤₀} x p = 𝟘-recursion _ (𝟙-is-not-𝟘 (g p))
+415,416c429,430
+<   f : ℕ → 𝓤₀ ̇
+<   f 0        = 𝟘
+---
+>   f : ℕ {𝓤₀} → 𝓤₀ ̇
+>   f zero        = 𝟘
+419c433
+<   g : succ x ≡ 0 → 𝟙 ≡ 𝟘
+---
+>   g : succ x ≡ zero → 𝟙 ≡ 𝟘
+422,423c436,437
+< pred : ℕ → ℕ
+< pred 0        = 0
+---
+> pred : ℕ {𝓤₀} → ℕ
+> pred zero        = zero
+426c440
+< succ-lc : {x y : ℕ} → succ x ≡ succ y → x ≡ y
+---
+> succ-lc : {x y : ℕ {𝓤₀}} → succ x ≡ succ y → x ≡ y
+429,432c443,446
+< ℕ-has-decidable-equality : has-decidable-equality ℕ
+< ℕ-has-decidable-equality 0 0               = inl (refl 0)
+< ℕ-has-decidable-equality 0 (succ y)        = inr (≢-sym (positive-not-zero y))
+< ℕ-has-decidable-equality (succ x) 0        = inr (positive-not-zero x)
+---
+> ℕ-has-decidable-equality : has-decidable-equality (ℕ {𝓤₀})
+> ℕ-has-decidable-equality zero zero               = inl (refl zero)
+> ℕ-has-decidable-equality zero (succ y)        = inr (≢-sym (positive-not-zero y))
+> ℕ-has-decidable-equality (succ x) zero        = inr (positive-not-zero x)
+444c458
+<   +-assoc : (x y z : ℕ) → (x ∔ y) ∔ z ≡ x ∔ (y ∔ z)
+---
+>   +-assoc : (x y z : (ℕ {𝓤₀})) → (x ∔ y) ∔ z ≡ x ∔ (y ∔ z)
+446,447c460,461
+<   +-assoc x y 0        = (x ∔ y) ∔ 0 ≡⟨ refl _ ⟩
+<                          x ∔ (y ∔ 0) ∎
+---
+>   +-assoc x y zero        = (x ∔ y) ∔ zero ≡⟨ refl _ ⟩
+>                          x ∔ (y ∔ zero) ∎
+457c471
+<   +-assoc' : (x y z : ℕ) → (x ∔ y) ∔ z ≡ x ∔ (y ∔ z)
+---
+>   +-assoc' : (x y z : (ℕ {𝓤₀})) → (x ∔ y) ∔ z ≡ x ∔ (y ∔ z)
+461c475
+<   +-base-on-first : (x : ℕ) → 0 ∔ x ≡ x
+---
+>   +-base-on-first : (x : (ℕ {𝓤₀})) → zero ∔ x ≡ x
+463c477
+<   +-base-on-first 0        = refl 0
+---
+>   +-base-on-first zero        = refl zero
+465,466c479,480
+<   +-base-on-first (succ x) = 0 ∔ succ x   ≡⟨ refl _     ⟩
+<                              succ (0 ∔ x) ≡⟨ ap succ IH ⟩
+---
+>   +-base-on-first (succ x) = zero ∔ succ x   ≡⟨ refl _     ⟩
+>                              succ (zero ∔ x) ≡⟨ ap succ IH ⟩
+469c483
+<     IH : 0 ∔ x ≡ x
+---
+>     IH : zero ∔ x ≡ x
+472c486
+<   +-step-on-first : (x y : ℕ) → succ x ∔ y ≡ succ (x ∔ y)
+---
+>   +-step-on-first : (x y : (ℕ {𝓤₀})) → succ x ∔ y ≡ succ (x ∔ y)
+483c497
+<   +-comm : (x y : ℕ) → x ∔ y ≡ y ∔ x
+---
+>   +-comm : (x y : (ℕ {𝓤₀})) → x ∔ y ≡ y ∔ x
+485c499
+<   +-comm 0 y = 0 ∔ y ≡⟨ +-base-on-first y ⟩
+---
+>   +-comm zero y = zero ∔ y ≡⟨ +-base-on-first y ⟩
+487c501
+<                y ∔ 0 ∎
+---
+>                y ∔ zero ∎
+497c511
+<   +-lc : (x y z : ℕ) → x ∔ y ≡ x ∔ z → y ≡ z
+---
+>   +-lc : (x y z : (ℕ {𝓤₀})) → x ∔ y ≡ x ∔ z → y ≡ z
+499,501c513,515
+<   +-lc 0        y z p = y     ≡⟨ (+-base-on-first y)⁻¹ ⟩
+<                         0 ∔ y ≡⟨ p                     ⟩
+<                         0 ∔ z ≡⟨ +-base-on-first z     ⟩
+---
+>   +-lc zero        y z p = y     ≡⟨ (+-base-on-first y)⁻¹ ⟩
+>                         zero ∔ y ≡⟨ p                     ⟩
+>                         zero ∔ z ≡⟨ +-base-on-first z     ⟩
+514c528
+<   _≼_ : ℕ → ℕ → 𝓤₀ ̇
+---
+>   _≼_ : ℕ {𝓤₀} → ℕ → 𝓤₀ ̇
+517,521c531,535
+<   ≤-gives-≼ : (x y : ℕ) → x ≤ y → x ≼ y
+<   ≤-gives-≼ 0 0               l = 0 , refl 0
+<   ≤-gives-≼ 0 (succ y)        l = succ y , +-base-on-first (succ y)
+<   ≤-gives-≼ (succ x) 0        l = !𝟘 (succ x ≼ zero) l
+<   ≤-gives-≼ (succ x) (succ y) l = γ
+---
+>   ≤-gives-≼ : (x y : (ℕ {𝓤₀})) → x ≤ y → x ≼ y
+>   ≤-gives-≼ {𝓤₀} zero zero               l = zero , refl zero
+>   ≤-gives-≼ {𝓤₀} zero (succ y)        l = succ y , +-base-on-first (succ y)
+>   ≤-gives-≼ {𝓤₀} (succ x) zero        l = !𝟘 (succ x ≼ zero) l
+>   ≤-gives-≼ {𝓤₀} (succ x) (succ y) l = γ
+526c540
+<     z : ℕ
+---
+>     z : (ℕ {𝓤₀})
+537c551
+<   ≼-gives-≤ : (x y : ℕ) → x ≼ y → x ≤ y
+---
+>   ≼-gives-≤ : (x y : (ℕ {𝓤₀})) → x ≼ y → x ≤ y
+539c553
+<   ≼-gives-≤ 0 0               (z , p) = ⋆
+---
+>   ≼-gives-≤ zero zero               (z , p) = ⋆
+541c555
+<   ≼-gives-≤ 0 (succ y)        (z , p) = ⋆
+---
+>   ≼-gives-≤ zero (succ y)        (z , p) = ⋆
+543c557
+<   ≼-gives-≤ (succ x) 0        (z , p) = positive-not-zero (x ∔ z) q
+---
+>   ≼-gives-≤ (succ x) zero        (z , p) = positive-not-zero (x ∔ z) q
+558c572
+<   ≤-refl : (n : ℕ) → n ≤ n
+---
+>   ≤-refl : (n : (ℕ {𝓤₀})) → n ≤ n
+562c576
+<   ≤-trans : (l m n : ℕ) → l ≤ m → m ≤ n → l ≤ n
+---
+>   ≤-trans : (l m n : (ℕ {𝓤₀})) → l ≤ m → m ≤ n → l ≤ n
+568c582
+<   ≤-anti : (m n : ℕ) → m ≤ n → n ≤ m → m ≡ n
+---
+>   ≤-anti : (m n : (ℕ {𝓤₀})) → m ≤ n → n ≤ m → m ≡ n
+574c588
+<   ≤-succ : (n : ℕ) → n ≤ succ n
+---
+>   ≤-succ : (n : (ℕ {𝓤₀})) → n ≤ succ n
+578c592
+<   zero-minimal : (n : ℕ) → zero ≤ n
+---
+>   zero-minimal : (n : (ℕ {𝓤₀})) → zero ≤ n
+581c595
+<   unique-minimal : (n : ℕ) → n ≤ zero → n ≡ zero
+---
+>   unique-minimal : (n : (ℕ {𝓤₀})) → n ≤ zero → n ≡ zero
+585c599
+<   ≤-split : (m n : ℕ) → m ≤ succ n → (m ≤ n) + (m ≡ succ n)
+---
+>   ≤-split : (m n : (ℕ {𝓤₀})) → m ≤ succ n → (m ≤ n) + (m ≡ succ n)
+590c604
+<   _<_ : ℕ → ℕ → 𝓤₀ ̇
+---
+>   _<_ : (ℕ {𝓤₀}) → ℕ → 𝓤₀ ̇
+595c609
+<   not-<-gives-≥ : (m n : ℕ) → ¬(n < m) → m ≤ n
+---
+>   not-<-gives-≥ : (m n : (ℕ {𝓤₀})) → ¬(n < m) → m ≤ n
+600c614
+<   bounded-∀-next : (A : ℕ → 𝓤 ̇ ) (k : ℕ)
+---
+>   bounded-∀-next : (A : (ℕ {𝓤₀}) → 𝓤 ̇ ) (k : ℕ)
+615,616c629,630
+<   root : (ℕ → ℕ) → 𝓤₀ ̇
+<   root f = Σ n ꞉ ℕ , f n ≡ 0
+---
+>   root : ((ℕ {𝓤₀}) → ℕ {𝓤₀}) → 𝓤₀ ̇
+>   root {𝓤₀} f = Σ n ꞉ (ℕ {𝓤₀}) , f n ≡ zero
+618,619c632,633
+<   _has-no-root<_ : (ℕ → ℕ) → ℕ → 𝓤₀ ̇
+<   f has-no-root< k = (n : ℕ) → n < k → f n ≢ 0
+---
+>   _has-no-root<_ : ((ℕ {𝓤₀}) → ℕ {𝓤₀}) → ℕ → 𝓤₀ ̇
+>   _has-no-root<_ {𝓤₀} f k = (n : (ℕ {𝓤₀})) → n < k → f n ≢ zero
+621,622c635,636
+<   is-minimal-root : (ℕ → ℕ) → ℕ → 𝓤₀ ̇
+<   is-minimal-root f m = (f m ≡ 0) × (f has-no-root< m)
+---
+>   is-minimal-root : ((ℕ {𝓤₀}) → ℕ) → ℕ → 𝓤₀ ̇
+>   is-minimal-root f m = (f m ≡ zero) × (f has-no-root< m)
+624c638
+<   at-most-one-minimal-root : (f : ℕ → ℕ) (m n : ℕ)
+---
+>   at-most-one-minimal-root : (f : (ℕ {𝓤₀}) → ℕ) (m n : ℕ)
+638c652
+<   minimal-root : (ℕ → ℕ) → 𝓤₀ ̇
+---
+>   minimal-root : (ℕ {𝓤₀} → ℕ {𝓤₀}) → 𝓤₀ ̇
+641c655
+<   minimal-root-is-root : ∀ f → minimal-root f → root f
+---
+>   minimal-root-is-root : (f : ℕ {𝓤₀} → ℕ {𝓤₀})→ minimal-root f → root f
+644,645c658,659
+<   bounded-ℕ-search : ∀ k f → (minimal-root f) + (f has-no-root< k)
+<   bounded-ℕ-search zero f = inr (λ n → !𝟘 (f n ≢ 0))
+---
+>   bounded-ℕ-search : ∀ k (f : ℕ {𝓤₀} → ℕ {𝓤₀}) → (minimal-root f) + (f has-no-root< k)
+>   bounded-ℕ-search zero f = inr (λ n → !𝟘 (f n ≢ zero))
+655c669
+<     γ u = +-recursion γ₀ γ₁ (ℕ-has-decidable-equality (f k) 0)
+---
+>     γ u = +-recursion γ₀ γ₁ (ℕ-has-decidable-equality (f k) zero)
+657c671
+<       γ₀ : f k ≡ 0 → A (succ k) f
+---
+>       γ₀ : f k ≡ zero → A (succ k) f
+660,661c674,675
+<       γ₁ : f k ≢ 0 → A (succ k) f
+<       γ₁ v = inr (bounded-∀-next (λ n → f n ≢ 0) k v u)
+---
+>       γ₁ : f k ≢ zero → A (succ k) f
+>       γ₁ v = inr (bounded-∀-next (λ n → f n ≢ zero) k v u)
+663c677
+<   root-gives-minimal-root : ∀ f → root f → minimal-root f
+---
+>   root-gives-minimal-root : ∀ (f : ℕ {𝓤₀} → ℕ {𝓤₀}) → root f → minimal-root f
+678c692
+< 𝟙-is-singleton : is-singleton 𝟙
+---
+> 𝟙-is-singleton : is-singleton (𝟙 {𝓤₀})
+690c704
+< 𝟘-is-subsingleton : is-subsingleton 𝟘
+---
+> 𝟘-is-subsingleton : is-subsingleton (𝟘 {𝓤₀})
+698c712
+< 𝟙-is-subsingleton : is-subsingleton 𝟙
+---
+> 𝟙-is-subsingleton : is-subsingleton (𝟙 {𝓤₀})
+743c757
+< no-unicorns (X , i , f , g) = c
+---
+> no-unicorns (X , i , f , g) = 𝟘-recursion _ c
+893c907
+< data Color : 𝓤₀ ̇  where
+---
+> data Color {𝓤₀} : 𝓤₀ ̇  where
+952,953c966,967
+< _is-of-hlevel_ : 𝓤 ̇ → ℕ → 𝓤 ̇
+< X is-of-hlevel 0        = is-singleton X
+---
+> _is-of-hlevel_ : 𝓤 ̇ → ℕ {𝓤} → 𝓤 ̇
+> X is-of-hlevel zero        = is-singleton X
+989a1004
+> 
+1028c1043
+< 𝟘-is-set : is-set 𝟘
+---
+> 𝟘-is-set : is-set (𝟘 {𝓤₀})
+1031c1046
+< 𝟙-is-set : is-set 𝟙
+---
+> 𝟙-is-set : is-set (𝟙 {𝓤₀})
+1036c1051
+<                               → X is-of-hlevel 1
+---
+>                               → X is-of-hlevel (succ zero)
+1044c1059
+<                                     → X is-of-hlevel 1
+---
+>                                     → X is-of-hlevel (succ zero)
+1052c1067
+< sets-are-of-hlevel-2 : (X : 𝓤 ̇ ) → is-set X → X is-of-hlevel 2
+---
+> sets-are-of-hlevel-2 : (X : 𝓤 ̇ ) → is-set X → X is-of-hlevel (succ (succ zero))
+1055c1070
+<   g : ((x y : X) → is-subsingleton (x ≡ y)) → (x y : X) → (x ≡ y) is-of-hlevel 1
+---
+>   g : ((x y : X) → is-subsingleton (x ≡ y)) → (x y : X) → (x ≡ y) is-of-hlevel (succ zero)
+1058c1073
+< types-of-hlevel-2-are-sets : (X : 𝓤 ̇ ) → X is-of-hlevel 2 → is-set X
+---
+> types-of-hlevel-2-are-sets : (X : 𝓤 ̇ ) → X is-of-hlevel (succ (succ zero)) → is-set X
+1061c1076
+<   f : ((x y : X) → (x ≡ y) is-of-hlevel 1) → (x y : X) → is-subsingleton (x ≡ y)
+---
+>   f : ((x y : X) → (x ≡ y) is-of-hlevel (succ zero)) → (x y : X) → is-subsingleton (x ≡ y)
+1064c1079
+< hlevel-upper : (X : 𝓤 ̇ ) (n : ℕ) → X is-of-hlevel n → X is-of-hlevel (succ n)
+---
+> hlevel-upper : (X : 𝓤 ̇ ) (n : ℕ {𝓤}) → X is-of-hlevel n → X is-of-hlevel (succ n)
+1078,1079c1093,1094
+< _has-minimal-hlevel_ : 𝓤 ̇ → ℕ → 𝓤 ̇
+< X has-minimal-hlevel 0        = X is-of-hlevel 0
+---
+> _has-minimal-hlevel_ : 𝓤 ̇ → ℕ {𝓤} → 𝓤 ̇
+> X has-minimal-hlevel zero        = X is-of-hlevel zero
+1083c1098
+< X has-minimal-hlevel-∞ = (n : ℕ) → ¬(X is-of-hlevel n)
+---
+> _has-minimal-hlevel-∞ {𝓤} X = (n : ℕ {𝓤}) → ¬(X is-of-hlevel n)
+1101c1116
+< ℕ-is-set : is-set ℕ
+---
+> ℕ-is-set : is-set (ℕ {𝓤₀})
+1104c1119
+< 𝟚-is-set : is-set 𝟚
+---
+> 𝟚-is-set : is-set (𝟚 {𝓤₀})
+1527c1542
+< swap₂ : 𝟚 → 𝟚
+---
+> swap₂ : 𝟚 {𝓤₀} → 𝟚 {𝓤₀}
+1531c1546
+< swap₂-involutive : (n : 𝟚) → swap₂ (swap₂ n) ≡ n
+---
+> swap₂-involutive : (n : 𝟚 {𝓤₀}) → swap₂ (swap₂ n) ≡ n
+1535,1537c1550,1552
+< swap₂-is-equiv : is-equiv swap₂
+< swap₂-is-equiv = invertibles-are-equivs
+<                   swap₂
+---
+> swap₂-is-equiv : ∀ {𝓤₀} → is-equiv swap₂
+> swap₂-is-equiv {𝓤₀} = invertibles-are-equivs
+>                   (swap₂ {𝓤₀})
+1540c1555
+< module example-of-a-nonset (ua : is-univalent 𝓤₀) where
+---
+> module example-of-a-nonset {𝓤₀ : Universe} (ua : is-univalent 𝓤₀) where
+1542c1557
+<  e₀ e₁ : 𝟚 ≃ 𝟚
+---
+>  e₀ e₁ : 𝟚 {𝓤₀} ≃ 𝟚
+1560c1575
+<  p₀-is-not-p₁ q = e₀-is-not-e₁ r
+---
+>  p₀-is-not-p₁ q = 𝟘-recursion 𝟘 (e₀-is-not-e₁ r)
+3096c3111
+<          → ∃! h ꞉ (ℕ → Y), (h 0 ≡ y₀) × (h ∘ succ ∼ g ∘ h)
+---
+>          → ∃! h ꞉ (ℕ  {𝓤₀} → Y), (h zero ≡ y₀) × (h ∘ succ ∼ g ∘ h)
+3098c3113
+< ℕ-is-nno {𝓤} hfe Y y₀ g = γ
+---
+> ℕ-is-nno {𝓤₀} {𝓤} hfe Y y₀ g = γ
+3101c3116
+<   lemma₀ : (h : ℕ → Y) → ((h 0 ≡ y₀) × (h ∘ succ ∼ g ∘ h)) ◁ (h ∼ ℕ-iteration Y y₀ g)
+---
+>   lemma₀ : (h : ℕ {𝓤₀} → Y) → ((h zero ≡ y₀) × (h ∘ succ ∼ g ∘ h)) ◁ (h ∼ ℕ-iteration Y y₀ g)
+3104,3105c3119,3120
+<     s : (h 0 ≡ y₀) × (h ∘ succ ∼ g ∘ h) → h ∼ ℕ-iteration Y y₀ g
+<     s (p , K) 0        = p
+---
+>     s : (h zero ≡ y₀) × (h ∘ succ ∼ g ∘ h) → h ∼ ℕ-iteration Y y₀ g
+>     s (p , K) zero        = p
+3111c3126
+<     r H = H 0 , (λ n → h (succ n)                  ≡⟨ H (succ n)     ⟩
+---
+>     r H = H zero , (λ n → h (succ n)                  ≡⟨ H (succ n)     ⟩
+3115c3130
+<     η : (z : (h 0 ≡ y₀) × (h ∘ succ ∼ g ∘ h)) → r (s z) ≡ z
+---
+>     η : (z : (h zero ≡ y₀) × (h ∘ succ ∼ g ∘ h)) → r (s z) ≡ z
+3131c3146
+<   lemma₁ = λ h → (h 0 ≡ y₀) × (h ∘ succ ∼ g ∘ h) ◁⟨ lemma₀ h ⟩
+---
+>   lemma₁ = λ h → (h zero ≡ y₀) × (h ∘ succ ∼ g ∘ h) ◁⟨ lemma₀ h ⟩
+3137c3152
+<   lemma₂ : (Σ h ꞉ (ℕ → Y), (h 0 ≡ y₀) × (h ∘ succ ∼ g ∘ h))
+---
+>   lemma₂ : (Σ h ꞉ (ℕ → Y), (h zero ≡ y₀) × (h ∘ succ ∼ g ∘ h))
+3142c3157
+<   γ : is-singleton (Σ h ꞉ (ℕ → Y), (h 0 ≡ y₀) × (h ∘ succ ∼ g ∘ h))
+---
+>   γ : is-singleton (Σ h ꞉ (ℕ → Y), (h zero ≡ y₀) × (h ∘ succ ∼ g ∘ h))
+3147c3162
+< module finite-types (hfe : hfunext 𝓤₀ 𝓤₁) where
+---
+> module finite-types (hfe : hfunext 𝓤₀ (𝓤₀ ⁺)) where
+3150,3151c3165,3166
+<                , (Fin 0 ≡ 𝟘)
+<                × ((n : ℕ) → Fin (succ  n) ≡ Fin n + 𝟙)
+---
+>                , (Fin zero ≡ (𝟘 {𝓤₀}))
+>                × ((n : ℕ) → Fin (succ  n) ≡ Fin n + (𝟙 {𝓤₀}))
+3153c3168
+<  fin = ℕ-is-nno hfe (𝓤₀ ̇ ) 𝟘 (_+ 𝟙)
+---
+>  fin = ℕ-is-nno hfe (𝓤₀ ̇ ) (𝟘 {𝓤₀}) (_+ (𝟙 {𝓤₀}))
+3158c3173
+<  Fin-equation₀ : Fin 0 ≡ 𝟘
+---
+>  Fin-equation₀ : Fin zero ≡ (𝟘 {𝓤₀})
+3161c3176
+<  Fin-equation-succ : Fin ∘ succ ≡ λ n → Fin n + 𝟙
+---
+>  Fin-equation-succ : Fin ∘ succ ≡ λ n → Fin n + (𝟙 {𝓤₀})
+3164c3179
+<  Fin-equation-succ' : (n : ℕ) → Fin (succ n) ≡ Fin n + 𝟙
+---
+>  Fin-equation-succ' : (n : ℕ) → Fin (succ n) ≡ Fin n + (𝟙 {𝓤₀})
+3167c3182
+<  Fin-equation₁ : Fin 1 ≡ 𝟘 + 𝟙
+---
+>  Fin-equation₁ : Fin (succ zero) ≡ (𝟘 {𝓤₀}) + (𝟙 {𝓤₀})
+3170c3185
+<  Fin-equation₂ : Fin 2 ≡ (𝟘 + 𝟙) + 𝟙
+---
+>  Fin-equation₂ : Fin (succ (succ zero)) ≡ ((𝟘 {𝓤₀}) + (𝟙 {𝓤₀})) + (𝟙 {𝓤₀})
+3173c3188
+<  Fin-equation₃ : Fin 3 ≡ ((𝟘 + 𝟙) + 𝟙) + 𝟙
+---
+>  Fin-equation₃ : Fin (succ (succ (succ zero))) ≡ (((𝟘 {𝓤₀}) + (𝟙 {𝓤₀})) + (𝟙 {𝓤₀})) + (𝟙 {𝓤₀})
+3557c3572
+< emptiness-is-subsingleton : dfunext 𝓤 𝓤₀ → (X : 𝓤 ̇ )
+---
+> emptiness-is-subsingleton : dfunext 𝓤 𝓤 → (X : 𝓤 ̇ )
+3565c3580
+<                   → (P → Q → 𝟘) → is-subsingleton (P + Q)
+---
+>                   → (P → Q → (𝟘 {𝓤₀})) → is-subsingleton (P + Q)
+3567c3582
+< +-is-subsingleton {𝓤} {𝓥} {P} {Q} i j f = γ
+---
+> +-is-subsingleton {𝓤} {𝓥} {𝓤₀} {P} {Q} i j f = γ
+3575c3590
+< +-is-subsingleton' : dfunext 𝓤 𝓤₀
+---
+> +-is-subsingleton' : dfunext 𝓤 𝓤
+3584c3599
+<                    → dfunext 𝓤 𝓤₀
+---
+>                    → dfunext 𝓤 𝓤
+4819c4834
+<                                            (ℕ-is-set (f m) 0)
+---
+>                                            (ℕ-is-set (f m) zero)
+4836c4851
+<  μ-property₀ : (f : ℕ → ℕ) → (Σ n ꞉ ℕ , f n ≡ 0) → is-defined μ f
+---
+>  μ-property₀ : (f : ℕ → ℕ) → (Σ n ꞉ ℕ , f n ≡ zero) → is-defined μ f
+4840,4841c4855,4856
+<              → (f (μ [ f , i ]) ≡ 0)
+<              × ((n : ℕ) → n < μ [ f , i ] → f n ≢ 0)
+---
+>              → (f (μ [ f , i ]) ≡ zero)
+>              × ((n : ℕ) → n < μ [ f , i ] → f n ≢ zero)
+5002d5016
+< 
+5004a5019
+> 
+5259c5274
+<   i : is-singleton (Lift 𝓤 𝟙)
+---
+>   i : is-singleton (Lift 𝓤 (𝟙 {𝓤}))
+7814c7829
+<  μρ : (f : ℕ → ℕ) → root f → root f
+---
+>  μρ : (f : ℕ {𝓤₀} → ℕ {𝓤₀}) → root f → root f
+7817c7832
+<  μρ-root : (f : ℕ → ℕ) → root f → ℕ
+---
+>  μρ-root : (f : ℕ {𝓤₀} → ℕ {𝓤₀}) → root f → ℕ {𝓤₀}
+7820c7835
+<  μρ-root-is-root : (f : ℕ → ℕ) (r : root f) → f (μρ-root f r) ≡ 0
+---
+>  μρ-root-is-root : (f : ℕ {𝓤₀} → ℕ {𝓤₀}) (r : root f) → f (μρ-root f r) ≡ zero
+7823,7824c7838,7839
+<  μρ-root-minimal : (f : ℕ → ℕ) (m : ℕ) (p : f m ≡ 0)
+<                  → (n : ℕ) → f n ≡ 0 → μρ-root f (m , p) ≤ n
+---
+>  μρ-root-minimal : (f : ℕ {𝓤₀} → ℕ {𝓤₀}) (m : ℕ {𝓤₀}) (p : f m ≡ zero)
+>                  → (n : ℕ {𝓤₀}) → f n ≡ zero → μρ-root f (m , p) ≤ n
+7828c7843
+<    φ : ¬(f n ≢ 0) → ¬(n < μρ-root f (m , p))
+---
+>    φ : ¬(f n ≢ zero) → ¬(n < μρ-root f (m , p))
+7832c7847
+<    γ = φ (dni (f n ≡ 0) q)
+---
+>    γ = φ (dni (f n ≡ zero) q)
+7834,7835c7849,7850
+<  μρ-wconstant : (f : ℕ → ℕ) → wconstant (μρ f)
+<  μρ-wconstant f (n , p) (n' , p') = r
+---
+>  μρ-wconstant : (f : ℕ {𝓤₀} → ℕ {𝓤₀}) → wconstant (μρ f)
+>  μρ-wconstant {𝓤₀} f (n , p) (n' , p') = r
+7837c7852
+<    m m' : ℕ
+---
+>    m m' : ℕ {𝓤₀}
+7851c7866
+<    r = to-subtype-≡ (λ _ → ℕ-is-set (f _) 0) q
+---
+>    r = to-subtype-≡ (λ _ → ℕ-is-set (f _) zero) q
+7853c7868
+<  find-existing-root : (f : ℕ → ℕ) → is-inhabited (root f) → root f
+---
+>  find-existing-root : (f : ℕ {𝓤₀} → ℕ {𝓤₀}) → is-inhabited (root f) → root f
+7865c7880
+<  module find-existing-root-example where
+---
+>  module find-existing-root-example {𝓤₀ : Universe} where
+7867,7875c7882,7890
+<   f : ℕ → ℕ
+<   f 0 = 1
+<   f 1 = 1
+<   f 2 = 0
+<   f 3 = 1
+<   f 4 = 0
+<   f 5 = 1
+<   f 6 = 1
+<   f 7 = 0
+---
+>   f : ℕ {𝓤₀} → ℕ {𝓤₀}
+>   f zero = (succ zero)
+>   f (succ zero) = (succ zero)
+>   f (succ (succ zero)) = zero
+>   f (succ (succ (succ zero))) = (succ zero)
+>   f (succ (succ (succ (succ zero)))) = zero
+>   f (succ (succ (succ (succ (succ zero))))) = (succ zero)
+>   f (succ (succ (succ (succ (succ (succ zero)))))) = (succ zero)
+>   f (succ (succ (succ (succ (succ (succ (succ zero))))))) = zero
+7879c7894
+<   root-existence = inhabited-intro (8 , refl 0)
+---
+>   root-existence = inhabited-intro ((succ (succ (succ (succ (succ (succ (succ (succ zero)))))))) , refl zero)
+7884c7899
+<   x : ℕ
+---
+>   x : ℕ {𝓤₀}
+7887c7902
+<   x-is-root : f x ≡ 0
+---
+>   x-is-root : f x ≡ zero
+7890c7905
+<   p : x ≡ 2
+---
+>   p : x ≡ (succ (succ zero))
+7901,7903c7916,7918
+<  find-∥∥-existing-root : (f : ℕ → ℕ)
+<                        → (∃ n ꞉ ℕ , f n ≡ 0)
+<                        →  Σ n ꞉ ℕ , f n ≡ 0
+---
+>  find-∥∥-existing-root : (f : ℕ {𝓤₀} → ℕ {𝓤₀})
+>                        → (∃ n ꞉ ℕ {𝓤₀} , f n ≡ zero)
+>                        →  Σ n ꞉ ℕ {𝓤₀} , f n ≡ zero
+7919c7934
+<  module find-∥∥-existing-root-example where
+---
+>  module find-∥∥-existing-root-example {𝓤₀ : Universe} where
+7921,7929c7936,7944
+<   f : ℕ → ℕ
+<   f 0 = 1
+<   f 1 = 1
+<   f 2 = 0
+<   f 3 = 1
+<   f 4 = 0
+<   f 5 = 1
+<   f 6 = 1
+<   f 7 = 0
+---
+>   f : ℕ {𝓤₀} → ℕ {𝓤₀}
+>   f zero = (succ zero)
+>   f (succ zero) = (succ zero)
+>   f (succ (succ zero)) = zero
+>   f (succ (succ (succ zero))) = (succ zero)
+>   f (succ (succ (succ (succ zero)))) = zero
+>   f (succ (succ (succ (succ (succ zero))))) = (succ zero)
+>   f (succ (succ (succ (succ (succ (succ zero)))))) = (succ zero)
+>   f (succ (succ (succ (succ (succ (succ (succ zero))))))) = zero
+7933c7948
+<   root-∥∥-existence = ∣ 8 , refl 0 ∣
+---
+>   root-∥∥-existence = ∣ (succ (succ (succ (succ (succ (succ (succ (succ zero)))))))) , refl zero ∣
+7938c7953
+<   x : ℕ
+---
+>   x : ℕ {𝓤₀}
+7941c7956
+<   x-is-root : f x ≡ 0
+---
+>   x-is-root : f x ≡ zero
+7948c7963
+<   NB = refl _
+---
+>   NB = refl (find-∥∥-existing-root f)
+7950c7965
+<   p : x ≡ 2
+---
+>   p : x ≡ (succ (succ zero))
+7955c7970,7971
+<             (8 , refl _))
+---
+>             ((succ (succ (succ (succ (succ (succ (succ (succ zero)))))))) , refl _))
+> 
+8028,8031c8044,8047
+<  is-left-noetherian 𝓡 = (I : ℕ → 𝓟 ⟨ 𝓡 ⟩)
+<                       → ((n : ℕ) → is-left-ideal 𝓡 (I n))
+<                       → ((n : ℕ) → I n ⊆ I (succ n))
+<                       → ∃ m ꞉ ℕ , ((n : ℕ) → m ≤ n → I m ≡ I n)
+---
+>  is-left-noetherian 𝓡 = (I : ℕ {𝓤} → 𝓟 ⟨ 𝓡 ⟩)
+>                       → ((n : ℕ {𝓤}) → is-left-ideal 𝓡 (I n))
+>                       → ((n : ℕ {𝓤}) → I n ⊆ I (succ n))
+>                       → ∃ m ꞉ ℕ {𝓤} , ((n : ℕ {𝓤}) → m ≤ n → I m ≡ I n)
+8420,8422c8436,8438
+<   decidable-equality-criterion : {X : 𝓤 ̇ } (α : 𝟚 → X)
+<                                → ((x : X) → (∃ n ꞉ 𝟚 , α n ≡ x)
+<                                           → (Σ n ꞉ 𝟚 , α n ≡ x))
+---
+>   decidable-equality-criterion : {X : 𝓤 ̇ } (α : 𝟚 {𝓤₀} → X)
+>                                → ((x : X) → (∃ n ꞉ 𝟚 {𝓤₀} , α n ≡ x)
+>                                           → (Σ n ꞉ 𝟚 {𝓤₀} , α n ≡ x))
+8425c8441
+<   decidable-equality-criterion α c = γ d
+---
+>   decidable-equality-criterion {𝓤} {𝓤₀} α c = γ d
+8427c8443
+<     r : 𝟚 → image α
+---
+>     r : 𝟚 {𝓤₀} → image α
+8430c8446
+<     σ : (y : image α) → Σ n ꞉ 𝟚 , r n ≡ y
+---
+>     σ : (y : image α) → Σ n ꞉ 𝟚 {𝓤₀} , r n ≡ y
+8433c8449
+<       u : Σ n ꞉ 𝟚 , α n ≡ x
+---
+>       u : Σ n ꞉ 𝟚 {𝓤₀} , α n ≡ x
+8436c8452
+<       f : (Σ n ꞉ 𝟚 , α n ≡ x) → Σ n ꞉ 𝟚 , r n ≡ (x , t)
+---
+>       f : (Σ n ꞉ 𝟚 {𝓤₀} , α n ≡ x) → Σ n ꞉ 𝟚 {𝓤₀} , r n ≡ (x , t)
+8439c8455
+<     s : image α → 𝟚
+---
+>     s : image α → 𝟚 {𝓤₀}
+8448c8464
+<     αr : {m n : 𝟚} → α m ≡ α n → r m ≡ r n
+---
+>     αr : {m n : 𝟚 {𝓤₀}} → α m ≡ α n → r m ≡ r n
+8451c8467
+<     rα : {m n : 𝟚} → r m ≡ r n → α m ≡ α n
+---
+>     rα : {m n : 𝟚 {𝓤₀}} → r m ≡ r n → α m ≡ α n
+8454c8470
+<     αs : {m n : 𝟚} → α m ≡ α n → s (r m) ≡ s (r n)
+---
+>     αs : {m n : 𝟚 {𝓤₀}} → α m ≡ α n → s (r m) ≡ s (r n)
+8457c8473
+<     sα : {m n : 𝟚} → s (r m) ≡ s (r n) → α m ≡ α n
+---
+>     sα : {m n : 𝟚 {𝓤₀}} → s (r m) ≡ s (r n) → α m ≡ α n
+8472c8488
+<     α : 𝟚 → X
+---
+>     α : 𝟚 {𝓤} → X
+8477c8493
+<     A x = Σ n ꞉ 𝟚 , α n ≡ x
+---
+>     A x = Σ n ꞉ 𝟚 {𝓤} , α n ≡ x
+8498c8514
+<     ⊤ = (Lift 𝓤 𝟙 , equiv-to-subsingleton (Lift-≃ 𝟙) 𝟙-is-subsingleton)
+---
+>     ⊤ = (𝟙 {𝓤} , 𝟙-is-subsingleton)
+8508c8524
+<       γ (inl r) = inl (Id→fun s (lift ⋆))
+---
+>       γ (inl r) = inl (Id→fun s ⋆)
+8510c8526
+<         s : Lift 𝓤 𝟙 ≡ P
+---
+>         s : 𝟙 ≡ P
+8516c8532
+<         f p = Ω-ext hunapply pe (λ (_ : Lift 𝓤 𝟙) → p) (λ (_ : P) → lift ⋆)
+---
+>         f p = Ω-ext hunapply pe (λ _ → p) (λ _ → ⋆)
+8598c8614
+<                                                 → 𝟘
+---
+>                                                 → ∀ {𝓤₀} → 𝟘 {𝓤₀ ⁺}
+8600c8616
+<   global-∥∥-choice-inconsistent-with-univalence g ua = γ (g 𝓤₁) (ua 𝓤₀)
+---
+>   global-∥∥-choice-inconsistent-with-univalence g ua {𝓤₀} = γ (g (𝓤₀ ⁺)) (ua 𝓤₀)
+8604c8620
+<     γ : global-∥∥-choice 𝓤₁ → is-univalent 𝓤₀ → 𝟘
+---
+>     γ : global-∥∥-choice (𝓤₀ ⁺) → is-univalent 𝓤₀ → 𝟘 {𝓤₀ ⁺}
+8609c8625
+<                                              → 𝟘
+---
+>                                              → ∀ {𝓤₀} → (𝟘 {𝓤₀ ⁺})
+8647,8648d8662
+< is-small : 𝓤 ̇  → 𝓤 ⊔ 𝓤₁ ̇
+< is-small X = X has-size 𝓤₀
+8650,8651c8664,8666
+< all-propositions-are-small : ∀ 𝓤 → 𝓤 ⁺ ̇
+< all-propositions-are-small 𝓤 = (P : 𝓤 ̇ ) → is-prop P → is-small P
+---
+> {- Doesn't make sense any more
+> is-small : 𝓤 ̇  → 𝓤 ⊔ (𝓤₀ ⁺) ̇
+> is-small {𝓤} {𝓤₀} X = X has-size 𝓤₀
+8653c8668,8671
+< all-propositions-are-small-means-PR₀ : all-propositions-are-small 𝓤
+---
+> all-propositions-are-small : ∀ 𝓤₀ 𝓤 → (𝓤₀ ⁺) ⊔ (𝓤 ⁺) ̇
+> all-propositions-are-small 𝓤₀ 𝓤 = (P : 𝓤 ̇ ) → is-prop P → is-small {𝓤} {𝓤₀} P
+> 
+> all-propositions-are-small-means-PR₀ : all-propositions-are-small 𝓤₀ 𝓤
+8658,8659d8675
+< all-propositions-are-small-gives-PR : all-propositions-are-small 𝓤
+<                                     → propositional-resizing 𝓤 𝓥
+8661c8677,8680
+< all-propositions-are-small-gives-PR {𝓤} {𝓥} a P i = γ
+---
+> all-propositions-are-small-gives-PR : ∀ {𝓦 𝓥} → all-propositions-are-small 𝓦 𝓤
+>                                     → propositional-resizing 𝓤 (𝓦 ⊔ 𝓥)
+> 
+> all-propositions-are-small-gives-PR {𝓦} {𝓥} {𝓤} a P i = γ
+8663c8682
+<   δ : P has-size 𝓤₀
+---
+>   δ : P has-size 𝓥
+8670c8689
+< All-propositions-are-small = ∀ 𝓤 → all-propositions-are-small 𝓤
+---
+> All-propositions-are-small = ∀ 𝓤 → all-propositions-are-small {!!} 𝓤
+8680a8700
+> -}
+8705,8706c8725,8727
+< EM-gives-all-propositions-are-small : EM 𝓤 → all-propositions-are-small 𝓤
+< EM-gives-all-propositions-are-small em P i = γ
+---
+> 
+> EM-gives-all-propositions-are-small : EM 𝓤 → propositional-resizing 𝓤 𝓥
+> EM-gives-all-propositions-are-small {𝓤} {𝓥} em P i = γ
+8708c8729
+<    Q : P + ¬ P → 𝓤₀ ̇
+---
+>    Q : P + ¬ P → 𝓥 ̇
+8728c8749
+<    γ : is-small P
+---
+>    γ : P has-size 𝓥
+8730a8752
+> {- Doesn't make sense any more
+8733a8756
+> -}
+8813a8837
+> {- Doesn't make sense any more
+8817c8841
+<                           → Impredicativity 𝓤 𝓤₁
+---
+>                           → Impredicativity 𝓤 (𝓤₀ ⁺)
+8819,8820c8843,8845
+< PR-gives-impredicativity₁ {𝓤} pe fe = PR-gives-Impredicativity⁺
+<                                        pe fe (λ P i → upper-resizing 𝓤 P)
+---
+> PR-gives-impredicativity₁ {𝓤} {𝓤₀} pe fe = PR-gives-Impredicativity⁺
+>                                        pe fe (λ P i → upper-resizing {!𝓤!} P)
+> -}
+8821a8847
+> {- Doesn't make sense any more
+8826,8827c8852,8853
+<    → all-propositions-are-small 𝓤
+<    → Ω 𝓤 has-size 𝓤₁
+---
+>    → all-propositions-are-small 𝓤₀ 𝓤
+>    → Ω 𝓤 has-size (𝓤₀ ⁺)
+8829a8856
+> -}
+8838,8843d8864
+<   𝟙' : 𝓤 ̇
+<   𝟙' = Lift 𝓤 𝟙
+< 
+<   k : is-subsingleton 𝟙'
+<   k (lift ⋆) (lift ⋆) = refl (lift ⋆)
+< 
+8851c8872
+<   Q = down (𝟙' , k) ≡ down (P , i)
+---
+>   Q = down (𝟙 {𝓤} , 𝟙-is-subsingleton) ≡ down (P , i)
+8854c8875
+<   j = O-is-set (down (Lift 𝓤 𝟙 , k)) (down (P , i))
+---
+>   j = O-is-set (down (𝟙 {𝓤}, 𝟙-is-subsingleton)) (down (P , i))
+8859c8880
+<          (lift ⋆)
+---
+>          ⋆
+8864c8885
+<                     (pe k i (λ _ → p) (λ _ → lift ⋆)))
+---
+>                     (pe 𝟙-is-subsingleton i (λ _ → p) (λ _ → ⋆)))
+8946,8947c8967,8968
+<     𝟙ᵤ : 𝓤 ̇
+<     𝟙ᵤ = Lift 𝓤 𝟙
+---
+>     𝓐 : 𝓟𝓟 (𝟙 {𝓤})
+>     𝓐 = λ (A : 𝓟 𝟙) → P , i
+8949,8950c8970,8971
+<     ⋆ᵤ : 𝟙ᵤ
+<     ⋆ᵤ = lift ⋆
+---
+>     B : 𝓟 (𝟙 {𝓤})
+>     B = pr₁ (α 𝟙 𝓐)
+8952,8962c8973,8974
+<     𝟙ᵤ-is-subsingleton : is-subsingleton 𝟙ᵤ
+<     𝟙ᵤ-is-subsingleton = equiv-to-subsingleton (Lift-≃ 𝟙) 𝟙-is-subsingleton
+< 
+<     𝓐 : 𝓟𝓟 𝟙ᵤ
+<     𝓐 = λ (A : 𝓟 𝟙ᵤ) → P , i
+< 
+<     B : 𝓟 𝟙ᵤ
+<     B = pr₁ (α 𝟙ᵤ 𝓐)
+< 
+<     φ : (x : 𝟙ᵤ) → (x ∈ B) ⇔ (∃ A ꞉ 𝓟 𝟙ᵤ , (A ∈ 𝓐) × (x ∈ A))
+<     φ = pr₂ (α 𝟙ᵤ 𝓐)
+---
+>     φ : (x : 𝟙) → (x ∈ B) ⇔ (∃ A ꞉ 𝓟 𝟙 , (A ∈ 𝓐) × (x ∈ A))
+>     φ = pr₂ (α 𝟙 𝓐)
+8965c8977
+<     Q = ⋆ᵤ ∈ B
+---
+>     Q = ⋆ ∈ B
+8968c8980
+<     j = ∈-is-subsingleton B ⋆ᵤ
+---
+>     j = ∈-is-subsingleton B ⋆
+8973,8974c8985,8986
+<       a : Σ A ꞉ 𝓟 𝟙ᵤ , (A ∈ 𝓐) × (⋆ᵤ ∈ A)
+<       a = (λ (x : 𝟙ᵤ) → 𝟙ᵤ , 𝟙ᵤ-is-subsingleton) , p , ⋆ᵤ
+---
+>       a : Σ A ꞉ 𝓟 𝟙 , (A ∈ 𝓐) × (⋆ ∈ A)
+>       a = (λ (x : 𝟙) → 𝟙 , 𝟙-is-subsingleton) , p , ⋆
+8976,8977c8988,8989
+<       b : ⋆ᵤ ∈ B
+<       b = rl-implication (φ ⋆ᵤ) ∣ a ∣
+---
+>       b : ⋆ ∈ B
+>       b = rl-implication (φ ⋆) ∣ a ∣
+8982,8983c8994,8995
+<       a : ∃ A ꞉ 𝓟 𝟙ᵤ , (A ∈ 𝓐) × (⋆ᵤ ∈ A)
+<       a = lr-implication (φ ⋆ᵤ) q
+---
+>       a : ∃ A ꞉ 𝓟 𝟙 , (A ∈ 𝓐) × (⋆ ∈ A)
+>       a = lr-implication (φ ⋆) q
+8985c8997
+<       b : (Σ A ꞉ 𝓟 𝟙ᵤ , (A ∈ 𝓐) × (⋆ᵤ ∈ A)) → P
+---
+>       b : (Σ A ꞉ 𝓟 𝟙 , (A ∈ 𝓐) × (⋆ ∈ A)) → P
+9064c9076
+<   ∅    = λ x → (Lift _ 𝟘 , equiv-to-subsingleton (Lift-≃ 𝟘) 𝟘-is-subsingleton)
+---
+>   ∅    = λ x → (𝟘 , 𝟘-is-subsingleton)
+9066c9078
+<   full = λ x → (Lift _ 𝟙 , equiv-to-subsingleton (Lift-≃ 𝟙) 𝟙-is-subsingleton)
+---
+>   full = λ x → (𝟙 , 𝟙-is-subsingleton)
+9069c9081
+<   ∅-property X x = lower
+---
+>   ∅-property X x = !𝟘 𝟘
+9072c9084
+<   full-property X x = lift ⋆
+---
+>   full-property X x = ⋆
+9247,9248c9259,9260
+<   _≤'_ : ℕ → ℕ → 𝓤₀ ̇
+<   _≤'_ = ℕ-iteration (ℕ → 𝓤₀ ̇ ) (λ y → 𝟙)
+---
+>   _≤'_ : ℕ {𝓤₀} → ℕ {𝓤₀} → 𝓤₀ ̇
+>   _≤'_ {𝓤₀} = ℕ-iteration (ℕ {𝓤₀} → 𝓤₀ ̇ ) (λ y → 𝟙)
+9253,9255c9265,9267
+<   ≤-and-≤'-coincide : (x y : ℕ) → (x ≤ y) ≡ (x ≤' y)
+<   ≤-and-≤'-coincide 0 y = refl _
+<   ≤-and-≤'-coincide (succ x) 0 = refl _
+---
+>   ≤-and-≤'-coincide : (x y : ℕ {𝓤₀}) → (x ≤ y) ≡ (x ≤' y)
+>   ≤-and-≤'-coincide zero y = refl _
+>   ≤-and-≤'-coincide (succ x) zero = refl _
+9263,9264c9275,9276
+<   ≤-prop-valued : (x y : ℕ) → is-subsingleton (x ≤ y)
+<   ≤-prop-valued 0 y               = 𝟙-is-subsingleton
+---
+>   ≤-prop-valued : (x y : ℕ {𝓤₀}) → is-subsingleton (x ≤ y)
+>   ≤-prop-valued zero y               = 𝟙-is-subsingleton
+9268c9280
+<   ≼-prop-valued : (x y : ℕ) → is-subsingleton (x ≼ y)
+---
+>   ≼-prop-valued : (x y : ℕ {𝓤₀}) → is-subsingleton (x ≼ y)
+9279c9291
+<   ≤-charac : propext 𝓤₀ → (x y : ℕ) → (x ≤ y) ≡ (x ≼ y)
+---
+>   ≤-charac : propext 𝓤₀ → (x y : ℕ {𝓤₀}) → (x ≤ y) ≡ (x ≼ y)
+9284,9285c9296,9297
+<                                                   → is-subsingleton X ⇔ (X ↪ 𝟙)
+< the-subsingletons-are-the-subtypes-of-a-singleton X = φ , ψ
+---
+>                                                   → is-subsingleton X ⇔ (X ↪ 𝟙 {𝓤₀})
+> the-subsingletons-are-the-subtypes-of-a-singleton {𝓤₀} {𝓤} X = φ , ψ
+9310c9322
+<                                                    → is-subsingleton X ≡ (X ↪ 𝟙)
+---
+>                                                    → is-subsingleton X ≡ (X ↪ 𝟙 {𝓤})
+9402c9414
+< positive-cantors-diagonal : (e : ℕ → (ℕ → ℕ)) → Σ α ꞉ (ℕ → ℕ), ((n : ℕ) → α ≢ e n)
+---
+> positive-cantors-diagonal : (e : ℕ {𝓤₀} → (ℕ {𝓤₀} → ℕ {𝓤₀})) → Σ α ꞉ (ℕ {𝓤₀} → ℕ {𝓤₀}), ((n : ℕ {𝓤₀}) → α ≢ e n)
+9404c9416
+< cantors-diagonal : ¬(Σ e ꞉ (ℕ → (ℕ → ℕ)) , ((α : ℕ → ℕ) → Σ n ꞉ ℕ , α ≡ e n))
+---
+> cantors-diagonal : ¬(Σ e ꞉ (ℕ {𝓤₀} → (ℕ {𝓤₀} → ℕ {𝓤₀})) , ((α : ℕ {𝓤₀} → ℕ {𝓤₀}) → Σ n ꞉ ℕ {𝓤₀} , α ≡ e n))
+9408c9420
+< lifttwo : is-univalent 𝓤₀ → is-univalent 𝓤₁ → (𝟚 ≡ 𝟚) ≡ Lift 𝓤₁ 𝟚
+---
+> lifttwo : is-univalent 𝓤₀ → is-univalent (𝓤₀ ⁺) → (𝟚 ≡ 𝟚) ≡ Lift (𝓤₀ ⁺) 𝟚
+9415c9427
+< DNE-gives-EM : dfunext 𝓤 𝓤₀ → DNE 𝓤 → EM 𝓤
+---
+> DNE-gives-EM : dfunext 𝓤 𝓤 → DNE 𝓤 → EM 𝓤
+9426,9427c9438,9439
+< succ-no-fixed-point : (n : ℕ) → succ n ≢ n
+< succ-no-fixed-point 0        = positive-not-zero 0
+---
+> succ-no-fixed-point : (n : ℕ {𝓤₀}) → succ n ≢ n
+> succ-no-fixed-point zero        = positive-not-zero zero
+9438,9439c9450,9451
+<   sol : (e : ℕ → (ℕ → ℕ)) → Σ α ꞉ (ℕ → ℕ), ((n : ℕ) → α ≢ e n)
+<   sol e = (α , φ)
+---
+>   sol : (e : ℕ {𝓤₀} → (ℕ {𝓤₀} → ℕ {𝓤₀})) → Σ α ꞉ (ℕ {𝓤₀} → ℕ {𝓤₀}), ((n : ℕ {𝓤₀}) → α ≢ e n)
+>   sol {𝓤₀} e = (α , φ)
+9441c9453
+<     α : ℕ → ℕ
+---
+>     α : ℕ {𝓤₀} → ℕ {𝓤₀}
+9444c9456
+<     φ : (n : ℕ) → α ≢ e n
+---
+>     φ : (n : ℕ {𝓤₀}) → α ≢ e n
+9453,9454c9465,9466
+<   sol : ¬(Σ e ꞉ (ℕ → (ℕ → ℕ)) , ((α : ℕ → ℕ) → Σ n ꞉ ℕ , α ≡ e n))
+<   sol (e , γ) = c
+---
+>   sol : ¬(Σ e ꞉ (ℕ {𝓤₀} → (ℕ {𝓤₀} → ℕ {𝓤₀})) , ((α : ℕ {𝓤₀} → ℕ {𝓤₀}) → Σ n ꞉ ℕ {𝓤₀} , α ≡ e n))
+>   sol {𝓤₀} (e , γ) = c
+9456c9468
+<     α : ℕ → ℕ
+---
+>     α : ℕ {𝓤₀} → ℕ {𝓤₀}
+9459c9471
+<     φ : (n : ℕ) → α ≢ e n
+---
+>     φ : (n : ℕ {𝓤₀}) → α ≢ e n
+9462c9474
+<     b : Σ n ꞉ ℕ , α ≡ e n
+---
+>     b : Σ n ꞉ ℕ {𝓤₀} , α ≡ e n
+9470c9482
+<   sol : dfunext 𝓤₀ 𝓤₀ → (𝟚 ≃ 𝟚) ≃ 𝟚
+---
+>   sol : dfunext 𝓤₀ 𝓤₀ → (𝟚 {𝓤₀} ≃ 𝟚 {𝓤₀}) ≃ 𝟚 {𝓤₀}
+9523c9535
+< lifttwo = sol
+---
+> lifttwo {𝓤₀} = sol
+9525,9526c9537,9538
+<   sol : is-univalent 𝓤₀ → is-univalent 𝓤₁ → (𝟚 ≡ 𝟚) ≡ Lift 𝓤₁ 𝟚
+<   sol ua₀ ua₁ = Eq→Id ua₁ (𝟚 ≡ 𝟚) (Lift 𝓤₁ 𝟚) e
+---
+>   sol : is-univalent 𝓤₀ → is-univalent (𝓤₀ ⁺) → (𝟚 ≡ 𝟚) ≡ Lift (𝓤₀ ⁺) 𝟚
+>   sol ua₀ ua₁ = Eq→Id ua₁ (𝟚 ≡ 𝟚) (Lift (𝓤₀ ⁺) 𝟚) e
+9531c9543
+<         Lift 𝓤₁ 𝟚 ■
+---
+>         Lift (𝓤₀ ⁺) 𝟚 ■
+9533,9534c9545
+< hde-is-subsingleton : dfunext 𝓤 𝓤₀
+<                     → dfunext 𝓤 𝓤
+---
+> hde-is-subsingleton : dfunext 𝓤 𝓤
+9537c9548
+< hde-is-subsingleton fe₀ fe X h h' = c h h'
+---
+> hde-is-subsingleton fe X h h' = c h h'
+9540c9551
+<   a x y = +-is-subsingleton' fe₀ b
+---
+>   a x y = +-is-subsingleton' fe b
+9555c9566
+<   sol : dfunext 𝓤 𝓤₀ → DNE 𝓤 → EM 𝓤
+---
+>   sol : dfunext 𝓤 𝓤 → DNE 𝓤 → EM 𝓤
+9619d9629
+< 
