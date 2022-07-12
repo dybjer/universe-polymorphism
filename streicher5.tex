@@ -180,9 +180,9 @@ The argument is as follows. There is a natural forgetful map from the Tarski ver
 
 \section{An annotated type theory with Tarski style universes}
 
-We now present the system $T_1$ with an external hierarchy of Tarski style universes $\UU_n$ with decoding maps $\T_n$. For simplicity we only consider closure under $\Pi$-types.
+We now present the system $T_1$ of type theory with $\Pi$-types with annotated application and abstraction and an external hierarchy of Tarski style universes $\UU_n$ with decoding maps $\T_n$. For simplicity we only consider closure under $\Pi$-types. 
 
-The syntax for types is
+The syntax\footnote{PD: I suggest being consistent about whether to write e g $\T_n a$ or $\T_n(a)$, etc, and vote for the latter} for types is
 $$
 A,B~::=~\Pi~{A}~B~|~\UU_n~|~\T_n a
 $$
@@ -190,15 +190,20 @@ and the syntax for terms is
 $$
 a,b~::=~v_i~|~\APP(A,B,c,a)~|~\LAM(A,B,b)~|~\Pi^n~ a~b~|~\UU^k_n~|~\sT^k_n a~
 $$
+Note that we present a system with de Bruijn variables and implicit substitution.
 Here $v_i$ is a variable with de Bruijn index $i$. In this system, applications $\APP(A,B,c,a)$ and abstractions $\LAM(A,B,b)$ are annotated with the argument type $A$ and the result type family $B$. Moreover, $\Pi^n~ a~b$ are codes for $\Pi$-types in $\UU_n$, $\UU^k_n$ is the code for $\UU_k$ in $\UU_n$, where $k < n$, and $\sT^k_n a$ is the lifting of an element $a$ in $\UU_k$ to $\UU_n$. We thus consider a cumulative hierarchy of universes.
 
+The theory $T_1$ is set up to facilitate the construction of an initial category with families with extra structure for $\Pi$-types and a cumulative hierarchy of universes, see appendix. (We also need to define equality of contexts $\Gamma = \Gamma'$ and $\gamma = \gamma' : \Delta \to \Gamma$.) A proof of a similar construction has been formalized in Agda by Brunerie et al \cite{brunerie:initial}, who proved that a similar calculus is initial in a category of contextual categories with suitable extra structure. Note that initial categories with families (and contextual categories) with suitable extra structure can also be constructed in an alternative way from a calculus of explicit substitutions  \cite{casellan:tlca15}.
+
+In the following section we will define the theory $T_2$ of type theory with $\Pi$-types and a cumulative hierarchy of universes \`a la Russell. In this system the application $c\,a$ is not annotated and the abstraction n$\lambda A b$ is only annotated with the argument type $A$ and not the result family $B$. We will prove that $T_1$ and $T_2$ are isomorphic 
+category with families with extra structure for $\Pi$-types and a cumulative hierarchy of universes, and thus the $T_2$ is initial in this category too.
 \medskip
 
-We define renamings (weakenings?) $r$ and (one place?) substitutions $\sigma$:
+We define weakenings\footnote{PD: changed from "renamings"} $r$ and one place substitutions $\sigma$:
 $$
 r~::=~\pp~|~r^+~~~~~~~~~\sigma~::=~[a]~|~\sigma^+~~~~~~~~~~\alpha~::=~r~|~\sigma
 $$
-We first define the action of a renaming on types $Ar$ and terms $ar$ and then the action of a substitution on types $A\sigma$ and terms $a\sigma$ by induction on $A$ and $a$. 
+We first define the action of a weakening on types $Ar$ and terms $ar$ and then the action of a substitution on types $A\sigma$ and terms $a\sigma$ by induction on $A$ and $a$. 
 
 The actions on variables are
 $$
@@ -212,7 +217,6 @@ and $\APP(A,B,c,a)\alpha = \APP(A\alpha,B\alpha^+,c\alpha,a\alpha)$.
   We have $(B[a])\alpha = B\alpha^+[a\alpha]$ and $(b[a])\alpha = b\alpha^+[a\alpha]$.
 \end{lemma}
 
-
 \medskip
 
 The type system describes how to derive judgements of the form $\Gamma\vdash$ and $\Gamma\vdash J$ where $J$ is of the form
@@ -220,38 +224,44 @@ $A~\type$ or $a:A$ or $A=B$ or $a=b : A$.
 
 \medskip
 
-
 The judgment $\Gamma\vdash$ expresses that $\Gamma$ is a well-formed context. $\Gamma\vdash A$ expresses that $A$ is a type in context $\Gamma$.
 We may write it $A~\type~(\Gamma)$ and may omit the global context $\Gamma$.
 
 First, we have the following general typing rules. These are common to the present system and the Russell-style system to be presented later:
+\begin{figure}
+  \caption{Context formation rules and typing rules for variables}
 $$
 \frac{\Gamma\vdash A}{\Gamma.A\vdash}~~~~~~\frac{}{()\vdash}~~~~~~~
 \frac{\Gamma\vdash A}{\Gamma.A\vdash v_0:A\pp}~~~~~~~
 \frac{\Gamma\vdash v_i:A~~~~~~~\Gamma\vdash B}{\Gamma.B\vdash v_{i+1}:A\pp}~~~~~~~
 $$
+\end{figure}
 The typing rules for $\Pi$-types and universes are shown in Figure \ref{type-Tarski}.
 \footnote{PD: I propose to restructure the rules a little. First, we can show the general rules which are common to both systems. Then the rules for annotated $\Pi$-types. And finally, the rules for Tarski-style universes. Then we only need to show the rules for non-annotated $\Pi$-types and the rules for Russell-style universes in the following section.}
 
 \begin{figure}
-  \caption{Typing rules for Tarski-style}\label{type-Tarski}
+  \caption{Typing rules for annotated $\Pi$-types and Tarski-style universes}\label{type-Tarski}
+%$$
+%  \frac{A~\type}{v_0:A\pp~(A)}
+%  ~~~~~~
+%  \frac{v_i:A~~~~B~\type}{v_{i+1}:A\pp~(B)}
+%$$
 $$
-  \frac{A~\type}{v_0:A\pp~(A)}~~~~~~\frac{v_i:A~~~~B~\type}{v_{i+1}:A\pp~(B)}
+    \frac{A~\type~~~~~~B~\type~(A)}{\Pi~A~B~\type}
+ ~~~~~~~~~
+\frac{b:B~(A)}{\LAM(A,B,b):\Pi~A~B}
 ~~~~~~~~
-\frac{b:B~(A)}{\LAM(A,B,b):\Pi~A~B}~~~~~~~~
 \frac{c:\Pi~A~B~~~~~~a:A}
      {\APP(A,B,c,a):B[a]}
 $$
 $$
 \frac{}{\UU_n~\type}~~~~~~
 \frac{a:\UU_{n}}{\T_{n}(a)~\type}~~~~~~
-\frac{}{\UU^{k}_n:\UU_{k}}k<n
-~~~~~~~~~\frac{a:\UU_{k}}{\sT_{k}^{n}(a):\UU_{n}}k<n
-$$
-$$
-     \frac{A~\type~~~~~~B~\type~(A)}{\Pi~A~B~\type}~~~~~~~
 \frac{a:\UU_{n}~~~~~~b:\UU_n~(\T_{n}(a))}
-     {\Pi^{n} a b:\UU_{n}}~~~~~~~~~
+     {\Pi^{n} a b:\UU_{n}}
+        ~~~~~~~
+\frac{}{\UU^{n}_m:\UU_{n}}m<n
+~~~~~~~~~\frac{a:\UU_{m}}{\sT_{m}^{n}(a):\UU_{n}}m<n
 $$
 \end{figure}
 
@@ -263,10 +273,6 @@ The main conversion rules are shown in Figure \ref{conv-Tarski}.
 $$
 \frac{ a:A~~~~~~ A~ \conv~ B}{ a:B}~~~~~~~~~
 \frac{ a ~\conv~a':A~~~~~~ A  ~\conv~ B}{ a ~\conv~a':B}
-$$
-$$
-\frac{a~=~a':\UU_n}{\T_n(a)~=~\T_n(a')}~~~~~~
-\frac{a~=~a':\UU_n}{\sT_n^m(a)~=~\sT_n^m(a'):\UU_m}n<m
 $$
 $$
 \frac{A~=~B~~~~~A~=~C}{B~=~C}~~~~~~~~~\frac{A~\type}{A~=~A}~~~~~~~~~
@@ -282,23 +288,26 @@ $$
 $$
 \frac{b:B~(A)~~~~~~~~ a:A}{ \APP(A,B,\LAM(A,B,b),a)  ~\conv~ b[a]:B[a]}
 ~~~~~~~
-\frac{f\pp~v_0 = g\pp~v_0:B~(A)}{ f = g : \Pi~A~B}
+\frac{\APP(A,B,f\pp,v_0) = \APP(A,B,g\pp,v_0):B~(A)}{ f = g : \Pi~A~B}\footnote{PD: corrected to annotated $\APP$}
 $$
 $$
-\frac{a:\UU_n}{\T_m(\sT_{n}^{m}(a)) = \T_{n}(a)}n<m~~~~~~
-\frac{}{\sT_{m}^p(\sT_{n}^m(a)) = \sT_n^p(a)}{n<m<p}
-$$
-$$
-\frac{}{\sT_{n}^{m}~(\UU^{n}_k) = \UU^m_k}k<n<m~~~~~~~~~~\frac{}{\T_{k}({\UU^{k}_l}) = \UU_{l}}k<l
+\frac{a~=~a':\UU_n}{\T_n(a)~=~\T_n(a')}~~~~~~
+\frac{a~=~a':\UU_n}{\sT_n^p(a)~=~\sT_n^p(a'):\UU_p}n<p
 $$
 $$
 \frac{a:\UU_n~~~~~~b:\UU_n~(\T_n(a))}{\T_{n}~(\Pi^{n} a b) = \Pi~{\T_{n}(a)}~{\T_{n}(b)}}
-~~~~~~~~\frac{a:\UU_n~~~~~~b:\UU_n~(\T_n(a))}{\sT_{n}^{m}~(\Pi^{n} a b) = \Pi^{m} \sT_{n}^{m}(a) \sT_{n}^{m}(b)}n< m~
+~~~~~~~~\frac{a:\UU_n~~~~~~b:\UU_n~(\T_n(a))}{\sT_{n}^{p}~(\Pi^{n} a b) = \Pi^{p} \sT_{n}^{p}(a) \sT_{n}^{p}(b):\UU_p}n< p~
+$$
+$$
+\frac{}{\T_{n}({\UU^{n}_m}) = \UU_{m}}m<n~~~~~~~~~~ \frac{}{\sT_{n}^{p}~(\UU^{n}_m) = \UU^p_m:\UU_p}m<n<p
+$$
+$$
+\frac{a:\UU_m}{\T_n(\sT_{m}^{n}(a)) = \T_{m}(a)}n<m~~~~~~
+\frac{a:\UU_m}{\sT_{n}^p(\sT_{m}^n(a)) = \sT_m^p(a):\UU_p}{m<n<p}
 $$
 \end{figure}
 
-
- We define $\alpha:\Delta\rightarrow\Gamma$ by induction on $\alpha$.
+We define $\alpha:\Delta\rightarrow\Gamma$ by induction on $\alpha$.
 We have $\pp:\Gamma.A\rightarrow\Gamma$ and $[a]:\Gamma\rightarrow \Gamma.A$ and
 $\alpha^+:\Delta.A\alpha\rightarrow\Gamma.A$ if $\alpha:\Delta\rightarrow\Gamma$ and $\Gamma\vdash A~\type$.
 
@@ -370,6 +379,10 @@ $$
 ~~~~~~~
 \frac{f\pp~v_0 = g\pp~v_0:B~(A)}{ f = g : \Pi~A~B}
 $$
+$$
+\frac{a~=~a':\UU_n}{a~=~a'}\footnote{PD: added}~~~~~~
+\frac{a~=~a':\UU_n}{a~=~a':\UU_p}n<p\footnote{PD: added}
+$$
 \end{figure}
 
 
@@ -383,8 +396,8 @@ $$
 |\UU_n| = \UU_n~~~~~~~~|\Pi~A~B| = \Pi~|A|~|B|~~~~~~~~~|\T_n(a)| = |a|
 $$
 $$
-|\APP(A,B,c,a)| = |c|~|a|~~~~~~|v_i| = v_i~~~~~~|\LAM(A,B,b)| = \lambda~|A|~|b|~~~~~|\sT_k^n(a)| = |a|
-~~~~~~~|\UU^n_l| = \UU_l
+|\APP(A,B,c,a)| = |c|~|a|~~~~~~|v_i| = v_i~~~~~~|\LAM(A,B,b)| = \lambda~|A|~|b|~~~~~|\sT_m^n(a)| = |a|
+~~~~~~~|\UU^n_m| = \UU_m
 $$
 The following remark has a direct proof.
 
