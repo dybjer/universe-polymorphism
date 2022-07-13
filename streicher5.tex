@@ -343,20 +343,28 @@ The typing and conversion rules are in Figures \ref{type-Russell} and \ref{conv-
   \caption{Typing rules for Russell-style}\label{type-Russell}
 $$
   \frac{A~\type}{v_0:A\pp~(A)}~~~~~~\frac{v_n:A~~~~B~\type}{v_{n+1}:A\pp~(B)}
+$$
+$$
+\frac{A~\type~~~~~~B~\type~(A)}{\Pi~A~B~\type}
 ~~~~~~~\frac{b:B~(A)}{\lambda~A~ b:\Pi~A~B}~~~~~~~~
 \frac{c:\Pi~A~B~~~~~~a:A}{c~a:B[a]}~~~~~~
 $$     
 $$
 \frac{}{\UU_n~\type}~~~~~~
 \frac{A:\UU_{n}}{A~\type}
-~~~~~~\frac{A:\UU_{n}}{A:\UU_{n+1}}
-~~~~~~~
-\frac{}{\UU_l:\UU_{l+1}}
-$$
-$$
-\frac{A~\type~~~~~~B~\type~(A)}{\Pi~A~B~\type}~~~~~~~
+~~~~~~
 \frac{A:\UU_{n}~~~~~~B:\UU_n~(A)}
-     {\Pi~A~B:\UU_{n}}$$
+     {\Pi~A~B:\UU_{n}}
+~~~~~~~
+\frac{}{\UU_m:\UU_{n}}m<n
+~~~~~~~
+\frac{A:\UU_{n}}{A:\UU_{p}}n<p
+$$
+$$
+\frac{}{\UU_n:\UU_{n+1}}~~~~~~~
+\frac{A:\UU_{n}}{A:\UU_{n+1}}
+\footnote{PD: old versions, should we keep them}
+$$
 \end{figure}
 
 \begin{figure}
@@ -380,10 +388,11 @@ $$
 \frac{f\pp~v_0 = g\pp~v_0:B~(A)}{ f = g : \Pi~A~B}
 $$
 $$
-\frac{a~=~a':\UU_n}{a~=~a'}\footnote{PD: added}~~~~~~
-\frac{a~=~a':\UU_n}{a~=~a':\UU_p}n<p\footnote{PD: added}
+\frac{A~=~A':\UU_n}{A~=~A'}~~~~~~
+\frac{A~=~A':\UU_n}{A~=~A':\UU_p}n<p
 $$
 \end{figure}
+\footnote{PD: added the two last rules}
 
 
 
