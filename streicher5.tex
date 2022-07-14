@@ -182,7 +182,7 @@ on  basic properties of such a type system (such as subject reduction and normal
 in \cite{Streicher:semtt}, but they are now known to be provable
 for systems with a predicative hierarchy of universes \cite{coquand:sophia,abel:wroclaw,coq18}.
 
-The argument is as follows. There is a natural forgetful map from the Tarski version to the Russell version. Modulo the (known) meta-properties of both system, one can show that any Russell judgement can be lifted in a unique way to a Tarski judgement.
+The argument is as follows. There is a natural forgetful map from the Tarski version to the Russell version. Modulo the (known) meta-properties of both system, one can show that any Russell judgement can be lifted in a unique way to a Tarski judgement.\footnote{PD: Cf the sketch of a proof using the initial $\Pi\UU$-cwf of normal forms in {\tt initial-cwf-normal-forms.tex} in the same directory.}
 
 \section{An annotated type theory with Tarski style universes}
 
@@ -331,7 +331,7 @@ we can also show that $\Pi$ is one-to-one. An important consequence is closure u
 
 \begin{proof}
   We first get that $\LAM(A',B',b)$ has to be of type $\Pi~A~B$ and then that $\Pi~A~B~\conv~\Pi~A'~B'$.
-  Using $\Pi$ one-to-one, we get $A=A'$ and $B=B'~(A)$. We then have $b:B~(A)$ and $T = B[a]$.
+  Using that $\Pi$ is one-to-one, we get $A=A'$ and $B=B'~(A)$. We then have $b:B~(A)$ and $T = B[a]$.
   We deduce $b[a]:B[a]$ by substitution and Lemma \ref{subst} and $b[a]:T$ by the type equality rule.
 \end{proof}
 
@@ -440,7 +440,7 @@ The following remark has a direct proof.
 \end{lemma}
 
 The proof relies on the normalization property. First, it follows that $|\Gamma | \vdash |t|:|A|$ and $|\Gamma | \vdash |u|:|B|$. Then by normalization in $T_2$, $| t |$ and $| u |$ have a common normal form $v$  and by subject reduction
-$|\Gamma | \vdash v : |A|$ and $|\Gamma | \vdash v : |B|$. By inspecting the types of normal forms we conclude that either $|\Gamma | \vdash |A| = |B|$ or $|\Gamma | \vdash |A| = \UU_k$ and $|\Gamma | \vdash |B| = \UU_l$ and $|\Gamma | \vdash v :\UU_m$ with $m = \max(k,l)$. In the first case,  $|A|$ and $|B|$ have a common normal form $V$ and there is $V_1$ such that $| V_1 |  = V$. Hence, $\Gamma \vdash V_1 = A = B$ (why?). In the second case, $A = \UU_k$ and $B = \UU_l$ and $\sT_k^m(t) = \sT_l^m(u):\UU_m$.
+$|\Gamma | \vdash v : |A|$ and $|\Gamma | \vdash v : |B|$. By inspecting the types of normal forms in $T_2$ we conclude that either $|\Gamma | \vdash |A| = |B|$ or $|\Gamma | \vdash |A| = \UU_k$ and $|\Gamma | \vdash |B| = \UU_l$ and $|\Gamma | \vdash v :\UU_m$ with $m = \max(k,l)$. In the first case,  $|A|$ and $|B|$ have a common normal form $V$ and there is $V_1$ such that $| V_1 |  = V$. Hence, $\Gamma \vdash V_1 = A = B$ (why?). In the second case, $A = \UU_k$ and $B = \UU_l$ and $\sT_k^m(t) = \sT_l^m(u):\UU_m$.
 
 \begin{theorem}
   If $\Gamma\vdash J$ in the system $T_2$ then there exists a unique, up to conversion, judgement $\Gamma_1\vdash J_1$
