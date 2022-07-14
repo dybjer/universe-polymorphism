@@ -171,6 +171,12 @@
 Some recent works \cite{Assaf14,Thire20} show the equivalence between these two formulations, but these arguments do not apply to formulation of type theory with typed equality judgements \cite{martinlof:hannover,martinlof:padova}. In this paper we show the equivalence for this case, using a method due to Streicher  \cite{Streicher:semtt} that seems simpler
 and more transparent than the one in \cite{Assaf14,Thire20}.
 
+We quote from Streicher, p 246, concerning his theorem 4.10.
+\begin{quotation}
+This theorem, although interesting in itself, has in particular the consequence that type information in application terms is redundant, i.~e.~if $t$ and $s$ are terms which are different only w.r.t. the type information of subterms which are application terms then $t$ and $s$ are provably equal.
+\end{quotation}
+The formal statement is theorem 4.11
+
 Streicher's argument relies
 on  basic properties of such a type system (such as subject reduction and normalization). Such properties were assumed
 in \cite{Streicher:semtt}, but they are now known to be provable
@@ -237,7 +243,7 @@ $$
 $$
 \end{figure}
 The typing rules for $\Pi$-types and universes are shown in Figure \ref{type-Tarski}.
-\footnote{PD: I propose to restructure the rules a little. First, we can show the general rules which are common to both systems. Then the rules for annotated $\Pi$-types. And finally, the rules for Tarski-style universes. Then we only need to show the rules for non-annotated $\Pi$-types and the rules for Russell-style universes in the following section.}
+\footnote{PD: I have restructured the rules a little. First, we can show the general rules which are common to both systems. Then the rules for annotated $\Pi$-types. And finally, the rules for Tarski-style universes. Then we only need to show the rules for non-annotated $\Pi$-types and the rules for Russell-style universes in the following section.}
 
 \begin{figure}
   \caption{Typing rules for annotated $\Pi$-types and Tarski-style universes}\label{type-Tarski}
@@ -317,7 +323,7 @@ $\alpha^+:\Delta.A\alpha\rightarrow\Gamma.A$ if $\alpha:\Delta\rightarrow\Gamma$
 \end{lemma}
 
 Using the techniques developed in \cite{coquand:sophia,abel:wroclaw,coq18},
-we can also show that $\Pi$ one-to-one. An important consequence is closure under $\beta$-reduction.
+we can also show that $\Pi$ is one-to-one. An important consequence is closure under $\beta$-reduction.
 
 \begin{lemma}
   If $\APP(A,B,\LAM(A',B',b),a):T$ then $b[a]:T$.
@@ -363,7 +369,7 @@ $$
 $$
 \frac{}{\UU_n:\UU_{n+1}}~~~~~~~
 \frac{A:\UU_{n}}{A:\UU_{n+1}}
-\footnote{PD: old versions, should we keep them}
+\footnote{PD: old versions, should we keep them? Uniqueness of type?}
 $$
 \end{figure}
 
@@ -433,7 +439,7 @@ The following remark has a direct proof.
   \end{itemize}
 \end{lemma}
 
-The proof relies on the normalization property. First, it follows that $|\Gamma | \vdash |t|:|A|$ and $|\Gamma | \vdash |u|:|B|$. Then by normalization, $| t |$ and $| u |$ have a common normal form $v$  and by subject reduction
+The proof relies on the normalization property. First, it follows that $|\Gamma | \vdash |t|:|A|$ and $|\Gamma | \vdash |u|:|B|$. Then by normalization in $T_2$, $| t |$ and $| u |$ have a common normal form $v$  and by subject reduction
 $|\Gamma | \vdash v : |A|$ and $|\Gamma | \vdash v : |B|$. By inspecting the types of normal forms we conclude that either $|\Gamma | \vdash |A| = |B|$ or $|\Gamma | \vdash |A| = \UU_k$ and $|\Gamma | \vdash |B| = \UU_l$ and $|\Gamma | \vdash v :\UU_m$ with $m = \max(k,l)$. In the first case,  $|A|$ and $|B|$ have a common normal form $V$ and there is $V_1$ such that $| V_1 |  = V$. Hence, $\Gamma \vdash V_1 = A = B$ (why?). In the second case, $A = \UU_k$ and $B = \UU_l$ and $\sT_k^m(t) = \sT_l^m(u):\UU_m$.
 
 \begin{theorem}
