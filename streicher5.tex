@@ -168,27 +168,30 @@
 
  There are two different ways to formulate the notion of universe in type theory. Martin-Löf's first versions \cite{martinlof:72,martinlof:predicative,martinlof:hannover,martinlof:padova} were formulated \`a la Russell, where a universe is seen as a type of types. Later \cite{martinlof:padova}, an alternative version \`a la Tarski, where a universe is seen as a type of names of types and comes with a decoding function, was also introduced.
  
-Some recent works \cite{Assaf14,Thire20} show the equivalence between these two formulations, but these arguments do not apply to formulation of type theory with typed equality judgements \cite{martinlof:hannover,martinlof:padova}. In this paper we show the equivalence for this case, using a method due to Streicher  \cite{Streicher:semtt} that seems simpler
+Some recent works \cite{Assaf14,Thire20} show the equivalence between these two formulations, but these arguments do not apply to formulations of type theory with typed equality judgements \cite{martinlof:hannover,martinlof:padova}. In this paper we show the equivalence for this case, using a method due to Streicher  \cite{Streicher:semtt} that seems simpler
 and more transparent than the one in \cite{Assaf14,Thire20}.
 
 We quote from Streicher, p 246, concerning his theorem 4.10.
 \begin{quotation}
 This theorem, although interesting in itself, has in particular the consequence that type information in application terms is redundant, i.~e.~if $t$ and $s$ are terms which are different only w.r.t. the type information of subterms which are application terms then $t$ and $s$ are provably equal.
 \end{quotation}
-The formal statement is theorem 4.11
+The formal statement is theorem 4.11. We shall here show that Streicher's technique can be extended to show the equivalence of the Russell and Tarski formulations of a hierarchy of universes.
 
-Streicher's argument relies
-on  basic properties of such a type system (such as subject reduction and normalization). Such properties were assumed
-in \cite{Streicher:semtt}, but they are now known to be provable
-for systems with a predicative hierarchy of universes \cite{coquand:sophia,abel:wroclaw,coq18}.
+Streicher's argument relies on  basic properties of such a type system (such as subject reduction and normalization). Such properties were assumed in \cite{Streicher:semtt}, but they are now known to be provable
+for systems with a predicative hierarchy of universes \cite{coquand:sophia,abel:neworleans,abel:wroclaw,coq18}.
 
 The argument is as follows. There is a natural forgetful map from the Tarski version to the Russell version. Modulo the (known) meta-properties of both system, one can show that any Russell judgement can be lifted in a unique way to a Tarski judgement.\footnote{PD: Cf the sketch of a proof using the initial $\Pi\UU$-cwf of normal forms in {\tt initial-cwf-normal-forms.tex} in the same directory.}
+\footnote{PD: Assume that we have a function $nbe_1$ that maps terms in $T_1$ to their normal forms with the property that $a = b : A$ iff $nbe_1(a)$ and $nbe_1(b)$ are syntactically equal (and similarly for types). And similarly $nbe_2$ for $T_2$. Then we can prove that the forgetful map |-| from Tarski-judgments in $T_1$ to Russell-judgments in $T_2$ has a unique inverse, by proving the property for normal terms and by showing that $|nbe_1(a)|$ is syntactically equal to $nbe_2(|a|)$. }
 
-\section{An annotated type theory with Tarski style universes}
+\section{An annotated type theory with universes \`a la Tarski}
 
 We now present the system $T_1$ of type theory with $\Pi$-types with annotated application and abstraction and an external hierarchy of Tarski style universes $\UU_n$ with decoding maps $\T_n$. For simplicity we only consider closure under $\Pi$-types. 
 
-The syntax\footnote{PD: I suggest being consistent about whether to write e g $\T_n a$ or $\T_n(a)$, etc, and vote for the latter} for types is
+The syntax\footnote{PD: 
+I suggest being consistent about whether to write e g $\Pi~A~B, \T_n~a$ 
+or $\Pi(A,B),\T_n(a)$, etc, and vote for the latter
+} 
+for types is
 $$
 A,B~::=~\Pi~{A}~B~|~\UU_n~|~\T_n a
 $$
@@ -199,9 +202,9 @@ $$
 Note that we present a system with de Bruijn variables and implicit substitution.
 Here $v_i$ is a variable with de Bruijn index $i$. In this system, applications $\APP(A,B,c,a)$ and abstractions $\LAM(A,B,b)$ are annotated with the argument type $A$ and the result type family $B$. Moreover, $\Pi^n~ a~b$ are codes for $\Pi$-types in $\UU_n$, $\UU^k_n$ is the code for $\UU_k$ in $\UU_n$, where $k < n$, and $\sT^k_n a$ is the lifting of an element $a$ in $\UU_k$ to $\UU_n$. We thus consider a cumulative hierarchy of universes.
 
-The theory $T_1$ is set up to facilitate the construction of an initial category with families with extra structure for $\Pi$-types and a cumulative hierarchy of universes, see appendix. (We also need to define equality of contexts $\Gamma = \Gamma'$ and $\gamma = \gamma' : \Delta \to \Gamma$.) A proof of a similar construction has been formalized in Agda by Brunerie et al \cite{brunerie:initial}, who proved that a similar calculus is initial in a category of contextual categories with suitable extra structure. Note that initial categories with families (and contextual categories) with suitable extra structure can also be constructed in an alternative way from a calculus of explicit substitutions  \cite{casellan:tlca15}.
+The theory $T_1$ is set up to facilitate the construction of an initial category with families with extra structure for $\Pi$-types and a cumulative hierarchy of universes, see appendix. (We also need to define equality of contexts $\Gamma = \Gamma'$ and $\gamma = \gamma' : \Delta \to \Gamma$.) A proof of a similar construction has been formalized in Agda by Brunerie et al \cite{brunerie:initial}, who proved that a similar calculus is initial in a category of contextual categories with suitable extra structure. Note that initial categories with families (and contextual categories) with suitable extra structure can also be constructed from a calculus of explicit substitutions  \cite{casellan:tlca15}.
 
-In the following section we will define the theory $T_2$ of type theory with $\Pi$-types and a cumulative hierarchy of universes \`a la Russell. In this system the application $c\,a$ is not annotated and the abstraction n$\lambda A b$ is only annotated with the argument type $A$ and not the result family $B$. We will prove that $T_1$ and $T_2$ are isomorphic 
+In the following section we will define the theory $T_2$ of type theory with $\Pi$-types and a cumulative hierarchy of universes \`a la Russell. In this system the application $c\,a$ is not annotated and the abstraction $\lambda A b$ is only annotated with the argument type $A$ and not the result family $B$. We will prove that $T_1$ and $T_2$ are isomorphic 
 category with families with extra structure for $\Pi$-types and a cumulative hierarchy of universes, and thus the $T_2$ is initial in this category too.
 \medskip
 
@@ -230,23 +233,30 @@ $A~\type$ or $a:A$ or $A=B$ or $a=b : A$.
 
 \medskip
 
-The judgment $\Gamma\vdash$ expresses that $\Gamma$ is a well-formed context. $\Gamma\vdash A$ expresses that $A$ is a type in context $\Gamma$.
-We may write it $A~\type~(\Gamma)$ and may omit the global context $\Gamma$.
+The judgment $\Gamma\vdash$ expresses that $\Gamma$ is a well-formed context. $\Gamma\vdash A$ expresses that $A$ is a type in context $\Gamma$. First, we have the following general typing rules. These are common to the present system and the Russell-style system to be presented later:
 
-First, we have the following general typing rules. These are common to the present system and the Russell-style system to be presented later:
 \begin{figure}
   \caption{Context formation rules and typing rules for variables}
 $$
-\frac{\Gamma\vdash A}{\Gamma.A\vdash}~~~~~~\frac{}{()\vdash}~~~~~~~
+\frac{}{()\vdash}~~~~~~~\frac{\Gamma\vdash A}{\Gamma.A\vdash}~~~~~~
 \frac{\Gamma\vdash A}{\Gamma.A\vdash v_0:A\pp}~~~~~~~
 \frac{\Gamma\vdash v_i:A~~~~~~~\Gamma\vdash B}{\Gamma.B\vdash v_{i+1}:A\pp}~~~~~~~
 $$
 \end{figure}
+We may write $A~\type~(\Gamma)$ rather than $\Gamma\vdash A$ and may omit the global context $\Gamma$, and employ this convention for the judgments $\Gamma \vdash a : A$ and $\Gamma \vdash a = b : A$ too. With this convention the typing rules for variables are written:
+\begin{figure}
+\caption{Typing rules for variables where the context is elided}
+$$
+\frac{A~\type}{v_0:A\pp}~~~~~~~
+\frac{v_i:A~~~~~~~B~\type}{v_{i+1}:A\pp\ (B)}~~~~~~~
+$$
+\end{figure}
+
 The typing rules for $\Pi$-types and universes are shown in Figure \ref{type-Tarski}.
 \footnote{PD: I have restructured the rules a little. First, we can show the general rules which are common to both systems. Then the rules for annotated $\Pi$-types. And finally, the rules for Tarski-style universes. Then we only need to show the rules for non-annotated $\Pi$-types and the rules for Russell-style universes in the following section.}
 
 \begin{figure}
-  \caption{Typing rules for annotated $\Pi$-types and Tarski-style universes}\label{type-Tarski}
+  \caption{Typing rules for annotated $\Pi$-types and universes \`a la Tarski}\label{type-Tarski}
 %$$
 %  \frac{A~\type}{v_0:A\pp~(A)}
 %  ~~~~~~
@@ -272,10 +282,10 @@ $$
 \end{figure}
 
 We write $\conv$ for definitional equality (or conversion).
-The main conversion rules are shown in Figure \ref{conv-Tarski}.
+The main conversion rules\footnote{PD: don't we have them all now? We could also consider presenting the system in terms of the per-rules. This makes sense if our aim is to present as compact a system as possible. With the per-rules the $\xi$-rule subsumes $\Pi$-introduction.} are shown in Figure \ref{conv-Tarski}.
 
 \begin{figure}
-  \caption{Conversion rules for Tarski-style}\label{conv-Tarski}
+  \caption{Conversion rules for \`a la Tarski}\label{conv-Tarski}
 $$
 \frac{ a:A~~~~~~ A~ \conv~ B}{ a:B}~~~~~~~~~
 \frac{ a ~\conv~a':A~~~~~~ A  ~\conv~ B}{ a ~\conv~a':B}
@@ -335,7 +345,7 @@ we can also show that $\Pi$ is one-to-one. An important consequence is closure u
   We deduce $b[a]:B[a]$ by substitution and Lemma \ref{subst} and $b[a]:T$ by the type equality rule.
 \end{proof}
 
-\section{Rules for a type theory $T_2$ with Russell style universes}
+\section{Rules for a type theory $T_2$ with universes \`a la Russell}
 
 The syntax is now for types and terms
 $$
@@ -343,11 +353,10 @@ A,B,a,b~::=~v_i~|~c~a~|~\lambda~A~ b~|~\Pi~{A}~B~|~\UU_n
 $$
 Note that the application $c~a$ is not annotated by types, and that the abstraction $\lambda~A~ b$ only has one type argument, not two.
 
-The typing and conversion rules are in Figures \ref{type-Russell} and \ref{conv-Russell}.
+The typing and conversion rules are in Figures \ref{type-Russell} and \ref{conv-Russell}.\footnote{PD: what about splitting up rules into those which are the same for Russell and Tarski and those which are different?}
 
 \begin{figure}
-  \caption{Typing rules for Russell-style}\label{type-Russell}
-$$
+  \caption{Typing rules for \`a la Russell}\label{type-Russell}$$
   \frac{A~\type}{v_0:A\pp~(A)}~~~~~~\frac{v_n:A~~~~B~\type}{v_{n+1}:A\pp~(B)}
 $$
 $$
@@ -440,7 +449,7 @@ The following remark has a direct proof.
 \end{lemma}
 
 The proof relies on the normalization property. First, it follows that $|\Gamma | \vdash |t|:|A|$ and $|\Gamma | \vdash |u|:|B|$. Then by normalization in $T_2$, $| t |$ and $| u |$ have a common normal form $v$  and by subject reduction
-$|\Gamma | \vdash v : |A|$ and $|\Gamma | \vdash v : |B|$. By inspecting the types of normal forms in $T_2$ we conclude that either $|\Gamma | \vdash |A| = |B|$ or $|\Gamma | \vdash |A| = \UU_k$ and $|\Gamma | \vdash |B| = \UU_l$ and $|\Gamma | \vdash v :\UU_m$ with $m = \max(k,l)$. In the first case,  $|A|$ and $|B|$ have a common normal form $V$ and there is $V_1$ such that $| V_1 |  = V$. Hence, $\Gamma \vdash V_1 = A = B$ (why?). In the second case, $A = \UU_k$ and $B = \UU_l$ and $\sT_k^m(t) = \sT_l^m(u):\UU_m$.
+$|\Gamma | \vdash v : |A|$ and $|\Gamma | \vdash v : |B|$. By inspecting the types of normal forms in $T_2$\footnote{PD: They are the neutrals, and $\lambda(b) : \Pi(A,B), \Pi(A,B) : \UU_n, \UU_m : \UU_n$. The lemma follows by induction on the normal forms.}, we conclude that either $|\Gamma | \vdash |A| = |B|$ or $|\Gamma | \vdash |A| = \UU_k$ and $|\Gamma | \vdash |B| = \UU_l$ and $|\Gamma | \vdash v :\UU_m$ with $m = \max(k,l)$. In the first case,  $|A|$ and $|B|$ have a common normal form $V$ and there is $V_1$ such that $| V_1 |  = V$. Hence, $\Gamma \vdash V_1 = A = B$\footnote{PD: This means stripping is one-to-one: $|V_1| = |A|$ implies $V_1 = A$. We can have a type part of the lemma: If $\Gamma\vdash A$ and $\Gamma\vdash B$ and $|A| = |B|$ then $\Gamma\vdash A = B$. } . In the second case, $A = \UU_k$ and $B = \UU_l$ and $\sT_k^m(t) = \sT_l^m(u):\UU_m$.
 
 \begin{theorem}
   If $\Gamma\vdash J$ in the system $T_2$ then there exists a unique, up to conversion, judgement $\Gamma_1\vdash J_1$
@@ -470,7 +479,7 @@ we do have $f~xs:\List~\UU_1$ but we do \EMP{not} have $xs:\List~\UU_1$
      Similarly, the system $T_2$ is \EMP{not} closed under $\eta$-reduction. In the context
      $x:\UU_1\rightarrow\UU_1$, 
      we have $\lambda_{y:\UU_0}x~y:\UU_0\rightarrow\UU_2$ but we do \EMP{not} have
-     $x:\UU_0\rightarrow\UU_2$.
+     $x:\UU_0\rightarrow\UU_2$.\footnote{PD: think about this. What does this mean for the PER-formulation of the system?}
 
 
 
