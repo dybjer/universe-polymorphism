@@ -461,6 +461,7 @@ This is by induction on the typing rules for normal forms. (We actually directly
   If $\Gamma\vdash J$ in the system $T_2$ then there exists a unique, up to conversion, judgement $\Gamma_1\vdash J_1$
   in the system $T_1$ such that $|\Gamma_1| = \Gamma$ and $|J_1| = J$.
 \end{theorem}
+\footnote{PD:  A direct construction first maps $\Gamma_1\vdash J_1$ to $|\Gamma_1|\vdash |J_1|$ and then normalizes to $\Gamma_2 \vdash J_2$ and then applies the algorithm which reconstructs the Tarski derivation: $\Gamma_2^*\vdash J_2^*$. To prove that this is the unique up to conversion judgment we also need to show that erasure commutes with normal forms.}
 
 \section{Addition of data types}
 
