@@ -2,7 +2,7 @@
 % run with "test(file)." where "file" is an input file name without ".in"
 
 % finds a model in [0..99999] assuming infty = 99999
-% code can easily be adapted to GMP and a formal +infty
+% code can easily be adapted to GnuMultiPres and a formal +infty
 
 % syntax
 :-op(1199, xfx, =>).
@@ -14,19 +14,23 @@
 init_frontier(N):- vars(Vars),forall(member(Var,Vars),put(Var,N)).
 init_frontier(X,N):- forall(member(Var,X),put(Var,N)).
 
-% activated/4 tries to improve Var with Sup => Var based on V,W
+% try_improve/4 tries to improve Var with Sup => Var, Sup based on V, Var in W
 
-activated(V,W,Sup,Var):- 
+try_improve(V,W,Sup,Var):- 
   member(Var,W)->
   based_on(V,Sup)->
   surplus(Sup,99999,M),
   get(Var,N),N<M,put(Var,M).
+
+% based_on/2 checks whether X contains all variables occurring in Sup
 
 based_on(X,Sup):- forall(member(T,Sup),
   (T=V+_ -> member(V,X);
   (T=V-_ -> member(V,X);
             member(T,X)))).
 
+% surplus/3 computes the maximal upward shift of Sup
+ 
 surplus([],Accumulator,Accumulator).
 surplus([T|Ts],Sold,Snew):- 
   (T=V+O -> (get(V,N),Smid is min(Sold,N-O)) ;
@@ -34,17 +38,20 @@ surplus([T|Ts],Sold,Snew):-
             (get(T,N),Smid is min(Sold,N)))),
   surplus(Ts,Smid,Snew).
 
-improve(V,W,I):- setof(Var,Sup^((Sup=>Var),activated(V,W,Sup,Var)),I).
+forward(V,W,Improved):- 
+  setof(Var,Sup^((Sup=>Var),try_improve(V,W,Sup,Var)),Improved).
 
-main:- vars(Vraw),sort(0,@=<,Vraw,V),main(V),print_model(V).
+main:- vars(Vraw),sort(Vraw,V),main(V),print_model(V).
 
-main(V):- improve(V,V,W) -> main(V,W) ; true.
+main(V):- forward(V,V,W) -> main(V,W) ; true.
 
-main(V,W):-
-  list_to_set(W,V) -> init_frontier(V,99999) ;
-  once((repeat, main(W), \+improve(V,W,_))),
+main(V,W):- % precondition: W subset of V and both sorted
+% write(V+W),nl, % check the precondition!
+  V=W -> init_frontier(V,99999) ;
+% the following line takes too long since \infty = 99999, see inf.in
+  once((repeat, main(W), /* until */ \+forward(V,W,_))),
   subtract(V,W,VminW),
-  (improve(V,VminW,I) -> union(W,I,WuI),main(V,WuI); true).
+  (forward(V,VminW,I) -> oset_union(W,I,WuI),main(V,WuI); true).
 
 
 %%%%%%%avoid reading this block with silly auxiliaries%%%%%%%
