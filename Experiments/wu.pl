@@ -41,12 +41,8 @@ chu(A) :- % NB duality
 dou :- inu(A0,Va,V,Concls),    
        clu,                             
        put_assoc(progress,A0,0,A1),
-       write(forward),nl,forward(Va,Concls,[],W,A1,A2),
-      
-       (W = [] -> write('model already') ;
-                  thm33(Va,V,W,A2,Model),
-                  chu(Model)
-       ).
+       thm32(Va,V,Concls,[],A1,Model),
+       chu(Model).
 
 % based_on/2 checks whether X contains all variables occurring in Sup
 
@@ -90,22 +86,37 @@ forward(Va,[Var|W],I0,Improved,A0,A):-
   append(I,I0,I1),                           %/*test*/ write(I1), nl,
   forward(Va,W,I1,Improved,A1,A).
 
-% The arguments V,W define the set of clauses with sups over V,
-% and conclusion in W. Always list_of_keys(Va,V).
+% The arguments V,C define the set of clauses with sups over V,
+% and conclusion in C. Always I subset C subset V and list_of_keys(Va,V).
 
-thm33(Va,V,W,A0,A):-   % precondition: W subset of set V
+thm32(Va,V,C,I,A0,A) :- 
   showprogress(A0),
   %fix later, the following is correct without loops only
+  forward(Va,C,[],U,A0,A1),
+  (U = [] -> A0 = A 
+           ; ord_union(I,U,IU),
+             ((length(V,N),length(IU,N)) -> write(loop),nl
+              ; % now we should actually simplify
   % termination of the following line should be proved (Lemma 3.3)
-  forward(Va,W,[],U,A0,A1),
-  (U \= [] -> thm33(Va,V,W,A1,A) ;
-              subtract(V,W,VminW), 
-              forward(Va,VminW,[],U1,A1,A2),
-              (U1 = [] -> A=A2 ;
-                          ord_union(W,U1,WU1),thm33(Va,V,WU1,A2,A)
+              lemma33(Va,V,IU,A1,A2),                                   
+              ord_subtract(C,IU,CmIU), 
+              forward(Va,CmIU,[],R,A2,A3),
+              (R = [] -> A=A3 ;
+                         ord_union(IU,R,IUR),
+                         thm32(Va,V,C,IUR,A3,A))
               )
   ).
 
+lemma33(Va,V,W,A0,A) :-
+  bagof(Var-0,member(Var,W),Pairs),
+  ord_list_to_assoc(Pairs,Wa),
+  thm32(Wa,W,W,[],A0,A1),
+  forward(Va,W,[],U,A1,A2),
+  (U = [] -> A2 = A 
+           ; lemma33(Va,V,W,A2,A)
+  ).
+  
+  
 
 %%%%%%%avoid reading this block with silly auxiliaries%%%%%%%
 
