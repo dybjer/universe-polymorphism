@@ -181,7 +181,7 @@ Streicher's argument relies on  basic properties of such a type system (such as 
 for systems with a predicative hierarchy of universes \cite{coquand:sophia,abel:neworleans,abel:wroclaw,coq18}.
 
 The argument is as follows. There is a natural forgetful map from the Tarski version to the Russell version. Modulo the (known) meta-properties of both system, one can show that any Russell judgement can be lifted in a unique way to a Tarski judgement.\footnote{PD: Cf the sketch of a proof using the initial $\Pi\UU$-cwf of normal forms in {\tt initial-cwf-normal-forms.tex} in the same directory.}
-\footnote{PD: Assume that we have a function $nbe_1$ that maps terms in $T_1$ to their normal forms with the property that $a = b : A$ iff $nbe_1(a)$ and $nbe_1(b)$ are syntactically equal (and similarly for types). And similarly $nbe_2$ for $T_2$. Then we can prove that the forgetful map |-| from Tarski-judgments in $T_1$ to Russell-judgments in $T_2$ has a unique inverse, by proving the property for normal terms and by showing that $|nbe_1(a)|$ is syntactically equal to $nbe_2(|a|)$. }
+\footnote{PD: Assume that we have a function $nbe_1$ that maps terms in $T_1$ to their normal forms with the property that $a = b : A$ iff $nbe_1(a)$ and $nbe_1(b)$ are syntactically equal (and similarly for types). And similarly $nbe_2$ for $T_2$. Then we can prove that the forgetful map $|-|$ from Tarski-judgments in $T_1$ to Russell-judgments in $T_2$ has a unique inverse, by proving the property for normal terms and by showing that $|nbe_1(a)|$ is syntactically equal to $nbe_2(|a|)$. }
 
 \section{An annotated type theory with universes \`a la Tarski}
 
@@ -448,7 +448,13 @@ The following remark has a direct proof.
   \begin{itemize}
     \item either $\Gamma\vdash A = B$
       and $\Gamma\vdash t = u:A$
-    \item or $\Gamma\vdash A = \UU_k$ and $\Gamma\vdash B = \UU_l$ and $\Gamma\vdash \sT_k^m(t) = \sT_l^m(u):\UU_m$ with $m = \max(k,l)$.
+    \item or $\Gamma\vdash A = \UU_k$ and $\Gamma\vdash B = \UU_l$ and $\Gamma\vdash \sT_k^m(t) = \sT_l^m(u):\UU_m$ with $m = \max(k,l)$.\footnote{TC:  Lemma 4.0.1 is not valid, even with normalisation. A counter-example is   $\lambda(N, U_{k+1}, U^k_n) $  and $\lambda(N, U_{l+1}, U^l_n)$    in T1
+ Both correspond to $\lambda(N, U_n)$ in T2.
+
+ Hopefully, we can still have that if  $G \vdash A$ and  $G \vdash B$ and $|A| = |B|$ then $G \vdash A = B$ and we need a refinement of Lemma 4.0.1 and we probably need to consider beta normal form.
+ 
+ PD: But if the translation from T2 to T1 is typed, that is, we have 
+ $[[ a ]]_{\Gamma,A} \in \Tm_{T1}([[ \Gamma ]], [[ A ]]_\Gamma)$ for $a \in \Tm_{T2}(\Gamma,A)$, then this is not a problem, is it?}
   \end{itemize}
 \end{lemma}
 \footnote{PD: Note that we have a type label for lambda also in $T_2$, so that the following is not a counterexample. Let $A = \UU_0 \to \UU_k, t = \lambda_{A,B} x.\T^k_0(x), B =  \UU_0 \to \UU_l, u = \lambda_{A,B} x.\T^l_0(x)$. Then $|t| \neq |u|$. However, we can reconstruct the Tarski normal form even without the type label, since this is available in the typing rule.}
