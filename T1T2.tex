@@ -1,0 +1,240 @@
+%\documentclass[12pt,a4paper]{amsart}
+\documentclass[11pt,a4paper]{article}
+%\ifx\pdfpageheight\undefined\PassOptionsToPackage{dvips}{graphicx}\else%
+%\PassOptionsToPackage{pdftex}{graphicx}
+\PassOptionsToPackage{pdftex}{color}
+%\fi
+
+%\usepackage{diagrams}
+
+%\usepackage[all]{xy}
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{latexsym}
+\usepackage{amssymb,amstext,amsmath,amsthm}
+\usepackage{epsf}
+\usepackage{epsfig}
+% \usepackage{isolatin1}
+\usepackage{a4wide}
+\usepackage{verbatim}
+\usepackage{proof}
+\usepackage{latexsym}
+%\usepackage{mytheorems}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}{Lemma}[theorem]
+\newtheorem{proposition}{Proposition}[theorem]
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}{Remark}[theorem]
+\newtheorem{TODO}{TODO}[theorem]
+
+\usepackage{float}
+\floatstyle{boxed}
+\restylefloat{figure}
+
+
+%%%%%%%%%copied from SymmetryBook by Marc
+
+% hyperref should be the package loaded last
+%% \usepackage[backref=page,
+%%             colorlinks,
+%%             citecolor=linkcolor,
+%%             linkcolor=linkcolor,
+%%             urlcolor=linkcolor,
+%%             unicode,
+%%             pdfauthor={CAS},
+%%             pdftitle={Symmetry},
+%%             pdfsubject={Mathematics},
+%%             pdfkeywords={type theory, group theory, univalence axiom}]{hyperref}
+% - except for cleveref!
+\usepackage[capitalize]{cleveref}
+%\usepackage{xifthen}
+\usepackage{xcolor}
+\definecolor{linkcolor}{rgb}{0,0,0.5}
+
+%%%%%%%%%
+\def\oge{\leavevmode\raise
+.3ex\hbox{$\scriptscriptstyle\langle\!\langle\,$}}
+\def\feg{\leavevmode\raise
+.3ex\hbox{$\scriptscriptstyle\,\rangle\!\rangle$}}
+
+%%%%%%%%%
+\newcommand\myfrac[2]{
+ \begin{array}{c}
+ #1 \\
+ \hline \hline
+ #2
+\end{array}}
+
+
+\newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}}%
+\newcommand*{\Resize}[2]{\resizebox{#1}{!}{$#2$}}
+
+\newcommand{\II}{\mathbb{I}}
+\newcommand{\refl}{\mathsf{refl}}
+\newcommand{\mkbox}[1]{\ensuremath{#1}}
+
+
+\newcommand{\Id}{\mathsf{Id}}
+\newcommand{\conv}{=}
+%\newcommand{\conv}{\mathsf{conv}}
+\newcommand{\lam}[2]{{\langle}#1{\rangle}#2}
+\def\NN{\mathsf{N}}
+\def\UU{\mathsf{U}}
+\def\JJ{\mathsf{J}}
+\def\Level{\mathsf{Level}}
+\def\List{\mathsf{List}}
+\def\Cons{\mathsf{Cons}}
+\def\Nil{\mathsf{Nil}}
+%\def\Type{\hbox{\sf Type}}
+\def\ZERO{\mathsf{0}}
+\def\SUCC{\mathsf{S}}
+
+\newcommand{\type}{\mathsf{type}}
+\newcommand{\LAM}{\lambda}
+\newcommand{\APP}{\mathsf{app}}
+\newcommand{\mypi}[3]{\Pi_{#1:#2}#3}
+\newcommand{\mylam}[3]{\lambda_{#1:#2}#3}
+\newcommand{\mysig}[3]{\Sigma_{#1:#2}#3}
+\newcommand{\N}{\mathsf{N}}
+\newcommand{\Set}{\mathsf{Set}}
+\newcommand{\El}{\mathsf{El}}
+%\newcommand{\U}{\mathsf{U}} clashes with def's in new packages
+\newcommand{\T}{\mathsf{T}}
+\newcommand{\sT}{\mathsf{t}}
+\newcommand{\Usuper}{\UU_{\mathrm{super}}}
+\newcommand{\Tsuper}{\T_{\mathrm{super}}}
+%\newcommand{\conv}{\mathrm{conv}}
+\newcommand{\idtoeq}{\mathsf{idtoeq}}
+\newcommand{\isEquiv}{\mathsf{isEquiv}}
+\newcommand{\ua}{\mathsf{ua}}
+\newcommand{\UA}{\mathsf{UA}}
+%\newcommand{\Level}{\mathrm{Level}}
+\def\Constraint{\mathsf{Constraint}}
+\def\Ordo{\mathcal{O}}
+
+\newcommand{\Con}{\mathsf{ Con}}
+\newcommand{\Elem}{\mathsf{Elem}}
+\newcommand{\Type}{\mathsf{Type}}
+\newcommand{\id}{\mathsf{id}}
+\newcommand{\pp}{\mathsf{p}}
+\newcommand{\qq}{\mathsf{q}}
+
+\def\Ctx{\mathrm{Ctx}}
+\def\Ty{\mathrm{Ty}}
+\def\Tm{\mathrm{Tm}}
+
+\def\CComega{\mathrm{CC}^\omega}
+\setlength{\oddsidemargin}{0in} % so, left margin is 1in
+\setlength{\textwidth}{6.27in} % so, right margin is 1in
+\setlength{\topmargin}{0in} % so, top margin is 1in
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{9.19in} % so, foot margin is 1.5in
+\setlength{\footskip}{.8in}
+
+% Definition of \placetitle
+% Want to do an alternative which takes arguments
+% for the names, authors etc.
+
+\newcommand{\natrec}{\mathsf{natrec}}
+%\rightfooter{}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\sct}[1]{[\![#1]\!]}
+%\usepackage{diagrams}
+\usepackage{color}
+\newcommand\coloremph[2][red]{\textcolor{#1}{\emph{#2}}}
+\newcommand\norm[1]{\left\lVert #1 \right\rVert}
+\newcommand\greenemph[2][green]{\textcolor{#1}{\emph{#2}}}
+\newcommand{\EMP}[1]{\emph{\textcolor{red}{#1}}}
+
+
+
+
+\begin{document}
+
+\title{Type Theory with a Cumulative Hierarchy of Universes}
+
+\author{}
+\date{}
+\maketitle
+
+%\begin{abstract}
+%\end{abstract}
+
+\section{Introduction}\label{sec:intros}
+
+ We prove the equivalence between $T_1$ and $T_2$.
+
+\section{Main Lemma}
+
+We assume some meta properties of $T_1$. We have that $\Pi$ is one-to-one for conversion, i.e.
+$\Gamma\vdash \Pi(A,B) = \Pi(C,D)$ implies $\Gamma\vdash A = C$ and
+$\Gamma.A\vdash B = D$. We also assume that $\sT^k_n$ is one-to-one for conversion, and
+$\UU_n = \UU_m$ implies $n = m$ and $\Pi(A,B)$ cannot be convertible to some $\UU_n$ or
+to some type of the form $\T_n(X)$.
+
+We introduce the following notations. We write $\Pi(\Delta,A)$ and $\lambda(\Delta,t)$
+for $\Gamma.\Delta\vdash A$ and $\Gamma.\Delta\vdash t:A$
+as iterated product and iterated abstraction respectively. If $\Gamma\vdash t : \Pi(\Delta,\UU_n)$, we can write
+$t = \lambda(\Delta,u)$ for some $u$, unique up to conversion, such that
+$\Gamma.\Delta\vdash u : \UU_n$. We define then
+$\sT^k_{n,\Delta}(t) = \lambda(\Delta,\sT^k_n(u))$.
+
+\begin{lemma}
+  If $\Gamma\vdash A$ and $\Gamma\vdash B$ and $|A| = |B|$ then $\Gamma\vdash A = B$.
+
+  If $\Gamma\vdash t:A$ and $\Gamma\vdash u:B$ and $|t| = |u|$ then
+  \begin{enumerate}
+  \item either $\Gamma\vdash A = B$ and $\Gamma\vdash t = u:A$
+  \item or there exists $\Delta$ and $n,m$ such that $A = \Pi(\Delta,\UU_n)$ and
+    $B = \Pi(\Delta,\UU_m)$ and
+    $\Gamma\vdash \sT^k_{n,\Delta}(t) = \sT^k_{m,\Delta}(u):\Pi(\Delta,\UU_k)$ for
+    $n\leqslant k,~m\leqslant k$.
+\end{enumerate}
+\end{lemma}
+
+Note that this implies that if
+$\Gamma\vdash t:A$ and $\Gamma\vdash u:B$ and $|t| = |u|$ {\em and} $\Gamma\vdash A = B$ then
+we have $\Gamma\vdash t = u : A$. This follows from the fact that $\sT^k_n$ is one-to-one for conversion.
+
+\begin{proof}
+  We prove the two statements by mutual induction.
+
+  Let us cover some cases.
+
+  If $|A| = |B| = \UU_n$ then we have $A$ has to be convertible to $\UU_n$ and the same holds for $B$.
+  Hence, we have $\Gamma\vdash A = B$.
+
+  If $|A| = |B|$ is a dependent product then $A$ is 
+  convertible to some $\Pi(E,F)$ where $E$ and $F$ are uniquely determined. Similarly, 
+  $B$ will be convertible to some $\Pi(E_1,F_1)$. We have $|E| = |E_1|$ and $|F| = |F_1|$. By induction, we have
+  $\Gamma\vdash E = E_1$ and $\Gamma.E \vdash F = F_1$.
+
+  If $t$ is of the form $\sT^k_n(v)$ then the result is direct by induction: we should have $|v| = |u|$
+  and then $A = \UU_k$ and $v:\UU_n$.
+
+  We can thus assume that neither $t$ nor $u$ are of the form $\sT^k_n(v)$.
+
+  If $|t|=|u|$ is an application, we can write $t = \APP(E,F,c,a)$ and $u = \APP(E_1,F_1,c_1,a_1)$.
+  We have $|c| = |c_1|$. By induction we have $\Pi(E,F) = \Pi(E_1,F_1)$ or
+  $F = \Pi(\Delta,\UU_n)$ and $F_1 = \Pi(\Delta,\UU_m)$ and $E = E_1$ and
+  $\sT^k_{n,E.\Delta}(c) = \sT^k_{m,E.\Delta}(c_1)$. We also have then by induction $a = a_1:E$.
+  We deduce $\sT^k_{n,\Delta[a]}(t) = \sT^k_{m,\Delta[a]}(u)$.
+
+  If $|t| = |u|$ is an abstraction, the result follows from the fact that $T_2$ has typed abstractions.
+  Indeed, we can write $t = \lambda(E,F,t')$ and $u = \lambda(E_1,F_1,u')$ and we have
+  $|E| = |E_1|$. By induction $\Gamma\vdash E = E_1$. We also have $|u| = |u'|$. Hence by induction
+  we have $F = F_1$ and $\Gamma.E\vdash u = u':F$ or $F = \Pi(\Delta,\UU_n)$ and $F' = \Pi(\Delta,\UU_m)$
+  and $\sT^k_{n,\Delta}(u) = \sT^k_{m,\Delta}(u'):\Pi(\Delta,\UU_k)$. We then have
+  $\sT^k_{n,E.\Delta}(t) = \sT^k_{m,E.\Delta}(u):\Pi(E.\Delta,\UU_k)$.
+\end{proof}
+
+
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}
