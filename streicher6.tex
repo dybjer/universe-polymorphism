@@ -446,6 +446,14 @@ The following remark has a direct proof.
 
  The proof is direct by mutual induction.
 
+\begin{corollary}
+  If $\Gamma\vdash A$ and $\Gamma\vdash B$ and $|A|=|B|$ (syntactic equality) then $\Gamma\vdash A = B$.
+
+    If $\Gamma\vdash u_0:A_0$ and $\Gamma\vdash u_1:A_1$ and $|u_0| = |u_1|$ and $|A_0| = |A_1|$ then $\Gamma\vdash A_0=A_1$ and $\Gamma\vdash u_0 = u_1:A_0$.
+\end{corollary}
+
+
+
 \begin{theorem}
   If $\Gamma\vdash J$ in the system $T_2$ then there exists a unique, up to conversion, judgement $\Gamma_1\vdash J_1$
   in the system $T_1$ such that $|\Gamma_1| = \Gamma$ and $|J_1| = J$.
