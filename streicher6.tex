@@ -440,7 +440,7 @@ The following remark has a direct proof.
     \item either $\Gamma\vdash A_0 = A_1$
       and $\Gamma\vdash u_0 = u_1:A_0$
     \item or $\Gamma\vdash A_0 = \UU_{n_0}$ and $\Gamma\vdash A_1 = \UU_{n_1}$ and $\Gamma\vdash u_0 = \sT_k^{n_0}(v_0) : A_0$
-      and $\Gamma\vdash u_1 = \sT_k^{n_1}(v_1):A_1$ and $\Gamma\vdash v_0 = v_1 :U_k$.
+      and $\Gamma\vdash u_1 = \sT_k^{n_1}(v_1):A_1$ and $\Gamma\vdash v_0 = v_1 :\UU_k$.
   \end{itemize}
 \end{lemma}
 \footnote{PD: Note that we have a type label for lambda also in $T_2$, so that the following is not a counterexample. Let $A = \UU_0 \to \UU_k, t = \lambda_{A,B} x.\T^k_0(x), B =  \UU_0 \to \UU_l, u = \lambda_{A,B} x.\T^l_0(x)$. Then $|t| \neq |u|$. However, we can reconstruct the Tarski normal form even without the type label, since this is available in the typing rule.}
