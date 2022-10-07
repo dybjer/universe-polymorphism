@@ -98,7 +98,7 @@
 \newcommand{\mypi}[3]{\Pi_{#1:#2}#3}
 \newcommand{\mylam}[3]{\lambda_{#1:#2}#3}
 \newcommand{\app}[2]{{#1\,#2}} % many applications still hard-coded with ~
-\newcommand{\Sapp}[1]{\sapp{\SUCC}{#1}} 
+\newcommand{\Sapp}[1]{\sapp{\SUCC}{#1}}
 \newcommand{\sapp}[2]{{#1(#2)}} % strict app for Id, refl, J, natrec, not S (!)
 \newcommand{\Idapp}[3]{\sapp{\Id}{#1,#2,#3}}
 \newcommand{\Idnapp}[4]{\sapp{\Id^#4}{#1,#2,#3}}
@@ -253,7 +253,7 @@ we can express universe polymorphism as quantification over universe levels.
 %% in Agda's notation.
 
 We remark that universes are more important in a predicative framework than in an impredicative one.
-Consider for example the formalisation of real numbers as Dedekind cuts, or domain elements as filters of formal neighbourhoods, that is, as properties of elements in $\UU_0$. The type of such real numbers thus belongs to $\UU_1$. 
+Consider for example the formalisation of real numbers as Dedekind cuts, or domain elements as filters of formal neighbourhoods, that is, as properties of elements in $\UU_0$. The type of such real numbers thus belongs to $\UU_1$.
 However, even in a system using an impredicative universe of propositions,
 such as the ones in \cite{Huet87,moura:lean}, there is a need for definitions that are parametric
 in universe levels.
@@ -261,12 +261,12 @@ in universe levels.
 %{\color{red} Cite Lean \cite{moura:lean}?}
 
  To deal with this problem Huet \cite{Huet87} and
- Harper and Pollack \cite{HarperP91} and, in Coq, Sozeau and Tabareau 
+ Harper and Pollack \cite{HarperP91} and, in Coq, Sozeau and Tabareau
  \cite{SozeauTabareau:coq} introduced \emph{universe polymorphism}.
- Their "implicit" approach to universe polymorphisms is, however, 
- problematic w.r.t.\ modularity, as pointed out in \cite{Courant02,Simpson04}: 
- one can prove $A\rightarrow B$ in one file, and $B\rightarrow C$ in 
- one other file, while $A\rightarrow C$ is not valid. 
+ Their "implicit" approach to universe polymorphisms is, however,
+ problematic w.r.t.\ modularity, as pointed out in \cite{Courant02,Simpson04}:
+ one can prove $A\rightarrow B$ in one file, and $B\rightarrow C$ in
+ one other file, while $A\rightarrow C$ is not valid.
  In order to cope with this issue, J. Courant \cite{Courant02}
  suggested to have explicit level universes, with a sup operation
  (see also \cite{herbelin05}).
@@ -304,7 +304,7 @@ with $\Pi, \Sigma, \NN,$ and $\Id$. Point of departure is
 the system described by Abel et al.\ in \cite{abel18},
 which has $\Pi$ and $\NN$ and one universe, since a
 significant part of its metatheory has been formalized in Agda.
-However, for better readability we use named variables instead 
+However, for better readability we use named variables instead
 of de Bruijn indices. We also add $\Sigma$ and $\Id$, and,
 in the next sections, several indexed universes.
 
@@ -351,7 +351,7 @@ $$
 $$
 \end{figure}
 
- 
+
 We write $\conv$ for definitional equality (or conversion).
 The following rules express that conversion is an equivalence
 relation and that judgments are invariant under conversion.
@@ -403,9 +403,9 @@ show congruence of $=$ for $\mylam{x}{A}{b}$ and $(a,b)$.}
 
 We want that $=$ is a congruence for all syntactic constructs
 that are to follow.
-Instead of giving tedious congruence rules for 
+Instead of giving tedious congruence rules for
 each addition to the syntax, we formulate a schema in \cref{fig:congr}.
-Here $\const(A_1,\ldots,A_m,t_1,\ldots,t_n)$ stands for a syntactic 
+Here $\const(A_1,\ldots,A_m,t_1,\ldots,t_n)$ stands for a syntactic
 construct $\const$ parametrized by $A_1,\ldots,A_m,t_1,\ldots,t_n$.
 
 \begin{figure}[h!]
@@ -413,17 +413,17 @@ construct $\const$ parametrized by $A_1,\ldots,A_m,t_1,\ldots,t_n$.
 $$
 \frac{A_1 = A'_1~\type~~\ldots~~ A_m = A'_m~\type  ~~~~
 t_1 = t'_1 : T_1 ~~\ldots~~  t_n = t'_n : T_n}
-{\const(A_1,\ldots,A_m,t_1,\ldots,t_n) = 
+{\const(A_1,\ldots,A_m,t_1,\ldots,t_n) =
 \const(A'_1,\ldots,A'_m,t'_1,\ldots,t'_n) : T \text{~~(or $~\type$)}}
 \belowdisplayshortskip -1pt
 $$
 \end{figure}
 
-We now introduce the type of natural numbers $\NN$ with 
-the usual constructors $\ZERO,\SUCC$ and eliminator $\RR$, 
-as an example of an inductive data type. 
+We now introduce the type of natural numbers $\NN$ with
+the usual constructors $\ZERO,\SUCC$ and eliminator $\RR$,
+as an example of an inductive data type.
 We rely on \cref{fig:congr} for congruence.
-Rules with the same hypotheses are written as one rule with 
+Rules with the same hypotheses are written as one rule with
 several conclusions.\footnote%
 {You may dislike this, as well as the order of the rules.}
 
@@ -444,8 +444,8 @@ g:\mypi{x}{\NN}{(P\to P(\Sapp{x}/x))}~~~~~n:\NN}
 $$
 \end{figure}
 
-We also add identity types $\Idapp{A}{a}{a'}$ for all $A~\type$, 
-$a:A$ and $a':A$, with constructor $\Rfapp{A}{a}$ and (based) eliminator 
+We also add identity types $\Idapp{A}{a}{a'}$ for all $A~\type$,
+$a:A$ and $a':A$, with constructor $\Rfapp{A}{a}$ and (based) eliminator
 $\Japp{A}{a}{C}{d}{a'}{q}$, all examples of parametrized syntactic constructs
 with congruence rules as in \cref{fig:congr}.
 
@@ -471,7 +471,7 @@ $$
   %PD: Is this set of rules is complete? What about $A=A':\UU_n$ implies $\T_n(A) = T_n(A')$?} set of rules for "universes as full reflections".
 %in the style of the rules in Section \ref{sec:palmgren}.
 We present an external sequence of universes of codes of types, together
-with the decoding functions. (Without cumulativity, 
+with the decoding functions. (Without cumulativity,
 the version with cumulativity is presented in the Appendix.)
 
 \begin{figure}[H]
@@ -481,13 +481,13 @@ $$
 \frac{A:\UU_{m}}{\T_{m}(A)~\type}~~~~~~
 \frac{}{\UU^{n}_{m}:\UU_{n}~~~~~~\T_{n}({\UU^{n}_{m}}) = \UU_{m}}{~(n>m)}
 \belowdisplayshortskip 0pt
-$$ 
+$$
 %\footnote{PD: wouldn't it be more natural to let $\UU^n$ be the code for $\UU_{n}$?}
 \end{figure}
 
 Here and below $m$ and $n$, as super- and subscripts of $\UU$ and $\T$,
-are external natural numbers, and $n \vee m$ is the 
-maximum of $n$ and $m$. This means, for example, that $\UU_m~\type$ is 
+are external natural numbers, and $n \vee m$ is the
+maximum of $n$ and $m$. This means, for example, that $\UU_m~\type$ is
 a \emph{schema}, yielding one rule for each $m$.
 
 Next we define how $\Pi$ and $\Sigma$ are `relativized' to
@@ -522,15 +522,15 @@ $$
 
 %% Note that $\UU_p, \T_p$ are given by separate inductive-recursive definition for each $p$. There is one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and also for $\UU^{p-1}$ provided $p \geq 1$.
 
-Note that the universe levels in the above theory are 
-\emph{external} natural numbers. 
-Thus the typing of the identity function 
-$$\mylam{X}{\UU_n}{\mylam{x}{\T_n(X)}{x}} : 
-      \mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}$$ 
-is a \emph{schema}  depending on the external natural number $n$. 
-It has infinitely many instances obtained by letting  $n = 0,1,\dots$. 
+Note that the universe levels in the above theory are
+\emph{external} natural numbers.
+Thus the typing of the identity function
+$$\mylam{X}{\UU_n}{\mylam{x}{\T_n(X)}{x}} :
+      \mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}$$
+is a \emph{schema}  depending on the external natural number $n$.
+It has infinitely many instances obtained by letting  $n = 0,1,\dots$.
 
-In the following section we present a type theory with \emph{internal} 
+In the following section we present a type theory with \emph{internal}
 universe level expressions. This theory has finitely many inference rules.
 
  \section{A type theory with universe levels and polymorphism }\label{sec:internal}
@@ -538,13 +538,13 @@ universe level expressions. This theory has finitely many inference rules.
 
 The problem with the type system with an external sequence of universes
 is that we have to \emph{duplicate} definitions that follow
-the same pattern. For instance, we have the identity function 
+the same pattern. For instance, we have the identity function
 $\id_n := \mylam{X}{\UU_n}{\mylam{x}{\T_n(X)}{x}}$
-of type $\mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}$ that 
+of type $\mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}$ that
 may have to be defined (and type-checked) for several $n$.
 We address this issue by introducing \emph{universe level}
 expressions: we write $\alpha,\beta,\dots$
-for \emph{level variables}, and $l,m,\dots$ for 
+for \emph{level variables}, and $l,m,\dots$ for
 \emph{level expressions} which are built from level variables
 by suprema $l \vee m$ and the next level operation $l^+$.
 Level expressions form a sup-semilattice $l\vee m$
@@ -583,7 +583,7 @@ rules of lattice theory. This can be compared to the practice
 in modal logic, where all (classical) propositional tautologies
 are postulated as axioms of modal propositional logic, allowing to focus
 on the axioms for the modal operators. (In the next section we will
-also have to consider \emph{hypothetical} level equality judgments.) 
+also have to consider \emph{hypothetical} level equality judgments.)
 }
 \begin{figure}[H]
   \caption{Rule for level equality}\label{fig:leveleq}
@@ -596,13 +596,13 @@ $$
 
 Next, we add rules that level equality implies definitional equality.
 One can view these rules as additional congruence rules, conceptually
-taking the union of level equality and definitional equality. 
+taking the union of level equality and definitional equality.
 
 \begin{figure}[H]
   \caption{Congruence rule for level equality}\label{fig:levelcongruence}
 $$
 \frac{l=m ~~~~~ A~\type~(\alpha~\Level)}{A(l/\alpha) = A(m/\alpha)}
-~~~~~~~ 
+~~~~~~~
 \frac{l=m ~~~~~ a:A~(\alpha~\Level)}{a(l/\alpha) = a(m/\alpha): A(l/\alpha)}
 \belowdisplayshortskip 0pt
 $$
@@ -626,10 +626,10 @@ $$
 
 The remaining rules are completely analogous to the rules in
 \cref{fig:PiSigU} and \cref{fig:NIdU}
-for externally indexed universes with external numbers replaced 
+for externally indexed universes with external numbers replaced
 by internal levels. There is even no need to add hypotheses
-like $m~\Level$ since they can be obtained from other hypotheses 
-through inversion lemmas. 
+like $m~\Level$ since they can be obtained from other hypotheses
+through inversion lemmas.
 
 
  We expect that normalisation holds for this system.
@@ -688,9 +688,13 @@ are constant.
 
 \section{A system with level constraints}\label{sec:constraints}
 
-{\color{red} Todo: mention one point lattice}
+{\color{red} Todo: mention that if the semilattice is bounded, that is, has a bottom element, then we get a first universe, but this is not necessary.}
 
-{\color{red} Todo: mention Egbert's lattice}
+{\color{red} Todo: mention empty semilattice}
+
+{\color{red} Todo: mention one point semilattice}
+
+{\color{red} Todo: mention Egbert's semilattice}
 
 {\color{red} Todo: perhaps add a variant of $c$ below with $\simeq$ iso $Id$}
 
