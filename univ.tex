@@ -743,7 +743,8 @@ variables\footnote{Note the similarity with the Gustave function in stable domai
 %    \to \Id\,\UU_{\beta \vee \gamma}\, (B\times^{\beta \vee \gamma} A)\,(C \times^{\beta \vee \gamma} A)
 %$$
 
-In a system with level constraints, we could instead derive the type
+In a system with level constraints, 
+we could instead derive the (inhabited) type
 $$
     \Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}
     {~~\Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
@@ -756,16 +757,7 @@ $
 
 \subsection{Rules for level constraints}%\label{ssec:VVsystem}
 
-{\color{red}
-  Remark about $Set_\UU$.}
-
 A constraint is an equation $l = m$, where $l$ and $m$ are level expression.
-A list of constraints is {\em consistent} if it does not create a {\em loop}, i.e.
-a level expression $n$ such  that $n<n$ modulo this list of constraints.
-The main result of \cite{bezem-coquand:lattices} is that it is decidable if a list
-of constraint is consistent; furthermore, we can also decide if a given constraint
-is a consequence.
-
 Voevodsky \cite{VV} suggested to {\em introduce} universe levels with constraints. This corresponds
 to mathematical practice: for instance, at the beginning of the book \cite{giraud:cohom-non-abel},
 the author introduces two universes $U$ and $V$ with the constraint that $U$ is a member of $V$.
@@ -790,8 +782,11 @@ such levels, and this is what we present next.
 %$$
 %We write $l\leqslant m$ for the constraint $l\vee m = m$.
 
-We  have a new context extension $\Gamma,\psi$ if $\psi$ is a {\em consistent}
-finite set of constraints in $\Gamma$.
+We  have a new context extension $\Gamma,\psi$ if $\psi$ is a consistent
+finite set of constraints in $\Gamma$. A finite set of constraints is 
+{\em consistent} if it does not create a {\em loop},
+i.e., a level expression $l$ such  that $l<l$ modulo this list of constraints.
+
 
 We have a new judgment form $\psi~(\Gamma)$ that expresses that the constraint set $\psi$
 holds in $\Gamma$.
@@ -804,10 +799,21 @@ $$
 $$
 but now $l<m$ may hold since it is implied by the constraints in the context $\Gamma$.
 
-%% In the system with constraints, we have judgments such as
-%% $$
-%% \UU_{\alpha}:\UU_{\beta}~(\alpha~\beta~\Level,\alpha<\beta)
-%% $$
+MB: We seem to need some rule like this:
+\begin{figure}[H]
+  \caption{Rule for level equality depending on constraints}%
+  \label{fig:depleveleq}
+$$
+\frac{\Gamma\vdash l~\Level~~~~~\Gamma\vdash m~\Level}
+     {\Gamma\vdash l=m} {~~~\mathbb{F}/\Gamma \models l=m}
+\belowdisplayshortskip 1pt
+$$
+\end{figure}
+Here, $\mathbb{F}/\Gamma$ is the sup-semilattice with $\_^+$
+with generators in $\Gamma$ modulo the constaints in $\Gamma$, 
+see \cite{bezem-coquand:lattices}.
+
+
 We introduce a ``restriction'' operation
 $$
 \frac{A~\type~(\psi)}{[\psi]A~\type}~~~~~~~~~~~~~~~~~
@@ -866,6 +872,11 @@ $l_1~\dots~l_m$ satisfy the constraint $\psi$.
 \item Voevodsky's levels are natural numbers with the operations $0$, successor, and maximum.
 \item Voevodsky does not have level-indexed products and the constraint restriction operator.
 \item Voevodsky does not have the constraint instantiation rule.
+\item Voevodsky allows inconsistent constraints. 
+Then ${\cal A}$ is empty and rules depending on ${\cal A}$
+(rules 7,10,29,30 in \cite[Sec. 3.4]{VV}) become weird.
+\item Voevodsky assumes cumulativity with explicit coercions $j$
+(rules 29,30 in \cite[Sec. 3.4]{VV}).
 \end{itemize}
 
 
@@ -923,9 +934,10 @@ $l_1~\dots~l_m$ satisfy the constraint $\psi$.
 
 \subsection{A decision problem for sup-semilattices with successor}
 
-The type system in the previous subsection gives rise to the following
-decision problem: given a context $\Gamma$ containing constraints $\phi_1,\ldots,\phi_n$,
-can one infer the constraint $\psi$?
+The type system in the previous subsection gives rise to two
+decision problems, given a context containing constraints. 
+First, are these constraints consistent in the sense that no loop is created?
+Second, can one infer another given constraint?
 
 Voevodsky considered a similar decision problem in \cite[Section 2]{VV}.
 His universe levels are natural numbers, with 0, successor, and maximum.
