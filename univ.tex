@@ -89,6 +89,7 @@
 \newcommand{\UU}{\mathsf{U}}
 \newcommand{\JJ}{\mathsf{J}}
 \newcommand{\Level}{\mathsf{Level}}
+\newcommand{\Lev}{{\mathbb{L}}}
 %\newcommand{\Type{\hbox{\sf Type}}
 \newcommand{\ZERO}{\mathsf{0}}
 \newcommand{\SUCC}{\mathsf{S}}
@@ -574,9 +575,9 @@ $$
 
 We also have level equality judgments $l = m$ and want to enforce
 that judgments are invariant under level equality. To this end
-we first add the following rule.
-Here, $\mathbb{F}_\Gamma$ is the free sup-semilattice with $\_^+$
-and generators in $\Gamma$, see \cite{bezem-coquand:lattices}.%
+we first add the following rule, where
+$\Lev_\Gamma$ is the free sup-semilattice with $\_^+$
+and generators (level variables) in $\Gamma$, see \cite{bezem-coquand:lattices}.%
 \footnote{
 In this way we avoid cluttering the type system with many
 rules of lattice theory. This can be compared to the practice
@@ -589,7 +590,7 @@ also have to consider \emph{hypothetical} level equality judgments.)
   \caption{Rule for level equality}\label{fig:leveleq}
 $$
 \frac{\Gamma\vdash l~\Level~~~~~\Gamma\vdash m~\Level}
-     {\Gamma\vdash l=m} {~~~\mathbb{F}_\Gamma \models l=m}
+     {\Gamma\vdash l=m} {~~~\Lev_\Gamma \models l=m}
 \belowdisplayshortskip 1pt
 $$
 \end{figure}
@@ -805,12 +806,12 @@ MB: We seem to need some rule like this:
   \label{fig:depleveleq}
 $$
 \frac{\Gamma\vdash l~\Level~~~~~\Gamma\vdash m~\Level}
-     {\Gamma\vdash l=m} {~~~\mathbb{F}/\Gamma \models l=m}
+     {\Gamma\vdash l=m} {~~~\Lev/\Gamma \models l=m}
 \belowdisplayshortskip 1pt
 $$
 \end{figure}
-Here, $\mathbb{F}/\Gamma$ is the sup-semilattice with $\_^+$
-with generators in $\Gamma$ modulo the constaints in $\Gamma$, 
+Here, $\Lev/\Gamma$ is the sup-semilattice with $\_^+$
+with generators (level variables) in $\Gamma$ modulo the constaints in $\Gamma$, 
 see \cite{bezem-coquand:lattices}.
 
 
@@ -819,6 +820,7 @@ $$
 \frac{A~\type~(\psi)}{[\psi]A~\type}~~~~~~~~~~~~~~~~~
 \frac{{t}:A~(\psi)}{\lam{\psi}{t}:[\psi]A}
 $$
+({\color{red} why is $\psi$ in parenthesis?})
 with the rule $[\psi]A = A$ and $\lam{\psi}{t} = t$ if $\psi = 1$.
 
 \medskip
@@ -840,6 +842,11 @@ $$
    We can further instantiate this constant $c$ on two levels $l$ and $m$, and this will be of type
    $$[l<m]\UU_{m} \rightarrow \UU_{m^+}$$
    and this can only be used further if $l<m$ holds in the current context.
+   
+   {\color{red} We need elimination rules for this, and they are more
+   involved than in Sec. 4 since one eliminates
+   $\lam{\alpha~\beta}\lam{\psi}$ with two level expressions. In general,
+   with as many level expressions as there are level variables in $\psi$.}
 
    \medskip
 
