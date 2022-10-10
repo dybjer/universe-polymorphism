@@ -697,7 +697,7 @@ are constant.
 
 {\color{red} Todo: mention Egbert's semilattice}
 
-{\color{red} Todo: perhaps add a variant of $c$ below with $\simeq$ iso $Id$}
+{\color{red} Todo: perhaps add a variant of $c$ below with $\simeq$ for $\Id$}
 
 To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity\footnote{We use Russell's style notation}:
 %[[The type constructor ``$\simeq$'' should be replaced by the identity type for this to work. I am not sure which notation for the identity type we want to use to formulate this example.]]
@@ -745,7 +745,7 @@ variables\footnote{Note the similarity with the Gustave function in stable domai
 %$$
 
 In a system with level constraints, 
-we could instead derive the (inhabited) type
+we could instead derive the ({\color{red} inhabited under UA?}) type
 $$
     \Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}
     {~~\Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
@@ -820,8 +820,20 @@ $$
 \frac{A~\type~(\psi)}{[\psi]A~\type}~~~~~~~~~~~~~~~~~
 \frac{{t}:A~(\psi)}{\lam{\psi}{t}:[\psi]A}
 $$
-({\color{red} why is $\psi$ in parenthesis?})
+
 with the rule $[\psi]A = A$ and $\lam{\psi}{t} = t$ if $\psi = 1$.
+{\color{red} Questions. 
+   \begin{enumerate}
+   \item Why is $(\psi)$ in parenthesis? I would say it is implied by
+   the context, not part of. Replace $(\psi)$ by 
+   $\Lev/\Gamma \models \psi$ as explained above?
+   With the rule in Fig.\ref{fig:depleveleq} we could write $\psi$
+   just as a premiss, without the parenthesis.
+   \item Could one view $[\psi]A = A$ and $\lam{\psi}{t} = t$ as
+   the elimination rules? 
+   \item Replace $\psi = 1$ by $\Lev/\Gamma \models \psi$? Or just
+   write $\psi$ as a premiss?
+   \end{enumerate}}
 
 \medskip
 
@@ -842,11 +854,6 @@ $$
    We can further instantiate this constant $c$ on two levels $l$ and $m$, and this will be of type
    $$[l<m]\UU_{m} \rightarrow \UU_{m^+}$$
    and this can only be used further if $l<m$ holds in the current context.
-   
-   {\color{red} We need elimination rules for this, and they are more
-   involved than in Sec. 4 since one eliminates
-   $\lam{\alpha~\beta}\lam{\psi}$ with two level expressions. In general,
-   with as many level expressions as there are level variables in $\psi$.}
 
    \medskip
 
