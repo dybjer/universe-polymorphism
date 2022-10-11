@@ -1,0 +1,13 @@
+*.agdai
+*~
+*.hi
+*.o
+*.aux
+*.log
+*.out
+*.pdf
+*.html
+*.blg
+*.bbl
+*.DS_Store
+#*

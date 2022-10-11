@@ -86,19 +86,21 @@ forward(Va,[Var|W],I0,Improved,A0,A):-
   append(I,I0,I1),                           %/*test*/ write(I1), nl,
   forward(Va,W,I1,Improved,A1,A).
 
-% The arguments V,C define the set of clauses with sups over V,
-% and conclusion in C. Always I subset C subset V and list_of_keys(Va,V).
+% The arguments V,C define the set of clauses with sups over V, with
+% conclusion in C. Always: I subset C subset V with list_of_keys(Va,V).
 
 thm32(Va,V,C,I,A0,A) :- 
+  % fix later: the following detects loops, but then stops 
   showprogress(A0),
-  %fix later, the following is correct without loops only
   forward(Va,C,[],U,A0,A1),
   (U = [] -> A0 = A 
            ; ord_union(I,U,IU),
              ((length(V,N),length(IU,N)) -> write(loop),nl
               ; % now we should actually simplify
   % termination of the following line should be proved (Lemma 3.3)
-              lemma33(Va,V,IU,A1,A2),                                   
+              bagof(Var-0,member(Var,IU),Pairs),
+              ord_list_to_assoc(Pairs,IUa),              
+              lemma33(Va,IUa,IU,A1,A2),                                   
               ord_subtract(C,IU,CmIU), 
               forward(Va,CmIU,[],R,A2,A3),
               (R = [] -> A=A3 ;
@@ -107,13 +109,11 @@ thm32(Va,V,C,I,A0,A) :-
               )
   ).
 
-lemma33(Va,V,W,A0,A) :-
-  bagof(Var-0,member(Var,W),Pairs),
-  ord_list_to_assoc(Pairs,Wa),
+lemma33(Va,Wa,W,A0,A) :-
   thm32(Wa,W,W,[],A0,A1),
   forward(Va,W,[],U,A1,A2),
   (U = [] -> A2 = A 
-           ; lemma33(Va,V,W,A2,A)
+           ; lemma33(Va,Wa,W,A2,A)
   ).
   
   
