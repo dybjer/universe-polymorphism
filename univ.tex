@@ -410,7 +410,8 @@ Here $\const(A_1,\ldots,A_m,t_1,\ldots,t_n)$ stands for a syntactic
 construct $\const$ parametrized by $A_1,\ldots,A_m,t_1,\ldots,t_n$.
 
 \begin{figure}[h!]
-  \caption{General schema for congruence rules}\label{fig:congr}
+  \caption{General schema for congruence rules
+  {\color{red}unsatisfactory, see R,J below, horrible}}\label{fig:congr}
 $$
 \frac{A_1 = A'_1~\type~~\ldots~~ A_m = A'_m~\type  ~~~~
 t_1 = t'_1 : T_1 ~~\ldots~~  t_n = t'_n : T_n}
@@ -587,7 +588,7 @@ on the axioms for the modal operators. (In the next section we will
 also have to consider \emph{hypothetical} level equality judgments.)
 }
 \begin{figure}[H]
-  \caption{Rule for level equality}\label{fig:leveleq}
+  \caption{Introduction rule for level equality}\label{fig:leveleq}
 $$
 \frac{\Gamma\vdash l~\Level~~~~~\Gamma\vdash m~\Level}
      {\Gamma\vdash l=m} {~~~\Lev_\Gamma \models l=m}
@@ -600,11 +601,15 @@ One can view these rules as additional congruence rules, conceptually
 taking the union of level equality and definitional equality.
 
 \begin{figure}[H]
-  \caption{Congruence rule for level equality}\label{fig:levelcongruence}
+  \caption{Basic eliminations rules for level equality {\color{red}red ones needed?}}%
+  \label{fig:levelcongruence}
 $$
-\frac{l=m ~~~~~ A~\type~(\alpha~\Level)}{A(l/\alpha) = A(m/\alpha)}
+\frac{l=m ~~~~~ A~\type~(\alpha~\Level)}
+{{\color{red}A(l/\alpha)~\type}~~~~~A(l/\alpha) = A(m/\alpha)}
 ~~~~~~~
-\frac{l=m ~~~~~ a:A~(\alpha~\Level)}{a(l/\alpha) = a(m/\alpha): A(l/\alpha)}
+\frac{l=m ~~~~~ a:A~(\alpha~\Level)}
+{{\color{red}a(l/\alpha): A(l/\alpha)}~~~~~
+a(l/\alpha) = a(m/\alpha): A(l/\alpha)}
 \belowdisplayshortskip 0pt
 $$
 \end{figure}
@@ -612,15 +617,16 @@ $$
 It then follows from the rules of our basic type theory that
 judgments are invariant under level equality: if $l=m$ and
 ${a(l/\alpha) : A(l/\alpha)}$, then ${a(m/\alpha) : A(m/\alpha)}$.
+{\color{red} How?}
 
 We will now add rules for internally indexed universes.
-Note that $m<l$ is shorthand for the level judgment $l= m^+ \vee l$.
+Note that $l<m$ is shorthand for the level judgment $m= l^+ \vee m$.
 \begin{figure}[H]
   \caption{Rules and conversion rule for universes $\UU_l$ and their codes}\label{fig:typeUl}
 $$
 \frac{l~\Level}{\UU_l~\type}~~~~~~
 \frac{A:\UU_{l}}{\T_{l}(A)~\type}~~~~~~
-\frac{m<l}{\UU^{l}_{m}:\UU_{l}~~~~~~\T_{l}({\UU^{l}_{m}}) = \UU_{m}}
+\frac{l<m}{\UU^{m}_{l}:\UU_{m}~~~~~~\T_{m}({\UU^{m}_{l}}) = \UU_{l}}
 \belowdisplayshortskip 0pt
 $$
 \end{figure}
@@ -665,6 +671,9 @@ In Agda $\Level$ is a type,
 and it is thus possible to form level-indexed products of types.
 In our system $\Level$ is not a type, but it is essential to be able to state operations polymorphic
 in the levels. In order to do this, we extend the system with the following rules:
+\begin{figure}[H]
+  \caption{Rules and conversion rule for level-indexed products}%
+  \label{fig:levindprod}
 $$
 \frac{A~\type~(\alpha~\Level)}{[\alpha]A~\type}~~~~~~~
 \frac{t:[\alpha]A~~~~~l~\Level}
@@ -672,9 +681,15 @@ $$
 \frac{u:A~(\alpha~\Level)}{\lam{\alpha}{u}: [\alpha]A}~~~~~
 \frac{t~\alpha = u~\alpha:A~(\alpha~\Level)}{t = u:[\alpha]A}
 $$
-with conversion rule $(\lam{\alpha}{u})~l = u(l/\alpha)$.
+$$
+\frac{u:A~(\alpha~\Level)~~~~~l~\Level}
+{(\lam{\alpha}{u})~l = u(l/\alpha): A(l/\alpha)}
+$$
+\end{figure}
 
-An example that uses level-indexed products is the following type which  expresses the theorem that univalence for universes of arbitrary level implies function extensionality for functions between universes of arbitrary levels.
+An example that uses level-indexed products is the following type which
+expresses the theorem that univalence for universes of arbitrary level implies
+function extensionality for functions between universes of arbitrary levels.
 $$
 ([\alpha]\mathsf{IsUnivalent}\, \UU_\alpha)
 \to [\beta][\gamma] \mathsf{FunExt}\, \UU_\beta\, \UU_\gamma
@@ -786,7 +801,8 @@ such levels, and this is what we present next.
 We  have a new context extension $\Gamma,\psi$ if $\psi$ is a consistent
 finite set of constraints in $\Gamma$. A finite set of constraints is 
 {\em consistent} if it does not create a {\em loop},
-i.e., a level expression $l$ such  that $l<l$ modulo this list of constraints.
+i.e., a level expression $l$ such  that $l<l$ modulo this set of constraints,
+see \cite{bezem-coquand:lattices}.
 
 
 We have a new judgment form $\psi~(\Gamma)$ that expresses that the constraint set $\psi$
@@ -794,13 +810,21 @@ holds in $\Gamma$.
 As shown in \cite{bezem-coquand:lattices}, this is a decidable judgment.
 For instance we have $\alpha^+\leqslant\beta^+~(\alpha\leqslant\beta)$.
 
-We recall that we have the following rule
+Recall that we have, e.g., the following rules in Section~\ref{sec:internal}
 $$
-\frac{l~m~\Level~~~~~~l<m}{\UU_l:\UU_m}
+\frac{l<m}{\UU^m_l:\UU_m}~~~~~~~~~
+\frac{l=m ~~~~~ A~\type~(\alpha~\Level)}{A(l/\alpha) = A(m/\alpha)}
+~~~~~~~
+\frac{l=m ~~~~~ a:A~(\alpha~\Level)}{a(l/\alpha) = a(m/\alpha): A(l/\alpha)}
 $$
-but now $l<m$ may hold since it is implied by the constraints in the context $\Gamma$.
+but now $l<m$ resp.\ $l=m$ may hold if implied by the constraints 
+in the context $\Gamma$.
+This is achieved by generalising the rule \ref{fig:leveleq}
+from Section~\ref{sec:internal} by the following one.
+Here, $\Lev/\Gamma$ is the sup-semilattice with $\_^+$ with generators 
+(level variables) in $\Gamma$ modulo the constraints in $\Gamma$, 
+see \cite{bezem-coquand:lattices}.
 
-MB: We seem to need some rule like this:
 \begin{figure}[H]
   \caption{Rule for level equality depending on constraints}%
   \label{fig:depleveleq}
@@ -810,32 +834,23 @@ $$
 \belowdisplayshortskip 1pt
 $$
 \end{figure}
-Here, $\Lev/\Gamma$ is the sup-semilattice with $\_^+$
-with generators (level variables) in $\Gamma$ modulo the constaints in $\Gamma$, 
-see \cite{bezem-coquand:lattices}.
 
 
-We introduce a ``restriction'' operation
+
+We introduce a ``restriction'' (cf.\ CTT?) or ``constraining'' operation
+\begin{figure}[H]
+  \caption{Rules for constraining}%
+  \label{fig:restriction}
 $$
-\frac{A~\type~(\psi)}{[\psi]A~\type}~~~~~~~~~~~~~~~~~
-\frac{{t}:A~(\psi)}{\lam{\psi}{t}:[\psi]A}
+\frac{A~\type~~~~~(\psi)}{[\psi]A~\type}~~~~~~~~~
+\frac{{t}:A~(\psi)}{\lam{\psi}{t}:[\psi]A}~~~~~~~~~
+\frac{\psi}{[\psi]A = A}~~~~~~~~~
+\frac{\psi}{\lam{\psi}{t} = t}
+\belowdisplayshortskip 1pt
 $$
-
+\end{figure}
 with the rule $[\psi]A = A$ and $\lam{\psi}{t} = t$ if $\psi = 1$.
-{\color{red} Questions. 
-   \begin{enumerate}
-   \item Why is $(\psi)$ in parenthesis? I would say it is implied by
-   the context, not part of. Replace $(\psi)$ by 
-   $\Lev/\Gamma \models \psi$ as explained above?
-   With the rule in Fig.\ref{fig:depleveleq} we could write $\psi$
-   just as a premiss, without the parenthesis.
-   \item Could one view $[\psi]A = A$ and $\lam{\psi}{t} = t$ as
-   the elimination rules? 
-   \item Replace $\psi = 1$ by $\Lev/\Gamma \models \psi$? Or just
-   write $\psi$ as a premiss?
-   \end{enumerate}}
 
-\medskip
 
 Here is a simple example of the use of this system. In order to represent set theory in type
 theory, we can use a type $V$ satisfying the following equality $\Id~{\UU_{\beta}}~V~(\Sigma_{X:\UU_{\alpha}}X\rightarrow V)$.
