@@ -566,7 +566,7 @@ for level expressions.
   \caption{Rules for typing level expressions, extending
   \cref{fig:context}}\label{fig:contextL}
 $$
-\frac{\Gamma\vdash}{\Gamma,\alpha~\Level}~(\alpha~\text{fresh})~~~~~~
+\frac{\Gamma\vdash}{\Gamma,\alpha~\Level\vdash}~(\alpha~\text{fresh})~~~~~~
 \frac{\Gamma\vdash}{\Gamma\vdash\alpha~\Level}(\alpha~\text{in}~\Gamma)~~~~~~
 \frac{l~\Level~~~~~m~\Level}{l\vee m~\Level}~~~~~~
 \frac{l~\Level}{l^+~\Level}
@@ -790,27 +790,7 @@ of definitions.
 Voevodsky however does not describe a mechanism to {\em eliminate}
 such levels, and this is what we present next.
 
-\medskip
-
-%Thus we have
-%$$
-%\frac{l_1~m_1~\dots~l_k~m_k~\Level}{l_1 = m_1,\dots,l_k = m_k~\Constraint}
-%$$
-%We write $l\leqslant m$ for the constraint $l\vee m = m$.
-
-We  have a new context extension $\Gamma,\psi$ if $\psi$ is a consistent
-finite set of constraints in $\Gamma$. A finite set of constraints is 
-{\em consistent} if it does not create a {\em loop},
-i.e., a level expression $l$ such  that $l<l$ modulo this set of constraints,
-see \cite{bezem-coquand:lattices}.
-
-
-We have a new judgment form $\psi~(\Gamma)$ that expresses that the constraint set $\psi$
-holds in $\Gamma$.
-As shown in \cite{bezem-coquand:lattices}, this is a decidable judgment.
-For instance we have $\alpha^+\leqslant\beta^+~(\alpha\leqslant\beta)$.
-
-Recall that we have, e.g., the following rules in Section~\ref{sec:internal}
+Recall that we have in Section~\ref{sec:internal}, e.g., the following rules
 $$
 \frac{l<m}{\UU^m_l:\UU_m}~~~~~~~~~
 \frac{l=m ~~~~~ A~\type~(\alpha~\Level)}{A(l/\alpha) = A(m/\alpha)}
@@ -819,31 +799,45 @@ $$
 $$
 but now $l<m$ resp.\ $l=m$ may hold if implied by the constraints 
 in the context $\Gamma$.
-This is achieved by generalising the rule \ref{fig:leveleq}
-from Section~\ref{sec:internal} by the following one.
-Here, $\Lev/\Gamma$ is the sup-semilattice with $\_^+$ with generators 
+For instance we have $\alpha^+\leqslant\beta$ in a context 
+with constraints $\alpha\leqslant\gamma$ and $\gamma^+\leqslant\beta$.
+
+To this end we introduce a new context extension operation,
+allowing to extend a context $\Gamma$ by a finite set of
+constraints $\psi$, if the finite set of constaints in the
+extended context $\Gamma,\psi$ is loop-free. 
+A finite set of constraints is {\em loop-free} if it does not 
+create a {\em loop}, i.e., a level expression $l$ such that $l<l$ 
+modulo this set of constraints, see \cite{bezem-coquand:lattices}.
+We also have a new judgment form $\Gamma\vdash\psi$ that expresses 
+that the constraint set $\psi$ holds in $\Gamma$.
+The corresponding rules are in Figure~\ref{fig:constraints}. 
+Here $\Lev/\Gamma$ is the sup-semilattice with $\_^+$ with generators 
 (level variables) in $\Gamma$ modulo the constraints in $\Gamma$, 
-see \cite{bezem-coquand:lattices}.
+see \cite{bezem-coquand:lattices}, quotienting $\Lev_\Gamma$ in
+the Figure~\ref{fig:leveleq} from Section~\ref{sec:internal}.
 
 \begin{figure}[H]
-  \caption{Rule for level equality depending on constraints}%
-  \label{fig:depleveleq}
+  \caption{Rules for constraints}\label{fig:constraints}
 $$
+\frac{\Gamma\vdash}{\Gamma,\psi\vdash}~~(\Gamma,\psi~\text{loop-free})~~~~~~
 \frac{\Gamma\vdash l~\Level~~~~~\Gamma\vdash m~\Level}
-     {\Gamma\vdash l=m} {~~~\Lev/\Gamma \models l=m}
-\belowdisplayshortskip 1pt
+     {\Gamma\vdash l=m}~~\Lev/\Gamma \models l=m~~~~~~
+\frac{\Gamma\vdash l=m~~~~~\Gamma\vdash \psi}{\Gamma\vdash\set{l=m}\cup\psi}
+\belowdisplayshortskip 0pt
 $$
 \end{figure}
 
-
+As shown in \cite{bezem-coquand:lattices}, the side conditions
+in the rules above are decidable in polynomial time.
 
 We introduce a ``restriction'' (cf.\ CTT?) or ``constraining'' operation
 \begin{figure}[H]
   \caption{Rules for constraining}%
   \label{fig:restriction}
 $$
-\frac{A~\type~~~~~(\psi)}{[\psi]A~\type}~~~~~~~~~
-\frac{{t}:A~(\psi)}{\lam{\psi}{t}:[\psi]A}~~~~~~~~~
+\frac{A~\type~~(\psi)}{[\psi]A~\type}~~~~~~~~~
+\frac{{t}:A~~(\psi)}{\lam{\psi}{t}:[\psi]A}~~~~~~~~~
 \frac{\psi}{[\psi]A = A}~~~~~~~~~
 \frac{\psi}{\lam{\psi}{t} = t}
 \belowdisplayshortskip 1pt
@@ -852,7 +846,8 @@ $$
 with the rule $[\psi]A = A$ and $\lam{\psi}{t} = t$ if $\psi = 1$.
 
 
-Here is a simple example of the use of this system. In order to represent set theory in type
+Here is a simple example of the use of this system. 
+In order to represent set theory in type
 theory, we can use a type $V$ satisfying the following equality $\Id~{\UU_{\beta}}~V~(\Sigma_{X:\UU_{\alpha}}X\rightarrow V)$.
 This equation is only well-typed modulo the constraint $\alpha<\beta$.
 
@@ -901,7 +896,7 @@ $l_1~\dots~l_m$ satisfy the constraint $\psi$.
 \item Voevodsky's levels are natural numbers with the operations $0$, successor, and maximum.
 \item Voevodsky does not have level-indexed products and the constraint restriction operator.
 \item Voevodsky does not have the constraint instantiation rule.
-\item Voevodsky allows inconsistent constraints. 
+\item Voevodsky allows loops such as $l<l$. 
 Then ${\cal A}$ is empty and rules depending on ${\cal A}$
 (rules 7,10,29,30 in \cite[Sec. 3.4]{VV}) become weird.
 \item Voevodsky assumes cumulativity with explicit coercions $j$
