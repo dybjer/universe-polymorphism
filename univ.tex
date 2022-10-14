@@ -256,10 +256,9 @@ we can express universe polymorphism as quantification over universe levels.
 We remark that universes are more important in a predicative framework than in an impredicative one.
 Consider for example the formalisation of real numbers as Dedekind cuts, or domain elements as filters of formal neighbourhoods, that is, as properties of elements in $\UU_0$. The type of such real numbers thus belongs to $\UU_1$.
 However, even in a system using an impredicative universe of propositions,
-such as the ones in \cite{Huet87,moura:lean}, there is a need for definitions that are parametric
+such as the ones in \cite{Huet87,moura:lean}, 
+there is a need for definitions that are parametric
 in universe levels.
-
-%{\color{red} Cite Lean \cite{moura:lean}?}
 
  To deal with this problem Huet \cite{Huet87} and
  Harper and Pollack \cite{HarperP91} and, in Coq, Sozeau and Tabareau
@@ -578,7 +577,8 @@ We also have level equality judgments $l = m$ and want to enforce
 that judgments are invariant under level equality. To this end
 we first add the following rule, where
 $\Lev_\Gamma$ is the free sup-semilattice with $\_^+$
-and generators (level variables) in $\Gamma$, see \cite{bezem-coquand:lattices}.%
+and generators (level variables) in $\Gamma$, 
+see \cite{bezem-coquand:lattices}.%
 \footnote{
 In this way we avoid cluttering the type system with many
 rules of lattice theory. This can be compared to the practice
@@ -596,28 +596,11 @@ $$
 $$
 \end{figure}
 
-Next, we add rules that level equality implies definitional equality.
-One can view these rules as additional congruence rules, conceptually
-taking the union of level equality and definitional equality.
-
-\begin{figure}[H]
-  \caption{Basic eliminations rules for level equality {\color{red}red ones needed?}}%
-  \label{fig:levelcongruence}
-$$
-\frac{l=m ~~~~~ A~\type~(\alpha~\Level)}
-{{\color{red}A(l/\alpha)~\type}~~~~~A(l/\alpha) = A(m/\alpha)}
-~~~~~~~
-\frac{l=m ~~~~~ a:A~(\alpha~\Level)}
-{{\color{red}a(l/\alpha): A(l/\alpha)}~~~~~
-a(l/\alpha) = a(m/\alpha): A(l/\alpha)}
-\belowdisplayshortskip 0pt
-$$
-\end{figure}
-
+We tacitly assume additional congruence rules that level equality 
+implies definitional equality of types and terms.
 It then follows from the rules of our basic type theory that
 judgments are invariant under level equality: if $l=m$ and
 ${a(l/\alpha) : A(l/\alpha)}$, then ${a(m/\alpha) : A(m/\alpha)}$.
-{\color{red} How?}
 
 We will now add rules for internally indexed universes.
 Note that $l<m$ is shorthand for the level judgment $m= l^+ \vee m$.
@@ -704,16 +687,6 @@ are constant.
 
 \section{A system with level constraints}\label{sec:constraints}
 
-{\color{red} Todo: mention that if the semilattice is bounded, that is, has a bottom element (empty join), then we get a first universe, but this is not necessary.}
-
-{\color{red} Todo: mention empty semilattice (theory without universes)}
-
-{\color{red} Todo: mention one point semilattice}
-
-{\color{red} Todo: mention Egbert's semilattice}
-
-{\color{red} Todo: perhaps add a variant of $c$ below with $\simeq$ for $\Id$}
-
 To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity\footnote{We use Russell's style notation}:
 %[[The type constructor ``$\simeq$'' should be replaced by the identity type for this to work. I am not sure which notation for the identity type we want to use to formulate this example.]]
 %$$
@@ -760,7 +733,7 @@ variables\footnote{Note the similarity with the Gustave function in stable domai
 %$$
 
 In a system with level constraints, 
-we could instead derive the ({\color{red} inhabited under UA?}) type
+we could instead derive the (inhabited under $\UA$) type
 $$
     \Pi_{A:\UU_\alpha~{B}:{\UU_\beta}~{C}:{\UU_\gamma}}
     {~~\Id\,\UU_{\alpha \vee \beta}\, (A\times B)\,(C \times A)
@@ -771,35 +744,40 @@ $
 \alpha \vee \beta = \alpha \vee \gamma.
 $
 
+
+
 \subsection{Rules for level constraints}%\label{ssec:VVsystem}
 
-A constraint is an equation $l = m$, where $l$ and $m$ are level expression.
-Voevodsky \cite{VV} suggested to {\em introduce} universe levels with constraints. This corresponds
-to mathematical practice: for instance, at the beginning of the book \cite{giraud:cohom-non-abel},
-the author introduces two universes $U$ and $V$ with the constraint that $U$ is a member of $V$.
-In our setting this will correspond to introducing two levels $\alpha$ and $\beta$ with the
-constraint $\alpha<\beta$. To be explicit about universes can be important, as shown by the
+A constraint is an equation $l = m$, where $l$ and $m$ are level expressions.
+Voevodsky \cite{VV} suggested to {\em introduce} universe levels with
+constraints. This corresponds to mathematical practice: 
+for instance, at the beginning of the book \cite{giraud:cohom-non-abel},
+the author introduces two universes $U$ and $V$ with the constraint 
+that $U$ is a member of $V$.
+In our setting this will correspond to introducing two levels 
+$\alpha$ and $\beta$ with the constraint $\alpha<\beta$. 
+
+To be explicit about universes can be important, as shown by the
 example in \cite{chambert-loir:universes-matter,waterhouse:sheaves}.
 
-Note that $\alpha<\beta$ holds if, and only if, $\beta$ is of the form $\gamma\vee\alpha^+$. We can thus
-avoid declaring such a constraint if we instead systematically write $\gamma\vee\alpha^+$ for $\beta$.
-This is what is done currently in the system Agda. However, this is a rather indirect way to express what is
-going on. Furthermore, the example at the beginning of this section shows that this can lead to an artificial duplication
-of definitions.
+Note that $\alpha<\beta$ holds if, and only if, 
+$\beta$ is of the form $\gamma\vee\alpha^+$. 
+We can thus avoid declaring such a constraint if we instead 
+systematically write $\gamma\vee\alpha^+$ for $\beta$.
+This is what is currently done in the system Agda. 
+However, this is a rather indirect way to express what is
+going on. Furthermore, the example at the beginning of this section 
+shows that this can lead to an artificial duplication of definitions.
 
 Voevodsky however does not describe a mechanism to {\em eliminate}
-such levels, and this is what we present next.
+universe levels and constraints, and this is what we present next.
 
-Recall that we have in Section~\ref{sec:internal}, e.g., the following rules
-$$
-\frac{l<m}{\UU^m_l:\UU_m}~~~~~~~~~
-\frac{l=m ~~~~~ A~\type~(\alpha~\Level)}{A(l/\alpha) = A(m/\alpha)}
-~~~~~~~
-\frac{l=m ~~~~~ a:A~(\alpha~\Level)}{a(l/\alpha) = a(m/\alpha): A(l/\alpha)}
-$$
-but now $l<m$ resp.\ $l=m$ may hold if implied by the constraints 
-in the context $\Gamma$.
-For instance we have $\alpha^+\leqslant\beta$ in a context 
+Recall that we have in Section~\ref{sec:internal}, e.g., the rule
+that $\UU^m_l:\UU_m$ if $l<m$, that is, if 
+$l<m$ can be proved in the semilattice. %\frac{l<m}{\UU^m_l:\UU_m}
+In the extended system in this section, this typing rule also applies 
+when $l<m$ is implied by the constraints in the context $\Gamma$.
+For instance, we have $\alpha^+\leqslant\beta$ in a context 
 with constraints $\alpha\leqslant\gamma$ and $\gamma^+\leqslant\beta$.
 
 To this end we introduce a new context extension operation,
@@ -809,18 +787,28 @@ extended context $\Gamma,\psi$ is loop-free.
 A finite set of constraints is {\em loop-free} if it does not 
 create a {\em loop}, i.e., a level expression $l$ such that $l<l$ 
 modulo this set of constraints, see \cite{bezem-coquand:lattices}.
+
+\begin{figure}[H]
+  \caption{Rule for context extension with constraints}\label{fig:Gpsi}
+$$
+\frac{\Gamma\vdash}{\Gamma,\psi\vdash}~~(\Gamma,\psi~\text{loop-free})
+\belowdisplayshortskip 0pt
+$$
+\end{figure}
+
 We also have a new judgment form $\Gamma\vdash\psi$ that expresses 
 that the constraint set $\psi$ holds in $\Gamma$.
 The corresponding rules are in Figure~\ref{fig:constraints}. 
 Here $\Lev/\Gamma$ is the sup-semilattice with $\_^+$ with generators 
 (level variables) in $\Gamma$ modulo the constraints in $\Gamma$, 
-see \cite{bezem-coquand:lattices}, quotienting $\Lev_\Gamma$ in
-the Figure~\ref{fig:leveleq} from Section~\ref{sec:internal}.
+quotienting $\Lev_\Gamma$ in
+Figure~\ref{fig:leveleq} from Section~\ref{sec:internal}.
+As shown in \cite{bezem-coquand:lattices}, the side conditions
+in the rules above and below are decidable in polynomial time.
 
 \begin{figure}[H]
   \caption{Rules for constraints}\label{fig:constraints}
 $$
-\frac{\Gamma\vdash}{\Gamma,\psi\vdash}~~(\Gamma,\psi~\text{loop-free})~~~~~~
 \frac{\Gamma\vdash l~\Level~~~~~\Gamma\vdash m~\Level}
      {\Gamma\vdash l=m}~~\Lev/\Gamma \models l=m~~~~~~
 \frac{\Gamma\vdash l=m~~~~~\Gamma\vdash \psi}{\Gamma\vdash\set{l=m}\cup\psi}
@@ -828,10 +816,8 @@ $$
 $$
 \end{figure}
 
-As shown in \cite{bezem-coquand:lattices}, the side conditions
-in the rules above are decidable in polynomial time.
-
-We introduce a ``restriction'' (cf.\ CTT?) or ``constraining'' operation
+We introduce a ``restriction'' or ``constraining'' operation with
+the following rules:
 \begin{figure}[H]
   \caption{Rules for constraining}%
   \label{fig:restriction}
@@ -843,7 +829,6 @@ $$
 \belowdisplayshortskip 1pt
 $$
 \end{figure}
-with the rule $[\psi]A = A$ and $\lam{\psi}{t} = t$ if $\psi = 1$.
 
 
 Here is a simple example of the use of this system. 
@@ -932,29 +917,18 @@ Then ${\cal A}$ is empty and rules depending on ${\cal A}$
 
 %% %Intuitively, we can use a term of type $[\psi]A$ only if all constraints in $\psi$ hold.
 
-%% %% {\color{red}
-%% %% TODO: state that decidability of type-checking requires (1) decidability of loop checking
-%% %% (since $\UU:\UU$ makes type checking undecidable) and (2) decidablity of whether $\psi$
-%% %% follows from the constraints in $\Gamma$.}
 
-\begin{TODO}
-  \begin{enumerate}
-  \item Complete the rules.
-  \item Add a remark saying that Voevodsky had all the rules for declaring level universes and
-    constraints but not the above rules for instantiating operations defined using these levels
-    supposed to satisfy these constraints.
-  % % Done in the introduction:
-  % \item Differences between the present system and Voevodsky's:
-  % \begin{itemize}
-  % \item
-  %   We generalize Voevodsky's levels from the natural numbers to an arbitrary join semilattice with successor.
-  % \item We add the instantiation rule.
-  % \item We add level-indexed products and the constraint restriction operation.
-%\end{itemize}
+\begin{remark}
+{\color{red} Todo: mention that if the semilattice is bounded, that is, has a bottom element (empty join), then we get a first universe, but this is not necessary.}
 
-  \item PD: We can postpone this question: TODO   can this be presented as GAT???
-   \end{enumerate}
- \end{TODO}
+{\color{red} Todo: mention empty semilattice (theory without universes)}
+
+{\color{red} Todo: mention one point semilattice}
+
+{\color{red} Todo: mention Egbert's semilattice}
+
+{\color{red} Todo: perhaps add a variant of $c$ below with $\simeq$ for $\Id$}
+\end{remark}
 
 \subsection{A decision problem for sup-semilattices with successor}
 
