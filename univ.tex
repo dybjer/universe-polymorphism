@@ -84,6 +84,7 @@
 \newcommand{\lam}[1]{{\langle}#1{\rangle}}
 
 \newcommand{\Id}{\mathsf{Id}}
+\newcommand{\Eq}{\mathsf{Eq}}
 \newcommand{\id}{\mathsf{id}}
 \newcommand{\NN}{\mathsf{N}}
 \newcommand{\UU}{\mathsf{U}}
@@ -127,6 +128,8 @@
 %\newcommand{\Level}{\mathrm{Level}}
 \newcommand{\Constraint}{\mathsf{Constraint}}
 \newcommand{\Ordo}{\mathcal{O}}
+\newcommand{\AFu}{\mathcal{A}}
+\newcommand{\Fu}{\mathit{Fu}}
 
 \newcommand{\Ctx}{\mathrm{Ctx}}
 \newcommand{\Ty}{\mathrm{Ty}}
@@ -881,11 +884,37 @@ $l_1~\dots~l_m$ satisfy the constraint $\psi$.
 \item Voevodsky's levels are natural numbers with the operations $0$, successor, and maximum.
 \item Voevodsky does not have level-indexed products and the constraint restriction operator.
 \item Voevodsky does not have the constraint instantiation rule.
-\item Voevodsky allows loops such as $l<l$. 
-Then ${\cal A}$ is empty and rules depending on ${\cal A}$
-(rules 7,10,29,30 in \cite[Sec. 3.4]{VV}) become weird.
 \item Voevodsky assumes cumulativity with explicit coercions $j$
-(rules 29,30 in \cite[Sec. 3.4]{VV}).
+(rules 29 and 30 in \cite[Sec. 3.4]{VV}).
+\item The type theories proposed by Voevodsky in \cite{VV} are parametrized 
+by a fixed but arbitrary finite set of constraints over a given finite
+set $\Fu$ of \emph{u-level variables}. 
+
+A \emph{u-level expression} \cite[Def. 2.0.2]{VV} is either a numeral,
+or a variable in $\Fu$, or an expression of the form $M+n$ with $n$ 
+a numeral and $M$ a u-level expression, or of the form $\max(M_1,M_2)$
+with $M_1,M_2$ u-level expression. A \emph{constraint} is an equation 
+between two u-level expressions. Given the finite set of constraints,
+$\AFu$ is the set of assigments of natural numbers to variables
+in $\Fu$ that satisfy all constraints.
+
+The rules 7 and 10 in \cite[Sec. 3.4]{VV} define how to use constraints:
+two types (and, similarly, two terms) become definitionally equal 
+if, for all assignments in $\AFu$, the two types become (essentially)
+syntactically equal after substitution of all variables in $\Fu$ by 
+their assigned natural number. For example, the constraint
+$\alpha < \beta$ makes $\UU_\beta$ and $\UU_{\max(1,\beta)}$
+definitionally equal.\footnote%
+{Voevodsky seemingly allows constraints such as $\alpha<\alpha$. 
+Then ${\cal A}$ is empty, which would imply that all types and 
+all terms become definitionally equal, respectively.
+Since this is not an interesting type theory, 
+we think this case is better excluded.
+}%end footnote
+
+
+  
+
 \end{itemize}
 
 
