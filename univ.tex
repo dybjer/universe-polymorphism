@@ -176,22 +176,26 @@
 
 \section{Introduction}\label{sec:intros}
 
-The system of simple type theory, as introduced by Church \cite{church:formulation},
-is elegant and the basis of several
-proof assistants. It however has an unnatural limitation: it is not possible in this system to talk
-about an arbitrary type, or about an arbitrary structure. It is also not possible to formulate the collection
-of e.g. all groups, as needed in category theory. In order to address these limitations, Martin-L\"of
-\cite{ML71,ML71a} introduced a system with a type $V$ of all types. A function $A\rightarrow V$ in this system can
-then be seen as a family of types over a given type $A$, and it is natural in such a system to refine
-the operations of simple type theory, exponential and cartesian product, by the operations of dependent products
-and sums. After the discovery of Girard's paradox \cite{Girard71}, Martin-L\"of \cite{ML72}
-introduced a distinction between
-{\em small} and {\em large} type, similar to the distinction introduced in category theory between large and small sets,
+The system of simple type theory, 
+as introduced by Church \cite{church:formulation},
+is elegant and forms the basis of several proof assistants. 
+However, it has some unnatural limitations: 
+it is not possible in this system to talk
+about an arbitrary type, or about an arbitrary structure. 
+It is also not possible to form the collection of e.g.\ all groups, 
+as needed in category theory. In order to address these limitations, 
+Martin-L\"of \cite{ML71,ML71a} introduced a system with a type $V$ of all types. 
+A function $A\rightarrow V$ in this system can then be seen as a family of types 
+over a given type $A$, and it is natural in such a system to refine
+the operations of simple type theory, exponential and cartesian product, 
+to operations of dependent products and sums. 
+After the discovery of Girard's paradox in \cite{Girard71}, 
+Martin-L\"of \cite{ML72} introduced a distinction between
+{\em small} and {\em large} types, similar to the distinction introduced 
+in category theory between large and small sets,
 and the type $V$ became the (large) type of small types.
-The name ``universe'' for such a type was chosen
-in analogy with the notion of universe introduced by Grothendieck to represent category theory
-in set theory.
-
+The name ``universe'' for such a type was chosen in analogy with the notion of 
+universes introduced by Grothendieck to represent category theory in set theory.
 
 %% The earliest record of the use of universes in type theory that we could
 %% find is in the paper \cite{deBruijn68} by de Bruijn on Automath.
@@ -215,81 +219,86 @@ in set theory.
 %to \ttt{type*}, disallowing functional abstraction with respect to \ttt{bool}.
 %The possibility of functional abstraction with respect to \ttt{type} is mentioned and rejected.
 
-
-%When representing mathematical reasoning using dependent types it is natural to introduce
-%a sort for types
-%\footnote{PD: This sentence is not clear: what is a "sort"?}
-%, itself closed by dependent product, as was done in the system Automath \cite{deBruijn68}.
-%% A little later, and independently, Martin-Löf \cite{ML71} introduced a dependent
-%% type system with a \emph{type} $V$ of all types (so $V:V$).
-%% After the discovery of Girard's Paradox \cite{Girard71}, this system was replaced by a predicative
-%% version \cite{ML72}\footnote{PD: in that paper there were just two levels: "types" and "small types" (in the universe).}, more similar to the one used in Automath \cite{deBruijn68}.
 Later, Martin-L\"of \cite{martinlof:predicative} introduced a countable sequence of universes
 $$
 \UU_0 : \UU_1 : \UU_2 : \cdots
 $$
 We refer to the indices $0, 1, 2, \ldots$ as {\em universe levels}.
 
-Before the advent of univalent foundations, one expected only the first few universe
-levels to be relevant in practical formalisations. This suggests that it might be feasible
-for a user of type theory to explicitly assign universe levels to their types, and whenever necessary
-repeat definitions when they are needed on different levels. However, the number of copies of definitions
-does not only grow with the level, but also with the number of type arguments in the definition of a type former.
-The need for universe polymorphism has increased with the advent of Voevodsky's univalent foundations,
-see for example \cite{VV}. One often wants to prove theorems uniformly for an arbitrary universe.
+Before the advent of univalent foundations, most type theorists expected 
+only the first few universe levels to be relevant in practical formalisations. 
+This included the expectation that it might be feasible for a user of 
+type theory to explicitly assign universe levels to their types, 
+simply adding updated versions of earlier
+definitions when they were needed at different levels.
+However, the number of copies of definitions does not only grow with the level, 
+but also with the number of type arguments in the definition of a type former. 
+(The latter growth can be exponential!)
+
+To deal with this problem Huet \cite{Huet87} and
+ Harper and Pollack \cite{HarperP91} and, in Coq, Sozeau and Tabareau 
+ \cite{SozeauTabareau:coq} introduced {\em universe polymorphism}.
+ Their "implicit" approach to universe polymorphisms is, however, problematic 
+ w.r.t.\ modularity, as pointed out in \cite{Courant02,Simpson04}: 
+ one can prove $A\rightarrow B$ in one file, and $B\rightarrow C$ in 
+ another file, while $A\rightarrow C$ is not valid.
+ 
+Leaving universe levels implicit also causes practical problems,
+since universe level inference can be a costly operation, 
+slowing down type-checking significantly. 
+Moreover, "universe inconsistencies" can be hard to explain to the user.
+
+ In order to cope with these issues, J. Courant \cite{Courant02}
+suggested to have explicit level universes, 
+with a sup operation (see also \cite{herbelin05}).
+This approach is now followed in Agda and in Voevodsky's proposal \cite{VV}.
+
+With the advent of Voevodsky's univalent foundations, 
+the need for universe polymorphism has only increased, 
+see for example \cite{VV}. 
+One often wants to prove theorems uniformly for any arbitrary universe(s).
 
 The {\em univalence axiom} states that for any two types $X,Y$ the canonical map
 $$
 \idtoeq_{X,Y} : (X=Y)\to (X\simeq Y)
 $$
 is an equivalence.
-Formally, the univalence axiom is an axiom scheme which is added to Martin-Löf type theory. If we work in Martin-Löf type theory with a countable tower of universes, each type is a member of some universe $\UU_n$. Such a universe $\UU_n$ is {\em univalent} provided for all $X,Y : \UU_n$ the canonical map $\idtoeq_{X,Y}$ is an equivalence. Let $\UA_n$ be the type expressing the univalence of $\UU_n$, and
-$$
-\ua_n : \UA_n
-$$
-for $n = 0,1,\ldots$, be a sequence of constants expressing the instances of the univalence axiom. We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and hence $\UA_n$ is in $\UU_{n+1}$.
-If we have a type of levels, as in the Agda or Lean system,
+Formally, the univalence axiom is an axiom scheme which is added to 
+Martin-Löf type theory. 
+If we work in Martin-Löf type theory with a countable tower of universes, 
+each type is a member of some universe $\UU_n$. 
+Such a universe $\UU_n$ is {\em univalent} provided for all $X,Y : \UU_n$ the 
+canonical map $\idtoeq_{X,Y}$ is an equivalence. 
+Let $\UA_n$ be the type expressing the univalence of $\UU_n$, and let
+$\ua_n : \UA_n$ for $n = 0,1,\ldots$ be a sequence of constants postulating 
+the respective instances of the univalence axiom. 
+We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and 
+hence $\UA_n$ is in $\UU_{n+1}$.
+If we have a type of levels, as in Agda \cite{agda-manual} 
+or Lean \cite{moura:lean},
 we can express universe polymorphism as quantification over universe levels.
-%% Then we can express univalence of all universes as one typing:
-%% $$
-%% \ua : (l : \Level) \to \UA_l
-%% $$
-%% in Agda's notation.
 
-We remark that universes are more important in a predicative framework than in an impredicative one.
-Consider for example the formalisation of real numbers as Dedekind cuts, or domain elements as filters of formal neighbourhoods, that is, as properties of elements in $\UU_0$. The type of such real numbers thus belongs to $\UU_1$.
+We remark that universes are more important in a predicative framework 
+than in an impredicative one.
+Consider for example the formalisation of real numbers as Dedekind cuts, 
+or domain elements as filters of formal neighbourhoods, 
+which belong to $\UU_1$ since they are properties of elements in $\UU_0$.
 However, even in a system using an impredicative universe of propositions,
-such as the ones in \cite{Huet87,moura:lean}, 
-there is a need for definitions that are parametric
-in universe levels.
+such as the ones in \cite{Huet87,moura:lean}, there is a need for the use of 
+definitions parametric in universe levels.
 
- To deal with this problem Huet \cite{Huet87} and
- Harper and Pollack \cite{HarperP91} and, in Coq, Sozeau and Tabareau
- \cite{SozeauTabareau:coq} introduced \emph{universe polymorphism}.
- Their "implicit" approach to universe polymorphisms is, however,
- problematic w.r.t.\ modularity, as pointed out in \cite{Courant02,Simpson04}:
- one can prove $A\rightarrow B$ in one file, and $B\rightarrow C$ in
- one other file, while $A\rightarrow C$ is not valid.
- In order to cope with this issue, J. Courant \cite{Courant02}
- suggested to have explicit level universes, with a sup operation
- (see also \cite{herbelin05}).
- This approach is now followed in Agda and in Voevodsky's proposal \cite{VV}.
-
-In this work we propose a system that refines
+In this work {\color{red} EDIT ME} we propose a system that refines
 Courant's \cite{Courant02} and Voevodsky's \cite{VV} systems as follows:
   \begin{enumerate}
   \item
-    We generalize levels from the natural numbers to elements of an arbitrary join semilattice with successor.
+    We generalize levels from the natural numbers to elements of an arbitrary sup-semilattice with successor.
   \item We add the instantiation rule.
   \item We add level-indexed products and the constraint restriction operation.
 \end{enumerate}
 
+%There is a connection between the dimension of a type and the level of a universe: for example, it is natural to consider the groupoid structure of the first universe, the 2-groupoid structure of the second universe, etc.
 
- %This is a practical problem since universe level inference can be a costly operation, sometimes more costly than the usual type-checking.
-
-%There is a connection between the dimension of a type and the level of a universe: for example, it is natural to consider the groupoid structure of the first universe, the 2-groupoid structure of the second universe, etc.\footnote{PD: I changed this paragraph. What do you think?}
-
-%The starting point for the present discussions was Escard\'o's \cite{escardo} development of univalent mathematics in the Agda system. His development is {\em universe polymorphic} and makes heavy use of quantification over Agda's type $\Level$ of universe levels. However, the Agda system is not a precisely defined logical system, and we would like to introduce several candidate systems in which Escard\'o's development can be carried out. We will also present a system similar to Voevodsky's universe polymorphic system \cite{VV}. (** MODIFY THIS STAMEMENT AND ALL OTHER REFERENCES TO VV **) In this system there are variables ranging over universe levels and each judgment is made relative to a list of equational constraints between universe level expressions.
+%The starting point for the present discussions was Escard\'o's \cite{escardo} development of univalent mathematics in the Agda system. His development is {\em universe polymorphic} and makes heavy use of quantification over Agda's type $\Level$ of universe levels. However, the Agda system is not a precisely defined logical system, and we would like to introduce several candidate systems in which Escard\'o's development can be carried out. 
 
 
 \paragraph{Plan.} We start by giving the rules for a basic version of dependent type theory with
@@ -403,25 +412,9 @@ Conversion rules for $\Pi$ and $\Sigma$ were given in \cref{fig:convPiSig}.
 and those rules imply that $=$ is a congruence.%
 \footnote{Some cases of congruence are subtle. Exercise:
 show congruence of $=$ for $\mylam{x}{A}{b}$ and $(a,b)$.}
-
-We want that $=$ is a congruence for all syntactic constructs
+In the sequel we will tacitly assume the inference rules
+ensuring that $=$ is a congruence for all syntactic constructs
 that are to follow.
-Instead of giving tedious congruence rules for
-each addition to the syntax, we formulate a schema in \cref{fig:congr}.
-Here $\const(A_1,\ldots,A_m,t_1,\ldots,t_n)$ stands for a syntactic
-construct $\const$ parametrized by $A_1,\ldots,A_m,t_1,\ldots,t_n$.
-
-\begin{figure}[h!]
-  \caption{General schema for congruence rules
-  {\color{red}unsatisfactory, see R,J below, horrible}}\label{fig:congr}
-$$
-\frac{A_1 = A'_1~\type~~\ldots~~ A_m = A'_m~\type  ~~~~
-t_1 = t'_1 : T_1 ~~\ldots~~  t_n = t'_n : T_n}
-{\const(A_1,\ldots,A_m,t_1,\ldots,t_n) =
-\const(A'_1,\ldots,A'_m,t'_1,\ldots,t'_n) : T \text{~~(or $~\type$)}}
-\belowdisplayshortskip -1pt
-$$
-\end{figure}
 
 We now introduce the type of natural numbers $\NN$ with
 the usual constructors $\ZERO,\SUCC$ and eliminator $\RR$,
@@ -469,7 +462,7 @@ $$
 \end{figure}
 
 
-\section{Rules for an external sequence of universes}
+\section{Rules for an external sequence of universes}\label{sec:external}
 
 
   %PD: Is this set of rules is complete? What about $A=A':\UU_n$ implies $\T_n(A) = T_n(A')$?} set of rules for "universes as full reflections".
@@ -794,7 +787,8 @@ modulo this set of constraints, see \cite{bezem-coquand:lattices}.
 \begin{figure}[H]
   \caption{Rule for context extension with constraints}\label{fig:Gpsi}
 $$
-\frac{\Gamma\vdash}{\Gamma,\psi\vdash}~~(\Gamma,\psi~\text{loop-free})
+\frac{\Gamma\vdash}{\Gamma,\psi\vdash}~~
+(\Gamma,\psi~\text{loop-free, variables in $\psi$ declared in $\Gamma$})
 \belowdisplayshortskip 0pt
 $$
 \end{figure}
@@ -852,6 +846,14 @@ $$
    We can further instantiate this constant $c$ on two levels $l$ and $m$, and this will be of type
    $$[l<m]\UU_{m} \rightarrow \UU_{m^+}$$
    and this can only be used further if $l<m$ holds in the current context.
+   
+It is interesting to replace $\Id~\UU_\beta$ in the definition of
+$c$ above by $\Eq$. We leave it to the reader to verify the
+following typing, for which no constraint is needed:
+$$
+c'~=~\lam{\alpha~\beta}\lambda_{Y:\UU_{\beta}}~\Eq~Y~ (\Sigma_{X:\UU_{\alpha}}X\rightarrow Y)~~:~~
+   [\alpha~\beta]\UU_{\beta} \rightarrow \UU_{\beta\vee\alpha^+}
+$$
 
    \medskip
 
@@ -878,46 +880,6 @@ $l_1~\dots~l_m$ satisfy the constraint $\psi$.
     We have thus complemented Voevodsky's proposal \cite{VV}: we can not only declare and define
     constants assuming universe levels satisfying some constraints, but we also provide a mechanism
     to {\em instantiate} these constants.
-
- We can summarize as the differences between the present systems and Voevodsky's as follows:
- \begin{itemize}
-\item Voevodsky's levels are natural numbers with the operations $0$, successor, and maximum.
-\item Voevodsky does not have level-indexed products and the constraint restriction operator.
-\item Voevodsky does not have the constraint instantiation rule.
-\item Voevodsky assumes cumulativity with explicit coercions $j$
-(rules 29 and 30 in \cite[Sec. 3.4]{VV}).
-\item The type theories proposed by Voevodsky in \cite{VV} are parametrized 
-by a fixed but arbitrary finite set of constraints over a given finite
-set $\Fu$ of \emph{u-level variables}. 
-
-A \emph{u-level expression} \cite[Def. 2.0.2]{VV} is either a numeral,
-or a variable in $\Fu$, or an expression of the form $M+n$ with $n$ 
-a numeral and $M$ a u-level expression, or of the form $\max(M_1,M_2)$
-with $M_1,M_2$ u-level expression. A \emph{constraint} is an equation 
-between two u-level expressions. Given the finite set of constraints,
-$\AFu$ is the set of assigments of natural numbers to variables
-in $\Fu$ that satisfy all constraints.
-
-The rules 7 and 10 in \cite[Sec. 3.4]{VV} define how to use constraints:
-two types (and, similarly, two terms) become definitionally equal 
-if, for all assignments in $\AFu$, the two types become (essentially)
-syntactically equal after substitution of all variables in $\Fu$ by 
-their assigned natural number. For example, the constraint
-$\alpha < \beta$ makes $\UU_\beta$ and $\UU_{\max(1,\beta)}$
-definitionally equal.\footnote%
-{Voevodsky seemingly allows constraints such as $\alpha<\alpha$. 
-Then ${\cal A}$ is empty, which would imply that all types and 
-all terms become definitionally equal, respectively.
-Since this is not an interesting type theory, 
-we think this case is better excluded.
-}%end footnote
-
-
-  
-
-\end{itemize}
-
-
 
 
 %% Here is an example showing how such a system can be used. With univalence, we can build a term $t$
@@ -948,87 +910,122 @@ we think this case is better excluded.
 
 
 \begin{remark}
-{\color{red} Todo: mention that if the semilattice is bounded, that is, has a bottom element (empty join), then we get a first universe, but this is not necessary.}
+Let's discuss some special cases and variations. 
 
-{\color{red} Todo: mention empty semilattice (theory without universes)}
+First, it is possible not to use
+level variables at all, making the semilattice empty,
+in which case the type theory defaults to one without universes.
 
-{\color{red} Todo: mention one point semilattice}
+Second, one could have exactly one level variable in the context. 
+Then any constraint would either be a loop or trivial. 
+In the latter case, $\Lev_{\alpha \Level}$ is isomorphic to the 
+natural numbers with successor and $\max$. Still, we get some more
+expressivity than the type theory in Sec.~\ref{sec:external} since
+we can express universe polymorphism in one variable.
 
-{\color{red} Todo: mention Egbert's semilattice}
+Third, with arbitrarily many level variables but not using contraints
+we get the type theory in Sec.~\ref{sec:internal}.
 
-{\color{red} Todo: perhaps add a variant of $c$ below with $\simeq$ for $\Id$}
+Fourth, we could add a bottom element, or empty supremum, to the semilattice.
+Without level variables and constraints, $\Lev_{\bot}$
+is isomorphic to the natural numbers with successor and $\max$
+and we would get the type theory in Sec.~\ref{sec:external}.
+We would also get a first universe, but this is not necessary.
+(Alternatively, one could have one designated level variable
+$\o$ and constraints $\o\leqslant\alpha$
+for all level variables $\alpha$.)
+
+Fifth, we note in passing that the one-point semilattice 
+with $\_^+$ has a loop.
 \end{remark}
 
 \subsection{A decision problem for sup-semilattices with successor}
-
-The type system in the previous subsection gives rise to two
-decision problems, given a context containing constraints. 
-First, are these constraints consistent in the sense that no loop is created?
-Second, can one infer another given constraint?
-
-Voevodsky considered a similar decision problem in \cite[Section 2]{VV}.
-His universe levels are natural numbers, with 0, successor, and maximum.
-His constraints are equations between open terms in this vocabulary,
-and for decidability he refers to Presburger Arithmetic,
-in which these constraints can easily be expressed.
-
-Although this is correct, we want to make a couple of remarks on Voevodsky's approach.
-The use of Presburger Arithmetic seems a bit of an overkill here.
-The only operations on universe levels that are directly motivated
-from type theory (without cumulativity) are a join operation and a compatible successor function.
-There is no need to assume a level 0, a well-founded total ordering,
-nor does one need that the successor function is injective.
-Since type theory is meant as a foundation of mathematics, it is,
-at least from a philosophical point of view,
-not a good idea to base the concept of a universe level
-on more mathematical notions than strictly necessary.
-
-We propose to apply Occam's Razor here. This means that universe levels
-are elements of an abstract sup-semilattice with a successor function
-that is compatible with the join operation. The logic is ordinary
-equational logic.
-This approach allows for possible other interpretations of universe levels
-than natural numbers. At the same time the particular decision problem
-called the \emph{uniform word problem} has to be solved for this equational theory.
-This has been done by Bezem and Coquand in \cite{bezem-coquand:lattices},
-proving the following theorem.
-
-\begin{theorem}\label{thm:P-solvability}
-For sup-semilattices with a successor, both the uniform word problem
-and the problem of loop detection are decidable.
-\end{theorem}
-This theorem ensures that type checking remains decidable when
-typings depend on universe level constraints, provided we have the expected property of normalisation.
+{\color{red} has been replaced by relevant references
+to \cite{bezem-coquand:lattices} at various places.}
 
 
 \section{Related work}
 
+Most important has been the 79 pp.\ draft \cite{VV} by Voevodsky.
+The type theories in \cite{VV} are parametrized 
+by a fixed but arbitrary finite set of constraints over a given finite
+set $\Fu$ of \emph{u-level variables}. 
+
+A \emph{u-level expression} \cite[Def. 2.0.2]{VV} is either a numeral,
+or a variable in $\Fu$, or an expression of the form $M+n$ with $n$ 
+a numeral and $M$ a u-level expression, or of the form $\max(M_1,M_2)$
+with $M_1,M_2$ u-level expression. A \emph{constraint} is an equation 
+between two u-level expressions. Given the finite set of constraints,
+$\AFu$ is the set of assigments of natural numbers to variables
+in $\Fu$ that satisfy all constraints.
+
+The rules 7 and 10 in \cite[Sec. 3.4]{VV} define how to use constraints:
+two types (and, similarly, two terms) become definitionally equal 
+if, for all assignments in $\AFu$, the two types become (essentially)
+syntactically equal after substitution of all variables in $\Fu$ by 
+their assigned natural number. For example, the constraint
+$\alpha < \beta$ makes $\UU_\beta$ and $\UU_{\max(1,\beta)}$
+definitionally equal.
+
+For decidability, Voevodsky refers in the proof of
+\cite[Lemma 2.0.4, proof]{VV} to Presburger Arithmetic,
+in which his constraints can easily be expressed.\footnote{%
+For this it seems necessary to also require that $\AFu$
+is defined by a \emph{finite} set of constraints.}%end footnote
+This indeed implies that definitional equality is decidable, even
+"in practice [...] expected to be very easily decidable i.e.\ 
+to have low complexity of the decision procedure"
+\cite[p.\ 5, l.\ -13]{VV}. 
+The latter is confirmed by \cite{bezem-coquand:lattices}.
+
+The remaining sections of \cite{VV} are devoted to extending the
+type theory with data types, $W$-types and identity types,
+and to its metatheory.
+
+We summarize the main differences between our type theories 
+and Voevodsky's in the following list.
+ \begin{itemize}
+\item In \cite{VV}, u-levels are natural numbers, even though u-level
+expressions can also contain u-level variables, successor and maximum.
+Our levels are elements of an abstract sup-semilattice with a successor
+operation ({\color{red} inflationary endo?}). 
+
+\item In \cite{VV}, constraints are introduced, once and for all,
+at the level of the theory. In our proposal they are introduced
+at the level of contexts 
+
+\item There are no level-indexed products or abstractions in \cite{VV},
+although rules 7 and 10 in \cite[Sec. 3.4]{VV} bear some resemblance 
+to the 3rd and 4th rule in Figure~\ref{fig:restriction}.
+
+\item There are no constraint instantiation rules in \cite{VV}
+such as the 2nd and the 5th rule in Figure~\ref{fig:levindprod}.
+
+\item Rules 29 and 30 in \cite[Sec. 3.4]{VV} postulate
+cumulativity with explicit coercion. In our proposal cumulativity
+is optional, see Appendix 1.
+
+\item The type theory in \cite{VV} is Tarski-style.
+cumulativity with explicit coercion. In our proposal
+this is optional, see Appendix 2.
+
+\item Voevodsky seemingly allowed constraints such as $\alpha<\alpha$. 
+Then ${\cal A}$ is empty, which would imply that all types and 
+all terms become definitionally equal, respectively.
+Since this is not an interesting type theory, 
+we think this case is better excluded and require contexts 
+to be loop-free.
+
+\end{itemize}
+
+
+
 (** Comments about groups **)
 (** comments about Id depending on the universe **)
 
-Huet \cite{Huet87} develops another algorithm for universe polymorphism
-in the Calculus of Constructions extended with a predicative system of universes.
-He drops the assumption that the universes form a linearly-ordered cumulative hierarchy indexed by the natural numbers.
-%, and on this basis develops a more efficient consistency checking algorithm than Chan's.
-
-Inspired by Huet's work, Harper and Pollack
-\cite{HarperP91} consider consider both an externally indexed version and a version
-with level expressions which are either numbers or variables, and with constraints of the form $l < m$ and $l \leq m$. They use an algorithm due to Chan
-for solving those constraints in $\Ordo(c,v^3)$, where $c$ is the number of constraints and $v$ is the number of level variables. They also consider the level synthesis problem in a version with an anonymous universe Type.
-
-This ``implicit"
-approach to universe polymorphisms however is problematic w.r.t. modularity, as pointed
-out in \cite{Courant02,Simpson04}:
-one can prove $A\rightarrow B$ in one file, and $B\rightarrow C$ in one other file, while
-$A\rightarrow C$ is not valid. In order to cope with this issue, J. Courant \cite{Courant02}
-suggested to have explicit level universes, with a sup operation (see also \cite{herbelin05}).
-This approach is now followed in Agda and in Voevodsky's proposal \cite{VV}. Our system complements
-\cite{Courant02,VV} by handling constraints on universe levels and having instantiation operations.
-\footnote{PD: This paragraph repeats what was said in the introduction.}
-%The sup operation on universe levels, also used in Agda and in Voevodsky's
-%proposal \cite{VV}, seems to appear first in the unpublished note \cite{herbelin05}.
-
 %\begin{quotation}
+%MB This quotation seems to refer to an older version of Huet's
+%UNPUBLISHED DRAFT - 1988 with the same title, and is no longer valid.
 %(cut-and-paste from Harper and Pollack)
 %Huet, in an unpublished manuscript \cite{Huet87}, has independently developed an
 %algorithm for handling universes in the Calculus of Constructions. His approach is to drop the assumption that the universes form a linearly-ordered
