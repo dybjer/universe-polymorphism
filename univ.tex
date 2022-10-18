@@ -87,6 +87,7 @@
 \newcommand{\Eq}{\mathsf{Eq}}
 \newcommand{\id}{\mathsf{id}}
 \newcommand{\NN}{\mathsf{N}}
+\newcommand{\Nat}{\mathbb{N}}
 \newcommand{\UU}{\mathsf{U}}
 \newcommand{\JJ}{\mathsf{J}}
 \newcommand{\Level}{\mathsf{Level}}
@@ -160,16 +161,18 @@
 
 \begin{abstract}
 
-  The goal of this paper is to refine Voevodsky's proposal for a type
-  theory with universe polymorphism \cite{VV}. In his system judgments
+  The goal of this paper is to refine and extend Voevodsky's proposal for a type
+  theory with universe polymorphism \cite{VV}, in which judgments
   can depend on constraints between universe levels. We first recall a
   version of type theory with an externally indexed sequence of
-  universes \`a la Tarski. We then add judgments $l\ \Level$ for internal
+  universes \`a la Tarski. We add judgments $l\ \Level$ for internal
   universe levels and judgments $l = m$ meaning that $l$ and $m$ are equal
   universe levels. Level expressions are built up from level
   variables $\alpha$ by a successor operation $l^+$ and suprema
-  $l \vee m$.  We then extend this theory with rules for level-indexed
-  product types.  Finally, we add constraints \`a la Voevodsky.
+  $l \vee m$.  We extend this theory with rules for level-indexed
+  product types.  Finally, and this is the main contribution of
+  this paper, we add constraints and constraint-indexed product types,
+  and compare the resulting type theory to Voevodsky's.
 
 \end{abstract}
 
@@ -301,15 +304,35 @@ Courant's \cite{Courant02} and Voevodsky's \cite{VV} systems as follows:
 %The starting point for the present discussions was Escard\'o's \cite{escardo} development of univalent mathematics in the Agda system. His development is {\em universe polymorphic} and makes heavy use of quantification over Agda's type $\Level$ of universe levels. However, the Agda system is not a precisely defined logical system, and we would like to introduce several candidate systems in which Escard\'o's development can be carried out. 
 
 
-\paragraph{Plan.} We start by giving the rules for a basic version of dependent type theory with
+\paragraph{Plan.} 
+We start by giving the rules for a basic version of dependent type theory with
 $\Pi, \Sigma, \NN$, and an identity type former $\Id$.
-We then explain how to add an externally indexed countable sequence of universes $\UU_n, \T_n$ \`a la Tarski without
-cumulativity rules. (In the appendix we present a system with cumulativity.)
-In Section \ref{sec:internal} we introduce the notion of universe level, and let judgments depend not only on a context of ordinary variables, but also on a list of level variables $\alpha_1, \ldots, \alpha_k$. This gives rise to a type theory with level polymorphism. This is similar to ML-polymorphism since we only quantify over global level variables. We then further extend the theory with level-indexed products of types $[\alpha]A$.
-%
-In Section \ref{sec:constraints} we present (a variation of) Voevodsky's proposal with constraints between level variables  \cite{VV}, complementing his proposal with a way to eliminate constants introduced with level variables and constraints.
 
-\section{Rules for a basic type theory}
+We then explain how to add an externally indexed sequence of universes 
+$\UU_n, \T_n~(n\in\Nat)$ \`a la Tarski, without cumulativity rules. 
+(In Appendix~1 we present a system with cumulativity,
+and in Appendix~2 we present a system \`a la Russell.)
+
+In Section~\ref{sec:internal} we introduce a notion of universe level, 
+and let judgments depend not only on a context of ordinary variables, 
+but also on level variables $\alpha, \ldots, \beta$. 
+This gives rise to a type theory with level polymorphism. 
+This is similar to ML-polymorphism as long as we do not bind those variables.
+We then further extend the theory with level-indexed products of 
+types $[\alpha]A$ and corresponding abstractions $\lam{\alpha}A$
+to give full level polymorphism.
+
+In Section \ref{sec:constraints} we extend the type theory in
+Section~\ref{sec:internal} with constraints between level variables
+and constraint-indexed products of types $[\psi]A$ and corresponding
+abstractions $\lam{\psi}A$. This goes beyond \cite{VV} where the
+constraint set is fixed (but arbitrary) on the level of the type theory.
+We consider this extension the main contribution of our paper.
+
+Finally, we extensively compare our type theory with Voevodsky's
+and briefly discuss some other approaches. 
+
+\section{Rules for a basic type theory}\label{sec:basic}
 
 We begin by listing the rules for a basic type theory
 with $\Pi, \Sigma, \NN,$ and $\Id$. Point of departure is
@@ -984,7 +1007,7 @@ and to its metatheory.
 
 We summarize the main differences between our type theories 
 and Voevodsky's in the following list.
- \begin{itemize}
+ \begin{enumerate}
 \item In \cite{VV}, u-levels are natural numbers, even though u-level
 expressions can also contain u-level variables, successor and maximum.
 Our levels are elements of an abstract sup-semilattice with a successor
@@ -1006,8 +1029,7 @@ cumulativity with explicit coercion. In our proposal cumulativity
 is optional, see Appendix 1.
 
 \item The type theory in \cite{VV} is Tarski-style.
-cumulativity with explicit coercion. In our proposal
-this is optional, see Appendix 2.
+Our proposal also works for Russell-style, see Appendix 2.
 
 \item Voevodsky seemingly allowed constraints such as $\alpha<\alpha$. 
 Then ${\cal A}$ is empty, which would imply that all types and 
@@ -1016,7 +1038,7 @@ Since this is not an interesting type theory,
 we think this case is better excluded and require contexts 
 to be loop-free.
 
-\end{itemize}
+\end{enumerate}
 
 
 
@@ -1047,6 +1069,7 @@ The authors acknowledge the support of the Centre for Advanced Study (CAS)
 at the Norwegian Academy of Science and Letters
 in Oslo, Norway, which funded and hosted the research project Homotopy
 Type Theory and Univalent Foundations during the academic year 2018/19.
+
 \bibliographystyle{plain}
 \bibliography{refs}
 
