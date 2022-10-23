@@ -21,8 +21,8 @@ inu1(Lin,Lout,Rin,Rout) :-
        read(Line),
        (Line=end_of_file -> Lin=Lout, Rin=Rout
        ;
-       assert(Line),
-       arg(1,Line,X),arg(2,Line,Y),Lmid=[X|Lin],Rmid=[Y|Rin],
+       assert(Line), Line=..[F,X,Y],
+       (F=eq -> Lmid=[X,Y|Lin],Rmid=[X,Y|Rin] ; Lmid=[X|Lin],Rmid=[Y|Rin]),
        inu1(Lmid,Lout,Rmid,Rout)
        ).
       
@@ -41,8 +41,8 @@ chu(A) :- % NB duality
 dou :- inu(A0,Va,V,Concls),    
        clu,                             
        put_assoc(progress,A0,0,A1),
-       thm32(Va,V,Concls,[],A1,Model),
-       chu(Model).
+       catch((thm32(Va,V,Concls,[],A1,Model),chu(Model)),loop(W),print(W)).
+       %chu(Model).
 
 % based_on/2 checks whether X contains all variables occurring in Sup
 
@@ -95,7 +95,7 @@ thm32(Va,V,C,I,A0,A) :-
   forward(Va,C,[],U,A0,A1),
   (U = [] -> A0 = A 
            ; ord_union(I,U,IU),
-             ((length(V,N),length(IU,N)) -> write(loop),nl
+             ((length(V,N),length(IU,N)) -> throw(loop(V)),nl
               ; % now we should actually simplify
   % termination of the following line should be proved (Lemma 3.3)
               bagof(Var-0,member(Var,IU),Pairs),
@@ -131,6 +131,8 @@ a_member(Var,V) :- get_assoc(Var,V,_).
 addprogress(X,A0,A) :- get_assoc(progress,A0,N),M is N+X,
                        put_assoc(progress,A0,M,A).
 showprogress(A) :- get_assoc(progress,A,N),write(N),nl.
+
+ask(M,A,B) :- get_assoc(A,M,X),get_assoc(B,M,Y),write(X-Y),nl.
 
 % not used yet
 %ext(F,E,FE):- atom_concat(F,'.',F1),atom_concat(F1,E,FE).
