@@ -281,8 +281,15 @@ If we have a type of levels, as in Agda \cite{agda-manual}
 or Lean \cite{moura:lean},
 we can express universe polymorphism as quantification over universe levels.
 
-We remark that universes are more important in a predicative framework 
+To be explicit about universes can be important, as shown by the
+example in \cite{chambert-loir:universes-matter,waterhouse:sheaves}.
+We remark that universes are even more important in a predicative framework 
 than in an impredicative one.
+
+(** Comments about groups **)
+
+(** comments about Id depending on the universe **)
+
 Consider for example the formalisation of real numbers as Dedekind cuts, 
 or domain elements as filters of formal neighbourhoods, 
 which belong to $\UU_1$ since they are properties of elements in $\UU_0$.
@@ -442,7 +449,6 @@ that are to follow.
 We now introduce the type of natural numbers $\NN$ with
 the usual constructors $\ZERO,\SUCC$ and eliminator $\RR$,
 as an example of an inductive data type.
-We rely on \cref{fig:congr} for congruence.
 Rules with the same hypotheses are written as one rule with
 several conclusions.\footnote%
 {You may dislike this, as well as the order of the rules.}
@@ -466,8 +472,7 @@ $$
 
 We also add identity types $\Idapp{A}{a}{a'}$ for all $A~\type$,
 $a:A$ and $a':A$, with constructor $\Rfapp{A}{a}$ and (based) eliminator
-$\Japp{A}{a}{C}{d}{a'}{q}$, all examples of parametrized syntactic constructs
-with congruence rules as in \cref{fig:congr}.
+$\Japp{A}{a}{C}{d}{a'}{q}$.
 
 \begin{figure}[H]
   \caption{Rules and conversion rule for identity types}\label{fig:typeId}
@@ -707,49 +712,25 @@ are constant.
 \section{A system with level constraints}\label{sec:constraints}
 
 To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity\footnote{We use Russell's style notation}:
-%[[The type constructor ``$\simeq$'' should be replaced by the identity type for this to work. I am not sure which notation for the identity type we want to use to formulate this example.]]
-%$$
-%    (A : \UU_l) \to (B : \UU_m) \to A \times B \simeq B \times A
-%$$
-%Here we get the constraint is that $l \vee m = m \vee l$, which holds for arbitrary levels $l, m$.
-%
-%Now  consider the theorem
-%% $$
-%%     \Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
-%%     {~~\Id\,\UU_{l \vee m}\, (A\times^{l \vee m} B)\,(C \times^{n \vee l} A)
-%%     \to \Id\,\UU_{m \vee l} \, (B\times^{m \vee l} A)\,(C \times^{n \vee l} A)}
-%% %    \to A \times B =_\delta C \times A \to B \times A =_\epsilon C \times A
-%% $$
+
 $$
     \Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
     {~~\Id\,\UU_{l \vee m}\, (A\times B)\,(C \times A)
     \to \Id\,\UU_{m \vee l} \, (B\times A)\,(C \times A)}
 %    \to A \times B =_\delta C \times A \to B \times A =_\epsilon C \times A
 $$
-It is well-formed provided $l \vee m = n \vee l$. There are three maximally general solutions:
+It is well-formed provided $l \vee m = n \vee l$. 
+There are three maximally general solutions:
 \begin{eqnarray*}
 &&l = \alpha, m = \beta, n = \alpha \vee \beta\\
 &&l = \alpha, m = \gamma \vee \alpha, n = \gamma\\
 &&l = \beta \vee \gamma, m = \beta, n = \gamma
 \end{eqnarray*}
 where $\alpha, \beta,$ and $\gamma$ are level
-variables\footnote{Note the similarity with the Gustave function in stable domain theory.}.
-%
-%$$
-%    (A : \UU_\alpha) \to (B : \UU_\beta) \to (C : \UU_{\alpha \vee \beta})
-%    \to \Id\,\UU_{\alpha \vee \beta}\, (A\times^{\alpha \vee \beta} B)\,(C \times^{\alpha \vee \beta} A)
-%    \to \Id\,\UU_{\alpha \vee \beta}\, (B\times^{\alpha \vee \beta} A)\,(C \times^{\alpha \vee \beta} A)
-%$$
-%$$
-%    (A : \UU_\alpha) \to (B : \UU_{\gamma \vee \alpha}) \to (C : \UU_{\gamma})
-%    \to \Id\,\UU_{\gamma \vee \alpha}\, (A\times^{\gamma \vee \alpha} B)\,(C \times^{\gamma \vee \alpha} A)
-%    \to \Id\,\UU_{\gamma \vee \alpha}\, (B\times^{\gamma \vee \alpha} A)\,(C \times^{\gamma \vee \alpha} A)
-%$$
-%$$
-%    (A : \UU_{\beta \vee \gamma}) \to (B : \UU_{\beta}) \to (C : \UU_{\gamma})
-%    \to \Id\,\UU_{\beta \vee \gamma}\, (A\times^{\beta \vee \gamma} B)\,(C \times^{\beta \vee \gamma} A)
-%    \to \Id\,\UU_{\beta \vee \gamma}\, (B\times^{\beta \vee \gamma} A)\,(C \times^{\beta \vee \gamma} A)
-%$$
+variables\footnote{Note the similarity with the Gustave function 
+in stable domain theory.}. In particular, if one is writing
+this definition in a proof assistant such as Agda or Lean,
+one would need to write three definitions.
 
 In a system with level constraints, 
 we could instead derive the (inhabited under $\UA$) type
@@ -759,10 +740,8 @@ $$
     \to \Id\,\UU_{\alpha \vee \gamma}\, (B\times A)\,(C \times A)}
 $$
 which is valid under the constraint
-$
-\alpha \vee \beta = \alpha \vee \gamma.
-$
-
+$\alpha \vee \beta = \alpha \vee \gamma$,
+which captures all solutions simultaneously.
 
 
 \subsection{Rules for level constraints}%\label{ssec:VVsystem}
@@ -775,9 +754,6 @@ the author introduces two universes $U$ and $V$ with the constraint
 that $U$ is a member of $V$.
 In our setting this will correspond to introducing two levels 
 $\alpha$ and $\beta$ with the constraint $\alpha<\beta$. 
-
-To be explicit about universes can be important, as shown by the
-example in \cite{chambert-loir:universes-matter,waterhouse:sheaves}.
 
 Note that $\alpha<\beta$ holds if, and only if, 
 $\beta$ is of the form $\gamma\vee\alpha^+$. 
@@ -937,12 +913,14 @@ Let's discuss some special cases and variations.
 
 First, it is possible not to use
 level variables at all, making the semilattice empty,
-in which case the type theory defaults to one without universes.
+in which case the type theory defaults to one without universes
+as presented in Section~\ref{sec:basic}.
 
 Second, one could have exactly one level variable in the context. 
 Then any constraint would either be a loop or trivial. 
-In the latter case, $\Lev_{\alpha \Level}$ is isomorphic to the 
-natural numbers with successor and $\max$. Still, we get some more
+In the latter case, the finitely presented semilattice
+is isomorphic to the natural numbers with successor and $\max$. 
+Still, we get some more
 expressivity than the type theory in Sec.~\ref{sec:external} since
 we can express universe polymorphism in one variable.
 
@@ -950,24 +928,20 @@ Third, with arbitrarily many level variables but not using contraints
 we get the type theory in Sec.~\ref{sec:internal}.
 
 Fourth, we could add a bottom element, or empty supremum, to the semilattice.
-Without level variables and constraints, $\Lev_{\bot}$
+Without level variables and constraints, the finitely presented semilattice
 is isomorphic to the natural numbers with successor and $\max$
 and we would get the type theory in Sec.~\ref{sec:external}.
-We would also get a first universe, but this is not necessary.
+We would also get a first universe.
 (Alternatively, one could have one designated level variable
 $\o$ and constraints $\o\leqslant\alpha$
 for all level variables $\alpha$.)
 
 Fifth, we note in passing that the one-point semilattice 
-with $\_^+$ has a loop.
+with $\_^+$ has a loop, and hence we cannot represent a
+universe that is a member of itself.
 \end{remark}
 
-\subsection{A decision problem for sup-semilattices with successor}
-{\color{red} has been replaced by relevant references
-to \cite{bezem-coquand:lattices} at various places.}
-
-
-\section{Related work}
+\section{Related work}\label{sec:related}
 
 Most important has been the 79 pp.\ draft \cite{VV} by Voevodsky.
 The type theories in \cite{VV} are parametrized 
@@ -984,7 +958,7 @@ in $\Fu$ that satisfy all constraints.
 
 The rules 7 and 10 in \cite[Sec. 3.4]{VV} define how to use constraints:
 two types (and, similarly, two terms) become definitionally equal 
-if, for all assignments in $\AFu$, the two types become (essentially)
+if, for all assignments in $\AFu$, the two types become "essentially"
 syntactically equal after substitution of all variables in $\Fu$ by 
 their assigned natural number. For example, the constraint
 $\alpha < \beta$ makes $\UU_\beta$ and $\UU_{\max(1,\beta)}$
@@ -1006,44 +980,37 @@ type theory with data types, $W$-types and identity types,
 and to its metatheory.
 
 We summarize the main differences between our type theories 
-and Voevodsky's in the following list.
- \begin{enumerate}
-\item In \cite{VV}, u-levels are natural numbers, even though u-level
+and Voevodsky's as follows.
+%
+In \cite{VV}, u-levels are natural numbers, even though u-level
 expressions can also contain u-level variables, successor and maximum.
 Our levels are elements of an abstract sup-semilattice with a successor
-operation ({\color{red} inflationary endo?}). 
-
-\item In \cite{VV}, constraints are introduced, once and for all,
+operation. 
+%
+In \cite{VV}, constraints are introduced, once and for all,
 at the level of the theory. In our proposal they are introduced
-at the level of contexts 
-
-\item There are no level-indexed products or abstractions in \cite{VV},
-although rules 7 and 10 in \cite[Sec. 3.4]{VV} bear some resemblance 
-to the 3rd and 4th rule in Figure~\ref{fig:restriction}.
-
-\item There are no constraint instantiation rules in \cite{VV}
+at the level of contexts.
+%
+There are no level-indexed products or abstractions in \cite{VV}.
+%
+There are no constraint instantiation rules in \cite{VV}
 such as the 2nd and the 5th rule in Figure~\ref{fig:levindprod}.
-
-\item Rules 29 and 30 in \cite[Sec. 3.4]{VV} postulate
+%
+Rules 29 and 30 in \cite[Sec. 3.4]{VV} postulate
 cumulativity with explicit coercion. In our proposal cumulativity
 is optional, see Appendix 1.
-
-\item The type theory in \cite{VV} is Tarski-style.
+%
+The type theory in \cite{VV} is Tarski-style.
 Our proposal also works for Russell-style, see Appendix 2.
 
-\item Voevodsky seemingly allowed constraints such as $\alpha<\alpha$. 
-Then ${\cal A}$ is empty, which would imply that all types and 
-all terms become definitionally equal, respectively.
-Since this is not an interesting type theory, 
-we think this case is better excluded and require contexts 
-to be loop-free.
-
-\end{enumerate}
+%\item Voevodsky seemingly allowed constraints such as $\alpha<\alpha$. 
+%Then ${\cal A}$ is empty, which would imply that all types and 
+%all terms become definitionally equal, respectively.
+%Since this is not an interesting type theory, 
+%we think this case is better excluded and require contexts 
+%to be loop-free.
 
 
-
-(** Comments about groups **)
-(** comments about Id depending on the universe **)
 
 %\begin{quotation}
 %MB This quotation seems to refer to an older version of Huet's
@@ -1063,6 +1030,20 @@ Assaf \cite{Assaf14} considers an alternative version of the calculus of
 constructions where subtyping is explicit. This new system avoids problems related to coercions and dependent types by using the Tarski style
 of universes and by introducing additional equations to reflect equality. In particular he adds an explicit cumulativity map $\T^0_1 : \UU_0 \to \UU_1$. He argues that "full reflection" is necessary to achieve the expressivity of Russell style. He introduces the explicit cumulative calculus of constructions (CC$\uparrow$) which is closely related to our system of externally indexed Tarski style universes.
 This is analysed further in the PhD thesis of F. Thir\'e \cite{Thire20}.
+
+\section{Conjectures and future work}\label{sec:future}
+
+For the moment only a list:
+
+1. Canonicity, normalization and decidability of type checking
+
+2. Equivalence between Tarski and Russell formulation
+
+3. Admissibility of \cite[Rule 20 on p. 17]{VV}
+
+4. Parametricity, e.g. all functions $[\alpha]\NN$ are constant (corr. of 1?)
+
+5. Implementation
 
 \paragraph{Acknowledgement.}
 The authors acknowledge the support of the Centre for Advanced Study (CAS)
@@ -1159,11 +1140,11 @@ and $\T_l(\Id^l~A~a~b) = \Id~\T_l(A)~a~b$.
 
 We can then define for $A$ and $B$ in $\UU_l$
 %the exponential $A\rightarrow^l B:\UU_l$ as $\Pi^l~A~(\lambda_{x:\T_l(A)}B)$ and
-the type $\Equiv^l~A~B:\UU_l$ such that
-$\T_l(\Equiv^l~A~B) = \Equiv~\T_l(A)~\T_l(B)$. For $m>l$, a consequence of univalence
+the type $\Eq^{l,l}~A~B:\UU_l$ such that
+$\T_l(\Eq^{l,l}~A~B) = \Equiv~\T_l(A)~\T_l(B)$. For $m>l$, a consequence of univalence
 for $\UU_m$ and $\UU_l$ is that we can build an element of
 $$
-\Id~\UU_m~(\Equiv^m~\T^m_l(A)~\T^m_l(B))~(\Id^m~\UU^m_l~A~B)
+\Id~\UU_m~(\Eq^{m,m}~\T^m_l(A)~\T^m_l(B))~(\Id^m~\UU^m_l~A~B)
 $$
 
 \section*{Appendix 2: formulation \`a la Russell}
