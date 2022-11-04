@@ -164,18 +164,8 @@
 
 \begin{abstract}
 
-  The goal of this paper is to refine and extend Voevodsky's proposal for a type
-  theory with universe polymorphism \cite{VV}, in which judgments
-  can depend on constraints between universe levels. We first recall a
-  version of type theory with an externally indexed sequence of
-  universes \`a la Tarski. We add judgments $l\ \Level$ for internal
-  universe levels and judgments $l = m$ meaning that $l$ and $m$ are equal
-  universe levels. Level expressions are built up from level
-  variables $\alpha$ by a successor operation $l^+$ and suprema
-  $l \vee m$.  We extend this theory with rules for level-indexed
-  product types.  Finally, and this is the main contribution of
-  this paper, we add constraints and constraint-indexed product types,
-  and compare the resulting type theory to Voevodsky's.
+  The goal of this paper is to refine and extend Voevodsky's draft "A universe polymorphic type system", in which judgments can depend on equalities between universe levels. We first recall a version of type theory with an externally indexed sequence of universes. We then add judgments for internal universe levels, built up from level variables by a successor operation and a binary supremum operation, as well as judgments for equality of universe levels. We extend this type theory with rules for level-indexed product types.
+Finally, and this is the main contribution of this paper, we add hypothetical judgments for equality of universe levels. This means that equality of universe levels may depend on constraints (universe level equalities in the context). We give rules for formation, introduction and elimination of constraint-indexed product types, and compare the resulting type theory to Voevodsky's.
 
 \end{abstract}
 
