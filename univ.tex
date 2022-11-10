@@ -319,25 +319,25 @@ types $[\alpha]A$ and corresponding abstractions $\lam{\alpha}A$
 to give full level polymorphism.
 
 In Section \ref{sec:constraints} we extend the type theory in
-Section~\ref{sec:internal} with constraints between level variables
-and constraint-indexed products of types $[\psi]A$ and corresponding
-abstractions $\lam{\psi}A$. This goes beyond \cite{VV} where the
+Section~\ref{sec:internal} with constraints (lists of equations between level expressions). Constraints can now appear as assumptions in hypothetical judgments. Moreover, we add
+constraint-indexed products of types $[\psi]A$ and corresponding
+abstractions $\lam{\psi}A$. This goes beyond Voevodsky's system \cite{VV} where the
 constraint set is fixed (but arbitrary) on the level of the type theory.
 We consider this extension the main contribution of our paper.
-
-Finally, we extensively compare our type theory with Voevodsky's
+Finally, we %extensively 
+compare our type theory with Voevodsky's
 and briefly discuss some other approaches. 
 
 \section{Rules for a basic type theory}\label{sec:basic}
 
 We begin by listing the rules for a basic type theory
-with $\Pi, \Sigma, \NN,$ and $\Id$. Point of departure is
-the system described by Abel et al.\ in \cite{abel18},
-which has $\Pi$ and $\NN$ and one universe, since a
-significant part of its metatheory has been formalized in Agda.
+with $\Pi, \Sigma, \NN,$ and $\Id$. A point of departure is
+the system described by Abel et al.\ in \cite{abel18}, since a
+significant part of the metatheory of this system has been formalized in Agda.
+This system has $\Pi$-types, $\NN$ and one universe.
 However, for better readability we use named variables instead
 of de Bruijn indices. We also add $\Sigma$ and $\Id$, and,
-in the next sections, several indexed universes.
+in the next sections, a tower universes.
 
 The judgment $\Gamma\vdash$ expresses that $\Gamma$ is a context.
 The judgment $\Gamma\vdash A$ expresses that $A$ is a type in context $\Gamma$.
@@ -429,8 +429,8 @@ for types and terms, such as $\mypi{x}{A}{B}$,
 $\mylam{x}{A}{b}$, $\app{c}{a}$, $(a,b).2$.
 Conversion rules for $\Pi$ and $\Sigma$ were given in \cref{fig:convPiSig}.
 and those rules imply that $=$ is a congruence.%
-\footnote{Some cases of congruence are subtle. Exercise:
-show congruence of $=$ for $\mylam{x}{A}{b}$ and $(a,b)$.}
+(Some cases of congruence are subtle. Exercise:
+show congruence of $=$ for $\mylam{x}{A}{b}$ and $(a,b)$.)
 In the sequel we will tacitly assume the inference rules
 ensuring that $=$ is a congruence for all syntactic constructs
 that are to follow.
@@ -492,8 +492,7 @@ will also be used later on.
   %PD: Is this set of rules is complete? What about $A=A':\UU_n$ implies $\T_n(A) = T_n(A')$?} set of rules for "universes as full reflections".
 %in the style of the rules in Section \ref{sec:palmgren}.
 We present an external sequence of universes of codes of types, together
-with the decoding functions. (Without cumulativity,
-the version with cumulativity is presented in the Appendix.)
+with the decoding functions. (We do not include rules for cumulativity here, but leave them for the Appendix.)
 
 \begin{figure}[H]
   \caption{Rules and conversion rules for all universes $\UU_m$ and their codes $\UU^{n}_{m}~(n>m)$}\label{fig:typeU}
@@ -507,11 +506,11 @@ $$
 \end{figure}
 
 Here and below $m$ and $n$, as super- and subscripts of $\UU$ and $\T$,
-are external natural numbers, and $n \vee m$ is the
+are \emph{external} natural numbers, and $n \vee m$ is the
 maximum of $n$ and $m$. This means, for example, that $\UU_m~\type$ is
 a \emph{schema}, yielding one rule for each $m$.
 
-Next we define how $\Pi$ and $\Sigma$ are `relativized' to
+Next we define how $\Pi$ and $\Sigma$ are ``relativized'' to
 codes of types, and how they are decoded.
 
 \begin{figure}[H]
@@ -543,12 +542,12 @@ $$
 
 %% Note that $\UU_p, \T_p$ are given by separate inductive-recursive definition for each $p$. There is one introduction rule for each $\Pi^{n,m}$ and $\Sigma^{n,m}$ such that $p = m \vee n$ and introduction rules for $\NN^p, \Id^p$, and also for $\UU^{p-1}$ provided $p \geq 1$.
 
-Note that the universe levels in the above theory are
-\emph{external} natural numbers.
-Thus the typing of the identity function
+%Note that the universe levels in the above theory are
+%\emph{external} natural numbers.
+Note that the typing of the identity function
 $$\mylam{X}{\UU_n}{\mylam{x}{\T_n(X)}{x}} :
       \mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}$$
-is a \emph{schema}  depending on the external natural number $n$.
+is also a \emph{schema}  depending on the external natural number $n$.
 It has infinitely many instances obtained by letting  $n = 0,1,\dots$.
 
 In the following section we present a type theory with \emph{internal}
