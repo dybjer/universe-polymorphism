@@ -290,6 +290,8 @@ than in an impredicative one, for uniform proofs and modularity.
 
 (** Comments about groups: Group$(\UU_i)$ depends essentially on $i$**)
 
+%(** Id U A B and Id U^+ A^+ B^+ **)
+
 Consider for example the formalisation of real numbers as Dedekind cuts, 
 or domain elements as filters of formal neighbourhoods, 
 which belong to $\UU_1$ since they are properties of elements in $\UU_0$.
@@ -598,17 +600,20 @@ $$
 We also have level equality judgments $l = m$ and want to enforce
 that judgments are invariant under level equality. To this end
 we first add the following rule, where
-$\Lev_\Gamma$ is the free sup-semilattice with $\_^+$
-and generators (level variables) in $\Gamma$, 
-see \cite{bezem-coquand:lattices}.%
-\footnote{
+$\Lev_\Gamma$ is the sup-semilattice presented by $\Gamma$.
+Here, in the absence of constraints in $\Gamma$, this
+means that $\Lev_\Gamma$ is the free sup-semilattice with $\_^+$
+and generators (level variables) in $\Gamma$. 
+\footnote{%
 In this way we avoid cluttering the type system with many
 rules of lattice theory. This can be compared to the practice
 in modal logic, where all (classical) propositional tautologies
 are postulated as axioms of modal propositional logic, allowing to focus
-on the axioms for the modal operators. (In the next section we will
-also have to consider \emph{hypothetical} level equality judgments.)
-}
+on the axioms for the modal operators.}
+\footnote{%
+In the next section we will also consider \emph{hypothetical} level 
+equality judgments, i.e., we may have constraints in $\Gamma$.}
+
 \begin{figure}[H]
   \caption{Introduction rule for level equality}\label{fig:leveleq}
 $$
@@ -809,11 +814,12 @@ $$
 
 We also have a new judgment form $\Gamma\vdash\psi$ that expresses 
 that the constraint set $\psi$ holds in $\Gamma$.
-The corresponding rules are in Figure~\ref{fig:constraints}. 
-Here $\Lev/\Gamma$ is the sup-semilattice with $\_^+$ with generators 
-(level variables) in $\Gamma$ modulo the constraints in $\Gamma$, 
-quotienting $\Lev_\Gamma$ in
-Figure~\ref{fig:leveleq} from Section~\ref{sec:internal}.
+The corresponding rules are in Figure~\ref{fig:constraints}.
+The first rule is the same as in Figure~\ref{fig:leveleq},
+with $\Lev_\Gamma$ again being the sup-semilattice presented by $\Gamma$.
+However, since we may have constraints in the context, this means 
+here that $\Lev_\Gamma$ is the sup-semilattice with $\_^+$ with generators 
+(level variables) in $\Gamma$ modulo the constraints in $\Gamma$.
 As shown in \cite{bezem-coquand:lattices}, the side conditions
 in the rules above and below are decidable in polynomial time.
 
@@ -821,7 +827,7 @@ in the rules above and below are decidable in polynomial time.
   \caption{Rules for constraints}\label{fig:constraints}
 $$
 \frac{\Gamma\vdash l~\Level~~~~~\Gamma\vdash m~\Level}
-     {\Gamma\vdash l=m}~~\Lev/\Gamma \models l=m~~~~~~
+     {\Gamma\vdash l=m}~~\Lev_\Gamma \models l=m~~~~~~
 \frac{\Gamma\vdash l=m~~~~~\Gamma\vdash \psi}{\Gamma\vdash\set{l=m}\cup\psi}
 \belowdisplayshortskip 0pt
 $$
