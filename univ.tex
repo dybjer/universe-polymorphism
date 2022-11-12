@@ -89,12 +89,13 @@
 \newcommand{\Nat}{\mathbb{N}}
 \newcommand{\UU}{\mathsf{U}}
 \newcommand{\JJ}{\mathsf{J}}
-\newcommand{\Level}{\mathsf{Level}}
+\newcommand{\AgdaLevel}{\mathsf{Level}}
+\newcommand{\Level}{\mathsf{level}}
 \newcommand{\Lev}{{\mathbb{L}}}
 %\newcommand{\Type{\hbox{\sf Type}}
 \newcommand{\ZERO}{\mathsf{0}}
 \newcommand{\SUCC}{\mathsf{S}}
-
+\newcommand{\true}{\mathsf{true}}
 \newcommand{\type}{\mathsf{type}}
 \newcommand{\const}{\mathsf{const}}
 \newcommand{\lam}[1]{{\langle}#1{\rangle}}
@@ -164,7 +165,7 @@
 
 \begin{abstract}
 
- The aim of this paper is to refine and extend Voevodsky's draft ``A universe polymorphic type system", where judgments can depend on equalities between universe levels (constraints). We first recall a version of type theory with an externally indexed sequence of universes. We then add judgments for internal universe levels, built up from level variables by a successor operation and a binary supremum operation, and also judgments for equality of universe levels. Furthermore, we extend this type theory with rules for level-indexed product types. Finally, we add constraints to the theory, so that a hypothetical judgment can depend on equalities between universe levels. We also give rules for constraint-indexed product types, and compare the resulting type theory to Voevodsky's.
+ The aim of this paper is to refine and extend Voevodsky's draft ``A universe polymorphic type system", where judgments can depend on equalities between universe levels expressions (constraints). We first recall a version of type theory with an externally indexed sequence of universes. We then add judgments for internal universe levels, built up from level variables by a successor operation and a binary supremum operation, and also judgments for equality of universe levels. Furthermore, we extend this type theory with rules for level-indexed product types. Finally, we add constraints to the theory, so that a hypothetical judgment can depend on equalities between universe levels. We also give rules for constraint-indexed product types, and compare the resulting type theory to Voevodsky's.
 
 \end{abstract}
 
@@ -323,10 +324,19 @@ Section~\ref{sec:internal} with constraints (lists of equations between level ex
 constraint-indexed products of types $[\psi]A$ and corresponding
 abstractions $\lam{\psi}A$. This goes beyond Voevodsky's system \cite{VV} where the
 constraint set is fixed (but arbitrary) on the level of the type theory.
-We consider this extension the main contribution of our paper.
 Finally, we %extensively 
 compare our type theory with Voevodsky's
 and briefly discuss some other approaches. 
+
+{\color{red}The main contributions of this paper are:
+(1) universe levels  and universe level equations as \emph{judgments},
+and \emph{level-indexed products}
+(Agda also has the latter, having a \emph{type} 
+$\AgdaLevel$ of universe levels;
+however, the type $\AgdaLevel$ has disadvantages, 
+such as breaking parametricity~\cite{Escardo});
+(2) constraints as \emph{judgments} and \emph{constraint-indexed products}.
+}%endcolor
 
 \section{Rules for a basic type theory}\label{sec:basic}
 
@@ -337,7 +347,7 @@ significant part of the metatheory of this system has been formalized in Agda.
 This system has $\Pi$-types, $\NN$ and one universe.
 However, for better readability we use named variables instead
 of de Bruijn indices. We also add $\Sigma$ and $\Id$, and,
-in the next sections, a tower universes.
+in the next sections, a tower of universes.
 
 The judgment $\Gamma\vdash$ expresses that $\Gamma$ is a context.
 The judgment $\Gamma\vdash A$ expresses that $A$ is a type in context $\Gamma$.
@@ -439,8 +449,7 @@ We now introduce the type of natural numbers $\NN$ with
 the usual constructors $\ZERO,\SUCC$ and eliminator $\RR$,
 as an example of an inductive data type.
 Rules with the same hypotheses are written as one rule with
-several conclusions.\footnote%
-{You may dislike this, as well as the order of the rules.}
+several conclusions.
 
 \begin{figure}[H]
   \caption{Rules and conversion rules for the datatype $\NN$}\label{fig:typeN}
@@ -605,9 +614,9 @@ rules of lattice theory. This can be compared to the practice
 in modal logic, where all (classical) propositional tautologies
 are postulated as axioms of modal propositional logic, allowing to focus
 on the axioms for the modal operators.}
-\footnote{%
+
 In the next section we will also consider \emph{hypothetical} level 
-equality judgments, i.e., we may have constraints in $\Gamma$.}
+equality judgments, i.e., we may have constraints in $\Gamma$.
 
 \begin{figure}[H]
   \caption{Introduction rule for level equality}\label{fig:leveleq}
@@ -726,7 +735,8 @@ $$
 
 \section{A system with level constraints}\label{sec:constraints}
 
-To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity\footnote{We use Russell's style notation}:
+To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity\footnote{We use Russell's style notation,
+see also Appendix 2}:
 
 $$
     \Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
