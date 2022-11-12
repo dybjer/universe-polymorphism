@@ -553,23 +553,24 @@ $$
 
 %Note that the universe levels in the above theory are
 %\emph{external} natural numbers.
-Note that the typing of the identity function
-$$\mylam{X}{\UU_n}{\mylam{x}{\T_n(X)}{x}} :
-      \mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}$$
-is also a \emph{schema}  depending on the external natural number $n$.
-It has infinitely many instances obtained by letting  $n = 0,1,\dots$.
+%Note that the typing of the identity function
+%$$\mylam{X}{\UU_n}{\mylam{x}{\T_n(X)}{x}} :
+%      \mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}$$
+%is also a \emph{schema}  depending on the external natural number $n$.
+%It has infinitely many instances obtained by letting  $n = 0,1,\dots$.
 
 In the following section we present a type theory with \emph{internal}
 universe level expressions. This theory has finitely many inference rules.
 
  \section{A type theory with universe levels and polymorphism }\label{sec:internal}
 
-
 The problem with the type system with an external sequence of universes
 is that we have to \emph{duplicate} definitions that follow
 the same pattern. For instance, we have the identity function
-$\id_n := \mylam{X}{\UU_n}{\mylam{x}{\T_n(X)}{x}}$
-of type $\mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}$ that
+$$
+\id_n := \mylam{X}{\UU_n}{\mylam{x}{\T_n(X)}{x}} : \mypi{X}{\UU_n}{\T_n(X)\rightarrow \T_n(X)}
+$$
+This is a schema that
 may have to be defined (and type-checked) for several $n$.
 We address this issue by introducing \emph{universe level}
 expressions: we write $\alpha,\beta,\dots$
@@ -627,7 +628,8 @@ $$
 $$
 \end{figure}
 
-We tacitly assume additional congruence rules that level equality 
+We tacitly assume additional %congruence 
+rules ensuring that level equality 
 implies definitional equality of types and terms.
 It then follows from the rules of our basic type theory that
 judgments are invariant under level equality: if $l=m$ and
@@ -650,8 +652,7 @@ The remaining rules are completely analogous to the rules in
 for externally indexed universes with external numbers replaced
 by internal levels. There is even no need to add hypotheses
 like $m~\Level$ since they can be obtained from other hypotheses
-through inversion lemmas.
-
+through inversion lemmas.\footnote{Except the rules without assumptions, such as $\NN^{l}:\UU_{l}$.}
 
  We expect that normalisation holds for this system.
  This implies decidable type-checking. This also implies that if $a : \NN$ in a context with only level variables
@@ -663,6 +664,7 @@ we can derive $A = B : \UU_l$ from $\T_l(A) = \T_l(B)$. {\bf Conjecture?}
  to the collection of types.
  Voevodsky \cite[Rule 20 on p. 17]{VV} adds this as an internal rule, but then the system is not
  generalized algebraic anymore, since the embedding rule gives rise to a conditional equation.
+ \footnote{Maybe we should write some more about this. It may not be clear to the reader what it means for a system to be "generalized algebraic"?}
 
 
 %% As we mentioned in the introduction, we have now got a system in which we can express univalence of all universes as one typing
@@ -709,7 +711,7 @@ In the context $\alpha\,\Level, A: \UU_\alpha$, define
 \Usig{\alpha,\alpha}{A}{(\mylam{a}{\T_\alpha(A)}
 {(\Upi{\alpha,\alpha}{A}{(\mylam{x}{\T_\alpha(A)}{\Id^\alpha(A,a,x)})})})}.
 \]
-Then $\T_\alpha (\isContr^\alpha(A)) = \isContr( T_\alpha(A))$.
+Then $\T_\alpha (\isContr^\alpha(A)) = \isContr(\T_\alpha(A))$.
 We can further abstract to obtain the following typing:
 \[
 \lam{\alpha}{\mylam{A}{\UU_\alpha}{\isContr^\alpha(A)}} :
@@ -735,8 +737,7 @@ $$
 
 \section{A system with level constraints}\label{sec:constraints}
 
-To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity\footnote{We use Russell's style notation,
-see also Appendix 2}:
+To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity. (We use Russell style notation for readability, see appendix 2 for the rules for the Russell style version of our system.)
 
 $$
     \Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
@@ -744,7 +745,7 @@ $$
     \to \Id\,\UU_{m \vee l} \, (B\times A)\,(C \times A)}
 %    \to A \times B =_\delta C \times A \to B \times A =_\epsilon C \times A
 $$
-It is well-formed provided $l \vee m = n \vee l$. 
+This is well-formed provided $l \vee m = n \vee l$. 
 There are three maximally general solutions:
 \begin{eqnarray*}
 &&l = \alpha, m = \beta, n = \alpha \vee \beta\\
@@ -752,10 +753,8 @@ There are three maximally general solutions:
 &&l = \beta \vee \gamma, m = \beta, n = \gamma
 \end{eqnarray*}
 where $\alpha, \beta,$ and $\gamma$ are level
-variables\footnote{Note the similarity with the Gustave function 
-in stable domain theory.}. In particular, if one is writing
-this definition in a proof assistant such as Agda or Lean,
-one would need to write three definitions.
+variables. (Note the similarity with the Gustave function 
+in stable domain theory.) 
 
 In a system with level constraints, 
 we could instead derive the (inhabited under $\UA$) type
@@ -766,13 +765,15 @@ $$
 $$
 which is valid under the constraint
 $\alpha \vee \beta = \alpha \vee \gamma$,
-which captures all solutions simultaneously.
+which captures all solutions simultaneously. 
 
+Since such constraints are not available in Agda and Lean
+one would instead need to write three separate definitions.
 
 \subsection{Rules for level constraints}%\label{ssec:VVsystem}
 
 A constraint is an equation $l = m$, where $l$ and $m$ are level expressions.
-Voevodsky \cite{VV} suggested to {\em introduce} universe levels with
+Voevodsky \cite{VV} suggested to introduce universe levels with
 constraints. This corresponds to mathematical practice: 
 for instance, at the beginning of the book \cite{giraud:cohom-non-abel},
 the author introduces two universes $U$ and $V$ with the constraint 
@@ -780,7 +781,7 @@ that $U$ is a member of $V$.
 In our setting this will correspond to introducing two levels 
 $\alpha$ and $\beta$ with the constraint $\alpha<\beta$. 
 
-Note that $\alpha<\beta$ holds if, and only if, 
+Note that $\alpha<\beta$ holds iff 
 $\beta$ is of the form $\gamma\vee\alpha^+$. 
 We can thus avoid declaring such a constraint if we instead 
 systematically write $\gamma\vee\alpha^+$ for $\beta$.
@@ -789,8 +790,8 @@ However, this is a rather indirect way to express what is
 going on. Furthermore, the example at the beginning of this section 
 shows that this can lead to an artificial duplication of definitions.
 
-Voevodsky however does not describe a mechanism to {\em eliminate}
-universe levels and constraints, and this is what we present next.
+However, Voevodsky does not describe a mechanism to {\em eliminate}
+universe levels and constraints, and this is what we present next.\footnote{What about saying precisely what this means?}
 
 Recall that we have in Section~\ref{sec:internal}, e.g., the rule
 that $\UU^m_l:\UU_m$ if $l<m$, that is, if 
