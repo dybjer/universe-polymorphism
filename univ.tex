@@ -636,13 +636,14 @@ judgments are invariant under level equality: if $l=m$ and
 ${a(l/\alpha) : A(l/\alpha)}$, then ${a(m/\alpha) : A(m/\alpha)}$.
 
 We will now add rules for internally indexed universes.
-Note that $l<m$ is shorthand for the level judgment $m= l^+ \vee m$.
+Note that $l<m~\true$ is shorthand for the level judgment 
+$m= l^+ \vee m ~ \true$.
 \begin{figure}[H]
   \caption{Rules and conversion rule for universes $\UU_l$ and their codes}\label{fig:typeUl}
 $$
 \frac{l~\Level}{\UU_l~\type}~~~~~~
 \frac{A:\UU_{l}}{\T_{l}(A)~\type}~~~~~~
-\frac{l<m}{\UU^{m}_{l}:\UU_{m}~~~~~~\T_{m}({\UU^{m}_{l}}) = \UU_{l}}
+\frac{l<m~\true}{\UU^{m}_{l}:\UU_{m}~~~~~~\T_{m}({\UU^{m}_{l}}) = \UU_{l}}
 \belowdisplayshortskip 0pt
 $$
 \end{figure}
@@ -818,7 +819,7 @@ $$
 $$
 \end{figure}
 
-We also have a new judgment form $\Gamma\vdash\psi$ that expresses 
+We also have a new judgment form $\Gamma\vdash\psi~\true$ that expresses 
 that the constraint set $\psi$ holds in $\Gamma$.
 The corresponding rules are in Figure~\ref{fig:constraints}.
 The first rule is the same as in Figure~\ref{fig:leveleq},
@@ -833,8 +834,9 @@ in the rules above and below are decidable in polynomial time.
   \caption{Rules for constraints}\label{fig:constraints}
 $$
 \frac{\Gamma\vdash l~\Level~~~~~\Gamma\vdash m~\Level}
-     {\Gamma\vdash l=m}~~\Lev_\Gamma \models l=m~~~~~~
-\frac{\Gamma\vdash l=m~~~~~\Gamma\vdash \psi}{\Gamma\vdash\set{l=m}\cup\psi}
+     {\Gamma\vdash l=m~\true}~~\Lev_\Gamma \models l=m~~~~~~
+\frac{\Gamma\vdash l=m~\true~~~~~\Gamma\vdash \psi}
+     {\Gamma\vdash\set{l=m}\cup\psi}
 \belowdisplayshortskip 0pt
 $$
 \end{figure}
