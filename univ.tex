@@ -685,9 +685,8 @@ A judgment in the level-indexed system can be interpreted in the externally inde
 \subsection*{Rules for level-indexed products}
 
 In Agda $\Level$ is a type,
-and it is thus possible to form level-indexed products of types.
-In our system $\Level$ is not a type, but it is essential to be able to state operations polymorphic
-in the levels. In order to do this, we extend the system with the following rules:
+and it is thus possible to form level-indexed products of types as $\Pi$-types.
+In our system this is not possible, since $\Level$ is not a type. Nevertheless, it is useful for modularity to be able to form level-indexed products. Thus we extend the system with the following rules:
 \begin{figure}[H]
   \caption{Rules and conversion rule for level-indexed products}%
   \label{fig:levindprod}
@@ -771,7 +770,7 @@ which captures all solutions simultaneously.
 Since such constraints are not available in Agda and Lean
 one would instead need to write three separate definitions.
 
-\subsection{Rules for level constraints}%\label{ssec:VVsystem}
+\subsection*{Rules for level constraints}%\label{ssec:VVsystem}
 
 A constraint is an equation $l = m$, where $l$ and $m$ are level expressions.
 Voevodsky \cite{VV} suggested to introduce universe levels with
@@ -841,6 +840,7 @@ $$
 $$
 \end{figure}
 
+\subsection*{Rules for constraint-indexed products}%\label{ssec:VVsystem}
 We introduce a ``restriction'' or ``constraining'' operation with
 the following rules:
 \begin{figure}[H]
