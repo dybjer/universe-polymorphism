@@ -872,17 +872,17 @@ $$
 
    We can further instantiate this constant $c$ on two levels $l$ and $m$, and this will be of type
    $$[l<m]\UU_{m} \rightarrow \UU_{m^+}$$
-   and this can only be used further if $l<m$ holds in the current context.
-   
-It is interesting to replace $\Id~\UU_\beta$ in the definition of
+   and this can only be used further if $l<m$ holds in the current
+   context\footnote{It is interesting to replace $\Id~\UU_\beta$ in the
+   definition of
 $c$ above by $\Eq$. We leave it to the reader to verify the
 following typing, for which no constraint is needed:
 $$
 c'~=~\lam{\alpha~\beta}\lambda_{Y:\UU_{\beta}}~\Eq~Y~ (\Sigma_{X:\UU_{\alpha}}X\rightarrow Y)~~:~~
    [\alpha~\beta]\UU_{\beta} \rightarrow \UU_{\beta\vee\alpha^+}
-$$
+$$}.
 
-   \medskip
+\medskip
 
 
 In the current system of Agda, the constraint $\alpha<\beta$ is represented indirectly by
