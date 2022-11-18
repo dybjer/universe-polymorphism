@@ -807,7 +807,7 @@ no constraints in $\Gamma$, the judgment $\Gamma\vdash\set{l=m}~\valid$
 amounts to the same as $\Gamma\vdash l=m$ in Section~\ref{sec:internal}.
 Otherwise it means that the constraints in $\psi$ hold in the 
 sup-semilattice with $\_^+$ presented by $\Gamma$. {\color{red}We add the rule
-that $\Gamma\vdash l=m$ when $\Gamma\vdash\set{l=m}~\valid$.\footnote{PD: isn't this superfluous, since it follows from the first sentence of the paragraph?}
+that $\Gamma\vdash l=m$ when $\Gamma\vdash\set{l=m}~\valid$.\footnote{PD: isn't this superfluous, since it follows from the first sentence of the paragraph?}}
 
 As shown in \cite{bezem-coquand:lattices}, $\Gamma\vdash\psi~\valid$
 as well as loop-checking, is decidable in polynomial time.
@@ -990,19 +990,14 @@ operation.
 %
 In \cite{VV}, constraints are introduced, once and for all,
 at the level of the theory. In our proposal they are introduced
-at the level of contexts.
+at the level of contexts.\footnote{PD: is this a substantial difference, if we consider the theory we get if we remove constraint-indexed products?}
 %
 There are no level-indexed products or abstractions in \cite{VV}.
 %
-There are no constraint instantiation rules in \cite{VV}
-such as the 2nd and the 5th rule in Figure~\ref{fig:levindprod}.
+\footnote{PD: I would remove "There are no constraint instantiation rules in \cite{VV}
+such as the 2nd and the 5th rule in Figure~\ref{fig:levindprod}" since these are among the rules for level-indexed products}.
 %
-Rules 29 and 30 in \cite[Sec. 3.4]{VV} postulate
-cumulativity with explicit coercion. In our proposal cumulativity
-is optional, see Appendix 1.
-%
-The type theory in \cite{VV} is Tarski-style.
-Our proposal also works for Russell-style, see Appendix 2.
+(We also remark that Voevodsky's system is Tarski-style and has cumulativity (rules 29 and 30 in \cite[Sec. 3.4]{VV}). Our system is also Tarski-style, but we present a Russell-style version in Appendix 2. We present rules for cumulativity in Appendix 1.)
 
 %\item Voevodsky seemingly allowed constraints such as $\alpha<\alpha$. 
 %Then ${\cal A}$ is empty, which would imply that all types and 
