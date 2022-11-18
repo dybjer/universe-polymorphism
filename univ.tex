@@ -165,7 +165,7 @@
 
 \begin{abstract}
 
- The aim of this paper is to refine and extend Voevodsky's draft ``A universe polymorphic type system", where judgments can depend on equalities between universe levels expressions (constraints). We first recall a version of type theory with an externally indexed sequence of universes. We then add judgments for internal universe levels, built up from level variables by a successor operation and a binary supremum operation, and also judgments for equality of universe levels. Furthermore, we extend this type theory with rules for level-indexed product types. Finally, we add constraints to the theory, so that a hypothetical judgment can depend on equalities between universe levels. We also give rules for constraint-indexed product types, and compare the resulting type theory to Voevodsky's.
+ The aim of this paper is to refine and extend Voevodsky's draft ``A universe polymorphic type system" that outlines a type theory where judgments can depend on equalities between universe levels expressions (constraints). We first recall a version of type theory with an externally indexed sequence of universes. We then add judgments for internal universe levels, built up from level variables by a successor operation and a binary supremum operation, and also judgments for equality of universe levels. Furthermore, we extend this type theory with rules for level-indexed product types. Finally, we add constraints to the theory, so that a hypothetical judgment can depend on equalities between universe levels. We also give rules for constraint-indexed product types, and compare the resulting type theory to Voevodsky's.
 
 \end{abstract}
 
@@ -328,16 +328,15 @@ Finally, we %extensively
 compare our type theory with Voevodsky's
 and briefly discuss some other approaches. 
 
-{\color{red}The main contributions of this paper are:
-(1) universe levels  and universe level equations as \emph{judgments},
-and \emph{level-indexed products}
-(Agda also has the latter, having a \emph{type} 
-$\AgdaLevel$ of universe levels;
-however, the type $\AgdaLevel$ has disadvantages, 
-such as breaking parametricity~\cite{Escardo});
-(2) constraints as \emph{judgments} and \emph{constraint-indexed products}.
+{\color{red}
+\paragraph{Main contributions.} Like Courant we present a type theory with 
+universe levels  and universe level equations as \emph{judgments}. However, we have no level 0, and our universe levels only form a sup-semilattice with an inflationary endomorphism. Moreover, we add 
+\emph{level-indexed products} to regain some of the expressivity Agda gets from having a \emph{type} 
+$\AgdaLevel$ of universe levels.
+
+Moreover, we present a type theory with constraints as \emph{judgments} extending Voevodsky's system. We also add \emph{constraint-indexed products} to this system.
 }%endcolor
-\footnote{PD: One may argue that Courant already had universe levels  and universe level equations as \emph{judgments}
+%\footnote{PD: One may argue that Courant already had universe levels  and universe level equations as judgments, so this is not really a novelty in our paper. }
 
 \section{Rules for a basic type theory}\label{sec:basic}
 
@@ -638,20 +637,18 @@ The remaining rules are completely analogous to the rules in
 for externally indexed universes with external numbers replaced
 by internal levels. (To rules without assumptions, 
 such as in Fig.~\ref{fig:NIdU}, we need to add assumptions like $n~\Level$,
-For other rules these assumptions through inversion lemmas.)
+For other rules these assumptions can be obtained from inversion lemmas.)
 
  We expect that normalisation holds for this system.
  This implies decidable type-checking. This also implies that if $a : \NN$ in a context with only level variables
 then $a$ is convertible to a numeral.
 
 Another consequence should be that the following rule is admissible:
-we can derive $A = B : \UU_l$ from $\T_l(A) = \T_l(B)$. {\bf Conjecture?}
+we can derive $A = B : \UU_l$ from $\T_l(A) = \T_l(B)$. {\bf Conjecture?\footnote{PD: how is this proved?}}
  It expresses that $\T_l$ is an embedding from the collection of elements of $\UU_l$
  to the collection of types.
  Voevodsky \cite[Rule 20 on p. 17]{VV} adds this as an internal rule, but then the system is not
- generalized algebraic anymore, since the embedding rule gives rise to a conditional equation.
- \footnote{Maybe we should write some more about this. It may not be clear to the reader what it means for a system to be "generalized algebraic"?}
-
+ obviously\footnote{PD: if the rule is admissible, then the system is generalized algebraic anyway.} generalized algebraic anymore, since the embedding rule gives rise to a conditional equation. (A system is generalized algebraic if it can be characterized as an initial model of a generalized algebraic theory in Cartmell's sense \cite{cartmell:apal}. See also the paper \cite{bezem:hofmann} for more information about generalized algebraic theories for dependent type theories and their initial models.)
 
 %% As we mentioned in the introduction, we have now got a system in which we can express univalence of all universes as one typing
 %% $$
@@ -660,8 +657,6 @@ we can derive $A = B : \UU_l$ from $\T_l(A) = \T_l(B)$. {\bf Conjecture?}
 %% since the type $(l : \Level) \to \UA_l$ is well-formed in the present system.
 % and the
 % fact that if all universes are univalent then they all satisfy function extensionality.
-
-
 
 \paragraph{Interpreting the level-indexed system in the system with externally indexed universes.}
 
@@ -764,10 +759,10 @@ for instance, at the beginning of the book \cite{giraud:cohom-non-abel},
 the author introduces two universes $U$ and $V$ with the constraint 
 that $U$ is a member of $V$.
 In our setting this will correspond to introducing two levels 
-$\alpha$ and $\beta$ with the constraint $\alpha<\beta$. 
+$\alpha$ and $\beta$ with the constraint $\alpha<\beta$.
 
 Note that $\alpha<\beta$ holds iff 
-$\beta$ is of the form $\gamma\vee\alpha^+$. 
+$\beta$ is of the form $\gamma\vee\alpha^+$. \footnote{PD: $\alpha$ and $\beta$ are level variables, not level expressions. So $\beta$ cannot be of the form $\gamma\vee\alpha^+$.}
 We can thus avoid declaring such a constraint if we instead 
 systematically write $\gamma\vee\alpha^+$ for $\beta$.
 This is what is currently done in the system Agda. 
@@ -812,7 +807,7 @@ no constraints in $\Gamma$, the judgment $\Gamma\vdash\set{l=m}~\valid$
 amounts to the same as $\Gamma\vdash l=m$ in Section~\ref{sec:internal}.
 Otherwise it means that the constraints in $\psi$ hold in the 
 sup-semilattice with $\_^+$ presented by $\Gamma$. {\color{red}We add the rule
-that $\Gamma\vdash l=m$ when $\Gamma\vdash\set{l=m}~\valid$.}
+that $\Gamma\vdash l=m$ when $\Gamma\vdash\set{l=m}~\valid$.\footnote{PD: isn't this superfluous, since it follows from the first sentence of the paragraph?}
 
 As shown in \cite{bezem-coquand:lattices}, $\Gamma\vdash\psi~\valid$
 as well as loop-checking, is decidable in polynomial time.
