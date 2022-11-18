@@ -95,7 +95,7 @@
 %\newcommand{\Type{\hbox{\sf Type}}
 \newcommand{\ZERO}{\mathsf{0}}
 \newcommand{\SUCC}{\mathsf{S}}
-\newcommand{\true}{\mathsf{true}}
+\newcommand{\valid}{\mathsf{valid}}
 \newcommand{\type}{\mathsf{type}}
 \newcommand{\const}{\mathsf{const}}
 \newcommand{\lam}[1]{{\langle}#1{\rangle}}
@@ -603,47 +603,32 @@ $$
 $$
 \end{figure}
 
-We also have level equality judgments $\Gamma\vdash l = m~\true$ 
+We also have level equality judgments $\Gamma\vdash l = m$ 
 and want to enforce that judgments are invariant under level equality. 
-To this end we add the rule that $\Gamma\vdash l = m~\true$
+To this end we add the rule that $\Gamma\vdash l = m$
 when $\Gamma\vdash l~\Level$ and $\Gamma\vdash m~\Level$ and
 $l=m$ in the free sup-semilattice with $\_^+$ and generators 
 (level variables) in $\Gamma$. 
-\footnote{%
-In this way we avoid cluttering the type system with many
-rules of lattice theory. This can be compared to the practice
-in modal logic, where all (classical) propositional tautologies
-are postulated as axioms of modal propositional logic, allowing to focus
-on the axioms for the modal operators.}
 
 In the next section we will also consider \emph{hypothetical} level 
 equality judgments, i.e., we may have constraints in $\Gamma$.
-
-%\begin{figure}[H]
-%  \caption{Introduction rule for level equality}\label{fig:leveleq}
-%$$
-%\frac{\Gamma\vdash l~\Level~~~~~\Gamma\vdash m~\Level}
-%     {\Gamma\vdash l=m} {~~~\Lev_\Gamma \models l=m}
-%\belowdisplayshortskip 1pt
-%$$
-%\end{figure}
 
 We tacitly assume additional %congruence 
 rules ensuring that level equality 
 implies definitional equality of types and terms.
 It then follows from the rules of our basic type theory that
-judgments are invariant under level equality: if $l=m~\true$ and
+judgments are invariant under level equality: if $l=m$ and
 ${a(l/\alpha) : A(l/\alpha)}$, then ${a(m/\alpha) : A(m/\alpha)}$.
 
 We will now add rules for internally indexed universes.
-Note that $l<m~\true$ is shorthand for the level equality judgment 
-$m= l^+ \vee m ~ \true$.
+Note that $l<m$ is shorthand for the level equality judgment 
+$m= l^+ \vee m$.
 \begin{figure}[H]
   \caption{Rules and conversion rule for universes $\UU_l$ and their codes}\label{fig:typeUl}
 $$
 \frac{l~\Level}{\UU_l~\type}~~~~~~
 \frac{A:\UU_{l}}{\T_{l}(A)~\type}~~~~~~
-\frac{l<m~\true}{\UU^{m}_{l}:\UU_{m}~~~~~~\T_{m}({\UU^{m}_{l}}) = \UU_{l}}
+\frac{l<m}{\UU^{m}_{l}:\UU_{m}~~~~~~\T_{m}({\UU^{m}_{l}}) = \UU_{l}}
 \belowdisplayshortskip 0pt
 $$
 \end{figure}
@@ -651,9 +636,9 @@ $$
 The remaining rules are completely analogous to the rules in
 \cref{fig:PiSigU} and \cref{fig:NIdU}
 for externally indexed universes with external numbers replaced
-by internal levels. There is even no need to add hypotheses
-like $m~\Level$ since they can be obtained from other hypotheses
-through inversion lemmas.\footnote{Except the rules without assumptions, such as $\NN^{l}:\UU_{l}$.}
+by internal levels. (To rules without assumptions, 
+such as in Fig.~\ref{fig:NIdU}, we need to add assumptions like $n~\Level$,
+For other rules these assumptions through inversion lemmas.)
 
  We expect that normalisation holds for this system.
  This implies decidable type-checking. This also implies that if $a : \NN$ in a context with only level variables
@@ -794,7 +779,7 @@ However, Voevodsky does not describe a mechanism to {\em eliminate}
 universe levels and constraints, and this is what we present next.\footnote{What about saying precisely what this means?}
 
 Recall that we have in Section~\ref{sec:internal}, e.g., the rule
-that $\UU^m_l:\UU_m$ if $l<m~\true$, that is, if 
+that $\UU^m_l:\UU_m$ if $l<m~\valid$, that is, if 
 $l<m$ holds in the free semilattice. %\frac{l<m}{\UU^m_l:\UU_m}
 In the extended system in this section, this typing rule also applies 
 when $l<m$ is implied by the constraints in the context $\Gamma$.
@@ -820,25 +805,17 @@ modulo this set of constraints, see \cite{bezem-coquand:lattices}.
 %$$
 %\end{figure}
 
-We also have a new judgment form $\Gamma\vdash\psi~\true$ that expresses 
-that the constraints in $\psi$ hold in $\Gamma$, that is.
+We also have a new judgment form $\Gamma\vdash\psi~\valid$ that expresses 
+that the constraints in $\psi$ hold in $\Gamma$, that is,
 are implied by the constraints in $\Gamma$. If there are
-no constraints in $\Gamma$, this amounts to the same as in
-Section~\ref{sec:internal}. Otherwise it means that the constraints
-in $\psi$ hold in the sup-semilattice with $\_^+$ presented by $\Gamma$.
-As shown in \cite{bezem-coquand:lattices}, 
-this condition, as well as loop-checking, is decidable in polynomial time.
+no constraints in $\Gamma$, the judgment $\Gamma\vdash\set{l=m}~\valid$
+amounts to the same as $\Gamma\vdash l=m$ in Section~\ref{sec:internal}.
+Otherwise it means that the constraints in $\psi$ hold in the 
+sup-semilattice with $\_^+$ presented by $\Gamma$. {\color{red}We add the rule
+that $\Gamma\vdash l=m$ when $\Gamma\vdash\set{l=m}~\valid$.}
 
-%\begin{figure}[H]
-%  \caption{Rules for constraints}\label{fig:constraints}
-%$$
-%\frac{\Gamma\vdash l~\Level~~~~~\Gamma\vdash m~\Level}
-%     {\Gamma\vdash l=m~\true}~~\Lev_\Gamma \models l=m~~~~~~
-%\frac{\Gamma\vdash l=m~\true~~~~~\Gamma\vdash \psi}
-%     {\Gamma\vdash\set{l=m}\cup\psi}
-%\belowdisplayshortskip 0pt
-%$$
-%\end{figure}
+As shown in \cite{bezem-coquand:lattices}, $\Gamma\vdash\psi~\valid$
+as well as loop-checking, is decidable in polynomial time.
 
 \subsection*{Rules for constraint-indexed products}%\label{ssec:VVsystem}
 We introduce a ``restriction'' or ``constraining'' operation with
@@ -849,8 +826,8 @@ the following rules:
 $$
 \frac{A~\type~~(\psi)}{[\psi]A~\type}~~~~~~~~~
 \frac{{t}:A~~(\psi)}{\lam{\psi}{t}:[\psi]A}~~~~~~~~~
-\frac{\psi~\true}{[\psi]A = A}~~~~~~~~~
-\frac{\psi~\true}{\lam{\psi}{t} = t}
+\frac{\psi~\valid}{[\psi]A = A}~~~~~~~~~
+\frac{\psi~\valid}{\lam{\psi}{t} = t}
 \belowdisplayshortskip 1pt
 $$
 \end{figure}
