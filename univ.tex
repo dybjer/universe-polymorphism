@@ -334,7 +334,9 @@ universe levels  and universe level equations as \emph{judgments}. However, we h
 \emph{level-indexed products} to regain some of the expressivity Agda gets from having a \emph{type} 
 $\AgdaLevel$ of universe levels.
 
-Moreover, we present a type theory with constraints as \emph{judgments} extending Voevodsky's system. We also add \emph{constraint-indexed products} to this system.
+Moreover, we present a type theory with constraints as \emph{judgments} extending Voevodsky's system.
+\footnote{PD: Should we replace "extending Voevodsky's system" by "similar to Voevodsky's system"?}
+We also add \emph{constraint-indexed products} to this system.
 }%endcolor
 %\footnote{PD: One may argue that Courant already had universe levels  and universe level equations as judgments, so this is not really a novelty in our paper. }
 
@@ -644,7 +646,8 @@ For other rules these assumptions can be obtained from inversion lemmas.)
 then $a$ is convertible to a numeral.
 
 Another consequence should be that the following rule is admissible:
-we can derive $A = B : \UU_l$ from $\T_l(A) = \T_l(B)$. {\bf Conjecture?\footnote{PD: how is this proved?}}
+we can derive $A = B : \UU_l$ from $\T_l(A) = \T_l(B)$. {\bf Conjecture?}
+%\footnote{PD: how is this proved?}
  It expresses that $\T_l$ is an embedding from the collection of elements of $\UU_l$
  to the collection of types.
  Voevodsky \cite[Rule 20 on p. 17]{VV} adds this as an internal rule, but then the system is not
@@ -761,17 +764,16 @@ that $U$ is a member of $V$.
 In our setting this will correspond to introducing two levels 
 $\alpha$ and $\beta$ with the constraint $\alpha<\beta$.
 
-Note that $\alpha<\beta$ holds iff 
-$\beta$ is of the form $\gamma\vee\alpha^+$. \footnote{PD: $\alpha$ and $\beta$ are level variables, not level expressions. So $\beta$ cannot be of the form $\gamma\vee\alpha^+$.}
-We can thus avoid declaring such a constraint if we instead 
-systematically write $\gamma\vee\alpha^+$ for $\beta$.
+Note that $\alpha < \beta$ holds iff $\beta = \beta \vee\alpha^+$. 
+We can thus avoid declaring this constraint if we instead 
+systematically replace $\beta$ by $\beta\vee\alpha^+$.
 This is what is currently done in the system Agda. 
 However, this is a rather indirect way to express what is
 going on. Furthermore, the example at the beginning of this section 
 shows that this can lead to an artificial duplication of definitions.
 
 However, Voevodsky does not describe a mechanism to {\em eliminate}
-universe levels and constraints, and this is what we present next.\footnote{What about saying precisely what this means?}
+universe levels and constraints, and this is what we present next.\footnote{What about saying precisely what this refers to and maybe also move the sentence?}
 
 Recall that we have in Section~\ref{sec:internal}, e.g., the rule
 that $\UU^m_l:\UU_m$ if $l<m~\valid$, that is, if 
