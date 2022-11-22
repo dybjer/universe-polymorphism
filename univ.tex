@@ -605,11 +605,12 @@ We also have level equality judgments $\Gamma\vdash l = m$
 and want to enforce that judgments are invariant under level equality. 
 To this end we add the rule that $\Gamma\vdash l = m$
 when $\Gamma\vdash l~\Level$ and $\Gamma\vdash m~\Level$ and
-$l=m$ in the free sup-semilattice with $\_^+$ and generators 
+$l=m$ in the free sup-semilattice above with $\_^+$ and generators 
 (level variables) in $\Gamma$. 
 
 In the next section we will also consider \emph{hypothetical} level 
-equality judgments, i.e., we may have constraints in $\Gamma$.
+equality judgments, i.e., we may have constraints in $\Gamma$,
+quotienting the free sup-semilattice above.
 
 We tacitly assume additional %congruence 
 rules ensuring that level equality 
@@ -639,16 +640,10 @@ such as in Fig.~\ref{fig:NIdU}, we need to add assumptions like $n~\Level$,
 For other rules these assumptions can be obtained from inversion lemmas.)
 
  We expect that normalisation holds for this system.
- This implies decidable type-checking. This also implies that if $a : \NN$ in a context with only level variables
-then $a$ is convertible to a numeral.
-
-Another consequence should be that the following rule is admissible:
-we can derive $A = B : \UU_l$ from $\T_l(A) = \T_l(B)$. {\bf Conjecture?}
-%\footnote{PD: how is this proved?}
- It expresses that $\T_l$ is an embedding from the collection of elements of $\UU_l$
- to the collection of types.
- Voevodsky \cite[Rule 20 on p. 17]{VV} adds this as an internal rule, but then the system is not
- obviously\footnote{PD: if the rule is admissible, then the system is generalized algebraic anyway.} generalized algebraic anymore, since the embedding rule gives rise to a conditional equation. (A system is generalized algebraic if it can be characterized as an initial model of a generalized algebraic theory in Cartmell's sense \cite{cartmell:apal}. See also the paper \cite{bezem:hofmann} for more information about generalized algebraic theories for dependent type theories and their initial models.)
+ This would imply decidable type-checking. 
+ This would also imply that if $a : \NN$ in a context with only 
+ level variables, then $a$ is convertible to a numeral.
+ See Section~\ref{fig:future} for a list of conjectures and open problems.
 
 %% As we mentioned in the introduction, we have now got a system in which we can express univalence of all universes as one typing
 %% $$
@@ -769,9 +764,6 @@ However, this is a rather indirect way to express what is
 going on. Furthermore, the example at the beginning of this section 
 shows that this can lead to an artificial duplication of definitions.
 
-However, Voevodsky does not describe a mechanism to {\em eliminate}
-universe levels and constraints, and this is what we present next.\footnote{What about saying precisely what this refers to and maybe also move the sentence?}
-
 Recall that we have in Section~\ref{sec:internal}, e.g., the rule
 that $\UU^m_l:\UU_m$ if $l<m~\valid$, that is, if 
 $l<m$ holds in the free semilattice. %\frac{l<m}{\UU^m_l:\UU_m}
@@ -805,11 +797,17 @@ are implied by the constraints in $\Gamma$. If there are
 no constraints in $\Gamma$, the judgment $\Gamma\vdash\set{l=m}~\valid$
 amounts to the same as $\Gamma\vdash l=m$ in Section~\ref{sec:internal}.
 Otherwise it means that the constraints in $\psi$ hold in the 
-sup-semilattice with $\_^+$ presented by $\Gamma$. {\color{red}We add the rule
-that $\Gamma\vdash l=m$ when $\Gamma\vdash\set{l=m}~\valid$.\footnote{PD: isn't this superfluous, since it follows from the first sentence of the paragraph?}}
+sup-semilattice with $\_^+$ presented by $\Gamma$.
 
 As shown in \cite{bezem-coquand:lattices}, $\Gamma\vdash\psi~\valid$
 as well as loop-checking, is decidable in polynomial time.
+
+
+Voevodsky \cite {VV} did not describe a mechanism to {\em eliminate}
+universe levels and constraints. {\color{red}In Figure~\ref{fig:levindprod} we
+gave rules for eliminating universe levels,
+and we give for eliminating constraints 
+in Figure~\ref{fig:restriction} below.}
 
 \subsection*{Rules for constraint-indexed products}%\label{ssec:VVsystem}
 We introduce a ``restriction'' or ``constraining'' operation with
@@ -1034,7 +1032,17 @@ For the moment only a list:
 
 2. Equivalence between Tarski and Russell formulation
 
-3. Admissibility of \cite[Rule 20 on p. 17]{VV}
+3. Rule 20 on page 17 of \cite{VV} states (in our notation) that
+one can derive $A = B : \UU_l$ from $\T_l(A) = \T_l(B)$.
+This rule expresses that $\T_l$ is an embedding from the collection 
+of elements of $\UU_l$ to the collection of types. 
+We conjecture that this internal rule is admissible
+in our system of Section~\ref{sec:constraints}.
+Note that the rule is not obviously generalized algebraic, 
+since it gives rise to a \emph{conditional} equation. 
+ (A system is generalized algebraic if it can be characterized as an initial model of a generalized algebraic theory in Cartmell's sense \cite{cartmell:apal}.
+ See also the paper \cite{bezem:hofmann} for more information about 
+generalized algebraic theories for dependent type theories and their initial models.)
 
 4. Parametricity, e.g. all functions $[\alpha]\NN$ are constant (corr. of 1?)
 
