@@ -328,17 +328,14 @@ Finally, we %extensively
 compare our type theory with Voevodsky's
 and briefly discuss some other approaches. 
 
-{\color{red}
-\paragraph{Main contributions.} Like Courant we present a type theory with 
-universe levels  and universe level equations as \emph{judgments}. However, we have no level 0, and our universe levels only form a sup-semilattice with an inflationary endomorphism. Moreover, we add 
+\paragraph{Summary of main contributions.} 
+Like Courant we present a type theory with 
+universe levels  and universe level equations as \emph{judgments}. Moreover, we don't restrict the levels to be the natural numbers, and instead they form a sup-semilattice with an inflationary endomorphism. 
+Furthermore, we add 
 \emph{level-indexed products} to regain some of the expressivity Agda gets from having a \emph{type} 
 $\AgdaLevel$ of universe levels.
-
-Moreover, we present a type theory with constraints as \emph{judgments} extending Voevodsky's system.
-\footnote{PD: Should we replace "extending Voevodsky's system" by "similar to Voevodsky's system"?}
-We also add \emph{constraint-indexed products} to this system.
-}%endcolor
-%\footnote{PD: One may argue that Courant already had universe levels  and universe level equations as judgments, so this is not really a novelty in our paper. }
+Finally, we present a type theory with constraints as \emph{judgments} extending Voevodsky's proposal with \emph{constraint-indexed products} and
+instantiations.
 
 \section{Rules for a basic type theory}\label{sec:basic}
 
@@ -581,7 +578,7 @@ for \emph{level variables}, and $l,m,\dots$ for
 by suprema $l \vee m$ and the next level operation $l^+$.
 Level expressions form a sup-semilattice $l\vee m$
 with a next level operation $l^+$ such that $l \vee l^+ = l^+$
-and $(l\vee m)^+ = l^+\vee m^+$. (We don't seem to need a $0$ element.)
+and $(l\vee m)^+ = l^+\vee m^+$. (We don't need a $0$ element.)
 We write $l\leqslant m$ for $l\vee m = m$ and $l<m$ for $l^+\leqslant m$.
 See \cite{bezem-coquand:lattices} for more details.
 
