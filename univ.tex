@@ -920,24 +920,24 @@ Then any constraint would either be a loop or trivial.
 In the latter case, the finitely presented semilattice
 is isomorphic to the natural numbers with successor and $\max$. 
 Still, we get some more
-expressivity than the type theory in Sec.~\ref{sec:external} since
+expressivity than the type theory in Section~\ref{sec:external} since
 we can express universe polymorphism in one variable.
 
 Third, with arbitrarily many level variables but not using contraints
-we get the type theory in Sec.~\ref{sec:internal}.
+we get the type theory in Section~\ref{sec:internal}.
 
 Fourth, we could add a bottom element, or empty supremum, to the semilattice.
 Without level variables and constraints, the finitely presented semilattice
 is isomorphic to the natural numbers with successor and $\max$
-and we would get the type theory in Sec.~\ref{sec:external}.
+and we would get the type theory in Section~\ref{sec:external}.
 We would also get a first universe.
 (Alternatively, one could have one designated level variable
 $\o$ and constraints $\o\leqslant\alpha$
 for all level variables $\alpha$.)
 
 Fifth, we note in passing that the one-point semilattice 
-with $\_^+$ has a loop, and hence we cannot represent a
-universe that is a member of itself.
+with $\_^+$ has a loop.
+%, and hence we cannot represent a universe that is a member of itself.
 \end{remark}
 
 \section{Related work}\label{sec:related}
@@ -955,7 +955,7 @@ between two u-level expressions. Given the finite set of constraints,
 $\AFu$ is the set of assigments of natural numbers to variables
 in $\Fu$ that satisfy all constraints.
 
-The rules 7 and 10 in \cite[Sec. 3.4]{VV} define how to use constraints:
+The rules 7 and 10 in \cite[Section 3.4]{VV} define how to use constraints:
 two types (and, similarly, two terms) become definitionally equal 
 if, for all assignments in $\AFu$, the two types become "essentially"
 syntactically equal after substitution of all variables in $\Fu$ by 
@@ -992,7 +992,7 @@ at the level of contexts.
 There are no level-indexed products and no constraint-indexed products in \cite{VV}.
 %
 %
-(We also remark that Voevodsky's system is Tarski-style and has cumulativity (rules 29 and 30 in \cite[Sec. 3.4]{VV}). Our system is also Tarski-style, but we present a Russell-style version in Appendix 2. We present rules for cumulativity in Appendix 1.)
+(We also remark that Voevodsky's system is Tarski-style and has cumulativity (rules 29 and 30 in \cite[Section 3.4]{VV}). Our system is also Tarski-style, but we present a Russell-style version in Appendix 2. We present rules for cumulativity in Appendix 1.)
 
 %\item Voevodsky seemingly allowed constraints such as $\alpha<\alpha$. 
 %Then ${\cal A}$ is empty, which would imply that all types and 
@@ -1026,7 +1026,20 @@ This is analysed further in the PhD thesis of F. Thir\'e \cite{Thire20}.
 
 For the moment only a list:
 
-1. Canonicity, normalization and decidability of type checking
+0. In the system of Section~\ref{sec:constraints},
+there is no context $\Gamma$ such that 
+one can infer $\Gamma\vdash \UU_\alpha : \UU_\alpha$.
+The key is of course that $\Gamma$ is required to be loop-free.
+Note that this conjecture is necessary to have normalization.
+
+1. The systems of Section~\ref{sec:internal} and \ref{sec:constraints}
+enjoy canonicity, normalization and decidability of type checking.
+Since we may have level variables as well as constraints in
+the context, care must be taken in formulating canonicity.
+For example, if $\Gamma\vdash t:\NN$ and $\Gamma$ consists of only
+level variables and constraints, then $t$ is convertible to a numeral.
+Once normalization has been established, decidability of type checking
+should follow using \cite{bezem-coquand:lattices}.
 
 2. Equivalence between Tarski and Russell formulation
 
