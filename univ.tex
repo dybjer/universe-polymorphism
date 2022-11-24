@@ -500,7 +500,7 @@ will also be used later on.
   %PD: Is this set of rules is complete? What about $A=A':\UU_n$ implies $\T_n(A) = T_n(A')$?} set of rules for "universes as full reflections".
 %in the style of the rules in Section \ref{sec:palmgren}.
 We present an external sequence of universes of codes of types, together
-with the decoding functions. (We do not include rules for cumulativity here, but leave them for the Appendix.)
+with the decoding functions. (We do not include rules for cumulativity here, but leave them for Appendix~1.)
 
 \begin{figure}[H]
   \caption{Rules and conversion rules for all universes $\UU_m$ and their codes $\UU^{n}_{m}~(n>m)$}\label{fig:typeU}
@@ -635,9 +635,9 @@ $$
 The remaining rules are completely analogous to the rules in
 \cref{fig:PiSigU} and \cref{fig:NIdU}
 for externally indexed universes with external numbers replaced
-by internal levels. (To rules without assumptions, 
-such as in Fig.~\ref{fig:NIdU}, we need to add assumptions like $n~\Level$,
-For other rules these assumptions can be obtained from inversion lemmas.)
+by internal levels. (To rules without assumptions, such as the first two
+in Fig.~\ref{fig:NIdU}, we need to add assumptions like $n~\Level$,
+for other rules these assumptions can be obtained from inversion lemmas.)
 
  We expect that normalisation holds for this system.
  This would imply decidable type-checking. 
@@ -659,7 +659,7 @@ A judgment in the level-indexed system can be interpreted in the externally inde
 
 \subsection*{Rules for level-indexed products}
 
-In Agda $\Level$ is a type,
+In Agda $\AgdaLevel$ is a type,
 and it is thus possible to form level-indexed products of types as $\Pi$-types.
 In our system this is not possible, since $\Level$ is not a type. Nevertheless, it is useful for modularity to be able to form level-indexed products. Thus we extend the system with the following rules:
 \begin{figure}[H]
@@ -698,7 +698,8 @@ a term $\Eq^{\alpha,\beta}(A,B) : \UU_{\alpha\vee\beta}$
 such that $\T_{\alpha\vee\beta}(\Eq^{\alpha,\beta}(A,B))= 
 \Equiv(\T_{\alpha}(A),\T_{\beta}(B))$.
 
-An example that uses level-indexed products is the following type which
+An example that uses level-indexed products beyond ML-polymorphism
+is the following type which
 expresses the theorem that univalence for universes of arbitrary level implies
 function extensionality for functions between universes of arbitrary levels.
 $$
@@ -712,7 +713,7 @@ $$
 
 \section{A system with level constraints}\label{sec:constraints}
 
-To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity. (We use Russell style notation for readability, see appendix 2 for the rules for the Russell style version of our system.)
+To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity. (We use Russell style notation for readability, see Appendix 2 for the rules for the Russell style version of our system.)
 
 $$
     \Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
@@ -805,9 +806,9 @@ as well as loop-checking, is decidable in polynomial time.
 
 Voevodsky \cite {VV} did not describe a mechanism to {\em eliminate}
 universe levels and constraints. {\color{red}In Figure~\ref{fig:levindprod} we
-gave rules for eliminating universe levels,
-and we give for eliminating constraints 
-in Figure~\ref{fig:restriction} below.}
+gave rules for eliminating universe levels
+and in Figure~\ref{fig:restriction} below we give rules
+for eliminating universe level constraints.}
 
 \subsection*{Rules for constraint-indexed products}%\label{ssec:VVsystem}
 We introduce a ``restriction'' or ``constraining'' operation with
