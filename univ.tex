@@ -1059,6 +1059,8 @@ generalized algebraic theories for dependent type theories and their initial mod
 
 5. Implementation
 
+In the article \cite{coquand:tcs2019} canonicity and normalization are proved for type theory with an external tower of universes. We conjecture that these proofs can be modified to yield proofs of analogous properties (and their corollaries) for our theories with universe level judgments.
+
 \paragraph{Acknowledgement.}
 The authors acknowledge the support of the Centre for Advanced Study (CAS)
 at the Norwegian Academy of Science and Letters
@@ -1170,14 +1172,14 @@ In a forthcoming paper, we plan to present some generalised algebraic theories o
 As explained
 in \cite{streicher:semtt}, in order to see the theories in this paper as presenting {\em initial} models,
 it is enough to use a variation where application $c~a:B(a/x)$ for $c:\mypi{x}{A}B$ and $a:A$
-is annoted by the type family $A,B$ (and similarly for the pairing operation). If the theories satisy the normal form property, it can then be shown that also the theories without annotated application is initial.
+is annoted by the type family $A,B$ (and similarly for the pairing operation). If the theories satisy the normal form property, it can then be shown that also the theories without annotated application are initial.
 \end{remark}
 
 %\medskip
 \paragraph{Russell formulation.}
-There is another way to present these initial models, which is by using
-a {\em Russell} formulation (using the terminology introduced in \cite{martinlof:padova}) of
-universes). One expects all these formulations to be equivalent; for preliminary results in this
+Above, we presented type theories with universe level judgments {\em \`a la Tarski}. There are alternative formulations
+{\em \`a la Russell} (using the terminology introduced in \cite{martinlof:padova}) of
+universes). One expects these formulations to be equivalent to the Tarski-versions, and thus also initial models. For preliminary results in this
 direction see \cite{Assaf14,Thire20}.
 
 With this formulation, the version without cumulativity becomes
