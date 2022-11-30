@@ -77,7 +77,7 @@
 \newcommand{\II}{\mathbb{I}}
 %\newcommand{\refl}{\mathsf{refl}} conflicts with above
 \newcommand{\mkbox}[1]{\ensuremath{#1}}
-
+\newcommand{\eraser}[1]{}
 
 \newcommand{\conv}{=}
 %\newcommand{\conv}{\mathsf{conv}}
@@ -114,6 +114,7 @@
 \newcommand{\Japp}[6]{\sapp{\JJ}{#1,#2,#3,#4,#5,#6}}
 \newcommand{\RR}{\mathsf{R}}
 \newcommand{\Set}{\mathsf{Set}}
+\newcommand{\Group}{\mathsf{Group}}
 \newcommand{\El}{\mathsf{El}}
 \newcommand{\T}{\mathsf{T}}
 \newcommand{\Usuper}{\UU_{\mathrm{super}}}
@@ -285,8 +286,9 @@ To be explicit about universes can be important, as shown by the
 example in \cite{chambert-loir:universes-matter,waterhouse:sheaves}.
 We remark that universes are even more important in a predicative framework 
 than in an impredicative one, for uniform proofs and modularity.
-
-(** Comments about groups: Group$(\UU_i)$ depends essentially on $i$**)
+ It can be shown in particular that the canonical map 
+ $\Group(\UU_n)\rightarrow \Group(\UU_{n+1})$ is not an equivalence,
+ see \cite{escardo:largegroup}.
 
 %(** Id U A B and Id U^+ A^+ B^+ **)
 
@@ -643,7 +645,7 @@ for other rules these assumptions can be obtained from inversion lemmas.)
  This would imply decidable type-checking. 
  This would also imply that if $a : \NN$ in a context with only 
  level variables, then $a$ is convertible to a numeral.
- See Section~\ref{sec:future} for a list of conjectures and open problems.
+ %See Section~\ref{sec:future} for a list of conjectures and open problems.
 
 %% As we mentioned in the introduction, we have now got a system in which we can express univalence of all universes as one typing
 %% $$
@@ -805,10 +807,10 @@ as well as loop-checking, is decidable in polynomial time.
 
 
 Voevodsky \cite {VV} did not describe a mechanism to {\em eliminate}
-universe levels and constraints. {\color{red}In Figure~\ref{fig:levindprod} we
+universe levels and constraints. In Figure~\ref{fig:levindprod} we
 gave rules for eliminating universe levels
 and in Figure~\ref{fig:restriction} below we give rules
-for eliminating universe level constraints.}
+for eliminating universe level constraints.
 
 \subsection*{Rules for constraint-indexed products}%\label{ssec:VVsystem}
 We introduce a ``restriction'' or ``constraining'' operation with
@@ -1024,6 +1026,11 @@ This is analysed further in the PhD thesis of F. Thir\'e \cite{Thire20}.
 
 \section{Conjectures and future work}\label{sec:future}
 
+Canonicity and normalization have been proved for type theory with an external tower of universes \cite{coquand:tcs2019}. We conjecture that these proofs can be modified to yield proofs of analogous properties (and their corollaries) for our type theories in Section~\ref{sec:internal} and \ref{sec:constraints}.
+
+In particular, decidability of type checking should following using [3]. 
+
+\eraser{%
 0. In the system of Section~\ref{sec:constraints},
 there is no context $\Gamma$ such that 
 one can infer $\Gamma\vdash \UU_\alpha : \UU_\alpha$.
@@ -1056,8 +1063,7 @@ generalized algebraic theories for dependent type theories and their initial mod
 4. Parametricity, e.g. all functions $[\alpha]\NN$ are constant (corr. of 1?)
 
 5. Implementation
-
-Canonicity and normalization have been proved for type theory with an external tower of universes \cite{coquand:tcs2019}. We conjecture that these proofs can be modified to yield proofs of analogous properties (and their corollaries) for our theories with universe level judgments.
+}%end eraser
 
 \paragraph{Acknowledgement.}
 The authors acknowledge the support of the Centre for Advanced Study (CAS)
@@ -1120,8 +1126,9 @@ and $l\leqslant m$ (i.e., $m = l\vee m$).
 We require $\T_{m}(\T_{l}^{m}(A)) = \T_{l}(A)$
 and $\T_{l}^{m}(\NN^{l}) = \NN^{m}$.
 
-We add $\T_{l}^l(A) = A$\footnote{Recall that the equality of universe levels is the one of
-  sup-semilattice with the next operation.}
+We add $\T_{l}^l(A) = A$\footnote{%
+Recall that the equality of universe levels is the one of
+sup-semilattice with the $\_^+$ operation.}
 and $\T_{m}^n\T_{l}^m = \T_l^n$ if $l\leqslant m\leqslant n$.
 %Note that this cannot be simplified to $\T_{l}^l(A) = A$
 %like $\T_{n}^n(A) = A$ in \cref{sec:internal}.
@@ -1233,7 +1240,7 @@ $$
   It should be the case that that the above formulation \`a la Russell presents the initial CwF with extra extructure for the standard type formers and a hierarchy of universes, but the proof doesn't seem to be trivial, due to Remark~\ref{uniqueness:without:cumulativity}.
 \end{remark}
 
-\footnote{PD: feedback from TYPES 2022. As expected, removing $U_0$ generated most feedback, people don't seem to have thought about this before. Pierre-Marie Pedrot asked about the proof-theoretic strength, but unfortunately I was not able to give a good answer on this immediately, although it is clear that it should be less than or equal to type theory with an external hierarchy with universes. I asked Anton whether it actually has the same strength, and he thought it should not be hard to prove that. I also talked to Mathieu who told me that Coq's checking of universe levels is with respect to a weaker theory than ours: only "less than" and "less than or equal" constraints between level experssions without "max", if I understood him correctly.}
+\eraser{PD: feedback from TYPES 2022. As expected, removing $U_0$ generated most feedback, people don't seem to have thought about this before. Pierre-Marie Pedrot asked about the proof-theoretic strength, but unfortunately I was not able to give a good answer on this immediately, although it is clear that it should be less than or equal to type theory with an external hierarchy with universes. I asked Anton whether it actually has the same strength, and he thought it should not be hard to prove that. I also talked to Mathieu who told me that Coq's checking of universe levels is with respect to a weaker theory than ours: only "less than" and "less than or equal" constraints between level experssions without "max", if I understood him correctly.}
 
 
 
