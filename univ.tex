@@ -874,7 +874,7 @@ $$
 In general, if we  build a term $t$ of type $A$ in a context using labels $\alpha_1,\dots,\alpha_m$
 and constraint $\psi$ and variables $x_1:A_1,\dots,x_n:A_n$ we can introduce a constant
 $$
-c~=~ \lam{\alpha_1~\dots~\alpha_m}\lambda_{x_1~\dots~x_n}t ~:~
+c~=~ \lam{\alpha_1~\dots~\alpha_m}\lam{\psi}\lambda_{x_1~\dots~x_n}t ~:~
 [\alpha_1~\dots~\alpha_m][\psi]\Pi_{x_1:A_1~\dots~x_n:A_n}A
 $$
 We can then instantiate this constant $c~l_1~\dots~l_m~u_1~\dots~u_n$, but only if the levels
