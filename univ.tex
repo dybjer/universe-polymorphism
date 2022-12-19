@@ -252,8 +252,8 @@ Moreover, ``universe inconsistencies" can be hard to explain to the user.
 In order to cope with these issues, Courant \cite{Courant02}
 introduced explicit level universes,
 with a sup operation (see also Herbelin \cite{herbelin05}).
-Explicit universe levels are also present in Agda \cite{agda-manual},
-Lean \cite{moura:lean},
+Explicit universe levels are also present in Agda \cite{agda-manual}
+%Lean \cite{moura:lean},
  and in Voevodsky's proposal \cite{VV}. However, whereas Courant has
 universe level \emph{judgments}, Agda and Lean have a \emph{type} of
 universe levels, and hence supports the formation of level-indexed products.
@@ -705,6 +705,12 @@ $$
 ([\alpha]\mathsf{IsUnivalent}\, \UU_\alpha)
 \to [\beta][\gamma] \mathsf{FunExt}\, \UU_\beta\, \UU_\gamma
 $$
+
+One can roughly describe the type system of Lean \cite{moura:lean,Carneiro19} as the current type system
+where we only can declare constants of the form
+$c~=~\lam{\alpha_1~\dots~\alpha_n}M~~:~~[\alpha_1~\dots~\alpha_n]A$ where there is no level declarations in $A$ and $M$.
+
+
 
 %\paragraph{Interpreting the system with levels into extensional type theory with a super universe.} We can interpret the theory with rules for level-indexed products in extensional type theory with a (minimal) super universe, provided we add the rules for cumulativity. Levels will be interpreted by internal natural numbers $n : \NN$, and level-indexed products $[\alpha]A$ will be interpreted by ordinary indexed products $\Pi_{n : \NN}A$. Level application and level abstraction will be interpreted as ordinary application and abstraction.
 
