@@ -253,17 +253,16 @@ In order to cope with these issues, Courant \cite{Courant02}
 introduced explicit level universes,
 with a sup operation (see also Herbelin \cite{herbelin05}).
 Explicit universe levels are also present in Agda \cite{agda-manual}
-%Lean \cite{moura:lean},
+Lean \cite{moura:lean,Carneiro19},
  and in Voevodsky's proposal \cite{VV}. However, whereas Courant has
-universe level \emph{judgments}, Agda and Lean have a \emph{type} of
+universe level \emph{judgments}, Agda has a \emph{type} of
 universe levels, and hence supports the formation of level-indexed products.
-Voevodsky proposes type theories parameterized by
-(arbitrary but fixed) universe levels and constraints.
-
+%
 With the advent of Voevodsky's univalent foundations,
-the need for universe polymorphism has only increased,
-see for example \cite{VV}.
-One often wants to prove theorems uniformly for any arbitrary universe(s).
+the need for universe polymorphism has only increased.
+One often wants to prove theorems uniformly for arbitrary universes.
+Voevodsky proposes type theories parameterized by
+(arbitrary but fixed) universe levels and constraints \cite{VV}.
 
 The \emph{univalence axiom} states that for any two types $X,Y$ the canonical map
 $$
@@ -708,7 +707,7 @@ $$
 
 One can roughly describe the type system of Lean \cite{moura:lean,Carneiro19} as the current type system
 where we only can declare constants of the form
-$c~=~\lam{\alpha_1~\dots~\alpha_n}M~~:~~[\alpha_1~\dots~\alpha_n]A$ where there is no level declarations in $A$ and $M$.
+$c~=~\lam{\alpha_1~\dots~\alpha_n}M~~:~~[\alpha_1~\dots~\alpha_n]A$ where there are no level declarations in $A$ and $M$.
 
 
 
