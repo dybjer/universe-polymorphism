@@ -250,16 +250,43 @@ We give an abstract presentation of  the type theories in our paper
 ``Type Theories with Universe Level Judgements'' as initial models of some generalized algabraic theories.
 \end{abstract}
 
+\section{Introduction}
+
+In a previous paper \cite{bcde:types21} we proposed a new version of type theory with universe polymorphism. The distinctive feature of this theory is that it extends Martin-Löf type theory with new judgments for universe levels:
+$
+\Gamma \vdash l\ Level
+$
+and 
+$
+\Gamma \vdash l = l'.
+$
+A context $\Gamma$ may contain declarations of universe level variables $\alpha\ Level$. 
+
+In this note we define a categorical notion of model of our type theory with universe levels. Just as categories with families with extra structure are models of ordinary dependent type theories, we introduced a notion of indexed categories with families which are models of a dependent type theories with universe level judgments. Moreover, just as categories with families with extra structure can be specified as models of certain generalized algebraic theories, so is the case with our indexed categories with families.
+
+We define a category of indexed categories with families with extra structure, and conjecture that (a suitable version of) our theory \cite{bcde} yields an initial object in this category.
+
+We refer to Cartmell's original work \cite{cartmell:phd,cartmell:contextual} for an introduction to generalized algebraic theories and \cite{dybjer:internal} for an introduction to categories with families. Moreover, we refer to \cite{bcde:hofmann} for an abstract definition of generalized algebraic theories as initial categories with families with extra structure. In this paper we also display the generalized algebraic theory of categories with families with extra structure for $\Pi$-types and a universe closed under $\Pi$-types. The generalized algebraic theories in this paper extend those.
+
+\paragraph{Plan of the paper.} We begin by showing the generalized algebraic theory for a version of Martin-Löf type theory with $\Pi$-types and an external tower of universes closed under $\Pi$-types. We show both non-cumulative and cumulative universe towers. 
+
+Then we show generalized algebraic theories for Martin-Löf type theory extended with level judgements and $\Pi$-types and an internal level-indexed universes closed under $\Pi$-types. We show both non-cumulative and cumulative versions here too.
+
 \section{Type theory with an external tower of universes}
 
-The generalized algebraic theory
+We present the generalized algebraic theory
 $$
  \CwF^{\Pi,(\UU_l)_l}
  $$
-  of categories with families with $\Pi$-types and an external tower of universes $(\UU_l)_{l \in \NN}$.
+ of categories with families with $\Pi$-types and an external tower of universes $(\UU_l)_{l \in \NN}$.
   
- We first consider the case without a cumulativity rule.
-
+ We first consider the case without a cumulativity rule. Then we add cumulativity.
+ 
+ We conjecture that (a variant of) the type theories with external towers of universes presented in BCDE \cite{bcde:univ} are initial objects in the categories 
+$$
+ \mathbf{\CwF^{\Pi,(\UU_l)_l}}
+$$
+with strict morphism, preserving all the structure on the nose.
  
 \subsection{The generalized algebraic theory of categories}
 
@@ -390,7 +417,7 @@ where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
 
 \subsection{Adding a universe closed under $\Pi$}
 
-\footnote{PD: for comparison only}
+\footnote{PD: this will be subsumed by the external tower of universes, but is included for comparison.}
 \begin{tiny}
 Operator symbols:
 \begin{eqnarray*}
@@ -404,7 +431,6 @@ b :  \tm(\Gamma \cdot \Ta(a), \U_\Gamma))
  \Pi^0(a,b) : \tm(\Gamma,\U_\Gamma)
 \end{eqnarray*}
 %$\U_\Gamma$ is the universe (a type) relative to the context $\Gamma$; $\Ta$ is the decoding operation mapping a term in the universe to the corresponding type; $\N^0$ is the code for $\N$ in the universe, and $\Pi^0$ forms codes for $\Pi$-types in the universe. (Note that we have dropped the context argument of $\Ta$ and $\Pi^0$.)
-
 Equation:
 \begin{eqnarray*}
 %\Ta(\N^0_\Gamma) &=& \N_\Gamma\\
@@ -426,7 +452,7 @@ Equation:
 An infinitary theory!
 \\
 \vspace{1ex}
-Operator symbols (for each $l, l' \in \NN$ and $l < m$)
+Operator symbols (for each $l, l', m\in \NN$ and $l < m$). We let $l \vee l' = \max(l,l')$.
 \begin{eqnarray*}
 \Gamma : \ctx &\vdash& (\U_{l})_\Gamma : \ty(\Gamma)\\
 \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta_{l}}(a) : \ty(\Gamma)\\
@@ -457,7 +483,7 @@ Equation:
 \subsection{Adding cumulativity}
 
 \begin{tiny}
-Operator symbols (for each $l < m$)
+We add the following operator symbols for lifting for $l < m$:
 \begin{eqnarray*}
 \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
 \end{eqnarray*}
@@ -469,7 +495,7 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
 &\vdash&
  \Pihat^{l}(a,b) : \tm(\Gamma,(\U_{l})_\Gamma)
 \end{eqnarray*}
-Equation:
+Equations:
 \begin{eqnarray*}
 \Ta^m_{l}(\Pi^{l}(a,b)) &=& \Pi^m(\Ta^m_l(a),\Ta^m_l(b))\\
 \Ta^m_l((\UU^l_k)_\Gamma) &=& (\UU^m_k)_\Gamma
@@ -484,7 +510,7 @@ Equations for commutativity of operator symbols wrt substitution ($\gamma : \hom
 
 \section{Level-indexed type theory}
 
-Initial model of the generalized algebraic theory of ucwf-indexed cwfs. These are contravariant functors $F$ from the category of contexts $\L$ (of the ucwf of levels) to the category of cwfs with $\Pi$-types:
+Initial model of the generalized algebraic theory of ucwf-indexed cwfs. These are contravariant functors $F$ from the category of contexts $\L$ (of the ucwf of levels) to the category of cwfs with $\Pi$-types and strict morphisms:
 $$
 F : \L^\mathrm{op} \to \CwF^{\Pi}
 $$
@@ -572,7 +598,8 @@ l \vee l^+ &=& l^+\\
 \end{eqnarray*}
 Commutativity of $\vee$ and $+$ with level substitution.
 \begin{eqnarray*}
-&\vdots&
+l^+[\gamma]&=&(l[\gamma])^+\\
+(l \vee l')[\gamma]&=&(l[\gamma])\vee(l'[\gamma])
 \end{eqnarray*}
 \end{tiny}
 
@@ -672,5 +699,9 @@ Equations ($\beta$ and $\eta$ for level abstraction and application):
 \end{eqnarray*}
 where $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$ and $\gamma^+ = \tuple{\gamma \circ \p, \q}$??
 \end{tiny}
+
+\section{Models of theories with equational universe level constraints}
+
+The simplest idea is to model a theory with the universe level constraint $l = l'$ as a gat with that constraint added to the theory.
 
 \end{document}
