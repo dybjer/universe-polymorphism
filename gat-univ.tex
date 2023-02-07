@@ -233,8 +233,8 @@
 \def\L{{\mathcal{L}}}
 \def\F{\mathcal{C}}
 \def\CwF{\mathrm{CwF}}
-
-
+\def\ScwF{\mathrm{ScwF}}
+\def\Cat{\mathrm{Cat}}
 
 \begin{document}
 
@@ -252,7 +252,7 @@ We give an abstract presentation of  the type theories in our paper
 
 \section{Introduction}
 
-In a previous paper \cite{bcde:types21} we proposed a new version of type theory with universe polymorphism. The distinctive feature of this theory is that it extends Martin-Löf type theory with new judgments for universe levels:
+In a previous paper \cite{bcde:types21} we proposed new versions of type theory with universe polymorphism. The distinctive feature of these theories is that they extend Martin-Löf type theory with new judgments for universe levels:
 $
 \Gamma \vdash l\ Level
 $
@@ -260,17 +260,19 @@ and
 $
 \Gamma \vdash l = l'.
 $
-A context $\Gamma$ may contain declarations of universe level variables $\alpha\ Level$. 
+The context $\Gamma$ may contain declarations of universe level variables $\alpha\ Level$. 
 
-In this note we define a categorical notion of model of our type theory with universe levels. Just as categories with families with extra structure are models of ordinary dependent type theories, we introduced a notion of indexed categories with families which are models of a dependent type theories with universe level judgments. Moreover, just as categories with families with extra structure can be specified as models of certain generalized algebraic theories, so is the case with our indexed categories with families.
+In this note we define categorical notions of model of our new type theories. Just as categories with families with extra structure are models of ordinary dependent type theories, we introduced indexed categories with families which model dependent type theories with universe level judgments. Moreover, just as categories with families with extra structure can be specified as models of certain generalized algebraic theories, so is the case with our indexed categories with families.
 
 We define a category of indexed categories with families with extra structure, and conjecture that (a suitable version of) our theory \cite{bcde} yields an initial object in this category.
 
-We refer to Cartmell's original work \cite{cartmell:phd,cartmell:contextual} for an introduction to generalized algebraic theories and \cite{dybjer:internal} for an introduction to categories with families. Moreover, we refer to \cite{bcde:hofmann} for an abstract definition of generalized algebraic theories as initial categories with families with extra structure. In that paper we also display the generalized algebraic theory of categories with families with extra structure for $\Pi$-types and a universe closed under $\Pi$-types. The generalized algebraic theories in this paper extend those.
+We refer to Cartmell's original work \cite{cartmell:phd,cartmell:contextual} for an introduction to generalized algebraic theories and to \cite{dybjer:internal} for an introduction to categories with families. Moreover, we refer to \cite{bcde:hofmann} for an abstract definition of generalized algebraic theories as initial categories with families with extra structure. In that paper we also display the generalized algebraic theory of categories with families with extra structure for $\Pi$-types and a universe closed under $\Pi$-types. The generalized algebraic theories in this paper extend that generalized algebraic theory.
 
 \paragraph{Plan of the paper.} We begin by showing the generalized algebraic theory for a version of Martin-Löf type theory with $\Pi$-types and an external tower of universes closed under $\Pi$-types. We show both non-cumulative and cumulative universe towers. 
 
 Then we show generalized algebraic theories for Martin-Löf type theory extended with level judgements and $\Pi$-types and an internal level-indexed universes closed under $\Pi$-types. We show both non-cumulative and cumulative versions here too.
+
+In our paper \cite{bcde:types21} we also present type theories where judgments depend on equational constraints between universe levels. In the final section we discuss the modelling of these theories using generalized algebraic theories.
 
 \section{Type theory with an external tower of universes}
 
@@ -278,17 +280,18 @@ We present the generalized algebraic theory
 $$
  \CwF^{\Pi,(\UU_l)_l}
  $$
- of categories with families with $\Pi$-types and an external tower of universes $(\UU_l)_{l \in \NN}$.
+ of categories with families with $\Pi$-types and an external tower of universes $(\UU_l)_{l \in \NN}$. 
   
- We first consider the case without a cumulativity rule. Then we add cumulativity.
+We first consider the case without a cumulativity rule. Then we add cumulativity.
  
- We conjecture that (a variant of) the type theories with external towers of universes presented in BCDE \cite{bcde:univ} are initial objects in the categories 
-$$
- \mathbf{\CwF^{\Pi,(\UU_l)_l}}
-$$
-with strict morphism, preserving all the structure on the nose.
- 
+We can define a category of models of $\CwF^{\Pi,(\UU_l)_l}$, where the morphisms preserve all the structure strictly. We conjecture that (a variant of) the type theories with external towers of universes presented in BCDE \cite{bcde:univ} are initial objects in this category.
+  
 \subsection{The generalized algebraic theory of categories}
+
+We present $\CwF^{\Pi,(\UU_l)_l}$ step by step and begin with the generalized algebraic theory of categories.
+$$
+\vspace{0.1ex}
+$$
 
 \begin{tiny}
 Sort symbols:
@@ -315,6 +318,11 @@ Note: officially $\circ$ has five arguments rather than two.
 \end{tiny}
 
 \subsection{Adding a family valued functor}
+
+A cwf is a category with a terminal object and a family valued functor on that category having a context comprehension structure. Here are the sort symbols, operator symbols, and equations for a family valued functor that are added to the sort symbols, operator symbols, and equations for the theory of categories.
+$$
+\vspace{0.1ex}
+$$
 
 \begin{tiny}
 Sort symbols ($\ctx = \Obj$):
@@ -510,26 +518,67 @@ Equations for commutativity of operator symbols wrt substitution ($\gamma : \hom
 
 \section{Level-indexed type theory}
 
-Initial model of the generalized algebraic theory of ucwf-indexed cwfs. These are contravariant functors $F$ from the category of contexts $\L$ (of the ucwf of levels) to the category of cwfs with $\Pi$-types and strict morphisms:
-$$
-F : \L^\mathrm{op} \to \CwF^{\Pi}
-$$
-This just says that for each level context $n$ there is a cwf with $\Pi$-types depending on level variables in $n$. The universe rules state that for each level term $l$ in $n$ variables, we can build a universe $\UU_l$.
 
- There is extra structure to this level-indexed cwf stating that every universe is in the next and that there is a cumulativity map making $\U_l$ a subuniverse of $\UU_m$.
+%A category-indexed cwf (with extra structure for $\Pi$) is a functor 
+%$$
+%F : C^\mathrm{op} \to \CwF^{\Pi}
+%$$
+%Our level indexed type theory 
+\footnote{Write more generally about level-indexed cwf and hyperdoctrines. Adjointness wrt one level variable. Discuss loop free base category. New constraints. In both cases there is an adjoint.}
+
+In section 4 of \cite{bcde:types} we introduce a type theory with new judgment forms
+\begin{itemize}
+\item $l\ Level$ meaning that $l$ is a universe level,
+\item and $l=l'$ meaning that $l$ and $l'$ are equal universe levels.
+\end{itemize}
+and rules stating that levels form a sup-semilattices with an inflationary endomorphism $(-)^+$.
+We shall present this theory abstractly as an initial {\em ucwf-indexed cwf} $(\L,F)$ with extra structure for level-indexed universes. Here
+\begin{itemize}
+\item $\L$ is a ucwf of sup-semilattices with an inflationary endomorphism;
+\item A contravariant functor
+$$
+F : \L_\ctx^\mathrm{op} \to \CwF^{\Pi}
+$$
+from the category of contexts $\L_\ctx$ of $\L$, and $\CwF^\Pi$ is the category where the objects are cwfs with $\Pi$-structures and the morphism preserve the cwf-structure and the $\Pi$-structure on the nose. (For simplicity we present a theory with level-indexed universes closed under $\Pi$-types only. It is straightforward to add closure under other type formers, such as $\Sigma, \N, \Id$, etc.)
+\item
+Extra structure for level-indexed universes stating that every universe $\U_l$  is in the next $\U_{l^+}$. In the cumulative version there is a map making $\U_l$ a subuniverse of $\UU_m$ if $l \leq m$.
+\end{itemize}
+Below we shall write down the sort symbols, operator symbols, and equations of the generalized algebraic theory of ucwf-indexed cwf with extra structure for level-indexed universes. 
 
 We can think of $\L$ as the unityped cwf (ucwf) of levels and a cwf-version of the Lawvere theory for upper semilattices with an inflationary endomorphism.
 
 \begin{itemize}
 \item 
-An object $n$ of $\L$ represents a level context, that is, a sequence of distinct level variables (or just records the number of level variables). 
+An object $n$ of $\L$ represents a level context of length $n$. (In general, $n$ is not required to be a natural number. It could, for example, be a list of names of level variables.)
 \item
-A morphism in $\L(m,n)$ represents a sequence of level expressions $\sigma$ of length $n$ and level variables in $m$.
+A morphism $\sigma$ in $\L(m,n)$ represents a sequence of level expressions of length $n$ and level variables in $m$.
 \item
-$F(n)$ is the cwf of contexts, substitutions, types, and terms that depend on level variables in $n$.
+$F(n)$ is the cwf of contexts, substitutions, types, and terms that depend on $n$ level variables.
 \item
-The cwf-functor $F(\sigma) : F(n) \to F(m)$ substitutes the $n$ level variables in $n$ by the level expressions in $\sigma$. 
+The cwf-functor $F(\sigma) : F(n) \to F(m)$ substitutes the $n$ level variables by the level expressions (in $m$ variables) in $\sigma$. 
 \end{itemize}
+
+\paragraph{Remark.} Note the similarity with Lawvere's hyperdoctrines \cite{lawvere:hyperdoctrine}. These are contravariant functors (category-indexed families of categories)
+$P :  C^\mathrm{op} \to \Cat$ with extra structure for interpreting predicate logic. We remark that ordinary untyped first-order predicate logic can be interpreted by ucwf-indexed scwfs $(T,P)$, 
+
+\begin{itemize}
+\item $T$ is a ucwf of tems;
+\item A contravariant functor
+$$
+P : T_\ctx^\mathrm{op} \to \ScwF^{0,1,+,\times,\to}
+$$
+where $\ScwF^{0,1,+,\times,\to}$ is the category of simply typed cwfs with extra structure for interpreting the propositional connectives.
+\item
+Extra structure for the quantifiers $\forall, \exists$, similar to the structure of a hyperdoctrine where quantifiers are adjoints to the substitution functor.
+\end{itemize}
+Several other logical systems can be captured by variants of indexed cwfs\footnote{PD: I don't suggest this is included in the paper. It's too much of a topic in its own right, and it needs more investigation.}. For example,
+\begin{itemize}
+\item scwf-indexed scwfs capture typed predicate logic;
+\item cwf-indexed scwfs (with extras structure) capture logic-enriched type theory in the sense of Makkai, Aczel and Gambino, and Belo;
+\item ucwf-indexed scwfs with extra structure for function types and type quantification capture system F.
+\item ucwf-indexed cwfs capture cubical type theory. (Check!)
+\end{itemize}
+
 
 %\begin{itemize}
 %\item
@@ -651,12 +700,28 @@ Equations:
 Etc, for level-indexing the other components of cwfs and of $\Pi$-types.
 \end{tiny}
 
+%\subsection{Level-indexed family-valued functor}
+%
+%In analogy with the previous section, all the operations of family-valued functors are indexed by level-contexts, and we can do level-substitution in types and terms. Moreover, we need laws relating ordinary substitution and level-substitution.
+%
+%\subsection{Level-indexed terminal object}
+%
+%Similar.
+%
+%\subsection{Level-indexed context comprehension}
+%
+%Similar.
+%
+%\subsection{Level-indexed $\Pi$-types}
+%
+%Similar.
+
 \subsection{A level-indexed non-cumulative tower of universes}
 
-\begin{tiny}
-A finitary theory!
+A finitary theory! The operator symbols and equations are analogous to the external case, but levels are now abstract rather than natural numbers. What about level-substitution?
 \\
 \vspace{1ex}
+\begin{tiny}
 Operator symbols:
 \begin{eqnarray*}
 n : \lctx, l : \ltm(n), \Gamma : \lctx_n &\vdash& (\U_{l})_\Gamma : \ty_n(\Gamma)\\
@@ -671,9 +736,32 @@ b :  \tm_n(\Gamma \cdot \Ta_{l}(a), (\U_{l'})_\Gamma))
 \end{eqnarray*}
 Equations:
 \begin{eqnarray*}
+(\U_{l})_\Gamma)[\sigma] &=& \U_{l[\sigma]})_{\Gamma[\sigma]}\\
 &\vdots&
 \end{eqnarray*}
 
+\end{tiny}
+
+\subsection{Adding cumulativity}
+
+(This is identical to the external case, except that levels are now from an abstract semi-lattice.)
+\begin{tiny}
+We add the following operator symbols for lifting for $l < m$:
+\begin{eqnarray*}
+\Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
+\end{eqnarray*}
+With cumulativity we can simplify the operator symbol for the code for $\Pi$:
+\begin{eqnarray*}
+\Gamma : \ctx,
+a : \tm(\Gamma,(\U_{l})_\Gamma),
+b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
+&\vdash&
+ \Pihat^{l}(a,b) : \tm(\Gamma,(\U_{l})_\Gamma)
+\end{eqnarray*}
+Equations:
+$$
+\vdots
+$$
 \end{tiny}
 
 \subsection{Level-indexed products of types}
