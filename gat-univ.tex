@@ -532,14 +532,15 @@ In section 4 of \cite{bcde:types} we introduce a type theory with new judgment f
 \item and $l=l'$ meaning that $l$ and $l'$ are equal universe levels.
 \end{itemize}
 and rules stating that levels form a sup-semilattices with an inflationary endomorphism $(-)^+$.
-We shall present this theory abstractly as an initial {\em ucwf-indexed cwf} $(\L,F)$ with extra structure for level-indexed universes closed under $\Pi$. Here
+We shall present this theory abstractly as an initial {\em ucwf-indexed cwf} $(\L,F)$ with extra structure for level-indexed universes closed under $\Pi$.  (For simplicity we present a theory with level-indexed universes closed under $\Pi$-types only. It is straightforward to add closure under other type formers, such as $\Sigma, \N, \Id$, etc.)
+Here
 \begin{itemize}
 \item $\L$ is a ucwf of sup-semilattices with an inflationary endomorphism;
 \item A contravariant functor
 $$
 F : \L_\ctx^\mathrm{op} \to \CwF^{\Pi}
 $$
-from the category of contexts $\L_\ctx$ of $\L$, and $\CwF^\Pi$ is the category where the objects are cwfs with $\Pi$-structures and the morphism preserve the cwf-structure and the $\Pi$-structure on the nose. (For simplicity we present a theory with level-indexed universes closed under $\Pi$-types only. It is straightforward to add closure under other type formers, such as $\Sigma, \N, \Id$, etc.)
+from the category of contexts $\L_\ctx$ of $\L$, and $\CwF^\Pi$ is the category where the objects are cwfs with $\Pi$-structures and the morphism preserve the cwf-structure and the $\Pi$-structure on the nose.
 \item
 Extra structure for level-indexed universes stating that every universe $\U_l$  is in the next $\U_{l^+}$. In the cumulative version there is a map making $\U_l$ a subuniverse of $\UU_m$ if $l \leq m$.
 \end{itemize}
@@ -571,7 +572,7 @@ where $\ScwF^{0,1,+,\times,\to}$ is the category of simply typed cwfs with extra
 \item
 Extra structure for the quantifiers $\forall, \exists$, similar to the structure of a hyperdoctrine where quantifiers are adjoints to the substitution functor.
 \end{itemize}
-Several other logical systems can be captured by variants of indexed cwfs\footnote{PD: I don't suggest this is included in the paper. It's too much of a topic in its own right, and it needs more investigation.}. For example,
+\paragraph{Remark.} Several other logical systems can be captured by variants of indexed cwfs\footnote{PD: I don't suggest this is included in the paper. It's too much of a topic in its own right, and it needs more investigation.}. For example,
 \begin{itemize}
 \item scwf-indexed scwfs capture typed predicate logic;
 \item cwf-indexed scwfs (with extras structure) capture logic-enriched type theory in the sense of Makkai, Aczel and Gambino, and Belo;
@@ -651,6 +652,15 @@ l^+[\gamma]&=&(l[\gamma])^+\\
 (l \vee l')[\gamma]&=&(l[\gamma])\vee(l'[\gamma])
 \end{eqnarray*}
 \end{tiny}
+
+We now need to turn the gat for the external tower of universes into a gat for level-indexed universes. To this end we need to
+\begin{itemize}
+\item all the four sort symbols now depend on a level context $n$;
+\item all the operator symbols now depend on a level context $n$;
+\item there are operations of level substitution in the four sort symbols
+\item there are operations of level substitution in the operator symbols
+\end{itemize}
+We show explicitly how the generalized algebraic theory of categories is turned into a generalized algebraic theory of level-indexed categories. The remaining part of the theory follows the same pattern.
 
 \subsection{Level-indexed categories of contexts}
 
