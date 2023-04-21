@@ -166,7 +166,9 @@
 
 \begin{abstract}
 
- The aim of this paper is to refine and extend Voevodsky's draft ``A universe polymorphic type system" that outlines a type theory where judgments can depend on equalities between universe levels expressions (constraints). We first recall a version of type theory with an externally indexed sequence of universes. We then add judgments for internal universe levels, built up from level variables by a successor operation and a binary supremum operation, and also judgments for equality of universe levels. Furthermore, we extend this type theory with rules for level-indexed product types. Finally, we add constraints to the theory, so that a hypothetical judgment can depend on equalities between universe levels. We also give rules for constraint-indexed product types, and compare the resulting type theory to Voevodsky's.
+The aim of this paper is to refine and extend proposals by Sozeau and Tabareau and by Voevodsky for universe polymorphism in type theory. In those systems judgments can depend on explicit constraints between universe levels. We here extend those systems with products indexed by universe levels and by constraints. Our theory has judgments for internal universe levels, built up from level variables by a successor operation and a binary supremum operation, and also judgments for equality of universe levels.
+
+% The aim of this paper is to refine and extend Voevodsky's draft ``A universe polymorphic type system" that outlines a type theory where judgments can depend on equalities between universe levels expressions (constraints). We first recall a version of type theory with an externally indexed sequence of universes. We then add judgments for internal universe levels, built up from level variables by a successor operation and a binary supremum operation, and also judgments for equality of universe levels. Furthermore, we extend this type theory with rules for level-indexed product types. Finally, we add constraints to the theory, so that a hypothetical judgment can depend on equalities between universe levels. We also give rules for constraint-indexed product types, and compare the resulting type theory to Voevodsky's.
 
 \end{abstract}
 
@@ -237,15 +239,16 @@ universe polymorphism that allowed the use of $\UU:\UU$
 on the condition that each occurrence of $\UU$ can be disambiguated
 %https://math.stanford.edu/~feferman/papers/Ambiguity.pdf
 as $\UU_i$ in a consistent way.
-This approach has been followed by Harper and Pollack \cite{HarperP91} and,
-in Coq, by Sozeau and Tabareau \cite{SozeauTabareau:coq}.
+This approach has been followed by Harper and Pollack \cite{HarperP91} and
+in Coq.
+%by Sozeau and Tabareau \cite{SozeauTabareau:coq}.
 These  approaches to ``implicit" universe polymorphism are, however,
 problematic with respect to modularity. As pointed out in \cite{Courant02,Simpson04}:
 one can prove $A\rightarrow B$ in one file, and $B\rightarrow C$ in
 another file, while $A\rightarrow C$ is not valid.
 
 Leaving universe levels implicit also causes practical problems,
-since universe level disambiguaton can be a costly operation,
+since universe level disambiguation can be a costly operation,
 slowing down type-checking significantly.
 Moreover, ``universe inconsistencies" can be hard to explain to the user.
 
@@ -260,9 +263,9 @@ universe levels, and hence supports the formation of level-indexed products.
 %
 With the advent of Voevodsky's univalent foundations,
 the need for universe polymorphism has only increased.
-One often wants to prove theorems uniformly for arbitrary universes.
-Voevodsky proposes type theories parameterized by
-(arbitrary but fixed) universe levels and constraints \cite{VV}.
+One often wants to prove theorems uniformly for arbitrary universes. These theorems may depend on several universes and there may be constraints on the level of these universes.
+In response to this Voevodsky  \cite{VV} and Sozeau and Tabareau \cite{SozeauTabareau:coq} proposed type theories parameterized by
+(arbitrary but fixed) universe levels and constraints. 
 
 The \emph{univalence axiom} states that for any two types $X,Y$ the canonical map
 $$
@@ -320,20 +323,21 @@ to give full level polymorphism.
 In Section \ref{sec:constraints} we extend the type theory in
 Section~\ref{sec:internal} with constraints (lists of equations between level expressions). Constraints can now appear as assumptions in hypothetical judgments. Moreover, we add
 constraint-indexed products of types $[\psi]A$ and corresponding
-abstractions $\lam{\psi}A$. This goes beyond Voevodsky's system \cite{VV} where the
-constraint set is fixed (but arbitrary) on the level of the type theory.
+abstractions $\lam{\psi}A$. This goes beyond the systems of Sozeau and Tabareau \cite{SozeauTabareau:coq} and Voevodsky \cite{VV}.
+%where the
+%constraint set is fixed (but arbitrary) on the level of the type theory.
 Finally, we %extensively
-compare our type theory with Voevodsky's
+compare our type theory with Voevodsky's and Sozeau-Tabareau's
 and briefly discuss some other approaches.
 
 \paragraph{Summary of main contributions.}
 Like Courant we present a type theory with
-universe levels  and universe level equations as \emph{judgments}. Moreover, we don't restrict the levels to be the natural numbers, and instead they form a sup-semilattice with an inflationary endomorphism. In this way all levels are built up from level variables by a successor operation and a binary supremum operation, and as a consequence all types involving universes depend on level variables; they are {\em universe polymorphic}.
+universe levels  and universe level equations as \emph{judgments}. Moreover, we don't restrict the levels to be natural numbers. Instead we just assume that they form a sup-semilattice with an inflationary endomorphism. In this way all levels are built up from level variables by a successor operation and a binary supremum operation. Unlike most other systems, we do not have a level constant zero for the first universe level. As a consequence all types involving universes depend on level variables; they are {\em universe polymorphic}.
+
 Furthermore, we add
-\emph{level-indexed products} to regain some of the expressivity Agda gets from having a \emph{type}
+\emph{level-indexed products} in order to regain some of the expressivity Agda gets from having a \emph{type}
 $\AgdaLevel$ of universe levels.
-Finally, we present a type theory with constraints as \emph{judgments} extending Voevodsky's proposal with \emph{constraint-indexed products} and
-instantiations.
+Finally, we present a type theory with constraints as \emph{judgments} similar to the ones by Sozeau and Tabareau \cite{SozeauTabareau:coq} and Voevodsky \cite{VV}  and extend this type theory with \emph{constraint-indexed products}.
 
 \section{Rules for a basic type theory}\label{sec:basic}
 
@@ -879,10 +883,12 @@ $$
 We can then instantiate this constant $c~l_1~\dots~l_m~u_1~\dots~u_n$, but only if the levels
 $l_1~\dots~l_m$ satisfy the constraint $\psi$.
 
-    We have thus complemented Voevodsky's proposal \cite{VV}: we can not only declare and define
-    constants assuming universe levels satisfying some constraints, but we also provide a mechanism
-    to {\em instantiate} these constants.
-
+We remark that Voevodsky's system \cite{VV} has no constraint-indexed products and no associated application operation. As a consequence, instantiation of levels is only a meta-level operation. Sozeau and Tabareau \cite{SozeauTabareau:coq} do not have constraint-index products either. However, they do have a special operation %(CONSTANT) 
+ for instantiating universe-polymorphic constants defined in the global environment.
+%    We have thus complemented Voevodsky's proposal \cite{VV}: we can not only declare and define
+%    constants assuming universe levels satisfying some constraints, but we also provide a mechanism
+%    to {\em instantiate} these constants.
+%
 
 %% Here is an example showing how such a system can be used. With univalence, we can build a term $t$
 %% $$
