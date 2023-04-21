@@ -89,6 +89,7 @@
 \newcommand{\Nat}{\mathbb{N}}
 \newcommand{\UU}{\mathsf{U}}
 \newcommand{\JJ}{\mathsf{J}}
+\newcommand{\Type}{\mathsf{Type}}
 \newcommand{\AgdaLevel}{\mathsf{Level}}
 \newcommand{\Level}{\mathsf{level}}
 \newcommand{\Lev}{{\mathbb{L}}}
@@ -700,7 +701,7 @@ a term $\Eq^{\alpha,\beta}(A,B) : \UU_{\alpha\vee\beta}$
 such that $\T_{\alpha\vee\beta}(\Eq^{\alpha,\beta}(A,B))=
 \Equiv(\T_{\alpha}(A),\T_{\beta}(B))$.
 
-An example that uses level-indexed products beyond ML-polymorphism
+An example that uses level-indexed products beyond the ML-polymorphism (provided by Sozeau and Tabareau and by Voevodsky)
 is the following type which
 expresses the theorem that univalence for universes of arbitrary level implies
 function extensionality for functions between universes of arbitrary levels.
@@ -708,6 +709,13 @@ $$
 ([\alpha]\mathsf{IsUnivalent}\, \UU_\alpha)
 \to [\beta][\gamma] \mathsf{FunExt}\, \UU_\beta\, \UU_\gamma
 $$
+In other words, {\em global} univalence  implies {\em global} function extensionality. 
+
+Since an assumption of global function extensionality can replace many assumptions of the local function extensionality (provided by the ML-polymorphism), this can also give rise to shorter code, see for example
+%https://
+\begin{verbatim}
+www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/HoTT-UF-Agda.html#275277
+\end{verbatim}
 
 One can roughly describe the type system of Lean \cite{moura:lean,Carneiro19} as the current type system
 where we only can declare constants of the form
@@ -1029,20 +1037,20 @@ There are no level-indexed products and no constraint-indexed products in \cite{
 
 \paragraph{Sozeau and Tabareau.}
 
-We later learned about the closely related work by Sozeau and Tabareau \cite{SozeauTabareau:coq}. We have already explained the most important differences, and will now list some of the presentation choices that obscure a comparison between their systems and ours.
+We later learned about the closely related work by Sozeau and Tabareau \cite{SozeauTabareau:coq}. As already mentioned the most important difference is between their ML-like polymorphim and the explicit polymorphism provided by our level- and constraint-indexed products. Apart from this, there are several presentation choices that obscure a comparison between their systems and ours.
 
 %\begin{itemize}
 %\item 
-Their systems are \`a la Russell and based on PTS with subtyping. Universes are called $Type_i$ with $Type_i : Type_{i+1}$. Our universes are \`a la Tarski and called $U_m$ with codes $U^m_l : U_l $ for $l < m$.
+Their systems are \`a la Russell and based on PTS with subtyping. Universes are called $\Type_i$ with $\Type_i : \Type_{i+1}$. Our universes are \`a la Tarski and called $\UU_m$ with codes $\UU^m_l : \UU_l $ for $l < m$.
 
 %\item
-They have special rules for introducing monomorphic and universe-polymorphic constants, and a rule for instantiating the latter. We could add similar rules for adding constants, where we use our notion of level-abstraction when defining universe-polymorphic constants.
+They have special rules for introducing universe-monomorphic and universe-polymorphic constants, and a rule for instantiating the latter. We could add similar rules for adding constants, where we use our notion of level-abstraction when defining universe-polymorphic constants.
 
 %\item
 Their constraints are only between level variables, while our constraints are between level expressions.
 
 %\item
-They have the special rule where you conclude $Type_u = Type_i$ where a constraint set implies that $u$ is a level expression equal to the level variable $i$. We have level equality judgments $\Gamma \vdash l = m$ and enforce that judgments are invariant under level equality.
+They have the special rule where you conclude $\Type_u = \Type_i$ where a constraint set implies that $u$ is a level expression equal to the level variable $i$. We have level equality judgments $\Gamma \vdash l = m$ and enforce that judgments are invariant under level equality.
 
 %\item
 Finally, a difference, which is orthogonal to universe polymorphism, is that they present a system with an impredicative universe and only $\beta$-conversion, while we present a predicative system with $\eta$-conversion as well.
@@ -1098,7 +1106,9 @@ generalized algebraic theories for dependent type theories and their initial mod
 }%end eraser
 
 \paragraph{Acknowledgement.}
-The authors acknowledge the support of the Centre for Advanced Study (CAS)
+The authors are grateful to the anonymous referees for feedback, among other things on the relationship between our work and Sozeau and Tabareau's.
+
+We acknowledge the support of the Centre for Advanced Study (CAS)
 at the Norwegian Academy of Science and Letters
 in Oslo, Norway, which funded and hosted the research project Homotopy
 Type Theory and Univalent Foundations during the academic year 2018/19.
