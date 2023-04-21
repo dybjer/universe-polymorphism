@@ -256,12 +256,14 @@ Moreover, ``universe inconsistencies" can be hard to explain to the user.
 In order to cope with these issues, Courant \cite{Courant02}
 introduced explicit level universes,
 with a sup operation (see also Herbelin \cite{herbelin05}).
-Explicit universe levels are also present in Agda \cite{agda-manual}
-Lean \cite{moura:lean,Carneiro19},
- and in Voevodsky's proposal \cite{VV}. However, whereas Courant has
+Explicit universe levels are also present in Agda \cite{agda-manual} and
+Lean \cite{moura:lean,Carneiro19}.
+% and in Voevodsky's proposal \cite{VV}. 
+However, whereas Courant has
 universe level \emph{judgments}, Agda has a \emph{type} of
 universe levels, and hence supports the formation of level-indexed products.
 %
+
 With the advent of Voevodsky's univalent foundations,
 the need for universe polymorphism has only increased.
 One often wants to prove theorems uniformly for arbitrary universes. These theorems may depend on several universes and there may be constraints on the level of these universes.
@@ -333,7 +335,7 @@ and briefly discuss some other approaches.
 
 \paragraph{Summary of main contributions.}
 Like Courant we present a type theory with
-universe levels  and universe level equations as \emph{judgments}. Moreover, we don't restrict the levels to be natural numbers. Instead we just assume that they form a sup-semilattice with an inflationary endomorphism. In this way all levels are built up from level variables by a successor operation and a binary supremum operation. Unlike most other systems, we do not have a level constant zero for the first universe level. As a consequence all types involving universes depend on level variables; they are {\em universe polymorphic}.
+universe levels  and universe level equations as \emph{judgments}. Moreover, we don't restrict the levels to be natural numbers. Instead we just assume that they form a sup-semilattice with an inflationary endomorphism. In this way all levels are built up from level variables by a successor operation and a binary supremum operation. Unlike most other systems, we do not have a level constant $0$ for the first universe level. Thus all types involving universes depend on level variables; they are {\em universe polymorphic}.
 
 Furthermore, we add
 \emph{level-indexed products} in order to regain some of the expressivity Agda gets from having a \emph{type}
@@ -711,7 +713,7 @@ $$
 $$
 In other words, {\em global} univalence  implies {\em global} function extensionality. 
 
-Since an assumption of global function extensionality can replace many assumptions of the local function extensionality (provided by the ML-polymorphism), this can also give rise to shorter code, see for example
+Since an assumption of global function extensionality can replace many assumptions of local function extensionality (provided by the ML-polymorphism), this can also give rise to shorter code, see the following example from Escard\'o's library of univalent mathematics in Agda:
 %https://
 \begin{verbatim}
 www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/HoTT-UF-Agda.html#275277
@@ -1037,7 +1039,7 @@ There are no level-indexed products and no constraint-indexed products in \cite{
 
 \paragraph{Sozeau and Tabareau.}
 
-We later learned about the closely related work by Sozeau and Tabareau \cite{SozeauTabareau:coq}. As already mentioned the most important difference is between their ML-like polymorphim and the explicit polymorphism provided by our level- and constraint-indexed products. Apart from this, there are several presentation choices that obscure a comparison between their systems and ours.
+We later learned about the closely related work by Sozeau and Tabareau \cite{SozeauTabareau:coq}. As already mentioned the most important difference is between their ML-like polymorphim and the explicit polymorphism provided by our level- and constraint-indexed products. Apart from this, they make several presentation choices different from ours.
 
 %\begin{itemize}
 %\item 
@@ -1047,11 +1049,11 @@ Their systems are \`a la Russell and based on PTS with subtyping. Universes are 
 They have special rules for introducing universe-monomorphic and universe-polymorphic constants, and a rule for instantiating the latter. We could add similar rules for adding constants, where we use our notion of level-abstraction when defining universe-polymorphic constants.
 
 %\item
-Their constraints are only between level variables, while our constraints are between level expressions.
+Their constraints are equalities or (strict) inequalities between level variables, while our constraints are equalities between level expressions.
 
 %\item
-They have the special rule where you conclude $\Type_u = \Type_i$ where a constraint set implies that $u$ is a level expression equal to the level variable $i$. We have level equality judgments $\Gamma \vdash l = m$ and enforce that judgments are invariant under level equality.
-
+%They have the special rule where you conclude $\Type_u = \Type_i$ where a constraint set implies that $u$ is a level expression equal to the level variable $i$. We have level equality judgments $\Gamma \vdash l = m$ and enforce that judgments are invariant under level equality.
+%
 %\item
 Finally, a difference, which is orthogonal to universe polymorphism, is that they present a system with an impredicative universe and only $\beta$-conversion, while we present a predicative system with $\eta$-conversion as well.
 %\end{itemize}
