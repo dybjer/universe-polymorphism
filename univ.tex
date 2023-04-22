@@ -340,7 +340,7 @@ universe levels  and universe level equations as \emph{judgments}. Moreover, we 
 Furthermore, we add
 \emph{level-indexed products} in order to regain some of the expressivity Agda gets from having a \emph{type}
 $\AgdaLevel$ of universe levels.
-Finally, we present a type theory with constraints as \emph{judgments} similar to the ones by Sozeau and Tabareau \cite{SozeauTabareau:coq} and Voevodsky \cite{VV}  and extend this type theory with \emph{constraint-indexed products}.
+Finally, we present a type theory with constraints as \emph{judgments} similar to the ones by Sozeau and Tabareau \cite{SozeauTabareau:coq} and Voevodsky \cite{VV}  but extended with \emph{constraint-indexed products}.
 
 \section{Rules for a basic type theory}\label{sec:basic}
 
@@ -1039,23 +1039,19 @@ There are no level-indexed products and no constraint-indexed products in \cite{
 
 \paragraph{Sozeau and Tabareau.}
 
-We later learned about the closely related work by Sozeau and Tabareau \cite{SozeauTabareau:coq}. As already mentioned the most important difference is between their ML-like polymorphim and the explicit polymorphism provided by our level- and constraint-indexed products. Apart from this, they make several presentation choices different from ours.
+We later learned about the closely related work by Sozeau and Tabareau \cite{SozeauTabareau:coq}. As already mentioned the most important difference is between their ML-like polymorphim and the explicit polymorphism provided by our level- and constraint-indexed products. Moreover, our constraint languages differ: their constraints are equalities or (strict) inequalities between level variables, while ours are equalities between level expressions.
 
+Apart from this, they make several presentation choices different from ours.
 %\begin{itemize}
 %\item 
-Their systems are \`a la Russell and based on PTS with subtyping. Universes are called $\Type_i$ with $\Type_i : \Type_{i+1}$. Our universes are \`a la Tarski and called $\UU_m$ with codes $\UU^m_l : \UU_l $ for $l < m$.
-
+For example, their systems are \`a la Russell and based on PTS with subtyping. Universes are called $\Type_i$ with $\Type_i : \Type_{i+1}$. Our universes are \`a la Tarski and called $\UU_m$ with codes $\UU^m_l : \UU_l $ for $l < m$.
 %\item
-They have special rules for introducing universe-monomorphic and universe-polymorphic constants, and a rule for instantiating the latter. We could add similar rules for adding constants, where we use our notion of level-abstraction when defining universe-polymorphic constants.
-
-%\item
-Their constraints are equalities or (strict) inequalities between level variables, while our constraints are equalities between level expressions.
-
+Moreover, they have special rules for introducing universe-monomorphic and universe-polymorphic constants, and a rule for instantiating the latter. We could add similar rules for adding constants, where we use our notion of level-abstraction when defining universe-polymorphic constants.
 %\item
 %They have the special rule where you conclude $\Type_u = \Type_i$ where a constraint set implies that $u$ is a level expression equal to the level variable $i$. We have level equality judgments $\Gamma \vdash l = m$ and enforce that judgments are invariant under level equality.
 %
 %\item
-Finally, a difference, which is orthogonal to universe polymorphism, is that they present a system with an impredicative universe and only $\beta$-conversion, while we present a predicative system with $\eta$-conversion as well.
+Finally, we should mention that they present a system with an impredicative universe and only $\beta$-conversion, while we present a predicative system with $\eta$-conversion as well.
 %\end{itemize}
  
 
