@@ -1303,7 +1303,7 @@ $$
 
 
 
-\begin{remark}
+\begin{remark}\label{notelementary}
   In the version \`a la Tarski, with or without cumulativity, terms have unique types, in the sense that if $t : A$ and $t : B$ then $A = B$, by induction on $t$. But for this to be valid, we need to annotate application as discussed in Remark~\ref{app:annotation}.
   Even with annotated application, the following property is not elementary: if $\UU_n$ and $\UU_m$ are convertible then $n$ is equal to $m$. This kind of property is needed for showing the equivalence between the Tarski and the Russell formulation.
 \end{remark}
@@ -1313,7 +1313,7 @@ If, in a system without cumulativity, we extend our system of levels with a leas
 \end{remark}
 
 \begin{remark}
-  It should be the case that the above formulation \`a la Russell presents the initial CwF with extra extructure for the standard type formers and a hierarchy of universes, but the proof doesn't seem to be trivial, due to Remark~\ref{uniqueness:without:cumulativity}.
+  It should be the case that the above formulation \`a la Russell presents the initial CwF with extra extructure for the standard type formers and a hierarchy of universes, but the proof doesn't seem to be trivial, due to Remark~\ref{notelementary}.
 \end{remark}
 
 \eraser{PD: feedback from TYPES 2022. As expected, removing $U_0$ generated most feedback, people don't seem to have thought about this before. Pierre-Marie Pedrot asked about the proof-theoretic strength, but unfortunately I was not able to give a good answer on this immediately, although it is clear that it should be less than or equal to type theory with an external hierarchy with universes. I asked Anton whether it actually has the same strength, and he thought it should not be hard to prove that. I also talked to Mathieu who told me that Coq's checking of universe levels is with respect to a weaker theory than ours: only "less than" and "less than or equal" constraints between level experssions without "max", if I understood him correctly.}
