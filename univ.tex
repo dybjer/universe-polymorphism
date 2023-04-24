@@ -766,8 +766,8 @@ which is valid under the constraint
 $\alpha \vee \beta = \alpha \vee \gamma$,
 which captures all solutions simultaneously.
 
-Since such constraints are not available in Agda and Lean
-one would instead need to write three separate definitions.
+Without being able to declare explicitely such constraints, % are not available in Agda and Lean
+one would instead need to write four separate definitions.
 
  Suprisingly, if we add a least level $0$ to the term levels (like in Agda) then there {\em is} a most general solution,
  namely $l = \alpha\vee\beta\vee\delta,~m = \beta\vee\gamma,~n = \alpha\vee\gamma$\footnote{We learnt this from
