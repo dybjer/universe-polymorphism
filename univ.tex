@@ -962,9 +962,11 @@ with $\_^+$ has a loop.
 
 \section{Related work}\label{sec:related}
 
-\paragraph{Agda.} Our original aim was to provide an alternative to Agda's approach to universe polymorphism, but without a {\em type} of universe levels. We wanted to present a system powerful enough to serve as a theoretical foundation of Escard\'o's library of univalent mathematics in Agda. 
+\paragraph{Agda.} Our original aim was to provide an alternative to Agda's approach to universe polymorphism, but without a {\em type} of universe levels. To this end, we introduced new judgments for universe levels. In order to compensate for some of the lost expressivity we added product types indexed by universe levels. We also added an approach to constraints and constraint-indexed products that has no counterpart in Agda.
 
-To this end, we introduced new judgments for universe levels. In order to compensate for some of the lost expressivity we added product types indexed by universe levels. We also added an approach to constraints and constraint-indexed products that has no counterpart in Agda.
+Many substantial Agda developments make essential use of explicit universe polymorphism with successor and supremum. Examples include the Agda standard library (at github), the cubical Agda library (at github), Liao's 1Lab (at github), the now-defunct Agda-HoTT library (at github), Rijke's agda-unimath (at
+github), and Escard\'o's TypeTopology (at github) repository and 
+HoTT-UF-in-Agda tutorial (at github and in the arxiv). We believe that the universe polymorphism employed by these can be expressed within our theory, although this claim has only been checked in detail for Escard\'o's developments.
 
 \paragraph{Voevodsky.} One of our starting points was the 79 pp.\ draft \cite{VV} by Voevodsky, where type theories are parametrized by a fixed but arbitrary finite set of constraints over a given finite
 set $\Fu$ of \emph{u-level variables}. A \emph{u-level expression} \cite[Def. 2.0.2]{VV} is either a numeral,
