@@ -1063,11 +1063,23 @@ our universes are \`a la Tarski and we consider both non-cumulative (like Agda) 
 %and called $\UU_m$ with codes $\UU^m_l : \UU_l $ for $l < m$.
 %\item
 Moreover, they have special rules for introducing universe-monomorphic and universe-polymorphic constants, and a rule for instantiating the latter. We could have similar rules for adding constants, where we would use our level-abstraction when defining universe-polymorphic constants and our level-application when instantiating them.
+In our system, we can have a uniform treatment of definitions, all of the form
+$$ c : A = t$$
+where $A$ is a type and $t$ a term of type $A$, and these definitions can be local as well.
+
 %\item
 %They have the special rule where you conclude $\Type_u = \Type_i$ where a constraint set implies that $u$ is a level expression equal to the level variable $i$. We have level equality judgments $\Gamma \vdash l = m$ and enforce that judgments are invariant under level equality.
 %
 %\item
-Finally, they present a system with an impredicative universe and only $\beta$-conversion, while we present a predicative system with $\eta$-conversion as well.
+One further important difference is that their system has been completely implemented and tested on
+significant examples, while our system is at this stage only a proposal. The idea would be that the
+users have to declare explicitely both universe levels {\em and} constraints. The Agda implementation
+shows that it works in practice to be explicit about universe levels, and we expect that to be
+explicit about constraints will actually simplify the use of the system, but this has yet to be tested in
+practice.
+\medskip
+Finally, they present a system with an impredicative universe and only $\beta$-conversion, while we present a predicative
+system with $\eta$-conversion as well.
 %\end{itemize}
  
 
