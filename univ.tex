@@ -740,15 +740,20 @@ $$
 %    \to A \times B =_\delta C \times A \to B \times A =_\epsilon C \times A
 $$
 This is well-formed provided $l \vee m = n \vee l$.
-There are three maximally general solutions:
+There are several independent solutions:
 \begin{eqnarray*}
 &&l = \alpha, m = \beta, n = \alpha \vee \beta\\
 &&l = \alpha, m = \gamma \vee \alpha, n = \gamma\\
-&&l = \beta \vee \gamma, m = \beta, n = \gamma
+&&l = \beta \vee \gamma, m = \beta, n = \gamma\\
+&&l = \alpha, m = \beta, n = \beta
 \end{eqnarray*}
 where $\alpha, \beta,$ and $\gamma$ are level
-variables. (Note the similarity with the Gustave function
-in stable domain theory.)
+variables. It should be clear that there cannot be any {\em most general} solution, since this solution would have to
+assign variables to $l,m,n$.
+
+
+
+%(Note the similarity with the Gustave function in stable domain theory.)
 
 In a system with level constraints,
 we could instead derive the (inhabited under $\UA$) type
@@ -763,6 +768,14 @@ which captures all solutions simultaneously.
 
 Since such constraints are not available in Agda and Lean
 one would instead need to write three separate definitions.
+
+ Suprisingly, if we add a least level $0$ to the term levels (like in Agda) then there {\em is} a most general solution,
+ namely $l = \alpha\vee\beta\vee\delta,~m = \beta\vee\gamma,~n = \alpha\vee\gamma$\footnote{We learnt this from
+ Th. Felicissimo, with a reference to the work \cite{FNN:impred2pred}.}.
+
+ It is however possible to find equation systems which do not have a most general unifier, even with a least level $0$, using
+ the next level operation. For instance, the system $l^+ = m\vee n$ does not have a most general unifier, using a reasoning
+ similar to the one in \cite{FNN:impred2pred}.
 
 \subsection*{Rules for level constraints}%\label{ssec:VVsystem}
 
