@@ -13,7 +13,7 @@ inu(Assoc,Assoc,V,W) :- % first Assoc for state, second for search in V
        see('u.txt'),
        inu1([],L,[],R),
        seen,
-       sort(L,W), sort(R,Rset), ord_union(W,Rset,V),
+       sort([progress,maxType|L],W), sort(R,Rset), ord_union(W,Rset,V),
        bagof(Var-0,member(Var,V),Pairs),
        ord_list_to_assoc(Pairs,Assoc).
        
@@ -30,7 +30,7 @@ clu :- retractall(cb(_,_)),
        % NB duality needed as only Y can be a max
        forall((X leq Y), assertz(cb(X,[Y]))),
        forall((X eq Y), (assertz(cb(X,[Y])), assertz(cb(Y,[X])))),
-       forall((X lt Y),  assertz(cb(X,[Y-1]))).
+       forall(((X lt Y),X\='Set'),  assertz(cb(X,[Y-1]))).
        
 chu(A) :- % NB duality
        forall((X leq Y),(get_assoc(X,A,N),get_assoc(Y,A,M), N >= M)),
@@ -38,9 +38,9 @@ chu(A) :- % NB duality
        forall((X  eq Y),(get_assoc(X,A,N),get_assoc(Y,A,M), N == M)),
        write('verified, Prop level '),get_assoc('Prop',A,N),write(N),nl. 
 
-dou :- inu(A0,Va,V,Concls),    
+dou :- inu(A0,Va,V,Concls),length(V,N), write('#variables = '),write(N),nl,  
        clu,                             
-       put_assoc(progress,A0,0,A1),
+       put_assoc('Set',A0,2,A03), put_assoc('Prop',A03,3,A1),
        catch((thm32(Va,V,Concls,[],A1,Model),chu(Model)),loop(W),print(W)).
        %chu(Model).
 
@@ -66,7 +66,8 @@ try_improve(V,Sup,Var,Imp,A0,A):-
     (based_on(V,Sup),surplus(Sup,99999,M,A0),get_assoc(Var,A0,N),N<M) ->
      put_assoc(Var,A0,M,A1),
      Imp = [Var],
-     (M<99999 -> addprogress(M-N,A1,A) ; A1=A)
+     (M<99999 -> addprogress(M-N,A1,A2) ; A1=A2),
+     get_assoc(maxType,A2,M0),(M0<M -> put_assoc(maxType,A2,M,A) ; A2=A)
      ;
      A0=A,
      Imp = [].
@@ -91,7 +92,7 @@ forward(Va,[Var|W],I0,Improved,A0,A):-
 
 thm32(Va,V,C,I,A0,A) :- 
   % fix later: the following detects loops, but then stops 
-  showprogress(A0),
+  show_maxType(A0),showprogress(A0),
   forward(Va,C,[],U,A0,A1),
   (U = [] -> A0 = A 
            ; ord_union(I,U,IU),
@@ -131,6 +132,7 @@ a_member(Var,V) :- get_assoc(Var,V,_).
 addprogress(X,A0,A) :- get_assoc(progress,A0,N),M is N+X,
                        put_assoc(progress,A0,M,A).
 showprogress(A) :- get_assoc(progress,A,N),write(N),nl.
+show_maxType(A) :- get_assoc(maxType,A,N),write(N),write('   ').
 
 ask(M,A,B) :- get_assoc(A,M,X),get_assoc(B,M,Y),write(X-Y),nl.
 
