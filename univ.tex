@@ -298,6 +298,7 @@ However, even in a system using an impredicative universe of propositions,
 such as the ones in \cite{Huet87,moura:lean}, there is a need for
 definitions parametric in universe levels.
 
+
 % (** Id U A B and Id U^+ A^+ B^+ **)
 
 % There is a connection between the dimension of a type and the level of a universe: for example, it is natural to consider the groupoid structure of the first universe, the 2-groupoid structure of the second universe, etc.
@@ -333,6 +334,7 @@ Finally, we %extensively
 compare our type theory with Voevodsky's and Sozeau-Tabareau's
 and briefly discuss some other approaches.
 
+
 \paragraph{Summary of main contributions.}
 Like Courant we present a type theory with
 universe levels  and universe level equations as \emph{judgments}. Moreover, we don't restrict the levels to be natural numbers. Instead we just assume that they form a sup-semilattice with an inflationary endomorphism. In this way all levels are built up from level variables by a successor operation and a binary supremum operation. Unlike most other systems, we do not have a level constant $0$ for the first universe level. Thus all types involving universes depend on level variables; they are {\em universe polymorphic}.
@@ -341,6 +343,15 @@ Furthermore, we add
 \emph{level-indexed products} in order to regain some of the expressivity Agda gets from having a \emph{type}
 $\AgdaLevel$ of universe levels.
 Finally, we present a type theory with constraints as \emph{judgments} similar to the ones by Sozeau and Tabareau \cite{SozeauTabareau:coq} and Voevodsky \cite{VV}  but extended with \emph{constraint-indexed products}.
+
+As in \cite{Cardelli87}, we can distinguish between {\em implicit} and {\em explicit}
+polymorphism\footnote{``Parametric polymorphism is explicit when parametrization is obtained by
+explicit type parameters in procedure headings, and corresponding explicit
+applications of type arguments when procedures are called $\dots$
+Parametric polymorphism is called implicit when the above type parameters and type applications are not admitted, but
+types can contain type variables which are unknown, yet to be determined, types'' \cite{Cardelli87}.}. 
+One difference with the treatment in \cite{SozeauTabareau:coq} is that our treatment of universe polymorphism
+is explicit.
 
 \section{Rules for a basic type theory}\label{sec:basic}
 
@@ -717,11 +728,6 @@ In other words, {\em global} univalence  implies {\em global} function extension
 Since an assumption of global function extensionality can replace many assumptions of local function extensionality (provided by ML-style polymorphism), this can also give rise to shorter code, see the example in \cite{escardo:UFinAgda}.
 
 
-One can roughly describe the type system of Lean \cite{moura:lean,Carneiro19} as the current type system
-where we only can declare constants of the form
-$c~=~\lam{\alpha_1~\dots~\alpha_n}M~~:~~[\alpha_1~\dots~\alpha_n]A$ where there are no {\color{red}level declarations?} in $A$ and $M$.
-
-
 
 %\paragraph{Interpreting the system with levels into extensional type theory with a super universe.} We can interpret the theory with rules for level-indexed products in extensional type theory with a (minimal) super universe, provided we add the rules for cumulativity. Levels will be interpreted by internal natural numbers $n : \NN$, and level-indexed products $[\alpha]A$ will be interpreted by ordinary indexed products $\Pi_{n : \NN}A$. Level application and level abstraction will be interpreted as ordinary application and abstraction.
 
@@ -1083,6 +1089,13 @@ Finally, they present a system with an impredicative universe and only $\beta$-c
 system with $\eta$-conversion as well.
 %\end{itemize}
  
+One can roughly describe the type system of Lean \cite{moura:lean,Carneiro19} as our current type system
+where we only can declare constants of the form
+$c~=~\lam{\alpha_1~\dots~\alpha_n}M~~:~~[\alpha_1~\dots~\alpha_n]A$ where there are new level variables introduced in $M$ and
+$A$.
+
+
+
 
 \paragraph{Assaf and Thir\'e.} 
 
