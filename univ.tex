@@ -344,13 +344,16 @@ Furthermore, we add
 $\AgdaLevel$ of universe levels.
 Finally, we present a type theory with constraints as \emph{judgments} similar to the ones by Sozeau and Tabareau \cite{SozeauTabareau:coq} and Voevodsky \cite{VV}  but extended with \emph{constraint-indexed products}.
 
-As in \cite{Cardelli87}, we can distinguish between {\em implicit} and {\em explicit}
-polymorphism\footnote{``Parametric polymorphism is explicit when parametrization is obtained by
+As discussed by Cardelli \cite{Cardelli87}, we can distinguish between {\em implicit} and {\em explicit}
+polymorphism
+\begin{quotation}
+  Parametric polymorphism is explicit when parametrization is obtained by
 explicit type parameters in procedure headings, and corresponding explicit
 applications of type arguments when procedures are called $\dots$
 Parametric polymorphism is called implicit when the above type parameters and type applications are not admitted, but
-types can contain type variables which are unknown, yet to be determined, types'' \cite{Cardelli87}.}. 
-One difference with the treatment in \cite{SozeauTabareau:coq} is that our treatment of universe polymorphism
+types can contain type variables which are unknown, yet to be determined, types.
+\end{quotation}
+One difference with \cite{SozeauTabareau:coq} is that our treatment of universe polymorphism
 is explicit.
 
 \section{Rules for a basic type theory}\label{sec:basic}
