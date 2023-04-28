@@ -983,11 +983,16 @@ with $\_^+$ has a loop.
 
 \section{Related work}\label{sec:related}
 
-\paragraph{Agda.} Our original aim was to provide an alternative to Agda's approach to universe polymorphism, but without a {\em type} of universe levels. To this end, we introduced new judgments for universe levels. In order to compensate for some of the lost expressivity we added product types indexed by universe levels. We also added an approach to constraints and constraint-indexed products that has no counterpart in Agda.
+\paragraph{Agda and Lean.} Our original aim was to provide an alternative to Agda's approach to universe polymorphism, but without a {\em type} of universe levels. To this end, we introduced new judgments for universe levels. In order to compensate for some of the lost expressivity we added product types indexed by universe levels. We also added an approach to constraints and constraint-indexed products that has no counterpart in Agda.
 
 Many substantial Agda developments make essential use of explicit universe polymorphism with successor and supremum. Examples include the Agda standard library (at github), the cubical Agda library (at github), Liao's 1Lab (at github), the now-defunct Agda-HoTT library (at github), Rijke's agda-unimath (at
 github), and Escard\'o's TypeTopology (at github) repository and 
 HoTT-UF-in-Agda tutorial (at github and in the arxiv). We believe that the universe polymorphism employed by these can be expressed within our theory, although this claim has only been checked in detail for Escard\'o's developments.
+
+One can roughly describe the type system of Lean \cite{moura:lean,Carneiro19} as our current type system
+where we only can declare constants of the form
+$c~=~\lam{\alpha_1~\dots~\alpha_n}M~~:~~[\alpha_1~\dots~\alpha_n]A$ where there are new level variables introduced in $M$ and
+$A$.
 
 \paragraph{Voevodsky.} One of our starting points was the 79 pp.\ draft \cite{VV} by Voevodsky, where type theories are parametrized by a fixed but arbitrary finite set of constraints over a given finite
 set $\Fu$ of \emph{u-level variables}. A \emph{u-level expression} \cite[Def. 2.0.2]{VV} is either a numeral,
@@ -1096,10 +1101,6 @@ Finally, they present a system with an impredicative universe and only $\beta$-c
 system with $\eta$-conversion as well.
 %\end{itemize}
  
-One can roughly describe the type system of Lean \cite{moura:lean,Carneiro19} as our current type system
-where we only can declare constants of the form
-$c~=~\lam{\alpha_1~\dots~\alpha_n}M~~:~~[\alpha_1~\dots~\alpha_n]A$ where there are new level variables introduced in $M$ and
-$A$.
 
 
 
