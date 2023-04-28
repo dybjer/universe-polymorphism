@@ -243,7 +243,7 @@ as $\UU_i$ in a consistent way.
 This approach has been followed by Harper and Pollack \cite{HarperP91} and
 in Coq.
 %by Sozeau and Tabareau \cite{SozeauTabareau:coq}.
-These  approaches to ``implicit" universe polymorphism are, however,
+These  approaches to \emph{implicit} universe polymorphism are, however,
 problematic with respect to modularity. As pointed out in \cite{Courant02,Simpson04}:
 one can prove $A\rightarrow B$ in one file, and $B\rightarrow C$ in
 another file, while $A\rightarrow C$ is not valid.
@@ -251,14 +251,14 @@ another file, while $A\rightarrow C$ is not valid.
 Leaving universe levels implicit also causes practical problems,
 since universe level disambiguation can be a costly operation,
 slowing down type-checking significantly.
-Moreover, ``universe inconsistencies" can be hard to explain to the user.
+Moreover, so-called universe inconsistencies can be hard to explain to the user.
 
 In order to cope with these issues, Courant \cite{Courant02}
 introduced explicit level universes,
 with a sup operation (see also Herbelin \cite{herbelin05}).
 Explicit universe levels are also present in Agda \cite{agda-manual} and
 Lean \cite{moura:lean,Carneiro19}.
-% and in Voevodsky's proposal \cite{VV}. 
+% and in Voevodsky's proposal \cite{VV}.
 However, whereas Courant has
 universe level \emph{judgments}, Agda has a \emph{type} of
 universe levels, and hence supports the formation of level-indexed products.
@@ -268,7 +268,7 @@ With the advent of Voevodsky's univalent foundations,
 the need for universe polymorphism has only increased.
 One often wants to prove theorems uniformly for arbitrary universes. These theorems may depend on several universes and there may be constraints on the level of these universes.
 In response to this Voevodsky  \cite{VV} and Sozeau and Tabareau \cite{SozeauTabareau:coq} proposed type theories parameterized by
-(arbitrary but fixed) universe levels and constraints. 
+(arbitrary but fixed) universe levels and constraints.
 
 The \emph{univalence axiom} states that for any two types $X,Y$ the canonical map
 $$
@@ -305,6 +305,27 @@ definitions parametric in universe levels.
 
 %The starting point for the present discussions was Escard\'o's \cite{escardo} development of univalent mathematics in the Agda system. His development is {\em universe polymorphic} and makes heavy use of quantification over Agda's type $\Level$ of universe levels. However, the Agda system is not a precisely defined logical system, and we would like to introduce several candidate systems in which Escard\'o's development can be carried out.
 
+Many substantial Agda developments make essential use of \emph{explicit} universe polymorphism with successor and finite joins. Examples include the Agda standard library~\cite{agda:stdlib}, the cubical Agda library~\cite{cubical:agda}, 1Lab~\cite{agda:1lab}, the Agda-HoTT library~\cite{hott:agda}, agda-unimath~\cite{agda:unimath}, TypeTopology~\cite{TypeTopology}
+HoTT-UF-in-Agda~\cite{hott:uf:in:agda} (Midlands Graduate School 2019 lecture notes).
+
+The original motivation for this work was to formalise the type theory of Agda, including explicit universe polymorphism. In doing that, we found ourselves modifying Agda's treatment of universes as follows:
+\begin{enumerate}
+\item We have universe level \emph{judgments}, like Courant~\cite{Courant02}, instead of a \emph{type} of universe levels, like Agda.
+
+ \item We allow nested universal quantification over universe levels.
+
+ \item We do not require a first universe level zero, so that every definition that involves universes is polymorphic.
+
+ \item We include a $\Type$ judgment, which does not refer to universes, as in Martin-L\"of~\cite{martinlof:hannover}.
+
+ \item We add the possibility of expressing universe level constraints. This is not only more general but also arguably gives a more natural way of expressing types involving universes.
+
+\end{enumerate}
+
+Our resulting type theory is orthogonal to the presence or absence of cumulativity. In the body of the paper, we treat universes \`a la Tarski, but we also give an appendix with a version \`a la Russell.
+
+
+We have checked that the lecture notes~\cite{hott:uf:in:agda} on HoTT/UF, which include 9620 lines of Agda without comments, can be rewritten without universe level zero. We believe, based on what we learned from this experiment, that the above Agda developments could also be rewritten in this way. Experience with these Agda developments suggest that a \emph{type} for levels in Agda could be replaced by level judgments in practice. The fact that levels form a type in Agda automatically allows for nested universal quantification over levels, which we instead add explicitly to our type theory.
 
 \paragraph{Plan.}
 In Section 2 we display rules for a basic version of dependent type theory with
@@ -726,7 +747,7 @@ $$
 ([\alpha]\mathsf{IsUnivalent}\, \UU_\alpha)
 \to [\beta][\gamma] \mathsf{FunExt}\, \UU_\beta\, \UU_\gamma
 $$
-In other words, {\em global} univalence  implies {\em global} function extensionality. 
+In other words, {\em global} univalence  implies {\em global} function extensionality.
 
 Since an assumption of global function extensionality can replace many assumptions of local function extensionality (provided by ML-style polymorphism), this can also give rise to shorter code, see the example in \cite{escardo:UFinAgda}.
 
@@ -914,7 +935,7 @@ $$
 We can then instantiate this constant $c~l_1~\dots~l_m~u_1~\dots~u_n$, but only if the levels
 $l_1~\dots~l_m$ satisfy the constraint $\psi$.
 
-We remark that Voevodsky's system \cite{VV} has no constraint-indexed products and no associated application operation, and instantiation of levels is only a meta-level operation. Sozeau and Tabareau \cite{SozeauTabareau:coq} do not have constraint-index products either. However, they do have a special operation %(CONSTANT) 
+We remark that Voevodsky's system \cite{VV} has no constraint-indexed products and no associated application operation, and instantiation of levels is only a meta-level operation. Sozeau and Tabareau \cite{SozeauTabareau:coq} do not have constraint-index products either. However, they do have a special operation %(CONSTANT)
  for instantiating universe-polymorphic constants defined in the global environment.
 %    We have thus complemented Voevodsky's proposal \cite{VV}: we can not only declare and define
 %    constants assuming universe levels satisfying some constraints, but we also provide a mechanism
@@ -981,13 +1002,12 @@ with $\_^+$ has a loop.
 %, and hence we cannot represent a universe that is a member of itself.
 \end{remark}
 
+% Is this really related work:
 \section{Related work}\label{sec:related}
 
-\paragraph{Agda and Lean.} Our original aim was to provide an alternative to Agda's approach to universe polymorphism, but without a {\em type} of universe levels. To this end, we introduced new judgments for universe levels. In order to compensate for some of the lost expressivity we added product types indexed by universe levels. We also added an approach to constraints and constraint-indexed products that has no counterpart in Agda.
+We have already discussed both Coq's and Agda's treatment of universe polymorphism in the introduction, including the work of Huet, Harper, Pollack, Courant and Herbelin.
 
-Many substantial Agda developments make essential use of explicit universe polymorphism with successor and supremum. Examples include the Agda standard library (at github), the cubical Agda library (at github), Liao's 1Lab (at github), the now-defunct Agda-HoTT library (at github), Rijke's agda-unimath (at
-github), and Escard\'o's TypeTopology (at github) repository and 
-HoTT-UF-in-Agda tutorial (at github and in the arxiv). We believe that the universe polymorphism employed by these can be expressed within our theory, although this claim has only been checked in detail for Escard\'o's developments.
+\paragraph{Lean.}
 
 One can roughly describe the type system of Lean \cite{moura:lean,Carneiro19} as our current type system
 where we only can declare constants of the form
@@ -1005,7 +1025,7 @@ in $\Fu$ that satisfy all constraints.
 
 The rules 7 and 10 in \cite[Section 3.4]{VV} define how to use constraints:
 two types (and, similarly, two terms) become definitionally equal
-if, for all assignments in $\AFu$, the two types become "essentially"
+if, for all assignments in $\AFu$, the two types become \emph{essentially}
 syntactically equal after substitution of all variables in $\Fu$ by
 their assigned natural number. For example, the constraint
 $\alpha < \beta$ makes $\UU_\beta$ and $\UU_{\max(1,\beta)}$
@@ -1017,8 +1037,8 @@ in which his constraints can easily be expressed.\footnote{%
 For this it seems necessary to also require that $\AFu$
 is defined by a \emph{finite} set of constraints.}%end footnote
 This indeed implies that definitional equality is decidable, even
-"in practice [...] expected to be very easily decidable i.e.\
-to have low complexity of the decision procedure"
+``in practice [...] expected to be very easily decidable i.e.\
+to have low complexity of the decision procedure''
 \cite[p.\ 5, l.\ -13]{VV}.
 The latter is confirmed by \cite{bezem-coquand:lattices}.
 
@@ -1079,7 +1099,7 @@ where $A$ is a type and $t$ a term of type $A$, and these definitions can be loc
 The constraint languages differ: their constraints are equalities or (strict) inequalities between level variables, while ours are equalities between level expressions generated by the supremum and successor operations, which is strictly more expressive.
 
 Furthermore, they consider cumulative universe hierarchies  \`a la Russell, while
-%based on PTS with subtyping. %Universes are called $\Type_i$ with $\Type_i : \Type_{i+1}$. 
+%based on PTS with subtyping. %Universes are called $\Type_i$ with $\Type_i : \Type_{i+1}$.
 our universes are \`a la Tarski and we consider both non-cumulative (like Agda) and cumulative versions.
 %and called $\UU_m$ with codes $\UU^m_l : \UU_l $ for $l < m$.
 %\item
@@ -1096,20 +1116,15 @@ shows that it works in practice to be explicit about universe levels, and we exp
 explicit about constraints will actually simplify the use of the system, but this has yet to be tested in
 practice.
 
-
 Finally, they present a system with an impredicative universe and only $\beta$-conversion, while we present a predicative
 system with $\eta$-conversion as well.
 %\end{itemize}
- 
 
-
-
-
-\paragraph{Assaf and Thir\'e.} 
+\paragraph{Assaf and Thir\'e.}
 
 Assaf \cite{Assaf14} considers an alternative version of the calculus of
 constructions where subtyping is explicit. This new system avoids problems related to coercions and dependent types by using the Tarski style
-of universes and by introducing additional equations to reflect equality. In particular he adds an explicit cumulativity map $\T^0_1 : \UU_0 \to \UU_1$. He argues that "full reflection" is necessary to achieve the expressivity of Russell style. He introduces the explicit cumulative calculus of constructions (CC$\uparrow$) which is closely related to our system of externally indexed Tarski style universes.
+of universes and by introducing additional equations to reflect equality. In particular he adds an explicit cumulativity map $\T^0_1 : \UU_0 \to \UU_1$. He argues that ``full reflection'' is necessary to achieve the expressivity of Russell style. He introduces the explicit cumulative calculus of constructions (CC$\uparrow$) which is closely related to our system of externally indexed Tarski style universes.
 This is analysed further in the PhD thesis of F. Thir\'e \cite{Thire20}.
 
 \section{Conjectures and future work}\label{sec:future}
@@ -1338,8 +1353,5 @@ If, in a system without cumulativity, we extend our system of levels with a leas
 \end{remark}
 
 \eraser{PD: feedback from TYPES 2022. As expected, removing $U_0$ generated most feedback, people don't seem to have thought about this before. Pierre-Marie Pedrot asked about the proof-theoretic strength, but unfortunately I was not able to give a good answer on this immediately, although it is clear that it should be less than or equal to type theory with an external hierarchy with universes. I asked Anton whether it actually has the same strength, and he thought it should not be hard to prove that. I also talked to Mathieu who told me that Coq's checking of universe levels is with respect to a weaker theory than ours: only "less than" and "less than or equal" constraints between level experssions without "max", if I understood him correctly.}
-
-
-
 
 \end{document}
