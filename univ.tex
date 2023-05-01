@@ -255,14 +255,23 @@ Moreover, so-called universe inconsistencies can be hard to explain to the user.
 
 In order to cope with these issues, Courant \cite{Courant02}
 introduced explicit level universes,
-with a sup operation (see also Herbelin \cite{herbelin05}).
+with a supremum operation (see also Herbelin \cite{herbelin05}).
 Explicit universe levels are also present in Agda \cite{agda-manual} and
 Lean \cite{moura:lean,Carneiro19}.
 % and in Voevodsky's proposal \cite{VV}.
 However, whereas Courant has
 universe level \emph{judgments}, Agda has a \emph{type} of
 universe levels, and hence supports the formation of level-indexed products.
-%
+
+Following Cardelli \cite{Cardelli87}, we distinguish between 
+{\em implicit} and {\em explicit} polymorphism:
+\begin{quotation}
+  Parametric polymorphism is explicit when parametrization is obtained by
+explicit type parameters in procedure headings, and corresponding explicit
+applications of type arguments when procedures are called $\dots$
+Parametric polymorphism is called implicit when the above type parameters and type applications are not admitted, but
+types can contain type variables which are unknown, yet to be determined, types.
+\end{quotation}
 
 With the advent of Voevodsky's univalent foundations,
 the need for universe polymorphism has only increased.
@@ -285,7 +294,7 @@ Let $\UA_n$ be the type expressing the univalence of $\UU_n$, and let
 $\ua_n : \UA_n$ for $n = 0,1,\ldots$ be a sequence of constants postulating
 the respective instances of the univalence axiom.
 We note that $X = Y : \UU_{n+1}$ and $X\simeq Y : \UU_n$ and
-hence $\UA_n : \UU_{n+1}$. We can express the universe polymorphism of these judgments internally in all of the above-mentioned systems by quantifying over universe levels, irrespectively if they have universe level judgments or a type of universe levels.
+hence $\UA_n : \UU_{n+1}$. We can express the universe polymorphism of these judgments internally in all of the above-mentioned systems by quantifying over universe levels, irrespective of having universe level judgments or a type of universe levels.
 
 To be explicit about universes can be important, as shown by Waterhouse~\cite{waterhouse:sheaves,chambert-loir:universes-matter}, who gives an example of a large presheaf with no associated sheaf. A second example is the fact that the embedding
  $\Group(\UU_n)\rightarrow \Group(\UU_{n+1})$ of the type of groups in a universe $\UU_n$ into that of the next universe $\UU_{n+1}$ is not an equivalence. That is, there are more groups in the next universe~\cite{bcde:largegroup}.
@@ -306,14 +315,14 @@ definitions parametric in universe levels.
 %The starting point for the present discussions was Escard\'o's \cite{escardo} development of univalent mathematics in the Agda system. His development is {\em universe polymorphic} and makes heavy use of quantification over Agda's type $\Level$ of universe levels. However, the Agda system is not a precisely defined logical system, and we would like to introduce several candidate systems in which Escard\'o's development can be carried out.
 
 \paragraph{Motivation.}
-Many substantial Agda developments make essential use of \emph{explicit} universe polymorphism with successor and finite joins. Examples include the Agda standard library~\cite{agda:stdlib}, the cubical Agda library~\cite{cubical:agda}, 1Lab~\cite{agda:1lab}, the Agda-HoTT library~\cite{hott:agda}, agda-unimath~\cite{agda:unimath}, TypeTopology~\cite{TypeTopology}
+Many substantial Agda developments make essential use of \emph{explicit} universe polymorphism with successor and finite suprema. Examples include the Agda standard library~\cite{agda:stdlib}, the cubical Agda library~\cite{cubical:agda}, 1Lab~\cite{agda:1lab}, the Agda-HoTT library~\cite{hott:agda}, agda-unimath~\cite{agda:unimath}, TypeTopology~\cite{TypeTopology}, 
 HoTT-UF-in-Agda~\cite{hott:uf:in:agda} (Midlands Graduate School 2019 lecture notes).
 
 The original motivation for this work was to formalise the type theory of Agda, including explicit universe polymorphism. In doing that, we found ourselves modifying Agda's treatment of universes as follows:
 \begin{enumerate}
 \item We have universe level \emph{judgments}, like Courant~\cite{Courant02}, instead of a \emph{type} of universe levels, like Agda.
 
- \item We add the possibility of expressing \emph{explicit} universe level constraints. This is not only more general but also arguably gives a more natural way of expressing types involving universes.
+ \item We add the possibility of expressing \emph{explicit} universe level constraints. This is not only more general but also arguably giving a more natural way of expressing types involving universes.
 
  \item We do not require a first universe level zero, so that every definition that involves universes is polymorphic.
 
@@ -335,24 +344,15 @@ Furthermore, we add
 \emph{level-indexed products} in order to regain some of the expressivity Agda gets from having a \emph{type}
 $\AgdaLevel$ of universe levels.
 Finally, we present a type theory with constraints as \emph{judgments} similar to the ones by Sozeau and Tabareau \cite{SozeauTabareau:coq} and Voevodsky \cite{VV}  but extended with \emph{constraint-indexed products}.
-
-Following Cardelli \cite{Cardelli87}, we distinguish between 
-{\em implicit} and {\em explicit} polymorphism:
-\begin{quotation}
-  Parametric polymorphism is explicit when parametrization is obtained by
-explicit type parameters in procedure headings, and corresponding explicit
-applications of type arguments when procedures are called $\dots$
-Parametric polymorphism is called implicit when the above type parameters and type applications are not admitted, but
-types can contain type variables which are unknown, yet to be determined, types.
-\end{quotation}
 One difference with \cite{SozeauTabareau:coq} is that our treatment of 
 universe polymorphism is explicit.
 
 \paragraph{Plan.}
-In Section 2 we display rules for a basic version of dependent type theory with
-$\Pi, \Sigma, \NN$, and an identity type former $\Id$.
+In Section~\ref{sec:basic} we display rules for a basic version of dependent 
+type theory with $\Pi, \Sigma, \NN$, and an identity type former $\Id$.
 
-In Section 3 we explain how to add an externally indexed sequence of universes
+In Section~\ref{sec:external} we explain how to add an externally indexed 
+sequence of universes
 $\UU_n, \T_n~(n\in\Nat)$ \`a la Tarski, without cumulativity rules.
 (In Appendix~1 we present a system with cumulativity,
 and in Appendix~2 we present a system \`a la Russell.)
@@ -366,15 +366,16 @@ We then extend this theory with level-indexed products of
 types $[\alpha]A$ and corresponding abstractions $\lam{\alpha}A$
 to give full level polymorphism.
 
-In Section \ref{sec:constraints} we extend the type theory in
+In Section~\ref{sec:constraints} we extend the type theory in
 Section~\ref{sec:internal} with constraints (lists of equations between level expressions). Constraints can now appear as assumptions in hypothetical judgments. Moreover, we add
 constraint-indexed products of types $[\psi]A$ and corresponding
 abstractions $\lam{\psi}A$. This goes beyond the systems of Sozeau and Tabareau \cite{SozeauTabareau:coq} and Voevodsky \cite{VV}.
 %where the
 %constraint set is fixed (but arbitrary) on the level of the type theory.
-Finally, we %extensively
+In Section~\ref{sec:related} we
 compare our type theory with Voevodsky's and Sozeau-Tabareau's
 and briefly discuss some other approaches.
+Finally, in Section~\ref{sec:future} we outline future work.
 
 \section{Rules for a basic type theory}\label{sec:basic}
 
