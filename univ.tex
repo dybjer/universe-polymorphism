@@ -753,9 +753,7 @@ $$
 \to [\beta][\gamma] \mathsf{FunExt}\, \UU_\beta\, \UU_\gamma
 $$
 In other words, {\em global} univalence implies {\em global} function 
-extensionality. (Sozeau has explained to us that one can define
-global univalence in a module in Coq and get some of the expressivity
-of level-indexed products through Coq's module abstraction mechanism.)
+extensionality.
 
 Since an assumption of global function extensionality can replace many assumptions of local function extensionality (provided by ML-style polymorphism), this can also give rise to shorter code, see the example in \cite{escardo:UFinAgda}.
 
@@ -805,7 +803,7 @@ which captures all solutions simultaneously.
 Without being able to declare explicitely such constraints, % are not available in Agda and Lean
 one would instead need to write four separate definitions.
 
- Suprisingly, if we add a least level $0$ to the term levels (like in Agda) then there \emph{is} a most general solution,
+ Surprisingly, if we add a least level $0$ to the term levels (like in Agda) then there \emph{is} a most general solution,
  namely $l = \alpha\vee\beta\vee\delta,~m = \beta\vee\gamma,~n = \alpha\vee\gamma$,\footnote{We learnt this from
  Thiago Felicissimo, with a reference to the work \cite{FBB:impred2pred}.}
  since it can be seen as an instance of
