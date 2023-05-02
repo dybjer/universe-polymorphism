@@ -241,7 +241,7 @@ on the condition that each occurrence of $\UU$ can be disambiguated
 %https://math.stanford.edu/~feferman/papers/Ambiguity.pdf
 as $\UU_i$ in a consistent way.
 This approach has been followed by Harper and Pollack \cite{HarperP91} and
-in Coq.
+in Coq \cite{coq:general}.
 %by Sozeau and Tabareau \cite{SozeauTabareau:coq}.
 These  approaches to \emph{implicit} universe polymorphism are, however,
 problematic with respect to modularity. As pointed out in \cite{Courant02,Simpson04}:
@@ -344,8 +344,13 @@ Furthermore, we add
 \emph{level-indexed products} in order to regain some of the expressivity Agda gets from having a \emph{type}
 $\AgdaLevel$ of universe levels.
 Finally, we present a type theory with constraints as \emph{judgments} similar to the ones by Sozeau and Tabareau \cite{SozeauTabareau:coq} and Voevodsky \cite{VV}  but extended with \emph{constraint-indexed products}.
+It should be noted that the current version of Coq also supports explicit
+universes, see \cite{coq:univpoly}.
+%One difference with \cite{SozeauTabareau:coq} is that our treatment of universe polymorphism is explicit.
+
 %One difference with \cite{SozeauTabareau:coq} is that our treatment of 
 %universe polymorphism is explicit. %Coq’s support ranges from fully explicit to entirely implicit universe and constraint annotations.
+
 
 \paragraph{Plan.}
 In Section~\ref{sec:basic} we display rules for a basic version of dependent 
@@ -747,7 +752,10 @@ $$
 ([\alpha]\mathsf{IsUnivalent}\, \UU_\alpha)
 \to [\beta][\gamma] \mathsf{FunExt}\, \UU_\beta\, \UU_\gamma
 $$
-In other words, {\em global} univalence  implies {\em global} function extensionality.
+In other words, {\em global} univalence implies {\em global} function 
+extensionality. (Sozeau has explained to us that one can define
+global univalence in a module in Coq and get some of the expressivity
+of level-indexed products through Coq's module abstraction mechanism.)
 
 Since an assumption of global function extensionality can replace many assumptions of local function extensionality (provided by ML-style polymorphism), this can also give rise to shorter code, see the example in \cite[Section 3.25]{hott:uf:in:agda}.
 
@@ -757,7 +765,7 @@ Since an assumption of global function extensionality can replace many assumptio
 
 %In intensional type theory we will not be able to justify all the laws for level expressions as definitional equalities. For example, we do not have $\max(m,n)=\max(n,m)$ definitionally.
 
-\section{A system with level constraints}\label{sec:constraints}
+\section{A type theory with level constraints}\label{sec:constraints}
 
 To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity. (We use Russell style notation for readability, see Appendix 2 for the rules for the Russell style version of our system.)
 
@@ -1176,8 +1184,9 @@ generalized algebraic theories for dependent type theories and their initial mod
 }%end eraser
 
 \paragraph{Acknowledgement.}
-The authors are grateful to the anonymous referees for useful feedback.
-%, among other things on the relationship between our work and Sozeau and Tabareau's.
+The authors are grateful to the anonymous referees for useful feedback,
+and to Matthieu Sozeau for an update on the current state
+of universe polymorphism in Coq.
 We acknowledge the support of the Centre for Advanced Study (CAS)
 at the Norwegian Academy of Science and Letters
 in Oslo, Norway, which funded and hosted the research project Homotopy
