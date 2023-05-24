@@ -35,7 +35,7 @@
 
 \ccsdesc[100]{\textcolor{red}{Replace ccsdesc macro with valid one}} %TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm 
 
-\keywords{Dummy keyword} %TODO mandatory; please add comma-separated list of keywords
+\keywords{type theory, universes in type theory, universe polymorphism, level-indexed products, constraint-indexed products} %TODO mandatory; please add comma-separated list of keywords
 
 \category{} %optional, e.g. invited paper
 
@@ -237,7 +237,7 @@ However, even in a system using an impredicative universe of propositions,
 such as the ones in \cite{Huet87,moura:lean}, there is a need for
 definitions parametric in universe levels.
 
-\paragraph{Motivation.}
+\paragraph*{Motivation.}
 Many substantial Agda developments make essential use of \emph{explicit} universe polymorphism with successor and finite suprema. Examples include the Agda standard library~\cite{agda:stdlib}, the cubical Agda library~\cite{cubical:agda}, 1Lab~\cite{agda:1lab}, the Agda-HoTT library~\cite{hott:agda}, agda-unimath~\cite{agda:unimath}, TypeTopology~\cite{TypeTopology}, 
 HoTT-UF-in-Agda~\cite{hott:uf:in:agda} (Midlands Graduate School 2019 lecture notes).
 
@@ -259,7 +259,7 @@ Our resulting type theory is orthogonal to the presence or absence of cumulativi
 
 We have checked that the lecture notes~\cite{hott:uf:in:agda} on HoTT/UF, which include 9620 lines of Agda without comments, can be rewritten without universe level zero. We believe, based on what we learned from this experiment, that the above Agda developments could also be rewritten in this way. Experience with these Agda developments suggest that a \emph{type} for levels in Agda could be replaced by level judgments in practice. The fact that levels form a type in Agda automatically allows for nested universal quantification over levels, which we instead add explicitly to our type theory.
 
-\paragraph{Summary of main contributions.}
+\paragraph*{Summary of main contributions.}
 Like Courant we present a type theory with
 universe levels  and universe level equations as \emph{judgments}. Moreover, we don't restrict the levels to be natural numbers. Instead we just assume that they form a sup-semilattice with an inflationary endomorphism. In this way all levels are built up from level variables by a successor operation and a binary supremum operation. Unlike most other systems, we do not have a level constant $0$ for the first universe level. Thus all types involving universes depend on level variables; they are {\em universe polymorphic}.
 
@@ -278,7 +278,7 @@ Parametric polymorphism is called implicit when the above type parameters and ty
 types can contain type variables which are unknown, yet to be determined, types.
 \end{quotation}
 
-\paragraph{Plan.}
+\paragraph*{Plan.}
 In Section~\ref{sec:basic} we display rules for a basic version of dependent 
 type theory with $\Pi, \Sigma, \NN$, and an identity type former $\Id$.
 
@@ -597,11 +597,11 @@ for other rules these assumptions can be obtained from inversion lemmas.)
  This would also imply that if $a : \NN$ in a context with only
  level variables, then $a$ is convertible to a numeral.
 
-\paragraph{Interpreting the level-indexed system in the system with externally indexed universes.}
+\paragraph*{Interpreting the level-indexed system in the system with externally indexed universes.}
 
 A judgment in the level-indexed system can be interpreted in the externally indexed system relative to an assignment $\rho$ of external natural numbers to level variables. We simply replace each level expression in the judgment by the corresponding natural number obtained by letting $l^+\,\rho = l\,\rho+1$ and $(l \vee m)\,\rho = \max(l\,\rho,m\,\rho)$.
 
-\subsection*{Rules for level-indexed products}
+\subsection{Rules for level-indexed products}
 
 In Agda $\AgdaLevel$ is a type,
 and it is thus possible to form level-indexed products of types as $\Pi$-types.
@@ -704,7 +704,7 @@ one would instead need to write four separate definitions.
  the next level operation. For instance, the system $l^+ = m\vee n$ does not have a most general unifier, using a reasoning
  similar to the one in \cite{FBB:impred2pred}.
 
-\subsection*{Rules for level constraints}%\label{ssec:VVsystem}
+\subsection{Rules for level constraints}%\label{ssec:VVsystem}
 
 A constraint is an equation $l = m$, where $l$ and $m$ are level expressions.
 Voevodsky \cite{VV} suggested to introduce universe levels with
@@ -759,7 +759,7 @@ gave rules for eliminating universe levels
 and in Figure~\ref{fig:restriction} below we give rules
 for eliminating universe level constraints.
 
-\subsection*{Rules for constraint-indexed products}%\label{ssec:VVsystem}
+\subsection{Rules for constraint-indexed products}%\label{ssec:VVsystem}
 We introduce a ``restriction'' or ``constraining'' operation with
 the following rules:
 \begin{figure}[H]
@@ -864,14 +864,14 @@ with $\_^+$ has a loop.
 We have already discussed both Coq's and Agda's treatment of universe polymorphism in the introduction, including the work of Huet, Harper and Pollack, Courant, Herbelin, and Sozeau and Tabareau, as well as of Voevodsky. In this section we further
 discuss the latter two, as well as some recent related work.
 
-\paragraph{Lean.}
+\paragraph*{Lean.}
 
 One can roughly describe the type system of Lean \cite{moura:lean,Carneiro19} as our current type system
 where we only can declare constants of the form
 $c~=~\lam{\alpha_1~\dots~\alpha_n}M~~:~~[\alpha_1~\dots~\alpha_n]A$ where there are new level variables introduced in $M$ and
 $A$.
 
-\paragraph{Voevodsky.} One of our starting points was the 79 pp.\ draft \cite{VV} by Voevodsky, where type theories are parametrized by a fixed but arbitrary finite set of constraints over a given finite
+\paragraph*{Voevodsky.} One of our starting points was the 79 pp.\ draft \cite{VV} by Voevodsky, where type theories are parametrized by a fixed but arbitrary finite set of constraints over a given finite
 set $\Fu$ of \emph{u-level variables}. A \emph{u-level expression} \cite[Def. 2.0.2]{VV} is either a numeral,
 or a variable in $\Fu$, or an expression of the form $M+n$ with $n$
 a numeral and $M$ a u-level expression, or of the form $\max(M_1,M_2)$
@@ -919,7 +919,7 @@ at the level of contexts.
 There are no level-indexed products and no constraint-indexed products in \cite{VV}.
 (We also remark that Voevodsky's system is Tarski-style and has cumulativity (rules 29 and 30 in \cite[Section 3.4]{VV}). Our system is also Tarski-style, but we present a Russell-style version in Appendix 2. We present rules for cumulativity in Appendix 1.)
 
-\paragraph{Sozeau and Tabareau.}
+\paragraph*{Sozeau and Tabareau.}
 
 In Sozeau and Tabareau's \cite{SozeauTabareau:coq} work on universe polymorphism in the Coq tradition, there are special rules for introducing universe-monomorphic and universe-polymorphic constants, as well as a rule for instantiating the latter.
 However, their system does not include the full explicit universe polymorphism provided by level- and constraint-indexed products.
@@ -941,7 +941,7 @@ explicit about constraints will actually simplify the use of the system, but thi
 practice. (Nowadays, Coq’s support actually ranges from explicit to entirely implicit universes and constraint annotations. Moreover, our level- and constraint-indexed products can to some extent be simulated by using Coq's module system
 \cite{coq:univpoly}.)
 
-\paragraph{Assaf and Thir\'e.}
+\paragraph*{Assaf and Thir\'e.}
 
 Assaf \cite{Assaf14} considers an alternative version of the calculus of
 constructions where subtyping is explicit. This new system avoids problems related to coercions and dependent types by using the Tarski style
@@ -954,7 +954,7 @@ Canonicity and normalization have been proved for a type theory with an external
 %
 In particular, decidability of type checking should follow using [3].
 
-\paragraph{Acknowledgement.}
+\paragraph*{Acknowledgement.}
 The authors are grateful to the anonymous referees for useful feedback,
 and to Matthieu Sozeau for an update on the current state
 of universe polymorphism in Coq.
@@ -1020,7 +1020,7 @@ $$
 
 \section*{Appendix 2: Notions of model and formulation \`a la Russell}
 
-\paragraph{Generalised algebraic presentation.}
+\paragraph*{Generalised algebraic presentation.}
 
 In a forthcoming paper, we plan to present some generalised algebraic theories of level-indexed categories with families with extra structure.  The models of these theories provide suitable notions of model of our type theories with level judgments. Moreover, the theories presented in this paper are initial objects in categories of such models.
 \begin{remark} \label{app:annotation}
@@ -1031,7 +1031,7 @@ is annoted by the type family $A,B$ (and similarly for the pairing operation). I
 \end{remark}
 
 
-\paragraph{Russell formulation.}
+\paragraph*{Russell formulation.}
 Above, we presented type theories with universe level judgments {\em \`a la Tarski}. There are alternative formulations
 {\em \`a la Russell} (using the terminology introduced in
 \cite{martinlof:padova} of
