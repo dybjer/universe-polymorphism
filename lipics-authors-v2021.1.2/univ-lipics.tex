@@ -932,7 +932,7 @@ In \cite{VV}, constraints are introduced, once and for all,
 at the level of the theory. In our proposal they are introduced
 at the level of contexts.
 There are no level-indexed products and no constraint-indexed products in \cite{VV}.
-(We also remark that Voevodsky's system is Tarski-style and has cumulativity (rules 29 and 30 in \cite[Section 3.4]{VV}). Our system is also Tarski-style, but we present a Russell-style version in Appendix~\ref{appendix:2}. We present rules for cumulativity in Appendix~\ref{appendix:1}.)
+We also remark that Voevodsky's system is Tarski-style and has cumulativity (rules 29 and 30 in \cite[Section 3.4]{VV}). Our system is also Tarski-style, but we present a Russell-style version in Appendix~\ref{appendix:2}. We present rules for cumulativity in Appendix~\ref{appendix:1}.
 
 \paragraph*{Sozeau and Tabareau}
 
@@ -953,8 +953,8 @@ significant examples, while our system is at this stage only a proposal. The ide
 users have to declare explicitly both universe levels {\em and} constraints. The Agda implementation
 shows that it works in practice to be explicit about universe levels, and we expect that to be
 explicit about constraints will actually simplify the use of the system, but this has yet to be tested in
-practice. (Nowadays, Coq’s support actually ranges from explicit to entirely implicit universes and constraint annotations. Moreover, our level- and constraint-indexed products can to some extent be simulated by using Coq's module system
-\cite{coq:univpoly}.)
+practice. Recently, Coq has been extended to support universes and constraint annotations, ranging from explicit to entirely implicit universes and constraint annotations. Moreover, our level- and constraint-indexed products can to some extent be simulated by using Coq's module system
+\cite{coq:univpoly}.
 
 \paragraph*{Assaf and Thir\'e}
 
