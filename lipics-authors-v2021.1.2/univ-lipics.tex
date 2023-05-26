@@ -1,6 +1,6 @@
 
 \documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate]{lipics-v2021}
-%This is a template for producing LIPIcs articles. 
+%This is a template for producing LIPIcs articles.
 %See lipics-v2021-authors-guidelines.pdf for further information.
 %for A4 paper format use option "a4paper", for US-letter use option "letterpaper"
 %for british hyphenation rules use option "UKenglish", for american hyphenation rules use option "USenglish"
@@ -39,7 +39,7 @@
 
 \Copyright{Marc Bezem and Thierry Coquand and Peter Dybjer and Mart\'{\i}n Escard\'o} %TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
 
-%TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm 
+%TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm
 \ccsdesc[500]{Theory of computation~Type theory}
 
 
@@ -246,7 +246,7 @@ such as the ones in \cite{Huet87,moura:lean}, there is a need for
 definitions parametric in universe levels.
 
 \paragraph*{Terminology}
-Following Cardelli \cite{Cardelli87}, we distinguish between 
+Following Cardelli \cite{Cardelli87}, we distinguish between
 {\em implicit} and {\em explicit} polymorphism:
 \begin{quotation}
   Parametric polymorphism is explicit when parametrization is obtained by
@@ -257,15 +257,15 @@ types can contain type variables which are unknown, yet to be determined, types.
 \end{quotation}
 
 \paragraph*{Motivation}
-Many substantial Agda developments make essential use of \emph{explicit} universe polymorphism with successor and finite suprema. Examples include the Agda standard library~\cite{agda:stdlib}, the cubical Agda library~\cite{cubical:agda}, 1Lab~\cite{agda:1lab}, the Agda-HoTT library~\cite{hott:agda}, agda-unimath~\cite{agda:unimath}, TypeTopology~\cite{TypeTopology}, 
+Many substantial Agda developments make essential use of \emph{explicit} universe polymorphism with successor and finite suprema. Examples include the Agda standard library~\cite{agda:stdlib}, the cubical Agda library~\cite{cubical:agda}, 1Lab~\cite{agda:1lab}, the Agda-HoTT library~\cite{hott:agda}, agda-unimath~\cite{agda:unimath}, TypeTopology~\cite{TypeTopology},
 HoTT-UF-in-Agda~\cite{hott:uf:in:agda} (Midlands Graduate School 2019 lecture notes).
 
 The original motivation for this work was to formalise the type theory of Agda, including explicit universe polymorphism. In doing that, we found ourselves modifying Agda's treatment of universes as follows:
 \begin{itemize}
 \item We have universe level \emph{judgments}, like Courant~\cite{Courant02}, instead of a \emph{type} of universe levels, like Agda.
 
- \item We add the possibility of expressing \emph{explicit} universe 
- level constraints. This is not only more general but also arguably 
+ \item We add the possibility of expressing \emph{explicit} universe
+ level constraints. This is not only more general but also arguably
  gives a more natural way of expressing types involving universes.
 
  \item We do not require a first universe level zero, so that every definition that involves universes is polymorphic.
@@ -284,20 +284,20 @@ Like Courant, we present a type theory with
 universe levels  and universe level equations as \emph{judgments}. Moreover, we don't restrict the levels to be natural numbers. Instead we just assume that they form a sup-semilattice with an inflationary endomorphism. In this way all levels are built up from level variables by a successor operation and a binary supremum operation. Unlike most other systems, we do not have a level constant $0$ for the first universe level. Thus all types involving universes depend on level variables; they are {\em universe polymorphic}.
 
 Furthermore, we make the polymorphism fully explicit in the sense of Cardelli
-by adding \emph{level-indexed products}. In this way we regain some of 
+by adding \emph{level-indexed products}. In this way we regain some of
 the expressivity Agda gets from having a \emph{type}
 $\AgdaLevel$ of universe levels.
 Finally, we present a type theory with constraints as \emph{judgments} similar to the ones by Sozeau and Tabareau \cite{SozeauTabareau:coq} and Voevodsky \cite{VV} but extended with \emph{constraint-indexed products}.
 
 \paragraph*{Plan}
-In Section~\ref{sec:basic} we display rules for a basic version of dependent 
+In Section~\ref{sec:basic} we display rules for a basic version of dependent
 type theory with $\Pi, \Sigma, \NN$, and an identity type former $\Id$.
 
-In Section~\ref{sec:external} we explain how to add an externally indexed 
+In Section~\ref{sec:external} we explain how to add an externally indexed
 sequence of universes
 $\UU_n, \T_n~(n\in\Nat)$ \`a la Tarski, without cumulativity rules.
-In Appendix~1 we present a system with cumulativity,
-and in Appendix~2 we present a system \`a la Russell.
+In Appendix~\ref{appendix:1} we present a system with cumulativity,
+and in Appendix~\ref{appendix:2} we present a system \`a la Russell.
 
 In Section~\ref{sec:internal} we introduce a notion of universe level,
 and let judgments depend not only on a context of ordinary variables,
@@ -478,7 +478,7 @@ will also be used later on.
 \section{Rules for an external sequence of universes}\label{sec:external}
 
 We present an external sequence of universes of codes of types, together
-with the decoding functions. (We do not include rules for cumulativity here, but leave them for Appendix~1.)
+with the decoding functions. (We do not include rules for cumulativity here, leaving them for Appendix~\ref{appendix:1}.)
 
 \begin{figure}[h]
 $$
@@ -662,7 +662,7 @@ $$
 ([\alpha]\mathsf{IsUnivalent}\, \UU_\alpha)
 \to [\beta][\gamma] \mathsf{FunExt}\, \UU_\beta\, \UU_\gamma
 $$
-In other words, {\em global} univalence implies {\em global} function 
+In other words, {\em global} univalence implies {\em global} function
 extensionality.
 
 Since an assumption of global function extensionality can replace many assumptions of local function extensionality (provided by ML-style polymorphism), this can also give rise to shorter code, see the example in \cite{escardo:UFinAgda}.
@@ -670,7 +670,7 @@ Since an assumption of global function extensionality can replace many assumptio
 
 \section{A type theory with level constraints}\label{sec:constraints}
 
-To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity. (We use Russell style notation for readability, see Appendix 2 for the rules for the Russell style version of our system.)
+To motivate why it may be useful to introduce the notion of judgment relative to a list of constraints on universe levels, consider the following type in a system without cumulativity. (We use Russell style notation for readability, see Appendix~\ref{appendix:2} for the rules for the Russell style version of our system.)
 
 $$
     \Pi_{A:\UU_l~{B}:{\UU_m}~{C}:{\UU_n}}
@@ -702,7 +702,7 @@ which is valid under the constraint
 $\alpha \vee \beta = \alpha \vee \gamma$,
 which captures all solutions simultaneously.
 
-Without being able to declare explicitely such constraints, 
+Without being able to declare explicitely such constraints,
 one would instead need to write four separate definitions.
 
  Surprisingly, if we add a least level $0$ to the term levels (like in Agda) then there \emph{is} a most general solution,
@@ -834,7 +834,7 @@ $$
 We can then instantiate this constant $c~l_1~\dots~l_m~u_1~\dots~u_n$, but only if the levels
 $l_1~\dots~l_m$ satisfy the constraint $\psi$.
 
-We remark that Voevodsky's system \cite{VV} has no constraint-indexed products and no associated application operation, and instantiation of levels is only a meta-level operation. Sozeau and Tabareau \cite{SozeauTabareau:coq} do not have constraint-index products either. However, they do have a special operation 
+We remark that Voevodsky's system \cite{VV} has no constraint-indexed products and no associated application operation, and instantiation of levels is only a meta-level operation. Sozeau and Tabareau \cite{SozeauTabareau:coq} do not have constraint-index products either. However, they do have a special operation
  for instantiating universe-polymorphic constants defined in the global environment.
 
 
@@ -879,7 +879,7 @@ discuss the latter two, as well as some recent related work.
 
 One can roughly describe the type system of Lean \cite{moura:lean,Carneiro19} as our current type system
 where we only can declare constants of the form
-$c~=~\lam{\alpha_1~\dots~\alpha_n}M~~:~~[\alpha_1~\dots~\alpha_n]A$ 
+$c~=~\lam{\alpha_1~\dots~\alpha_n}M~~:~~[\alpha_1~\dots~\alpha_n]A$
 where there are no new level variables introduced in $M$ and
 $A$.
 
@@ -929,7 +929,7 @@ In \cite{VV}, constraints are introduced, once and for all,
 at the level of the theory. In our proposal they are introduced
 at the level of contexts.
 There are no level-indexed products and no constraint-indexed products in \cite{VV}.
-(We also remark that Voevodsky's system is Tarski-style and has cumulativity (rules 29 and 30 in \cite[Section 3.4]{VV}). Our system is also Tarski-style, but we present a Russell-style version in Appendix 2. We present rules for cumulativity in Appendix 1.)
+(We also remark that Voevodsky's system is Tarski-style and has cumulativity (rules 29 and 30 in \cite[Section 3.4]{VV}). Our system is also Tarski-style, but we present a Russell-style version in Appendix~\ref{appendix:2}. We present rules for cumulativity in Appendix~\ref{appendix:1}.)
 
 \paragraph*{Sozeau and Tabareau}
 
@@ -941,8 +941,8 @@ where $A$ is a type and $t$ a term of type $A$, and these definitions can be loc
 
 The constraint languages differ: their constraints are equalities or (strict) inequalities between level variables, while ours are equalities between level expressions generated by the supremum and successor operations.
 
-Furthermore, they consider cumulative universe hierarchies  \`a la Russell, 
-while our universes are \`a la Tarski and we consider both non-cumulative 
+Furthermore, they consider cumulative universe hierarchies  \`a la Russell,
+while our universes are \`a la Tarski and we consider both non-cumulative
 (like Agda) and cumulative versions.
 
 One further important difference is that their system has been completely implemented and tested on
@@ -977,8 +977,11 @@ Type Theory and Univalent Foundations during the academic year 2018/19.
 
 \bibliography{../refs}
 
+\newpage
 
-\section*{Appendix 1: formulation with cumulativity}
+\appendix
+
+\section{Formulation with cumulativity} \label{appendix:1}
 
 
 We introduce an operation $\T_{l}^{m}(A):\UU_{m}$ if $A:\UU_{l}$
@@ -1030,7 +1033,7 @@ $$
 \Id(\UU_m,\Eq^{m,m}(\T^m_l(A),\T^m_l(B)),\Id^m(\UU^m_l,A,B)).
 $$
 
-\section*{Appendix 2: Notions of model and formulation \`a la Russell}
+\section{Notions of model and formulation \`a la Russell} \label{appendix:2}
 
 \paragraph*{Generalised algebraic presentation}
 
@@ -1084,7 +1087,7 @@ $$
 $$
 
      For $m>l$ the consequence of univalence for $\UU_m$ and $\UU_l$
-     mentioned in Appendix~1 can now be written
+     mentioned in Appendix~\ref{appendix:1} can now be written
      simply as
      $$\Id(\UU_m,\Equiv(A,B),\Id(\UU_l,A,B)).$$
 
@@ -1106,5 +1109,3 @@ If, in a system without cumulativity, we extend our system of levels with a leas
 \end{document}
 
 %\appendix
-
-
