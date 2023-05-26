@@ -261,17 +261,18 @@ Many substantial Agda developments make essential use of \emph{explicit} univers
 HoTT-UF-in-Agda~\cite{hott:uf:in:agda} (Midlands Graduate School 2019 lecture notes).
 
 The original motivation for this work was to formalise the type theory of Agda, including explicit universe polymorphism. In doing that, we found ourselves modifying Agda's treatment of universes as follows:
-\begin{enumerate}
+\begin{itemize}
 \item We have universe level \emph{judgments}, like Courant~\cite{Courant02}, instead of a \emph{type} of universe levels, like Agda.
 
- \item We add the possibility of expressing \emph{explicit} universe level constraints. This is not only more general but also arguably giving a more natural way of expressing types involving universes.
+ \item We add the possibility of expressing \emph{explicit} universe 
+ level constraints. This is not only more general but also arguably 
+ gives a more natural way of expressing types involving universes.
 
  \item We do not require a first universe level zero, so that every definition that involves universes is polymorphic.
 
  \item We include a $\Type$ judgment, which does not refer to universes, as in Martin-L\"of~\cite{martinlof:hannover}.
 
-
-\end{enumerate}
+\end{itemize}
 
 Our resulting type theory is orthogonal to the presence or absence of cumulativity. In the body of the paper, we treat universes \`a la Tarski, but we also give an appendix with a version \`a la Russell.
 
@@ -279,7 +280,7 @@ Our resulting type theory is orthogonal to the presence or absence of cumulativi
 We have checked that the lecture notes~\cite{hott:uf:in:agda} on HoTT/UF, which include 9620 lines of Agda without comments, can be rewritten without universe level zero. We believe, based on what we learned from this experiment, that the above Agda developments could also be rewritten in this way. Experience with these Agda developments suggest that a \emph{type} for levels in Agda could be replaced by level judgments in practice. The fact that levels form a type in Agda automatically allows for nested universal quantification over levels, which we instead add explicitly to our type theory.
 
 \paragraph*{Summary of main contributions}
-Like Courant we present a type theory with
+Like Courant, we present a type theory with
 universe levels  and universe level equations as \emph{judgments}. Moreover, we don't restrict the levels to be natural numbers. Instead we just assume that they form a sup-semilattice with an inflationary endomorphism. In this way all levels are built up from level variables by a successor operation and a binary supremum operation. Unlike most other systems, we do not have a level constant $0$ for the first universe level. Thus all types involving universes depend on level variables; they are {\em universe polymorphic}.
 
 Furthermore, we make the polymorphism fully explicit in the sense of Cardelli
