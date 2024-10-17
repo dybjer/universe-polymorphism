@@ -1137,13 +1137,46 @@ Thus $\alpha<\alpha$ can never occur in a context.
 
 As a consequence of the above example the type theory in \cref{sec:constraints}
 fails to have some usual, and very desirable, metatheoretic properties.
-There are at least three ways to solve this problem. In short:
-one can extend type formation, one can refine how substitutions
-act, and one can allow that contexts contain loops.
-In the following we elaborate these three solutions.
+There are several ways to solve this problem.
+In the following we give two solutions.
 
-\paragraph*{Extending type formation}
+\paragraph*{Allowing loops in contexts}
+\def\gg{{\circlearrowleft}}% loop 
 
+This solution has been suggested by Georges Gonthier, for which
+we are very grateful. The idea is to allow loops in contexts,
+making sure that the type theory collapses in contexts that
+contain a loop. 
+
+First we change the context extension operation $\Gamma,\psi$ in 
+\cref{sec:constraints} by requiring only that all
+all level variables occurring in $\psi$ are declared in $\Gamma$.
+The second condition that the extended context $\Gamma,\psi$ is loop-free.
+is dropped. 
+
+Recall that a level expression $l$ is a loop
+if $l<l$ is implied by the constraints in the context $\Gamma$,
+and that the existence of such a loop is decidable. Thus we can use
+the judgement $l<l~\valid$ for expressing that the context yields a loop.
+
+Now add a new symbol $\gg$ to the type theory, plus the following rules.
+
+\begin{figure}[h!]
+$$
+\frac{l<l~\valid}{\gg~\type}~~~~~~~~
+\frac{A~\type~~~l<l~\valid}{\gg = A}~~~~~~~~
+\frac{t:A~~~l<l~\valid}{\gg = A}~~~~~~~~
+\frac{t:A~~~l<l~\valid}{\gg = t}
+\belowdisplayshortskip 1pt
+$$
+ \caption{Rules for collapsing}%
+  \label{fig:restriction}
+\end{figure}
+These rules clearly collapse the type theory (is the 3rd rule needed?).
+
+\paragraph*{Making substitutions explicit}
+
+For this solution we keep the substitutions as in the paper, loop-free.
 The description of the type theories in the paper is admittedly sketchy,
 in particular the substitution of levels for level variables.
 Recall that contexts in \cref{sec:constraints}, as far as the levels 
@@ -1165,8 +1198,6 @@ Types that are inferred by this rule can be considered to be empty
 products in the context $\Gamma$. They are useless, but do no harm.
 TODO or remove.
 
-\paragraph*{Refining substitution}
-
 \begin{verbatim}
 It is better to capture pollution at the source, which is the substitution,
 so we propose the following. The intuition is that empty products behave like unit types.
@@ -1182,24 +1213,12 @@ then (capture at the source)
 otherwise (business as usual)
            ([l = m]T) sub      = [sub(l) = sub(m)] t sub  and          
            (<l=m> t) sub      = <sub(l) = sub(m)> t  sub  .
-\end{verbatim}                                              
-
-\paragraph*{Allowing loops in contexts}
-
-\begin{verbatim}
-Hello Marc,
-Thanks for finding a way to get back to me. I’d been muling a bit over the issue,
- while nursing a bad cold the last two days.
-
-  - The first thought I had was that I’d missed a simple fix of only checking for
-   loop-freedom when checkin entailment of constraints 
-   (i.e., when there’s a « psi valid » premise),
- and otherwise allowing inconsistencies (non loop-free) contexts. 
- That doesn’t work because one still loses subject reduction, 
- because disabling a conversion rule in this way in a dependently 
- typed system can break a type derivation.
-
- - I believe your fix can be made to work, but it would have to be more
+           
+           
+           -------------------------------
+           
+           
+            - I believe your fix can be made to work, but it would have to be more
   extensive, because one also has to worry about term substitution : 
   for example, suppose we have [psi]T : Type where psi is consistent 
   with the current context Gamma, and we now want to form F{[psi]T/alpha}; 
@@ -1216,25 +1235,9 @@ when Gamma, phi entails psi, restrict the formation rule for [phi]T
 to contexts that do NOT entail phi (in addition to not being inconsistent 
 with phi), with similar rules for <phi>t and level substitution do away 
 with the conversion rules for [phi]T and <psi>t entirely.
+\end{verbatim}                                              
 
-  - While I think the semantics of this approach should work, I fear 
-  that equational and type checking reasoning may be awkward, 
-  forcing inconvenient case splitting on which constraints are entailed or 
-  inconsistent with the current context.
 
-   - The approach I was mulling over in my fevered days was to simply 
-   embrace the inconsistencies rather than hunt them down, that is, 
-   simply make the logic inconsistent in an inconsistent context by
-   adding a rule Gamma has a loop |- t = Omega : T 
-   (Note that this entails Omega : Omega)
-    Then the pruning you suggested can be performed eagerly while type 
-    checking by replacing everything with Omega when the context becomes
-     inconsistent, so the semantics can still be restricted to consistent
-      contexts, but as pruning is localised to the type checking algorithm 
-      it wlll not interfere as much with manipulating and reasoning about terms…
-   Cheers,
-Georges
-\end{verbatim}
 \end{document}
 
 %\appendix
