@@ -88,6 +88,8 @@
 \newcommand{\Eq}{\mathsf{Eq}}
 \newcommand{\id}{\mathsf{id}}
 \newcommand{\NN}{\mathsf{N}}
+\newcommand{\Unit}{\mathsf{Unit}}
+\newcommand{\ttU}{\mathsf{tt}}
 \newcommand{\Nat}{\mathbb{N}}
 \newcommand{\UU}{\mathsf{U}}
 \newcommand{\JJ}{\mathsf{J}}
@@ -1122,31 +1124,71 @@ If, in a system without cumulativity, we extend our system of levels with a leas
 
 The type theory in \cref{sec:constraints} has received some justified,
 and very constructive, criticism. Let's explain the problem first,
-and then elaborate some solutions.
+and then discuss some solutions.
 
-As an example, assume one has inferred a typing $\alpha,\beta \vdash 
-\lam{\alpha<\beta} t : [\alpha<\beta] T$.
-Substituting $\alpha$ for $\beta$ gives the typing $\alpha \vdash 
-\lam{\alpha<\alpha} t : [\alpha<\alpha] T$.
-However, the typing $\alpha \vdash [\alpha<\alpha] T~\type$
-cannot be inferred with the formation rule for constraint-indexed
-products (the first rule in \cref{fig:restriction}).
-The context extension rule only allows for extension with constraints 
-provided that the resulting context is loop-free. 
-Thus $\alpha<\alpha$ can never occur in a context.
+As an example, consider the inferrable typing
+$\alpha,\beta \vdash [\alpha<\beta] \NN~\type$.
+Substituting $\alpha$ for $\beta$ gives the typing 
+$\alpha \vdash [\alpha<\alpha] \NN~\type$.
+However, the latter typing cannot be inferred.
+The reason is that $\alpha<\alpha$ is a loop
+and cannot occur in any context, as context extension
+is only allowed if the resulting context is loop-free. 
+Hence the formation rule for constraint-indexed products 
+(the first rule in \cref{fig:restriction}) cannot be applied.
 
-As a consequence of the above example the type theory in \cref{sec:constraints}
-fails to have some usual, and very desirable, metatheoretic properties.
+As a consequence of the above example,
+the type theory in \cref{sec:constraints}
+fails to have some usual, and very desirable, metatheoretic properties,
+such as substitution invariance and subject reduction.
+(Still, we believe our type theory to be consistent.)
 There are several ways to solve this problem.
-In the following we give two solutions.
+Let's first take a closer look.
+
+The expression $[\alpha<\alpha] \NN$ may be considered an empty product.
+We do in fact have similar empty products as types in our type theory:
+just weaken the first typing above to 
+$\alpha,\beta, \alpha=\beta \vdash [\alpha<\beta] \NN~\type$
+and then apply the formation rule for constraint-indexed products to obtain
+$\alpha,\beta \vdash [\alpha=\beta][\alpha<\beta] \NN~\type$.
+The crucial step here is the weakening 
+$p: (\alpha,\beta, \alpha=\beta) \to (\alpha,\beta)$
+which is not accounted for.
+
+Recall that contexts in \cref{sec:constraints}, as far as the levels 
+are concerned, are finitely presented \emph{loop-free} lattices in the 
+sense of \cite{bezem-coquand:lattices}. Level substitutions
+are lattice homomorphisms between these contexts.
+The substitution $p$ is perfectly fine, but the weakening rule should infer
+$\alpha,\beta, \alpha=\beta \vdash ([\alpha<\beta] \NN)p ~\type$,
+and the way $p$ acts in this case should reflect that a
+product over $\alpha<\beta$ is empty in a context with $\alpha=\beta$.
+
+One possible solution is to present the system with explicit substitutions,
+with suitable judgemental equality rules. We can then be careful when such a substitution makes a constraint product empty,
+replacing this empty product by a unit type 
+(and replacing the corresponding abstraction by the unique element
+of this unit type). More precisely,
+whenever $\sigma:\Delta\rightarrow\Gamma$ is a 
+substitution and $\psi\sigma$ introduces a loop 
+for $\Delta$, which is decidable, we add the 
+conversion that $([\psi]A)\sigma$ is equal to the unit type.
+
+As an example, if $\sigma$ is the weakening $p:(\alpha,\beta,\alpha = \beta)\rightarrow (\alpha,\beta)$ and $A$ is a
+type in the context $\alpha,\beta,\alpha<\beta$, then $[\alpha < \beta]A$ 
+is a type in the context $\alpha,\beta$
+and we add the conversion that $([\alpha<\beta]A)p$ is equal to the unit type, 
+since $(\alpha<\beta)p = \alpha<\beta$
+introduces a loop for the context $\alpha,\beta,\alpha = \beta$.
+
+We refrain from elaborating the above solution in detail here, as it will
+involve a significant amount of work. Instead we will present
+in the next section a short and elegant solution suggested 
+by Georges Gonthier, for which we are very grateful. 
+
 
 \paragraph*{Allowing loops in contexts}
-\def\gg{{\circlearrowleft}}% loop 
-
-This solution has been suggested by Georges Gonthier, for which
-we are very grateful. The idea is to allow loops in contexts,
-making sure that the type theory collapses in contexts that
-contain a loop. 
+\def\gg{{\emptyset}}% loop 
 
 First we change the context extension operation $\Gamma,\psi$ in 
 \cref{sec:constraints} by requiring only that all
@@ -1154,41 +1196,32 @@ all level variables occurring in $\psi$ are declared in $\Gamma$.
 The second condition, that the extended context $\Gamma,\psi$ is loop-free,
 is dropped. 
 
-Recall that a level expression $l$ is a \emph{loop}
+Recall that a level expression $l$ is a {loop}
 if $l<l$ is implied by the constraints in the context $\Gamma$,
 and that the existence of such a loop is decidable. Thus we can use
 the judgement $\Gamma\vdash l<l~\valid$ for expressing that $\Gamma$ 
 yields a loop.
 
-Now add a new symbol $\gg$ to the type theory, plus the following rules.
+We assume that our type theory has an empty type $\gg$.
+The idea of the following rules is to collapse the type
+theory in contexts that yield a loop.
 
 \begin{figure}[h!]
 $$
-\frac{l<l~\valid}{\gg~\type}~~~~~~~~
-\frac{A~\type~~~l<l~\valid}{\gg = A}~~~~~~~~
-\frac{t:A~~~l<l~\valid}{\gg = A}~~~~~~~~
-\frac{t:A~~~l<l~\valid}{\gg = t}
+\frac{A~\type~~~l<l~\valid}{\gg = A}~~~~~~~~~~~~~~~~~~~~
+\frac{t:A~~~l<l~\valid}{\gg = t : A}
 \belowdisplayshortskip 1pt
 $$
  \caption{Rules for collapsing}%
-  \label{fig:restriction}
+  \label{fig:collapsing}
 \end{figure}
-These rules clearly collapse the type theory (is the 3rd rule needed?).
+Note that we can infer $\Gamma \vdash \gg : \gg$ if $\Gamma$ yields a loop.
+Furthermore, the lattice presented by the level
+variables and constraints in $\Gamma$ can still be non-trivial even
+if $\Gamma$ yields a loop. 
+In this solution substitutions can remain implicit.
 
-\paragraph*{Making substitutions explicit}
-
-For this solution we keep the contexts as in the paper, loop-free.
-The description of the type theories in the paper is admittedly sketchy,
-in particular regarding the substitution of levels for level variables.
-Recall that contexts in \cref{sec:constraints}, as far as the levels 
-are concerned, are finitely presented \emph{loop-free} lattices in the 
-sense of \cite{bezem-coquand:lattices}. 
-We should have stipulated in \cref{sec:constraints} that level substitutions
-are lattice homomorphisms between these contexts. Thus we cannot
-substitute $\alpha$ for $\beta$  in the context $\alpha,\beta,\alpha<\beta$
-since $\alpha,\alpha<\alpha$ is not a context. However, we still
-have the problem exemplified in introduction to this appendix.
-
+\end{document}
 
 \begin{verbatim}
 It is better to capture pollution at the source, which is the substitution,
@@ -1227,6 +1260,21 @@ when Gamma, phi entails psi, restrict the formation rule for [phi]T
 to contexts that do NOT entail phi (in addition to not being inconsistent 
 with phi), with similar rules for <phi>t and level substitution do away 
 with the conversion rules for [phi]T and <psi>t entirely.
+
+ - The approach I was mulling over in my fevered days was to simply 
+ embrace the inconsistencies rather than hunt them down, that is, 
+ simply make the logic inconsistent in an inconsistent context by
+adding a rule
+   Gamma has a loop |- t = Omega : T (Note that this entails Omega : Omega)
+   
+    Then the pruning you suggested can be performed eagerly while type 
+    checking by replacing everything with Omega when the context becomes
+    inconsistent, so the semantics can still be restricted to consistent
+    contexts, but as pruning is localised to the type checking algorithm
+    it wlll not interfere as much with manipulating and reasoning about 
+    terms…
+   Cheers,
+Georges
 
 -----------------------------------------
 
@@ -1318,7 +1366,5 @@ in your example.
 
 \end{verbatim}                                              
 
-
-\end{document}
 
 %\appendix
