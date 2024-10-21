@@ -1151,13 +1151,14 @@ contain a loop.
 First we change the context extension operation $\Gamma,\psi$ in 
 \cref{sec:constraints} by requiring only that all
 all level variables occurring in $\psi$ are declared in $\Gamma$.
-The second condition that the extended context $\Gamma,\psi$ is loop-free.
+The second condition, that the extended context $\Gamma,\psi$ is loop-free,
 is dropped. 
 
-Recall that a level expression $l$ is a loop
+Recall that a level expression $l$ is a \emph{loop}
 if $l<l$ is implied by the constraints in the context $\Gamma$,
 and that the existence of such a loop is decidable. Thus we can use
-the judgement $l<l~\valid$ for expressing that the context yields a loop.
+the judgement $\Gamma\vdash l<l~\valid$ for expressing that $\Gamma$ 
+yields a loop.
 
 Now add a new symbol $\gg$ to the type theory, plus the following rules.
 
@@ -1176,9 +1177,9 @@ These rules clearly collapse the type theory (is the 3rd rule needed?).
 
 \paragraph*{Making substitutions explicit}
 
-For this solution we keep the substitutions as in the paper, loop-free.
+For this solution we keep the contexts as in the paper, loop-free.
 The description of the type theories in the paper is admittedly sketchy,
-in particular the substitution of levels for level variables.
+in particular regarding the substitution of levels for level variables.
 Recall that contexts in \cref{sec:constraints}, as far as the levels 
 are concerned, are finitely presented \emph{loop-free} lattices in the 
 sense of \cite{bezem-coquand:lattices}. 
@@ -1188,15 +1189,6 @@ substitute $\alpha$ for $\beta$  in the context $\alpha,\beta,\alpha<\beta$
 since $\alpha,\alpha<\alpha$ is not a context. However, we still
 have the problem exemplified in introduction to this appendix.
 
-Add the following formation rule to the type theory in \cref{sec:constraints}:
-$$
-\frac{\Gamma\vdash A~\type~~~\Gamma\vdash l~\Level~~~\Gamma\vdash m~\Level}%
-{\Gamma\vdash [l=m] A~\type}~~~\text{$\Gamma,l=m$ yields a loop}
-$$
-(NB $\Gamma,l=m$ is \emph{not} a context here.)
-Types that are inferred by this rule can be considered to be empty
-products in the context $\Gamma$. They are useless, but do no harm.
-TODO or remove.
 
 \begin{verbatim}
 It is better to capture pollution at the source, which is the substitution,
@@ -1235,6 +1227,95 @@ when Gamma, phi entails psi, restrict the formation rule for [phi]T
 to contexts that do NOT entail phi (in addition to not being inconsistent 
 with phi), with similar rules for <phi>t and level substitution do away 
 with the conversion rules for [phi]T and <psi>t entirely.
+
+-----------------------------------------
+
+Concerning Georges' remarks, I don't understand his notation t{phi} but I can see his point that something is missing.
+As an example, consider the following two typings followed by a substitution
+a,b, x: [a=b]T |- [a<b]S type
+a,b |- <a=b>t : [a=b]T
+sub = (a:= a, b:= b, x:= <a=b>t)
+Now apply sub to the first typing. Then the abstraction <a=b> gets in the scope of [a<b].
+
+----------------------------
+
+ If we present a system with explicit substitutions (very close to a 
+ generalised algebraic theory presentation like cwf)   % MB: 5.4 in BCDE-Hofmann?
+we also have to be explicit about weakening. For instance, if we have
+
+ a, b |- <a = b>t : [a=b]T
+
+we cannot write
+
+ a, b, a<b  |- <a = b>t : [a=b]T
+
+but we have to introduce explicitly a weakening p : (a,b, a<b) -> (a, b) and
+
+ a, b , a<b |- (<a = b>t) p : ([a = b]T) p
+
+and we should have
+
+ (<a = b>t) p = tt     unique element of the type unit and
+ ([a = b]T)p = unit
+
+ I believe this solves the question you raise. We have
+
+ sub : (a, b) -> (a, b, x : [a=b]T)      % MB: sub = "x:=t"
+
+and
+
+ (sub p , q) : (a, b, a<b) -> (a, b, x : [a=b]T, a<b)
+
+and
+
+ a, b, x : [a=b]T, a<b  |- S type
+
+so that x (sub p, q) becomes tt : unit.
+
+ For updating the paper, it looks like Gonthier’s solution is simpler to present.
+
+ Thierry
+ 
+----------------------------
+
+Definitely, it gets complicated with explicit weakenings!
+Here is another example.  In fact a,b |- [a=b][a<b]N type is an empty product that can already be inferred in our current system, 
+in contrast to a |- [a<a]N type.
+
+. |- N type
+a |- N p_{.|a} type
+a,b |- N p_{.|a} p_{a|b} type
+a,b,a<b |- N p_{.|a} p_{a|b} p_{a,b|a<b} type
+a,b |- [a<b](N p_{.|a} p_{a|b} p_{a,b|a<b}) type, by rule for [_]
+a,b,a=b |- ([a<b](N p_{.|a} p_{a|b} p_{a,b|a<b})) p_{a,b|a=b} type
+
+Should we now get:
+
+a,b,a=b |- Unit p_{.|a} p_{a|b} p_{a,b|a=b} type ? How?
+
+Btw the symbol "|" is for separating the context from the extension,
+so p_{G|X} : G,X -> G, where X can be a level variable or a constraint, 
+or a type.
+
+----------------
+
+Thierry: simplify using the terminal substitution. Then:
+
+I believe one only wants to understand
+
+ p :   a, b, [a = b]       ————>      a,b
+
+and what should be     ([a < b]N) p      given that [a<b]N is valid in the context    a,b, which is line 5
+in your example.
+
+  In general when we have    sub : H -> G and  [phi]A    in G, 
+  one needs to define     ([phi]A) sub
+  One can test      whether or not   phi sub is compatible with H,
+  i.e. introduces a loop or not
+
+ If it introduces a loop then ([phi]A) sub is defined to be Unit
+ Otherwise  one does the substitution.
+
 \end{verbatim}                                              
 
 
