@@ -1190,11 +1190,9 @@ by Georges Gonthier, for which we are very grateful.
 \paragraph*{Allowing loops in contexts}
 \def\gg{{\emptyset}}% loop 
 
-First we change the context extension operation $\Gamma,\psi$ in 
-\cref{sec:constraints} by requiring only that all
-all level variables occurring in $\psi$ are declared in $\Gamma$.
-The second condition, that the extended context $\Gamma,\psi$ is loop-free,
-is dropped. 
+First we liberalize the context extension operation $\Gamma,\psi$ in 
+\cref{sec:constraints} by dropping the second condition, 
+that the extended context $\Gamma,\psi$ is loop-free. 
 
 Recall that a level expression $l$ is a {loop}
 if $l<l$ is implied by the constraints in the context $\Gamma$,
@@ -1203,7 +1201,7 @@ the judgement $\Gamma\vdash l<l~\valid$ for expressing that $\Gamma$
 yields a loop.
 
 We assume that our type theory has an empty type $\gg$.
-The idea of the following rules is to collapse the type
+The idea of adding the following rules is to collapse the type
 theory in contexts that yield a loop.
 
 \begin{figure}[h!]
@@ -1216,10 +1214,10 @@ $$
   \label{fig:collapsing}
 \end{figure}
 Note that we can infer $\Gamma \vdash \gg : \gg$ if $\Gamma$ yields a loop.
-Furthermore, the lattice presented by the level
+(The lattice presented by the level
 variables and constraints in $\Gamma$ can still be non-trivial even
-if $\Gamma$ yields a loop. 
-In this solution substitutions can remain implicit.
+if $\Gamma$ yields a loop.)
+In this solution substitutions no explicit substitutions are needed.
 
 \end{document}
 
