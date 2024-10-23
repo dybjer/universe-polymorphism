@@ -1137,32 +1137,24 @@ is only allowed if the resulting context is loop-free.
 Hence the formation rule for constraint-indexed products 
 (the first rule in \cref{fig:restriction}) cannot be applied.
 
+
 As a consequence of the above example,
 the type theory in \cref{sec:constraints}
 fails to have some usual, and very desirable, metatheoretic properties,
 such as substitution invariance and subject reduction.
 (Still, we believe our type theory to be consistent.)
 There are several ways to solve this problem.
-Let's first take a closer look.
-
-The expression $[\alpha<\alpha] \NN$ may be considered an empty product.
-We do in fact have similar empty products as types in our type theory:
-just weaken the first typing above to 
-$\alpha,\beta, \alpha=\beta \vdash [\alpha<\beta] \NN~\type$
-and then apply the formation rule for constraint-indexed products to obtain
-$\alpha,\beta \vdash [\alpha=\beta][\alpha<\beta] \NN~\type$.
-The crucial step here is the weakening 
-$p: (\alpha,\beta, \alpha=\beta) \to (\alpha,\beta)$
-which is not accounted for.
+Let's first take a closer look at substitutions.
 
 Recall that contexts in \cref{sec:constraints}, as far as the levels 
 are concerned, are finitely presented \emph{loop-free} lattices in the 
 sense of \cite{bezem-coquand:lattices}. Level substitutions
 are lattice homomorphisms between these contexts.
-The substitution $p$ is perfectly fine, but the weakening rule should infer
-$\alpha,\beta, \alpha=\beta \vdash ([\alpha<\beta] \NN)p ~\type$,
-and the way $p$ acts in this case should reflect that a
-product over $\alpha<\beta$ is empty in a context with $\alpha=\beta$.
+The substitution $\beta/\alpha : (\alpha) \to (\alpha,\beta)$ is allowed,
+leading to the example above. The resulting type $[\alpha<\alpha] \NN$ 
+can be considered to be an `empty' product. The substitution 
+$\beta/\alpha : (\alpha,\alpha<\alpha) \to (\alpha,\beta,\alpha<\beta)$
+is not allowed, since $\alpha<\alpha$ is a loop.
 
 One possible solution is to present the system with explicit substitutions,
 with suitable judgemental equality rules. We can then be careful when such a substitution makes a constraint product empty,
@@ -1174,11 +1166,12 @@ substitution and $\psi\sigma$ introduces a loop
 for $\Delta$, which is decidable, we add the 
 conversion that $([\psi]A)\sigma$ is equal to the unit type.
 
-As an example, if $\sigma$ is the weakening $p:(\alpha,\beta,\alpha = \beta)\rightarrow (\alpha,\beta)$ and $A$ is a
+As an example, if $\sigma$ is the weakening 
+$(\alpha,\beta,\alpha = \beta)\to (\alpha,\beta)$ and $A$ is a
 type in the context $\alpha,\beta,\alpha<\beta$, then $[\alpha < \beta]A$ 
 is a type in the context $\alpha,\beta$
-and we add the conversion that $([\alpha<\beta]A)p$ is equal to the unit type, 
-since $(\alpha<\beta)p = \alpha<\beta$
+and we add the conversion that $([\alpha<\beta]A)\sigma$ is equal to the 
+unit type, since $(\alpha<\beta)\sigma = \alpha<\beta$
 introduces a loop for the context $\alpha,\beta,\alpha = \beta$.
 
 We refrain from elaborating the above solution in detail here, as it will complicate the syntax significantly. Instead we will present
@@ -1216,7 +1209,7 @@ Note that we can infer $\Gamma \vdash \gg : \gg$ if $\Gamma$ yields a loop.
 (The lattice presented by the level
 variables and constraints in $\Gamma$ can still be non-trivial even
 if $\Gamma$ yields a loop.)
-In this solution substitutions no explicit substitutions are needed.
+In this solution no explicit substitutions are needed.
 
 \end{document}
 
