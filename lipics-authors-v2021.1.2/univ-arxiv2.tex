@@ -1120,7 +1120,7 @@ If, in a system without cumulativity, we extend our system of levels with a leas
   It should be the case that the above formulation \`a la Russell presents the initial CwF with extra extructure for the standard type formers and a hierarchy of universes, but the proof doesn't seem to be trivial, due to Remark~\ref{notelementary}.
 \end{remark}
 
-\section{Revision and extension}
+\section{Revision and extension} \label{appendix:3}
 
 The type theory in \cref{sec:constraints} has received some justified,
 and very constructive, criticism. Let's explain the problem first,
@@ -1128,13 +1128,13 @@ and then discuss some solutions.
 
 As an example, consider the inferrable typing
 $\alpha,\beta \vdash [\alpha<\beta] \NN~\type$.
-Substituting $\alpha$ for $\beta$ gives the typing 
+Substituting $\alpha$ for $\beta$ gives the typing
 $\alpha \vdash [\alpha<\alpha] \NN~\type$.
 However, the latter typing cannot be inferred.
 The reason is that $\alpha<\alpha$ is a loop
 and cannot occur in any context, as context extension
-is only allowed if the resulting context is loop-free. 
-Hence the formation rule for constraint-indexed products 
+is only allowed if the resulting context is loop-free.
+Hence the formation rule for constraint-indexed products
 (the first rule in \cref{fig:restriction}) cannot be applied.
 
 
@@ -1146,50 +1146,50 @@ such as substitution invariance and subject reduction.
 There are several ways to solve this problem.
 Let's first take a closer look at substitutions.
 
-Recall that contexts in \cref{sec:constraints}, as far as the levels 
-are concerned, are finitely presented \emph{loop-free} lattices in the 
+Recall that contexts in \cref{sec:constraints}, as far as the levels
+are concerned, are finitely presented \emph{loop-free} lattices in the
 sense of \cite{bezem-coquand:lattices}. Level substitutions
 are lattice homomorphisms between these contexts.
 The substitution $\beta/\alpha : (\alpha) \to (\alpha,\beta)$ is allowed,
-leading to the example above. The resulting type $[\alpha<\alpha] \NN$ 
-can be considered to be an `empty' product. The substitution 
+leading to the example above. The resulting type $[\alpha<\alpha] \NN$
+can be considered to be an `empty' product. The substitution
 $\beta/\alpha : (\alpha,\alpha<\alpha) \to (\alpha,\beta,\alpha<\beta)$
 is not allowed, since $\alpha<\alpha$ is a loop.
 
 One possible solution is to present the system with explicit substitutions,
 with suitable judgemental equality rules. We can then be careful when such a substitution makes a constraint product empty,
-replacing this empty product by a unit type 
+replacing this empty product by a unit type
 (and replacing the corresponding abstraction by the unique element
 of this unit type). More precisely,
-whenever $\sigma:\Delta\rightarrow\Gamma$ is a 
-substitution and $\psi\sigma$ introduces a loop 
-for $\Delta$, which is decidable, we add the 
+whenever $\sigma:\Delta\rightarrow\Gamma$ is a
+substitution and $\psi\sigma$ introduces a loop
+for $\Delta$, which is decidable, we add the
 conversion that $([\psi]A)\sigma$ is equal to the unit type.
 
-As an example, if $\sigma$ is the weakening 
+As an example, if $\sigma$ is the weakening
 $(\alpha,\beta,\alpha = \beta)\to (\alpha,\beta)$ and $A$ is a
-type in the context $\alpha,\beta,\alpha<\beta$, then $[\alpha < \beta]A$ 
+type in the context $\alpha,\beta,\alpha<\beta$, then $[\alpha < \beta]A$
 is a type in the context $\alpha,\beta$
-and we add the conversion that $([\alpha<\beta]A)\sigma$ is equal to the 
+and we add the conversion that $([\alpha<\beta]A)\sigma$ is equal to the
 unit type, since $(\alpha<\beta)\sigma = \alpha<\beta$
 introduces a loop for the context $\alpha,\beta,\alpha = \beta$.
 
 We refrain from elaborating the above solution in detail here, as it will complicate the syntax significantly. Instead we will present
-in the next section a short and elegant solution suggested 
-by Georges Gonthier, for which we are very grateful. 
+in the next section a short and elegant solution suggested
+by Georges Gonthier, for which we are very grateful.
 
 
 \paragraph*{Allowing loops in contexts}
-\def\gg{{\emptyset}}% loop 
+\def\gg{{\emptyset}}% loop
 
-First we liberalize the context extension operation $\Gamma,\psi$ in 
-\cref{sec:constraints} by dropping the second condition, 
-that the extended context $\Gamma,\psi$ is loop-free. 
+First we liberalize the context extension operation $\Gamma,\psi$ in
+\cref{sec:constraints} by dropping the second condition,
+that the extended context $\Gamma,\psi$ is loop-free.
 
 Recall that a level expression $l$ is a {loop}
 if $l<l$ is implied by the constraints in the context $\Gamma$,
 and that the existence of such a loop is decidable. Thus we can use
-the judgement $\Gamma\vdash l<l~\valid$ for expressing that $\Gamma$ 
+the judgement $\Gamma\vdash l<l~\valid$ for expressing that $\Gamma$
 yields a loop.
 
 We assume that our type theory has an empty type $\gg$.
@@ -1222,46 +1222,46 @@ Assume we have a substitution sub : H -> G  with G and H contexts. Define:
 if  H, sub(l) = sub(m) is looping (which is decidable)
 
 then (capture at the source)
-           ([l = m]T) sub      = unit   and  
+           ([l = m]T) sub      = unit   and
            (<l=m> t) sub      = tt ,
 
 otherwise (business as usual)
-           ([l = m]T) sub      = [sub(l) = sub(m)] t sub  and          
+           ([l = m]T) sub      = [sub(l) = sub(m)] t sub  and
            (<l=m> t) sub      = <sub(l) = sub(m)> t  sub  .
-           
-           
+
+
            -------------------------------
-           
-           
+
+
             - I believe your fix can be made to work, but it would have to be more
-  extensive, because one also has to worry about term substitution : 
-  for example, suppose we have [psi]T : Type where psi is consistent 
-  with the current context Gamma, and we now want to form F{[psi]T/alpha}; 
-  alpha might well occur in F in local contexts that are consistent with 
-  Gamma, but inconsistent with (Gamma, psi), so it is also necessary to 
-  tweak the definition of substitution to prune such cases, similar to 
+  extensive, because one also has to worry about term substitution :
+  for example, suppose we have [psi]T : Type where psi is consistent
+  with the current context Gamma, and we now want to form F{[psi]T/alpha};
+  alpha might well occur in F in local contexts that are consistent with
+  Gamma, but inconsistent with (Gamma, psi), so it is also necessary to
+  tweak the definition of substitution to prune such cases, similar to
   what you are suggesting for universe level substitutions:
-    ([phi]T){t/x} = [phi](T{t{phi}/x}), ([psi]T){phi} = unit if 
+    ([phi]T){t/x} = [phi](T{t{phi}/x}), ([psi]T){phi} = unit if
     Gamma, phi, psi has a loop (assuming cumulativity).
-    similar rules for <phi>u, and otherwise propagating substitution 
+    similar rules for <phi>u, and otherwise propagating substitution
     ans assumption specialisation.
-Note that while we are at it we could also define ([psi]T){phi} = T 
-when Gamma, phi entails psi, restrict the formation rule for [phi]T 
-to contexts that do NOT entail phi (in addition to not being inconsistent 
-with phi), with similar rules for <phi>t and level substitution do away 
+Note that while we are at it we could also define ([psi]T){phi} = T
+when Gamma, phi entails psi, restrict the formation rule for [phi]T
+to contexts that do NOT entail phi (in addition to not being inconsistent
+with phi), with similar rules for <phi>t and level substitution do away
 with the conversion rules for [phi]T and <psi>t entirely.
 
- - The approach I was mulling over in my fevered days was to simply 
- embrace the inconsistencies rather than hunt them down, that is, 
+ - The approach I was mulling over in my fevered days was to simply
+ embrace the inconsistencies rather than hunt them down, that is,
  simply make the logic inconsistent in an inconsistent context by
 adding a rule
    Gamma has a loop |- t = Omega : T (Note that this entails Omega : Omega)
-   
-    Then the pruning you suggested can be performed eagerly while type 
+
+    Then the pruning you suggested can be performed eagerly while type
     checking by replacing everything with Omega when the context becomes
     inconsistent, so the semantics can still be restricted to consistent
     contexts, but as pruning is localised to the type checking algorithm
-    it wlll not interfere as much with manipulating and reasoning about 
+    it wlll not interfere as much with manipulating and reasoning about
     terms…
    Cheers,
 Georges
@@ -1277,7 +1277,7 @@ Now apply sub to the first typing. Then the abstraction <a=b> gets in the scope 
 
 ----------------------------
 
- If we present a system with explicit substitutions (very close to a 
+ If we present a system with explicit substitutions (very close to a
  generalised algebraic theory presentation like cwf)   % MB: 5.4 in BCDE-Hofmann?
 we also have to be explicit about weakening. For instance, if we have
 
@@ -1313,11 +1313,11 @@ so that x (sub p, q) becomes tt : unit.
  For updating the paper, it looks like Gonthier’s solution is simpler to present.
 
  Thierry
- 
+
 ----------------------------
 
 Definitely, it gets complicated with explicit weakenings!
-Here is another example.  In fact a,b |- [a=b][a<b]N type is an empty product that can already be inferred in our current system, 
+Here is another example.  In fact a,b |- [a=b][a<b]N type is an empty product that can already be inferred in our current system,
 in contrast to a |- [a<a]N type.
 
 . |- N type
@@ -1332,7 +1332,7 @@ Should we now get:
 a,b,a=b |- Unit p_{.|a} p_{a|b} p_{a,b|a=b} type ? How?
 
 Btw the symbol "|" is for separating the context from the extension,
-so p_{G|X} : G,X -> G, where X can be a level variable or a constraint, 
+so p_{G|X} : G,X -> G, where X can be a level variable or a constraint,
 or a type.
 
 ----------------
@@ -1346,7 +1346,7 @@ I believe one only wants to understand
 and what should be     ([a < b]N) p      given that [a<b]N is valid in the context    a,b, which is line 5
 in your example.
 
-  In general when we have    sub : H -> G and  [phi]A    in G, 
+  In general when we have    sub : H -> G and  [phi]A    in G,
   one needs to define     ([phi]A) sub
   One can test      whether or not   phi sub is compatible with H,
   i.e. introduces a loop or not
@@ -1354,7 +1354,7 @@ in your example.
  If it introduces a loop then ([phi]A) sub is defined to be Unit
  Otherwise  one does the substitution.
 
-\end{verbatim}                                              
+\end{verbatim}
 
 
 %\appendix
