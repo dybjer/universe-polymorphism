@@ -1,0 +1,998 @@
+\documentclass[11pt,a4paper]{article}
+%\ifx\pdfpageheight\undefined\PassOptionsToPackage{dvips}{graphicx}\else%
+%\PassOptionsToPackage{pdftex}{graphicx}
+\PassOptionsToPackage{pdftex}{color}
+%\fi
+
+%\usepackage{diagrams}
+
+%\usepackage[all]{xy}
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{latexsym}
+\usepackage{amssymb,amstext,amsmath,amsthm}
+\usepackage{epsf}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{a4wide}
+\usepackage{verbatim}
+\usepackage{proof}
+\usepackage{latexsym}
+%\usepackage{mytheorems}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}{Lemma}[theorem]
+\newtheorem{proposition}{Proposition}[theorem]
+\theoremstyle{definition}
+%\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{remark}{Remark}[theorem]
+\newtheorem{TODO}{TODO}[theorem]
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+
+\usepackage{float}
+\floatstyle{boxed}
+\restylefloat{figure}
+
+
+%%%%%%%%%copied from SymmetryBook by Marc
+
+% hyperref should be the package loaded last
+\usepackage[backref=page,
+            colorlinks,
+            citecolor=linkcolor,
+            linkcolor=linkcolor,
+            urlcolor=linkcolor,
+            unicode,
+            pdfauthor={BCDE},
+            pdftitle={Universes},
+            pdfsubject={Mathematics},
+            pdfkeywords={type theory, universes}]{hyperref}
+% - except for cleveref!
+\usepackage[capitalize]{cleveref}
+%\usepackage{xifthen}
+\usepackage{xcolor}
+\definecolor{linkcolor}{rgb}{0,0,0.5}
+
+%%%%%%%%%
+\def\oge{\leavevmode\raise
+.3ex\hbox{$\scriptscriptstyle\langle\!\langle\,$}}
+\def\feg{\leavevmode\raise
+.3ex\hbox{$\scriptscriptstyle\,\rangle\!\rangle$}}
+
+%%%%%%%%%
+
+\newcommand{\mkbox}[1]{\ensuremath{#1}}
+\newcommand{\eraser}[1]{}
+
+\newcommand{\conv}{=}
+%\newcommand{\conv}{\mathsf{conv}}
+
+\newcommand{\Id}{\mathsf{Id}}
+\newcommand{\Eq}{\mathsf{Eq}}
+\newcommand{\id}{\mathsf{id}}
+\newcommand{\NN}{\mathsf{N}}
+\newcommand{\Nat}{\mathbb{N}}
+\newcommand{\UU}{\mathsf{U}}
+\newcommand{\JJ}{\mathsf{J}}
+\newcommand{\AgdaLevel}{\mathsf{Level}}
+\newcommand{\Level}{\mathsf{level}}
+\newcommand{\Lev}{{\mathbb{L}}}
+%\newcommand{\Type{\hbox{\sf Type}}
+\newcommand{\ZERO}{\mathsf{0}}
+\newcommand{\SUCC}{\mathsf{S}}
+\newcommand{\valid}{\mathsf{valid}}
+%\newcommand{\type}{\mathsf{type}}
+\newcommand{\const}{\mathsf{const}}
+\newcommand{\lam}[1]{{\langle}#1{\rangle}}
+\newcommand{\mylam}[3]{\lambda_{#1:#2}#3}
+\newcommand{\mypi}[3]{\Pi_{#1:#2}#3}
+\newcommand{\Upi}[3]{\Pi^{#1}\,#2\,#3}
+\newcommand{\mysig}[3]{\Sigma_{#1:#2}#3}
+\newcommand{\Usig}[3]{\Sigma^{#1}\,#2\,#3}
+\newcommand{\app}[2]{{#1\,#2}} % many applications still hard-coded with ~
+\newcommand{\Sapp}[1]{\sapp{\SUCC}{#1}}
+\newcommand{\sapp}[2]{{#1(#2)}} % strict app for Id, refl, J, natrec, not S (!)
+\newcommand{\Idapp}[3]{\sapp{\Id}{#1,#2,#3}}
+\newcommand{\Idnapp}[4]{\sapp{\Id^#4}{#1,#2,#3}}
+\newcommand{\NRapp}[4]{\sapp{\RR}{#1,#2,#3,#4}}
+\newcommand{\Rfapp}[2]{\sapp{\refl}{#1,#2}}
+\newcommand{\Japp}[6]{\sapp{\JJ}{#1,#2,#3,#4,#5,#6}}
+\newcommand{\RR}{\mathsf{R}}
+%\newcommand{\Set}{\mathsf{Set}}
+\newcommand{\Group}{\mathsf{Group}}
+%\newcommand{\El}{\mathsf{El}}
+%\newcommand{\T}{\mathsf{T}}
+%\newcommand{\Usuper}{\UU_{\mathrm{super}}}
+%\newcommand{\Tsuper}{\T_{\mathrm{super}}}
+%\newcommand{\idtoeq}{\mathsf{idtoeq}}
+%\newcommand{\isEquiv}{\mathsf{isEquiv}}
+%\newcommand{\Equiv}{\mathsf{Equiv}}
+\newcommand{\isContr}{\mathsf{isContr}}
+%\newcommand{\ua}{\mathsf{ua}}
+%\newcommand{\UA}{\mathsf{UA}}
+%\newcommand{\natrec}{\mathsf{natrec}}
+%\newcommand{\set}[1]{\{#1\}}
+%\newcommand{\sct}[1]{[\![#1]\!]}
+%\newcommand{\refl}{\mathsf{refl}}
+\newcommand{\ttt}[1]{\text{\tt #1}}
+
+%\newcommand{\Level}{\mathrm{Level}}
+\newcommand{\Constraint}{\mathsf{Constraint}}
+\newcommand{\Ordo}{\mathcal{O}}
+\newcommand{\AFu}{\mathcal{A}}
+\newcommand{\Fu}{\mathit{Fu}}
+
+\newcommand{\Ctx}{\mathrm{Ctx}}
+\newcommand{\Ty}{\mathrm{Ty}}
+\newcommand{\Tm}{\mathrm{Tm}}
+\newcommand{\op}{\mathrm{op}}
+
+\newcommand{\CComega}{\mathrm{CC}^\omega}
+\setlength{\oddsidemargin}{0in} % so, left margin is 1in
+\setlength{\textwidth}{6.27in} % so, right margin is 1in
+\setlength{\topmargin}{0in} % so, top margin is 1in
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{9.19in} % so, foot margin is 1.5in
+\setlength{\footskip}{.8in}
+
+% Definition of \placetitle
+% Want to do an alternative which takes arguments
+% for the names, authors etc.
+
+\newcommand\myfrac[2]{
+ \begin{array}{c}
+ #1 \\
+ \hline \hline
+ #2
+\end{array}}
+
+\def\levelctx{\mathrm{lctx}}
+\def\lhom{\mathrm{lhom}}
+
+\newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}}%
+\newcommand*{\Resize}[2]{\resizebox{#1}{!}{$#2$}}
+
+\newcommand{\II}{\mathbb{I}}
+\newcommand{\refl}{\mathsf{refl}}
+%\newcommand{\mkbox}[1]{\ensuremath{#1}}
+
+
+%\newcommand{\Id}{\mathsf{Id}}
+%\newcommand{\conv}{=}
+%\newcommand{\conv}{\mathsf{conv}}
+%\newcommand{\lam}[2]{{\langle}#1{\rangle}#2}
+\def\NN{\mathsf{N}}
+\def\UU{\mathsf{U}}
+\def\JJ{\mathsf{J}}
+\def\Level{\mathrm{level}}
+%\def\Type{\hbox{\sf Type}}
+\def\ZERO{\mathsf{0}}
+\def\SUCC{\mathsf{S}}
+
+\newcommand{\RawCtx}{{\tt Ctx}}
+\newcommand{\RawSub}{{\tt Sub}}
+\newcommand{\RawTy}{{\tt Ty}}
+\newcommand{\RawTm}{{\tt Tm}}
+\newcommand{\type}{\mathsf{type}}
+\newcommand{\N}{\mathsf{N}}
+\newcommand{\Set}{\mathsf{Set}}
+\newcommand{\El}{\mathsf{El}}
+%\newcommand{\U}{\mathsf{U}} clashes with def's in new packages
+\newcommand{\T}{\mathsf{T}}
+\newcommand{\Usuper}{\UU_{\mathrm{super}}}
+\newcommand{\Tsuper}{\T_{\mathrm{super}}}
+%\newcommand{\conv}{\mathrm{conv}}
+\newcommand{\idtoeq}{\mathsf{idtoeq}}
+\newcommand{\isEquiv}{\mathsf{isEquiv}}
+\newcommand{\ua}{\mathsf{ua}}
+\newcommand{\UA}{\mathsf{UA}}
+%\newcommand{\Level}{\mathrm{Level}}
+\def\Constraint{\mathsf{Constraint}}
+\def\Ordo{\mathcal{O}}
+\def\Pihat{\Pi}
+
+\def\Ctx{\mathrm{Ctx}}
+\def\Ty{\mathrm{Ty}}
+\def\Tm{\mathrm{Tm}}
+\def\Obj{\mathrm{obj}}
+\def\Hom{\mathrm{hom}}
+\def\id{\mathrm{id}}
+\def\lHom{\mathrm{lhom}}
+\def\lctx{\mathrm{lctx}}
+\def\lty{\mathrm{level}}
+\def\ltm{\mathrm{ltm}}
+\def\lid{\mathrm{lid}}
+\def\lrefl{\mathrm{lrefl}}
+\def\lp{\mathrm{lp}}
+\def\lq{\mathrm{lq}}
+\def\s{\mathrm{s}}
+\def\lid{\mathrm{lid}}
+\def\cctx{\mathrm{cctx}}
+\def\cty{\mathrm{cty}}
+\def\ctm{\mathrm{ctm}}
+\def\cid{\mathrm{cid}}
+\def\cp{\mathrm{cp}}
+\def\cq{\mathrm{cq}}
+\def\chom{\mathrm{chom}}
+
+\newcommand{\ctx}{\mathrm{ctx}}
+\newcommand{\sub}{\mathrm{sub}}
+\newcommand{\ty}{\mathrm{ty}}
+\newcommand{\tm}{\mathrm{tm}}
+%\newcommand{\hom}{\mathrm{hom}}
+\newcommand{\tuple}[1]{\langle #1 \rangle}
+\def\CComega{\mathrm{CC}^\omega}
+\newcommand{\cext}{.}
+\def\p{\mathrm{p}}
+\def\q{\mathrm{q}}
+\def\app{\mathsf{app}}
+\def\U{\mathsf{U}}
+\def\T{\mathcal{T}}
+\newcommand{\Ta}{\mathrm{T}}
+\newcommand{\ta}{\mathrm{t}}
+
+\newcommand{\natrec}{\mathsf{natrec}}
+%\rightfooter{}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\sct}[1]{[\![#1]\!]}
+\def\R{\mathcal{R}}
+
+\def\L{{\mathcal{L}}}
+\def\F{\mathcal{C}}
+\def\CwF{\mathrm{CwF}}
+\def\SCwF{\mathrm{SCwF}}
+
+
+\begin{document}
+
+\title{Categorical Models of Type Theory\\
+with Explicit Universe Polymorphism}
+
+\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'{\i}n Escard\'o}
+
+\date{}
+\maketitle
+
+\begin{abstract}
+We present generalized algebraic theories corresponding to the theories in our paper 
+{\em Type Theory with Explicit Universe Polymorphism}, so that models of these theories are models of the corresponding type theories. We first consider type theory with internal universe level variables, the models of which are level-indexed categories with families with extra structure, and present the corresponding generalized algebraic theory. We then extend this theory with universe level constraints, show how this theory can be modelled by doubly indexed categories with families with extra structure, and present the corresponding generalized algebraic theory.
+\end{abstract}
+
+\section{Introduction}
+
+In our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BCDE} we addressed the problem of the formal setting for explicit universe polymorphism in dependent type theory. An implicit form of universe polymorphism was introduced by Huet \cite{huet} and is an essential feature of the proof assistants Coq. Alternatively, Agda and Lean employ versions of universe polymorphism, where universe levels are explicitly declared. 
+
+In that paper we followed Courant's approach to explicit universe polymorphism   \cite{courant} and introduced special universe level judgments:
+$$
+l\ level
+\hspace{5em}
+l = l'
+$$
+in addition to the usual judgment forms of type theory. Moreover, all judgments may depend on level variables that are declared in the context. We emphasize that, unike in Agda, universe levels do {\em not} form a type in our setting, and instead we add the new judgments. 
+
+Moreover, we presented an extension of our theory with equational constraints on universe levels, building on a proposal by Voevodsky \cite{}. To this end we added yet another judgment form
+$$
+\Gamma \vdash \psi\ valid
+$$
+where $\psi$ is a list of equational level constraints and $\Gamma$ is a context which may contain equational constraints as well as ordinary typings of variables and level variable declarations.
+
+However, the published version of our paper \cite{} had some shortcomings that are discussed in a revised and extended version of the paper published on the ArXiV \cite{}. To provide further perspective on the precise rules for our theory we provide alternative presentation as initial models of generalized algebraic theories. (In order to achieve this, we need to modify our original theories.)
+
+Our generalized algebraic theories are based on the generalized algebraic theory of an {\em indexed category with families}. They resemble syntactic presentations of variable free dependent type theories with explicit substitutions \cite{martinlof}. We also discuss how certain modifications of our theories in \cite{} give rise to initial models of these generalized algebraic theories.
+
+When presenting standard type theories (without universe level judgments) by generalized algebraic theories we have the following correspondences:
+\begin{itemize}
+\item we have four sort symbols corresponding to the four judgment principal forms of type theory with explicit substitutions. The four equality judgments are represented by equations between terms of the four respecitive sorts.
+\item we have operator symbols for the basic operations of cwfs (corresponding to the general rules of type theory with explicit substituions
+\item for each type former we have an operator symbol for the formation rule, one for each of the introduction rules and one for the elimination rule. The equality (or computation) rules are represented by equations of appropriate types.
+\end{itemize}
+
+We build initial models by defining raw contexts, raw context morphisms, raw types, and raw terms. Then we 
+define pers of equal (well-formed) contexts,  context morphisms, types, and terms, that encode the equality judgments ($\Gamma = \Gamma'$, etc). Finally, we form quotients wrt these pers. See Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,castellan:lambek} for details.
+
+In this way the generalized algebraic theory only records the ``important" rules. When building the initial model we need to include various general ``bookkeeping rules''. Moreover, we remark that the pure theory of cwfs only models the most general rules of dependent type theory, those that are independent of any specific type formers. Then we add new operator symbols and equations for type formers $\Sigma, \Pi$, $\UU$, etc.
+
+These generalized algebraic theories can be found in other publications \cite{dybjer:cwf, bezem:hofmann} and we relegate them to an appendix, except that we begin by listing the sort symbols for an external tower of universes $\UU_n$ indexed by external natural numbers. This is in section 2.
+
+We shall now show generalized algebraic theories for explicit universe polymorphism. This is the theory of cwfs indexed by unityped cwfs (ucwfs) of universe levels. Let $\L$ be the base category of the ucwf of levels. A level-indexed cwf is a cwf-valued presheaf 
+$$
+T : \L^\op \to \CwF
+$$
+The corresponding generalized algebraic theory has three new sort symbol
+$$
+\vdash \lctx
+$$
+$$
+m,n : \lctx \vdash \lhom(m,n)
+$$
+$$
+n : \lctx \vdash \ltm(n)
+$$
+where $\lctx$ is the sort of objects (contexts) of the ucwf, $\lhom$ is the dependent sort of morphisms, and $\ltm$ is the dependent sort of terms.  In the initial model, $n : \lctx$ is the number of universe level variables, $l : \ltm(n)$ is a level term in $n$ level variables, and $ls : \lhom(m,n)$ is context morphism representing $n$ level terms in $m$ level variables.
+
+Moreover, the sorts of the gat of cwfs ($\Ctx,\Hom,\Ty,\Tm$) are now indexed by $n : \lctx$. We will present the full generalized algebraic theory of level-indexed cwfs with the extra structure for level-indexed universes.
+
+However before presenting this theory it is helpful to look at the (infinitary) generalized algebraic theory of cwfs with an externally indexed tower of universes.
+
+\section{Type theory with an external tower of universes}
+
+We refer to the appendix for the generalized algebraic theory of cwfs with $\Pi$-types, and a single universe $\UU$ closed under $\Pi$-types. We could of course add other type formers as well, and let $\UU$ be closed under those too.
+We first consider the case without cumulativity.
+
+\paragraph{An external tower of universes without cumulativity.}
+%\begin{tiny}
+\vspace{1ex}
+Operator symbols (for each $l, l' \in \NN$ and $l < m$). Note that codes for $\Pi$ are doubly indexed.
+\begin{eqnarray*}
+\Gamma : \ctx &\vdash& (\U_{l})_\Gamma : \ty(\Gamma)\\
+\Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta_{l}}(a) : \ty(\Gamma)\\
+%\Gamma : \ctx &\vdash& (\N^0)_\Gamma : \tm(\Gamma,(\U_0)_\Gamma) \\
+\Gamma : \ctx,
+a : \tm(\Gamma,(\U_{l})_\Gamma),
+b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l'})_\Gamma))
+&\vdash&
+ \Pihat^{l,l'}(a,b) : \tm(\Gamma,(\U_{l \vee l'})_\Gamma)\\
+ \Gamma : \ctx&\vdash&(\UU^m_l)_\Gamma: \tm(\Gamma,(\UU_{m})_\Gamma)
+\end{eqnarray*}
+We remark that we often leave arguments to operator symbols {\em implicit}. An example are the decoding operators $\Ta_l$. These are binary operators, so that in the official notation we should write $\Ta_l(\Gamma,a)$. However, in the notation above we omit $\Gamma$ and write $\Ta_l(a)$.
+
+Equations for lifting:
+\begin{eqnarray*}
+%\Ta(\N^0_\Gamma) &=& \N_\Gamma\\
+\Ta_{l \vee l'}(\Pi^{l,l'}(a,b)) &=& \Pi(\Ta_l(a),\Ta_{l'}(b))\\
+\Ta_{m}((\UU^m_l)_\Gamma) &=& (\UU_l)_\Gamma
+\end{eqnarray*}
+Equations for commutativity of lifting and $\Pi$-codes wrt substitution:
+ \begin{eqnarray*}
+(\U_l)_\Gamma [ \gamma ] &=& (\U_l)_\Delta\\
+\Ta_l(a) [ \gamma ] &=& \Ta_l(a[ \gamma ] )\\
+%\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
+\Pi^{l,l'}(a,b)[ \gamma ] &=& \Pi^{l,l'}(a [ \gamma ], b[ \gamma^+ ])\\
+(\UU^m_l)_\Gamma[ \gamma ] &=&(\UU^m_l)_\Delta
+\end{eqnarray*}
+%\end{tiny}
+\paragraph{Adding cumulativity.}
+In the cumulative case we have operator symbols that {\em lift} elements in the $l$th universe to the $m$th universe for $l < m$:
+%\begin{tiny}
+\begin{eqnarray*}
+\Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
+\end{eqnarray*}
+The operator symbols for codes for $\Pi$ now need only one index:
+\begin{eqnarray*}
+\Gamma : \ctx,
+a : \tm(\Gamma,(\U_{l})_\Gamma),
+b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
+&\vdash&
+ \Pihat^{l}(a,b) : \tm(\Gamma,(\U_{l})_\Gamma)
+\end{eqnarray*}
+Equation:
+\begin{eqnarray*}
+\Ta^m_{l}(\Pi^{l}(a,b)) &=& \Pi^m(\Ta^m_l(a),\Ta^m_l(b))\\
+\Ta^m_l((\UU^l_k)_\Gamma) &=& (\UU^m_k)_\Gamma
+\end{eqnarray*}
+Equations for commutativity of operator symbols wrt substitution ($\gamma : \hom(\Delta,\Gamma)$):
+\begin{eqnarray*}
+\Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )\\
+%\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
+\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^+ ])
+\end{eqnarray*}
+%\end{tiny}
+
+\section{Level-indexed type theory}
+
+We start with $\L$, the unityped cwf (ucwf) of levels. This is a cwf-version of the Lawvere theory for upper semilattices with an inflationary endomorphism. These are models of a generalized algebraic theory displayed below.
+
+Then we define the generalized algebraic theory of ucwf-indexed cwfs with $\Pi$-types. These are contravariant functors $F$ from the category of contexts of $\L$ to the category with objects cwfs with $\Pi$-types and arrows cwf-morphisms preserving $\Pi$-types:
+$$
+F : \L^\mathrm{op} \to \CwF^{\Pi}
+$$
+This just says that for each level context $n$ there is a cwf with $\Pi$-types depending on level variables in $n$ and that level-substitution commutes with cwf-structure and $\Pi$-types. 
+
+The universe rules state that for each level term $l$ in $n$ variables, we can build a universe $\UU_l$. There is extra structure to this level-indexed cwf stating that every universe is in the next and that there is a cumulativity map making $\U_l$ a subuniverse of $\UU_m$.
+
+Moreover, level-substitution commutes with the operations associated with a universe.
+
+\begin{itemize}
+\item 
+An object $n$ of $\L$ represents a level context, that is, a sequence of distinct level variables (or just records the number of level variables). 
+\item
+A morphism $\sigma$ in $\L(m,n)$ represents a sequence of length $n$ of level expressions depending on level variables in $m$.
+\item
+$F(n)$ is the cwf of contexts, substitutions, types, and terms that depend on level variables in $n$.
+\item
+The cwf-functor $F(\sigma) : F(n) \to F(m)$ substitutes the $n$ level variables by the level expressions in $\sigma$ in the various components of a cwf depending on $n$ level variables, yielding a cwf depending on $m$ level variables.. 
+\end{itemize}
+
+\paragraph{Remark.} on finitely presented semilattices and constraints.
+
+%\begin{itemize}
+%\item
+%Object part of the functor $\L \to \CwF^{\Pi,\UU_l}$
+%\begin{itemize}
+%\item Level-indexed contexts and context-morphisms
+%\item Level-indexed types and terms
+%\end{itemize}
+%\item
+%Arrow part of the functor $\L \to \CwF^{\Pi,\UU_l}$
+%\begin{itemize}
+%\item Level-substitution in contexts and context-morphisms
+%\item Level-substitution in types and terms
+%\end{itemize}
+%\end{itemize}
+
+\subsection{The ucwf of levels: sort and operator symbols}
+
+%\begin{tiny}
+Sort symbols:
+\begin{eqnarray*}
+&\vdash& \lctx\\
+m, n : \lctx &\vdash& \lHom(m,n)\\
+%\Gamma : \lctx &\vdash& \lty(\Gamma)\\
+m : \lctx &\vdash& \ltm(m)
+\end{eqnarray*}
+
+Operator symbols:\footnote{Add remark about dropping of arguments}
+\begin{eqnarray*}
+m : \lctx &\vdash& \lid_m : \lhom(m,m)\\
+m, n, p : \lctx, \gamma : \lhom(n,p), \delta : \lhom(m,n) &\vdash&
+\gamma \circ \delta : \lhom(m,p)\\
+&&\\
+m,n: \lctx, \gamma : \lhom(n,m), l :\ltm(m) &\vdash&  l[\gamma] : \ltm(n)\\
+&&\\
+&\vdash& 0 : \lctx\\
+m : \lctx &\vdash& \tuple{}_m : \lhom(m,0)\\
+&&\\
+m : \lctx &\vdash& \s(m) : \lctx\\
+m,n : \lctx, \gamma : \lhom(n,m), l:\ltm(n) &\vdash& \tuple{\gamma,l} : \lhom(n,\s(m))\\
+m : \lctx &\vdash& \p: \lhom(\s(m),m)\\
+m : \lctx &\vdash& \q: \ltm(\s(m))\\
+&&\\
+m : \lctx, l : \ltm(m) &\vdash& l^+ : \ltm(m)\\
+m : \lctx, l,l' : \ltm(m) &\vdash& l \vee l' : \ltm(m)
+\end{eqnarray*}
+%\end{tiny}
+Equations:
+
+%\begin{tiny}
+All ucwf-equations (same as the cwf-equations in 1.1 - 1.4, but removing type equations, since there is only one type).
+\begin{eqnarray*}
+&\vdots&
+\end{eqnarray*}
+Semi-lattice equations for $l \vee l'$
+\begin{eqnarray*}
+(l \vee l') \vee l'' &=& l \vee (l' \vee l'')\\
+l \vee l' &=& l'\vee l\\
+l \vee l &=& l
+\end{eqnarray*}
+Equations for $l^+$.
+\begin{eqnarray*}
+l \vee l^+ &=& l^+\\
+(l\vee l')^+ &=& l^+\vee l'^+
+\end{eqnarray*}
+Commutativity of $\vee$ and $+$ with level substitution.
+\begin{eqnarray*}
+&\vdots&
+\end{eqnarray*}
+%\end{tiny}
+
+\subsection{Level-indexed cwfs}
+
+\subsubsection{There is a category above each level-context $n$}
+%\begin{tiny}
+
+Sort symbols:
+\begin{eqnarray*}
+n : \lctx &\vdash& \ctx_n\\
+n : \lctx, \Delta, \Gamma : \ctx_n &\vdash& \Hom_n(\Delta,\Gamma)\\
+\end{eqnarray*}
+
+Operator symbols:
+\begin{eqnarray*}
+n : \lctx, \Gamma : \ctx_n &\vdash& \id_{n,\Gamma} : \Hom_n(\Gamma,\Gamma)\\
+n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \gamma : \Hom_n(\Delta,\Gamma), \delta : \Hom_n(\Xi,\Delta) &\vdash&
+\gamma \circ \delta : \Hom_n(\Xi,\Gamma)
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+\id_{n,\Gamma} \circ \gamma &=& \gamma \\
+ \gamma \circ \id_{n,\Delta} &=& \gamma \\
+(\gamma \circ \delta) \circ \xi &=& \gamma \circ (\delta \circ \xi)
+\end{eqnarray*}
+Note: officially $\circ$ has six arguments rather than two.
+%\end{tiny}
+
+\subsubsection{There is a family-valued functor above each level-context $n$}
+
+Omitted.
+
+\subsubsection{There is a terminal object above each level-context $n$}
+
+%\begin{tiny}
+%Sort symbols: none
+Operator symbols:
+\begin{eqnarray*}
+n : \lctx &\vdash& 1_n : \ctx_n\\
+n : \lctx, \Gamma : \ctx_n &\vdash& \tuple{}_{n,\Gamma} : \Hom_n(\Gamma,1_n)
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+n : \lctx &\vdash& \id_{n,1_n} = \tuple{}_{1_n} : \Hom_n(1_n,1_n)\\
+\Gamma,\Delta : \ctx_n , \gamma : \Hom_n (\Delta,\Gamma) &\vdash&
+\tuple{}_{n,\Gamma\circ\gamma} = \tuple{}_{n,\Delta} : \Hom_n (\Delta,1_n )
+\end{eqnarray*}
+%\end{tiny}
+
+
+\subsubsection{There is a context comprehension above each level-context $n$}
+
+Omitted.
+
+\subsection{Level substitution}
+
+\subsubsection{Level substitution in contexts and context-morphisms}
+
+%\begin{tiny}
+Operator symbols (overloaded notation):
+\begin{eqnarray*}
+n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'} &\vdash& 
+\Gamma[\sigma] : \ctx_n\\
+n, n' : \lctx , \sigma : \lhom(n,n'), \Delta,\Gamma : \ctx_{n'}, \gamma : \Hom_{n'}(\Delta,\Gamma) 
+&\vdash& 
+\gamma[\sigma] : \Hom_{n}(\Delta[\sigma],\Gamma[\sigma]) 
+\end{eqnarray*}
+Equations:
+\begin{eqnarray*}
+\Gamma[\lid_n] &=& \Gamma\\
+\Gamma[\sigma \circ \sigma'] &=& \Gamma[\sigma][\sigma']\\
+\gamma[\lid_n] &=& \gamma\\
+\gamma[\sigma \circ \sigma'] &=& \gamma[\sigma][\sigma']
+\end{eqnarray*}
+%\end{tiny}
+
+\subsubsection{Level substitution in types and terms}
+
+Omitted.
+
+%\subsubsection{Functor laws for level-substitution}
+
+
+\subsubsection{Level substitution in $\Pi$-types}
+
+Omitted.
+
+\subsection{A level-indexed non-cumulative tower of universes}
+
+%\begin{tiny}
+A finitary theory!
+\\
+\vspace{1ex}
+Operator symbols:
+\begin{eqnarray*}
+n : \lctx, l : \ltm(n), \Gamma : \lctx_n &\vdash& (\U_{l})_\Gamma : \ty_n(\Gamma)\\
+n : \lctx, l : \ltm(n), \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta_{l}}(a) : \ty_n(\Gamma)\\
+%\Gamma : \ctx &\vdash& (\N^0)_\Gamma : \tm(\Gamma,(\U_0)_\Gamma) \\
+n : \lctx, l, l' : \ltm(n), \Gamma : \ctx_n,
+a : \tm_n(\Gamma,(\U_{l})_\Gamma),
+b :  \tm_n(\Gamma \cdot \Ta_{l}(a), (\U_{l'})_\Gamma))
+&\vdash&
+ \Pihat^{l,l'}(a,b) : \tm_n(\Gamma,(\U_{l \vee l'})_\Gamma)\\
+ n : \lctx, l : \ltm(n),\Gamma : \ctx_n&\vdash&\UU^l_\Gamma: \tm_n(\Gamma,(\UU_{l^+})_\Gamma)
+\end{eqnarray*}
+Equations:
+\begin{eqnarray*}
+&\vdots&
+\end{eqnarray*}
+There are many equations. First for each $l$, $\U_l$ satisfies all the laws of a single universe, including laws of ordinary substitution. Then we have laws for level substitution $(\U_{l})_\Gamma[\sigma] = (\U_{l[\sigma]})_{\Gamma[\sigma]}$
+%\end{tiny}
+
+\subsection{Level-indexed products of types}
+%We add three operator symbols in addition to the operator symbols for cwfs in Section 5.2 and 5.3:
+\def\l{\mathrm{l}}
+%\begin{tiny}
+Operator symbols (universal level quantification, abstraction, and application):
+\begin{eqnarray*}
+n : \lctx, \Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp])&\vdash& \forall_\l(B) : \ty_n(\Gamma)\\
+n : \lctx, \Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp]), b : \tm_{\s(n)}(\Gamma[\lp], B) &\vdash& \lambda_\l(b) : \tm_n(\Gamma,\forall_\l(B))\\
+n : \lctx, \Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp]), c :  \tm_n(\Gamma,\forall_\l(B)), l : \ltm(n) &\vdash& \app_\l(c,l) : \tm_n(\Gamma, B[\tuple{\lid,l}])
+\end{eqnarray*}
+Equations ($\beta$ and $\eta$ for level abstraction and application):
+ \begin{eqnarray*}
+ \app_\l(\lambda_\l(b),l) &=& b[\tuple{\lid,l}]\\
+ \lambda_\l(\app_\l(c[\lp],\lq)) &=& c
+ \end{eqnarray*}
+ Equations for commutativity of operator symbols wrt a level substitution $\sigma : \lhom(m,n)$ and a term substitution $\gamma : \hom_n(\Delta,\Gamma)$:
+ \begin{eqnarray*}
+ \forall_\l(B)[ \sigma ] &=& \forall_\l(B[ \sigma^{+}])\\
+ \forall_\l(B)[ \gamma ] &=& \forall_\l(B[ \gamma^+ ])\\
+&\vdots&
+\end{eqnarray*}
+where $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$ and $\gamma^+ = \tuple{\gamma \circ \p, \q}$??
+%\end{tiny}
+
+\section{Adding level-constraints}
+
+\subsection{The level-indexed scwf of level constraints}
+
+Constraints are lists of identities of level terms. We formalize the theory of constraints as level-indexed scwfs (simply typed cwfs) $(\cctx, \chom, \cty, \ctm)$. The gat of level-indexed scwf is the same as gat of level-indexed cwfs defined above, except that in scwf types don't depend on contexts. \footnote{In the published paper all constraints appearing in contexts are loop-free "The second condition is that the finite set of constraints in the extended context $\Gamma, \psi$ is loop-free." Here we prefer to allow inconsistent constraints in the first step. As a second step we propose to add a rule that all types are equal to the unit types in an inconsistent context. Such a theory has decidable type-checking.}
+
+The following new sort symbols come from the structure of a level-indexed scwf:
+\begin{eqnarray*}
+n : \lctx &\vdash& \cctx_n\\
+n : \lctx, \psi : \cctx(n), \psi' : \cctx(n) &\vdash& \chom_n(\psi,\psi')\\
+n : \lctx &\vdash& \cty_n\\
+n : \lctx, \psi : \cctx_n, c : \cty_n &\vdash& \ctm_n(\psi,c)
+\end{eqnarray*}
+The extra structure for level-indexed scwfs is given by the following operator symbol $\lid$ for level equality and an equation for equality reflection:
+\begin{eqnarray*}
+n : \lctx, l, l' : \ltm_n &\vdash& \lid(l,l') : \cty_n\\
+n : \lctx, l, l' : \ltm_n, \psi : \cctx_n, p : \ctm_n(\psi,\lid(l,l')) &\vdash& l = l'
+\end{eqnarray*}
+We note that $\lid$ is the only constructor for constraint types $\cty$, and thus constraint contexts are lists of level equalities.
+\footnote{I don't think we need the reflexivity rule $$n : \lctx, \psi : \cctx_n, l : \ltm_n \vdash \lrefl(l) : \ctm_n(\psi,\lid(l,l))$$, since all reasoning about level equations (except using a constraint assumption) are about judgmental equalities} 
+
+It follows that a constraint "type" $c : \cty_n$ is a level equation $\lid(l,l')$ in $n$-variables encoding a level equation $l = l'$. A constraint "context" $\psi : \cctx_n$ is a list of constraint types, that is a list of level equations in $n$-variables. A constraint "term" $p : \ctm_n(\psi,c)$ is a proof that the equations in $\psi$ imply the equation $c$. A constraint morphism $ps : \chom_n(\psi,\psi')$ is a proof that the constraints in $\psi$ imply the constraints in $\psi'$, and represents that the judgment $$\psi \vdash \psi'$$ holds in our paper. 
+
+\paragraph{Remark.} We remark that predicate logic can also be formalized as ucwf-indexed scwfs with extra structure. The base is the ucwf of untyped terms, and the fibre above $n$ is a scwf of propositions in $n$ free variables. Here we have extra structure for all of the logical constants, whereas in the level-indexed scwfs of constraints, the only logical constant is the level equality $\lid$.
+
+\subsection{The level- and constraint-indexed cwf of types}
+
+Let 
+$$
+\F : \L \to \SCwF
+$$
+be the level-indexed scwf of constraints described above.
+
+We have a doubly indexed cwf of types (in our type theory)
+$$
+\T : (n : \L) \to \F(n) \to \CwF
+$$
+or alternatively (spell out what this means officially)
+$$
+\T : \sum_{n : \L}\F(n) \to \CwF
+$$
+So the contexts $\Ctx(n,\psi)$ in the cwf $\T(n,\psi)$ denotes the (type-theoretic) contexts in $n$ level variables satisfying the constraints in $\psi$, and similarly for the context morphisms, types, and terms.
+
+\subsection{A level- and constraint-indexed non-cumulative tower of universes}
+
+
+A finitary theory!
+\\
+\vspace{1ex}
+Operator symbols: (We can factor out the common premises $n : \lctx, \psi : \cctx_n, l : \ltm(n), \Gamma : \ctx_n(\psi)$).
+\begin{tiny}
+\begin{eqnarray*}
+n : \lctx, \psi : \cctx_n, l : \ltm(n), \Gamma : \ctx_n(\psi) &\vdash& (\U_{l})_\Gamma : \ty_n(\psi,\Gamma)\\
+n : \lctx, \psi : \cctx_n, l : \ltm(n), \Gamma : \ctx_n(\psi), a : \tm_n(\psi,\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta_{l}}(a) : \ty_n(\psi,\Gamma)\\
+%\Gamma : \ctx &\vdash& (\N^0)_\Gamma : \tm(\Gamma,(\U_0)_\Gamma) \\
+n : \lctx, \psi : \cctx_n,  l, l' : \ltm(\psi,n), \Gamma : \ctx_n(\psi),
+a : \tm_n(\psi,\Gamma,(\U_{l})_\Gamma),
+b :  \tm_n(\psi,\Gamma \cdot \Ta_{l}(a), (\U_{l'})_\Gamma))
+&\vdash&
+ \Pihat^{l,l'}(a,b) : \tm_n(\psi,\Gamma,(\U_{l \vee l'})_\Gamma)\\
+ n : \lctx, \psi : \cctx_n, l : \ltm(\psi,n),\Gamma : \ctx_n(\psi)&\vdash&\UU^l_\Gamma: \tm_n(\psi,\Gamma,(\UU_{l^+})_\Gamma)
+\end{eqnarray*}
+Equations:
+\begin{eqnarray*}
+&\vdots&
+\end{eqnarray*}
+\end{tiny}
+There are many equations. First for each $l$, $\U_l$ satisfies all the laws of a single universe, including laws of ordinary substitution. Then we have laws for level substitution $(\U_{l})_\Gamma[\sigma] = (\U_{l[\sigma]})_{\Gamma[\sigma]}$
+
+
+\subsection{Constraint-indexed products of types}
+%We add three operator symbols in addition to the operator symbols for cwfs in Section 5.2 and 5.3:
+\def\l{\mathrm{l}}
+\begin{tiny}
+Operator symbols (universal level quantification, abstraction, and application):
+\begin{eqnarray*}
+n : \lctx, \psi : \cctx_n, c : \cty_n, \Gamma : \ctx_n(\psi), A : \ty_n(\psi.c, \Gamma[\cp])&\vdash& [c]A : \ty_n(\psi,\Gamma)\\
+n : \lctx, \psi : \cctx_n, c : \cty_n, \Gamma : \ctx_n(\psi), A : \ty_n(\psi.c,\Gamma[\cp]), t : \tm_n(\psi.c,\Gamma[\cp], A) &\vdash& \langle c \rangle t : \tm_n(\psi,\Gamma,[c]A)\\
+n : \lctx, \psi : \cctx_n, c : \cty_n, \Gamma : \ctx_n(\psi), A : \ty_n(\psi.c,\Gamma[\cp]), f :  \tm_n(\psi,\Gamma,[c]A), pr : \ctm_n(\psi,c) &\vdash& \app_c(f,l) : \tm_n(\psi,\Gamma, A[\tuple{\cid,pr}])
+\end{eqnarray*}
+Equations ($\beta$ and $\eta$ for level abstraction and application):
+ \begin{eqnarray*}
+ \app_c(\langle c \rangle(b),pr) &=& b[\tuple{\cid,c}]\\
+ \langle c \rangle(\app_c(f[\cp],\cq)) &=& f
+ \end{eqnarray*}
+ Equations for commutativity of operator symbols wrt constraint substitution $\sigma : \lhom(m,n)$ and a term substitution $\gamma : \hom_n(\Delta,\Gamma)$:
+ \begin{eqnarray*}
+ ([c]B)[ \sigma ] &=& [c](B[ \sigma^{+}])\\
+ ([c]B)[ \gamma ] &=& [c](B[ \gamma^+ ])\\
+&\vdots&
+\end{eqnarray*}
+where $\sigma^+ = \tuple{\sigma \circ \cp, \cq}$ and $\gamma^+ = \tuple{\gamma \circ \p, \q}$??
+\end{tiny}
+\footnote{Check all this. It's easy to get wrong.}
+
+The first two operator symbols correspond $[c]A$ and $\langle c \rangle t$ to the first two rules (with implicit contexts) in our paper:
+$$
+\frac{\psi \vdash A\ type}{\vdash [\psi]A}
+\hspace{5em}
+\frac{\psi \vdash t : A}{\vdash \langle \psi \rangle t : [\psi]A}\
+$$
+The third operator symbol is the application of a constraint abstraction $\langle c \rangle t : [c]A$ to a proof that the constraint $c$ is valid. This suggests the following rule in the setup of our paper:
+$$
+\frac{\langle \psi \rangle t : [\psi]A\hspace{3em}\psi\ valid}
+{t : A}
+$$
+This rule is implied by the stronger rules in our paper:
+$$
+\frac
+{\psi\ valid}
+{[\psi]A = A}
+\hspace{5em}
+\frac
+{\psi\ valid}
+{[\psi]t  = t}
+$$
+
+\subsection{Level-indexed products of types in the presence of constraints}
+
+We can also do level-indexing in the theory with constraints, provided the constraints don't depend on the abstracted level variable.
+
+\begin{tiny}
+Operator symbols (universal level quantification, abstraction, and application):
+\begin{eqnarray*}
+n : \lctx, \psi : \cctx_{n}, \Gamma : \ctx_n(\psi), B : \ty_{\s(n)}(\psi[\lp],\Gamma[\lp])&\vdash& \forall_\l(B) : \ty_n(\psi,\Gamma)\\
+n : \lctx, \psi : \cctx_{n}, \Gamma : \ctx_n(\psi), B : \ty_{\s(n)}(\psi[\lp],\Gamma[\lp]), b : \tm_{\s(n)}(\psi[\lp],\Gamma[\lp], B) &\vdash&  \lambda_\l(b) : \tm_n(\psi,\Gamma,\forall_\l(B))\\
+n : \lctx, \psi : \cctx_{n}, \Gamma : \ctx_n(\psi), B : \ty_{\s(n)}(\psi[\lp],\Gamma[\lp]), f :  \tm_n(\psi,\Gamma,\forall_l(B)),  l : \ltm(n) &\vdash& \app_\l(f,l) : \tm_n(\psi,\Gamma, B[\tuple{\lid,l}])
+\end{eqnarray*}
+\end{tiny}
+
+Note the similarity with with level-indexed products of types in the absence of constraints in 2.5. We only need to insert the dependence of constraints $\psi$ in $n$ level variables. Then we can abstract with respect to types and terms in $\s(n) = n+1$ variables.
+\begin{tiny}
+Equations ($\beta$ and $\eta$ for level abstraction and application):
+ \begin{eqnarray*}
+ \app_\l(\lambda_\l(b),l) &=& b[\tuple{\lid,l}]\\
+ \lambda_\l(\app_\l(f[\lp],\lq)) &=& f
+ \end{eqnarray*}
+ Equations for commutativity of operator symbols wrt a level substitution $\sigma : \lhom(m,n)$ and a term substitution $\gamma : \hom_n(\Delta,\Gamma)$:
+ \begin{eqnarray*}
+ \forall_\l(B)[ \sigma ] &=& \forall_\l(B[ \sigma^{+}])\\
+ \forall_\l(B)[ \gamma ] &=& \forall_\l(B[ \gamma^+ ])\\
+&\vdots&
+\end{eqnarray*}
+where $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$ and $\gamma^+ = \tuple{\gamma \circ \p, \q}$??
+\end{tiny}
+
+What about substitution with respect to constraints?
+
+\subsection{The decision problem}
+
+The decision problem is whether the judgments are decidable in the initial model. In the initial model the ucwf of levels is finitely presented, and so are the constraints.
+
+There is an algorithm for deciding whether a set of constraints $\psi$ is consistent \cite{bezemcoquand}. If it is consistent then a small modification of the decision algorithm for type theory with an external hierarchy of universes can be employed for the theory with constraints on levels.
+
+If $\psi$ is inconsistent, then the theory is undecidable. If we have a loop $l = l^+$, then $\UU_l : \UU_{l^+}$ implies $\UU_l : \UU_l$.
+
+We can recover decidability by adding the rule that any type is equal to the unit type in an inconsistent level context $\psi$:
+\begin{eqnarray*}
+ \Gamma : \ctx, A  : \ty(\Gamma), c : \psi &\vdash& A = 1_\Gamma
+\end{eqnarray*}
+
+\paragraph{Appendix C.} Here we add the rules
+$$
+\frac{A\ type\hspace{3em}l < l}{A = \emptyset}
+\hspace{5em}
+\frac{t : A\hspace{3em}l < l}{t = \emptyset : A}
+$$
+The first rule corresponds to the following operator in generalized algebraic theories:
+$$
+n : \lctx, \psi : \cctx_n, \Gamma : \ctx_n(\psi), l : \ltm_n, p : \ctm_n(\psi,l < l), A : \ty_n(\psi,\Gamma)
+\vdash
+A = 1_\Gamma
+$$
+where $l < l : \cty_n$ abbreviates $\lid(l^+ \vee l,l) = \lid(l^+,l)$. If we have $A = 1$ rather than $A = \emptyset$ then we don't need an analogue of the second rule.  
+
+
+\paragraph{Remark.} We need to think more about this.
+
+\section{Set-theoretic models}
+
+\subsection{The system with internal levels but no constraints.}
+Assume we have a model in set theory with a hierarchy of universes of type theory with an external hierarchy of universes. The corresponding cwf has the components
+ $$
+(\Ctx, \mathrm{Hom}, \Ty, \Tm)
+ $$
+Let’s first consider the system with internal levels (as in our paper) but without constraints. We can now build a corresponding ucwf-indexed cwf (with the appropriate extra structure)
+ $$
+T : \L^{\op} \to \CwF
+$$
+where $\L$ is the ucwf with $\Ctx_\L = \N$ and $\Tm_\L(n) = \N^n \to \N$, that is, level expressions in $n$ level variables are interpreted as $n$-place set theoretic functions on $\N$. This has the appropriate sup/+ - structure with $\max$ and $\mathrm{succ}$ on $N$. Now
+ $$
+T(n) = (\Ctx_n, \mathrm{Hom}_n, \Ty_n, \Tm_n)
+ $$
+is a cwf modelling type theory with $n$ universe level variables. We have e g
+ $$
+\Ctx_n = \N^n \to \Ctx
+ $$
+that maps an assignment of external levels (as numbers) to the $n$ variables. $T$ can be extended to a functor.
+ 
+\subsection{The system with constraints.}
+If we then consider the system with constraints, we let the scwf $C(n)$ of constraints (in $n$ level variables) be the poset $\{0,1\}$, where 0 is the empty set and 1 is the singleton set. We interpret $\lid(l,l’) = 1$ iff $l = l’ : \Tm_\L(n)$ in the ucwf of levels.
+ 
+If $\psi$ is a context in $C(n)$, that is, a sequence of level identities in $n$ level variables, then we can define a doubly indexed cwf $T(n, \psi)$ assigning external levels to the $n$ variables, that is, provided this assignment is valid in the sense that all the level identities in $\psi$ are satisfied.
+ 
+Instead of starting with the ucwf of levels as natural numbers we can start with any $\sup/+$ lattice $L$.  We can still model the scwf of constraints in the same way and interpret $\lid(l,l’) = 1$ iff $ l = l’ : Tm(n)$.
+ 
+It is part of the indexed cwf-structure that $T(L) \to T(L’)$ for any map $L’ \to L$ of ucwfs with sup+ structure.
+
+\section{Summary}
+
+It's important to give a high-level description. Some of the laws are simply derived from the fact that the level-substitution functor preserves all the structure of $\CwF_\Pi$. But level-substitution also commutes with all the four operator symbols for a universe ($\U_l, \Ta_l, \Pi^{l,l'},\U^{l}$ and with cumulativity $\Ta^m_l$.)
+
+We can separate out all "background" laws, and focus on the laws that define the universe hierarchy, with and without cumulativity.
+
+We note that in the case with cumulativity we have a ($\Pi$-closed) universe structure $\U_l, \Ta_l, \Pi^{l}$ for each term $l \in \tm_\L(n)$. Moreover, for each $l<m$ we have $\U^l_m \in \Tm(\Gamma,\U_{m})$ as in the paper. Moreover, %we should have  (or 
+$\Ta^l_{m}(\U^l_m) = \U_l$)? We also need the cumulativity map $\Ta^l_m(a) \in \Tm(\Gamma,\U_l)$ for $a \in \Tm(\Gamma,\U_l)$ where $l  < m$. It satisfies the two equations found above.
+
+In the presence of cumulativity, it may be better to have for each $l$ that $\U^l \in \Tm(\Gamma,\U_{l^+})$) and $\Ta_{l^+}(\U^l) = \U_l$. Think more about this.
+
+Perhaps the natural thing for external tower of universe is to put $\U_l$ in $\U_{l^+}$ and also let the cumulativity map only take one step? While the level-indexed version suggests a potentially partially order hierarchy of universes, and then you want to use $l < m$. (Note that $l < m$ iff $l^+ = m$, so this is only one step.)
+
+\appendix
+\section{The generalized algebraic theory of cwfs with $\Pi$-types and a single universe closed under them}
+
+\paragraph{The generalized algebraic theory of categories.}
+\begin{tiny}
+Sort symbols:
+\begin{eqnarray*}
+&\vdash& \Obj\\
+\Delta, \Gamma : \Obj &\vdash& \Hom(\Delta,\Gamma)\\
+\end{eqnarray*}
+
+Operator symbols:
+\begin{eqnarray*}
+\Gamma : \Obj &\vdash& \id_\Gamma : \Hom(\Gamma,\Gamma)\\
+\Xi,\Delta,\Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta) &\vdash&
+\gamma \circ \delta : \Hom(\Xi,\Gamma)
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+\Delta, \Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma) &\vdash& \id_\Gamma \circ \gamma = \gamma : \Hom(\Delta,\Gamma)\\
+\Delta, \Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma) &\vdash& \gamma \circ \id_\Delta = \gamma : \Hom(\Delta,\Gamma)\\
+\Theta, \Xi,\Delta,\Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta), \xi : \Hom(\Theta,\Xi) &\vdash&
+(\gamma \circ \delta) \circ \xi = \gamma \circ (\delta \circ \xi): \Hom(\Theta,\Gamma)
+\end{eqnarray*}
+Note: officially $\circ$ has five arguments rather than two.
+\end{tiny}
+
+\paragraph{Adding a family valued functor}
+
+\begin{tiny}
+Sort symbols ($\ctx = \Obj$):
+\begin{eqnarray*}
+\Gamma : \ctx &\vdash& \ty(\Gamma)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \tm(\Gamma,A)
+\end{eqnarray*}
+
+Operator symbols:
+\begin{eqnarray*}
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma) &\vdash&
+A[\gamma] : \ty(\Delta)\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Gamma,A) &\vdash&  a[\gamma] : \tm(\Delta,A[\gamma])
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& A[\id_\Gamma] = A : \ty(\Gamma)\\
+\Gamma : \ctx, A:\ty(\Gamma), a:\tm(\Gamma,A) &\vdash& a[\id_\Gamma] = a : \tm(\Gamma,A)\\
+\Xi,\Delta,\Gamma : \ctx, \delta : \Hom(\Xi,\Delta), \gamma : \Hom(\Delta,\Gamma),
+A:\ty(\Gamma) &\vdash& A[\gamma\circ\delta] = A[\gamma][\delta]: \ty(\Xi)\\
+\Xi,\Delta,\Gamma : \ctx, \delta : \Hom(\Xi,\Delta), \gamma : \Hom(\Delta,\Gamma),
+A:\ty(\Gamma), a:\tm(\Gamma,A) &\vdash&
+a[\gamma\circ\delta] = a[\gamma][\delta]: \tm(\Xi,A[\gamma\circ\delta])
+\end{eqnarray*}
+We have dropped some of the official arguments here too, and will do so in the following as well.
+\end{tiny}
+
+
+\paragraph{Adding a terminal object}
+
+\begin{tiny}
+%Sort symbols: none
+Operator symbols:
+\begin{eqnarray*}
+&\vdash& 1 : \ctx\\
+\Gamma : \ctx &\vdash& \tuple{}_\Gamma : \Hom(\Gamma,1)
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+ &\vdash& \id_1 = \tuple{}_1 : \Hom(1,1)\\
+\Gamma,\Delta : \ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash&
+\tuple{}_\Gamma\circ\gamma = \tuple{}_\Delta : \Hom(\Delta,1)
+\end{eqnarray*}
+\end{tiny}
+
+
+%(The latter two equations are better for term rewriting than the
+%obvious single one expressing the uniqueness of $\tuple{}_\Gamma$.)
+
+\paragraph{Adding context comprehension}
+
+%No new sorts are added.
+\begin{tiny}
+Operator symbols:
+\begin{eqnarray*}
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \Gamma\cext A : \ctx\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \tuple{\gamma,a} : \Hom(\Delta,\Gamma\cext A)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \p: \Hom(\Gamma\cext A,\Gamma)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \q: \tm(\Gamma\cext A,A[\p])
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \p\circ\tuple{\gamma,a} = \gamma : \Hom(\Delta,\Gamma)\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \q[\tuple{\gamma,a}] = a : \tm(\Delta,A[\gamma]) \\
+\Gamma,\Delta,\Xi : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]), \delta : \Hom(\Xi,\Delta) &\vdash&
+\tuple{\gamma,a} \circ \delta = \tuple{\gamma\circ\delta,a[\delta]} :
+\Hom(\Xi,\Gamma\cext A) \\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash&
+\id_{\Gamma\cext A} = \tuple{\p,\q} : \Hom(\Gamma\cext A,\Gamma\cext A)
+\end{eqnarray*}
+\end{tiny}
+
+
+\paragraph{Adding $\Pi$-types}
+%We add three operator symbols in addition to the operator symbols for cwfs in Section 5.2 and 5.3:
+\begin{tiny}
+Operator symbols:
+\begin{eqnarray*}
+\Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A)&\vdash& \Pi(A,B) : \ty(\Gamma)\\
+\Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A), b : \tm(\Gamma.A, B) &\vdash& \lambda(b) : \tm(\Gamma,\Pi(A,B))\\
+\Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A), c :  \tm(\Gamma,\Pi(A,B)), a : \tm(\Gamma, A) &\vdash& \app(c,a) : \tm(\Gamma, B[\tuple{\id,a}])
+\end{eqnarray*}
+Equations (omitting the context and type of the equalities):
+ \begin{eqnarray*}
+ \app(\lambda(b),a) &=& b[\tuple{\id,a}]\\
+ \lambda(\app(c[\p],\q)) &=& c
+ \end{eqnarray*}
+ Equations for commutativity of operator symbols wrt substitution:
+ \begin{eqnarray*}
+\Pi(A,B)[ \gamma ] &=& \Pi(A [ \gamma ], B[ \gamma^+ ])\\
+\lambda(b) [ \gamma ] &=& \lambda(b[\gamma^+ ])\\
+\app(c,a) [ \gamma ] &=& \app(c[ \gamma ], a[ \gamma ] )
+\end{eqnarray*}
+where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
+\end{tiny}
+
+
+\paragraph{Adding a universe closed under $\Pi$}
+
+\footnote{PD: for comparison only}
+\begin{tiny}
+Operator symbols:
+\begin{eqnarray*}
+\Gamma : \ctx &\vdash& \U_\Gamma : \ty(\Gamma)\\
+\Gamma : \ctx, a : \tm(\Gamma,\U_\Gamma) &\vdash& {\Ta}(a) : \ty(\Gamma)\\
+%\Gamma : \ctx &\vdash& (\N^0)_\Gamma : \tm(\Gamma,\U_\Gamma) \\
+\Gamma : \ctx,
+a : \tm(\Gamma,\U_\Gamma),
+b :  \tm(\Gamma \cdot \Ta(a), \U_\Gamma))
+&\vdash&
+ \Pi^0(a,b) : \tm(\Gamma,\U_\Gamma)
+\end{eqnarray*}
+%$\U_\Gamma$ is the universe (a type) relative to the context $\Gamma$; $\Ta$ is the decoding operation mapping a term in the universe to the corresponding type; $\N^0$ is the code for $\N$ in the universe, and $\Pi^0$ forms codes for $\Pi$-types in the universe. (Note that we have dropped the context argument of $\Ta$ and $\Pi^0$.)
+
+Equation:
+\begin{eqnarray*}
+%\Ta(\N^0_\Gamma) &=& \N_\Gamma\\
+\Ta(\Pi^0(a,b)) &=& \Pi(\Ta(a),\Ta(b))
+\end{eqnarray*}
+ Equations for commutativity of operator symbols wrt substitution:
+ \begin{eqnarray*}
+{\U}_\Gamma [ \gamma ] &=& {\U}_\Delta\\
+\Ta(a) [ \gamma ] &=& \Ta(a[ \gamma ] )\\
+%\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
+\Pi^0(a,b)[ \gamma ] &=& \Pi^0(a [ \gamma ], b[ \gamma^+ ])
+\end{eqnarray*}
+\end{tiny}
+%where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
+\end{document}
