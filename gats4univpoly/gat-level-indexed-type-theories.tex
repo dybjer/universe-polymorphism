@@ -435,6 +435,8 @@ m : \lctx &\vdash& \ltm(m)
 \end{eqnarray*}
 
 Operator symbols:\footnote{Add remark about dropping of arguments}
+
+MB: below, lhom's are denoted differently: $\sigma,\sigma'$ 
 \begin{eqnarray*}
 m : \lctx &\vdash& \lid_m : \lhom(m,m)\\
 m, n, p : \lctx, \gamma : \lhom(n,p), \delta : \lhom(m,n) &\vdash&
@@ -457,7 +459,8 @@ m : \lctx, l,l' : \ltm(m) &\vdash& l \vee l' : \ltm(m)
 Equations:
 
 %\begin{tiny}
-All ucwf-equations (same as the cwf-equations in 1.1 - 1.4, but removing type equations, since there is only one type).
+All ucwf-equations (same as the cwf-equations in \ref{sec:gatPiU}, 
+but removing type equations, since there is only one type).
 \begin{eqnarray*}
 &\vdots&
 \end{eqnarray*}
@@ -507,7 +510,36 @@ Note: officially $\circ$ has six arguments rather than two.
 
 \subsubsection{There is a family-valued functor above each level-context $n$}
 
-Omitted.
+MB, check. Perhaps better to describe how to modify \ref{sec:gatPiU}:
+prefix every rule with $n:\lctx$ and add index $n$ to every occurrence
+of $\ctx,\ty,\tm$.
+
+\begin{tiny}
+Sort symbols:
+\begin{eqnarray*}
+n : \lctx, \Gamma : \ctx_n &\vdash& \ty_n(\Gamma)\\
+n : \lctx, \Gamma : \ctx_n, A:\ty_n(\Gamma) &\vdash& \tm_n(\Gamma,A)
+\end{eqnarray*}
+
+Operator symbols:
+\begin{eqnarray*}
+n : \lctx, \Gamma,\Delta : \ctx_n, A:\ty_n(\Gamma), \gamma : \Hom_n(\Delta,\Gamma) &\vdash&
+A[\gamma] : \ty_n(\Delta)\\
+n : \lctx, \Gamma,\Delta : \ctx_n, A:\ty_n(\Gamma), \gamma : \Hom_n(\Delta,\Gamma), a:\tm_n(\Gamma,A) &\vdash&  a[\gamma] : \tm_n(\Delta,A[\gamma])
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+n : \lctx, \Gamma : \ctx_n, A:\ty_n(\Gamma) &\vdash& A[\id_{n,\Gamma}] = A : \ty_n(\Gamma)\\
+n : \lctx, \Gamma : \ctx_n, A:\ty_n(\Gamma), a:\tm_n(\Gamma,A) &\vdash& a[\id_{n,\Gamma}] = a : \tm_n(\Gamma,A)\\
+n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \delta : \Hom_n(\Xi,\Delta), \gamma : \Hom_n(\Delta,\Gamma),
+A:\ty_n(\Gamma) &\vdash& A[\gamma\circ\delta] = A[\gamma][\delta]: \ty_n(\Xi)\\
+n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \delta : \Hom_n(\Xi,\Delta), \gamma : \Hom_n(\Delta,\Gamma),
+A:\ty_n(\Gamma), a:\tm_n(\Gamma,A) &\vdash&
+a[\gamma\circ\delta] = a[\gamma][\delta]: \tm_n(\Xi,A[\gamma\circ\delta])
+\end{eqnarray*}
+We have dropped some of the official arguments here too, and will do so in the following as well.
+\end{tiny}
 
 \subsubsection{There is a terminal object above each level-context $n$}
 
@@ -556,7 +588,24 @@ Equations:
 
 \subsubsection{Level substitution in types and terms}
 
-Omitted.
+MB, check.
+
+Operator symbols (overloaded notation):
+\begin{eqnarray*}
+n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma)
+&\vdash& 
+A[\sigma]: \ty_n(\Gamma[\sigma])\\
+n,n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma), a : \tm_{n'}(A,\Gamma) 
+&\vdash& 
+a[\sigma] : \tm_{n}(A[\sigma],\Gamma[\sigma]) 
+\end{eqnarray*}
+\begin{eqnarray*}
+A[\lid_n] &=& A\\
+A[\sigma \circ \sigma'] &=& A[\sigma][\sigma']: \ty_p(\Gamma[\sigma \circ \sigma'])\\
+a[\lid_n] &=& a\\
+a[\sigma \circ \sigma'] &=& a[\sigma][\sigma']: \tm_p(A[\sigma][\sigma'],\Gamma[\sigma \circ \sigma'])
+\end{eqnarray*}
+%\end{tiny}
 
 %\subsubsection{Functor laws for level-substitution}
 
@@ -766,7 +815,7 @@ What about substitution with respect to constraints?
 
 The decision problem is whether the judgments are decidable in the initial model. In the initial model the ucwf of levels is finitely presented, and so are the constraints.
 
-There is an algorithm for deciding whether a set of constraints $\psi$ is consistent \cite{bezemcoquand}. If it is consistent then a small modification of the decision algorithm for type theory with an external hierarchy of universes can be employed for the theory with constraints on levels.
+There is an algorithm for deciding whether a set of constraints $\psi$ is consistent \cite{bezem-coquand:lattices}. If it is consistent then a small modification of the decision algorithm for type theory with an external hierarchy of universes can be employed for the theory with constraints on levels.
 
 If $\psi$ is inconsistent, then the theory is undecidable. If we have a loop $l = l^+$, then $\UU_l : \UU_{l^+}$ implies $\UU_l : \UU_l$.
 
@@ -836,7 +885,7 @@ In the presence of cumulativity, it may be better to have for each $l$ that $\U^
 Perhaps the natural thing for external tower of universe is to put $\U_l$ in $\U_{l^+}$ and also let the cumulativity map only take one step? While the level-indexed version suggests a potentially partially order hierarchy of universes, and then you want to use $l < m$. (Note that $l < m$ iff $l^+ = m$, so this is only one step.)
 
 \appendix
-\section{The generalized algebraic theory of cwfs with $\Pi$-types and a single universe closed under them}
+\section{The generalized algebraic theory of cwfs with $\Pi$-types and a single universe closed under them}\label{sec:gatPiU}
 
 \paragraph{The generalized algebraic theory of categories.}
 \begin{tiny}
@@ -995,4 +1044,6 @@ Equation:
 \end{eqnarray*}
 \end{tiny}
 %where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
+\bibliographystyle{plain}
+\bibliography{../refs}
 \end{document}
