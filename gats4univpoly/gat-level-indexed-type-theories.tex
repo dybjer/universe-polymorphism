@@ -249,7 +249,7 @@
 \begin{document}
 
 \title{Categorical Models of Type Theory\\
-with Explicit Universe Polymorphism}
+with Explicit Universe Polymorphism\footnote{Alternative title: Generalised Algebraic Theories of Type Theories with Explicit Universe Polymorphism?}}
 
 \author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'{\i}n Escard\'o}
 
@@ -263,17 +263,17 @@ We present generalized algebraic theories corresponding to the theories in our p
 
 \section{Introduction}
 
-In our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22} we addressed the problem of the formal setting for explicit universe polymorphism in dependent type theory. An implicit form of universe polymorphism was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Coq (Rocq). Alternatively, Agda and Lean employ versions of universe polymorphism, where universe levels are explicitly declared. 
+In our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22} we addressed the problem of the formal setting for explicit universe polymorphism in Martin-Löf type theory. An implicit form of universe polymorphism was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Coq (Rocq). Alternatively, Agda and Lean employ versions of universe polymorphism, where universe levels are explicitly declared. 
 
-In that paper we followed Courant's approach to explicit universe polymorphism   \cite{Courant02} and introduced special universe level judgments:
+In our paper we followed Courant's approach to explicit universe polymorphism  \cite{Courant02} and introduced special universe level {\em judgments}:
 $$
 l\ level
 \hspace{5em}
 l = l'
 $$
-in addition to the usual judgment forms of type theory. Moreover, all judgments may depend on level variables that are declared in the context. We emphasize that, unike in Agda, universe levels do {\em not} form a type in our setting, and instead we add the new judgments. 
+in addition to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variable that are declared in the context. We emphasize that, unike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we add the above judgment forms. 
 
-Moreover, we presented an extension of our theory with equational constraints on universe levels, building on a proposal by Voevodsky \cite{VV}. To this end we added yet another judgment form
+We also presented an extension with equational constraints between universe levels, building on a proposal by Voevodsky \cite{VV}. To this end we added yet another judgment form
 $$
 \Gamma \vdash \psi\ valid
 $$
