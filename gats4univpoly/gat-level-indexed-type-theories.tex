@@ -253,7 +253,7 @@ with Explicit Universe Polymorphism\footnote{Alternative title: Generalised Alge
 
 \author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'{\i}n Escard\'o}
 
-\date{}
+\date{(incomplete draft)}
 \maketitle
 
 \begin{abstract}
@@ -271,26 +271,26 @@ l\ level
 \hspace{5em}
 l = l'
 $$
-in addition to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variable that are declared in the context. We emphasize that, unike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we add the above judgment forms. 
+in addition to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variable that are declared in the context. We emphasized that, unike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms. 
 
-We also presented an extension with equational constraints between universe levels, building on a proposal by Voevodsky \cite{VV}. To this end we added yet another judgment form
+We also presenteded an extension with equational constraints between universe levels, building on a proposal by Voevodsky \cite{VV}. To this end we added yet another judgment form
 $$
-\Gamma \vdash \psi\ valid
+\psi\ valid
 $$
-where $\psi$ is a list of equational level constraints and $\Gamma$ is a context which may contain equational constraints as well as ordinary typings of variables and level variable declarations.
+where $\psi$ is a list of equational level constraints that can depend on a context which may contain equational constraints as well as level variables and ordinary typings of variables.
 
-However, the published version of our paper \cite{BezemCDE22} had some shortcomings that are discussed in a revised and extended version of the paper published on the ArXiV \cite{BezemCDE22:revised}. To provide further perspective on the precise rules for our theory we provide alternative presentation as initial models of generalized algebraic theories. (In order to achieve this, we need to modify our original theories.)
+However, the published version of our paper \cite{BezemCDE22} had some shortcomings that are discussed in a revised and extended version of the paper published on the ArXiV \cite{BezemCDE22:revised}. To provide further perspective on our theories we present generalized algebraic theories such that (slightly modified versions of) our theories give rise to their initial models. These generalized algebraic theories are based on the notion of an {\em indexed category with families} and resemble syntactic presentations of dependent type theories with explicit substitutions \cite{martinlof:gbg92,tasistro:lic}. By focusing on the notion of an initial model, we abstract away from certain details of the precise definition of the syntax and inference rules.  Moreover, since the models are described on a high level in terms of indexed categories with families with extra structure we have evidence that they are regular notions. This is much harder to establish if we work with traditional presentation of logical theories defined in terms of syntax and inference rules. 
 
-Our generalized algebraic theories are based on the generalized algebraic theory of an {\em indexed category with families}. They resemble syntactic presentations of variable free dependent type theories with explicit substitutions \cite{martinlof:gbg92,tasistro:lic}. We also discuss how certain modifications of our theories give rise to initial models of these generalized algebraic theories.
+A further contribution of the present paper is to extend the programme of {\em uniform categorical logic} to indexed structures. As shown by Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,CCD:lambek} we can use the notions of cwf, scwf (simply typed cwf), and ucwf (unityped cwf) to develop a uniform approach to models of various dependently typed, simply typed, and untyped systems. We here show our type theory with explicit universe polymorphism is captured by ucwf-indexed cwfs, and our type theory with universe level constraints can be described by ucwf-scwf-indexed cwfs. Other important examples are untyped predicate logic which arises as ucwf-indexed scwfs, typed predicate logic as scwf-indexed scwfs, and dependently typed predicate logic as cwf-indexed scwfs (all with extra structure for the logical constants).
 
 When presenting standard type theories (without universe level judgments) by generalized algebraic theories we have the following correspondences:
 \begin{itemize}
-\item we have four sort symbols corresponding to the four judgment principal forms of type theory with explicit substitutions. The four equality judgments are represented by equations between terms of the four respecitive sorts.
-\item we have operator symbols for the basic operations of cwfs (corresponding to the general rules of type theory with explicit substituions
-\item for each type former we have an operator symbol for the formation rule, one for each of the introduction rules and one for the elimination rule. The equality (or computation) rules are represented by equations of appropriate types.
+\item four sort symbols (context, context morphism (substitution), type in context, and term of a type in context) corresponding to the four principal forms of judgment of type theory with explicit substitutions:The four equality judgments are represented by equations between terms of the four respecitive sorts.
+\item ten operator symbols for the basic operations of cwfs (identity and composition of contexts, substitution in types and in terms, empty context, context extension, empty substitution, substitution extension, projection substitution, last variable term).
+\item an operator symbol for each formation rule,  introduction rule and elimination rule for each type forner of the type theory. The equality (or computation) rules are represented by equations of appropriate types.
 \end{itemize}
 
-We build initial models by defining raw contexts, raw context morphisms, raw types, and raw terms. Then we 
+We can build initial models by defining raw contexts, raw context morphisms, raw types, and raw terms. Then we 
 define pers of equal (well-formed) contexts,  context morphisms, types, and terms, that encode the equality judgments ($\Gamma = \Gamma'$, etc). Finally, we form quotients wrt these pers. See Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,CCD:lambek} for details.
 
 In this way the generalized algebraic theory only records the ``important" rules. When building the initial model we need to include various general ``bookkeeping rules''. Moreover, we remark that the pure theory of cwfs only models the most general rules of dependent type theory, those that are independent of any specific type formers. Then we add new operator symbols and equations for type formers $\Sigma, \Pi$, $\UU$, etc.
