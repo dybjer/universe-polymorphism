@@ -319,11 +319,13 @@ Moreover, the sorts of the gat of cwfs ($\Ctx,\Hom,\Ty,\Tm$) are now indexed by 
 
 \paragraph{Plan of the paper.} In Section 2 we present the (infinitary) generalized algebraic theory of cwfs with extra structure for the type formers and an externally indexed tower of universes. In Section 3 we present the finitary generalized algebraic theory of level-indexed type theory with extra structure for the type formers and an internally indexed tower of universes. In Section 4 we present the generalized algebraic theory of cwfs with extra structure doubly indexed by levels and level constraints. In Section 5 we discuss models. In Section 6 we condclude. The appendix contains generalized algebraic theories appearing in previous publications. 
 
-\paragraph{Acknowledgement to Stefano Berardi.} This paper is a contribution to a Festschrift in honour of Professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend and colleague who has made many deep contributions to type theory and constructivity, in particular to analyzing the constructiive content of classical logic.
+\paragraph{Acknowledgement to Stefano Berardi.} This paper is a contribution to a Festschrift in honour of Professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend and colleague who has made many deep contributions to type theory and constructivity, in particular to the understanding of the constructiive content of classical logic.
 
 \section{Type theory with an external tower of universes}
 
-We refer to the appendix for the generalized algebraic theory of cwfs with $\Pi$-types, and a single universe $\UU$ closed under $\Pi$-types. We could of course add other type formers as well, and let $\UU$ be closed under those too, but leave this to the reader. 
+As a first step, we shall show the operator symbols and equations for an external tower of universes without cumulativity. Note that this is an infinitary theory.
+
+We assume that we already have defined the generalized algebraic theory of cwfs with $\Pi$-types, see the appendix. We could of course add other type formers as well, and let $\UU$ be closed under those too, but leave this to the reader. 
 
 \paragraph{A tower of universes without cumulativity.} We show the infinitely many operator symbols and equations indexed by external natural numbers $l, l' , m \in \NN$ and $l < m$.
 Note that codes for $\Pi$ are doubly indexed.
@@ -357,7 +359,7 @@ Moreover, we have equations for commutativity of lifting and $\Pi$-codes wrt sub
 \end{eqnarray*}
 %\end{tiny}
 \paragraph{A tower with cumulativity.}
-In the cumulative case we have operator symbols that lift elements in the $l$th universe to the $m$th universe for $l < m$:
+In the cumulative case we also have operator symbols that lift elements in the $l$th universe to the $m$th universe for $l < m$:
 %\begin{tiny}
 \begin{eqnarray*}
 \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
@@ -383,7 +385,7 @@ Equations for commutativity of operator symbols wrt substitution ($\gamma : \hom
 \end{eqnarray*}
 %\end{tiny}
 
-\paragraph{Syntax and inference rules as an initial model.} A proof that a version of Martin-Löf type theory with an external tower of universes (without cumulativity) is an initial contextual category with appropriate extra structure has been implemented in Agda by de Boer and Brunerie \cite{Brunerie:initiality,deBoer:lic}. This is for a version of type theory with de Bruijn variables and implicit substitutions. A very similar construction would yield an initial model of the above generalized algebraic theories and only minor modifications would be needed to move from contextual categories to cwfs and other differences between the model notions. Moreover, the syntax and inference rules in our paper \cite{BezemCDE22} are not identical to the ones implemented by de Boer and Brunerie, but we expect no difficult in adapting their proof (!?).
+\paragraph{Syntax and inference rules as an initial model.} A proof that a version of Martin-Löf type theory with an external tower of universes  is an initial contextual category with appropriate extra structure has been implemented in Agda by de Boer and Brunerie \cite{Brunerie:initiality,deBoer:lic}. This is for a version of type theory with de Bruijn variables and implicit substitutions. A very similar construction would yield an initial model of the above generalized algebraic theories and only minor modifications would be needed to move from contextual categories to cwfs and other differences between the model notions. Moreover, the syntax and inference rules in our paper \cite{BezemCDE22} are not identical to the ones implemented by de Boer and Brunerie, but we expect no difficult in adapting their proof (!?).
 
 \section{Level-indexed type theory}
 
@@ -1019,7 +1021,7 @@ where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
 
 \paragraph{Adding a universe closed under $\Pi$}
 
-\footnote{PD: for comparison only}
+\footnote{PD: for comparison only. Should we remove it?}
 \begin{tiny}
 Operator symbols:
 \begin{eqnarray*}
