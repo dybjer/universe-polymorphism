@@ -389,60 +389,27 @@ Equations for commutativity of operator symbols wrt substitution ($\gamma : \hom
 
 \section{Level-indexed type theory}
 
-We start with $\L$, the unityped cwf (ucwf) of levels. This is a cwf-version of the Lawvere theory for upper semilattices with an inflationary endomorphism. These are models of a generalized algebraic theory displayed below.
-
-Then we define the generalized algebraic theory of ucwf-indexed cwfs with $\Pi$-types. These are contravariant functors $F$ from the category of contexts of $\L$ to the category with objects cwfs with $\Pi$-types and arrows cwf-morphisms preserving $\Pi$-types:
-$$
-F : \L^\mathrm{op} \to \CwF^{\Pi}
-$$
-This just says that for each level context $n$ there is a cwf with $\Pi$-types depending on level variables in $n$ and that level-substitution commutes with cwf-structure and $\Pi$-types. 
-
-The universe rules state that for each level term $l$ in $n$ variables, we can build a universe $\UU_l$. There is extra structure to this level-indexed cwf stating that every universe is in the next and that there is a cumulativity map making $\U_l$ a subuniverse of $\UU_m$.
-
-Moreover, level-substitution commutes with the operations associated with a universe.
-
+\subsection{The ucwf of levels}
+We shall now turn the externally indexed tower of universes into an internally indexed one by replacing the external natural numbers with internal level expressions. We shall organize these as a unityped cwf (ucwf) of levels  with extra structure for upper semilattices with an inflationary endomorphism. 
 \begin{itemize}
 \item 
-An object $n$ of $\L$ represents a level context, that is, a sequence of distinct level variables (or just records the number of level variables). 
+An object $n \in \Ctx_\L$ represents a level context, that is, a sequence of distinct level variables (or just records the number of level variables). 
 \item
-A morphism $\sigma$ in $\L(m,n)$ represents a sequence of length $n$ of level expressions depending on level variables in $m$.
+A term in $\Tm_\L(n)$ represents a level expression in $n$ level variables.
 \item
-$F(n)$ is the cwf of contexts, substitutions, types, and terms that depend on level variables in $n$.
-\item
-The cwf-functor $F(\sigma) : F(n) \to F(m)$ substitutes the $n$ level variables by the level expressions in $\sigma$ in the various components of a cwf depending on $n$ level variables, yielding a cwf depending on $m$ level variables.. 
+A morphism in $\Hom_\L(m,n)$ represents a sequence of length $n$ of level expressions depending on level variables in $m$.
 \end{itemize}
 
-\paragraph{Remark.} on finitely presented semilattices and constraints.
-
-%\begin{itemize}
-%\item
-%Object part of the functor $\L \to \CwF^{\Pi,\UU_l}$
-%\begin{itemize}
-%\item Level-indexed contexts and context-morphisms
-%\item Level-indexed types and terms
-%\end{itemize}
-%\item
-%Arrow part of the functor $\L \to \CwF^{\Pi,\UU_l}$
-%\begin{itemize}
-%\item Level-substitution in contexts and context-morphisms
-%\item Level-substitution in types and terms
-%\end{itemize}
-%\end{itemize}
-
-\subsection{The ucwf of levels: sort and operator symbols}
-
+Since ucwfs are cwfs with only one type, the gat of ucwfs is a simplified version of the gat of cwfs. We only need three sort symbols 
 %\begin{tiny}
-Sort symbols:
 \begin{eqnarray*}
 &\vdash& \lctx\\
 m, n : \lctx &\vdash& \lHom(m,n)\\
 %\Gamma : \lctx &\vdash& \lty(\Gamma)\\
 m : \lctx &\vdash& \ltm(m)
 \end{eqnarray*}
-
-Operator symbols:\footnote{Add remark about dropping of arguments}
-
-MB: below, lhom's are denoted differently: $\sigma,\sigma'$ 
+The operator symbols for ucwfs are \footnote{Add remark about dropping of arguments}
+\footnote{MB: below, lhom's are denoted differently: $\sigma,\sigma'$}
 \begin{eqnarray*}
 m : \lctx &\vdash& \lid_m : \lhom(m,m)\\
 m, n, p : \lctx, \gamma : \lhom(n,p), \delta : \lhom(m,n) &\vdash&
@@ -456,21 +423,21 @@ m : \lctx &\vdash& \tuple{}_m : \lhom(m,0)\\
 m : \lctx &\vdash& \s(m) : \lctx\\
 m,n : \lctx, \gamma : \lhom(n,m), l:\ltm(n) &\vdash& \tuple{\gamma,l} : \lhom(n,\s(m))\\
 m : \lctx &\vdash& \p: \lhom(\s(m),m)\\
-m : \lctx &\vdash& \q: \ltm(\s(m))\\
-&&\\
+m : \lctx &\vdash& \q: \ltm(\s(m))
+\end{eqnarray*}
+Note that since there is only one type, we can remove the operator symbol for operations in types and only keep substitution in (level) terms.
+
+Moreover, we have the operator symbol for the successor level and for the supremum of two levels:
+\begin{eqnarray*}
 m : \lctx, l : \ltm(m) &\vdash& l^+ : \ltm(m)\\
 m : \lctx, l,l' : \ltm(m) &\vdash& l \vee l' : \ltm(m)
 \end{eqnarray*}
 %\end{tiny}
-Equations:
 
 %\begin{tiny}
-All ucwf-equations (same as the cwf-equations in \ref{sec:gatPiU}, 
-but removing type equations, since there is only one type).
-\begin{eqnarray*}
-&\vdots&
-\end{eqnarray*}
-Semi-lattice equations for $l \vee l'$
+We also have all the ucwf-equations, but we do not display them here. These are the cwf-equations  \ref{sec:gatPiU} for the special case that there is only one type. Thus all type equations are redundant.
+
+Then we have the semi-lattice equations for $l \vee l'$
 \begin{eqnarray*}
 (l \vee l') \vee l'' &=& l \vee (l' \vee l'')\\
 l \vee l' &=& l'\vee l\\
@@ -483,28 +450,35 @@ l \vee l^+ &=& l^+\\
 \end{eqnarray*}
 Commutativity of $\vee$ and $+$ with level substitution.
 \begin{eqnarray*}
-&\vdots&
+(l \vee l')[ls] &=& l[ls] \vee l' [ls]\\
+ l^+[ls] &=&  l[ls]^+
 \end{eqnarray*}
 %\end{tiny}
+\paragraph{Remark.} Ucwfs are closely related to Lawvere theories. One can prove that they are equivalent to contextual ucwfs, that is, ucwfs where the set of contexts is isomorphic to the natural numbers \cite{CCD:lambek}.
 
-\subsection{Level-indexed cwfs}
-
-\subsubsection{There is a category above each level-context $n$}
-%\begin{tiny}
-
-Sort symbols:
+\subsection{The ucwf-indexed cwf of types with explicit universe polymorphism}
+We now define the generalized algebraic theory of ucwf-indexed cwfs with $\Pi$-types. These are contravariant functors $F$ from the category of contexts of $\L$ (we use $\L$ also for the base category of the ucwf $\L$)  to the category with objects cwfs with $\Pi$-types and arrows cwf-morphisms preserving $\Pi$-types:
+$$
+F : \L^\mathrm{op} \to \CwF^{\Pi}
+$$
+We have
+\begin{itemize}
+\item
+$F(n)$ is the cwf (with $\Pi$-types) of contexts, substitutions, types, and terms that depend on level variables in $n$.
+\item
+The cwf-functor $F(\sigma) : F(n) \to F(m)$ substitutes the $n$ level variables by the level expressions in $\sigma$ in the various components of a cwf depending on $n$ level variables, yielding a cwf depending on $m$ level variables. All structure of the cwf with $\Pi$-types is preserved.
+\end{itemize}
+We have the following sort symbols:
 \begin{eqnarray*}
 n : \lctx &\vdash& \ctx_n\\
 n : \lctx, \Delta, \Gamma : \ctx_n &\vdash& \Hom_n(\Delta,\Gamma)\\
 \end{eqnarray*}
-
 Operator symbols:
 \begin{eqnarray*}
 n : \lctx, \Gamma : \ctx_n &\vdash& \id_{n,\Gamma} : \Hom_n(\Gamma,\Gamma)\\
 n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \gamma : \Hom_n(\Delta,\Gamma), \delta : \Hom_n(\Xi,\Delta) &\vdash&
 \gamma \circ \delta : \Hom_n(\Xi,\Gamma)
 \end{eqnarray*}
-
 Equations:
 \begin{eqnarray*}
 \id_{n,\Gamma} \circ \gamma &=& \gamma \\
@@ -514,11 +488,11 @@ Equations:
 Note: officially $\circ$ has six arguments rather than two.
 %\end{tiny}
 
-\subsubsection{There is a family-valued functor above each level-context $n$}
+\paragraph{There is a family-valued functor above each level-context $n$}
 
-MB, check. Perhaps better to describe how to modify \ref{sec:gatPiU}:
+\footnote{MB, check. Perhaps better to describe how to modify \ref{sec:gatPiU}:
 prefix every rule with $n:\lctx$ and add index $n$ to every occurrence
-of $\ctx,\ty,\tm$.
+of $\ctx,\ty,\tm$.}
 
 \begin{tiny}
 Sort symbols:
@@ -546,6 +520,26 @@ a[\gamma\circ\delta] = a[\gamma][\delta]: \tm_n(\Xi,A[\gamma\circ\delta])
 \end{eqnarray*}
 We have dropped some of the official arguments here too, and will do so in the following as well.
 \end{tiny}
+  
+
+\paragraph{Remark.} on finitely presented semilattices and constraints.
+
+%\begin{itemize}
+%\item
+%Object part of the functor $\L \to \CwF^{\Pi,\UU_l}$
+%\begin{itemize}
+%\item Level-indexed contexts and context-morphisms
+%\item Level-indexed types and terms
+%\end{itemize}
+%\item
+%Arrow part of the functor $\L \to \CwF^{\Pi,\UU_l}$
+%\begin{itemize}
+%\item Level-substitution in contexts and context-morphisms
+%\item Level-substitution in types and terms
+%\end{itemize}
+%\end{itemize}
+
+
 
 \subsubsection{There is a terminal object above each level-context $n$}
 
@@ -619,6 +613,11 @@ a[\sigma \circ \sigma'] &=& a[\sigma][\sigma']: \tm_p(A[\sigma][\sigma'],\Gamma[
 \subsubsection{Level substitution in $\Pi$-types}
 
 Omitted.
+
+
+The universe rules state that for each level term $l$ in $n$ variables, there is a type $\UU_l$. There is extra structure to this level-indexed cwf stating that every universe is in the next and that there is a cumulativity map making $\U_l$ a subuniverse of $\UU_m$.
+
+Moreover, level-substitution commutes with the operations associated with a universe.
 
 \subsection{A level-indexed non-cumulative tower of universes}
 
