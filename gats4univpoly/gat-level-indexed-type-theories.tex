@@ -204,7 +204,7 @@
 \def\lctx{\mathrm{lctx}}
 \def\lty{\mathrm{level}}
 \def\ltm{\mathrm{ltm}}
-\def\lid{\mathrm{lid}}
+\def\leq{\mathrm{leq}}
 \def\lrefl{\mathrm{lrefl}}
 \def\lp{\mathrm{lp}}
 \def\lq{\mathrm{lq}}
@@ -681,17 +681,34 @@ n : \lctx, \psi : \cctx(n), \psi' : \cctx(n) &\vdash& \chom_n(\psi,\psi')\\
 n : \lctx &\vdash& \cty_n\\
 n : \lctx, \psi : \cctx_n, c : \cty_n &\vdash& \ctm_n(\psi,c)
 \end{eqnarray*}
-The extra structure for level-indexed scwfs is given by the following operator symbol $\lid$ for level equality and an equation for equality reflection:
+The extra structure for level-indexed scwfs is given by the following operator symbol $\leq$ for level equality and an equation for equality reflection:
 \begin{eqnarray*}
-n : \lctx, l, l' : \ltm_n &\vdash& \lid(l,l') : \cty_n\\
-n : \lctx, l, l' : \ltm_n, \psi : \cctx_n, p : \ctm_n(\psi,\lid(l,l')) &\vdash& l = l'
+n : \lctx, l, l' : \ltm_n &\vdash& \leq(l,l') : \cty_n\\
+n : \lctx, l, l' : \ltm_n, \psi : \cctx_n, p : \ctm_n(\psi,\leq(l,l')) &\vdash& l = l'
 \end{eqnarray*}
-We note that $\lid$ is the only constructor for constraint types $\cty$, and thus constraint contexts are lists of level equalities.
-\footnote{I don't think we need the reflexivity rule $$n : \lctx, \psi : \cctx_n, l : \ltm_n \vdash \lrefl(l) : \ctm_n(\psi,\lid(l,l))$$, since all reasoning about level equations (except using a constraint assumption) are about judgmental equalities} 
+We note that $\leq$ is the only constructor for constraint types $\cty$, 
+and thus constraint contexts are lists of level equalities.
+MB By induction on the length of the constraint context $\psi$ we can
+prove in the metatheory the following admissibility result:
+for any $l,l'$ such that $\leq(l,l')$ occurs in $\psi$,
+we can infer $n : \lctx, l, l' : \ltm_n, \psi : \cctx_n \vdash l=l'$.
+It follows that we can infer the latter equality judgment for all $l,l'$ such 
+that $l=l'$ can be inferred in lattice theory from the equalities reflected
+in $\psi$. Make this a lemma?%
+\footnote{MB: We don't need the reflexivity rule 
+\[
+n : \lctx, \psi : \cctx_n, l : \ltm_n \vdash \lrefl(l) : \ctm_n(\psi,\leq(l,l)),
+\]
+nor any other rule about $\leq$ beyond those already present in the basic
+scwf set up. The reason is that all reasoning about level equations 
+(except using a constraint assumption) is done using judgmental equalities.}
 
-It follows that a constraint "type" $c : \cty_n$ is a level equation $\lid(l,l')$ in $n$-variables encoding a level equation $l = l'$. A constraint "context" $\psi : \cctx_n$ is a list of constraint types, that is a list of level equations in $n$-variables. A constraint "term" $p : \ctm_n(\psi,c)$ is a proof that the equations in $\psi$ imply the equation $c$. A constraint morphism $ps : \chom_n(\psi,\psi')$ is a proof that the constraints in $\psi$ imply the constraints in $\psi'$, and represents that the judgment $$\psi \vdash \psi'$$ holds in our paper. 
 
-\paragraph{Remark.} We remark that predicate logic can also be formalized as ucwf-indexed scwfs with extra structure. The base is the ucwf of untyped terms, and the fibre above $n$ is a scwf of propositions in $n$ free variables. Here we have extra structure for all of the logical constants, whereas in the level-indexed scwfs of constraints, the only logical constant is the level equality $\lid$.
+%$\q : \ctm_n(.\leq(l,l),\leq(l,l))\vdash l=l$.} 
+
+It follows that a constraint "type" $c : \cty_n$ is a level equation $\leq(l,l')$ in $n$-variables encoding a level equation $l = l'$. A constraint "context" $\psi : \cctx_n$ is a list of constraint types, that is a list of level equations in $n$-variables. A constraint "term" $p : \ctm_n(\psi,c)$ is a proof that the equations in $\psi$ imply the equation $c$. A constraint morphism $ps : \chom_n(\psi,\psi')$ is a proof that the constraints in $\psi$ imply the constraints in $\psi'$, and represents that the judgment $$\psi \vdash \psi'$$ holds in our paper. 
+
+\paragraph{Remark.} We remark that predicate logic can also be formalized as ucwf-indexed scwfs with extra structure. The base is the ucwf of untyped terms, and the fibre above $n$ is a scwf of propositions in $n$ free variables. Here we have extra structure for all of the logical constants, whereas in the level-indexed scwfs of constraints, the only logical constant is the level equality $\leq$.
 
 \subsection{The level- and constraint-indexed cwf of types}
 
@@ -841,7 +858,7 @@ n : \lctx, \psi : \cctx_n, \Gamma : \ctx_n(\psi), l : \ltm_n, p : \ctm_n(\psi,l 
 \vdash
 A = 1_\Gamma
 $$
-where $l < l : \cty_n$ abbreviates $\lid(l^+ \vee l,l) = \lid(l^+,l)$. If we have $A = 1$ rather than $A = \emptyset$ then we don't need an analogue of the second rule.  
+where $l < l : \cty_n$ abbreviates $\leq(l^+ \vee l,l) = \leq(l^+,l)$. If we have $A = 1$ rather than $A = \emptyset$ then we don't need an analogue of the second rule.  
 
 
 \paragraph{Remark.} We need to think more about this.
@@ -868,11 +885,11 @@ is a cwf modelling type theory with $n$ universe level variables. We have e g
 that maps an assignment of external levels (as numbers) to the $n$ variables. $T$ can be extended to a functor.
  
 \subsection{The system with constraints.}
-If we then consider the system with constraints, we let the scwf $C(n)$ of constraints (in $n$ level variables) be the poset $\{0,1\}$, where 0 is the empty set and 1 is the singleton set. We interpret $\lid(l,l’) = 1$ iff $l = l’ : \Tm_\L(n)$ in the ucwf of levels.
+If we then consider the system with constraints, we let the scwf $C(n)$ of constraints (in $n$ level variables) be the poset $\{0,1\}$, where 0 is the empty set and 1 is the singleton set. We interpret $\leq(l,l’) = 1$ iff $l = l’ : \Tm_\L(n)$ in the ucwf of levels.
  
 If $\psi$ is a context in $C(n)$, that is, a sequence of level identities in $n$ level variables, then we can define a doubly indexed cwf $T(n, \psi)$ assigning external levels to the $n$ variables, that is, provided this assignment is valid in the sense that all the level identities in $\psi$ are satisfied.
  
-Instead of starting with the ucwf of levels as natural numbers we can start with any $\sup/+$ lattice $L$.  We can still model the scwf of constraints in the same way and interpret $\lid(l,l’) = 1$ iff $ l = l’ : Tm(n)$.
+Instead of starting with the ucwf of levels as natural numbers we can start with any $\sup/+$ lattice $L$.  We can still model the scwf of constraints in the same way and interpret $\leq(l,l’) = 1$ iff $ l = l’ : Tm(n)$.
  
 It is part of the indexed cwf-structure that $T(L) \to T(L’)$ for any map $L’ \to L$ of ucwfs with sup+ structure.
 
