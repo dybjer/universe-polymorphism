@@ -283,7 +283,7 @@ To provide further perspective and rigour to our theories we present generalized
  
 Moreover, the published version of our paper \cite{BezemCDE22} had some shortcomings that are discussed in a revised and extended version of the paper published on the ArXiV \cite{BezemCDE22:revised}.
 
-\paragraph{Uniform categorical logic.} A further contribution of the present paper is to extend the programme of {\em uniform categorical logic} to indexed structures. As shown by Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,CCD:lambek} we can use the notions of cwf, scwf (simply typed cwf), and ucwf (unityped cwf) to develop a uniform approach to the categorical logic of various dependently typed, simply typed, and untyped systems. We here further extend the scope of cwf-based uniform categorical logic by showing that our type theory with explicit universe polymorphism is captured by ucwf-indexed cwfs. Furthermore, we show that type theory with universe level constraints can be described by ucwf-scwf-indexed cwfs. Other important examples are untyped predicate logic which arises as ucwf-indexed scwfs, typed predicate logic as scwf-indexed scwfs, and dependently typed predicate logic as cwf-indexed scwfs (all with extra structure for the logical constants). Different versions of dependently typed predicate logic have been proposed by Martin-Löf \cite{}, Makkai \cite{}, Gambino and Aczel 2006, and Belo 2007. Palmgren 2019 (Categories with families and first-orderlogic with dependent sorts) has suggested the closely related notion of a hyperdoctrine over a cwf. It would be interesting to extend the work of Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,CCD:lambek} to prove theorems with hyperdoctrines and other notions from categorical logic and also to continue the work by Palmgren \cite{Palmgren19} and relate the notion of indexed category with families to the above-mentioned systems 
+\paragraph{Uniform categorical logic.} A further contribution of the present paper is to extend the programme of {\em uniform categorical logic} to indexed structures. As shown by Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,CCD:lambek} we can use the notions of cwf, scwf (simply typed cwf), and ucwf (unityped cwf) to develop a uniform approach to the categorical logic of various dependently typed, simply typed, and untyped systems. We here further extend the scope of cwf-based uniform categorical logic by showing that our type theory with explicit universe polymorphism is captured by ucwf-indexed cwfs. Furthermore, we show that type theory with universe level constraints can be described by ucwf-scwf-indexed cwfs. Another important example  is untyped predicate logic which arises as initial ucwf-indexed scwfs with extra structure for the logical constant. Typed predicate logic arises in the same way from scwf-indexed scwfs, and dependently typed predicate logic from cwf-indexed scwfs (both with extra structure for the logical constants). Different versions of dependently typed predicate logic have been proposed by Martin-Löf \cite{}, Makkai \cite{}, Gambino and Aczel 2006, and Belo 2007. Palmgren 2019 (Categories with families and first-order logic with dependent sorts) has suggested the closely related notion of a hyperdoctrine over a cwf. It would be interesting to extend the work of Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,CCD:lambek} to prove theorems with hyperdoctrines and other notions from categorical logic and also to continue the work by Palmgren \cite{Palmgren19} and relate the notion of indexed category with families to the above-mentioned systems 
 
 \paragraph{Type theory and generalized algebraic theories.} When presenting standard type theories (without universe level judgments) by generalized algebraic theories we have the following correspondences:
 \begin{itemize}
@@ -456,7 +456,8 @@ Commutativity of $\vee$ and $+$ with level substitution.
 %\end{tiny}
 \paragraph{Remark.} Ucwfs are closely related to Lawvere theories. One can prove that they are equivalent to contextual ucwfs, that is, ucwfs where the set of contexts is isomorphic to the natural numbers \cite{CCD:lambek}.
 
-\subsection{The ucwf-indexed cwf of types with explicit universe polymorphism}
+\subsection{Ucwf-indexed cwfs  with $\Pi$-types}
+
 We now define the generalized algebraic theory of ucwf-indexed cwfs with $\Pi$-types. These are contravariant functors $F$ from the category of contexts of $\L$ (we use $\L$ also for the base category of the ucwf $\L$)  to the category with objects cwfs with $\Pi$-types and arrows cwf-morphisms preserving $\Pi$-types:
 $$
 F : \L^\mathrm{op} \to \CwF^{\Pi}
@@ -494,7 +495,7 @@ Note: officially $\circ$ has six arguments rather than two.
 prefix every rule with $n:\lctx$ and add index $n$ to every occurrence
 of $\ctx,\ty,\tm$.}
 
-\begin{tiny}
+%\begin{tiny}
 Sort symbols:
 \begin{eqnarray*}
 n : \lctx, \Gamma : \ctx_n &\vdash& \ty_n(\Gamma)\\
@@ -508,18 +509,27 @@ A[\gamma] : \ty_n(\Delta)\\
 n : \lctx, \Gamma,\Delta : \ctx_n, A:\ty_n(\Gamma), \gamma : \Hom_n(\Delta,\Gamma), a:\tm_n(\Gamma,A) &\vdash&  a[\gamma] : \tm_n(\Delta,A[\gamma])
 \end{eqnarray*}
 
-Equations:
+Equations: (where we have factored out the common context $n : \lctx, \Gamma : \ctx_n, A:\ty_n(\Gamma)$):
 \begin{eqnarray*}
-n : \lctx, \Gamma : \ctx_n, A:\ty_n(\Gamma) &\vdash& A[\id_{n,\Gamma}] = A : \ty_n(\Gamma)\\
-n : \lctx, \Gamma : \ctx_n, A:\ty_n(\Gamma), a:\tm_n(\Gamma,A) &\vdash& a[\id_{n,\Gamma}] = a : \tm_n(\Gamma,A)\\
+&\vdash& A[\id_{n,\Gamma}] = A : \ty_n(\Gamma)\\
+a:\tm_n(\Gamma,A) &\vdash& a[\id_{n,\Gamma}] = a : \tm_n(\Gamma,A)\\
 n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \delta : \Hom_n(\Xi,\Delta), \gamma : \Hom_n(\Delta,\Gamma),
-A:\ty_n(\Gamma) &\vdash& A[\gamma\circ\delta] = A[\gamma][\delta]: \ty_n(\Xi)\\
-n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \delta : \Hom_n(\Xi,\Delta), \gamma : \Hom_n(\Delta,\Gamma),
-A:\ty_n(\Gamma), a:\tm_n(\Gamma,A) &\vdash&
+&\vdash& A[\gamma\circ\delta] = A[\gamma][\delta]: \ty_n(\Xi)\\
+n : \lctx, \Xi,\Delta, : \ctx_n, \delta : \Hom_n(\Xi,\Delta), \gamma : \Hom_n(\Delta,\Gamma),
+a:\tm_n(\Gamma,A) &\vdash&
 a[\gamma\circ\delta] = a[\gamma][\delta]: \tm_n(\Xi,A[\gamma\circ\delta])
 \end{eqnarray*}
+%\begin{eqnarray*}
+%n : \lctx, \Gamma : \ctx_n, A:\ty_n(\Gamma) &\vdash& A[\id_{n,\Gamma}] = A : \ty_n(\Gamma)\\
+%n : \lctx, \Gamma : \ctx_n, A:\ty_n(\Gamma), a:\tm_n(\Gamma,A) &\vdash& a[\id_{n,\Gamma}] = a : \tm_n(\Gamma,A)\\
+%n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \delta : \Hom_n(\Xi,\Delta), \gamma : \Hom_n(\Delta,\Gamma),
+%A:\ty_n(\Gamma) &\vdash& A[\gamma\circ\delta] = A[\gamma][\delta]: \ty_n(\Xi)\\
+%n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \delta : \Hom_n(\Xi,\Delta), \gamma : \Hom_n(\Delta,\Gamma),
+%A:\ty_n(\Gamma), a:\tm_n(\Gamma,A) &\vdash&
+%a[\gamma\circ\delta] = a[\gamma][\delta]: \tm_n(\Xi,A[\gamma\circ\delta])
+%\end{eqnarray*}
 We have dropped some of the official arguments here too, and will do so in the following as well.
-\end{tiny}
+%\end{tiny}
   
 
 \paragraph{Remark.} on finitely presented semilattices and constraints.
@@ -550,7 +560,6 @@ Operator symbols:
 n : \lctx &\vdash& 1_n : \ctx_n\\
 n : \lctx, \Gamma : \ctx_n &\vdash& \tuple{}_{n,\Gamma} : \Hom_n(\Gamma,1_n)
 \end{eqnarray*}
-
 Equations:
 \begin{eqnarray*}
 n : \lctx &\vdash& \id_{n,1_n} = \tuple{}_{1_n} : \Hom_n(1_n,1_n)\\
@@ -622,14 +631,11 @@ Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm
 \app(c,a)[\sigma] &=&\app(c[\sigma],a[\sigma])
 \end{eqnarray*}
 
-\subsection{Universes}
+\subsection{A level-indexed non-cumulative tower of universes}
 
 The universe rules state that for each level term $l$ in $n$ variables, there is a type $\UU_l$. There is extra structure to this level-indexed cwf stating that every universe is in the next and that there is a cumulativity map making $\U_l$ a subuniverse of $\UU_m$.
 
 Moreover, level-substitution commutes with the operations associated with a universe.
-
-\subsection{A level-indexed non-cumulative tower of universes}
-
 %\begin{tiny}
 A finitary theory!
 \\
