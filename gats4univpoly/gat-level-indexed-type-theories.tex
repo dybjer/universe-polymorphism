@@ -385,7 +385,7 @@ Equations for commutativity of operator symbols wrt substitution ($\gamma : \hom
 \end{eqnarray*}
 %\end{tiny}
 
-\paragraph{Syntax and inference rules as an initial model.} A proof that a version of Martin-Löf type theory with an external tower of universes  is an initial contextual category with appropriate extra structure has been implemented in Agda by de Boer and Brunerie \cite{Brunerie:initiality,deBoer:lic}. This is for a version of type theory with de Bruijn variables and implicit substitutions. The equivalence between split type-cateogries and categories with families was implemented in UniMath by Lumsdaine, and Voevodsky \cite{AHV18}. Moreover, the syntax and inference rules in our paper \cite{BezemCDE22} are not identical to the ones implemented by de Boer and Brunerie, but we expect no difficult in adapting their proof (!?).
+\paragraph{Syntax and inference rules as an initial model.} A proof that a version of Martin-Löf type theory with an external tower of universes  is an initial contextual category with appropriate extra structure has been implemented in Agda by de Boer and Brunerie \cite{Brunerie:initiality,deBoer:lic}. This is for a version of type theory with de Bruijn variables and implicit substitutions. The equivalence between split type-cateogries and categories with families was implemented in UniMath by Ahrens, Lumsdaine, and Voevodsky \cite{AhrensLV18}. Moreover, the syntax and inference rules in our paper \cite{BezemCDE22} are not identical to the ones implemented by de Boer and Brunerie, but we expect no difficult in adapting their proof.
 
 \section{Level-indexed type theory}
 
@@ -612,8 +612,17 @@ a[\sigma \circ \sigma'] &=& a[\sigma][\sigma']: \tm_p(A[\sigma][\sigma'],\Gamma[
 
 \subsubsection{Level substitution in $\Pi$-types}
 
-Omitted.
+Let $n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma), B:\ty_{n'}(\Gamma.A)$. Then
+\begin{eqnarray*}
+\Pi(A,B)[\sigma] &=& \Pi(A[\sigma],B[\sigma])
+\end{eqnarray*}
+Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm_n(\Gamma,A)$, we have
+\begin{eqnarray*}
+\lambda(b)[\sigma] &=&\lambda(b[\sigma])\\
+\app(c,a)[\sigma] &=&\app(c[\sigma],a[\sigma])
+\end{eqnarray*}
 
+\subsection{Universes}
 
 The universe rules state that for each level term $l$ in $n$ variables, there is a type $\UU_l$. There is extra structure to this level-indexed cwf stating that every universe is in the next and that there is a cumulativity map making $\U_l$ a subuniverse of $\UU_m$.
 
@@ -662,10 +671,11 @@ Equations ($\beta$ and $\eta$ for level abstraction and application):
  Equations for commutativity of operator symbols wrt a level substitution $\sigma : \lhom(m,n)$ and a term substitution $\gamma : \hom_n(\Delta,\Gamma)$:
  \begin{eqnarray*}
  \forall_\l(B)[ \sigma ] &=& \forall_\l(B[ \sigma^{+}])\\
- \forall_\l(B)[ \gamma ] &=& \forall_\l(B[ \gamma^+ ])\\
+ \forall_\l(B)[ \gamma ] &=& \forall_\l(B[ \gamma[\lp]])\\
 &\vdots&
 \end{eqnarray*}
-where $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$ and $\gamma^+ = \tuple{\gamma \circ \p, \q}$??
+where $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$.
+%and $\gamma^+ = \tuple{\gamma \circ \p, \q}$??
 %\end{tiny}
 
 \section{Adding level-constraints}
