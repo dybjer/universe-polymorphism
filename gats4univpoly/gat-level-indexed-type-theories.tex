@@ -633,14 +633,10 @@ Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm
 
 \subsection{A level-indexed non-cumulative tower of universes}
 
-The universe rules state that for each level term $l$ in $n$ variables, there is a type $\UU_l$. There is extra structure to this level-indexed cwf stating that every universe is in the next and that there is a cumulativity map making $\U_l$ a subuniverse of $\UU_m$.
-
-Moreover, level-substitution commutes with the operations associated with a universe.
+The rule of universe formation states that for each level term $l$ in $n$ variables, there is a type $\UU_l$ with decoding map $\Ta_l$. Then there is an introduction rule for each small type former; we here only consider closure under $\Pi$. Then there is an introduction rule expressing that every universe is in the next. (We later add  a cumulativity map making $\U_l$ a subuniverse of $\UU_m$ for $l < m$. We note that the resulting theory is finitary in contrast to the theory with an externally indexed tower of universes.
 %\begin{tiny}
-A finitary theory!
-\\
-\vspace{1ex}
-Operator symbols:
+%\vspace{1ex}
+The operator symbols are:
 \begin{eqnarray*}
 n : \lctx, l : \ltm(n), \Gamma : \lctx_n &\vdash& (\U_{l})_\Gamma : \ty_n(\Gamma)\\
 n : \lctx, l : \ltm(n), \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta_{l}}(a) : \ty_n(\Gamma)\\
@@ -656,7 +652,9 @@ Equations:
 \begin{eqnarray*}
 &\vdots&
 \end{eqnarray*}
-There are many equations. First for each $l$, $\U_l$ satisfies all the laws of a single universe, including laws of ordinary substitution. Then we have laws for level substitution $(\U_{l})_\Gamma[\sigma] = (\U_{l[\sigma]})_{\Gamma[\sigma]}$
+There are many equations. First for each $l$, $\U_l$ satisfies all the laws of a single universe, including laws of ordinary substitution. Then we have laws for level substitution $(\U_{l})_\Gamma[\sigma] = (\U_{l[\sigma]})_{\Gamma[\sigma]}$. Moreover, level-substitution commutes with the operations associated with a universe.
+
+
 %\end{tiny}
 
 \subsection{Level-indexed products of types}
