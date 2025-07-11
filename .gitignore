@@ -1,3 +1,5 @@
+*.brf
+*.synctex.gz
 *.agdai
 *~
 *.hi
