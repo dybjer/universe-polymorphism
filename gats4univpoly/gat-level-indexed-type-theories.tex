@@ -289,7 +289,7 @@ Moroever, we take the opportunity to discuss some issues in our original paper \
 
 \paragraph{Type theory and generalized algebraic theories.} When presenting standard type theories (without universe level judgments) by generalized algebraic theories we have the following correspondences:
 \begin{itemize}
-\item Four sort symbols (context, context morphism (substitution), type in context, and term of a type in context) corresponding to the four principal forms of judgment of type theory with explicit substitutions. The four equality judgments are represented by equations between terms of the four respecitive sorts.
+\item Four sort symbols (context, context morphism (substitution), type in context, and term of a type in context) corresponding to the four principal forms of judgment of type theory with explicit substitutions. The four equality judgments are represented by equations of the four respecitive sorts.
 \item Ten operator symbols for the basic operations of cwfs (identity and composition of substitutions, substitution in types and in terms, empty context, context extension, empty substitution, substitution extension, projection substitution, last variable term) and the equations relating them.
 \item An operator symbol for each formation, introduction, and elimination rule for the type formers of the type theory. The equality (or computation) rules are represented by equations of appropriate types.
 \end{itemize}
@@ -305,11 +305,9 @@ These generalized algebraic theories can be found in other publications \cite{dy
 $$
 T : \L^\op \to \CwF
 $$
-The corresponding generalized algebraic theory has three new sort symbols%
-\footnote{MB Since there is only one type in a ucwf, we don't need
-a sort of types. Moreover, variables ans terms need not be typed, and
-terms only depend on the context $n$, that is, the number of variables
-they may use.}
+The corresponding generalized algebraic theory of type theory with explicit polymorphism has
+\begin{itemize}
+\item An additional three sort symbols for the ucwf of levels: level context, level context morphism (level substitution), level term in context:. 
 $$
 \vdash \lctx
 $$
@@ -317,8 +315,18 @@ $$
 m,n : \lctx \vdash \lhom(m,n)
 $$
 $$
-n : \lctx \vdash \ltm(n)
+n : \lctx \vdash  \ltm(n)
 $$
+The last of these corresponds to the judgment $l\ level$, and the two former are added in an explicit substituion calculus for explicit polymorphism. The equality judgments (such as $l = l'$) are represented by equations.
+\item An additional nine operator symbols for the basic operations of ucwfs (identity and composition of level substitutions, substitution in level terms, empty level context, level context extension, empty level substitution, level substitution extension, projection level substitution, last level variable term) and the equations relating them.
+\item An operator symbol for each formation, introduction, and elimination rule for the type formers of the type theory. The equality (or computation) rules are represented by equations of appropriate types.
+\end{itemize}
+%
+\footnote{MB Since there is only one type in a ucwf, we don't need
+a sort of types. Moreover, variables ans terms need not be typed, and
+terms only depend on the context $n$, that is, the number of variables
+they may use.}
+
 where $\lctx$ is the sort of objects (contexts) of the ucwf, $\lhom$ is the dependent sort of morphisms, and $\ltm$ is the dependent sort of terms.  In the initial model, $n : \lctx$ is the number of universe level variables, $l : \ltm(n)$ is a level term in $n$ level variables, and $ls : \lhom(m,n)$ is context morphism representing $n$ level terms in $m$ level variables.
 
 Moreover, the sorts of the gat of cwfs ($\Ctx,\Hom,\Ty,\Tm$) are now indexed by $n : \lctx$. We will present the full generalized algebraic theory of level-indexed cwfs with the extra structure for level-indexed universes.
