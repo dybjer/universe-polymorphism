@@ -305,7 +305,11 @@ These generalized algebraic theories can be found in other publications \cite{dy
 $$
 T : \L^\op \to \CwF
 $$
-The corresponding generalized algebraic theory has three new sort symbol
+The corresponding generalized algebraic theory has three new sort symbols%
+\footnote{MB Since there is only one type in a ucwf, we don't need
+a sort of types. Moreover, variables ans terms need not be typed, and
+terms only depend on the context $n$, that is, the number of variables
+they may use.}
 $$
 \vdash \lctx
 $$
@@ -688,7 +692,7 @@ where $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$.
 
 \subsection{The level-indexed scwf of level constraints}
 
-Constraints are lists of identities of level terms. We formalize the theory of constraints as level-indexed scwfs (simply typed cwfs) $(\cctx, \chom, \cty, \ctm)$. The gat of level-indexed scwf is the same as gat of level-indexed cwfs defined above, except that in scwf types don't depend on contexts. \footnote{In the published paper all constraints appearing in contexts are loop-free "The second condition is that the finite set of constraints in the extended context $\Gamma, \psi$ is loop-free." Here we prefer to allow inconsistent constraints in the first step. As a second step we propose to add a rule that all types are equal to the unit types in an inconsistent context. Such a theory has decidable type-checking.}
+Constraints are lists of identities of level terms. We formalize the theory of constraints as level-indexed scwfs $(\cctx, \chom, \cty, \ctm)$. The gat of level-indexed scwf is the same as the gat of level-indexed cwfs defined above, except that in a scwf types don't depend on type contexts.\footnote{MB In a level-indexed scwf, types do depend on level contexts, though.} \footnote{In the published paper all constraints appearing in contexts are loop-free "The second condition is that the finite set of constraints in the extended context $\Gamma, \psi$ is loop-free." Here we prefer to allow inconsistent constraints in the first step. As a second step we propose to add a rule that all types are equal to the unit types in an inconsistent context. Such a theory has decidable type-checking.}
 
 The following new sort symbols come from the structure of a level-indexed scwf:
 \begin{eqnarray*}
@@ -704,19 +708,16 @@ n : \lctx, l, l' : \ltm_n, \psi : \cctx_n, p : \ctm_n(\psi,\leq(l,l')) &\vdash& 
 \end{eqnarray*}
 We note that $\leq$ is the only constructor for constraint types $\cty$, 
 and thus constraint contexts are lists of level equalities.
-MB By induction on the length of the constraint context $\psi$ we can
-prove in the metatheory the following admissibility result:
-for any $l,l'$ such that $\leq(l,l')$ occurs in $\psi$,
-we can infer $n : \lctx, l, l' : \ltm_n, \psi : \cctx_n \vdash l=l'$.
+MB DISCUSS
 It follows that we can infer the latter equality judgment for all $l,l'$ such 
 that $l=l'$ can be inferred in lattice theory from the equalities reflected
 in $\psi$. Make this a lemma?%
-\footnote{MB: We don't need the reflexivity rule 
+\footnote{PD thinks we don't need the reflexivity rule 
 \[
 n : \lctx, \psi : \cctx_n, l : \ltm_n \vdash \lrefl(l) : \ctm_n(\psi,\leq(l,l)),
 \]
-nor any other rule about $\leq$ beyond those already present in the basic
-scwf set up. The reason is that all reasoning about level equations 
+MB nor any other rule about $\leq$ beyond those already present in the basic
+scwf set up??? The reason is that all reasoning about level equations 
 (except using a constraint assumption) is done using judgmental equalities.}
 
 
