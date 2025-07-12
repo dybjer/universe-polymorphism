@@ -30,6 +30,7 @@
 \newtheorem{TODO}{TODO}[theorem]
 \newtheorem{remark}{Remark}
 \newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
 
 \usepackage{float}
 \floatstyle{boxed}
@@ -711,14 +712,53 @@ n : \lctx, \psi : \cctx(n), \psi' : \cctx(n) &\vdash& \chom_n(\psi,\psi')\\
 n : \lctx &\vdash& \cty_n\\
 n : \lctx, \psi : \cctx_n, c : \cty_n &\vdash& \ctm_n(\psi,c)
 \end{eqnarray*}
-The extra structure for level-indexed scwfs is given by the following operator symbol $\leq$ for level equality and an equation for equality reflection:
+The extra structure for level-indexed scwfs is given by the following operator symbol $\leq$ for level equality types and an equation for equality reflection:
 \begin{eqnarray*}
 n : \lctx, l, l' : \ltm_n &\vdash& \leq(l,l') : \cty_n\\
 n : \lctx, l, l' : \ltm_n, \psi : \cctx_n, p : \ctm_n(\psi,\leq(l,l')) &\vdash& l = l'
 \end{eqnarray*}
 We note that $\leq$ is the only constructor for constraint types $\cty$, 
 and thus constraint contexts are lists of level equalities.
-MB DISCUSS
+The latter equation for equality reflection deserves exemplification.
+\begin{example}\label{exa:cctx-entails-lattice-eqs}
+In level context $2$ we can use two level variables which we name $\alpha$ and 
+$\beta$ for readability. In this context, these variables themselves
+are level terms, and so are, e.g., $\alpha\vee\beta$ and $\beta\vee\alpha$.
+Hence we have in this same context $2$ level equations, such as
+$\leq(\alpha,\alpha\vee\beta)$ and $\leq(\beta\vee\alpha,\beta)$,
+so that we can form a constraint context such as 
+$1.\leq(\alpha,\alpha\vee\beta).\leq(\beta\vee\alpha,\beta)$,
+which we name $\psi$ for short.
+We can then instantiate the equation for equality reflection
+with $n\equiv 2$, $l\equiv \beta\vee\alpha$, $l'\equiv \beta$ and $\psi$
+as above and get 
+\[
+p : \ctm_2(\psi,\leq(\beta\vee\alpha,\beta))\vdash \beta\vee\alpha = \beta.
+\]
+With this particular instantiation we have that the
+level equality type $\leq(\beta\vee\alpha,\beta)$ is the last type
+of the constraint context $\psi$ so that we can use the operator $\q$ 
+from the basic vocabulary of cwfs, see \ref{XYZ}.
+Thus the equation for equality reflection gives us:
+\[
+2,1.\leq(\alpha,\alpha\vee\beta).\leq(\beta\vee\alpha,\beta)
+\vdash \beta\vee\alpha = \beta,
+\]
+that is, (MB unsure, DISCUSS) $\beta\vee\alpha$ and $\beta$ are equal
+in the context $2,\psi$.
+
+In much the same way, using a slightly different instantiation
+and $\q[\p]$ instead of $\q$ we can get
+\[
+p : \ctm_2(\psi,\leq(\alpha\vee\beta,\alpha))\vdash \alpha\vee\beta=\alpha.
+\]
+and hence that $\beta\vee\alpha$ and $\beta$ are equal
+in the context $2,\psi$.
+
+Now, by reasoning about level equations, using commutativity and congruence,
+we can also obtain, e.g., that $\alpha$ and $\beta$ are equal
+in the context $2,\psi$.
+\end{example}
 It follows that we can infer the latter equality judgment for all $l,l'$ such 
 that $l=l'$ can be inferred in lattice theory from the equalities reflected
 in $\psi$. Make this a lemma?%
