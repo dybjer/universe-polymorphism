@@ -769,7 +769,7 @@ In level context $2:\lctx$ we can use two level variables which we
 name $\alpha$ and $\beta$ for readability. 
 In this context, these variables themselves are level terms, and so are, 
 e.g., $\alpha\vee\beta$ and $\beta\vee\alpha$, all in $\ltm_2$.
-Hence we have level equation types in $\lty_2$, such as
+Hence we have level equality types in $\cty_2$, such as
 $\leq(\alpha,\alpha\vee\beta)$ and $\leq(\beta\vee\alpha,\beta)$,
 so that we can form a constraint context in $\cctx_2$, such as 
 $1.\leq(\alpha,\alpha\vee\beta).\leq(\beta\vee\alpha,\beta)$,
@@ -778,7 +778,8 @@ We can now instantiate the equation for equality reflection
 with $n\equiv 2$, $l\equiv \beta\vee\alpha$, $l'\equiv \beta$ and $\psi$
 as above and get 
 \[
-p : \ctm_2(\psi,\leq(\beta\vee\alpha,\beta))\vdash \beta\vee\alpha = \beta.
+p : \ctm_2(\psi,\leq(\beta\vee\alpha,\beta))\vdash 
+[\beta\vee\alpha] = [\beta] : \ltmq_2(\psi).
 \]
 With this particular instantiation, the
 level equality type $\leq(\beta\vee\alpha,\beta)$ is the last type
@@ -786,22 +787,31 @@ of the constraint context $\psi$, so that we can use the operator $\q$
 from the basic vocabulary of cwfs, see \ref{XYZ}.
 Thus the equation for equality reflection gives us:
 \[
-2,1.\leq(\alpha,\alpha\vee\beta).\leq(\beta\vee\alpha,\beta)
-\vdash \beta\vee\alpha = \beta,
+\vdash [\beta\vee\alpha] = [\beta] : \ltmq_2(\psi)
 \]
-that is, (MB: discuss) $\beta\vee\alpha$ and $\beta$ are equal
-in the context $2,\psi$.
+that is, (MB: discuss) $\beta\vee\alpha$ and $\beta$ are equivalent
+modulo $\psi$, in the empty context.
 
 In much the same way, using the instantiation $l\equiv\alpha,~
 l'\equiv\alpha\vee\beta$ and $\q[\p]$ instead of $\q$, we can get from
 \[
-p : \ctm_2(\psi,\leq(\alpha,\alpha\vee\beta))\vdash \alpha=\alpha\vee\beta.
+p : \ctm_2(\psi,\leq(\alpha,\alpha\vee\beta))\vdash 
+[\alpha]=[\alpha\vee\beta] : \ltmq_2(\psi).
 \]
-that $\alpha=\alpha\vee\beta$ in context $2,\psi$.
+that $\alpha$ and $\alpha\vee\beta$ are equivalent modulo $\psi$, 
+in the empty context.
 
-Now, by reasoning about level equality in the level context 2,
-using commutativity of $\vee$ and congruence,
-we can also obtain, e.g., $\alpha =\beta$ in the context $2,\psi$.
+Next we explain how we can get, e.g.,
+$
+\vdash [\alpha] = [\beta] : \ltmq_2(\psi).
+$
+This result cannot be obtained by simply using the transitivity of $=$,
+we also have to show that
+$
+\vdash [\beta\vee\alpha]=[\alpha\vee\beta] : \ltmq_2(\psi).
+$
+The latter follows from 
+$\vdash \beta\vee\alpha=\alpha\vee\beta : \ltm_2$ and congruence.
 \end{example}
 
 
@@ -809,18 +819,17 @@ An important observation in the above example is that
 both $\leq(\alpha,\alpha\vee\beta)$ and $\leq(\beta\vee\alpha,\beta)$
 are elements of $\psi$, so that we can use $\q$, $\q[\p]$. If there
 are more elements in a constraint context, we can just use $\q[\p][\p]$
-and so on, to get the equations reflected by these level equation types.
+and so on, to get the equations reflected by these level equality types.
 
 Generalizing this observation leads to the following result.
 
 \begin{lemma}\label{lem:cctx-entails-lattice-eqs}
 Let $n:\lctx$ be a level context, and $l,l':\ltm_n$ level terms and 
 $\psi:\cctx_n$ a constraint context, all indexed by $n$. Then we have:
-$n,\psi\vdash l=l'$ if and only if $l=l'$ can be inferred in 
+$\vdash [l]=[l'] : \ltmq_n(\psi)$ if and only if $l=l'$ can be inferred in 
 lattice theory from the equalities reflected by the level
-equation types occurring in $\psi$. 
+equality types occurring in $\psi$. 
 \end{lemma}
-%$\q : \ctm_n(.\leq(l,l),\leq(l,l))\vdash l=l$.} 
 
 \paragraph{Remark.} We remark that predicate logic can also be formalized as ucwf-indexed scwfs with extra structure. The base is the ucwf of untyped terms, and the fibre above $n$ is a scwf of propositions in $n$ free variables. Here we have extra structure for all of the logical constants, whereas in the level-indexed scwfs of constraints, the only logical constant is the level equality $\leq$.
 
