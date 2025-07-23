@@ -456,7 +456,7 @@ m : \lctx &\vdash& \tuple{}_m : \lhom(m,0)\\
 m : \lctx &\vdash& \s(m) : \lctx\\
 m,n : \lctx, \gamma : \lhom(n,m), l:\ltm(n) &\vdash& \tuple{\gamma,l} : \lhom(n,\s(m))\\
 m : \lctx &\vdash& \p: \lhom(\s(m),m)\\
-m : \lctx &\vdash& \q: \ltm(\s(m))
+m : \lctx &\vdash& \q: \ltm(\s(m))\footnote{In other places we use $\lp$ and $\lq$. Same issue with $\cp$ and $\cq$.}
 \end{eqnarray*}
 Note that since there is only one type, we can remove the operator symbol for operations in types and only keep substitution in (level) terms.
 
