@@ -152,6 +152,7 @@
 
 \def\levelctx{\mathrm{lctx}}
 \def\lhom{\mathrm{lhom}}
+\def\psiab{\psi_{\alpha\beta}}
 
 \newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}}%
 \newcommand*{\Resize}[2]{\resizebox{#1}{!}{$#2$}}
@@ -287,7 +288,9 @@ By focusing on the notion of an initial model, we abstract away from certain det
  
 Moroever, we take the opportunity to discuss some issues in our original paper \cite{BezemCDE22}, see the revised and extended version of published on the ArXiV \cite{BezemCDE22:revised}.
 
-\paragraph{Uniform categorical logic.} A further contribution of the present paper is to extend the programme of {\em uniform categorical logic} to indexed structures. As shown by Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,CCD:lambek} we can use the notions of cwf, scwf (simply typed cwf), and ucwf (unityped cwf) to develop a uniform approach to the categorical logic of various dependently typed, simply typed, and untyped systems. We here further extend the scope of cwf-based uniform categorical logic by showing that our type theory with explicit universe polymorphism is captured by ucwf-indexed cwfs. Furthermore, we show that type theory with universe level constraints can be described by ucwf-scwf-indexed cwfs. We will not here develop the uniform categorical logic of indexed cwfs broadly, but remark that untyped predicate logic which arises as initial ucwf-indexed scwfs, typed predicate logic arises in the same way from scwf-indexed scwfs, and dependently typed predicate logic from cwf-indexed scwfs (all with extra structure for the logical constants). Different versions of dependently typed predicate logic have been proposed by Martin-Löf \cite{}, Makkai \cite{}, Gambino and Aczel 2006, and Belo 2007. Palmgren 2019 (Categories with families and first-order logic with dependent sorts) has suggested the closely related notion of a hyperdoctrine over a cwf. It would be interesting to extend the work of Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,CCD:lambek} to prove theorems with hyperdoctrines and other notions from categorical logic and also to continue the work by Palmgren \cite{Palmgren19} and relate the notion of indexed category with families to the above-mentioned systems 
+\paragraph{Uniform categorical logic.} A further contribution of the present paper is to extend the programme of {\em uniform categorical logic} to indexed structures. As shown by Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,CCD:lambek} we can use the notions of cwf, scwf (simply typed cwf), and ucwf (unityped cwf) to develop a uniform approach to the categorical logic of various dependently typed, simply typed, and untyped systems. We here further extend the scope of cwf-based uniform categorical logic by showing that our type theory with explicit universe polymorphism is captured by ucwf-indexed cwfs. Furthermore, we show that type theory with universe level constraints can be described by ucwf-scwf-indexed cwfs. We will not here develop the uniform categorical logic of indexed cwfs broadly, but remark that untyped predicate logic which arises as initial ucwf-indexed scwfs, typed predicate logic arises in the same way from scwf-indexed scwfs, and dependently typed predicate logic from cwf-indexed scwfs (all with extra structure for the logical constants). Different versions of dependently typed predicate logic have been proposed by Martin-Löf \cite{}, Makkai \cite{}, Gambino and Aczel 2006, and Belo 2007. Palmgren 2019 (Categories with families and first-order logic with dependent sorts) has suggested the closely related notion of a hyperdoctrine over a cwf. It would be interesting to extend the work of Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,CCD:lambek} to prove theorems with hyperdoctrines and other notions from categorical logic and also to continue the work by Palmgren \cite{Palmgren19} and relate the notion of indexed category with families to the above-mentioned systems .
+
+This is a case study in uniform categorical logic, and a contribution to Voevodsky's initiality conjecture programme.
 
 \paragraph{Type theory and generalized algebraic theories.} When presenting standard type theories (without universe level judgments) by generalized algebraic theories we have the following correspondences:
 \begin{itemize}
@@ -725,26 +728,22 @@ n : \lctx &\vdash& \cty_n\\
 n : \lctx, \psi : \cctx_n, c : \cty_n &\vdash& \ctm_n(\psi,c)
 \end{eqnarray*}
 
-The extra structure for level-indexed scwfs is given by the following operator symbol $\leq$ for level equality types:
-\footnote{equality reflection in ordinary type theory is
+The extra structure for level-indexed scwfs is given by the following operator symbol $\leq$ for {\em level equality} as types in the level-indexed scwf of constraints:
+\footnote{equality reflection in ordinary type theory is the following equation in generalized algebraic theories:
 \begin{eqnarray*}
 \Gamma : \ctx, A : \ty(\Gamma), a, a' : \tm(\Gamma, A),p :  \tm(\Gamma,\Id_A(a,a'))&\vdash& a = a' : \tm(\Gamma,A)
 \end{eqnarray*}
-
-Equality reflection for level equality will be defined later
-\begin{eqnarray*}
-n : \lctx, l, l' : \ltm_n, p : \ctm_n(\leq(l,l')) &\vdash& [l] = [l]' : \ltm_n/\psi
-\end{eqnarray*}
 }
+
 \begin{eqnarray*}
 n : \lctx, l, l' : \ltm_n &\vdash& \leq(l,l') : \cty_n
 \end{eqnarray*}
-It follows that a constraint "type" $c : \cty_n$ is a level equation 
-$\leq(l,l')$ in $n$-variables reflecting a level equation $l = l'$.
+A constraint type $c : \cty_n$ is a level equation 
+$\leq(l,l')$ in $n$ variables reflecting a level equation $l = l'$.
 We note that $\leq$ is the only constructor for constraint types $\cty$. 
 Consequently, by the basic structure for level-indexed scwfs,
 a constraint "context" $\psi : \cctx_n$ is a list of constraint types, 
-that is a list of level equation types in $n$-variables. 
+that is, a list of level equation types in $n$ variables. 
 A constraint "term" $p : \ctm_n(\psi,c)$ is a proof that the equation $c$ is
 in $\psi$.
 % imply the equation $c$, see \cref{exa:cctx-entails-lattice-eqs}
@@ -754,70 +753,70 @@ any term constructors for $\leq$ beyond $\q$ from the basic
 scwf set up. The reason is that all reasoning about level equations 
 (except using a constraint assumption) is done using judgmental equalities.} 
 
-Reasoning about level equality will be performed on the judgmental level. To this end we need to introduce a new sort for level terms with respect to constraints:
+Reasoning about level equality will be performed on the judgmental level. To this end we introduce a new sort for level terms with respect to constraints:
 \begin{eqnarray*}
 n : \lctx, \psi : \cctx_n &\vdash& \ltmq_n(\psi)
 \end{eqnarray*}
-This is to be understood as the quotient sort of $\ltm$ with respect to the equivalence relation generated by the constraints in $\psi$ and the laws for $\vee$ and $(-)^+$. We have a new operator symbol $[-]$ for equivalence class formation and an equation:
+This is to be understood as the quotient sort of $\ltm$ with respect to the equivalence relation generated by the constraints in $\psi$ and the laws for $\vee$ and $(-)^+$. We have a new operator symbol $[-]$ for equivalence class formation with its equation:
 \begin{eqnarray*}
 n : \lctx, \psi : \cctx_n,  l : \ltm_n &\vdash& [l]_\psi  : \ltmq_n(\psi)\\
 n : \lctx, \psi : \cctx_n,  l, l' : \ltm_n, p : \ctm_n(\psi,\leq(l,l')) &\vdash& [l]_\psi  = [l']_\psi  : \ltmq_n(\psi)
 \end{eqnarray*}
-Note that this is related to equality reflection: from a "propositional" level equality $\leq(l,l')$ we derive a judgmental level equality, and it is the latter that enables equational reasoning about $\vee$ and $(-)^+$ and $\psi$.
+Note that the equation is a version of equality reflection: from a "propositional" level equality $\leq(l,l')$ we derive a judgmental level equality, and it is the latter that enables equational reasoning about $\vee$ and $(-)^+$ and $\psi$.
 \begin{example}\label{exa:cctx-entails-lattice-eqs}
-In level context $2:\lctx$ we can use two level variables which we 
-name $\alpha$ and $\beta$ for readability. 
+In level context $2:\lctx$ (where we define $2 = \s(\s(0)) : \lctx$ and remark that level contexts need not be natural numbers) we can use two level variables which we 
+name $\alpha$ and $\beta$ for readability. (Officially $\alpha = \q[\p] : \ltm(2)$ and $\beta = \q  : \ltm(2)$ in the ucwf of levels.)
 In this context, these variables themselves are level terms, and so are, 
 e.g., $\alpha\vee\beta$ and $\beta\vee\alpha$, all in $\ltm_2$.
 Hence we have level equality types in $\cty_2$, such as
 $\leq(\alpha,\alpha\vee\beta)$ and $\leq(\beta\vee\alpha,\beta)$,
-so that we can form a constraint context in $\cctx_2$, such as 
-$1.\leq(\alpha,\alpha\vee\beta).\leq(\beta\vee\alpha,\beta)$,
-which we name $\psi: \cctx_2$ for short.
-We can now instantiate the equation for equality reflection
-with $n\equiv 2$, $l\equiv \beta\vee\alpha$, $l'\equiv \beta$ and $\psi$
+so that we can form a constraint contexts, such as 
+$1.\leq(\alpha,\alpha\vee\beta).\leq(\beta\vee\alpha,\beta) : \cctx_2$,
+which we name $\psiab : \cctx_2$ for short.
+We now instantiate the equation for equality reflection
+with $n\equiv 2$, $l\equiv \beta\vee\alpha$, $l'\equiv \beta$ and $\psi:= \psiab$\footnote{check signs for instatiation and definition}
 as above and get 
 \[
-p : \ctm_2(\psi,\leq(\beta\vee\alpha,\beta))\vdash 
-[\beta\vee\alpha] = [\beta] : \ltmq_2(\psi).
+p : \ctm_2(\psiab,\leq(\beta\vee\alpha,\beta))\vdash 
+[\beta\vee\alpha] = [\beta] : \ltmq_2(\psiab).
 \]
 With this particular instantiation, the
 level equality type $\leq(\beta\vee\alpha,\beta)$ is the last type
-of the constraint context $\psi$, so that we can use the operator $\q$ 
+of the constraint context $\psiab$, so that we can use the operator $\q$ 
 from the basic vocabulary of cwfs, see \ref{XYZ}.
 Thus the equation for equality reflection gives us:
 \[
-\vdash [\beta\vee\alpha] = [\beta] : \ltmq_2(\psi)
+\vdash [\beta\vee\alpha] = [\beta] : \ltmq_2(\psiab)
 \]
 that is, (MB: discuss) $\beta\vee\alpha$ and $\beta$ are equivalent
-modulo $\psi$, in the empty context.
+modulo $\psiab$, in the empty context.
 
 In much the same way, using the instantiation $l\equiv\alpha,~
 l'\equiv\alpha\vee\beta$ and $\q[\p]$ instead of $\q$, we can get from
 \[
-p : \ctm_2(\psi,\leq(\alpha,\alpha\vee\beta))\vdash 
-[\alpha]=[\alpha\vee\beta] : \ltmq_2(\psi).
+p : \ctm_2(\psiab,\leq(\alpha,\alpha\vee\beta))\vdash 
+[\alpha]=[\alpha\vee\beta] : \ltmq_2(\psiab).
 \]
-that $\alpha$ and $\alpha\vee\beta$ are equivalent modulo $\psi$, 
+that $\alpha$ and $\alpha\vee\beta$ are equivalent modulo $\psiab$, 
 in the empty context.
 
 Next we explain how we can get, e.g.,
 $
-\vdash [\alpha] = [\beta] : \ltmq_2(\psi).
+\vdash [\alpha] = [\beta] : \ltmq_2(\psiab).
 $
 This result cannot be obtained by simply using the transitivity of $=$,
 we also have to show that
 $
-\vdash [\beta\vee\alpha]=[\alpha\vee\beta] : \ltmq_2(\psi).
+\vdash [\beta\vee\alpha]=[\alpha\vee\beta] : \ltmq_2(\psiab).
 $
 The latter follows from 
-$\vdash \beta\vee\alpha=\alpha\vee\beta : \ltm_2$ and congruence.
+$\vdash \beta\vee\alpha=\alpha\vee\beta : \ltm_2$ and the fact that operator symbols preserve equality in gats.
 \end{example}
 
 
 An important observation in the above example is that
 both $\leq(\alpha,\alpha\vee\beta)$ and $\leq(\beta\vee\alpha,\beta)$
-are elements of $\psi$, so that we can use $\q$, $\q[\p]$. If there
+are elements of $\psiab$, so that we can use the projections $\q$, $\q[\p]$. If there
 are more elements in a constraint context, we can just use $\q[\p][\p]$
 and so on, to get the equations reflected by these level equality types.
 
@@ -826,14 +825,16 @@ Generalizing this observation leads to the following result.
 \begin{lemma}\label{lem:cctx-entails-lattice-eqs}
 Let $n:\lctx$ be a level context, and $l,l':\ltm_n$ level terms and 
 $\psi:\cctx_n$ a constraint context, all indexed by $n$. Then we have:
-$\vdash [l]=[l'] : \ltmq_n(\psi)$ if and only if $l=l'$ can be inferred in 
-lattice theory from the equalities reflected by the level
-equality types occurring in $\psi$. 
+\begin{eqnarray*}
+n : \lctx, \psi : \cctx_n,  l, l' : \ltm_n &\vdash& [l]_\psi  = [l']_\psi  : \ltmq_n(\psi)
+\end{eqnarray*}
+if and only if $l=l'$ can be inferred by equational reasoning from the laws for $\vee$ and $(-)^+$ and the equations reflected by the level
+equalities occurring in $\psi$. 
 \end{lemma}
 
-\paragraph{Remark.} We remark that predicate logic can also be formalized as ucwf-indexed scwfs with extra structure. The base is the ucwf of untyped terms, and the fibre above $n$ is a scwf of propositions in $n$ free variables. Here we have extra structure for all of the logical constants, whereas in the level-indexed scwfs of constraints, the only logical constant is the level equality $\leq$.
-
 \subsection{The level- and constraint-indexed cwf of types}
+
+{\bf All of this needs to be rethought!}
 
 Let 
 $$
@@ -857,24 +858,28 @@ So the contexts $\Ctx(n,\psi)$ in the cwf $\T(n,\psi)$ denotes the (type-theoret
 A finitary theory!
 \\
 \vspace{1ex}
-Operator symbols: (We can factor out the common premises $n : \lctx, \psi : \cctx_n, l : \ltm(n), \Gamma : \ctx_n(\psi)$).
-\begin{tiny}
+Operator symbols: (We  factor out the common premises $n : \lctx, \psi : \cctx_n, l : \ltmq_n(\psi), \Gamma : \ctx_n(\psi)$. Note that $l$ now ranges over level terms quotiented by constraints in $\psi$).
+%\begin{tiny}
 \begin{eqnarray*}
-n : \lctx, \psi : \cctx_n, l : \ltm(n), \Gamma : \ctx_n(\psi) &\vdash& (\U_{l})_\Gamma : \ty_n(\psi,\Gamma)\\
-n : \lctx, \psi : \cctx_n, l : \ltm(n), \Gamma : \ctx_n(\psi), a : \tm_n(\psi,\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta_{l}}(a) : \ty_n(\psi,\Gamma)\\
+%n : \lctx, \psi : \cctx_n, l : \ltm(n), \Gamma : \ctx_n(\psi) 
+&\vdash& (\U_{l})_\Gamma : \ty_n(\psi,\Gamma)\\
+%n : \lctx, \psi : \cctx_n, l : \ltm(n), \Gamma : \ctx_n(\psi), 
+a : \tm_n(\psi,\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta_{l}}(a) : \ty_n(\psi,\Gamma)\\
 %\Gamma : \ctx &\vdash& (\N^0)_\Gamma : \tm(\Gamma,(\U_0)_\Gamma) \\
-n : \lctx, \psi : \cctx_n,  l, l' : \ltm(\psi,n), \Gamma : \ctx_n(\psi),
+%n : \lctx, \psi : \cctx_n,  l, 
+l' : \ltmq_n(\psi),
 a : \tm_n(\psi,\Gamma,(\U_{l})_\Gamma),
-b :  \tm_n(\psi,\Gamma \cdot \Ta_{l}(a), (\U_{l'})_\Gamma))
+b :  \tm_n(\psi,\Gamma \cdot \Ta_{l}(a), (\U_{l'})_{\Gamma \cdot \Ta_{l}(a)})
 &\vdash&
  \Pihat^{l,l'}(a,b) : \tm_n(\psi,\Gamma,(\U_{l \vee l'})_\Gamma)\\
- n : \lctx, \psi : \cctx_n, l : \ltm(\psi,n),\Gamma : \ctx_n(\psi)&\vdash&\UU^l_\Gamma: \tm_n(\psi,\Gamma,(\UU_{l^+})_\Gamma)
+ %n : \lctx, \psi : \cctx_n, l : \ltm(\psi,n),\Gamma : \ctx_n(\psi)
+ &\vdash&\UU^l_\Gamma: \tm_n(\psi,\Gamma,(\UU_{l^+})_\Gamma)
 \end{eqnarray*}
 Equations:
 \begin{eqnarray*}
 &\vdots&
 \end{eqnarray*}
-\end{tiny}
+%\end{tiny}
 There are many equations. First for each $l$, $\U_l$ satisfies all the laws of a single universe, including laws of ordinary substitution. Then we have laws for level substitution $(\U_{l})_\Gamma[\sigma] = (\U_{l[\sigma]})_{\Gamma[\sigma]}$
 
 
