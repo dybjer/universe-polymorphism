@@ -270,7 +270,7 @@ In our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCD
 
 In our paper we followed Courant's approach to explicit universe polymorphism  \cite{Courant02} and introduced special universe level {\em judgments}:
 $$
-l\ level
+l\ \mathrm{level}
 \hspace{5em}
 l = l'
 $$
@@ -278,7 +278,7 @@ in addition to the usual judgment forms of type theory. Moreover, all judgments 
 
 We also presented an extension with equational constraints between universe levels, building on a proposal by Voevodsky \cite{VV}. To this end we added yet another judgment form
 $$
-\psi\ valid
+\psi\ \mathrm{valid}
 $$
 where $\psi$ is a list of equational level constraints. In this extension judgments that can depend on a context which may contain equational constraints as well as level variables and ordinary typings of variables.
 
@@ -731,13 +731,11 @@ n : \lctx &\vdash& \cty_n\\
 n : \lctx, \psi : \cctx_n, c : \cty_n &\vdash& \ctm_n(\psi,c)
 \end{eqnarray*}
 
-The extra structure for level-indexed scwfs is given by the following operator symbol $\leq$ for {\em level equality} as types in the level-indexed scwf of constraints:
-\footnote{equality reflection in ordinary type theory is the following equation in generalized algebraic theories:
+The extra structure for level-indexed scwfs is given by the following operator symbol $\leq$ for {\em level equality} as types in the level-indexed scwf of constraints\footnote{equality reflection in ordinary type theory is the following equation in generalized algebraic theories:
 \begin{eqnarray*}
 \Gamma : \ctx, A : \ty(\Gamma), a, a' : \tm(\Gamma, A),p :  \tm(\Gamma,\Id_A(a,a'))&\vdash& a = a' : \tm(\Gamma,A)
 \end{eqnarray*}
 }
-
 \begin{eqnarray*}
 n : \lctx, l, l' : \ltm_n &\vdash& \leq(l,l') : \cty_n
 \end{eqnarray*}
@@ -769,6 +767,15 @@ n : \lctx, \psi : \cctx_n,  l, l' : \ltm_n, p : \ctm_n(\psi,\leq(l,l')) &\vdash&
 \end{eqnarray*}
 Note that the equation is a version of equality reflection: from a "propositional" level equality $\leq(l,l')$ we derive a judgmental level equality, and it is the latter that enables equational reasoning about $\vee$ and $(-)^+$ and $\psi$.
 \begin{example}\label{exa:cctx-entails-lattice-eqs}
+In our old paper we have a judgment form $\Gamma \vdash \psi$ valid that expresses that the constraints in $\psi$
+hold in $\Gamma$, that is, are implied by the constraints in $\Gamma$.
+For example, if $\alpha$ and $\beta$ are level variables we can prove
+$$
+\alpha = \alpha\vee\beta, \beta\vee\alpha = \beta \vdash \alpha = \beta\ \mathrm{valid}
+$$
+by equational reasoning using the semilattice laws for $\vee$ in our system.
+
+What does this correspond to in the present setting? Consider the initial model of the present gat, see for example our paper on gats and cwfs \cite{bezem:hofmann}. If we let 
 (Talk about initial model and the notion of derivation.)
 In level context $2:\lctx$ (where we define $2 = \s(\s(0)) : \lctx$ and remark that level contexts need not be natural numbers) we can use two level variables which we 
 name $\alpha$ and $\beta$ for readability. (Officially, $\alpha = \q[\p] : \ltm_2$ and $\beta = \q  : \ltm_2$ in the ucwf of levels.)
