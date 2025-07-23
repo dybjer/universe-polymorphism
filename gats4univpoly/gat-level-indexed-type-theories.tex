@@ -895,12 +895,20 @@ There are many equations. First for each $l$, $\U_l$ satisfies all the laws of a
 \subsection{Constraint-indexed products of types}
 %We add three operator symbols in addition to the operator symbols for cwfs in Section 5.2 and 5.3:
 \def\l{\mathrm{l}}
-\begin{tiny}
+%\begin{tiny}
 Operator symbols (universal level quantification, abstraction, and application):
+(We  factor out the common premises 
+$
+n : \lctx, \psi : \cctx_n, c : \cty_n, \Gamma : \ctx_n(\psi), A : \ty_n(\psi.c, \Gamma[\cp])
+$.)
 \begin{eqnarray*}
-n : \lctx, \psi : \cctx_n, c : \cty_n, \Gamma : \ctx_n(\psi), A : \ty_n(\psi.c, \Gamma[\cp])&\vdash& [c]A : \ty_n(\psi,\Gamma)\\
-n : \lctx, \psi : \cctx_n, c : \cty_n, \Gamma : \ctx_n(\psi), A : \ty_n(\psi.c,\Gamma[\cp]), t : \tm_n(\psi.c,\Gamma[\cp], A) &\vdash& \langle c \rangle t : \tm_n(\psi,\Gamma,[c]A)\\
-n : \lctx, \psi : \cctx_n, c : \cty_n, \Gamma : \ctx_n(\psi), A : \ty_n(\psi.c,\Gamma[\cp]), f :  \tm_n(\psi,\Gamma,[c]A), pr : \ctm_n(\psi,c) &\vdash& \app_c(f,l) : \tm_n(\psi,\Gamma, A[\tuple{\cid,pr}])
+%n : \lctx, \psi : \cctx_n, c : \cty_n, \Gamma : \ctx_n(\psi), A : \ty_n(\psi.c, \Gamma[\cp])
+&\vdash& [c]A : \ty_n(\psi,\Gamma)\\
+%n : \lctx, \psi : \cctx_n, c : \cty_n, \Gamma : \ctx_n(\psi), A : \ty_n(\psi.c,\Gamma[\cp]), 
+t : \tm_n(\psi.c,\Gamma[\cp], A) 
+&\vdash& \langle c \rangle t : \tm_n(\psi,\Gamma,[c]A)\\
+%n : \lctx, \psi : \cctx_n, c : \cty_n, \Gamma : \ctx_n(\psi), A : \ty_n(\psi.c,\Gamma[\cp]), 
+f :  \tm_n(\psi,\Gamma,[c]A), pr : \ctm_n(\psi,c) &\vdash& \app_c(f,l) : \tm_n(\psi,\Gamma, A[\tuple{\cid,pr}])
 \end{eqnarray*}
 Equations ($\beta$ and $\eta$ for level abstraction and application):
  \begin{eqnarray*}
@@ -914,7 +922,7 @@ Equations ($\beta$ and $\eta$ for level abstraction and application):
 &\vdots&
 \end{eqnarray*}
 where $\sigma^+ = \tuple{\sigma \circ \cp, \cq}$ and $\gamma^+ = \tuple{\gamma \circ \p, \q}$??
-\end{tiny}
+%\end{tiny}
 \footnote{Check all this. It's easy to get wrong.}
 
 The first two operator symbols correspond $[c]A$ and $\langle c \rangle t$ to the first two rules (with implicit contexts) in our paper:
@@ -941,6 +949,7 @@ $$
 
 \subsection{Level-indexed products of types in the presence of constraints}
 
+{\bf I suggest to omit this although it's somewhat interesting.}
 We can also do level-indexing in the theory with constraints, provided the constraints don't depend on the abstracted level variable.
 
 \begin{tiny}
