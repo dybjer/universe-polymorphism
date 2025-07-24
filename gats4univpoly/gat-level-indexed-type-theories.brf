@@ -1,5 +1,7 @@
 \backcite {BezemCDE22}{{1}{1}{section.1}}
 \backcite {Huet87}{{1}{1}{section.1}}
+\backcite {agda}{{1}{1}{section.1}}
+\backcite {lean}{{1}{1}{section.1}}
 \backcite {Courant02}{{1}{1}{section.1}}
 \backcite {VV}{{1}{1}{section.1}}
 \backcite {BezemCDE22}{{2}{1}{section.1}}
@@ -9,11 +11,15 @@
 \backcite { }{{2}{1}{section*.1}}
 \backcite {castellan:warsaw,CCD:lambek}{{2}{1}{section*.1}}
 \backcite {Palmgren19}{{2}{1}{section*.1}}
+\backcite {bezem:hofmann}{{2}{1}{section*.2}}
 \backcite {castellan:warsaw,CCD:lambek}{{3}{1}{section*.2}}
 \backcite {dybjer:torino, bezem:hofmann}{{3}{1}{section*.2}}
-\backcite {Brunerie:initiality,deBoer:lic}{{5}{2}{section*.13}}
-\backcite {AhrensLV18}{{5}{2}{section*.13}}
-\backcite {BezemCDE22}{{5}{2}{section*.13}}
-\backcite {CCD:lambek}{{7}{3.1}{section*.14}}
+\backcite {bezem:hofmann}{{3}{1}{section*.4}}
+\backcite {dybjer:torino}{{4}{1}{section*.7}}
+\backcite {hofmann:cambridge}{{4}{1}{section*.7}}
+\backcite {Brunerie:initiality,deBoer:lic}{{6}{2}{section*.11}}
+\backcite {AhrensLV18}{{6}{2}{section*.11}}
+\backcite {BezemCDE22}{{6}{2}{section*.11}}
+\backcite {CCD:lambek}{{7}{3.1}{section*.12}}
 \backcite {bezem:hofmann}{{11}{1}{example.1}}
 \backcite {bezem-coquand:lattices}{{15}{4.6}{subsection.4.6}}

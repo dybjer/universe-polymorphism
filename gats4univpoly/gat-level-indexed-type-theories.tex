@@ -221,6 +221,7 @@
 \def\cp{\mathrm{cp}}
 \def\cq{\mathrm{cq}}
 \def\chom{\mathrm{chom}}
+\def\level{\mathrm{level}}
 
 \newcommand{\ctx}{\mathrm{ctx}}
 \newcommand{\sub}{\mathrm{sub}}
@@ -267,25 +268,26 @@ We present generalized algebraic theories corresponding to the theories in our p
 
 \section{Introduction}
 
-In our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22} we addressed the problem of the formal setting for explicit universe polymorphism in Martin-Löf type theory. An implicit form of universe polymorphism was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Coq (Rocq). Alternatively, Agda and Lean employ versions of universe polymorphism, where universe levels are explicitly declared. 
+In our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22} we proposed several versions of Martin-Löf type theory extended with explicit universe polymorphism. An implicit form of universe polymorphism was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Coq (Rocq). Alternatively, Agda \cite{agda} and Lean \cite{lean} employ versions of universe polymorphism, where universe levels are explicitly declared. 
 
-In our paper we followed Courant's approach to explicit universe polymorphism  \cite{Courant02} and introduced special universe level {\em judgments}:
+In our paper we followed Courant's approach \cite{Courant02} to explicit universe polymorphism and introduced special universe level {\em judgments}:
 $$
 l\ \mathrm{level}
 \hspace{5em}
 l = l'
 $$
-in addition to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variables that are declared in the context. We emphasized that, unike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms. 
+in addition to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variables declared in the context. We emphasized that, unike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms. 
 
-We also presented an extension with equational constraints between universe levels, building on a proposal by Voevodsky \cite{VV}. To this end we added yet another judgment form
+We also presented an extension where equational constraints between universe levels can be declared, building on a proposal by Voevodsky \cite{VV}. To this end we added yet another judgment form
 $$
 \psi\ \mathrm{valid}
 $$
-where $\psi$ is a list of equational level constraints. In this extension judgments that can depend on a context which may contain equational constraints as well as level variables and ordinary typings of variables.
+where $\psi$ is a list of equational level constraints. 
+In this extension judgments that can depend on a context which may contain equational constraints as well as level variables and ordinary typings of variables.
 
 In this article we aim to provide further perspective and rigour to our theories by presenting generalized algebraic theories such that (slightly modified versions of) of our theories give rise to their initial models. These generalized algebraic theories are based on the notion of an {\em indexed category with families (indexed cwfs)}.
 %and resemble syntactic presentations of dependent type theories with explicit substitutions \cite{martinlof:gbg92,tasistro:lic}. 
-By focusing on the notion of an initial model, we abstract away from certain details of the precise syntax and inference rules.  Moreover, since the models are described on a high level in terms of indexed categories with families with extra structure we highlight their high-level structure. This is less visible in traditional presentation of logical theories defined in terms of syntax and inference rules. 
+By focusing on the notion of an initial model, we abstract from certain details of the precise syntax and inference rules.  Moreover, since the models are described on a high level in terms of indexed categories with families with extra structure we highlight their high-level structure. This is less visible in traditional presentation of logical theories defined in terms of syntax and inference rules. 
  
 Moroever, we take the opportunity to discuss some issues in our original paper \cite{BezemCDE22}, see the revised and extended version of published on the ArXiV \cite{BezemCDE22:revised}.
 
@@ -293,26 +295,31 @@ Moroever, we take the opportunity to discuss some issues in our original paper \
 
 This is a case study in uniform categorical logic, and a contribution to Voevodsky's initiality conjecture programme.
 
-\paragraph{Type theory and generalized algebraic theories.} When presenting standard type theories (without universe level judgments) by generalized algebraic theories we have the following correspondences:
+\paragraph{Type theory and generalized algebraic theories.} When presenting standard type theories (without universe level judgments) by generalized algebraic theories we have the following correspondences \cite{bezem:hofmann}:
 \begin{itemize}
-\item Four sort symbols (context, context morphism (substitution), type in context, and term of a type in context) corresponding to the four principal forms of judgment of type theory with explicit substitutions. The four equality judgments are represented by equations of the four respecitive sorts.
-\item Ten operator symbols for the basic operations of cwfs (identity and composition of substitutions, substitution in types and in terms, empty context, context extension, empty substitution, substitution extension, projection substitution, last variable term) and the equations relating them.
+\item Four sort symbols (context, context morphism (substitution), type in context, and term of a type in context) corresponding to the four principal forms of judgment of type theory with explicit substitutions. The four equality judgments are represented by equations between terms of the four respective sorts.
+\item Ten operator symbols for the basic operations of cwfs: identity and composition of substitutions, substitution in types and in terms, empty context, context extension, empty substitution, substitution extension, projection (or weakening) substitution, last variable term, and also the cwf-equations relating them.
 \item An operator symbol for each formation, introduction, and elimination rule for the type formers of the type theory. The equality (or computation) rules are represented by equations of appropriate types.
 \end{itemize}
 
 We can build initial models by defining raw contexts, raw context morphisms, raw types, and raw terms. Then we 
-define pers of equal (well-formed) contexts,  context morphisms, types, and terms, that encode the equality judgments ($\Gamma = \Gamma'$, etc). Finally, we form quotients wrt these pers. See Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,CCD:lambek} for details.
+define partial equivalence relations (pers) of equal (well-formed) contexts,  context morphisms, types, and terms, that encode the equality judgments ($\Gamma = \Gamma'$, etc). Finally, we form quotients with respect to these pers, see Castellan, Clairambault, and Dybjer \cite{castellan:warsaw,CCD:lambek} for details.
 
-In this way the generalized algebraic theory only records the ``important" rules. When building the initial model we need to include various general ``bookkeeping'' rules. Moreover, note that the pure theory of cwfs only models the most general rules of dependent type theory, those that are independent of any specific type formers. Then we add new operator symbols and equations for type formers $\Sigma, \Pi$, $\UU$, etc.
+In this way the generalized algebraic theory only records the ``important" rules. When building the initial model we need to include various ``bookkeeping'' rules, such as general rules of equality reasoning. Moreover, the pure theory of cwfs only models the most general rules of dependent type theory, those that are independent of any specific type formers. Thus we need to add new operator symbols and equations for the rules for the type formers $\Sigma, \Pi$, $\UU$, etc.
 
-These generalized algebraic theories can be found in other publications \cite{dybjer:torino, bezem:hofmann} and we relegate them to an appendix and begin by listing the sort symbols for an external tower of universes $\UU_n$ indexed by external natural numbers in section 2.
+These generalized algebraic theories can be found in other publications \cite{dybjer:torino, bezem:hofmann} and we relegate them to an appendix. Instead we begin by listing the sort symbols for an external tower of universes $\UU_n$ indexed by external natural numbers in section 2.
 
 \paragraph{Explicit polymorphism and indexed cwfs.} In section 3 we display generalized algebraic theories for explicit universe polymorphism. These are based on the generalized algebraic theory of cwfs indexed by unityped cwfs (ucwfs) of universe levels. Let $\L$ be the base category of the ucwf of levels. A level-indexed cwf is a cwf-valued presheaf 
 $$
 T : \L^\op \to \CwF^\Pi
 $$
+The resulting generalized algebraic theory consists of following parts: \begin{itemize}
+\item the theory of the ucwf of levels;
+\item the theory of level-indexed pure cwfs of types with its object part and
+arrow part;
+\item the extra structure for the type formers.
+\end{itemize}
 
-The resulting generalized algebraic theory consists of
 \paragraph{The theory of the ucwf of levels.}
 \begin{itemize}
 \item An additional three sort symbols for the ucwf of levels: level context, level context morphism (level substitution), level term in context:. 
@@ -325,9 +332,9 @@ $$
 $$
 n : \lctx \vdash  \ltm(n)
 $$
-The last of these corresponds to the judgment $l\ level$, and the two former are added in an explicit substituion calculus for explicit polymorphism. The equality judgments (such as $l = l'$) are represented by equations.
+This is our notation for the sort symbols of a gat, see also \cite{bezem:hofmann}. It states that $\lctx$ is a constant sort symbol, that $\lhom$ is a binary sort symbol indexed by $m,n : \lctx$. Moreover, $\ltm$ is a unary sort symbol indexed by $n : \lctx$ and corresponds to the judgment $l\ \level$. The first and second sort symbols are added in an explicit substitution calculus for explicit polymorphism. The equality judgments (such as $l = l'$) are represented by equations.  
 
-where $\lctx$ is the sort of objects (contexts) of the ucwf, $\lhom$ is the dependent sort of morphisms, and $\ltm$ is the dependent sort of terms.  In the initial model, $n : \lctx$ is the number of universe level variables, $l : \ltm(n)$ is a level term in $n$ level variables, and $ls : \lhom(m,n)$ is context morphism representing $n$ level terms in $m$ level variables.
+In the initial model, $n : \lctx$ represents the number of universe level variables, $l : \ltm(n)$ a level term in $n$ level variables, and $ls : \lhom(m,n)$ a context morphism consisting of $n$ level terms in $m$ level variables.
 
 \item An additional nine operator symbols for the basic operations of ucwfs (identity and composition of level substitutions, substitution in level terms, empty level context, level context extension, empty level substitution, level substitution extension, projection level substitution, last level variable term) and the equations relating them.
 \item Two operator symbols: the join $\vee$ of two levels (with the upper semilattice equations) and the next universe level $[-)^+$ with equations making it an inflationary operation.
@@ -338,30 +345,25 @@ a sort of types. Moreover, variables ans terms need not be typed, and
 terms only depend on the context $n$, that is, the number of variables
 they may use.}
 
-\paragraph{The object part of the level-indexed cwf of types.} This is like the cwf with extra structure for ordinary type theory, but now all the structure depends on a level context $n$.
-
-\paragraph{The arrow part of the level-indexed cwf of types.} 
+\paragraph{The theory of the level-indexed cwfs of types.} 
 \begin{itemize}
-\item
-Moreover, the sorts of the gat of cwfs ($\Ctx,\Hom,\Ty,\Tm$) are now indexed by $n : \lctx$. We will present the full generalized algebraic theory of level-indexed cwfs with the extra structure for level-indexed universes.
-\item An operator symbol for each formation, introduction, and elimination rule for the type formers of the type theory. The equality (or computation) rules are represented by equations of appropriate types.
+\item This has an object part which is like the gat of the cwf of types, but the sorts of the gat of cwfs ($\Ctx_n,\Hom_n,\Ty_n,\Tm_n$) are now indexed by $n : \lctx$. We will present the full generalized algebraic theory of level-indexed cwfs with the extra structure for type formers and also for  level-indexed universes.
+\item It also has an arrow part, with operator symbols for level-substitution in all the four parts of the level-indexed cwf. Level-substitution preserves all the structure of pure cwfs and of the structure for the type-formers.
 \end{itemize}
 
-\paragraph{The arrow part of the level-indexed cwf of types.} There is an operator symbol for level-substitution in each judgment.
+\paragraph{Plan of the paper.} In Section 2 we present the {\em infinitary} generalized algebraic theory of cwfs with extra structure for the type formers and an externally indexed tower of universes. We consider both cumulative and non-cumulative universes. In Section 3 we present the {\em finitary} generalized algebraic theory of level-indexed type theory with extra structure for the type formers and an internally indexed tower of universes. In Section 4 we present the generalized algebraic theory of cwfs with extra structure doubly indexed by levels and level constraints (* modify *). In Section 5 we discuss models. In Section 6 we condclude. The appendix contains generalized algebraic theories appearing in previous publications. 
 
-\paragraph{Plan of the paper.} In Section 2 we present the (infinitary) generalized algebraic theory of cwfs with extra structure for the type formers and an externally indexed tower of universes. We consider both cumulative and non-cumulative universes. In Section 3 we present the finitary generalized algebraic theory of level-indexed type theory with extra structure for the type formers and an internally indexed tower of universes. In Section 4 we present the generalized algebraic theory of cwfs with extra structure doubly indexed by levels and level constraints. In Section 5 we discuss models. In Section 6 we condclude. The appendix contains generalized algebraic theories appearing in previous publications. 
-
-\paragraph{Background.} This paper builds on three previous papers: Type theory with explicit universe polymorphism, Generalized Algebraic Theories and Categories with Families, and Cwfs, unityped, simply typed, and dependently typed.
+\paragraph{Background.} This paper builds on three previous papers: Type theory with explicit universe polymorphism, Generalized Algebraic Theories and Categories with Families, and Cwfs, unityped, simply typed, and dependently typed. See also Voevodsky's initiality conjecture programme. This paper is a contribution to that. We also need to refer to papers about cwfs, such as Dybjer \cite{dybjer:torino}, Hofmann \cite{hofmann:cambridge}, and Castellan et al. 
 
 \paragraph{Acknowledgement.} This paper is written in honour of Professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend and colleague who spent the autumn of 1994 (check?) in Göteborg. He has made fundamental contributions to type theory and constructivity, in particular to the understanding of the constructiive content of classical logic.
 
 \section{Type theory with an external tower of universes}
 
-As a first step, we shall show the operator symbols and equations for an external tower of universes without cumulativity. Note that this is an infinitary theory.
+As a first step, we shall show the operator symbols and equations for an external tower of universes without cumulativity. %Note that this is an infinitary theory.
 
 We assume that we already have defined the generalized algebraic theory of cwfs with $\Pi$-types, see the appendix. We could of course add other type formers as well, and let $\UU$ be closed under those too, but leave this to the reader. 
 
-\paragraph{A tower of universes without cumulativity.} We show the infinitely many operator symbols and equations indexed by external natural numbers $l, l' , m \in \NN$ and $l < m$.
+\paragraph{A tower of universes without cumulativity.} We show the infinitely many operator symbols and equations indexed by external natural numbers $l, l' , m \in \NN$ and $l < m$\footnote{Check original paper whether we have $l^+$ instead}.
 Note that codes for $\Pi$ are doubly indexed.
 \begin{eqnarray*}
 \Gamma : \ctx &\vdash& (\U_{l})_\Gamma : \ty(\Gamma)\\
