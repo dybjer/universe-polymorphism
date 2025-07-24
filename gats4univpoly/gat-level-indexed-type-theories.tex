@@ -685,11 +685,26 @@ b :  \tm_n(\Gamma \cdot \Ta_{l}(a), (\U_{l'})_\Gamma))
  \Pihat^{l,l'}(a,b) : \tm_n(\Gamma,(\U_{l \vee l'})_\Gamma)\\
  n : \lctx, l : \ltm(n),\Gamma : \ctx_n&\vdash&\UU^l_\Gamma: \tm_n(\Gamma,(\UU_{l^+})_\Gamma)
 \end{eqnarray*}
+
 Equations:
 \begin{eqnarray*}
 &\vdots&
 \end{eqnarray*}
 There are many equations. First for each $l$, $\U_l$ satisfies all the laws of a single universe, including laws of ordinary substitution. Then we have laws for level substitution $(\U_{l})_\Gamma[\sigma] = (\U_{l[\sigma]})_{\Gamma[\sigma]}$. Moreover, level-substitution commutes with the operations associated with a universe.
+
+\paragraph{Remark.} Recall the rule for the $l$th universe in the $m$th for $l < m$ in the external tower of universes above \ref{}: 
+\begin{eqnarray*}
+\Gamma : \ctx&\vdash&(\UU^m_l)_\Gamma: \tm(\Gamma,(\UU_{m})_\Gamma)
+\end{eqnarray*}
+In our old paper we had a similar rule for the internally indexed version, which used the definition of $l < m$ by the level equation $m = l^+ \vee m$. If we try to represent this rule by the following operator symbol
+\begin{eqnarray*}
+m = l^+ \vee m, \Gamma : \ctx&\vdash&(\UU^m_l)_\Gamma: \tm(\Gamma,(\UU_{m})_\Gamma)
+\end{eqnarray*}
+we leave the framework of generalized algebraic theories, since they do not allow equations in contexts. In the next section we will show how to extend our calculus with such external constraints.
+
+
+
+
 
 
 %\end{tiny}
