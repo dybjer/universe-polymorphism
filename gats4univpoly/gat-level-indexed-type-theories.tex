@@ -313,7 +313,7 @@ These generalized algebraic theories can be found in other publications \cite{dy
 $$
 T : \L^\op \to \CwF^\Pi
 $$
-The resulting generalized algebraic theory consists of following parts: \begin{itemize}
+The resulting generalized algebraic theory consists of the following parts: \begin{itemize}
 \item the theory of the ucwf of levels;
 \item the theory of level-indexed pure cwfs of types with its object part and
 arrow part;
@@ -762,9 +762,8 @@ where $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$. No, this is not right. Check l
 
 \subsection{The level-indexed scwf of level constraints}
 
-Constraints are lists of identitiesof level terms. We formalize the theory of constraints as level-indexed scwfs $(\cctx, \chom, \cty, \ctm)$.\footnote{Maybe we don't need the full scwf structure, but only lists of identities and projections to pull them out.} The gat of level-indexed scwf is the same as the gat of level-indexed cwfs defined above, except that in a scwf types don't depend on type contexts.\footnote{In a level-indexed scwf, types do depend on level contexts, though.} \footnote{In the published paper all constraints appearing in contexts are loop-free "The second condition is that the finite set of constraints in the extended context $\Gamma, \psi$ is loop-free." Here we prefer to allow inconsistent constraints in the first step. As a second step we propose to add a rule that all types are equal to the unit types in an inconsistent context. Such a theory has decidable type-checking.}
+Constraints are lists of equations between level terms. We formalize the theory of constraints as level-indexed scwfs $(\cctx, \chom, \cty, \ctm)$.\footnote{Maybe we don't need the full scwf structure, but only lists of identities and projections to pull them out.} The gat of level-indexed scwf is the same as the gat of level-indexed cwfs defined above, except that in a scwf types don't depend on type contexts.\footnote{In a level-indexed scwf, types do depend on level contexts, though.} \footnote{In the published paper all constraints appearing in contexts are loop-free "The second condition is that the finite set of constraints in the extended context $\Gamma, \psi$ is loop-free." Here we prefer to allow inconsistent constraints in the first step. As a second step we propose to add a rule that all types are equal to the unit types in an inconsistent context. Such a theory has decidable type-checking.}
 
-\newpage
 The following new sort symbols come from the structure of a level-indexed scwf:
 \begin{eqnarray*}
 n : \lctx &\vdash& \cctx_n\\
