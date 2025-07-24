@@ -268,7 +268,7 @@ We present generalized algebraic theories corresponding to the theories in our p
 
 \section{Introduction}
 
-In our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22} we proposed several versions of Martin-Löf type theory extended with explicit universe polymorphism. An implicit form of universe polymorphism was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Coq (Rocq). Alternatively, Agda \cite{agda} and Lean \cite{lean} employ versions of universe polymorphism, where universe levels are explicitly declared. 
+In our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22} we proposed several extensions of Martin-Löf type theory with explicit universe polymorphism. An implicit form of universe polymorphism was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Coq (Rocq) \cite{coq}. Alternatively, Agda \cite{agda} and Lean \cite{lean} employ versions of universe polymorphism, where universe levels are explicitly declared. 
 
 In our paper we followed Courant's approach \cite{Courant02} to explicit universe polymorphism and introduced special universe level {\em judgments}:
 $$
@@ -278,12 +278,12 @@ l = l'
 $$
 in addition to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variables declared in the context. We emphasized that, unike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms. 
 
-We also presented an extension where equational constraints between universe levels can be declared, building on a proposal by Voevodsky \cite{VV}. To this end we added yet another judgment form
+We also presented an extension where equational constraints between universe levels can be declared, building on a proposal by Voevodsky \cite{VV}. We added yet another judgment form
 $$
 \psi\ \mathrm{valid}
 $$
 where $\psi$ is a list of equational level constraints. 
-In this extension judgments that can depend on a context which may contain equational constraints as well as level variables and ordinary typings of variables.
+In this extension judgments can depend on equational constraints as well as on level variables and ordinary typed term variables.
 
 In this article we aim to provide further perspective and rigour to our theories by presenting generalized algebraic theories such that (slightly modified versions of) of our theories give rise to their initial models. These generalized algebraic theories are based on the notion of an {\em indexed category with families (indexed cwfs)}.
 %and resemble syntactic presentations of dependent type theories with explicit substitutions \cite{martinlof:gbg92,tasistro:lic}. 
