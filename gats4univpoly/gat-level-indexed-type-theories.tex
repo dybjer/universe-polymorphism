@@ -687,20 +687,41 @@ b :  \tm_n(\Gamma \cdot \Ta_{l}(a), (\U_{l'})_\Gamma))
 \end{eqnarray*}
 
 Equations:
+We have the following decoding equations:
 \begin{eqnarray*}
-&\vdots&
+%\Ta(\N^0_\Gamma) &=& \N_\Gamma\\
+\Ta_{l \vee l'}(\Pi^{l,l'}(a,b)) &=& \Pi(\Ta_l(a),\Ta_{l'}(b))\\
+%\Ta_{m}((\UU^m_l)_\Gamma) &=& (\UU_l)_\Gamma (* wrong *)\\
+\Ta_{l^+}((\UU^l)_\Gamma) &=& (\UU_l)_\Gamma 
 \end{eqnarray*}
-There are many equations. First for each $l$, $\U_l$ satisfies all the laws of a single universe, including laws of ordinary substitution. Then we have laws for level substitution $(\U_{l})_\Gamma[\sigma] = (\U_{l[\sigma]})_{\Gamma[\sigma]}$. Moreover, level-substitution commutes with the operations associated with a universe.
+
+Moreover, we have equations for commutativity of lifting and $\Pi$-codes with respect to term substitution $\gamma$:
+ \begin{eqnarray*}
+(\U_l)_\Gamma [ \gamma ] &=& (\U_l)_\Delta\\
+\Ta_l(a) [ \gamma ] &=& \Ta_l(a[ \gamma ] )\\
+%\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
+\Pi^{l,l'}(a,b)[ \gamma ] &=& \Pi^{l,l'}(a [ \gamma ], b[ \gamma^+ ])\\
+(\UU^l)_\Gamma[ \gamma ] &=&(\UU^l)_\Delta
+\end{eqnarray*}
+%There are many equations. First for each $l$, $\U_l$ satisfies all the laws of a single universe, including laws of ordinary substitution. Then we have 
+Moreover, we have laws that level substitution $\sigma$ commutes with operations associated with a universe.
+ \begin{eqnarray*}
+ (\U_{l})_\Gamma[\sigma] &=& (\U_{l[\sigma]})_{\Gamma[\sigma]}\\
+ \Ta_l(a) [ \sigma ] &=& \Ta_{l[\sigma]}(a[ \sigma ] )\\
+\Pi^{l,l'}(a,b)[ \sigma ] &=& \Pi^{l[ \sigma ] ,l'[ \sigma ] }(a [ \sigma ], b[ \sigma^+ ])\\
+(\UU^l)_\Gamma[ \sigma ] &=&(\UU^{l[ \sigma ]} )_{\Delta[ \sigma ]} 
+ \end{eqnarray*}
+Check that this is right. Cf comment by intern.
 
 \paragraph{Remark.} Recall the rule for the $l$th universe in the $m$th for $l < m$ in the external tower of universes above \ref{}: 
 \begin{eqnarray*}
 \Gamma : \ctx&\vdash&(\UU^m_l)_\Gamma: \tm(\Gamma,(\UU_{m})_\Gamma)
 \end{eqnarray*}
-In our old paper we had a similar rule for the internally indexed version, which used the definition of $l < m$ by the level equation $m = l^+ \vee m$. If we try to represent this rule by the following operator symbol
+In our old paper the rule for the internally indexed version was similar to the one for the externally indexed version. It used the definition of $l < m$ by the level equation $m = l^+ \vee m$. However, if we try to represent the internally indexed rule by the following operator symbol
 \begin{eqnarray*}
-m = l^+ \vee m, \Gamma : \ctx&\vdash&(\UU^m_l)_\Gamma: \tm(\Gamma,(\UU_{m})_\Gamma)
+n : \lctx, m, l : \ltm(n), m = l^+ \vee m, \Gamma : \ctx_n &\vdash&(\UU^m_l)_\Gamma: \tm(\Gamma,(\UU_{m})_\Gamma)
 \end{eqnarray*}
-we leave the framework of generalized algebraic theories, since they do not allow equations in contexts. In the next section we will show how to extend our calculus with such equational constraints.
+we leave the framework of generalized algebraic theories which does not admit operator symbols that depend on such equational constraints. In the next section we will show a method for dealing with such equational constraints.
 
 
 
@@ -726,11 +747,14 @@ Equations ($\beta$ and $\eta$ for level abstraction and application):
  \end{eqnarray*}
  Equations for commutativity of operator symbols wrt a level substitution $\sigma : \lhom(m,n)$ and a term substitution $\gamma : \hom_n(\Delta,\Gamma)$:
  \begin{eqnarray*}
- \forall_\l(B)[ \sigma ] &=& \forall_\l(B[ \sigma^{+}])\\
  \forall_\l(B)[ \gamma ] &=& \forall_\l(B[ \gamma[\lp]])\\
-&\vdots&
+ \lambda_\l(B)[ \gamma ] &=& \lambda_\l(B[ \gamma[\lp]])\\
+ \app_\l(c,l)[ \gamma ] &=& \app_\l(c[ \gamma ] ,l[ \gamma ] )\\
+ \forall_\l(B)[ \sigma ] &=& \forall_\l(B[ \sigma^{+}])\\
+ \lambda_\l(B)[ \sigma ] &=& \lambda_\l(B[ \sigma^{+}])\\
+\app_\l(c,l)[ \sigma ] &=& \app_\l(c[ \sigma ] ,l[ \sigma ] )
 \end{eqnarray*}
-where $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$.
+where $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$. No, this is not right. Check lifting of level substitution and term substitution.
 %and $\gamma^+ = \tuple{\gamma \circ \p, \q}$??
 %\end{tiny}
 
