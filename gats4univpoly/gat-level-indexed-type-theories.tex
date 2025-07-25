@@ -254,7 +254,8 @@
 \begin{document}
 
 \title{Categorical Models of Type Theory\\
-with Explicit Universe Polymorphism\footnote{Alternative title: Generalised Algebraic Theories of Type Theories with Explicit Universe Polymorphism?}}
+with Explicit Universe Polymorphism\footnote{Alternative title: Generalised Algebraic Theories of Type Theories with Explicit Universe Polymorphism?
+}}
 
 \author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'{\i}n Escard\'o}
 
@@ -337,6 +338,15 @@ This is our notation for the sort symbols of a gat, see also \cite{bezem:hofmann
 In the initial model, $n : \lctx$ represents the number of universe level variables, $l : \ltm(n)$ a level term in $n$ level variables, and $ls : \lhom(m,n)$ a context morphism consisting of $n$ level terms in $m$ level variables.
 
 \item An additional nine operator symbols for the basic operations of ucwfs (identity and composition of level substitutions, substitution in level terms, empty level context, level context extension, empty level substitution, level substitution extension, projection level substitution, last level variable term) and the equations relating them.
+
+Our notation for the operator symbols is exemplified by the identity and composition of level substitution.
+\begin{eqnarray*}
+n : \lctx, \Gamma : \ctx_n &\vdash& \id_{n,\Gamma} : \Hom_n(\Gamma,\Gamma)\\
+n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \gamma : \Hom_n(\Delta,\Gamma), \delta : \Hom_n(\Xi,\Delta) &\vdash&
+\gamma \circ \delta : \Hom_n(\Xi,\Gamma)
+\end{eqnarray*}
+The first line states that $\id$ is a binary operation symbol with argument sorts $n : \lctx$ and  $\Gamma : \ctx_n$ and result sort $\Hom_n(\Gamma,\Gamma)$. The second line states that $\circ$ is an infix operation symbol with six arguments $n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \gamma : \Hom_n(\Delta,\Gamma), \delta : \Hom_n(\Xi,\Delta)$, where the four initial arguments are implicit. The result type is $\Hom_n(\Xi,\Gamma)$.
+
 \item Two operator symbols: the join $\vee$ of two levels (with the upper semilattice equations) and the next universe level $[-)^+$ with equations making it an inflationary operation.
 \end{itemize}
 %
