@@ -681,9 +681,10 @@ Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm
 \app(c,a)[\sigma] &=&\app(c[\sigma],a[\sigma])
 \end{eqnarray*}
 
-\subsection{A level-indexed non-cumulative tower of universes}
+\subsection{A level-indexed cumulative tower of universes}
 
-The rule of universe formation states that for each level term $l$ in $n$ variables, there is a type $\UU_l$ with decoding map $\Ta_l$. Then there is an introduction rule for each small type former; we here only consider closure under $\Pi$. Then there is an introduction rule expressing that every universe is in the next. (We later add  a cumulativity map making $\U_l$ a subuniverse of $\UU_m$ for $l < m$. We note that the resulting theory is finitary in contrast to the theory with an externally indexed tower of universes.
+The rule of universe formation states that for each level term $l$ in $n$ variables, there is a type $\UU_l$ with decoding map $\Ta_l$. Then there is an introduction rule for each small type former; we here only consider closure under $\Pi$. Then there is an introduction rule expressing that every universe is in the next. 
+
 %\begin{tiny}
 %\vspace{1ex}
 The operator symbols are: (Factor out common premises?)
@@ -698,7 +699,17 @@ b :  \tm_n(\Gamma \cdot \Ta_{l}(a), (\U_{l'})_\Gamma))
  \Pihat^{l,l'}(a,b) : \tm_n(\Gamma,(\U_{l \vee l'})_\Gamma)\\
  n : \lctx, l : \ltm(n),\Gamma : \ctx_n&\vdash&\UU^l_\Gamma: \tm_n(\Gamma,(\UU_{l^+})_\Gamma)
 \end{eqnarray*}
-
+In externally indexed cumulative universes we have operator symbols that lift elements in the $l$th universe to the $m$th universe for $l < m$ (see above):
+%\begin{tiny}
+\begin{eqnarray*}
+\Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
+\end{eqnarray*}
+However, the external assumption $l < m$ on levels cannot directly be internalized as the level equation $l^+ \vee m = m$ since gats do not admit equational constraints on its arguments. Instead we introduce three cumulativity maps
+\begin{eqnarray*}
+n : \lctx, l : \ltm(n), \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^{+}_{l}}(a) : \tm(\Gamma,(\U_{l^+})_\Gamma))\\
+n : \lctx, l,m : \ltm(n), \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^{- \vee m}_{l}}(a) : \tm(\Gamma,(\U_{l \vee m})_\Gamma))\\
+n : \lctx, l,m : \ltm(n), \Gamma : \ctx, b : \tm(\Gamma,(\U_{m})_\Gamma) &\vdash& {\Ta^{l \vee -}_{m}}(b) : \tm(\Gamma,(\U_{l \vee m})_\Gamma))
+\end{eqnarray*}
 Equations:
 We have the following decoding equations:
 \begin{eqnarray*}
