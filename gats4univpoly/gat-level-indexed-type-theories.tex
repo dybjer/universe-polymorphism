@@ -704,7 +704,7 @@ In externally indexed cumulative universes we have operator symbols that lift el
 \begin{eqnarray*}
 \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
 \end{eqnarray*}
-However, the external assumption $l < m$ on levels cannot directly be internalized as the level equation $l^+ \vee m = m$ since gats do not admit equational constraints on its arguments. Instead we introduce three cumulativity maps
+However, the external assumption $l < m$ on levels cannot directly be internalized as the level equation $l^+ \vee m = m$ since gats do not admit equational constraints on its arguments. Instead we introduce three operator symbols for different liftings:
 \begin{eqnarray*}
 n : \lctx, l : \ltm(n), \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^{+}_{l}}(a) : \tm(\Gamma,(\U_{l^+})_\Gamma))\\
 n : \lctx, l,m : \ltm(n), \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^{- \vee m}_{l}}(a) : \tm(\Gamma,(\U_{l \vee m})_\Gamma))\\
@@ -718,6 +718,23 @@ We have the following decoding equations:
 %\Ta_{m}((\UU^m_l)_\Gamma) &=& (\UU_l)_\Gamma (* wrong *)\\
 \Ta_{l^+}((\UU^l)_\Gamma) &=& (\UU_l)_\Gamma 
 \end{eqnarray*}
+We have the following decoding equations for the three liftings:
+\begin{eqnarray*}
+\Ta^+_{l}(\Pi^{l}(a,b)) &=& \Pi^{l^+}(\Ta^+_l(a),\Ta^+_l(b))\\
+\Ta^+_{l^+}((\UU^l)_\Gamma) &=& (\UU^{l^+})_\Gamma\\
+&&\\
+\Ta^{-\vee m}_{l}(\Pi^{l}(a,b)) &=& \Pi^{l \vee m}(\Ta^{-\vee m}_l(a),\Ta^{-\vee m}_l(b))\\
+\Ta^{-\vee m}_{l}((\UU^l)_\Gamma) &=& (\UU^{l\vee m})_\Gamma\\
+&&\\
+\Ta^{l \vee -}_{l}(\Pi^{m}(a,b)) &=& \Pi^{l \vee m}(\Ta^{l \vee -}_l(a),\Ta^{l \vee -}_l(b))\\
+\Ta^{l \vee -}_{l}((\UU^m)_\Gamma) &=& (\UU^{l\vee m})_\Gamma\end{eqnarray*}
+Equations for commutativity of operator symbols wrt substitution ($\gamma : \hom(\Delta,\Gamma)$):
+\begin{eqnarray*}
+\Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )\\
+%\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
+\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^+ ])
+\end{eqnarray*}
+
 
 Moreover, we have equations for commutativity of lifting and $\Pi$-codes with respect to term substitution $\gamma$:
  \begin{eqnarray*}
