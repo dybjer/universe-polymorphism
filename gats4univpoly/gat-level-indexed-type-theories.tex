@@ -253,8 +253,9 @@
 
 \begin{document}
 
-\title{Categorical Models of Type Theory\\
-with Explicit Universe Polymorphism\footnote{Alternative title: Generalised Algebraic Theories of Type Theories with Explicit Universe Polymorphism?
+\title{Type Theory
+with Explicit Universe Polymorphism\\ as an Initial Model of a Generalized Algebraic Theory\footnote{Alternative title: Categorical Models of Type Theory or Type Theory
+with Explicit Universe PolymorphismGeneralised Algebraic Theories of Type Theories with Explicit Universe Polymorphism?
 }}
 
 \author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'{\i}n Escard\'o}
@@ -855,15 +856,24 @@ For example, if $\alpha$ and $\beta$ are level variables we can prove
 $$
 \alpha = \alpha\vee\beta, \beta\vee\alpha = \beta \vdash \alpha = \beta\ \mathrm{valid}
 $$
-by equational reasoning using the semilattice laws for $\vee$ in our system.
+by equational reasoning using commutativity of $\vee$ (one of the semilattice laws) in our system.
 
-What does this correspond to in the present setting? Consider the initial model of the present gat, see for example our paper on gats and cwfs \cite{bezem:hofmann}. This above judgment is a level equation in a level context $2:\lctx$ (where we define $2 = \s(\s(0)) : \lctx$), where the variables correspond to the projections: $\alpha = \q[\p] : \ltm_2$ and $\beta = \q  : \ltm_2$ in the ucwf of levels. These variables themselves are level terms, and so are, 
-e.g., $\alpha\vee\beta$ and $\beta\vee\alpha$, all in $\ltm_2$.
+What does this correspond to in the present setting? Recall that each gat with sort symbols, operator symbols and equations in $\Sigma$ has an initial model $\T_\Sigma$. As shown in our paper on gats and cwfs, this can be defined as a variable free, explicit substitution calculus for dependent type theory built from cwf-combinators and the operator symbols in $\Sigma$\cite{bezem:hofmann}. In this calculus the above judgment is a level equation
+$$
+[\alpha] = [\beta] : \ltmq_2(\psiab)
+$$
+This is a judgment in the level context $2 = \s(\s(0)) : \lctx$ and the variables are defined the projections $\alpha = \q[\p] : \ltm_2$ and $\beta = \q  : \ltm_2$ in the ucwf of levels. Moreover, 
+$$
+\psiab = 1.\leq(\alpha,\alpha\vee\beta).\leq(\beta\vee\alpha,\beta) : \cctx_2
+$$
+is a constraint context. The derivation of this in $\T_\Sigma$ uses that 
+$\alpha$ and $\beta$ are level terms, and so are, 
+$\alpha\vee\beta$ and $\beta\vee\alpha$, all in $\ltm_2$.
 Hence we have level equality types in $\cty_2$, such as
 $\leq(\alpha,\alpha\vee\beta)$ and $\leq(\beta\vee\alpha,\beta)$,
-so that we can form a constraint context, such as 
-$1.\leq(\alpha,\alpha\vee\beta).\leq(\beta\vee\alpha,\beta) : \cctx_2$,
-which we name $\psiab : \cctx_2$ for short.
+so that we can form the constraint context $\psiab : \cctx_2$.
+%$1.\leq(\alpha,\alpha\vee\beta).\leq(\beta\vee\alpha,\beta) : \cctx_2$,
+%which we name $\psiab : \cctx_2$ for short.
 We now instantiate the equation for equality reflection
 with $n := 2$, $l :=  \beta\vee\alpha, l':= \beta, \psi:= \psiab$, and $p := \q: \ctm_2(\psiab,\leq(\beta\vee\alpha,\beta))$\footnote{check signs for instatiation and definition}
 as above and get 
