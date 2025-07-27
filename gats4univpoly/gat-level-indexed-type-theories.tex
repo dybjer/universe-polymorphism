@@ -290,6 +290,10 @@ In this extension judgments can depend on equational constraints as well as on l
 In this article we aim to provide further perspective and rigour to our theories by presenting generalized algebraic theories such that (slightly modified versions of) of our theories give rise to their initial models. These generalized algebraic theories are based on the notion of an {\em indexed category with families (indexed cwfs)}.
 %and resemble syntactic presentations of dependent type theories with explicit substitutions \cite{martinlof:gbg92,tasistro:lic}. 
 By focusing on the notion of an initial model, we abstract from certain details of the precise syntax and inference rules.  Moreover, since the models are described on a high level in terms of indexed categories with families with extra structure we highlight their high-level structure. This is less visible in traditional presentation of logical theories defined in terms of syntax and inference rules. 
+
+(* Discuss it as a contribution to Voevodsky's initiality conjecture programme. Our approach is that type theories are represented by gats of cwfs with extra strucuture, and in this case it is gats of indexed cwfs with extra structure. The question is whether we can find appropriate gats of such so that the theories in our paper are initial models. What we discover is that it is easier to represent cumulative internally level-indexed universes than non-cumulative.
+
+Also discuss the idea of uniform categorical logic. *) 
  
 Moroever, we take the opportunity to discuss some issues in our original paper \cite{BezemCDE22}, see the revised and extended version of published on the ArXiV \cite{BezemCDE22:revised}.
 
@@ -376,8 +380,7 @@ As a first step, we shall show the operator symbols and equations for an externa
 
 We assume that we already have defined the generalized algebraic theory of cwfs with $\Pi$-types, see the appendix. We could of course add other type formers as well, and let $\UU$ be closed under those too, but leave this to the reader. 
 
-\paragraph{A tower of universes without cumulativity.} We show the infinitely many operator symbols and equations indexed by external natural numbers $l, l' , m \in \NN$ and $l < m$\footnote{Check original paper whether we have $l^+$ instead}.
-Note that codes for $\Pi$ are doubly indexed.
+\paragraph{A tower of universes without cumulativity.} We show the infinitely many operator symbols and equations indexed by external natural numbers $l, l' , m \in \NN$ and $l < m$. Note that codes for $\Pi$ are doubly indexed.
 \begin{eqnarray*}
 \Gamma : \ctx &\vdash& (\U_{l})_\Gamma : \ty(\Gamma)\\
 \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta_{l}}(a) : \ty(\Gamma)\\
@@ -776,6 +779,29 @@ $\vee$ and $(-)^+$. (And for the laws in $\psi$. We should first formulate this 
  \item An element of $\lhom(m,n)$ is a sequence of length $n$ of elements of $\ltm(m)$.
  \item The ucwf-operations are defined in the obvious way. E g level substitution $l[ls]$ is defined by induction on $l$. (Note that the calculus in our old paper uses implicit substitutions; this is the main difference between it and the level calculus in $\T_{\Sigma_{\mathrm{universe\ polymorphism}}}$. If $n = (l_n, \ldots, l_1)$ and $\s(n) =  (l_n, \ldots, l_1, l_0)$, then the projections are  $\p = (l_n, \ldots, l_1) : \lhom(\s(n),n)$ and $\q = l_0 : \ltm(\s(n))$.
 \end{itemize}
+In our old paper have the following introduction rule for cumulative universes with its decoding equation:
+$$
+\frac{l < m}
+{\UU^m_l : \UU_m\hspace{3em}\Ta_m(\UU^m_l) = \UU_l}
+$$
+where the context $\Gamma$ is implicit.
+\begin{itemize}
+\item 
+The gat-operation $\UU^l_\Gamma$ can be interpreted as the per-equivalence class of $\UU^{l^+}_l$, such that $\Gamma \vdash \UU^{l^+}_l$.
+\item
+The gat-operation $\Ta^+_l(a)$ can be interpreted as the equivalence class of $\Ta^{l^+}_l(a)$, etc.
+\item
+The gat-operation $\Ta^{-\vee m}_l(a)$ can be interpreted as the equivalence class of $\Ta^{l \vee m}_l(a)$, etc.
+\item
+The gat-operation $\Ta^{l\vee -}_m(b)$ can be interpreted as the equivalence class of $\Ta^{l \vee m}_l(b)$, etc.
+\end{itemize}
+To prove initiality we need the opposite direction.
+\begin{itemize}
+\item If $l < m$ ($l^+ \vee m = m$) we can define $\UU^m_l$ by induction on $m$ following the laws for semilattices with an inflationary operation $(-)^+$.
+\end{itemize}
+
+
+
 
 
 
