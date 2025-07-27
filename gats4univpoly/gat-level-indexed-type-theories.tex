@@ -507,7 +507,7 @@ The operator symbols $\vee$ and $+$ commute with level substitution.
  l^+[ls] &=&  l[ls]^+
 \end{eqnarray*}
 %\end{tiny}
-\paragraph{Remark.} Ucwfs are closely related to Lawvere theories. One can prove that the latter are equivalent to contextual ucwfs, that is, ucwfs where the set of contexts is isomorphic to the natural numbers \cite{CCD:lambek}.
+\paragraph{Remark.} Ucwfs are closely related to Lawvere theories. One can prove that the latter are equivalent to contextual ucwfs, that is, ucwfs where each context has a length \cite{CCD:lambek}.
 
 \subsection{Ucwf-indexed cwfs  with $\Pi$-types}
 
@@ -785,6 +785,27 @@ $$
 {\UU^m_l : \UU_m\hspace{3em}\Ta_m(\UU^m_l) = \UU_l}
 $$
 where the context $\Gamma$ is implicit.
+
+We note that $l < m$ can also be defined inductively by the rules
+$$
+\frac{}{l < l^+}
+\hspace{3em}
+\frac{l < m}{l < m \vee m'}
+\hspace{3em}
+\frac{l < m'}{l < m \vee m'}
+$$
+Let $l <_i m$ mean $l < m$ defined inductively, and  $l <_e m$ mean $l < m$ defined equationally as $l^+ \vee m = m$. Then $l <_i m$ iff $l <_e m$.
+
+Proof $\Rightarrow$: By the induction on the proof of $l <_i m$. All cases are direct.
+
+Proof $\Leftarrow$: Assume $l^+ \vee m = m$ and do induction on $m$. We have three cases:
+\begin{itemize}
+\item $m = \alpha$ for a level variable $\alpha$. But  $l^+ \vee \alpha \neq \alpha$ for all $l$.
+\item $m = k^+$, and the induction hypothesis is that $l^+ \vee k = k$ implies $l <_i k$. Now if $l^+ \vee k^+ = k^+$ then $l <_i k^+$
+\item $m = m' \vee m''$.
+\end{itemize}
+
+We shall now define how to model the gat-operations for cumulative universes in the system of our old paper.
 \begin{itemize}
 \item 
 The gat-operation $\UU^l_\Gamma$ can be interpreted as the per-equivalence class of $\UU^{l^+}_l$, such that $\Gamma \vdash \UU^{l^+}_l$.
