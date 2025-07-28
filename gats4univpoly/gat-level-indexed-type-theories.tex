@@ -369,6 +369,26 @@ they may use.}
 
 This paper should be read as a second part of {\em Type theory with explicit universe polymorphism}. We will not here repeat material from that paper and refer to it for the rules of the type theory in question, and for motivation and examples. 
 
+\paragraph{Conventions.} Throughout this paper we will try to alleviate
+the notational burden, in particular for denoting equations.
+Every equation is an equation between two terms of the same sort, 
+but we will often leave out this sort. 
+All variables occurring in an equation and its sort should be declared 
+in a context, but we will leave out this context when no confusion can occur.
+There are specific cases where confusion is very likely. One example is
+the equation for equality reflection:
+\begin{eqnarray*}
+\Gamma : \ctx, A : \ty(\Gamma), a, a' : \tm(\Gamma, A),p :  \tm(\Gamma,\Id_A(a,a'))&\vdash& a = a' : \tm(\Gamma,A)
+\end{eqnarray*}
+Note that the variable $p$ does not occur in any of $\Gamma,A,a,a'$.
+However, it is a very important variable expressing
+the condition under which $a=a'$ holds, and will never be left out.
+We will meet a similar case for reflection on equality on level terms.
+
+This example also shows that generalized algebraic theories can express 
+conditional equations by using a sort reflecting on them, 
+a feature that is absent in ordinary algebra without dependent sorts.
+
 \paragraph{Acknowledgement.} This paper is written in honour of Professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend and colleague who spent the autumn of 1994 (check?) in Göteborg. He has made fundamental contributions to type theory and constructivity, in particular to the understanding of the constructive content of classical logic.
 
 \section{Type theory with an external tower of universes}
@@ -490,13 +510,7 @@ Note that, as in our old paper, we have no level 0 for the first universe. All u
 %\begin{tiny}
 We also have all the ucwf-equations, but we do not display them here. These are the cwf-equations (see appendix   \ref{sec:gatPiU}) for the special case that there is only one type. Thus all type equations are redundant.
 
-Then we have the semi-lattice equations for $l \vee l'$\footnote{%
-MB Let's introduce up-front a good convention for leaving out the type
-of an equation and the meta-context with all the variable declarations.
-Critical cases are the equations for equality reflection,
-since they have the declaration of a variable that does neither occur
-in the equation, nor in the type. This is a prototype example of
-a conditional equation.}
+Then we have the semi-lattice equations for $l \vee l'$
 
 \begin{eqnarray*}
 (l \vee l') \vee l'' &=& l \vee (l' \vee l'')\\
