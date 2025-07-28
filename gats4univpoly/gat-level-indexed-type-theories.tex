@@ -271,7 +271,7 @@ In our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCD
 
 In our paper we followed Courant's approach \cite{Courant02} to explicit universe polymorphism and introduced special universe level {\em judgments}:
 $$
-l \level
+l\ \level
 \hspace{5em}
 l = l'
 $$
@@ -279,7 +279,7 @@ in addition to the usual judgment forms of type theory. Moreover, all judgments 
 
 We also presented an extension where equational constraints between universe levels can be declared, building on a proposal by Voevodsky \cite{VV}. We added yet another judgment form
 $$
-\psi \valid
+\psi\ \valid
 $$
 where $\psi$ is a list of equational level constraints. 
 In this extension judgments can depend on equational constraints as well as on level variables and ordinary typed term variables.
@@ -335,7 +335,7 @@ $$
 $$
 n : \lctx \vdash  \ltm(n)
 $$
-This is our notation for the sort symbols of a gat, see also \cite{bezem:hofmann}. It states that $\lctx$ is a constant sort symbol, that $\lhom$ is a binary sort symbol indexed by $m,n : \lctx$. Moreover, $\ltm$ is a unary sort symbol indexed by $n : \lctx$ and corresponds to the judgment $l \level$. The first and second sort symbols are added in an explicit substitution calculus for explicit polymorphism. The equality judgments (such as $l = l'$) are represented by equations.  
+This is our notation for the sort symbols of a gat, see also \cite{bezem:hofmann}. It states that $\lctx$ is a constant sort symbol, that $\lhom$ is a binary sort symbol indexed by $m,n : \lctx$. Moreover, $\ltm$ is a unary sort symbol indexed by $n : \lctx$ and corresponds to the judgment $l\ \level$. The first and second sort symbols are added in an explicit substitution calculus for explicit polymorphism. The equality judgments (such as $l = l'$) are represented by equations.  
 
 In the initial model, $n : \lctx$ represents the number of universe level variables, $l : \ltm(n)$ a level term in $n$ level variables, and $ls : \lhom(m,n)$ a context morphism consisting of $n$ level terms in $m$ level variables.
 
@@ -943,7 +943,7 @@ n : \lctx, \psi : \cctx_n,  l, l' : \ltm_n, p : \ctm_n(\psi,\leq(l,l')) &\vdash&
 \end{eqnarray*}
 Note that the equation is a version of equality reflection: from a "propositional" level equality $\leq(l,l')$ we derive a judgmental level equality, and it is the latter that enables equational reasoning about $\vee$ and $(-)^+$ and $\psi$.
 \begin{example}\label{exa:cctx-entails-lattice-eqs}
-In our old paper we have a judgment form $\Gamma \vdash \psi \valid$ that expresses that the constraints in $\psi$
+In our old paper we have a judgment form $\Gamma \vdash \psi\ \valid$ that expresses that the constraints in $\psi$
 hold in $\Gamma$, that is, are implied by the constraints in $\Gamma$.
 For example, if $\alpha$ and $\beta$ are level variables we can prove
 $$
@@ -1128,17 +1128,17 @@ $$
 $$
 The third operator symbol is the application of a constraint abstraction $\langle c \rangle t : [c]A$ to a proof that the constraint $c$ is valid. This suggests the following rule in the setup of our paper:
 $$
-\frac{\langle \psi \rangle t : [\psi]A\hspace{3em}\psi \valid}
+\frac{\langle \psi \rangle t : [\psi]A\hspace{3em}\psi\ \valid}
 {t : A}
 $$
 This rule is implied by the stronger rules in our paper:
 $$
 \frac
-{\psi \valid}
+{\psi\ \valid}
 {[\psi]A = A}
 \hspace{5em}
 \frac
-{\psi \valid}
+{\psi\ \valid}
 {[\psi]t  = t}
 $$
 
