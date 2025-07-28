@@ -343,11 +343,11 @@ In the initial model, $n : \lctx$ represents the number of universe level variab
 
 Our notation for the operator symbols is exemplified by the identity and composition of level substitution.
 \begin{eqnarray*}
-n : \lctx, \Gamma : \ctx_n &\vdash& \id_{n,\Gamma} : \Hom_n(\Gamma,\Gamma)\\
-n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \gamma : \Hom_n(\Delta,\Gamma), \delta : \Hom_n(\Xi,\Delta) &\vdash&
-\gamma \circ \delta : \Hom_n(\Xi,\Gamma)
+m : \lctx &\vdash& \lid_m : \lhom(m,m)\\
+m, n, p : \lctx, \sigma : \lhom(n,p), \tau : \lhom(m,n) &\vdash&
+\sigma \circ \tau : \lhom(m,p)
 \end{eqnarray*}
-The first line states that $\id$ is a binary operation symbol with argument sorts $n : \lctx$ and  $\Gamma : \ctx_n$ and result sort $\Hom_n(\Gamma,\Gamma)$. The second line states that $\circ$ is an infix operation symbol with six arguments $n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \gamma : \Hom_n(\Delta,\Gamma), \delta : \Hom_n(\Xi,\Delta)$, where the four initial arguments are implicit. The result type is $\Hom_n(\Xi,\Gamma)$.
+The first line states that $\lid$ is a binary operator symbol with argument sort $n : \lctx$ and result sort $\lhom(n,n)$. The second line states that $\circ$ is an infix operator symbol with five arguments $m,n,p : \lctx, \sigma : \lhom(n,p), \tau : \lhom(m,n)$, where the three first arguments are implicit. The result type is $\lhom(m,p)$.
 
 \item Two operator symbols: the join $\vee$ of two levels (with the upper semilattice equations) and the next universe level $(-)^+$ with equations making it an inflationary operation.
 \end{itemize}
@@ -732,8 +732,9 @@ In externally indexed cumulative universes we have operator symbols that lift el
 However, the external assumption $l < m$ on levels cannot directly be internalized as the level equation $l^+ \vee m = m$ since gats do not admit equational constraints on its arguments. Instead we introduce three operator symbols for different liftings:
 \begin{eqnarray*}
 n : \lctx, l : \ltm(n), \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^{+}_{l}}(a) : \tm(\Gamma,(\U_{l^+})_\Gamma)\\
-n : \lctx, l,m : \ltm(n), \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^{- \vee m}_{l}}(a) : \tm(\Gamma,(\U_{l \vee m})_\Gamma)\\
-n : \lctx, l,m : \ltm(n), \Gamma : \ctx, b : \tm(\Gamma,(\U_{m})_\Gamma) &\vdash& {\Ta^{l \vee -}_{m}}(b) : \tm(\Gamma,(\U_{l \vee m})_\Gamma)
+n : \lctx, l,m : \ltm(n), \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^{- \vee m}_{l}}(a) : \tm(\Gamma,(\U_{l \vee m})_\Gamma)
+%\\
+%n : \lctx, l,m : \ltm(n), \Gamma : \ctx, b : \tm(\Gamma,(\U_{m})_\Gamma) &\vdash& {\Ta^{l \vee -}_{m}}(b) : \tm(\Gamma,(\U_{l \vee m})_\Gamma)
 \end{eqnarray*}
 Equations:
 We have the following decoding equations:
@@ -750,9 +751,11 @@ We have the following decoding equations for the three liftings:
 &&\\
 \Ta^{-\vee m}_{l}(\Pi^{l}(a,b)) &=& \Pi^{l \vee m}(\Ta^{-\vee m}_l(a),\Ta^{-\vee m}_l(b))\\
 \Ta^{-\vee m}_{l}((\UU^l)_\Gamma) &=& (\UU^{l\vee m})_\Gamma\\
-&&\\
-\Ta^{l \vee -}_{l}(\Pi^{m}(a,b)) &=& \Pi^{l \vee m}(\Ta^{l \vee -}_l(a),\Ta^{l \vee -}_l(b))\\
-\Ta^{l \vee -}_{l}((\UU^m)_\Gamma) &=& (\UU^{l\vee m})_\Gamma\end{eqnarray*}
+&&
+%\\
+%\Ta^{l \vee -}_{l}(\Pi^{m}(a,b)) &=& \Pi^{l \vee m}(\Ta^{l \vee -}_l(a),\Ta^{l \vee -}_l(b))\\
+%\Ta^{l \vee -}_{l}((\UU^m)_\Gamma) &=& (\UU^{l\vee m})_\Gamma
+\end{eqnarray*}
 Equations for commutativity of operator symbols wrt substitution ($\gamma : \hom(\Delta,\Gamma)$):
 \begin{eqnarray*}
 \Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )\\
@@ -808,23 +811,31 @@ $$
 where the context $\Gamma$ is implicit.
 
 We note that $l < m$ can also be defined inductively by the rules
+%\footnote{Should we include $\frac{l < m\ \ \ l'<m}{l \vee l'  < m}$?}
 $$
 \frac{}{l < l^+}
 \hspace{3em}
+\frac{l < m}{l < m^+}
+\hspace{3em}
 \frac{l < m}{l < m \vee m'}
 \hspace{3em}
-\frac{l < m\ \ \ l'<m}{l \vee l'  < m}
+\frac{l < m\ \ \ l' < m'}{l \vee l' < m \vee m'}
 $$
 Let $l <_i m$ mean $l < m$ defined inductively, and  $l <_e m$ mean $l < m$ defined equationally as $l^+ \vee m = m$ in the initial model. Then $l <_i m$ iff $l <_e m$.
 
 Proof $\Rightarrow$: By induction on the proof of $l <_i m$. Both cases are direct.
 
-Proof $\Leftarrow$: Assume $l^+ \vee m = m$ and do induction on $m$. We have three cases:
-\begin{itemize}
-\item $m = \alpha$ for a level variable $\alpha$. But  $l^+ \vee \alpha \neq \alpha$ for all $l$ in the initial model.
-\item $m = k^+$, and the induction hypothesis is that $l^+ \vee k = k$ implies $l <_i k$. Now if $l^+ \vee k^+ = k^+$ then $l <_i k^+$
-\item $m = m' \vee m''$.
-\end{itemize}
+Proof $\Leftarrow$: If  $n$ is the length of the level context, then level expressions have normal forms 
+$$
+\alpha_1^{+^{p_1}} \vee \cdots \vee \alpha_m^{+^{p_m}}
+$$ 
+for $p_i \geq 0$ for $1 \le i \le m \le n$ . We have 
+$$
+\alpha_1^{+^{p_1}} \vee \cdots \vee \alpha_m^{+^{p_m}} 
+< 
+\alpha_1^{+^{q_1}} \vee \cdots \vee \alpha_m^{+^{q_m}} \vee \alpha_{m+1}^{+^{q_{m+1}}} \vee \cdots \vee \alpha_{m'}  ^{+^{q_{m'}}}
+$$ 
+provided $p_i < q_i$ for $1 \le i \le m \le m' \le n$. It follows that $<$ indeed can be inductively generated by the two rules above. Because all the $\alpha_j$ for $m+1 \le j \le n$ can be added by using the second rule repeatedly with $m' = \alpha_j^{+^{q_{j}}}$. Then use the monotonicity wrt $(-)^+$ to decrease all remaining $p_i$ and $q_i$. Then repeat the process. Monotonicity of $(-)^+$ follows by induction on the rules.
 
 We shall now define how to model the gat-operations for cumulative universes in the system of our old paper.
 \begin{itemize}
@@ -834,12 +845,12 @@ The gat-operation $\UU^l_\Gamma$ can be interpreted as the per-equivalence class
 The gat-operation $\Ta^+_l(a)$ can be interpreted as the equivalence class of $\Ta^{l^+}_l(a)$, etc.
 \item
 The gat-operation $\Ta^{-\vee m}_l(a)$ can be interpreted as the equivalence class of $\Ta^{l \vee m}_l(a)$, etc.
-\item
-The gat-operation $\Ta^{l\vee -}_m(b)$ can be interpreted as the equivalence class of $\Ta^{l \vee m}_l(b)$, etc.
+%\item
+%The gat-operation $\Ta^{l\vee -}_m(b)$ can be interpreted as the equivalence class of $\Ta^{l \vee m}_l(b)$, etc.
 \end{itemize}
 To prove initiality we need the opposite direction.
 \begin{itemize}
-\item If $l < m$ ($l^+ \vee m = m$) we can define $\UU^m_l$ by induction on $m$ following the laws for semilattices with an inflationary operation $(-)^+$.
+\item If $l < m$ ($l^+ \vee m = m$) we can define $\UU^m_l$ by the process described above.
 \end{itemize}
 
 
