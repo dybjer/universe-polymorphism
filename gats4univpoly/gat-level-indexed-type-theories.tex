@@ -813,15 +813,15 @@ $$
 \hspace{3em}
 \frac{l < m}{l < m \vee m'}
 \hspace{3em}
-\frac{l < m'}{l < m \vee m'}
+\frac{l < m\ \ \ l'<m}{l \vee l'  < m}
 $$
-Let $l <_i m$ mean $l < m$ defined inductively, and  $l <_e m$ mean $l < m$ defined equationally as $l^+ \vee m = m$. Then $l <_i m$ iff $l <_e m$.
+Let $l <_i m$ mean $l < m$ defined inductively, and  $l <_e m$ mean $l < m$ defined equationally as $l^+ \vee m = m$ in the initial model. Then $l <_i m$ iff $l <_e m$.
 
-Proof $\Rightarrow$: By induction on the proof of $l <_i m$. All cases are direct.
+Proof $\Rightarrow$: By induction on the proof of $l <_i m$. Both cases are direct.
 
 Proof $\Leftarrow$: Assume $l^+ \vee m = m$ and do induction on $m$. We have three cases:
 \begin{itemize}
-\item $m = \alpha$ for a level variable $\alpha$. But  $l^+ \vee \alpha \neq \alpha$ for all $l$.
+\item $m = \alpha$ for a level variable $\alpha$. But  $l^+ \vee \alpha \neq \alpha$ for all $l$ in the initial model.
 \item $m = k^+$, and the induction hypothesis is that $l^+ \vee k = k$ implies $l <_i k$. Now if $l^+ \vee k^+ = k^+$ then $l <_i k^+$
 \item $m = m' \vee m''$.
 \end{itemize}
