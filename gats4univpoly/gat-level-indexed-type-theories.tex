@@ -458,22 +458,24 @@ m, n : \lctx &\vdash& \lHom(m,n)\\
 %\Gamma : \lctx &\vdash& \lty(\Gamma)\\
 m : \lctx &\vdash& \ltm(m)
 \end{eqnarray*}
-The operator symbols for ucwfs are \footnote{Add remark about dropping of arguments}
-\footnote{MB: below, lhom's are denoted differently: $\sigma,\sigma'$}
+The operator symbols for ucwfs are
+\footnote{Add remark about dropping of arguments}
+\footnote{We use  $\sigma,\tau$ for level substitutions.}
+\footnote{In other places we use $\lp$ and $\lq$. Same issue with $\cp$ and $\cq$.}
 \begin{eqnarray*}
 m : \lctx &\vdash& \lid_m : \lhom(m,m)\\
-m, n, p : \lctx, \gamma : \lhom(n,p), \delta : \lhom(m,n) &\vdash&
-\gamma \circ \delta : \lhom(m,p)\\
+m, n, p : \lctx, \sigma : \lhom(n,p), \tau : \lhom(m,n) &\vdash&
+\sigma \circ \tau : \lhom(m,p)\\
 &&\\
-m,n: \lctx, \gamma : \lhom(n,m), l :\ltm(m) &\vdash&  l[\gamma] : \ltm(n)\\
+m,n: \lctx, \sigma : \lhom(n,m), l :\ltm(m) &\vdash&  l[\sigma] : \ltm(n)\\
 &&\\
 &\vdash& 0 : \lctx\\
 m : \lctx &\vdash& \tuple{}_m : \lhom(m,0)\\
 &&\\
 m : \lctx &\vdash& \s(m) : \lctx\\
-m,n : \lctx, \gamma : \lhom(n,m), l:\ltm(n) &\vdash& \tuple{\gamma,l} : \lhom(n,\s(m))\\
+m,n : \lctx, \sigma : \lhom(n,m), l:\ltm(n) &\vdash& \tuple{\sigma,l} : \lhom(n,\s(m))\\
 m : \lctx &\vdash& \p: \lhom(\s(m),m)\\
-m : \lctx &\vdash& \q: \ltm(\s(m))\footnote{In other places we use $\lp$ and $\lq$. Same issue with $\cp$ and $\cq$.}
+m : \lctx &\vdash& \q: \ltm(\s(m))
 \end{eqnarray*}
 Note that since there is only one type, we can remove the operator symbol for operations in types and only keep substitution in (level) terms.
 
@@ -648,9 +650,9 @@ n, n' : \lctx , \sigma : \lhom(n,n'), \Delta,\Gamma : \ctx_{n'}, \gamma : \Hom_{
 Equations:
 \begin{eqnarray*}
 \Gamma[\lid_n] &=& \Gamma\\
-\Gamma[\sigma \circ \sigma'] &=& \Gamma[\sigma][\sigma']\\
+\Gamma[\sigma \circ \tau] &=& \Gamma[\sigma][\tau]\\
 \gamma[\lid_n] &=& \gamma\\
-\gamma[\sigma \circ \sigma'] &=& \gamma[\sigma][\sigma']
+\gamma[\sigma \circ \tau] &=& \gamma[\sigma][\tau]
 \end{eqnarray*}
 %\end{tiny}
 
@@ -669,9 +671,9 @@ a[\sigma] : \tm_{n}(A[\sigma],\Gamma[\sigma])
 \end{eqnarray*}
 \begin{eqnarray*}
 A[\lid_n] &=& A\\
-A[\sigma \circ \sigma'] &=& A[\sigma][\sigma']: \ty_p(\Gamma[\sigma \circ \sigma'])\\
+A[\sigma \circ \tau] &=& A[\sigma][\tau]: \ty_p(\Gamma[\sigma \circ \tau])\\
 a[\lid_n] &=& a\\
-a[\sigma \circ \sigma'] &=& a[\sigma][\sigma']: \tm_p(A[\sigma][\sigma'],\Gamma[\sigma \circ \sigma'])
+a[\sigma \circ \tau] &=& a[\sigma][\tau]: \tm_p(A[\sigma][\tau],\Gamma[\sigma \circ \tau])
 \end{eqnarray*}
 %\end{tiny}
 
@@ -870,7 +872,7 @@ where $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$. No, this is not right. Check l
 
 \subsection{The level-indexed scwf of level constraints}
 
-Constraints are lists of equations between level terms. We formalize the theory of constraints as level-indexed scwfs $(\cctx, \chom, \cty, \ctm)$.\footnote{Maybe we don't need the full scwf structure, but only lists of identities and projections to pull them out.} The gat of level-indexed scwf is the same as the gat of level-indexed cwfs defined above, except that in a scwf types don't depend on type contexts.\footnote{In a level-indexed scwf, types do depend on level contexts, though.} \footnote{In the published paper all constraints appearing in contexts are loop-free "The second condition is that the finite set of constraints in the extended context $\Gamma, \psi$ is loop-free." Here we prefer to allow inconsistent constraints in the first step. As a second step we propose to add a rule that all types are equal to the unit types in an inconsistent context. Such a theory has decidable type-checking.}
+Constraints are lists of equations between level terms. We formalize the theory of constraints as level-indexed scwfs $(\cctx, \chom, \cty, \ctm)$.\footnote{Maybe we don't need the full scwf structure, but only lists of identities and projections to pull them out.} The gat of level-indexed scwf is the same as the gat of level-indexed cwfs defined above, except that in a scwf types don't depend on type contexts.\footnote{In a level-indexed scwf, types do depend on level contexts, though.} \footnote{In the published paper all constraint contexts are loop-free "The second condition is that the finite set of constraints in the extended context $\Gamma, \psi$ is loop-free." Here we prefer to allow arbitrary constraints as a first step. As a second step, suggested by Georges Gonthier, we add a rule that all types are equal to the unit type in a context that is not loop-free. Such a theory still has decidable type-checking.}
 
 The following new sort symbols come from the structure of a level-indexed scwf:
 \begin{eqnarray*}
@@ -920,13 +922,13 @@ In our old paper we have a judgment form $\Gamma \vdash \psi$ valid that express
 hold in $\Gamma$, that is, are implied by the constraints in $\Gamma$.
 For example, if $\alpha$ and $\beta$ are level variables we can prove
 $$
-\alpha = \alpha\vee\beta, \beta\vee\alpha = \beta \vdash \alpha = \beta\ \mathrm{valid}
+\alpha = \alpha\vee\beta, \beta\vee\alpha = \beta \vdash \alpha = \beta\ \valid
 $$
 by equational reasoning using commutativity of $\vee$ (one of the semilattice laws) in our system.
 
 What does this correspond to in the present setting? Recall that each gat with sort symbols, operator symbols and equations in $\Sigma$ has an initial model $\T_\Sigma$. As shown in our paper on gats and cwfs, this can be defined as a variable free, explicit substitution calculus for dependent type theory built from cwf-combinators and the operator symbols in $\Sigma$\cite{bezem:hofmann}. In this calculus the above judgment corresponds to a level equation
 $$
-[\alpha] = [\beta] : \ltmq_2(\psiab)
+[\alpha]_{\psiab} = [\beta]_{\psiab} : \ltmq_2(\psiab)
 $$
 This is a judgment in the level context $2 = \s(\s(0)) : \lctx$ and the variables are defined as the projections $\alpha = \q[\p] : \ltm_2$ and $\beta = \q  : \ltm_2$ in the ucwf of levels. Moreover, 
 $$
@@ -945,7 +947,7 @@ as above and get
 \[
 %p : \ctm_2(\psiab,\leq(\beta\vee\alpha,\beta))
 %\vdash 
-[\beta\vee\alpha] = [\beta] : \ltmq_2(\psiab).
+[\beta\vee\alpha]_{\psiab} = [\beta]_{\psiab} : \ltmq_2(\psiab).
 \]
 We have used that the
 level equality type $\leq(\beta\vee\alpha,\beta)$ is the last type
@@ -953,7 +955,7 @@ of the constraint context $\psiab$, so that we can use the operator $\q$
 from the basic vocabulary of cwfs, see \ref{XYZ}.
 %Thus the equation for equality reflection gives us:
 %\[
-%\vdash [\beta\vee\alpha] = [\beta] : \ltmq_2(\psiab)
+%\vdash [\beta\vee\alpha]_{\psiab} = [\beta]_{\psiab} : \ltmq_2(\psiab)
 %\]
 that is, (MB: discuss) $\beta\vee\alpha$ and $\beta$ are equivalent
 modulo $\psiab$, in the empty context.)
@@ -963,7 +965,7 @@ l' := \alpha\vee\beta$ and $p := \q[\p]$ instead of $\q$, we get
 \[
 %p : \ctm_2(\psiab,\leq(\alpha,\alpha\vee\beta))
 %\vdash 
-[\alpha]=[\alpha\vee\beta] : \ltmq_2(\psiab).
+[\alpha]_{\psiab}=[\alpha\vee\beta]_{\psiab} : \ltmq_2(\psiab).
 \]
 that $\alpha$ and $\alpha\vee\beta$ are equivalent modulo $\psiab$, 
 in the empty context.
@@ -971,13 +973,13 @@ in the empty context.
 Next we explain how we can get, e.g.,
 $
 %\vdash 
-[\alpha] = [\beta] : \ltmq_2(\psiab).
+[\alpha]_{\psiab} = [\beta]_{\psiab} : \ltmq_2(\psiab).
 $
 This result cannot be obtained by simply using the transitivity of $=$,
 we also have to show that
 $
 %\vdash 
-[\beta\vee\alpha]=[\alpha\vee\beta] : \ltmq_2(\psiab).
+[\beta\vee\alpha]_{\psiab}=[\alpha\vee\beta]_{\psiab} : \ltmq_2(\psiab).
 $
 The latter follows from 
 $
@@ -993,7 +995,7 @@ are more elements in a constraint context, we can use the further projections $\
 to access the other equations in the constraint list.
 
 %\begin{conjecture}\label{conj:cctx-entails-lattice-eqs}
-\paragraph{The initiality conjecture.} We would like to extend the proof in section to 3 to constraints. Roughly, we need to show the following.
+\paragraph{The initiality conjecture for constraints.} We would like to extend the proof in section to 3 to constraints. Roughly, we need to show the following.
 Let $n:\lctx$ be a level context, $l,l':\ltm_n$ level terms and 
 $\psi:\cctx_n$ a constraint context. Then (in any initial model)
 %\begin{eqnarray*}
