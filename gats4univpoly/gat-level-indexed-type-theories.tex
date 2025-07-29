@@ -726,14 +726,14 @@ and an operator symbol for reflexivity:
 \begin{eqnarray*}
 n : \lctx, l : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l)
 \end{eqnarray*}
-Note that if we can derive $l = l'$ in the initial model, then we can also derive $\refl(l) :  \leq_n(l,l')$.
+Note that if we can derive $l = l' : \ltm(n)$ in the initial model, then we can also derive $\refl(l) :  \leq_n(l,l')$.
 \footnote{Discuss relationship with equality types in ordinary type theory.}
 
 We now have a proper typing of the operator symbol $\UU^m_l$:
 \begin{eqnarray*}
-n : \lctx, l, m : \ltm(n), p : l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_\Gamma: \tm_n(\Gamma,(\UU_{m})_\Gamma)
+n : \lctx, l, m : \ltm(n), p : l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_{p,\Gamma} : \tm_n(\Gamma,(\UU_{m})_\Gamma)
 \end{eqnarray*}
-having suppressed the proof $p : l < m$ as an argument to this operator symbol.
+where $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. In the sequel we will suppress the proof $p : l < m$ as an argument to this operator symbol.
 
 %\begin{tiny}
 %\vspace{1ex}
