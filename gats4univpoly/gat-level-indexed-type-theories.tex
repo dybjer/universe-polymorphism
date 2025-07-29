@@ -378,7 +378,7 @@ in a context, but we will leave out this context when no confusion can occur.
 There are specific cases where confusion is very likely. One example is
 the equation for equality reflection:
 \begin{eqnarray*}
-\Gamma : \ctx, A : \ty(\Gamma), a, a' : \tm(\Gamma, A),p :  \tm(\Gamma,\Id_A(a,a'))&\vdash& a = a' : \tm(\Gamma,A)
+\Gamma : \ctx, A : \ty(\Gamma), a, a' : \tm(\Gamma, A),p :  \tm(\Gamma,\Id_{\Gamma,A}(a,a'))&\vdash& a = a' : \tm(\Gamma,A)
 \end{eqnarray*}
 Note that the variable $p$ does not occur on the right hand side.
 However, it is a very important variable expressing
@@ -712,7 +712,7 @@ Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm
 
 The rule of universe formation states that for each level term $l$ in $n$ variables, there is a type $\UU_l$ with decoding map $\Ta_l$. Then there is an introduction rule for each small type former; we here only consider closure under $\Pi$. Then there is an introduction rule expressing that every universe is in the next. 
 
-\paragraph{Level equality sorts}
+\paragraph{Level equality sorts.}
 
 We need to ensure that any universe $\UU_l$ has a code $\UU^m_l$ in any larger universe $\UU^l$ for $l < m$, where the latter is defined as $l^+ \vee m = m$. We would like to  type of the operator symbol for such codes should be something like
 \begin{eqnarray*}
@@ -720,18 +720,20 @@ n : \lctx, l, m : \ltm(n), l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_\Gamma: \tm_n
 \end{eqnarray*}
 However, equational constraints are not allowed in argument types in gats. Hence, we introduce a new sort symbol for level equality:
 \begin{eqnarray*}
-n : \lctx, l, l' m : \ltm(n) &\vdash& \leq_n(l,l')
+n : \lctx, l, l'  : \ltm(n) &\vdash& \leq_n(l,l')
 \end{eqnarray*}
 and an operator symbol for reflexivity:
 \begin{eqnarray*}
-n : \lctx, l, l' m : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l)
+n : \lctx, l : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l)
 \end{eqnarray*}
-Note that if we can derive $l = l'$ in the initial model, then we can also derive $\refl(l) :  \leq_n(l,l')$. 
+Note that if we can derive $l = l'$ in the initial model, then we can also derive $\refl(l) :  \leq_n(l,l')$.
+\footnote{Discuss relationship with equality types in ordinary type theory.}
 
 We now have a proper typing of the operator symbol $\UU^m_l$:
 \begin{eqnarray*}
-n : \lctx, l, m : \ltm(n), p : l < m, \Gamma : \ctx&\vdash&(\UU^m_l)_\Gamma: \tm(\Gamma,(\UU_{m})_\Gamma)
+n : \lctx, l, m : \ltm(n), p : l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_\Gamma: \tm_n(\Gamma,(\UU_{m})_\Gamma)
 \end{eqnarray*}
+having suppressed the proof $p : l < m$ as an argument to this operator symbol.
 
 %\begin{tiny}
 %\vspace{1ex}
