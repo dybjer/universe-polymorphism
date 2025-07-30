@@ -459,7 +459,7 @@ Remark on decorating application in the grammar for the theory of the old paper.
 
 \paragraph{Internalization.}
 A simple way to internalize the externally indexed tower of universes is to index each universe by an {\em internal} natural number. Instead of an external sequence $\UU_l$ we will have an internal sequence 
-$$l : \Gamma : \ctx, l : \tm(\Gamma,\N) \vdash U_l : \ty(\Gamma)$$. 
+$$l : \N, \Gamma : \ctx, l : \tm(\Gamma,\N) \vdash \UU_l : \ty(\Gamma)$$. 
 However, this would mean that we could build large types such as $\Pi l : \N.\U_l$ and $\Pi l : \N.\U_l$ which increase the proof theoretic strength of type theory. 
 
 In Agda, there is a type $\Level$ which has a level 0, and is closed under the next level operation $(-)^+$ and $\vee$. Also here we can build $\Pi l : \Level.\U_l$ and $\Pi l : \Level.\U_l$
@@ -716,10 +716,6 @@ Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm
 
 \subsection{Level-indexed universes}
 
-The rule of universe formation states that for each level term $l$ in $n$ variables, there is a type $\UU_l$ with decoding map $\Ta_l$. Then there is an  Then there is an introduction rule expressing that every universe is in the next. 
-
-%\begin{tiny}
-%\vspace{1ex}
 The operator symbols for universe formation $\UU_l$, the decoding map $\Ta_l$, and the introduction rule for closure under all small type formers are obtained by a straightforward internalization of the corresponding rules for the externally indexed universes. (as before we only show closure under $\Pi$ and leave the closure under other the other standard small type formers) : (Factor out common premises?)
 \begin{eqnarray*}
 n : \lctx, l : \ltm(n), \Gamma : \lctx_n &\vdash& (\U_{l})_\Gamma : \ty_n(\Gamma)\\
@@ -735,7 +731,7 @@ However, when we try to internalize the operator symbols $\UU^m_l$ for universes
 \begin{eqnarray*}
 n : \lctx, l, m : \ltm(n), l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_\Gamma: \tm_n(\Gamma,(\UU_{m})_\Gamma)
 \end{eqnarray*}
-where $l < m$ is defined as $l^+ \vee m = m$, does not work since equations are not allowed in argument types in gats. This issue can be solved by introducing a new sort symbol for level equality:
+where $l < m$ is defined as $l^+ \vee m = m$, does not work since equations are not allowed in argument types in gats. This issue can be resolved by introducing a new sort symbol for level equality:
 \begin{eqnarray*}
 n : \lctx, l, l'  : \ltm(n) &\vdash& \leq_n(l,l')
 \end{eqnarray*}
@@ -753,9 +749,9 @@ n : \lctx, l,l' : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l')
 \end{eqnarray*}
 Moreover, if we have concrete proofs
 \begin{eqnarray*}
-n : \lctx, l,l' : \ltm(n), p :  \leq_n(l,l')
+\vdash n : \lctx, \vdash l,l' : \ltm(n), \vdash p :  \leq_n(l,l')
 \end{eqnarray*}
-then $p = \refl(l) : \leq(l,l)$ and $l = l' : \ltm(n)$.
+then $\vdash p = \refl(l) : \leq(l,l')$ and $\vdash l = l' : \ltm(n)$.
 
 If we now define $l < m$ as $\leq_n(l^+ \vee m, m)$ we get a proper typing of the operator symbol $\UU^m_l$:
 \begin{eqnarray*}
