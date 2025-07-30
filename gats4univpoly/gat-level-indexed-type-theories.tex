@@ -724,10 +724,10 @@ n : \lctx, l,m : \ltm(n), l < m, \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gam
 where again $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. However, unlike for the external tower of universes, we need double superscripts on codes $\Pi^{l,l'}$ also in the cumulative case. 
 %This is because, unlike in the external case, we to the greater in general.
 
-We have the following decoding equations for lifting:
+We have the following decoding equations for lifting (common premiss is $n : \lctx$):
 \begin{eqnarray*}
-l,l',m,m' : \ltm(n), l < m, l' < m' &\vdash& \Ta^{m \vee m'}_{l \vee l'}(\Pi^{l,l'}(a,b)) = \Pi^{m,m'}(\Ta^m_l(a),\Ta^{m'}_{l'}(b))\\
-k, l, m : \ltm(n), k < l < m &\vdash& \Ta^m_l((\UU^l_k)_\Gamma) = (\UU^m_k)_\Gamma
+l,l',m,m' : \ltm(n), l < m, l' < m', , \Gamma : \ctx(n), a : \tm_n(\Gamma,(\UU_l)_\Gamma), b : ?  &\vdash& \Ta^{m \vee m'}_{l \vee l'}(\Pi^{l,l'}(a,b)) = \Pi^{m,m'}(\Ta^m_l(a),\Ta^{m'}_{l'}(b))\\
+k, l, m : \ltm(n), k < l < m, \Gamma : \ctx(n) &\vdash& \Ta^m_l((\UU^l_k)_\Gamma) = (\UU^m_k)_\Gamma
 \end{eqnarray*}
 Equations for commutativity of lifting and substitution ($\gamma : \hom(\Delta,\Gamma)$):
 \begin{eqnarray*}
