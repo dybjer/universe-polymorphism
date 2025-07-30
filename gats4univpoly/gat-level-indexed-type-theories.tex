@@ -435,25 +435,6 @@ In the cumulative case we also have operator symbols that lift elements in the $
 \begin{eqnarray*}
 \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
 \end{eqnarray*}
-%The codes for $\Pi$ now need only one index:
-%\begin{eqnarray*}
-%\Gamma : \ctx,
-%a : \tm(\Gamma,(\U_{l})_\Gamma),
-%b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
-%&\vdash&
-% \Pihat^{l}(a,b) : \tm(\Gamma,(\U_{l})_\Gamma)
-%\end{eqnarray*}
-We have the following decoding equations for lifting with $k < l < m$:
-\begin{eqnarray*}
-\Ta^{m \vee m'}_{l \vee l'}(\Pi^{l,l'}(a,b)) &=& \Pi^{m,m'}(\Ta^m_l(a),\Ta^{m'}_{l'}(b))\\
-\Ta^m_l((\UU^l_k)_\Gamma) &=& (\UU^m_k)_\Gamma
-\end{eqnarray*}
-Equations for commutativity of lifting and substitution ($\gamma : \hom(\Delta,\Gamma)$):
-\begin{eqnarray*}
-\Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )
-%\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
-%\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^+ ])
-\end{eqnarray*}
 We remark that in the presence of cumulativity it suffices to introduce codes for $\Pi$ with one superscript instead of two:
 \begin{eqnarray*}
 \Gamma : \ctx,
@@ -462,7 +443,7 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
 &\vdash&
  \Pihat^{l}(a,b) : \tm(\Gamma,(\U_{l})_\Gamma)
  \end{eqnarray*}
- The equations simplify accordingly.
+ We omit the equations for the cumulative case, see instead the cumulative case for level-indexing.
 
 \paragraph{Syntax and inference rules as an initial model.} A proof that a version of Martin-Löf type theory with an external tower of universes  is an initial contextual category with appropriate extra structure has been implemented in Agda by de Boer and Brunerie \cite{Brunerie:initiality,deBoer:lic}. This is for a version of type theory with de Bruijn variables and implicit substitutions. The equivalence between split type-cateogries and categories with families was implemented in UniMath by Ahrens, Lumsdaine, and Voevodsky \cite{AhrensLV18}. Moreover, the syntax and inference rules in our paper \cite{BezemCDE22} are not identical to the ones implemented by de Boer and Brunerie, but we expect no difficulty in adapting their proof.
 
@@ -741,6 +722,18 @@ Moreover, we have equations for commutativity of lifting and $\Pi$-codes with re
 n : \lctx, l,m : \ltm(n), l < m, \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
 \end{eqnarray*}
 where again $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. Note however, that we still need double superscripts on codes $\Pi^{l,l'}$. This is because, unlike in the external case, we cannot lift the smaller code to the greater in general.
+
+We have the following decoding equations for lifting with $k < l < m$:
+\begin{eqnarray*}
+\Ta^{m \vee m'}_{l \vee l'}(\Pi^{l,l'}(a,b)) &=& \Pi^{m,m'}(\Ta^m_l(a),\Ta^{m'}_{l'}(b))\\
+\Ta^m_l((\UU^l_k)_\Gamma) &=& (\UU^m_k)_\Gamma
+\end{eqnarray*}
+Equations for commutativity of lifting and substitution ($\gamma : \hom(\Delta,\Gamma)$):
+\begin{eqnarray*}
+\Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )
+%\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
+%\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^+ ])
+\end{eqnarray*}
 
 \paragraph{Remark.} The introduction of the sort symbol $\leq$ is analogous to the introduction of the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, proofs of level equality can only be constructed from reflexivity and by equational reasoning with level terms. 
 
