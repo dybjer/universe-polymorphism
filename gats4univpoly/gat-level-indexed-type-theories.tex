@@ -442,7 +442,7 @@ In the cumulative case we also have operator symbols that lift elements in the $
 %\end{eqnarray*}
 We have the following decoding equations for lifting with $k < l < m$:
 \begin{eqnarray*}
-\Ta^m_{l \vee l'}(\Pi^{l,l'}(a,b)) &=& \Pi(\Ta^m_l(a),\Ta^m_{l'}(b))\\
+\Ta^{m \vee m'}_{l \vee l'}(\Pi^{l,l'}(a,b)) &=& \Pi^{m,m'}(\Ta^m_l(a),\Ta^{m'}_{l'}(b))\\
 \Ta^m_l((\UU^l_k)_\Gamma) &=& (\UU^m_k)_\Gamma
 \end{eqnarray*}
 Equations for commutativity of lifting and substitution ($\gamma : \hom(\Delta,\Gamma)$):
@@ -451,7 +451,15 @@ Equations for commutativity of lifting and substitution ($\gamma : \hom(\Delta,\
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
 %\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^+ ])
 \end{eqnarray*}
-We remark that in the presence of cumulativity it suffices with one superscript on codes for $\Pi$, that is, we have $\Pi^l$ rather than $\Pi^{l,l'}$.
+We remark that in the presence of cumulativity it suffices to introduce codes for $\Pi$ with one superscript instead of two:
+\begin{eqnarray*}
+\Gamma : \ctx,
+a : \tm(\Gamma,(\U_{l})_\Gamma),
+b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
+&\vdash&
+ \Pihat^{l}(a,b) : \tm(\Gamma,(\U_{l})_\Gamma)
+ \end{eqnarray*}
+ The equations simplify accordingly.
 
 \paragraph{Syntax and inference rules as an initial model.} A proof that a version of Martin-Löf type theory with an external tower of universes  is an initial contextual category with appropriate extra structure has been implemented in Agda by de Boer and Brunerie \cite{Brunerie:initiality,deBoer:lic}. This is for a version of type theory with de Bruijn variables and implicit substitutions. The equivalence between split type-cateogries and categories with families was implemented in UniMath by Ahrens, Lumsdaine, and Voevodsky \cite{AhrensLV18}. Moreover, the syntax and inference rules in our paper \cite{BezemCDE22} are not identical to the ones implemented by de Boer and Brunerie, but we expect no difficulty in adapting their proof.
 
@@ -549,8 +557,11 @@ We have
 \item
 $F(n)$ is the cwf (with $\Pi$-types) of contexts, substitutions, types, and terms that depend on level variables in $n$.
 \item
-The cwf-functor $F(\sigma) : F(n) \to F(m)$ substitutes the $n$ level variables by the level expressions in $\sigma$ in the various components of a cwf depending on $n$ level variables, yielding a cwf depending on $m$ level variables. All structure of the cwf with $\Pi$-types is preserved.
+Each $F(n)$ has extra structure for level-indexed universes $\UU_l$ with decodings $\Ta_l$, where $l$ is a level term that depends on level variables in $n$. These universes are closed under $\Pi$-types and contain smaller universes $\UU_{l'}$ for $l' < l$.
+\item
+The cwf-functor $F(\sigma) : F(n) \to F(m)$ substitutes the $n$ level variables by the level expressions in $\sigma$ in the various components of a cwf depending on $n$ level variables, yielding a cwf depending on $m$ level variables. All structure of the cwf with $\Pi$-types and level-indexed universes is preserved.
 \end{itemize}
+\subsection{Theory of the object part of $F$}
 We have the following sort symbols:
 \begin{eqnarray*}
 n : \lctx &\vdash& \ctx_n\\
@@ -656,64 +667,6 @@ n : \lctx &\vdash& \id_{n,1_n} = \tuple{}_{1_n} : \Hom_n(1_n,1_n)\\
 
 Omitted.
 
-\subsection{Level substitution}
-
-\subsubsection{Level substitution in contexts and context-morphisms}
-
-%\begin{tiny}
-Operator symbols (overloaded notation):
-\begin{eqnarray*}
-n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'} &\vdash& 
-\Gamma[\sigma] : \ctx_n\\
-n, n' : \lctx , \sigma : \lhom(n,n'), \Delta,\Gamma : \ctx_{n'}, \gamma : \Hom_{n'}(\Delta,\Gamma) 
-&\vdash& 
-\gamma[\sigma] : \Hom_{n}(\Delta[\sigma],\Gamma[\sigma]) 
-\end{eqnarray*}
-Equations:
-\begin{eqnarray*}
-\Gamma[\lid_n] &=& \Gamma\\
-\Gamma[\sigma \circ \tau] &=& \Gamma[\sigma][\tau]\\
-\gamma[\lid_n] &=& \gamma\\
-\gamma[\sigma \circ \tau] &=& \gamma[\sigma][\tau]
-\end{eqnarray*}
-%\end{tiny}
-
-\subsubsection{Level substitution in types and terms}
-
-MB, check.
-
-Operator symbols (overloaded notation):
-\begin{eqnarray*}
-n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma)
-&\vdash& 
-A[\sigma]: \ty_n(\Gamma[\sigma])\\
-n,n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma), a : \tm_{n'}(A,\Gamma) 
-&\vdash& 
-a[\sigma] : \tm_{n}(A[\sigma],\Gamma[\sigma]) 
-\end{eqnarray*}
-\begin{eqnarray*}
-A[\lid_n] &=& A\\
-A[\sigma \circ \tau] &=& A[\sigma][\tau]: \ty_p(\Gamma[\sigma \circ \tau])\\
-a[\lid_n] &=& a\\
-a[\sigma \circ \tau] &=& a[\sigma][\tau]: \tm_p(A[\sigma][\tau],\Gamma[\sigma \circ \tau])
-\end{eqnarray*}
-%\end{tiny}
-
-%\subsubsection{Functor laws for level-substitution}
-
-
-\subsubsection{Level substitution in $\Pi$-types}
-
-Let $n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma), B:\ty_{n'}(\Gamma.A)$. Then
-\begin{eqnarray*}
-\Pi(A,B)[\sigma] &=& \Pi(A[\sigma],B[\sigma])
-\end{eqnarray*}
-Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm_n(\Gamma,A)$, we have
-\begin{eqnarray*}
-\lambda(b)[\sigma] &=&\lambda(b[\sigma])\\
-\app(c,a)[\sigma] &=&\app(c[\sigma],a[\sigma])
-\end{eqnarray*}
-
 \subsection{Level-indexed universes}
 
 The operator symbols for universe formation $\UU_l$, the decoding map $\Ta_l$, and the introduction rule for closure under all small type formers are obtained by a straightforward internalization of the corresponding rules for the externally indexed universes. (as before we only show closure under $\Pi$ and leave the closure under other the other standard small type formers) : (Factor out common premises?)
@@ -776,6 +729,66 @@ Moreover, we have equations for commutativity of lifting and $\Pi$-codes with re
 (\UU^l)_\Gamma[ \gamma ] &=&(\UU^l)_\Delta
 \end{eqnarray*}
 }
+
+
+\subsection{Level substitution}
+
+\subsubsection{Level substitution in contexts and context-morphisms}
+
+%\begin{tiny}
+Operator symbols (overloaded notation):
+\begin{eqnarray*}
+n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'} &\vdash& 
+\Gamma[\sigma] : \ctx_n\\
+n, n' : \lctx , \sigma : \lhom(n,n'), \Delta,\Gamma : \ctx_{n'}, \gamma : \Hom_{n'}(\Delta,\Gamma) 
+&\vdash& 
+\gamma[\sigma] : \Hom_{n}(\Delta[\sigma],\Gamma[\sigma]) 
+\end{eqnarray*}
+Equations:
+\begin{eqnarray*}
+\Gamma[\lid_n] &=& \Gamma\\
+\Gamma[\sigma \circ \tau] &=& \Gamma[\sigma][\tau]\\
+\gamma[\lid_n] &=& \gamma\\
+\gamma[\sigma \circ \tau] &=& \gamma[\sigma][\tau]
+\end{eqnarray*}
+%\end{tiny}
+
+\subsubsection{Level substitution in types and terms}
+
+MB, check.
+
+Operator symbols (overloaded notation):
+\begin{eqnarray*}
+n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma)
+&\vdash& 
+A[\sigma]: \ty_n(\Gamma[\sigma])\\
+n,n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma), a : \tm_{n'}(A,\Gamma) 
+&\vdash& 
+a[\sigma] : \tm_{n}(A[\sigma],\Gamma[\sigma]) 
+\end{eqnarray*}
+\begin{eqnarray*}
+A[\lid_n] &=& A\\
+A[\sigma \circ \tau] &=& A[\sigma][\tau]: \ty_p(\Gamma[\sigma \circ \tau])\\
+a[\lid_n] &=& a\\
+a[\sigma \circ \tau] &=& a[\sigma][\tau]: \tm_p(A[\sigma][\tau],\Gamma[\sigma \circ \tau])
+\end{eqnarray*}
+%\end{tiny}
+
+%\subsubsection{Functor laws for level-substitution}
+
+
+\subsubsection{Level substitution in $\Pi$-types}
+
+Let $n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma), B:\ty_{n'}(\Gamma.A)$. Then
+\begin{eqnarray*}
+\Pi(A,B)[\sigma] &=& \Pi(A[\sigma],B[\sigma])
+\end{eqnarray*}
+Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm_n(\Gamma,A)$, we have
+\begin{eqnarray*}
+\lambda(b)[\sigma] &=&\lambda(b[\sigma])\\
+\app(c,a)[\sigma] &=&\app(c[\sigma],a[\sigma])
+\end{eqnarray*}
+
 
 Moreover, we have laws that level substitution $\sigma$ commutes with the operator symbols for a universe.
  \begin{eqnarray*}
