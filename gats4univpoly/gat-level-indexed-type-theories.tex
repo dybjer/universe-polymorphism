@@ -708,13 +708,13 @@ Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm
 \app(c,a)[\sigma] &=&\app(c[\sigma],a[\sigma])
 \end{eqnarray*}
 
-\subsection{A level-indexed cumulative tower of universes}
+\subsection{A level-indexed tower of universes}
 
 The rule of universe formation states that for each level term $l$ in $n$ variables, there is a type $\UU_l$ with decoding map $\Ta_l$. Then there is an introduction rule for each small type former; we here only consider closure under $\Pi$. Then there is an introduction rule expressing that every universe is in the next. 
 
 \paragraph{Level equality sorts.}
 
-We need to ensure that any universe $\UU_l$ has a code $\UU^m_l$ in any larger universe $\UU^l$ for $l < m$, where the latter is defined as $l^+ \vee m = m$. We would like to  type of the operator symbol for such codes should be something like
+We need to ensure that any universe $\UU_l$ has a code $\UU^m_l$ in any larger universe $\UU^l$ for $l < m$, where the latter is defined as $l^+ \vee m = m$, as in the externally indexed universes. We would like to  type of the operator symbol for such codes should be something like
 \begin{eqnarray*}
 n : \lctx, l, m : \ltm(n), l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_\Gamma: \tm_n(\Gamma,(\UU_{m})_\Gamma)
 \end{eqnarray*}
@@ -748,18 +748,6 @@ b :  \tm_n(\Gamma \cdot \Ta_{l}(a), (\U_{l'})_\Gamma)
 &\vdash&
  \Pihat^{l,l'}(a,b) : \tm_n(\Gamma,(\U_{l \vee l'})_\Gamma)\\
  n : \lctx, l : \ltm(n),\Gamma : \ctx_n&\vdash&\UU^l_\Gamma: \tm_n(\Gamma,(\UU_{l^+})_\Gamma)
-\end{eqnarray*}
-In externally indexed cumulative universes we have operator symbols that lift elements in the $l$th universe to the $m$th universe for $l < m$ (see above):
-%\begin{tiny}
-\begin{eqnarray*}
-\Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma)
-\end{eqnarray*}
-However, the external assumption $l < m$ on levels cannot directly be internalized as the level equation $l^+ \vee m = m$ since gats do not admit equational constraints on its arguments. Instead we introduce three operator symbols for different liftings:
-\begin{eqnarray*}
-n : \lctx, l : \ltm(n), \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^{+}_{l}}(a) : \tm(\Gamma,(\U_{l^+})_\Gamma)\\
-n : \lctx, l,m : \ltm(n), \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^{- \vee m}_{l}}(a) : \tm(\Gamma,(\U_{l \vee m})_\Gamma)
-%\\
-%n : \lctx, l,m : \ltm(n), \Gamma : \ctx, b : \tm(\Gamma,(\U_{m})_\Gamma) &\vdash& {\Ta^{l \vee -}_{m}}(b) : \tm(\Gamma,(\U_{l \vee m})_\Gamma)
 \end{eqnarray*}
 Equations:
 We have the following decoding equations:
@@ -807,16 +795,6 @@ Moreover, we have laws that level substitution $\sigma$ commutes with operations
  \end{eqnarray*}
 Check that this is right. Cf comment by intern.
 
-\paragraph{Remark.} Recall the rule for the $l$th universe in the $m$th for $l < m$ in the external tower of universes above \ref{}: 
-\begin{eqnarray*}
-\Gamma : \ctx&\vdash&(\UU^m_l)_\Gamma: \tm(\Gamma,(\UU_{m})_\Gamma)
-\end{eqnarray*}
-In our old paper the rule for the internally indexed version was similar to the one for the externally indexed version. It used the definition of $l < m$ by the level equation $m = l^+ \vee m$. However, if we try to represent the internally indexed rule by the following operator symbol
-\begin{eqnarray*}
-n : \lctx, m, l : \ltm(n), m = l^+ \vee m, \Gamma : \ctx_n &\vdash&(\UU^m_l)_\Gamma: \tm(\Gamma,(\UU_{m})_\Gamma)
-\end{eqnarray*}
-we leave the framework of generalized algebraic theories which does not admit operator symbols that depend on such equational constraints. In the next section we will show a method for dealing with such equational constraints.
-
 \paragraph{The initiality conjecture.} Ideally, we would like to prove that The the calculus in our old paper is an initial model of the gat  $\Sigma_{\mathrm{universe\ polymorphism}}$. It would then follow that it is equivalent to the variable free explicit substitution calculus $\T_{\Sigma_{\mathrm{universe\ polymorphism}}}$.
 Such an initiality theorem might superficially seem straightforward, but a rigorous proof is surprisingly subtle. This is the reason why Voevodsky called his project ``the initiality conjecture''. In fact, an attempt to prove the conjecture for our system would probably uncover discrepancies.
 
@@ -835,22 +813,7 @@ $$
 $$
 where the context $\Gamma$ is implicit.
 
-We note that $l < m$ can also be defined inductively by the rules
-%\footnote{Should we include $\frac{l < m\ \ \ l'<m}{l \vee l'  < m}$?}
-$$
-\frac{}{l < l^+}
-\hspace{3em}
-\frac{l < m}{l < m^+}
-\hspace{3em}
-\frac{l < m}{l < m \vee m'}
-\hspace{3em}
-\frac{l < m\ \ \ l' < m'}{l \vee l' < m \vee m'}
-$$
-Let $l <_i m$ mean $l < m$ defined inductively, and  $l <_e m$ mean $l < m$ defined equationally as $l^+ \vee m = m$ in the initial model. Then $l <_i m$ iff $l <_e m$.
-
-Proof $\Rightarrow$: By induction on the proof of $l <_i m$. Both cases are direct.
-
-Proof $\Leftarrow$: If  $n$ is the length of the level context, then level expressions have normal forms 
+\footnote{If  $n$ is the length of the level context, then level expressions have normal forms 
 $$
 \alpha_1^{+^{p_1}} \vee \cdots \vee \alpha_m^{+^{p_m}}
 $$ 
@@ -860,7 +823,7 @@ $$
 < 
 \alpha_1^{+^{q_1}} \vee \cdots \vee \alpha_m^{+^{q_m}} \vee \alpha_{m+1}^{+^{q_{m+1}}} \vee \cdots \vee \alpha_{m'}  ^{+^{q_{m'}}}
 $$ 
-provided $p_i < q_i$ for $1 \le i \le m \le m' \le n$. It follows that $<$ indeed can be inductively generated by the two rules above. Because all the $\alpha_j$ for $m+1 \le j \le n$ can be added by using the second rule repeatedly with $m' = \alpha_j^{+^{q_{j}}}$. Then use the monotonicity wrt $(-)^+$ to decrease all remaining $p_i$ and $q_i$. Then repeat the process. Monotonicity of $(-)^+$ follows by induction on the rules.
+provided $p_i < q_i$ for $1 \le i \le m \le m' \le n$.} 
 
 We shall now define how to model the gat-operations for cumulative universes in the system of our old paper.
 \begin{itemize}
@@ -873,22 +836,6 @@ The gat-operation $\Ta^{-\vee m}_l(a)$ can be interpreted as the equivalence cla
 %\item
 %The gat-operation $\Ta^{l\vee -}_m(b)$ can be interpreted as the equivalence class of $\Ta^{l \vee m}_l(b)$, etc.
 \end{itemize}
-To prove initiality we need the opposite direction.
-\begin{itemize}
-\item If $l < m$ ($l^+ \vee m = m$) we can define $\UU^m_l$ by the process described above.
-\end{itemize}
-
-
-
-
-
-
-
-
-
-
-
-%\end{tiny}
 
 \subsection{Level-indexed products of types}
 %We add three operator symbols in addition to the operator symbols for cwfs in Section 5.2 and 5.3:
