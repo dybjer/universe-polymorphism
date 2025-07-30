@@ -320,7 +320,10 @@ The resulting generalized algebraic theory consists of the following parts: \beg
 \item the theory of the ucwf of levels;
 \item the theory of level-indexed pure cwfs of types with its object part and
 arrow part;
-\item the extra structure for the type formers.
+\begin{itemize}
+\item the theory of the object part is about $n$-indexed cwfs with $\Pi$-types and level-indexed universes.
+\item the theory of the arrow part is about level substitution.
+\end{itemize}
 \end{itemize}
 
 \paragraph{The theory of the ucwf of levels.}
@@ -468,11 +471,14 @@ Remark on decorating application in the grammar for the theory of the old paper.
 \paragraph{Internalization.}
 A simple way to internalize the externally indexed tower of universes is to index each universe by an {\em internal} natural number. Instead of an external sequence $\UU_l$ we will have an internal sequence 
 $$l : \N, \Gamma : \ctx, l : \tm(\Gamma,\N) \vdash \UU_l : \ty(\Gamma)$$. 
-However, this would mean that we could build large types such as $\Pi l : \N.\U_l$ and $\Pi l : \N.\U_l$ which increase the proof theoretic strength of type theory. 
+However, this would mean that we could build large types such as $\Pi l : \N.\U_l$ and $\Sigma l : \N.\U_l$ which increase the proof theoretic strength of type theory. 
 
-In Agda, there is a type $\Level$ which has a level 0, and is closed under the next level operation $(-)^+$ and $\vee$. Also here we can build $\Pi l : \Level.\U_l$ and $\Pi l : \Level.\U_l$
+In Agda, there is a type $\Level$ which has a level 0, and is closed under the next level operation $(-)^+$ and $\vee$. Also here we can build $\Pi l : \Level.\U_l$ and $\Sigma l : \Level.\U_l$.
 
 \section{Level-indexed type theory}
+
+We shall now show the generalized algebraic theory corresponding to the our theory with level judgments \cite{bezem:}.
+This gat can be structured as follows:
 
 \subsection{The ucwf of levels}
 We shall now turn the externally indexed tower of universes into an internally indexed one by replacing the external natural numbers with internal level expressions. We shall organize these as a unityped cwf (ucwf) of levels  with extra structure for upper semilattices with an inflationary endomorphism. 
@@ -550,18 +556,18 @@ The operator symbols $\vee$ and $+$ commute with level substitution.
 
 We now define the generalized algebraic theory of ucwf-indexed cwfs with $\Pi$-types. These are contravariant functors $F$ from the category of contexts of $\L$ (we use $\L$ also for the base category of the ucwf $\L$)  to the category with objects cwfs with $\Pi$-types and arrows cwf-morphisms preserving $\Pi$-types:
 $$
-F : \L^\mathrm{op} \to \CwF^{\Pi}
+T : \L^\mathrm{op} \to \CwF^{\Pi}
 $$
 We have
 \begin{itemize}
 \item
-$F(n)$ is the cwf (with $\Pi$-types) of contexts, substitutions, types, and terms that depend on level variables in $n$.
+$T(n)$ is the cwf (with $\Pi$-types) of contexts, substitutions, types, and terms that depend on level variables in $n$.
 \item
-Each $F(n)$ has extra structure for level-indexed universes $\UU_l$ with decodings $\Ta_l$, where $l$ is a level term that depends on level variables in $n$. These universes are closed under $\Pi$-types and contain smaller universes $\UU_{l'}$ for $l' < l$.
+Each $T(n)$ has extra structure for level-indexed universes $\UU_l$ with decodings $\Ta_l$, where $l$ is a level term that depends on level variables in $n$. These universes are closed under $\Pi$-types and contain smaller universes $\UU_{l'}$ for $l' < l$.
 \item
-The cwf-functor $F(\sigma) : F(n) \to F(m)$ substitutes the $n$ level variables by the level expressions in $\sigma$ in the various components of a cwf depending on $n$ level variables, yielding a cwf depending on $m$ level variables. All structure of the cwf with $\Pi$-types and level-indexed universes is preserved.
+The cwf-functor $T(\sigma) : T(n) \to T(m)$ substitutes the $n$ level variables by the level expressions in $\sigma$ in the various components of a cwf depending on $n$ level variables, yielding a cwf depending on $m$ level variables. All structure of the cwf with $\Pi$-types and level-indexed universes is preserved.
 \end{itemize}
-\subsection{Theory of the object part of $F$}
+\subsection{Theory of the object part of $T$}
 We have the following sort symbols:
 \begin{eqnarray*}
 n : \lctx &\vdash& \ctx_n\\
@@ -730,6 +736,14 @@ Moreover, we have equations for commutativity of lifting and $\Pi$-codes with re
 \end{eqnarray*}
 }
 
+\paragraph{Adding cumulativity.} Adding an operator symbol for cumulativity is also a straightforward internalization of the lifting operations in the external tower:
+\begin{eqnarray*}
+n : \lctx, l,m : \ltm(n), l < m, \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
+\end{eqnarray*}
+where again $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. Note however, that we still need double superscripts on codes $\Pi^{l,l'}$. This is because, unlike in the external case, we cannot lift the smaller code to the greater in general.
+
+\paragraph{Remark.} The introduction of the sort symbol $\leq$ is analogous to the introduction of the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, proofs of level equality can only be constructed from reflexivity and by equational reasoning with level terms. 
+
 
 \subsection{Level substitution}
 
@@ -798,14 +812,6 @@ Moreover, we have laws that level substitution $\sigma$ commutes with the operat
 (\UU^l)_\Gamma[ \sigma ] &=&(\UU^{l[ \sigma ]} )_{\Delta[ \sigma ]} 
  \end{eqnarray*}
 Check that this is right. Cf comment by intern.
-
-\paragraph{Adding cumulativity.} Adding an operator symbol for cumulativity is also a straightforward internalization of the lifting operations in the external tower:
-\begin{eqnarray*}
-n : \lctx, l,m : \ltm(n), l < m, \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
-\end{eqnarray*}
-where again $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. Note however, that we still need double superscripts on codes $\Pi^{l,l'}$. This is because, unlike in the external case, we cannot lift the smaller code to the greater in general.
-
-\paragraph{Remark.} The introduction of the sort symbol $\leq$ is analogous to the introduction of the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, proofs of level equality can only be constructed from reflexivity and by equational reasoning with level terms. 
 
 \paragraph{The initiality conjecture.} Ideally, we would like to prove that The the calculus in our old paper is an initial model of the gat  $\Sigma_{\mathrm{universe\ polymorphism}}$. It would then follow that it is equivalent to the variable free explicit substitution calculus $\T_{\Sigma_{\mathrm{universe\ polymorphism}}}$.
 Such an initiality theorem might superficially seem straightforward, but a rigorous proof is surprisingly subtle. This is the reason why Voevodsky called his project ``the initiality conjecture''. In fact, an attempt to prove the conjecture for our system would probably uncover discrepancies.
