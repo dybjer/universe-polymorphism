@@ -427,36 +427,42 @@ Moreover, we have equations for commutativity of lifting and $\Pi$-codes wrt sub
 (\UU^m_l)_\Gamma[ \gamma ] &=&(\UU^m_l)_\Delta
 \end{eqnarray*}
 %\end{tiny}
-\paragraph{A tower with cumulativity.}
+\paragraph{Adding cumulativity.}
 In the cumulative case we also have operator symbols that lift elements in the $l$th universe to the $m$th universe for $l < m$:
-%\begin{tiny}
 \begin{eqnarray*}
 \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
 \end{eqnarray*}
-The codes for $\Pi$ now need only one index:
+%The codes for $\Pi$ now need only one index:
+%\begin{eqnarray*}
+%\Gamma : \ctx,
+%a : \tm(\Gamma,(\U_{l})_\Gamma),
+%b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
+%&\vdash&
+% \Pihat^{l}(a,b) : \tm(\Gamma,(\U_{l})_\Gamma)
+%\end{eqnarray*}
+We have the following decoding equations for lifting with $k < l < m$:
 \begin{eqnarray*}
-\Gamma : \ctx,
-a : \tm(\Gamma,(\U_{l})_\Gamma),
-b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
-&\vdash&
- \Pihat^{l}(a,b) : \tm(\Gamma,(\U_{l})_\Gamma)
-\end{eqnarray*}
-We have the following decoding equations:
-\begin{eqnarray*}
-\Ta^m_{l}(\Pi^{l}(a,b)) &=& \Pi^m(\Ta^m_l(a),\Ta^m_l(b))\\
+\Ta^m_{l \vee l'}(\Pi^{l,l'}(a,b)) &=& \Pi(\Ta^m_l(a),\Ta^m_{l'}(b))\\
 \Ta^m_l((\UU^l_k)_\Gamma) &=& (\UU^m_k)_\Gamma
 \end{eqnarray*}
-Equations for commutativity of operator symbols wrt substitution ($\gamma : \hom(\Delta,\Gamma)$):
+Equations for commutativity of lifting and substitution ($\gamma : \hom(\Delta,\Gamma)$):
 \begin{eqnarray*}
-\Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )\\
+\Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
-\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^+ ])
+%\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^+ ])
 \end{eqnarray*}
-%\end{tiny}
+We remark that in the presence of cumulativity it suffices with one superscript on codes for $\Pi$, that is, we have $\Pi^l$ rather than $\Pi^{l,l'}$.
 
 \paragraph{Syntax and inference rules as an initial model.} A proof that a version of Martin-Löf type theory with an external tower of universes  is an initial contextual category with appropriate extra structure has been implemented in Agda by de Boer and Brunerie \cite{Brunerie:initiality,deBoer:lic}. This is for a version of type theory with de Bruijn variables and implicit substitutions. The equivalence between split type-cateogries and categories with families was implemented in UniMath by Ahrens, Lumsdaine, and Voevodsky \cite{AhrensLV18}. Moreover, the syntax and inference rules in our paper \cite{BezemCDE22} are not identical to the ones implemented by de Boer and Brunerie, but we expect no difficulty in adapting their proof.
 
 Remark on decorating application in the grammar for the theory of the old paper.
+
+\paragraph{Internalization.}
+A simple way to internalize the externally indexed tower of universes is to index each universe by an {\em internal} natural number. Instead of an external sequence $\UU_l$ we will have an internal sequence 
+$$l : \Gamma : \ctx, l : \tm(\Gamma,\N) \vdash U_l : \ty(\Gamma)$$. 
+However, this would mean that we could build large types such as $\Pi l : \N.\U_l$ and $\Pi l : \N.\U_l$ which increase the proof theoretic strength of type theory. 
+
+In Agda, there is a type $\Level$ which has a level 0, and is closed under the next level operation $(-)^+$ and $\vee$. Also here we can build $\Pi l : \Level.\U_l$ and $\Pi l : \Level.\U_l$
 
 \section{Level-indexed type theory}
 
@@ -708,36 +714,13 @@ Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm
 \app(c,a)[\sigma] &=&\app(c[\sigma],a[\sigma])
 \end{eqnarray*}
 
-\subsection{A level-indexed tower of universes}
+\subsection{Level-indexed universes}
 
-The rule of universe formation states that for each level term $l$ in $n$ variables, there is a type $\UU_l$ with decoding map $\Ta_l$. Then there is an introduction rule for each small type former; we here only consider closure under $\Pi$. Then there is an introduction rule expressing that every universe is in the next. 
-
-\paragraph{Level equality sorts.}
-
-We need to ensure that any universe $\UU_l$ has a code $\UU^m_l$ in any larger universe $\UU^l$ for $l < m$, where the latter is defined as $l^+ \vee m = m$, as in the externally indexed universes. We would like to  type of the operator symbol for such codes should be something like
-\begin{eqnarray*}
-n : \lctx, l, m : \ltm(n), l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_\Gamma: \tm_n(\Gamma,(\UU_{m})_\Gamma)
-\end{eqnarray*}
-However, equational constraints are not allowed in argument types in gats. Hence, we introduce a new sort symbol for level equality:
-\begin{eqnarray*}
-n : \lctx, l, l'  : \ltm(n) &\vdash& \leq_n(l,l')
-\end{eqnarray*}
-and an operator symbol for reflexivity:
-\begin{eqnarray*}
-n : \lctx, l : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l)
-\end{eqnarray*}
-Note that if we can derive $l = l' : \ltm(n)$ in the initial model, then we can also derive $\refl(l) :  \leq_n(l,l')$.
-\footnote{Discuss relationship with equality types in ordinary type theory.}
-
-We now have a proper typing of the operator symbol $\UU^m_l$:
-\begin{eqnarray*}
-n : \lctx, l, m : \ltm(n), p : l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_{p,\Gamma} : \tm_n(\Gamma,(\UU_{m})_\Gamma)
-\end{eqnarray*}
-where $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. In the sequel we will suppress the proof $p : l < m$ as an argument to this operator symbol.
+The rule of universe formation states that for each level term $l$ in $n$ variables, there is a type $\UU_l$ with decoding map $\Ta_l$. Then there is an  Then there is an introduction rule expressing that every universe is in the next. 
 
 %\begin{tiny}
 %\vspace{1ex}
-The operator symbols are: (Factor out common premises?)
+The operator symbols for universe formation $\UU_l$, the decoding map $\Ta_l$, and the introduction rule for closure under all small type formers are obtained by a straightforward internalization of the corresponding rules for the externally indexed universes. (as before we only show closure under $\Pi$ and leave the closure under other the other standard small type formers) : (Factor out common premises?)
 \begin{eqnarray*}
 n : \lctx, l : \ltm(n), \Gamma : \lctx_n &\vdash& (\U_{l})_\Gamma : \ty_n(\Gamma)\\
 n : \lctx, l : \ltm(n), \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta_{l}}(a) : \ty_n(\Gamma)\\
@@ -746,37 +729,48 @@ n : \lctx, l, l' : \ltm(n), \Gamma : \ctx_n,
 a : \tm_n(\Gamma,(\U_{l})_\Gamma),
 b :  \tm_n(\Gamma \cdot \Ta_{l}(a), (\U_{l'})_\Gamma)
 &\vdash&
- \Pihat^{l,l'}(a,b) : \tm_n(\Gamma,(\U_{l \vee l'})_\Gamma)\\
- n : \lctx, l : \ltm(n),\Gamma : \ctx_n&\vdash&\UU^l_\Gamma: \tm_n(\Gamma,(\UU_{l^+})_\Gamma)
+ \Pihat^{l,l'}(a,b) : \tm_n(\Gamma,(\U_{l \vee l'})_\Gamma)
 \end{eqnarray*}
-Equations:
-We have the following decoding equations:
+However, when we try to internalize the operator symbols $\UU^m_l$ for universes $\UU^l$ in larger universes $\UU^m$, where $l < m$, we encounter a problem. The following attempt
 \begin{eqnarray*}
-%\Ta(\N^0_\Gamma) &=& \N_\Gamma\\
-\Ta_{l \vee l'}(\Pi^{l,l'}(a,b)) &=& \Pi(\Ta_l(a),\Ta_{l'}(b))\\
-%\Ta_{m}((\UU^m_l)_\Gamma) &=& (\UU_l)_\Gamma (* wrong *)\\
-\Ta_{l^+}((\UU^l)_\Gamma) &=& (\UU_l)_\Gamma 
+n : \lctx, l, m : \ltm(n), l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_\Gamma: \tm_n(\Gamma,(\UU_{m})_\Gamma)
 \end{eqnarray*}
-We have the following decoding equations for the three liftings:
+where $l < m$ is defined as $l^+ \vee m = m$, does not work since equations are not allowed in argument types in gats. This issue can be solved by introducing a new sort symbol for level equality:
 \begin{eqnarray*}
-\Ta^+_{l}(\Pi^{l}(a,b)) &=& \Pi^{l^+}(\Ta^+_l(a),\Ta^+_l(b))\\
-\Ta^+_{l^+}((\UU^l)_\Gamma) &=& (\UU^{l^+})_\Gamma\\
-&&\\
-\Ta^{-\vee m}_{l}(\Pi^{l}(a,b)) &=& \Pi^{l \vee m}(\Ta^{-\vee m}_l(a),\Ta^{-\vee m}_l(b))\\
-\Ta^{-\vee m}_{l}((\UU^l)_\Gamma) &=& (\UU^{l\vee m})_\Gamma\\
-&&
-%\\
-%\Ta^{l \vee -}_{l}(\Pi^{m}(a,b)) &=& \Pi^{l \vee m}(\Ta^{l \vee -}_l(a),\Ta^{l \vee -}_l(b))\\
-%\Ta^{l \vee -}_{l}((\UU^m)_\Gamma) &=& (\UU^{l\vee m})_\Gamma
+n : \lctx, l, l'  : \ltm(n) &\vdash& \leq_n(l,l')
 \end{eqnarray*}
+and an operator symbol for reflexivity:
+\begin{eqnarray*}
+n : \lctx, l : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l)
+\end{eqnarray*}
+Note that if we can derive 
+\begin{eqnarray*}
+n : \lctx, l, l'  : \ltm(n) &\vdash& l = l' : \ltm(n)
+\end{eqnarray*}
+in the initial model, then we can also derive
+\begin{eqnarray*}
+n : \lctx, l,l' : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l')
+\end{eqnarray*}
+Moreover, if we have concrete proofs
+\begin{eqnarray*}
+n : \lctx, l,l' : \ltm(n), p :  \leq_n(l,l')
+\end{eqnarray*}
+then $p = \refl(l) : \leq(l,l)$ and $l = l' : \ltm(n)$.
+
+If we now define $l < m$ as $\leq_n(l^+ \vee m, m)$ we get a proper typing of the operator symbol $\UU^m_l$:
+\begin{eqnarray*}
+n : \lctx, l, m : \ltm(n), p : l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_{p,\Gamma} : \tm_n(\Gamma,(\UU_{m})_\Gamma)
+\end{eqnarray*}
+In the sequel we will suppress the proof $p : l < m$ as an argument to this operator symbol and just write $(\UU^m_l)_{\Gamma}$.
+
+The decoding equations for $\Ta_l$ and the equations for commutativity of operator symbols with substitution can be obtained by a straightforward internalization of the corresponding equations for the external tower, see ?.
+\footnote{Omit:
 Equations for commutativity of operator symbols wrt substitution ($\gamma : \hom(\Delta,\Gamma)$):
 \begin{eqnarray*}
 \Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )\\
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
 \Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^+ ])
 \end{eqnarray*}
-
-
 Moreover, we have equations for commutativity of lifting and $\Pi$-codes with respect to term substitution $\gamma$:
  \begin{eqnarray*}
 (\U_l)_\Gamma [ \gamma ] &=& (\U_l)_\Delta\\
@@ -785,8 +779,9 @@ Moreover, we have equations for commutativity of lifting and $\Pi$-codes with re
 \Pi^{l,l'}(a,b)[ \gamma ] &=& \Pi^{l,l'}(a [ \gamma ], b[ \gamma^+ ])\\
 (\UU^l)_\Gamma[ \gamma ] &=&(\UU^l)_\Delta
 \end{eqnarray*}
-%There are many equations. First for each $l$, $\U_l$ satisfies all the laws of a single universe, including laws of ordinary substitution. Then we have 
-Moreover, we have laws that level substitution $\sigma$ commutes with operations associated with a universe.
+}
+
+Moreover, we have laws that level substitution $\sigma$ commutes with the operator symbols for a universe.
  \begin{eqnarray*}
  (\U_{l})_\Gamma[\sigma] &=& (\U_{l[\sigma]})_{\Gamma[\sigma]}\\
  \Ta_l(a) [ \sigma ] &=& \Ta_{l[\sigma]}(a[ \sigma ] )\\
@@ -794,6 +789,14 @@ Moreover, we have laws that level substitution $\sigma$ commutes with operations
 (\UU^l)_\Gamma[ \sigma ] &=&(\UU^{l[ \sigma ]} )_{\Delta[ \sigma ]} 
  \end{eqnarray*}
 Check that this is right. Cf comment by intern.
+
+\paragraph{Adding cumulativity.} Adding an operator symbol for cumulativity is also a straightforward internalization of the lifting operations in the external tower:
+\begin{eqnarray*}
+n : \lctx, l,m : \ltm(n), l < m, \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
+\end{eqnarray*}
+where again $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. Note however, that we still need double superscripts on codes $\Pi^{l,l'}$. This is because, unlike in the external case, we cannot lift the smaller code to the greater in general.
+
+\paragraph{Remark.} The introduction of the sort symbol $\leq$ is analogous to the introduction of the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, proofs of level equality can only be constructed from reflexivity and by equational reasoning with level terms. 
 
 \paragraph{The initiality conjecture.} Ideally, we would like to prove that The the calculus in our old paper is an initial model of the gat  $\Sigma_{\mathrm{universe\ polymorphism}}$. It would then follow that it is equivalent to the variable free explicit substitution calculus $\T_{\Sigma_{\mathrm{universe\ polymorphism}}}$.
 Such an initiality theorem might superficially seem straightforward, but a rigorous proof is surprisingly subtle. This is the reason why Voevodsky called his project ``the initiality conjecture''. In fact, an attempt to prove the conjecture for our system would probably uncover discrepancies.
@@ -824,18 +827,6 @@ $$
 \alpha_1^{+^{q_1}} \vee \cdots \vee \alpha_m^{+^{q_m}} \vee \alpha_{m+1}^{+^{q_{m+1}}} \vee \cdots \vee \alpha_{m'}  ^{+^{q_{m'}}}
 $$ 
 provided $p_i < q_i$ for $1 \le i \le m \le m' \le n$.} 
-
-We shall now define how to model the gat-operations for cumulative universes in the system of our old paper.
-\begin{itemize}
-\item 
-The gat-operation $\UU^l_\Gamma$ can be interpreted as the per-equivalence class of $\UU^{l^+}_l$, such that $\Gamma \vdash \UU^{l^+}_l$.
-\item
-The gat-operation $\Ta^+_l(a)$ can be interpreted as the equivalence class of $\Ta^{l^+}_l(a)$, etc.
-\item
-The gat-operation $\Ta^{-\vee m}_l(a)$ can be interpreted as the equivalence class of $\Ta^{l \vee m}_l(a)$, etc.
-%\item
-%The gat-operation $\Ta^{l\vee -}_m(b)$ can be interpreted as the equivalence class of $\Ta^{l \vee m}_l(b)$, etc.
-\end{itemize}
 
 \subsection{Level-indexed products of types}
 %We add three operator symbols in addition to the operator symbols for cwfs in Section 5.2 and 5.3:
