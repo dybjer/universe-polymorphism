@@ -435,7 +435,7 @@ In the cumulative case we also have operator symbols that lift elements in the $
 \begin{eqnarray*}
 \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
 \end{eqnarray*}
-We remark that in the presence of cumulativity it suffices to introduce codes for $\Pi$ with one superscript instead of two:
+In the presence of cumulativity it suffices that codes for $\Pi$ have one superscript rather than two:
 \begin{eqnarray*}
 \Gamma : \ctx,
 a : \tm(\Gamma,(\U_{l})_\Gamma),
@@ -450,7 +450,7 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
 Remark on decorating application in the grammar for the theory of the old paper.
 
 \paragraph{Internalization.}
-A simple way to internalize the externally indexed tower of universes is to index each universe by an {\em internal} natural number. Instead of an external sequence $\UU_l$ we will have an internal sequence 
+A simple way to internalize the externally indexed tower of universes is to index each universe by an {\em internal} natural number. Instead of an external sequence $\UU_l$ we would have an internal sequence 
 $$l : \N, \Gamma : \ctx, l : \tm(\Gamma,\N) \vdash \UU_l : \ty(\Gamma)$$. 
 However, this would mean that we could build large types such as $\Pi l : \N.\U_l$ and $\Sigma l : \N.\U_l$ which increase the proof theoretic strength of type theory. 
 
@@ -687,11 +687,13 @@ in the initial model, then we can also derive
 \begin{eqnarray*}
 n : \lctx, l,l' : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l')
 \end{eqnarray*}
-Moreover, if we have concrete proofs
+\footnote{Can we prove the following:
+If we have derivations
 \begin{eqnarray*}
 \vdash n : \lctx, \vdash l,l' : \ltm(n), \vdash p :  \leq_n(l,l')
 \end{eqnarray*}
 then $\vdash p = \refl(l) : \leq(l,l')$ and $\vdash l = l' : \ltm(n)$.
+}
 
 We now define $l < m$ as $\leq_n(l^+ \vee m, m)$ and get a proper typing of the operator symbol $\UU^m_l$:
 \begin{eqnarray*}
