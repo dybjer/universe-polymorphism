@@ -268,13 +268,27 @@ We shall show that cwfs indexed by the base category of a ucwf $\L$ of universe 
 
 Moreover, further variations of indexed cwfs extend the scope of gat and cwf-based uniform categorical. For example, untyped predicate logic can be captured by ucwf-indexed scwfs with extra structure for the logical constants. Moreover, typed predicate logic can be captured by scwf-indexed scwfs, and dependently typed predicate logic by cwf-indexed scwfs, both with suitable extra structure for type formers and logical constants.
 
-Summary of previous paper on explicit universe polymorphism. Background knowledge.
+\paragraph{Universe polymorphism.} We refer to our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22} for a presentation of the inference rules of Martin-Löf type theory with explicit universe polymorphism. There the reader can also find motivation and examples. Here we only give a brief overview. 
 
-Plan of paper. 
+An implicit form of universe polymorphism in dependent type theory was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Coq (Rocq) \cite{coq:general}. Alternatively, Agda \cite{agda-wiki} and Lean \cite{moura:lean} employ versions of universe polymorphism, where universe levels are explicitly declared. 
 
-Acknowledgement to Berardi.
+In our paper we followed Courant's approach \cite{Courant02} to explicit universe polymorphism and introduced special universe level {\em judgments}:
+$$
+l\ \level
+\hspace{5em}
+l = l'
+$$
+in addition to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variables declared in the context. We emphasized that, unlike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms. 
 
-Postpone details of gats of cwfs and notational convention until section 2 and 3 (when needed)
+We also presented an extension where equational constraints between universe levels can be declared, building on a proposal by Voevodsky \cite{VV}. This extension can also be described by a gat, but we will postpone this to a forthcoming paper.
+
+\paragraph{Plan of the paper.} In Section 2 we present the {\em infinitary} generalized algebraic theory of cwfs with extra structure for the type formers and an externally indexed tower of universes. We consider both cumulative and non-cumulative universes. In Section 3 we present the {\em finitary} generalized algebraic theory of level-indexed type theory with extra structure for the type formers and an internally indexed tower of universes. (* In Section 4 we present the generalized algebraic theory of cwfs with extra structure doubly indexed by levels and level constraints *). In Section 5 we discuss models. In Section 6 we conclude. The appendix contains generalized algebraic theories appearing in previous publications. 
+
+\paragraph{Acknowledgement.} This paper is written in honour of professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend and colleague who spent the autumn of 1994 (check?) in Göteborg with the second and third author. He has made fundamental contributions to type theory and constructivity, in particular to the understanding of the constructive content of classical logic.
+
+
+
+Postpone details of gats of cwfs and notational convention until section 2 and 3 (when needed). Something about qiits.
 
 \bibliographystyle{plain}
 \bibliography{../refs}
