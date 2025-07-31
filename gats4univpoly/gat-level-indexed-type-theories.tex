@@ -396,9 +396,11 @@ a feature that is absent in ordinary algebra without dependent sorts.
 
 \section{Type theory with an external tower of universes}
 
-As a first step, we shall show the operator symbols and equations for an external tower of universes without cumulativity. %Note that this is an infinitary theory.
+As a first step, we shall show the operator symbols and equations for an external tower of universes $\UU_l$, where $l \in \N$ is an external natural number. %Note that this is an infinitary theory.
 
-We assume that we already have defined the generalized algebraic theory of cwfs with $\Pi$-types, see the appendix. We could of course add other type formers as well, and let $\UU$ be closed under those too, but leave this to the reader. 
+We assume that we already have defined the generalized algebraic theory of cwfs with $\Pi$-types, see Bezem, Coquand, Dybjer, and Escard\'o \cite{bezem:hofmann}. The reader may also consult the appendix, where an indexed version of this theory is presented: each sort symbol and operator symbol has an additional first argument $n : \lctx$. 
+
+We should of course include operator symbols corresponding to the formation, introduction, and elimination rules, and equations for the other standard type formers of Martin-Löf type theory as well, and let $\UU_l$ be closed under those too. However, throughout the paper we will only show closure under $\Pi$-types and leave the extension to the other standard type formers to the reader.
 
 \paragraph{A tower of universes without cumulativity.} We show the infinitely many operator symbols and equations indexed by external natural numbers $l, l' , m \in \NN$ with $l < m$. Note that codes for $\Pi$ are doubly indexed.
 \begin{eqnarray*}
@@ -429,7 +431,7 @@ Moreover, we have equations for commutativity of lifting and $\Pi$-codes wrt sub
 \Pi^{l,l'}(a,b)[ \gamma ] &=& \Pi^{l,l'}(a [ \gamma ], b[ \gamma^+ ])\\
 (\UU^m_l)_\Gamma[ \gamma ] &=&(\UU^m_l)_\Delta
 \end{eqnarray*}
-%\end{tiny}
+where $\gamma^+ = \langle \gamma \circ \p, \q \rangle$ (check!).
 \paragraph{Adding cumulativity.}
 In the cumulative case we also have operator symbols that lift elements in the $l$th universe to the $m$th universe for $l < m$:
 \begin{eqnarray*}
@@ -447,19 +449,28 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
 
 \paragraph{Syntax and inference rules as an initial model.} A proof that a version of Martin-Löf type theory with an external tower of universes  is an initial contextual category with appropriate extra structure has been implemented in Agda by de Boer and Brunerie \cite{Brunerie:initiality,deBoer:lic}. This is for a version of type theory with de Bruijn variables and implicit substitutions. The equivalence between split type-cateogries and categories with families was implemented in UniMath by Ahrens, Lumsdaine, and Voevodsky \cite{AhrensLV18}. Moreover, the syntax and inference rules in our paper \cite{BezemCDE22} are not identical to the ones implemented by de Boer and Brunerie, but we expect no difficulty in adapting their proof.
 
-Remark on decorating application in the grammar for the theory of the old paper.
+Remark on decorating application in the grammar for the theory of the old paper. (Check what de Boer does!)
 
 \paragraph{Internalization.}
 A simple way to internalize the externally indexed tower of universes is to index each universe by an {\em internal} natural number. Instead of an external sequence $\UU_l$ we would have an internal sequence 
-$$l : \N, \Gamma : \ctx, l : \tm(\Gamma,\N) \vdash \UU_l : \ty(\Gamma)$$. 
+$$l : \N, \Gamma : \ctx, l : \tm(\Gamma,\N) \vdash \UU_l : \ty(\Gamma)$$
 However, this would mean that we could build large types such as $\Pi l : \N.\U_l$ and $\Sigma l : \N.\U_l$ which increase the proof theoretic strength of type theory. 
 
 In Agda, there is a type $\Level$ which has a level 0, and is closed under the next level operation $(-)^+$ and $\vee$. Also here we can build $\Pi l : \Level.\U_l$ and $\Sigma l : \Level.\U_l$.
 
 \section{Level-indexed type theory}
 
-We shall now show the generalized algebraic theory corresponding to the our theory with level judgments \cite{bezem:}.
-This gat can be structured as follows:
+We shall now show the generalized algebraic theory corresponding to the our theory where we do not have a type of levels but level judgments \cite{BezemCDE22}.
+This gat consists of the following parts:
+\begin{itemize}
+\item the ucwf of levels
+\item the ucwf-indexed cwf with $\Pi$-types and level-indexed universes
+\begin{itemize}
+\item the object part has sort symbols for level-indexed judgments and operator symbols for ...
+\item the arrow part has operator symbols for level-substitutions in all sorts of the cwfs that preserve all the structure.
+\end{itemize}
+\end{itemize}
+
 
 \subsection{The ucwf of levels}
 We shall now turn the externally indexed tower of universes into an internally indexed one by replacing the external natural numbers with internal level expressions. We shall organize these as a unityped cwf (ucwf) of levels  with extra structure for upper semilattices with an inflationary endomorphism. 
