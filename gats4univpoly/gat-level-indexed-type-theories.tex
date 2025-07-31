@@ -471,7 +471,6 @@ This gat consists of the following parts:
 \end{itemize}
 \end{itemize}
 
-
 \subsection{The ucwf of levels}
 We shall now turn the externally indexed tower of universes into an internally indexed one by replacing the external natural numbers with internal level expressions. We shall organize these as a unityped cwf (ucwf) of levels  with extra structure for upper semilattices with an inflationary endomorphism. 
 \begin{itemize}
@@ -522,16 +521,17 @@ Note that, as in our old paper, we have no level 0 for the first universe. All u
 %\end{tiny}
 
 %\begin{tiny}
-We also have all the ucwf-equations, but we do not display them here. These are the cwf-equations (see appendix   \ref{sec:gatPiU}) for the special case that there is only one type. Thus all type equations are redundant.
+We also have all the ucwf-equations, but we do not display them here. These are the cwf-equations (see Dybjer \cite{dybjer:torino} and Bezem et al \cite{BezemCDE22})
+%appendix   \ref{sec:gatPiU}) 
+for the special case that there is only one type, so that all type equations are redundant.
 
-Then we have the semi-lattice equations for $l \vee l'$
-
+We have the semi-lattice equations for $l \vee l'$:
 \begin{eqnarray*}
 (l \vee l') \vee l'' &=& l \vee (l' \vee l'')\\
 l \vee l' &=& l'\vee l\\
 l \vee l &=& l
 \end{eqnarray*}
-Equations for $l^+$.
+and the equations for $l^+$:
 \begin{eqnarray*}
 l \vee l^+ &=& l^+\\
 (l\vee l')^+ &=& l^+\vee l'^+
@@ -559,7 +559,8 @@ Each $T(n)$ has extra structure for level-indexed universes $\UU_l$ with decodin
 \item
 The cwf-functor $T(\sigma) : T(n) \to T(m)$ substitutes the $n$ level variables by the level expressions in $\sigma$ in the various components of a cwf depending on $n$ level variables, yielding a cwf depending on $m$ level variables. All structure of the cwf with $\Pi$-types and level-indexed universes is preserved.
 \end{itemize}
-\subsection{Theory of the object part of $T$}
+
+\subsection{Theory of the object part of $T$ (* relegate to appendix *) }
 We have the following sort symbols:
 \begin{eqnarray*}
 n : \lctx &\vdash& \ctx_n\\
@@ -749,7 +750,7 @@ Equations for commutativity of lifting and substitution ($\gamma : \hom(\Delta,\
 %\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^+ ])
 \end{eqnarray*}
 
-\paragraph{Remark.} The introduction of the sort symbol $\leq$ is analogous to the introduction of the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, proofs of level equality can only be constructed from reflexivity and by equational reasoning with level terms. 
+\paragraph{Remark.} The introduction of the sort symbol $\leq$ is analogous to the introduction of the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, proofs of level equality can only be constructed from reflexivity\footnote{How to say this rigorously? We can of course use general reasoning available in any initial gat, including reasoning about judgmental level equality.}
 
 
 \subsection{Level substitution}
