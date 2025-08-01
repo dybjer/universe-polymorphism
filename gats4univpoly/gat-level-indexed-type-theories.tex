@@ -432,10 +432,10 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
 Remark on decorating application in the grammar for the theory of the old paper. (Check what de Boer does!)
 
 \paragraph{Internalization (* Remove? *).}
-A simple way to internalize the externally indexed tower of universes is to index each universe by an {\em internal} natural number: 
+A simple way to internalize the externally indexed tower of universes is to index each universe by varying internal natural numbers: 
 $$\Gamma : \ctx, l : \tm(\Gamma,\N) \vdash \UU_l : \ty(\Gamma)$$
 %However, this would mean that we could build large types such as $\Pi l : \N.\U_l$ and $\Sigma l : \N.\U_l$ which increase the proof theoretic strength of type theory. 
-or 
+or by constant internal natural numbers:
 $$ l : \tm(1,\N) \vdash \UU_l : \ty(\Gamma)$$
 
 Similarly, Agda has a type $\Level$ of universe levels with a level 0 and closed under the next level operation $(-)^+$ and $\vee$. 
