@@ -282,7 +282,9 @@ In this article we shall introduce the notion of an indexed cwf, that is, a base
 $$
 P : \C^\op \to \CwF
 $$
-We shall show that cwfs indexed by (the base category of) a ucwf $\L$ of universe levels (with suitable extra structure) forms a suitable notion of model of Martin-Löf type theory with explicit universe polymorphism along the lines of our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22}. The benefit is twofold. First, it is a case study for our approach to the initiality conjecture project. Type theory with explicit universe polymorphism is an example of a dependent type theory, and we show that it can be captured by a gat based on a variation of cwfs. Second, it provides an alternative view of our syntactic type theory with explicit universe polymorphism. One can argue that a type theory presented by a gat of cwfs is a higher-level and more ``objective'' notion than a presentation by grammar and inference rules. The gat only records the ``important" rules. When building initial models in terms of grammar and inference rules we  need to include various ``bookkeeping'' rules, such as general rules of equality reasoning, and there will be a multitude of options. A proof that a (modification of) the theory presented in Bezem et al forms an initial model \cite{BezemCDE22} is however beyond the scope of the paper, and we only outline the relationship. 
+We shall show that cwfs indexed by (the base category of) a ucwf $\L$ of universe levels (with suitable extra structure) forms a suitable notion of model of Martin-Löf type theory with explicit universe polymorphism along the lines of our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22}. The benefit is twofold. First, it is a case study for our approach to the initiality conjecture project. Type theory with explicit universe polymorphism is an example of a dependent type theory, and we show that it can be captured by a gat based on a variation of cwfs. Second, it provides an alternative view of our syntactic type theory with explicit universe polymorphism. One can argue that a type theory presented by a gat of cwfs is a higher-level and more ``objective'' notion than a presentation by grammar and inference rules. This is because the gat only records the ``important" rules and highlights categorical structure. When building initial models in terms of grammar and inference rules we  need to include various bookkeeping rules, such as general rules of equality reasoning, and there will be a multitude of options. 
+
+A proof that a (modification of) the theory presented in Bezem et al forms an initial model \cite{BezemCDE22} is however beyond the scope of the paper, and we only outline the relationship. 
 
 Moreover, further variations of indexed cwfs extend the scope of gat and cwf-based uniform categorical. For example, untyped predicate logic can be captured by ucwf-indexed scwfs with extra structure for the logical constants. Moreover, typed predicate logic can be captured by scwf-indexed scwfs, and dependently typed predicate logic by cwf-indexed scwfs, both with suitable extra structure for type formers and logical constants.
 
@@ -325,15 +327,24 @@ The gat of cwfs with extra structure for $\Pi$-types, a notion of model of Marti
 \end{eqnarray*}
 corresponding to the objects and morphisms of the category of contexts, and the family of terms indexed by types in a given context, respectively. The notation states that $\ctx$ is a constant sort symbol, that $\hom$ is a binary sort symbol depending on arguments $\Delta, \Gamma : \ctx$, that $\ty$ is a unary sort symbol depending on the argument $\Gamma : \ctx$, and $\tm$ is a binary sort symbol depending on arguments $\Gamma : \ctx, A : \ty(\Gamma)$.
 
-Moreover, the gat of cwfs has 10 operator symbols for the basic operations of cwfs (identity and composition of context morphisms, substitution in types and terms, empty context, context extension, empty context morphism, context morphism extension, projection morphism, last variable term). To illustrate the notation we show the typings of identity and composition of context morphisms:
+Moreover, the gat of cwfs has 10 operator symbols for the basic operations of cwfs (identity and composition of context morphisms, substitution in types and terms, empty context and context morphism, context extension and context morphism extension, projection morphism, last variable term): 
 \begin{eqnarray*}
 \Gamma : \ctx &\vdash& \id_{\Gamma} : \Hom(\Gamma,\Gamma)\\
 \Xi,\Delta,\Gamma : \ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta) &\vdash&
-\gamma \circ \delta : \Hom(\Xi,\Gamma)
+\gamma \circ \delta : \Hom(\Xi,\Gamma)\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma) &\vdash&
+A[\gamma] : \ty(\Delta)\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Gamma,A) &\vdash&  a[\gamma] : \tm(\Delta,A[\gamma])\\
+&\vdash& 1 : \ctx\\
+\Gamma : \ctx &\vdash& \tuple{}_\Gamma : \Hom(\Gamma,1)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \Gamma\cext A : \ctx\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \tuple{\gamma,a} : \Hom(\Delta,\Gamma\cext A)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \p: \Hom(\Gamma\cext A,\Gamma)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \q: \tm(\Gamma\cext A,A[\p])
 \end{eqnarray*}
-The first line states that identity is a unary operator symbol with argument $\Gamma : \ctx$. The second line states that $\circ$ is a binary operator symbol with five arguments $\Xi,\Delta,\Gamma : \ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta)$ and result sort $\Hom(\Xi,\Gamma)$. Note that only two of the five official arguments are explicit. To alleviate notation, we we often suppress arguments of operator symbols. The reader is referred to Bezem et al \cite{bezem:hofmann} for the remaining operator symbols expressed in the same notation.
+The first line states that identity is a unary operator symbol with argument $\Gamma : \ctx$. The second line states that $\circ$ is a binary operator symbol with five arguments $\Xi,\Delta,\Gamma : \ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta)$ and result sort $\Hom(\Xi,\Gamma)$. Note that only two of the five official arguments are explicit. To alleviate notation, we we often suppress arguments of operator symbols. Note also that we overload notation for type and term substitution $A[\gamma]$ and $a[\gamma]$.
 
-Finally, the gat of cwfs has 13 equations. We illustrate the notation by showing one of the laws for identity morphisms:
+Finally, the gat of cwfs has 13 equations. We illustrate the notation by showing one of the laws for identity morphisms.  The reader is referred to Bezem et al \cite{bezem:hofmann} for the remaining cwf-equations.
 \begin{eqnarray*}
 \Delta, \Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma) &\vdash& \id_\Gamma \circ \gamma = \gamma : \Hom(\Delta,\Gamma)
 %\\
@@ -369,7 +380,7 @@ The operator symbol for $\Pi$-types is
 \end{eqnarray*}
 and refer to Bezem et al \cite{bezem:hofmann} for the operator symbols for abstraction and application and their associated equation.
 
-In the gat for externally indexed universes we have infinitely many operator symbols:
+In the gat for externally indexed universes we the following families of operator symbols (the universes $\UU_l$, the decoding maps, codes for $\Pi$, and codes for $\UU_l$ in $\UU_m$):
 \begin{eqnarray*}
 \Gamma : \ctx &\vdash& (\U_{l})_\Gamma : \ty(\Gamma)\\
 \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta_{l}}(a) : \ty(\Gamma)\\
@@ -381,9 +392,8 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l'})_\Gamma))
  \Pihat^{l,l'}(a,b) : \tm(\Gamma,(\U_{l \vee l'})_\Gamma)\\
  \Gamma : \ctx&\vdash&(\UU^m_l)_\Gamma: \tm(\Gamma,(\UU_{m})_\Gamma)
 \end{eqnarray*}
-one for each $l, l' , m \in \NN$ with $l < m$. Note that codes for $\Pi$ are doubly indexed and $l \vee l' = \max(l,l')$.
-
-Again, we have left some arguments to operator symbols implicit. For example, the decoding operators $\Ta_l$ are binary operators and that in the official notation we should write $\Ta_l(\Gamma,a)$. However, in the notation above we omit $\Gamma$ and write $\Ta_l(a)$.
+where $l, l' , m \in \NN$ with $l < m$. Note that codes for $\Pi$ are doubly indexed and $l \vee l' = \max(l,l')$.
+We have again left some arguments to operator symbols implicit. For example, the decoding operators $\Ta_l$ are binary operators and that in the official notation we should write $\Ta_l(\Gamma,a)$. However, in the notation above we omit $\Gamma$ and write $\Ta_l(a)$.
 
 We have the following decoding equations:
 \begin{eqnarray*}
@@ -392,7 +402,8 @@ We have the following decoding equations:
 \Ta_{m}((\UU^m_l)_\Gamma) &=& (\UU_l)_\Gamma
 \end{eqnarray*}
 
-Moreover, we have equations that the operator symbols commute with the cwf-operation of substitution in terms: \begin{eqnarray*}
+Moreover, we have equations that the operator symbols with respect to term substitution with $\gamma : \Hom(\Delta,\Gamma)$: 
+\begin{eqnarray*}
 (\U_l)_\Gamma [ \gamma ] &=& (\U_l)_\Delta\\
 \Ta_l(a) [ \gamma ] &=& \Ta_l(a[ \gamma ] )\\
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
@@ -400,8 +411,8 @@ Moreover, we have equations that the operator symbols commute with the cwf-opera
 (\UU^m_l)_\Gamma[ \gamma ] &=&(\UU^m_l)_\Delta
 \end{eqnarray*}
 where $\gamma^+ = \langle \gamma \circ \p, \q \rangle$ (check!).
-\paragraph{Adding cumulativity.}
-In the cumulative case we also have operator symbols that lift elements in the $l$th universe to the $m$th universe for $l < m$:
+%\paragraph{Adding cumulativity.}
+If we want a cumulative tower of universes we add operator symbols that lift elements in the $l$th universe to the $m$th universe for $l < m$:
 \begin{eqnarray*}
 \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
 \end{eqnarray*}
