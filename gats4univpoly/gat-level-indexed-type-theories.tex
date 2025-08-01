@@ -282,9 +282,9 @@ In this article we shall introduce the notion of an indexed cwf, that is, a base
 $$
 P : \C^\op \to \CwF
 $$
-We shall show that cwfs indexed by (the base category of) a ucwf $\L$ of universe levels (with suitable extra structure) forms a suitable notion of model of Martin-Löf type theory with explicit universe polymorphism along the lines of our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22}. The benefit is twofold. First, it is a case study for our approach to the initiality conjecture project. Type theory with explicit universe polymorphism is an example of a dependent type theory, and we show that it can be captured by a gat based on a variation of cwfs. Second, it provides an alternative view of our syntactic type theory with explicit universe polymorphism. One can argue that a type theory presented by a gat of cwfs is a higher-level and more ``objective'' notion than a presentation by grammar and inference rules. This is because the gat only records the ``important" rules and highlights categorical structure. When building initial models in terms of grammar and inference rules we  need to include various bookkeeping rules, such as general rules of equality reasoning, and there will be a multitude of options. 
+We shall show that cwfs indexed by (the base category of) a ucwf $\L$ of universe levels (with suitable extra structure) forms a suitable notion of model of Martin-Löf type theory with explicit universe polymorphism along the lines of our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22}. The benefit is twofold. First, it is a case study for our approach to the initiality conjecture project. Type theory with explicit universe polymorphism is an example of a dependent type theory, and we show that it can be captured by a gat based on a variation of cwfs. Second, it provides an alternative view of our syntactic type theory with explicit universe polymorphism. One can argue that a type theory presented by a gat of cwfs is a higher-level and more ``objective'' notion than one presented by grammar and inference rules. This is because the gat only records the ``important" rules and highlights categorical structure. When building initial models in terms of grammar and inference rules we  need to include various bookkeeping rules, such as general rules of equality reasoning, and there will be a multitude of options. 
 
-A proof that a (modification of) the theory presented in Bezem et al forms an initial model \cite{BezemCDE22} is however beyond the scope of the paper, and we only outline the relationship. 
+A proof that a (modification of) the theory presented in Bezem et al  \cite{BezemCDE22} forms an initial model is however beyond the scope of the paper, and we only outline the relationship. 
 
 Moreover, further variations of indexed cwfs extend the scope of gat and cwf-based uniform categorical. For example, untyped predicate logic can be captured by ucwf-indexed scwfs with extra structure for the logical constants. Moreover, typed predicate logic can be captured by scwf-indexed scwfs, and dependently typed predicate logic by cwf-indexed scwfs, both with suitable extra structure for type formers and logical constants.
 
@@ -344,7 +344,7 @@ A[\gamma] : \ty(\Delta)\\
 \end{eqnarray*}
 The first line states that identity is a unary operator symbol with argument $\Gamma : \ctx$. The second line states that $\circ$ is a binary operator symbol with five arguments $\Xi,\Delta,\Gamma : \ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta)$ and result sort $\Hom(\Xi,\Gamma)$. Note that only two of the five official arguments are explicit. To alleviate notation, we we often suppress arguments of operator symbols. Note also that we overload notation for type and term substitution $A[\gamma]$ and $a[\gamma]$.
 
-Finally, the gat of cwfs has 13 equations. We illustrate the notation by showing one of the laws for identity morphisms.  The reader is referred to Bezem et al \cite{bezem:hofmann} for the remaining cwf-equations.
+Finally, the gat of cwfs has 13 equations. We illustrate the notation by showing one of the laws for identity morphisms.  The reader is referred to Bezem et al \cite{bezem:hofmann} for the remaining cwf-equations (maybe put them in the appendix).
 \begin{eqnarray*}
 \Delta, \Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma) &\vdash& \id_\Gamma \circ \gamma = \gamma : \Hom(\Delta,\Gamma)
 %\\
@@ -442,6 +442,17 @@ However, if universe levels form a type we can quantify over them, something we 
 
 \section{Level-indexed type theory}
 
+\paragraph{The ucwf of levels.} As already mentioned in the introduction, in Bezem et al \cite{BezemCDE22} we added special universe level {\em judgments}:
+$$
+l\ \level
+\hspace{5em}
+l = l'
+$$
+to the usual judgment forms of Martin-Löf type theory. Moreover, universe level variables as well as ordinary term variables can be declared in a context. As in Agda, we have a next level operation $(-)^+$ and an operation $\vee$ for join of levels. Levels form an upper semilattice with respect to $\vee$ and $(-)^+$ is an inflationary operation, see below.
+
+However, as in our previous paper \cite{BezemCDE22}, we have no level 0 for the first universe. All universes are polymorphic! 
+
+\footnote{
 We shall now show the generalized algebraic theory corresponding to the our theory where we do not have a type of levels but level judgments \cite{BezemCDE22}.
 This gat consists of the following parts:
 \begin{itemize}
@@ -452,29 +463,17 @@ This gat consists of the following parts:
 \item the arrow part has operator symbols for level-substitutions in all sorts of the cwfs that preserve all the structure.
 \end{itemize}
 \end{itemize}
-
-\subsection{The ucwf of levels}
-We shall now turn the externally indexed tower of universes into an internally indexed one by replacing the external natural numbers with internal level expressions. We shall organize these as a unityped cwf (ucwf) of levels  with extra structure for upper semilattices with an inflationary endomorphism. 
-\begin{itemize}
-\item 
-An object $n \in \Ctx_\L$ represents a level context, that is, a sequence of distinct level variables (or just records the number of level variables). 
-\item
-A term in $\Tm_\L(n)$ represents a level expression in $n$ level variables.
-\item
-A morphism in $\Hom_\L(m,n)$ represents a sequence of length $n$ of level expressions depending on level variables in $m$.
-\end{itemize}
-
-Since ucwfs are cwfs with only one type, the gat of ucwfs is a simplified version of the gat of cwfs. We only need three sort symbols\footnote{%
-MB Eliminate this duplication in forthcoming restructuring.} 
-%\begin{tiny}
+}
+Levels can be organized as a ucwf. We have the following sort symbols:
 \begin{eqnarray*}
 &\vdash& \lctx\\
 m, n : \lctx &\vdash& \lHom(m,n)\\
-%\Gamma : \lctx &\vdash& \lty(\Gamma)\\
 m : \lctx &\vdash& \ltm(m)
 \end{eqnarray*}
-The operator symbols for ucwfs are
-\footnote{Add remark about dropping of arguments}
+standing for level context, level context morphism (substitution), and level term.
+Since ucwfs are cwfs with only one type, we do not need a sort symbol for level types. 
+
+The operator symbols for ucwfs are simplified versions of those for cwfs, where all dependence on types is removed:
 \footnote{We use  $\sigma,\tau$ for level substitutions.}
 \footnote{In other places we use $\lp$ and $\lq$. Same issue with $\cp$ and $\cq$.}
 \begin{eqnarray*}
@@ -492,14 +491,13 @@ m,n : \lctx, \sigma : \lhom(n,m), l:\ltm(n) &\vdash& \tuple{\sigma,l} : \lhom(n,
 m : \lctx &\vdash& \lp: \lhom(\s(m),m)\\
 m : \lctx &\vdash& \lq: \ltm(\s(m))
 \end{eqnarray*}
-Note that since there is only one type, we can remove the operator symbol for operations in types and only keep substitution in (level) terms.
+There is one operator symbol less, since we no longer need substitution in types but only in level terms. We also change the notation to suggest that these are operations on levels. For example, we use $\sigma$ and $\tau$ to range over level substitutions to distinguish them from term substitutions $\gamma$ and $\delta$. However, we keep the notation $\circ$ for composition of level substitutions, for level substitution in level terms $l[\sigma]$, for the empty level context morphism $\tuple{}_m$ and for context morphism extension $\tuple{\sigma,l}$. The notation for level contexts suggests that we have an initial ucwf where $\lctx = \N$: a level context just records the number of available level variables.
 
-Moreover, we have the operator symbol for the successor level and for the supremum of two levels:
+The ucwf of levels also has operator symbols for next level and for the join of two levels:
 \begin{eqnarray*}
 m : \lctx, l : \ltm(m) &\vdash& l^+ : \ltm(m)\\
 m : \lctx, l,l' : \ltm(m) &\vdash& l \vee l' : \ltm(m)
 \end{eqnarray*}
-Note that, as in our old paper, we have no level 0 for the first universe. All universes are polymorphic! See the discussion in the old paper.
 %\end{tiny}
 
 %\begin{tiny}
@@ -524,9 +522,9 @@ The operator symbols $\vee$ and $+$ commute with level substitution.
  l^+[\sigma] &=&  l[\sigma]^+
 \end{eqnarray*}
 %\end{tiny}
-\paragraph{Remark.} Ucwfs are closely related to Lawvere theories. One can prove that the latter are equivalent to contextual ucwfs, that is, ucwfs where each context has a length \cite{CCD:lambek}.
+\paragraph{Lawvere theories.} Ucwfs are closely related to Lawvere theories. One can prove that the latter are equivalent to contextual ucwfs, that is, ucwfs where each context has a length \cite{CCD:lambek}.
 
-\subsection{Ucwf-indexed cwfs  with $\Pi$-types}
+\paragraph{The level-indexed cwf of types.}
 
 We now define the generalized algebraic theory of ucwf-indexed cwfs with $\Pi$-types. These are contravariant functors $F$ from the category of contexts of $\L$ (we use $\L$ also for the base category of the ucwf $\L$)  to the category with objects cwfs with $\Pi$-types and arrows cwf-morphisms preserving $\Pi$-types:
 $$
