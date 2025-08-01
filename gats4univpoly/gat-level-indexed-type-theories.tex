@@ -248,7 +248,7 @@
 \def\Fam{\mathrm{Fam}}
 \def\SCwF{\mathrm{SCwF}}
 \def\C{\mathcal{C}}
-
+\def\W{\mathsf{W}}
 
 \begin{document}
 
@@ -280,9 +280,9 @@ Furthermore, as shown by Castellan, Clairambault, and Dybjer \cite{castellan:lam
 
 In this article we shall introduce the notion of an indexed cwf, that is, a base category $\C$ and a cwf-valued presheaf
 $$
-T : \C^\op \to \CwF
+P : \C^\op \to \CwF
 $$
-We shall show that cwfs indexed by (the base category of) a ucwf $\L$ of universe levels (with suitable extra structure) forms a suitable notion of model of Martin-Löf type theory with explicit universe polymorphism along the lines of our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22}. The benefit is twofold. First, it is a case study for our approach to the initiality conjecture project. Type theory with explicit universe polymorphism is an example of a dependent type theory, and we show that it can be captured by a gat based on a variation of cwfs. Second, it provides an alternative view of our syntactic type theory with explicit universe polymorphism. A proof that a (modification of) the latter forms an initial model of our gat is however beyond the scope of the paper, and we only outline the relationship. 
+We shall show that cwfs indexed by (the base category of) a ucwf $\L$ of universe levels (with suitable extra structure) forms a suitable notion of model of Martin-Löf type theory with explicit universe polymorphism along the lines of our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22}. The benefit is twofold. First, it is a case study for our approach to the initiality conjecture project. Type theory with explicit universe polymorphism is an example of a dependent type theory, and we show that it can be captured by a gat based on a variation of cwfs. Second, it provides an alternative view of our syntactic type theory with explicit universe polymorphism. One can argue that a type theory presented by a gat of cwfs is a higher-level and more ``objective'' notion than a presentation by grammar and inference rules. The gat only records the ``important" rules. When building initial models in terms of grammar and inference rules we  need to include various ``bookkeeping'' rules, such as general rules of equality reasoning, and there will be a multitude of options. A proof that a (modification of) the theory presented in Bezem et al forms an initial model \cite{BezemCDE22} is however beyond the scope of the paper, and we only outline the relationship. 
 
 Moreover, further variations of indexed cwfs extend the scope of gat and cwf-based uniform categorical. For example, untyped predicate logic can be captured by ucwf-indexed scwfs with extra structure for the logical constants. Moreover, typed predicate logic can be captured by scwf-indexed scwfs, and dependently typed predicate logic by cwf-indexed scwfs, both with suitable extra structure for type formers and logical constants.
 
@@ -325,7 +325,7 @@ The gat of cwfs with extra structure for $\Pi$-types, a notion of model of Marti
 \end{eqnarray*}
 corresponding to the objects and morphisms of the category of contexts, and the family of terms indexed by types in a given context, respectively. The notation states that $\ctx$ is a constant sort symbol, that $\hom$ is a binary sort symbol depending on arguments $\Delta, \Gamma : \ctx$, that $\ty$ is a unary sort symbol depending on the argument $\Gamma : \ctx$, and $\tm$ is a binary sort symbol depending on arguments $\Gamma : \ctx, A : \ty(\Gamma)$.
 
-Moreover, the gat of cwfs has 11 operator symbols for the basic operations of cwfs (identity and composition of context morphisms, substitution in types and terms, empty context, context extension, terminal (empty) context, terminal context morphism, context morphism extension, projection morphism, last variable term). To illustrate the notation we show the typings of identity and composition of context morphisms:
+Moreover, the gat of cwfs has 10 operator symbols for the basic operations of cwfs (identity and composition of context morphisms, substitution in types and terms, empty context, context extension, empty context morphism, context morphism extension, projection morphism, last variable term). To illustrate the notation we show the typings of identity and composition of context morphisms:
 \begin{eqnarray*}
 \Gamma : \ctx &\vdash& \id_{\Gamma} : \Hom(\Gamma,\Gamma)\\
 \Xi,\Delta,\Gamma : \ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta) &\vdash&
@@ -359,13 +359,17 @@ the condition under which $a=a'$ holds, and will never be left out.
 %We will meet a similar case for reflection on equality on level terms.
 
 \paragraph{The gat of cwfs with an external tower of universes.}
-As a first step, we shall show the operator symbols and equations for an external tower of universes $\UU_l$, where $l \in \N$ is an external natural number. %Note that this is an infinitary theory.
+In Bezem et al \cite{BezemCDE22} we began by displaying the inference rules for Martin-Löf type theory with an external tower of universes $\UU_l$, where $l \in \N$ is an external natural number. Here we show the operator symbols and equations for the corresponding gat.
 
-We assume that we already have defined the generalized algebraic theory of cwfs with $\Pi$-types, see Bezem, Coquand, Dybjer, and Escard\'o \cite{bezem:hofmann}. The reader may also consult the appendix, where an indexed version of this theory is presented: each sort symbol and operator symbol has an additional first argument $n : \lctx$. 
+We assume that we already have defined the generalized algebraic theory of cwfs with the extra structure for the standard small type formers $\Pi, \Sigma, \N_0, \N_1, \N_2, \N, \W$, and $\Id$, and we wish to define a tower of universes closed under those. To save space, we shall however only display the operator symbols and equations for closure under $\Pi$-types, since it is straightforward to add similar operator symbols for closure under the other small type formers. We shall use the same convention throughout the paper.
 
-We should of course include operator symbols corresponding to the formation, introduction, and elimination rules, and equations for the other standard type formers of Martin-Löf type theory as well, and let $\UU_l$ be closed under those too. However, throughout the paper we will only show closure under $\Pi$-types and leave the extension to the other standard type formers to the reader.
+The operator symbol for $\Pi$-types is
+\begin{eqnarray*}
+\Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A) &\vdash& \Pi_\Gamma(A,B) : \ty(\Gamma)
+\end{eqnarray*}
+and refer to Bezem et al \cite{bezem:hofmann} for the operator symbols for abstraction and application and their associated equation.
 
-\paragraph{A tower of universes without cumulativity.} We show the infinitely many operator symbols and equations indexed by external natural numbers $l, l' , m \in \NN$ with $l < m$. Note that codes for $\Pi$ are doubly indexed.
+In the gat for externally indexed universes we have infinitely many operator symbols:
 \begin{eqnarray*}
 \Gamma : \ctx &\vdash& (\U_{l})_\Gamma : \ty(\Gamma)\\
 \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta_{l}}(a) : \ty(\Gamma)\\
@@ -377,7 +381,9 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l'})_\Gamma))
  \Pihat^{l,l'}(a,b) : \tm(\Gamma,(\U_{l \vee l'})_\Gamma)\\
  \Gamma : \ctx&\vdash&(\UU^m_l)_\Gamma: \tm(\Gamma,(\UU_{m})_\Gamma)
 \end{eqnarray*}
-Note that we often leave arguments to operator symbols {\em implicit}. For example, the decoding operators $\Ta_l$ are binary operators and that in the official notation we should write $\Ta_l(\Gamma,a)$. However, in the notation above we omit $\Gamma$ and write $\Ta_l(a)$.
+one for each $l, l' , m \in \NN$ with $l < m$. Note that codes for $\Pi$ are doubly indexed and $l \vee l' = \max(l,l')$.
+
+Again, we have left some arguments to operator symbols implicit. For example, the decoding operators $\Ta_l$ are binary operators and that in the official notation we should write $\Ta_l(\Gamma,a)$. However, in the notation above we omit $\Gamma$ and write $\Ta_l(a)$.
 
 We have the following decoding equations:
 \begin{eqnarray*}
@@ -386,8 +392,7 @@ We have the following decoding equations:
 \Ta_{m}((\UU^m_l)_\Gamma) &=& (\UU_l)_\Gamma
 \end{eqnarray*}
 
-Moreover, we have equations for commutativity of lifting and $\Pi$-codes wrt substitution:
- \begin{eqnarray*}
+Moreover, we have equations that the operator symbols commute with the cwf-operation of substitution in terms: \begin{eqnarray*}
 (\U_l)_\Gamma [ \gamma ] &=& (\U_l)_\Delta\\
 \Ta_l(a) [ \gamma ] &=& \Ta_l(a[ \gamma ] )\\
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
