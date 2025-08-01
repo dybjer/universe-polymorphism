@@ -432,13 +432,15 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
 Remark on decorating application in the grammar for the theory of the old paper. (Check what de Boer does!)
 
 \paragraph{Internalization.}
-A simple way to internalize the externally indexed tower of universes is to index each universe by an {\em internal} natural number. Instead of an external sequence $\UU_l$ we would have an internal sequence 
-$$l : \N, \Gamma : \ctx, l : \tm(\Gamma,\N) \vdash \UU_l : \ty(\Gamma)$$
+A simple way to internalize the externally indexed tower of universes is to index each universe by an {\em internal} natural number: 
+$$\Gamma : \ctx, l : \tm(\Gamma,\N) \vdash \UU_l : \ty(\Gamma)$$
 %However, this would mean that we could build large types such as $\Pi l : \N.\U_l$ and $\Sigma l : \N.\U_l$ which increase the proof theoretic strength of type theory. 
+or 
+$$ l : \tm(1,\N) \vdash \UU_l : \ty(\Gamma)$$
 
 Similarly, Agda has a type $\Level$ of universe levels with a level 0 and closed under the next level operation $(-)^+$ and $\vee$. 
 
-However, if universe levels form a type we can quantify over them, something we wish to disallow. This is the main motivation for designing a type theory with universe level judgments rather than a type of levels.
+However, if universe levels form a type we can quantify over them, something we wish to avoidThis is the main motivation for designing a type theory with universe level judgments rather than a type of levels.
 
 \section{Level-indexed type theory}
 
