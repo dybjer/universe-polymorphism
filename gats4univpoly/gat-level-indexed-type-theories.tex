@@ -550,6 +550,45 @@ Each sort symbol of cwfs has now an initial extra argument $n : \lctx$.
 
 Similarly, the operator symbols are precisely the operator symbols for cwfs (with extra structure for the small type formers) with an extra argument $n : \lctx$. The equations are modified accordingly. See the appendix.
 
+\paragraph{Level substitution.} 
+
+Operator symbols (overloaded notation):
+\begin{eqnarray*}
+n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'} &\vdash& 
+\Gamma[\sigma] : \ctx_n\\
+n, n' : \lctx , \sigma : \lhom(n,n'), \Delta,\Gamma : \ctx_{n'}, \gamma : \Hom_{n'}(\Delta,\Gamma) 
+&\vdash& 
+\gamma[\sigma] : \Hom_{n}(\Delta[\sigma],\Gamma[\sigma]) \\
+n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma)
+&\vdash& 
+A[\sigma]: \ty_n(\Gamma[\sigma])\\
+n,n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma), a : \tm_{n'}(A,\Gamma) 
+&\vdash& 
+a[\sigma] : \tm_{n}(A[\sigma],\Gamma[\sigma]) 
+\end{eqnarray*}
+MB, check.
+
+Equations:
+\begin{eqnarray*}
+\Gamma[\lid_n] &=& \Gamma\\
+\Gamma[\sigma \circ \tau] &=& \Gamma[\sigma][\tau]\\
+\gamma[\lid_n] &=& \gamma\\
+\gamma[\sigma \circ \tau] &=& \gamma[\sigma][\tau]\\
+A[\lid_n] &=& A\\
+A[\sigma \circ \tau] &=& A[\sigma][\tau]: \ty_p(\Gamma[\sigma \circ \tau])\\
+a[\lid_n] &=& a\\
+a[\sigma \circ \tau] &=& a[\sigma][\tau]: \tm_p(A[\sigma][\tau],\Gamma[\sigma \circ \tau])
+\end{eqnarray*}
+Level substitution in $\Pi$-types is as follows:
+Let $n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma), B:\ty_{n'}(\Gamma.A)$. Then
+\begin{eqnarray*}
+\Pi(A,B)[\sigma] &=& \Pi(A[\sigma],B[\sigma])
+\end{eqnarray*}
+Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm_n(\Gamma,A)$, we have
+\begin{eqnarray*}
+\lambda(b)[\sigma] &=&\lambda(b[\sigma])\\
+\app(c,a)[\sigma] &=&\app(c[\sigma],a[\sigma])
+\end{eqnarray*}
 
 \paragraph{Level-indexed universes.}
 Each $T(n)$ has extra structure for level-indexed universes $\UU_l$ with decodings $\Ta_l$, where $l$ is a level term that depends on level variables in $n$. These universes are closed under the small type formers and contain smaller universes $\UU_{l'}$ for $l' < l$.
@@ -657,54 +696,6 @@ Equations for commutativity of lifting and substitution ($\gamma : \hom(\Delta,\
 \paragraph{Remark.} The introduction of the sort symbol $\leq$ is analogous to the introduction of the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, proofs of level equality can only be constructed from reflexivity\footnote{How to say this rigorously? We can of course use general reasoning available in any initial gat, including reasoning about judgmental level equality.}
 
 
-\paragraph{Level substitution}
-
-Operator symbols (overloaded notation):
-\begin{eqnarray*}
-n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'} &\vdash& 
-\Gamma[\sigma] : \ctx_n\\
-n, n' : \lctx , \sigma : \lhom(n,n'), \Delta,\Gamma : \ctx_{n'}, \gamma : \Hom_{n'}(\Delta,\Gamma) 
-&\vdash& 
-\gamma[\sigma] : \Hom_{n}(\Delta[\sigma],\Gamma[\sigma]) 
-\end{eqnarray*}
-Equations:
-\begin{eqnarray*}
-\Gamma[\lid_n] &=& \Gamma\\
-\Gamma[\sigma \circ \tau] &=& \Gamma[\sigma][\tau]\\
-\gamma[\lid_n] &=& \gamma\\
-\gamma[\sigma \circ \tau] &=& \gamma[\sigma][\tau]
-\end{eqnarray*}
-%\end{tiny}
-
-MB, check.
-
-Operator symbols (overloaded notation):
-\begin{eqnarray*}
-n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma)
-&\vdash& 
-A[\sigma]: \ty_n(\Gamma[\sigma])\\
-n,n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma), a : \tm_{n'}(A,\Gamma) 
-&\vdash& 
-a[\sigma] : \tm_{n}(A[\sigma],\Gamma[\sigma]) 
-\end{eqnarray*}
-\begin{eqnarray*}
-A[\lid_n] &=& A\\
-A[\sigma \circ \tau] &=& A[\sigma][\tau]: \ty_p(\Gamma[\sigma \circ \tau])\\
-a[\lid_n] &=& a\\
-a[\sigma \circ \tau] &=& a[\sigma][\tau]: \tm_p(A[\sigma][\tau],\Gamma[\sigma \circ \tau])
-\end{eqnarray*}
-
-Level substitution in $\Pi$-types is as follows:
-
-Let $n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma), B:\ty_{n'}(\Gamma.A)$. Then
-\begin{eqnarray*}
-\Pi(A,B)[\sigma] &=& \Pi(A[\sigma],B[\sigma])
-\end{eqnarray*}
-Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm_n(\Gamma,A)$, we have
-\begin{eqnarray*}
-\lambda(b)[\sigma] &=&\lambda(b[\sigma])\\
-\app(c,a)[\sigma] &=&\app(c[\sigma],a[\sigma])
-\end{eqnarray*}
 
 
 Moreover, we have laws that level substitution $\sigma$ commutes with the operator symbols for a universe.
