@@ -250,6 +250,8 @@
 \def\C{\mathcal{C}}
 \def\W{\mathsf{W}}
 
+\def\TTUP{\mathbf{MLTT^{\UU_l}}}
+
 \begin{document}
 
 \title{Type Theory
@@ -638,7 +640,7 @@ n : \lctx, l, m : \ltm(n), p : l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_{p,\Gamma
 \end{eqnarray*}
 In the sequel we will suppress the proof $p : l < m$ as an argument to this operator symbol and just write $(\UU^m_l)_{\Gamma}$.
 
-\paragraph{Remark.} The introduction of the sort symbol $\leq$ is analogous to the introduction of the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, proofs of level equality can only be constructed from reflexivity and general reasoning available in all gats.\footnote{How to say this rigorously? We can of course use general reasoning available in any initial gat, including reasoning about judgmental level equality.}
+\paragraph{Remark.} The introduction of the sort symbol $\leq$ is analogous to the introduction of the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, proofs of level equality can only be constructed from reflexivity and general reasoning available in all gats.%\footnote{How to say this rigorously? We can of course use general reasoning available in any initial gat, including reasoning about judgmental level equality.}
 
 
 
@@ -685,9 +687,9 @@ where again $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. However, unlike for t
 
 We have the following decoding equation for lifting of codes for $\Pi$:
 \begin{eqnarray*}
-\Ta^{m \vee m'}_{l \vee l'}(\Pi^{l,l'}(a,b)) = \Pi^{m,m'}(\Ta^m_l(a),\Ta^{m'}_{l'}(b))
+\Ta^{m \vee m'}_{l \vee l'}(\Pi^{l,l'}(a,b)) = \Pi^{m,m'}(\Ta^m_l(a),\Ta^{m'}_{l'}(b)) &:& \tm_n(\Gamma,(\UU_{l \vee l'})_\Gamma)
 \end{eqnarray*}
-where $n, \lctx,l',m,m' : \ltm(n), l < m, l' < m', , \Gamma : \ctx_n, a : \tm_n(\Gamma,(\UU_l)_\Gamma), b : ?$.
+where $n, \lctx,l',m,m' : \ltm(n), l < m, l' < m', \Gamma : \ctx_n, a : \tm_n(\Gamma,(\UU_l)_\Gamma), b : \tm_n(\Gamma.\Ta_l(a),(\UU_{l'})_\Gamma)$.
 The decoding equation for lifting of codes for universes is as follows:
 \begin{eqnarray*}
 n : \lctx, k, l, m : \ltm(n), k < l < m, \Gamma : \ctx(n) &\vdash& \Ta^m_l((\UU^l_k)_\Gamma) = (\UU^m_k)_\Gamma
@@ -709,41 +711,62 @@ Moreover, we have laws that level substitution $\sigma$ commutes with the operat
  \end{eqnarray*}
 %Check that this is right. Cf comment by intern.
 
-\paragraph{The initiality conjecture.} Ideally, we would like to prove that The the calculus in our old paper is an initial model of the gat  $\Sigma_{\mathrm{universe\ polymorphism}}$. It would then follow that it is equivalent to the variable free explicit substitution calculus $\T_{\Sigma_{\mathrm{universe\ polymorphism}}}$.
-Such an initiality theorem might superficially seem straightforward, but a rigorous proof is surprisingly subtle. This is the reason why Voevodsky called his project ``the initiality conjecture''. In fact, an attempt to prove the conjecture for our system would probably uncover discrepancies.
+\paragraph{The initiality conjecture for level-indexed Martin-Löf type theory.} Can we adapt Brunerie and de Boer's  initiality proof for Martin-Löf type theory with an external tower of universes \cite{Brunerie:initiality,deBoer:lic} to a proof that Martin-Löf type theory with explicit universe polymorphism and level judgments (call it $\TTUP$) in the sense of our paper \cite{BezemCDE22} is an initial model of the gat in the present paper? Apart from the adaptations already discussed (cwfs versus contextual categories and decorations of terms on the syntactic side) we need to extend the proof to take into account the level judgments on the syntactic side and the level-indexing on the categorical side. 
 
-Part of the proof of the initiality conjecture is to prove that the the level judgments of our old calculus constitutes an initial model of the ucwf of levels and constraints (this needs to be spelled out better). We sketch this syntactic cwf. In fact Brilakis has proved in Agda that two ucwfs built by an explicit cwf-calculus and implicit substitution calculus built from de Bruijn variables are equivalent. 
+We first explain how to construct a ucwf of levels from the judgments of $\TTUP$. 
 \begin{itemize}
-\item Each level context in the sense of our old paper is an element of $\lctx$. $0 : \lctx$ is the empty context, and $\s(n)$ adds a new level variable to the level context $n : \lctx$. (Note that level contexts here are not just natural numbers (de Bruijn variables), but arbitrary sequences of level variable names.
-\item An element of $\ltm(n)$ is a level term generated by $\vee$ and $(-)^+$ from level variables in $n$ taken up to the equality generated by the laws for
-$\vee$ and $(-)^+$. (And for the laws in $\psi$. We should first formulate this theorem for the calculus without constraints.)
- \item An element of $\lhom(m,n)$ is a sequence of length $n$ of elements of $\ltm(m)$.
- \item The ucwf-operations are defined in the obvious way. E g level substitution $l[ls]$ is defined by induction on $l$. (Note that the calculus in our old paper uses implicit substitutions; this is the main difference between it and the level calculus in $\T_{\Sigma_{\mathrm{universe\ polymorphism}}}$. If $n = (l_n, \ldots, l_1)$ and $\s(n) =  (l_n, \ldots, l_1, l_0)$, then the projections are  $\p = (l_n, \ldots, l_1) : \lhom(\s(n),n)$ and $\q = l_0 : \ltm(\s(n))$.
+\item We use named level variables, and we define an element $n : \lctx$ as a list of distinct level variables. (Alternatively, we could use de Bruijn variables in our theory so that $n : \lctx$ is the number of variables.)
+\item An element of $\ltm(n)$ is an equivalence class of level terms generated by $\vee$ and $(-)^+$ from level variables with respect to the equivalence relation generated by the equations for $\vee$ and $(-)^+$. Corresponding to this, in $\TTUP$  we have judgments
+$$
+\Gamma \vdash l\ \level
+\hspace{5em}
+\Gamma \vdash l = l'
+$$
+where $\Gamma$ is a context which may contain both level variables and term variables in arbitrary order. So $\ltm(n)$ would be the equivalence class $[ l ]$ such that $\Gamma \vdash  l\ \level$ where $n$ is the list of level variables in $\Gamma$ and $[ l ] = [ l' ]$ iff $\Gamma \vdash l = l'$.
+
+\item An element of $\lhom(m,n)$ is a sequence of length $n$ of elements of $\ltm(m)$.
+\item The ucwf-operations are defined in the obvious way. For example, level substitution $l[\sigma]$ is an implicit operation defined by induction on $l$. If $n = (\alpha_n, \ldots, \alpha_1)$ and $\s(n) =  (\alpha_n, \ldots, \alpha_1, \alpha_0)$ are lists of distinct level variables, then $\lp_n = (\alpha_n, \ldots, \alpha_1) : \lhom(\s(n),n)$ and $\lq_n = \alpha_0 : \ltm(\s(n))$ are the projections.
 \end{itemize}
-In our old paper have the following introduction rule for cumulative universes with its decoding equation:
-$$
-\frac{l < m}
-{\UU^m_l : \UU_m\hspace{3em}\Ta_m(\UU^m_l) = \UU_l}
-$$
-where the context $\Gamma$ is implicit.
+To prove that this forms an initial ucwf of levels we note that 
+Brilakis \cite{Brilakis18} has implemented a proof in Agda of the equivalence between two initial ucwfs: one with explicit substitutions and one with implicit substitution and de Bruijn variables. Since the ucwf with explicit substitutions is constructed directly from the operator symbols of ucwfs, Brilakis' proof is essentially the same as proving the initiality of the ucwf with implicit substutions. To prove the initiality of the ucwf of levels obtained as above (but with de Bruijn variables), we only need to extend Brilakis' proof to account for the extra structure for $\vee$ and $(-)^+$.
 
-\footnote{If  $n$ is the length of the level context, then level expressions have normal forms 
-$$
-\alpha_1^{+^{p_1}} \vee \cdots \vee \alpha_m^{+^{p_m}}
-$$ 
-for $p_i \geq 0$ for $1 \le i \le m \le n$ . We have 
-$$
-\alpha_1^{+^{p_1}} \vee \cdots \vee \alpha_m^{+^{p_m}} 
-< 
-\alpha_1^{+^{q_1}} \vee \cdots \vee \alpha_m^{+^{q_m}} \vee \alpha_{m+1}^{+^{q_{m+1}}} \vee \cdots \vee \alpha_{m'}  ^{+^{q_{m'}}}
-$$ 
-provided $p_i < q_i$ for $1 \le i \le m \le m' \le n$.} 
+The next step is to prove the initiality of the gat for the level-indexed cwf with small types. 
+\begin{itemize}
+\item We can always divide a context $\Gamma \vdash$ in $\TTUP$ into two parts: the list of level variables $n : \lctx$ and the list of typings of term variables $\Gamma'$. We can then define $\ctx_n$ as the set of contexts $\Gamma'$ including the term variables in $\Gamma \vdash$. We need to divide by equal contexts.
+\item Moreover, we can define $\ty_n(\Gamma')$ as the set of $A$ such that $n, \Gamma' \vdash A$ is a type. We need to divide by equal types.
+\item Similarly, $\tm_n(\Gamma',A)$ as the set of $a$ such that $n, \Gamma' \vdash a : A$. We need to divide by equal terms.
+\item Finally, $\hom_n(\Delta,\Gamma)$ are lists of $\tm_n(\Delta,A)$.
+\end{itemize}
+To compare with Brunerie and de Boer's initiality proof we need to replace the external numbers by internal level indices. They also consider cumulative universes, that only need one level-index for $\Pi$ (and other type formers).
 
-\subsection{Level-indexed products of types}
+The final part of the proof is about the arrow part of the level-indexed cwf with small types and level-indexed universes. In $\TTUP$ the different forms of level substitution and composition (in levels, level morphisms, contexts, context morphisms, types and terms) are all defined implicitly by induction on the respective syntactic categories. It follows directly that such level substitution satisfy the appropriate gat-equations, and that they are the unique operations doing so.
+
+
+%In our old paper have the following introduction rule for cumulative universes with its decoding equation:
+%$$
+%\frac{l < m}
+%{\UU^m_l : \UU_m\hspace{3em}\Ta_m(\UU^m_l) = \UU_l}
+%$$
+%where the context $\Gamma$ is implicit.
+
+%\footnote{If  $n$ is the length of the level context, then level expressions have normal forms 
+%$$
+%\alpha_1^{+^{p_1}} \vee \cdots \vee \alpha_m^{+^{p_m}}
+%$$ 
+%for $p_i \geq 0$ for $1 \le i \le m \le n$ . We have 
+%$$
+%\alpha_1^{+^{p_1}} \vee \cdots \vee \alpha_m^{+^{p_m}} 
+%< 
+%\alpha_1^{+^{q_1}} \vee \cdots \vee \alpha_m^{+^{q_m}} \vee \alpha_{m+1}^{+^{q_{m+1}}} \vee \cdots \vee \alpha_{m'}  ^{+^{q_{m'}}}
+%$$ 
+%provided $p_i < q_i$ for $1 \le i \le m \le m' \le n$.} 
+
+\paragraph{Level-indexed products of types.}
 %We add three operator symbols in addition to the operator symbols for cwfs in Section 5.2 and 5.3:
 \def\l{\mathrm{l}}
 %\begin{tiny}
-Operator symbols (universal level quantification, abstraction, and application):
+In $\TTUP$ we also introduced operations of 
+universal level quantification, abstraction, and application. The new corresponding operator symbols are
 \begin{eqnarray*}
 n : \lctx, \Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp])&\vdash& \forall_\l(B) : \ty_n(\Gamma)\\
 n : \lctx, \Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp]), b : \tm_{\s(n)}(\Gamma[\lp], B) &\vdash& \lambda_\l(b) : \tm_n(\Gamma,\forall_\l(B))\\
@@ -754,7 +777,7 @@ Equations ($\beta$ and $\eta$ for level abstraction and application):
  \app_\l(\lambda_\l(b),l) &=& b[\tuple{\lid,l}]\\
  \lambda_\l(\app_\l(c[\lp],\lq)) &=& c
  \end{eqnarray*}
- Equations for commutativity of operator symbols wrt a level substitution $\sigma : \lhom(m,n)$ and a term substitution $\gamma : \hom_n(\Delta,\Gamma)$:
+ Equations for commutativity of operator symbols with respect to level substitution
  \begin{eqnarray*}
  \forall_\l(B)[ \gamma ] &=& \forall_\l(B[ \gamma[\lp]])\\
  \lambda_\l(B)[ \gamma ] &=& \lambda_\l(B[ \gamma[\lp]])\\
@@ -763,13 +786,23 @@ Equations ($\beta$ and $\eta$ for level abstraction and application):
  \lambda_\l(B)[ \sigma ] &=& \lambda_\l(B[ \sigma^{+}])\\
 \app_\l(c,l)[ \sigma ] &=& \app_\l(c[ \sigma ] ,l[ \sigma ] )
 \end{eqnarray*}
-where $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$. No, this is not right. Check lifting of level substitution and term substitution.
+where $\gamma : \hom_n(\Delta,\Gamma)$ is a term substitution, and $\sigma : \lhom(m,n)$ is a level substitutuion with, $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$. 
+To check the type of the equation
+$$ \forall_\l(B)[ \sigma ] = \forall_\l(B[ \sigma^{+}])$$ we assume $\Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp])$. It follows that $B[\sigma^+] : \ty_{s(m)}(\Gamma[\lp][\sigma^+]) = \ty_{s(m)}(\Gamma[\sigma][\lp])$. Hence 
+$\forall_\l(B[ \sigma^{+}]) : \ty_m(\Gamma[\sigma])$.
+
+\section{Conclusion and further research}
+
+Future work to consider calculus with constraints.
+
+Related work? Qiits? Qiits are inductively defined (initial) gats inside dependent type theory. We have the sequence: inductive type, inductive family, inductive-inductive type, quotient inductive-inductive type.
+
 %and $\gamma^+ = \tuple{\gamma \circ \p, \q}$??
 %\end{tiny}
-\footnote{Discussion with Raphael Sterback:
-$$
-\forall_l (B)[\gamma] = \forall_l (B[\gamma[\lp]])
-$$}
+%\footnote{Discussion with Raphael Sterback:
+%$$
+%\forall_l (B)[\gamma] = \forall_l (B[\gamma[\lp]])
+%$$}
 
 \subsection{Theory of the object part of $T$ (* relegate to appendix *) }
 We have the following sort symbols:
