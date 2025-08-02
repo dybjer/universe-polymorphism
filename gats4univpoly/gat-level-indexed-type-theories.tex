@@ -339,8 +339,8 @@ A[\gamma] : \ty(\Delta)\\
 \Gamma : \ctx &\vdash& \tuple{}_\Gamma : \Hom(\Gamma,1)\\
 \Gamma : \ctx, A:\ty(\Gamma) &\vdash& \Gamma\cext A : \ctx\\
 \Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \tuple{\gamma,a} : \Hom(\Delta,\Gamma\cext A)\\
-\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \p: \Hom(\Gamma\cext A,\Gamma)\\
-\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \q: \tm(\Gamma\cext A,A[\p])
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \p_{\Gamma,A}: \Hom(\Gamma\cext A,\Gamma)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \q_{\Gamma,A}: \tm(\Gamma\cext A,A[\p])
 \end{eqnarray*}
 The first line states that identity is a unary operator symbol with argument $\Gamma : \ctx$. The second line states that $\circ$ is a binary operator symbol with five arguments $\Xi,\Delta,\Gamma : \ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta)$ and result sort $\Hom(\Xi,\Gamma)$. Note that only two of the five official arguments are explicit. To alleviate notation, we we often suppress arguments of operator symbols. Note also that we overload notation for type and term substitution $A[\gamma]$ and $a[\gamma]$.
 
@@ -410,7 +410,7 @@ Moreover, the operator symbols commute with term substitution:
 \Pi^{l,l'}(a,b)[ \gamma ] &=& \Pi^{l,l'}(a [ \gamma ], b[ \gamma^+ ])\\
 (\UU^m_l)_\Gamma[ \gamma ] &=&(\UU^m_l)_\Delta
 \end{eqnarray*}
-where $\gamma : \Hom(\Delta,\Gamma)$ and $\gamma^+ = \langle \gamma \circ \p, \q \rangle : \Hom($ (check!).
+where $\gamma : \Hom(\Delta,\Gamma)$ and $\gamma^+ = \langle \gamma \circ \p_{\Delta,\Ta_l(a[\gamma])}, \q_{\Delta,\Ta_l(a[\gamma])}\rangle : \Hom(\Delta.\Ta_l(a[\gamma]),\Gamma.\Ta_l(a))$.
 %\paragraph{Adding cumulativity.}
 
 If we want a cumulative tower of universes we add operator symbols that lift elements in the $l$th universe to the $m$th universe for $l < m$:
