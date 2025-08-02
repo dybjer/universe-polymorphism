@@ -264,7 +264,7 @@ with Explicit Universe PolymorphismGeneralised Algebraic Theories of Type Theori
 
 \begin{abstract}
 We present generalized algebraic theories corresponding to the theories in our paper 
-{\em Type Theory with Explicit Universe Polymorphism}, so that models of these theories are models of the corresponding type theories. We first consider Martin-Löf type theory with an external tower of universes. Its models are categories with families with extra structure for the type formers including the universes. We then consider type theory with explicit universe polymorphsm, where we have universe level judgments and an internally indexed tower of universes. Its models are level-indexed categories with families, again with appropriate extra structure. Finally, we extend the theory with universe level constraints. Its models are doubly indexed categories with families with extra structure. In this way we get abstract syntax definitions of our theories as initial models of certain indexed categories with families with extra structure. We thus abstract from details of the grammar and inference rules of the type theories, and also highlight their high-level structure.
+{\em Type Theory with Explicit Universe Polymorphism}, so that models of these theories are models of the corresponding type theories. We first consider Martin-Löf type theory with an external tower of universes. Its models are categories with families with extra structure for the small type formers and the tower of universes. We then consider Martin-Löf type theory with explicit universe polymorphism, where we have universe level judgments and internally indexed universes. Its models are level-indexed categories with families, again with appropriate extra structure. (* Finally, we extend the theory with universe level constraints. Its models are doubly indexed categories with families with extra structure. *) In this way we get abstract syntax definitions of our theories as initial models of certain indexed categories with families with extra structure. We thus abstract from details of the grammar and inference rules of the type theories, and also highlight their high-level structure.
 \end{abstract}
 
 \section{Introduction}
@@ -282,7 +282,7 @@ In this article we shall introduce the notion of an indexed cwf, that is, a base
 $$
 P : \C^\op \to \CwF
 $$
-We shall show that cwfs indexed by (the base category of) a ucwf $\L$ of universe levels (with suitable extra structure) forms a suitable notion of model of Martin-Löf type theory with explicit universe polymorphism along the lines of our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22}. The benefit is twofold. First, it is a case study for our approach to the initiality conjecture project. Type theory with explicit universe polymorphism is an example of a dependent type theory, and we show that it can be captured by a gat based on a variation of cwfs. Second, it provides an alternative view of our syntactic type theory with explicit universe polymorphism. One can argue that a type theory presented by a gat of cwfs is a higher-level and more ``objective'' notion than one presented by grammar and inference rules. This is because the gat only records the ``important" rules and highlights categorical structure. When building initial models in terms of grammar and inference rules we  need to include various bookkeeping rules, such as general rules of equality reasoning, and there will be a multitude of options. 
+We shall show that cwfs indexed by (the base category of) a ucwf $\L$ of universe levels (with suitable extra structure) forms a suitable notion of model of Martin-Löf type theory with explicit universe polymorphism along the lines of our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22}. The benefit is twofold. First, it is a case study for our approach to the initiality conjecture project. Type theory with explicit universe polymorphism is an example of a dependent type theory, and we show that it can be captured by a gat based on a variation of cwfs. Second, it provides an alternative view of our syntactic type theory with explicit universe polymorphism. One can argue that a type theory presented by a gat of cwfs is a higher-level and more ``objective'' notion than one presented by grammar and inference rules. This is because the gat only records the ``important" rules and highlights categorical structure. When building initial models in terms of grammar and inference rules we  need to include various bookkeeping rules, such as general rules of equality reasoning, and there will be a multitude of options. Without the a common high level abstraction it will be hard to prove the equivalence between these options, and to claim that there is a unique notion. Can one really claim that a type system is a mathematical notion? (Put this more prominently.)
 
 A proof that a (modification of) the theory presented in Bezem et al  \cite{BezemCDE22} forms an initial model is however beyond the scope of the paper, and we only outline the relationship. 
 
@@ -378,7 +378,7 @@ The operator symbol for $\Pi$-types is
 \begin{eqnarray*}
 \Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A) &\vdash& \Pi_\Gamma(A,B) : \ty(\Gamma)
 \end{eqnarray*}
-and refer to Bezem et al \cite{bezem:hofmann} for the operator symbols for abstraction and application, equations for the $\beta$ and $\eta$ rule, and equations expressing that $\Pi$, abstraction, and application commute with substitution.
+and refer to Bezem et al \cite{bezem:hofmann} for the operator symbols for abstraction and application, equations for the $\beta$ and $\eta$ rule, and equations expressing that $\Pi$, abstraction, and application commute with term substitution.
 
 In the gat for externally indexed universes we have the following families of operator symbols (the universes $\UU_l$, the decoding maps $\Ta_l$, codes for $\Pi$, and codes for $\UU_l$ in $\UU_m$):
 \begin{eqnarray*}
@@ -387,7 +387,7 @@ In the gat for externally indexed universes we have the following families of op
 %\Gamma : \ctx &\vdash& (\N^0)_\Gamma : \tm(\Gamma,(\U_0)_\Gamma) \\
 \Gamma : \ctx,
 a : \tm(\Gamma,(\U_{l})_\Gamma),
-b :  \tm(\Gamma . \Ta_{l}(a), (\U_{l'})_\Gamma))
+b :  \tm(\Gamma . \Ta_{l}(a), (\U_{l'})_\Gamma)
 &\vdash&
  \Pihat^{l,l'}(a,b) : \tm(\Gamma,(\U_{l \vee l'})_\Gamma)\\
  \Gamma : \ctx&\vdash&(\UU^m_l)_\Gamma: \tm(\Gamma,(\UU_{m})_\Gamma)
@@ -402,7 +402,7 @@ We have the following decoding equations:
 \Ta_{m}((\UU^m_l)_\Gamma) &=& (\UU_l)_\Gamma
 \end{eqnarray*}
 
-Moreover, we have equations that the operator symbols with respect to term substitution with $\gamma : \Hom(\Delta,\Gamma)$: 
+Moreover, the operator symbols commute with term substitution: 
 \begin{eqnarray*}
 (\U_l)_\Gamma [ \gamma ] &=& (\U_l)_\Delta\\
 \Ta_l(a) [ \gamma ] &=& \Ta_l(a[ \gamma ] )\\
@@ -410,7 +410,7 @@ Moreover, we have equations that the operator symbols with respect to term subst
 \Pi^{l,l'}(a,b)[ \gamma ] &=& \Pi^{l,l'}(a [ \gamma ], b[ \gamma^+ ])\\
 (\UU^m_l)_\Gamma[ \gamma ] &=&(\UU^m_l)_\Delta
 \end{eqnarray*}
-where $\gamma^+ = \langle \gamma \circ \p, \q \rangle$ (check!).
+where $\gamma : \Hom(\Delta,\Gamma)$ and $\gamma^+ = \langle \gamma \circ \p, \q \rangle : \Hom($ (check!).
 %\paragraph{Adding cumulativity.}
 
 If we want a cumulative tower of universes we add operator symbols that lift elements in the $l$th universe to the $m$th universe for $l < m$:
@@ -432,10 +432,10 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
 Remark on decorating application in the grammar for the theory of the old paper. (Check what de Boer does!)
 
 \paragraph{Internalization (* Remove? *).}
-A simple way to internalize the externally indexed tower of universes is to index each universe by varying internal natural numbers: 
+A simple way to internalize the externally indexed tower of universes would be to index each universe by internal natural numbers: 
 $$\Gamma : \ctx, l : \tm(\Gamma,\N) \vdash \UU_l : \ty(\Gamma)$$
 %However, this would mean that we could build large types such as $\Pi l : \N.\U_l$ and $\Sigma l : \N.\U_l$ which increase the proof theoretic strength of type theory. 
-or by constant internal natural numbers:
+Note that $l$ here depends on variables in the context $\Gamma$. Alternatively, one may want only to allow constant internal natural numbers:
 $$ l : \tm(1,\N) \vdash \UU_l : \ty(\Gamma)$$
 
 Similarly, Agda has a type $\Level$ of universe levels with a level 0 and closed under the next level operation $(-)^+$ and $\vee$. 
