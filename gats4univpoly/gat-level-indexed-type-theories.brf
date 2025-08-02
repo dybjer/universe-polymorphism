@@ -13,8 +13,8 @@
 \backcite {agda-wiki}{{2}{1}{section*.1}}
 \backcite {moura:lean}{{2}{1}{section*.1}}
 \backcite {Courant02}{{2}{1}{section*.1}}
-\backcite {BezemCDE22}{{2}{1}{section*.1}}
-\backcite {VV}{{2}{1}{section*.1}}
+\backcite {BezemCDE22}{{3}{1}{section*.1}}
+\backcite {VV}{{3}{1}{section*.1}}
 \backcite {dybjer:torino}{{3}{2}{section*.5}}
 \backcite {hofmann:cambridge}{{3}{2}{section*.5}}
 \backcite {castellan:lambek}{{3}{2}{section*.5}}
@@ -23,8 +23,8 @@
 \backcite {bezem:hofmann}{{4}{2}{section*.5}}
 \backcite {BezemCDE22}{{4}{2}{section*.6}}
 \backcite {bezem:hofmann}{{5}{2}{section*.6}}
-\backcite {BezemCDE22}{{5}{2}{section*.7}}
-\backcite {Brunerie:initiality,deBoer:lic}{{5}{2}{section*.7}}
+\backcite {BezemCDE22}{{6}{2}{section*.7}}
+\backcite {Brunerie:initiality,deBoer:lic}{{6}{2}{section*.7}}
 \backcite {castellan:lambek}{{6}{2}{section*.7}}
 \backcite {AhrensLV18}{{6}{2}{section*.7}}
 \backcite {BezemCDE22}{{6}{3}{section*.9}}
