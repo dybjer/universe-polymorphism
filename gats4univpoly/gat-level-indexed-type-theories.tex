@@ -323,13 +323,11 @@ l = l'
 $$
 in addition to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variables declared in the context. We emphasized that, unlike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms. 
 
-Furthermore, we presented an extension where equational constraints between universe levels can be declared \cite{BezemCDE22}, building on a proposal by Voevodsky \cite{VV}. This extension can also be described by a gat, but we will postpone this topic to a forthcoming paper.
+Furthermore, we presented an extension where equational constraints between universe levels can be declared \cite{BezemCDE22}, building on a proposal by Voevodsky \cite{VV}. This extension can also be described by a gat, but we postpone this topic to a forthcoming paper.
 
-\paragraph{Plan of the paper.} In Section 2 we present the infinitary gat of cwfs with extra structure for the type formers and an externally indexed tower of universes. We consider both cumulative and non-cumulative universes. In Section 3 we present the finitary gat of level-indexed type theory with extra structure for the type formers and an internally indexed tower of universes. (* In Section 4 we present the generalized algebraic theory of cwfs with extra structure doubly indexed by levels and level constraints *). In Section 5 we discuss models. In Section 6 we conclude. (* The appendix presents the full definition of the gat for cws with explicit universe polymorphism. *)
+\paragraph{Plan of the paper.} In Section 2 we present the infinitary gat of cwfs with extra structure for the type formers and an externally indexed tower of universes. We consider both cumulative and non-cumulative universes. In Section 3 we present the finitary gat of level-indexed type theory with extra structure for the type formers and an internally indexed tower of universes. (* In Section 4 we present the generalized algebraic theory of cwfs with extra structure doubly indexed by levels and level constraints *). (* In Section 5 we discuss models *). In Section 6 we conclude. (* The appendix presents the full definition of the gat for cws with explicit universe polymorphism. *)
 
 \paragraph{Acknowledgement.} This paper is written in honour of professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend and colleague who spent the autumn of 1994 (check?) in Göteborg with the second and third author. He has made fundamental contributions to type theory and constructivity, in particular to the understanding of the constructive content of classical logic.
-
-\paragraph{Postpone.} Postpone details of gats of cwfs and notational convention until section 2 and 3 (when needed). Something about qiits in the related work section.
 
 \section{Type theory with an external tower of universes}
 
@@ -337,9 +335,11 @@ Furthermore, we presented an extension where equational constraints between univ
 $$
 T : \C^\op \to \Fam
 $$
-and a notion of context comprehension. Here $\Fam$ is the category of indexed families of sets $(A,B)$, where $A$ is the index set and $B$ is a family of sets indexed by $A$. The reader is referred to the articles by Dybjer \cite{dybjer:torino}, Hofmann \cite{hofmann:cambridge}, and Castellan et al \cite{castellan:lambek} for a full definition and further information about cwfs.
+and a notion of context comprehension. Here $\Fam$ is the category of indexed families of sets $(A,B)$, where $A$ is the index set and $B$ is a family of sets indexed by $A$. The presheaf $T$ maps a context to the family of terms indexed by a type. The reader is referred to Dybjer \cite{dybjer:torino}, Hofmann \cite{hofmann:cambridge}, and Castellan et al \cite{castellan:lambek} for a full definition and further information about cwfs.
 
-The gat of cwfs with extra structure for $\Pi$-types, a notion of model of Martin-Löf type theory with $\Pi$-types, was presented by Dybjer \cite{dybjer:torino}. The extra operator symbols and equations needed for the natural number type and one universe can be found in Bezem et al \cite{bezem:hofmann}. We will use the same notation for gats as in the latter paper. For example, the gat of cwfs has four sort symbols:
+The gat of cwfs with extra structure for $\Pi$-types, a notion of model of Martin-Löf type theory with $\Pi$-types, was presented by Dybjer \cite{dybjer:torino}. The extra operator symbols and equations needed for the natural number type and one universe can for example be found in Bezem et al \cite{bezem:hofmann}. We will use the same notation for gats as in the latter paper. 
+
+The gat of cwfs has four sort symbols:
 \begin{eqnarray*}
 &\vdash& \ctx\\
 \Delta, \Gamma : \ctx&\vdash& \hom(\Delta,\Gamma)\\
@@ -363,7 +363,7 @@ A[\gamma] : \ty(\Delta)\\
 \Gamma : \ctx, A:\ty(\Gamma) &\vdash& \p_{\Gamma,A}: \Hom(\Gamma\cext A,\Gamma)\\
 \Gamma : \ctx, A:\ty(\Gamma) &\vdash& \q_{\Gamma,A}: \tm(\Gamma\cext A,A[\p])
 \end{eqnarray*}
-The first line states that identity is a unary operator symbol with argument $\Gamma : \ctx$. The second line states that $\circ$ is a binary operator symbol with five arguments $\Xi,\Delta,\Gamma : \ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta)$ and result sort $\Hom(\Xi,\Gamma)$. Note that only two of the five official arguments are explicit. To alleviate notation, we we often suppress arguments of operator symbols. Note also that we overload notation for type and term substitution $A[\gamma]$ and $a[\gamma]$.
+The first line states that identity is a unary operator symbol with argument $\Gamma : \ctx$. The second line states that $\circ$ is a binary operator symbol with five arguments $\Xi,\Delta,\Gamma : \ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta)$ and result sort $\Hom(\Xi,\Gamma)$. Note that only two of the five official arguments are explicit. To alleviate notation, we often suppress arguments of operator symbols. Note also that we overload notation for type and term substitution $A[\gamma]$ and $a[\gamma]$.
 
 Finally, the gat of cwfs has 13 equations. We illustrate the notation by showing one of the laws for identity morphisms.  The reader is referred to Bezem et al \cite{bezem:hofmann} for the remaining cwf-equations (maybe put them in the appendix).
 \begin{eqnarray*}
@@ -381,7 +381,7 @@ However, there are specific cases where we need the official notation. Assume th
 \begin{eqnarray*}
 \Gamma : \ctx, A : \ty(\Gamma), a, a' : \tm(\Gamma, A) &\vdash \Id_{\Gamma,A}(a,a'): \ty(\Gamma)
 \end{eqnarray*}
-In extensional type theory we have the rule of equality reflection. This can be captured by an equation in gats:
+In extensional Martin-Löf type theory \cite{martinlof:hannover} we have the rule of equality reflection. This can be captured by an equation in gats:
 \begin{eqnarray*}
 \Gamma : \ctx, A : \ty(\Gamma), a, a' : \tm(\Gamma, A),p :  \tm(\Gamma,\Id_{\Gamma,A}(a,a'))&\vdash& a = a' : \tm(\Gamma,A)
 \end{eqnarray*}
@@ -448,7 +448,8 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
  \end{eqnarray*}
  We omit the equations for the cumulative case, see instead the cumulative case for level-indexing.
 
-\paragraph{Syntax and inference rules as an initial model.} Brunerie and de Boer \cite{Brunerie:initiality,deBoer:lic} implemented a proof that Martin-Löf type theory with an external tower of universes is an initial contextual category with appropriate extra structure for the type formers. Contextual categories are closely related to contextual cwfs \cite{castellan:lambek} and we expect that the implementation could be adapted accordingly, since initial cwfs are contextual. Several equivalences and embeddings between categorical notions of models including cwfs have been implemented in UniMath by Ahrens, Lumsdaine, and Voevodsky \cite{AhrensLV18}. On the syntactic side, our version of Martin-Löf type theory with an external tower of universes in Bezem et al \cite{BezemCDE22} is not presented in full detail as needed for formalization. There are also some differences, for example we use named variables rather than de Bruijn indices. A significant difference is that Brunerie and de Boer work with decorated terms. For example, application is decorated with type information. The insight that this is needed is due to Streicher \cite{streicher:thesis} who proved an initiality theorem for the Calculus of Constructions.
+\paragraph{Syntax and inference rules as an initial model.} Brunerie and de Boer \cite{Brunerie:initiality,deBoer:lic} implemented a proof that Martin-Löf type theory with an external tower of universes is an initial contextual category with appropriate extra structure for the type formers. Contextual categories are closely related to contextual cwfs \cite{castellan:lambek} and we expect that the implementation could be adapted accordingly, since initial cwfs are contextual. Several equivalences and embeddings between categorical notions of models including cwfs have been implemented in UniMath by Ahrens, Lumsdaine, and Voevodsky \cite{AhrensLV18}. On the syntactic side, our version of Martin-Löf type theory with an external tower of universes in Bezem et al \cite{BezemCDE22} is not presented in full detail as needed for formalization. %There are also some differences, for example we use named variables rather than de Bruijn indices. 
+A significant difference is that Brunerie and de Boer work with decorated terms following Streicher \cite{streicher:thesis}. For example, application is decorated with type information. 
 
 \paragraph{Internalization (* Remove? *).}
 A simple way to internalize the externally indexed tower of universes would be to index each universe by internal natural numbers: 
@@ -459,7 +460,7 @@ $$ l : \tm(1,\N) \vdash \UU_l : \ty(\Gamma)$$
 
 Similarly, Agda has a type $\Level$ of universe levels with a level 0 and closed under the next level operation $(-)^+$ and $\vee$. 
 
-However, if universe levels form a type we can quantify over them, something we wish to avoid. This is the main motivation for designing a type theory with universe level judgments rather than a type of levels.
+However, if universe levels form a type we can quantify over them, something we wish to avoid. This is an important reason for designing a type theory with universe level judgments rather than a type of levels.
 
 \section{Level-indexed type theory}
 
@@ -469,9 +470,8 @@ l\ \level
 \hspace{5em}
 l = l'
 $$
-to the usual judgment forms of Martin-Löf type theory. Moreover, universe level variables as well as ordinary term variables can be declared in a context. As in Agda, we have a next level operation $(-)^+$ and an operation $\vee$ for join of levels. Levels form an upper semilattice with respect to $\vee$ and $(-)^+$ is an inflationary operation, see below.
-
-However, as in our previous paper \cite{BezemCDE22}, we have no level 0 for the first universe. It follows that all universes are polymorphic.
+to the usual judgment forms of Martin-Löf type theory. Moreover, universe level variables as well as ordinary term variables can be declared in a context. As in Agda, we have a next level operation $(-)^+$ and an operation $\vee$ for join of levels. However, as in Bezem et al \cite{BezemCDE22}, we have no level 0 for the first universe. It follows that all universes are polymorphic.
+Levels form an upper semilattice with respect to $\vee$ and $(-)^+$ is an inflationary operation, see below.
 
 %\footnote{
 %We shall now show the gat corresponding to the our theory where we do not have a type of levels but level judgments \cite{BezemCDE22}.
@@ -543,7 +543,7 @@ The operator symbols $\vee$ and $+$ commute with level substitution:
  l^+[\sigma] &=&  l[\sigma]^+
 \end{eqnarray*}
 %\end{tiny}
-\paragraph{Lawvere theories.} (* Remove *) Ucwfs are closely related to Lawvere theories. One can prove that the latter are equivalent to contextual ucwfs, that is, ucwfs where each context has a length \cite{castellan:lambek}.
+\paragraph{Remark.} We remark that uwfs are closely related to Lawvere theories, but closer to the usual syntax based on $n$-place functions. One can prove that the latter are equivalent to contextual ucwfs, that is, ucwfs where each context has a length \cite{castellan:lambek}.
 
 \paragraph{The level-indexed cwf of small types.}
 
@@ -560,7 +560,7 @@ Let $\sigma : n \to m$ be a level substitution. In the initial model it is an $m
 $T(\sigma) : T(m) \to T(n)$ substitutes the $m$ level variables by the respective $m$ level expressions in $\sigma$ in the various components of the cwf $T(m)$ yielding a cwf depending on $n$ level variables. All structure of the cwf with small type formers is preserved.
 \end{itemize}
 
-The gat for the level-indexd cwf of small types has the following sort symbols in addition to those of the gat of levels:
+The gat for the level-indexed cwf of small types has the following sort symbols in addition to those of the gat of levels:
 \begin{eqnarray*}
 n : \lctx &\vdash& \ctx_n\\
 n : \lctx, \Delta, \Gamma : \ctx_n &\vdash& \Hom_n(\Delta,\Gamma)\\
@@ -597,7 +597,7 @@ A[\sigma \circ \tau] &=& A[\sigma][\tau]: \ty_p(\Gamma[\sigma \circ \tau])\footn
 a[\lid_n] &=& a\\
 a[\sigma \circ \tau] &=& a[\sigma][\tau]: \tm_p(A[\sigma \circ \tau],\Gamma[\sigma \circ \tau])
 \end{eqnarray*}
-Level substitution commutes with small type formers too, but we only show the case for $\Pi$-types.
+Level substitution commutes with small type formers. We show the case for $\Pi$-types:
 
 Let $n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma), B:\ty_{n'}(\Gamma.A)$. Then
 \begin{eqnarray*}
@@ -610,7 +610,7 @@ Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm
 \end{eqnarray*}
 This finishes the gat for level-indexed cwfs with small type formers.
 
-\paragraph{Level-indexed universes.} We now add the operator symbols and equations for level-indexed universes.
+\paragraph{Level-indexed universes.} We finally add the operator symbols and equations for level-indexed universes.
 Each $T(n)$ has extra structure for level-indexed universes $\UU_l$ with decodings $\Ta_l$, where $l$ is a level term that depends on level variables in $n$. These universes are closed under the small type formers and contain smaller universes $\UU_{l'}$ for $l' < l$.
 
 The operator symbols are obtained by internalizating the corresponding rules for the externally indexed universes. As before, we only show closure under $\Pi$. (Should we factor out common premises $n : \lctx, l : \ltm(n), \Gamma : \ctx_n$?)
@@ -671,7 +671,7 @@ is now relative to the context
 $$
 n : \lctx, l, l' : \ltm(n), \Gamma : \ctx_n, a : \tm_n(\Gamma,\UU_l), b : \tm_n(\Gamma.\Ta_l(a),\UU_{l'} )
 $$
-and the decoding equation for the $l$th universe in the $m$th ($l < m$)
+and the decoding equation for the $l$th universe in the $m$th
 \begin{eqnarray*}
 \Ta_{m}((\UU^m_l)_\Gamma) &=& (\UU_l)_\Gamma
 \end{eqnarray*}
@@ -681,13 +681,15 @@ n : \lctx, l, m : \ltm(n), p : l < m
 $$
 where again $l < m$ is defined as $\leq_n(l^+ \vee m, m)$.
 
-Equations for commutativity of operator symbols wrt substitution ($\gamma : \hom(\Delta,\Gamma)$):
+Equations for commutativity of operator symbols wrt substitution:
 \begin{eqnarray*}
 \Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )\\
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
 \Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^+ ])
 \end{eqnarray*}
-Moreover, we have equations for commutativity of lifting and $\Pi$-codes with respect to term substitution $\gamma$:
+ where $\gamma : \hom(\Delta,\Gamma)$.
+ 
+We also have equations for commutativity of lifting and $\Pi$-codes with respect to term substitution $\gamma$:
  \begin{eqnarray*}
 (\U_l)_\Gamma [ \gamma ] &=& (\U_l)_\Delta\\
 \Ta_l(a) [ \gamma ] &=& \Ta_l(a[ \gamma ] )\\
@@ -697,7 +699,7 @@ Moreover, we have equations for commutativity of lifting and $\Pi$-codes with re
 \end{eqnarray*}
 
 
-\paragraph{Adding cumulativity.} Adding an operator symbol for cumulativity can also be obtained by internalizing the lifting operations in the external tower:
+\paragraph{Adding cumulativity.} Adding an operator symbol for cumulativity is obtained by internalizing the lifting operations in the external tower:
 \begin{eqnarray*}
 n : \lctx, l,m : \ltm(n), l < m, \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
 \end{eqnarray*}
@@ -756,8 +758,8 @@ The next step is to prove the initiality of the gat for the level-indexed cwf wi
 \item Similarly, $\tm_n(\Gamma',A)$ as the set of $a$ such that $n, \Gamma' \vdash a : A$. We need to divide by equal terms.
 \item Finally, $\hom_n(\Delta,\Gamma)$ are lists of $\tm_n(\Delta,A)$.
 \end{itemize}
-To compare with Brunerie and de Boer's initiality proof we need to replace the external numbers by internal level indices. They also consider cumulative universes, that only need one level-index for $\Pi$ (and other type formers).
-
+We then replace the external tower of universes in Brunerie and de Boer's initiality proof we need by internally level-indexed ones. We we also need to take into account that Brunerie and de Boer consider non-cumulative universes with singly rather than doubly indexed codes for $\Pi$ and the other small type formers.
+ 
 The final part of the proof is about the arrow part of the level-indexed cwf with small types and level-indexed universes. In $\TTUP$ the different forms of level substitution and composition (in levels, level morphisms, contexts, context morphisms, types and terms) are all defined implicitly by induction on the respective syntactic categories. It follows directly that such level substitution satisfy the appropriate gat-equations, and that they are the unique operations doing so.
 
 
@@ -809,6 +811,8 @@ where $\gamma : \hom_n(\Delta,\Gamma)$ is a term substitution, and $\sigma : \lh
 To check the type of the equation
 $$ \forall_\l(B)[ \sigma ] = \forall_\l(B[ \sigma^{+}])$$ we assume $\Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp])$. It follows that $B[\sigma^+] : \ty_{s(m)}(\Gamma[\lp][\sigma^+]) = \ty_{s(m)}(\Gamma[\sigma][\lp])$. Hence 
 $\forall_\l(B[ \sigma^{+}]) : \ty_m(\Gamma[\sigma])$.
+
+\paragraph{Remark.} In the introduction we mentioned that untyped predicate logic can be captured by ucwf-indexed scwfs. (This gives a proof-relevant logic, just like Lawvere's hyperdoctrines \cite{lawvere:hyperdoctrine}.) We note that the operator symbols and equations for universal quantification in untyped predicate logic are the same as those for universal level quantification above, except the difference between scwfs and cwfs: types (propositions) in predicate logic do not depend on proofs.
 
 \section{Conclusion and further research}
 
