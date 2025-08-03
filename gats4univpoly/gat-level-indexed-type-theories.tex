@@ -265,20 +265,41 @@ with Explicit Universe PolymorphismGeneralised Algebraic Theories of Type Theori
 \maketitle
 
 \begin{abstract}
-We present generalized algebraic theories corresponding to the theories in our paper 
-{\em Type Theory with Explicit Universe Polymorphism}, so that models of these theories are models of the corresponding type theories. We first consider Martin-Löf type theory with an external tower of universes. Its models are categories with families with extra structure for the small type formers and the tower of universes. We then consider Martin-Löf type theory with explicit universe polymorphism, where we have universe level judgments and internally indexed universes. Its models are level-indexed categories with families, again with appropriate extra structure. (* Finally, we extend the theory with universe level constraints. Its models are doubly indexed categories with families with extra structure. *) In this way we get abstract syntax definitions of our theories as initial models of certain indexed categories with families with extra structure. We thus abstract from details of the grammar and inference rules of the type theories, and also highlight their high-level structure.
+We present generalized algebraic theories corresponding to slightly modified versions of the theories in our paper 
+{\em Type Theory with Explicit Universe Polymorphism}. We first consider Martin-Löf type theory with an external tower of universes. Its models are categories with families with extra structure for the small type formers and the tower of universes. We then consider Martin-Löf type theory with explicit universe polymorphism, where we have universe level judgments and internally indexed universes. Its models are level-indexed categories with families, again with appropriate extra structure. (* Finally, we extend the theory with universe level constraints. Its models are doubly indexed categories with families with extra structure. *) In this way we get abstract syntax definitions of our theories as initial models of certain indexed categories with families with extra structure. We thus abstract from details of the grammar and inference rules of the type theories and highlight their high-level structure.
 \end{abstract}
 
 \section{Introduction}
 
-The aim of Voevodsky's {\em initiality conjecture project} \cite{voevodsky:initiality} is to provide a definition of a general class of dependent type theories and to develop generic metatheory for theories in this class. In particular, one would like a generic construction showing that theories in this class are initial in corresponding categories of models. Such proofs may seem straightforward superficially, but depend on subtle details in the formulation of grammar and inference rules. Hence, Voevodsky insisted on calling such theorems ``conjectures'' until proven rigorously and ideally implemented in a proof assistant.
+The aim of Voevodsky's  {\em Initiality Conjecture project} is to provide a definition of a general class of dependent type theories and to develop generic metatheory for theories in this class. We quote from the introduction of an extended abstract where Voevodsky \cite{voevodsky:initiality} motivates why this is an important project:
+\begin{quotation}
+The first few steps in all approaches to the set-theoretic semantics of dependent
+type theories remain insuﬃciently understood. The constructions which have been
+worked out in detail in the case of a few particular type systems by dedicated authors
+are being extended to the wide variety of type systems under consideration today by
+analogy. This is not acceptable in mathematics. Instead we should be able to obtain
+the required results for new type systems by specialization of general theorems and
+constructions formulated for abstract objects the instances of which combine together
+to produce a given type system.
+\end{quotation}
+In particular, one would like a generic construction showing that theories in this class are initial in corresponding categories of models. We quote Voevodsky \cite{voevodsky:initiality} again:
+\begin{quotation}
+A crucial component of this approach is the expected result that for a particular
+class of inference rules the term model is an initial object in the category of models.
+This is known as the Initiality Conjecture. In the case of the pure Calculus of
+Constructions with a “decorated” application operation this conjecture was proved in
+1988 by Thomas Streicher \cite{streicher:thesis}. The problem of finding an appropriate formulation
+of the general version of the conjecture and of proving this general version will be the
+subject of future work.
+\end{quotation}
+Such initiality proofs may seem straightforward superficially, but depend on subtle details in the formulation of grammar and inference rules. This is why Voevodsky insisted on calling such theorems ``conjectures'' until proven rigorously and ideally implemented in a proof assistant.
 
 An example of such an initiality proof is Brunerie and de Boer's \cite{Brunerie:initiality,deBoer:lic} proof in Agda that a version of Martin-Löf type theory with an external tower of universes is an initial contextual category \cite{cartmell:phd,cartmell:apal} with appropriate extra structure. %Theversion of type theory with de Bruijn variables and implicit substitutions. 
 
 A possible approach to Voevodsky's project is based on Cartmell's notion of a {\em generalized algebraic theory (gat)} \cite{cartmell:phd,cartmell:apal}. The most basic rules of dependent type theory can be captured by the gat of categories with families (cwfs) \cite{dybjer:torino}. Moreover, as shown in our paper {\em On generalized algebraic theories and categories with families} \cite{bezem:hofmann} there is a generic construction of an initial model of an arbitrary gat. 
-Maybe an approach to a general notion of dependent type theory is as an initial model of an extension of the gat of cws?
+Maybe an approach to a general notion of dependent type theory is as an initial model of an extension of the gat of cwfs? The reason for focusing on the gat of cwfs is that it occupies an intermediate place between dependent type theories defined by a grammar and inference rules and notions of model based on more mainstream categorical notions. In particular, they resemble Martin-Löf's substitution calculus for dependent type theory \cite{martinlof:gbg92,tasistro:lic}.
 
-Furthermore, as shown by Castellan, Clairambault, and Dybjer \cite{castellan:lambek}, by considering simply typed cwfs (scwfs) and unityped cwfs (ucwfs) we can also capture various simply typed and untyped logical systems as gats and thus widening the scope of {\em uniform categorical logic} based on gats and cwfs.
+Furthermore, as shown by Castellan, Clairambault, and Dybjer \cite{castellan:lambek}, by considering simply typed cwfs (scwfs) and unityped cwfs (ucwfs) we can also capture various simply typed and untyped logical systems as gats and thus widening the scope of {\em uniform categorical logic} based on gats and cwfs. 
 
 In this article we shall introduce the notion of an indexed cwf, that is, a base category $\C$ and a cwf-valued presheaf
 $$
