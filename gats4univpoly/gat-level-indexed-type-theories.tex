@@ -826,14 +826,14 @@ Equations ($\beta$ and $\eta$ for level abstraction and application):
  \forall_\l(B)[ \gamma ] &=& \forall_\l(B[ \gamma[\lp]])\\
  \lambda_\l(B)[ \gamma ] &=& \lambda_\l(B[ \gamma[\lp]])\\
  \app_\l(c,l)[ \gamma ] &=& \app_\l(c[ \gamma ] ,l[ \gamma ] )\\
- \forall_\l(B)[ \sigma ] &=& \forall_\l(B[ \sigma^{+}])\\
- \lambda_\l(B)[ \sigma ] &=& \lambda_\l(B[ \sigma^{+}])\\
+ \forall_\l(B)[ \sigma ] &=& \forall_\l(B[ \sigma^{\dagger}])\\
+ \lambda_\l(B)[ \sigma ] &=& \lambda_\l(B[ \sigma^{\dagger}])\\
 \app_\l(c,l)[ \sigma ] &=& \app_\l(c[ \sigma ] ,l[ \sigma ] )
 \end{eqnarray*}
-where $\gamma : \hom_n(\Delta,\Gamma)$ is a term substitution, and $\sigma : \lhom(m,n)$ is a level substitutuion with $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$. 
+where $\gamma : \hom_n(\Delta,\Gamma)$ is a term substitution, and $\sigma : \lhom(m,n)$ is a level substitutuion with $\sigma^\dagger = \tuple{\sigma \circ \lp, \lq}$. 
 To check the type of the equation
-$$ \forall_\l(B)[ \sigma ] = \forall_\l(B[ \sigma^{+}])$$ we assume $\Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp])$. It follows that $B[\sigma^+] : \ty_{s(m)}(\Gamma[\lp][\sigma^+]) = \ty_{s(m)}(\Gamma[\sigma][\lp])$. Hence 
-$\forall_\l(B[ \sigma^{+}]) : \ty_m(\Gamma[\sigma])$.
+$$ \forall_\l(B)[ \sigma ] = \forall_\l(B[ \sigma^{\dagger}])$$ we assume $\Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp])$. It follows that $B[\sigma^\dagger] : \ty_{s(m)}(\Gamma[\lp][\sigma^\dagger]) = \ty_{s(m)}(\Gamma[\sigma][\lp])$. Hence 
+$\forall_\l(B[ \sigma^{\dagger}]) : \ty_m(\Gamma[\sigma])$.
 
 \paragraph{Universal quantification in predicate logic.} In the introduction we mentioned that untyped predicate logic can be captured by ucwf-indexed scwfs. (This gives a proof-relevant logic, just like Lawvere's hyperdoctrines \cite{lawvere:hyperdoctrines}.) We note that the operator symbols and equations for universal quantification in untyped predicate logic are the same as those for universal level quantification above, except the difference between scwfs and cwfs: propositions in predicate logic do not depend on proofs.
 
@@ -1191,7 +1191,7 @@ Equations ($\beta$ and $\eta$ for level abstraction and application):
  ([c]B)[ \gamma ] &=& [c](B[ \gamma^\dagger ])\\
 &\vdots&
 \end{eqnarray*}
-where $\sigma^+ = \tuple{\sigma \circ \cp, \cq}$ and $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$??
+where $\sigma^\dagger = \tuple{\sigma \circ \cp, \cq}$ and $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$??
 %\end{tiny}
 \footnote{Check all this. It's easy to get wrong.}
 
@@ -1245,7 +1245,7 @@ Equations ($\beta$ and $\eta$ for level abstraction and application):
  \forall_\l(B)[ \gamma ] &=& \forall_\l(B[ \gamma^\dagger ])\\
 &\vdots&
 \end{eqnarray*}
-where $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$ and $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$??
+where $\sigma^\dagger = \tuple{\sigma \circ \lp, \lq}$ and $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$??
 \end{tiny}
 
 What about substitution with respect to constraints?
