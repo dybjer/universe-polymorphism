@@ -159,7 +159,7 @@
 \newcommand*{\Resize}[2]{\resizebox{#1}{!}{$#2$}}
 
 \newcommand{\II}{\mathbb{I}}
-\newcommand{\refl}{\mathsf{refl}}
+\newcommand{\refl}{\mathsf{r}}
 %\newcommand{\mkbox}[1]{\ensuremath{#1}}
 
 
@@ -207,7 +207,7 @@
 \def\ltm{\mathrm{ltm}}
 \def\ltmq{\mathrm{ltmq}}
 \def\leq{\mathrm{leq}}
-\def\lrefl{\mathrm{lrefl}}
+\def\lrefl{\mathrm{lr}}
 \def\lp{\mathrm{lp}}
 \def\lq{\mathrm{lq}}
 \def\s{\mathrm{s}}
@@ -321,13 +321,13 @@ l\ \level
 \hspace{5em}
 l = l'
 $$
-in addition to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variables declared in the context. We emphasized that, unlike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms. 
+in addition to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variables declared in the context. We emphasized that, unlike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms. Nevertheless, we added the type $[\alpha]A$ of the level-indexed product of a family of types $A\ (\alpha\ \level)$.
 
 Furthermore, we presented an extension where equational constraints between universe levels can be declared \cite{BezemCDE22}, building on a proposal by Voevodsky \cite{VV}. This extension can also be described by a gat, but we postpone this topic to a forthcoming paper.
 
 \paragraph{Plan of the paper.} In Section 2 we present the infinitary gat of cwfs with extra structure for the type formers and an externally indexed tower of universes. We consider both cumulative and non-cumulative universes. In Section 3 we present the finitary gat of level-indexed type theory with extra structure for the type formers and an internally indexed tower of universes. (* In Section 4 we present the generalized algebraic theory of cwfs with extra structure doubly indexed by levels and level constraints *). (* In Section 5 we discuss models *). In Section 6 we conclude. (* The appendix presents the full definition of the gat for cws with explicit universe polymorphism. *)
 
-\paragraph{Acknowledgement.} This paper is written in honour of professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend and colleague who spent the autumn of 1994 (check?) in the type theory group in Göteborg. He has made fundamental contributions to type theory and constructivity, in particular to the understanding of the constructive content of classical logic.
+\paragraph{Dedication.} We dedicate this article to professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend, colleague, and coauthor, who spent the autumn of 1994 (check?) in the type theory group in Göteborg. He has made fundamental contributions to type theory and constructivity, in particular to the understanding of the constructive content of classical logic.
 
 \section{Type theory with an external tower of universes}
 
@@ -348,7 +348,7 @@ The gat of cwfs has four sort symbols:
 \end{eqnarray*}
 corresponding to the objects and morphisms of the category of contexts, and the family of terms indexed by types in a given context, respectively. The notation states that $\ctx$ is a constant sort symbol, that $\hom$ is a binary sort symbol depending on arguments $\Delta, \Gamma : \ctx$, that $\ty$ is a unary sort symbol depending on the argument $\Gamma : \ctx$, and $\tm$ is a binary sort symbol depending on arguments $\Gamma : \ctx, A : \ty(\Gamma)$.
 
-Moreover, the gat of cwfs has operator symbols for the basic operations of cwfs (identity and composition of context morphisms, substitution in types and terms, empty context and context morphism, context extension and context morphism extension, projection morphism, last variable term): 
+Moreover, the gat of cwfs has operator symbols for the basic operations of cwfs (identity and composition of context morphisms, substitution in types and terms, empty context and context morphism, context extension and context morphism extension, projection morphism, last variable term)\footnote{MB: should we separate them into four groups: structure for the base category, for the arrow part of the family valued functor, for the terminal object, and for context comprehension?}: 
 \begin{eqnarray*}
 \Gamma : \ctx &\vdash& \id_{\Gamma} : \Hom(\Gamma,\Gamma)\\
 \Xi,\Delta,\Gamma : \ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta) &\vdash&
@@ -387,7 +387,7 @@ In extensional Martin-Löf type theory \cite{martinlof:hannover} we have the rul
 \end{eqnarray*}
 Note that the variable $p$ does not occur on the right hand side.
 However, it is a very important variable expressing
-the condition under which $a=a'$ holds, and will never be left out.
+the condition under which $a=a'$ holds and must not be omitted.
 %We will meet a similar case for reflection on equality on level terms.
 
 \subsection{The gat of cwfs with an external tower of universes.}
@@ -428,10 +428,10 @@ Moreover, the operator symbols commute with term substitution:
 (\U_l)_\Gamma [ \gamma ] &=& (\U_l)_\Delta\\
 \Ta_l(a) [ \gamma ] &=& \Ta_l(a[ \gamma ] )\\
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
-\Pi^{l,l'}(a,b)[ \gamma ] &=& \Pi^{l,l'}(a [ \gamma ], b[ \gamma^+ ])\\
+\Pi^{l,l'}(a,b)[ \gamma ] &=& \Pi^{l,l'}(a [ \gamma ], b[ \gamma^\dagger ])\\
 (\UU^m_l)_\Gamma[ \gamma ] &=&(\UU^m_l)_\Delta
 \end{eqnarray*}
-where $\gamma : \Hom(\Delta,\Gamma)$ and $\gamma^+ = \langle \gamma \circ \p_{\Delta,\Ta_l(a[\gamma])}, \q_{\Delta,\Ta_l(a[\gamma])}\rangle : \Hom(\Delta.\Ta_l(a[\gamma]),\Gamma.\Ta_l(a))$.
+where $\gamma : \Hom(\Delta,\Gamma)$ and $\gamma^\dagger = \langle \gamma \circ \p_{\Delta,\Ta_l(a[\gamma])}, \q_{\Delta,\Ta_l(a[\gamma])}\rangle : \Hom(\Delta.\Ta_l(a[\gamma]),\Gamma.\Ta_l(a))$.
 %\paragraph{Adding cumulativity.}
 
 If we want a cumulative tower of universes we add operator symbols that lift elements in the $l$th universe to the $m$th universe for $l < m$:
@@ -448,10 +448,14 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
  \end{eqnarray*}
  We omit the equations for the cumulative case, see instead the cumulative case for level-indexing.
 
-\subsection{Syntax and inference rules as an initial model.} As already mentioned, the grammar and inference rules for an initial model can be obtained by a general construction for finitary gats\cite{bezem:hofmann} and this can be extended to infinitary gats. The recipe is to build the judgment structure of the theory from the sort symbols of the gat, and the syntax of raw terms, types, contexts and context morphisms from untyped versions of the cwf-combinators and the operator symbols of the gat. Then one defines a system of inference rules from the typings of the cwf-combinators and the operator symbols of the gat. This yields an explicit substitution calculus for dependent type theory quite similar to Martin-Löf's but with named variables replaced by projections of the form.
+\subsection{Syntax and inference rules as an initial model.} As already mentioned, the grammar and inference rules for an initial model can be obtained by a general construction for finitary gats \cite{bezem:hofmann} and this construction can be extended to infinitary gats. The recipe is to build the judgment structure of the theory from the sort symbols of the gat, and the syntax of raw terms, types, contexts and context morphisms from untyped versions of the cwf-combinators and the operator symbols of the gat. Then one defines a system of inference rules from the typings of the cwf-combinators and the operator symbols of the gat. This yields an explicit substitution calculus for dependent type theory quite similar to Martin-Löf's but with named variables replaced by projections of the form.
 
-If we instead wish to implement a version of MartinBrunerie and de Boer \cite{Brunerie:initiality,deBoer:lic} implemented a proof that Martin-Löf type theory with an external tower of universes is an initial contextual category with appropriate extra structure for the type formers. Contextual categories are closely related to contextual cwfs, that is, cwfs where each context has a finite length \cite{castellan:lambek}. We expect that the implementation could be adapted accordingly, since initial cwfs are contextual. Several equivalences and embeddings between categorical notions of models including cwfs have been implemented in UniMath by Ahrens, Lumsdaine, and Voevodsky \cite{AhrensLV18}. On the syntactic side, our version of Martin-Löf type theory with an external tower of universes in Bezem et al \cite{BezemCDE22} is not presented in full detail as needed for formalization. %There are also some differences, for example we use named variables rather than de Bruijn indices. 
-A significant difference is that Brunerie and de Boer work with decorated terms following Streicher \cite{streicher:thesis}. For example, application is decorated with type information. Moreover, their Russell-style tower only has the rule $\UU_l : \UU_{l+1}$ and is not cumulative while ours is Tarski-style and has a code $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$. Note that the Russell vs Tarski distinction is not reflected in the gat. They are different only different options for the syntactic systems.
+We could also build an initial model by adapting the proof by Brunerie and de Boer \cite{Brunerie:initiality,deBoer:lic} that Martin-Löf type theory with an external tower of universes is an initial contextual category with appropriate extra structure for the type formers. Their version of Martin-Löf type theory is more traditional with implicit substitutions, that is, substitution is not a term constructor, but an operation defined by induction on the structure of terms. 
+
+To adapt their construction to yield a model of our gat we would first need to replace their contextual categories by cwfs. Contextual categories are closely related to contextual cwfs, that is, cwfs where each context has a finite length \cite{castellan:lambek}. We expect that the implementation could be adapted accordingly, since initial cwfs are contextual. (We also remark that several equivalences and embeddings between categorical notions of models including cwfs have been implemented in UniMath by Ahrens, Lumsdaine, and Voevodsky \cite{AhrensLV18}.)
+Moreover, Brunerie and de Boer's rules for universes are not the same as ours. They just have the rule $\UU_l : \UU_{l+1}$ and only consider the non-cumulative case, while we have $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$ and consider both the non-cumulative and cumulative cases. We expect that it would be a modest amount of effort to adapt their construction to our universes.
+
+There are also differences Brunerie and de Boer's version of Martin-Löf type theory and ours \cite{BezemCDE22} on the syntactic side. Firstly, they work with decorated terms following Streicher \cite{streicher:thesis} and we would need to do the same. Another difference is that they have a Russell-style tower while we have a Tarski-style. Note that the Russell versus Tarski distinction is not reflected in the gat. They are different only different options for the syntactic type theories.
 
 \subsection{Internalization (* Remove? *).}
 One might be tempted to internalize the externally indexed tower of universes by indexing universes by internal natural numbers: 
@@ -463,7 +467,7 @@ allow universes indexed by constant internal natural numbers:
 $$ l : \tm(1,\N), \Gamma : \ctx \vdash (\UU_l) : \ty(\Gamma)$$
 
 However, then we can quantify over levels and form $\Pi l : \N.\UU_l$ % ($(\Pi(\N,\(\UU_l)_\Gamma)$ 
-and $\Sigma l : \N.\UU_l$, something we wish to avoid. 
+and $\Sigma l : \N.\UU_l$, something we wish to avoid. We have level-indexed products ... Hmm.
 
 Similarly, Agda has a type $\Level$ of universe levels with a level 0 and closed under the next level operation $(-)^+$ and $\vee$. 
 
@@ -695,7 +699,7 @@ Equations for commutativity of operator symbols wrt substitution:
 \begin{eqnarray*}
 \Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )\\
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
-\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^+ ])
+\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^\dagger ])
 \end{eqnarray*}
  where $\gamma : \hom(\Delta,\Gamma)$.
  
@@ -704,7 +708,7 @@ We also have equations for commutativity of lifting and $\Pi$-codes with respect
 (\U_l)_\Gamma [ \gamma ] &=& (\U_l)_\Delta\\
 \Ta_l(a) [ \gamma ] &=& \Ta_l(a[ \gamma ] )\\
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
-\Pi^{l,l'}(a,b)[ \gamma ] &=& \Pi^{l,l'}(a [ \gamma ], b[ \gamma^+ ])\\
+\Pi^{l,l'}(a,b)[ \gamma ] &=& \Pi^{l,l'}(a [ \gamma ], b[ \gamma^\dagger ])\\
 (\UU^l)_\Gamma[ \gamma ] &=&(\UU^l)_\Delta
 \end{eqnarray*}
 
@@ -729,7 +733,7 @@ Equations for commutativity of lifting and substitution ($\gamma : \hom(\Delta,\
 \begin{eqnarray*}
 \Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
-%\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^+ ])
+%\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^\dagger ])
 \end{eqnarray*}
 
 
@@ -831,7 +835,7 @@ Future work to consider calculus with constraints. Also look at predicate logic 
 
 Related work? Qiits? Qiits are inductively defined (initial) gats inside dependent type theory. Unlike gats they have elimination rules. We have the sequence: inductive type, inductive family, inductive-inductive type, quotient inductive-inductive type. In the work of Kaposi, Kovacs, and Altenkirch there are various classes of qiits. The correspondence between these and the class of gats has not been investigated.
 
-%and $\gamma^+ = \tuple{\gamma \circ \p, \q}$??
+%and $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$??
 %\end{tiny}
 %\footnote{Discussion with Raphael Sterback:
 %$$
@@ -1170,10 +1174,10 @@ Equations ($\beta$ and $\eta$ for level abstraction and application):
  Equations for commutativity of operator symbols wrt constraint substitution $\sigma : \lhom(m,n)$ and a term substitution $\gamma : \hom_n(\Delta,\Gamma)$:
  \begin{eqnarray*}
  ([c]B)[ \sigma ] &=& [c](B[ \sigma^{+}])\\
- ([c]B)[ \gamma ] &=& [c](B[ \gamma^+ ])\\
+ ([c]B)[ \gamma ] &=& [c](B[ \gamma^\dagger ])\\
 &\vdots&
 \end{eqnarray*}
-where $\sigma^+ = \tuple{\sigma \circ \cp, \cq}$ and $\gamma^+ = \tuple{\gamma \circ \p, \q}$??
+where $\sigma^+ = \tuple{\sigma \circ \cp, \cq}$ and $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$??
 %\end{tiny}
 \footnote{Check all this. It's easy to get wrong.}
 
@@ -1224,10 +1228,10 @@ Equations ($\beta$ and $\eta$ for level abstraction and application):
  Equations for commutativity of operator symbols wrt a level substitution $\sigma : \lhom(m,n)$ and a term substitution $\gamma : \hom_n(\Delta,\Gamma)$:
  \begin{eqnarray*}
  \forall_\l(B)[ \sigma ] &=& \forall_\l(B[ \sigma^{+}])\\
- \forall_\l(B)[ \gamma ] &=& \forall_\l(B[ \gamma^+ ])\\
+ \forall_\l(B)[ \gamma ] &=& \forall_\l(B[ \gamma^\dagger ])\\
 &\vdots&
 \end{eqnarray*}
-where $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$ and $\gamma^+ = \tuple{\gamma \circ \p, \q}$??
+where $\sigma^+ = \tuple{\sigma \circ \lp, \lq}$ and $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$??
 \end{tiny}
 
 What about substitution with respect to constraints?
@@ -1413,11 +1417,11 @@ Equations (omitting the context and type of the equalities):
  \end{eqnarray*}
  Equations for commutativity of operator symbols wrt substitution:
  \begin{eqnarray*}
-\Pi(A,B)[ \gamma ] &=& \Pi(A [ \gamma ], B[ \gamma^+ ])\\
-\lambda(b) [ \gamma ] &=& \lambda(b[\gamma^+ ])\\
+\Pi(A,B)[ \gamma ] &=& \Pi(A [ \gamma ], B[ \gamma^\dagger ])\\
+\lambda(b) [ \gamma ] &=& \lambda(b[\gamma^\dagger ])\\
 \app(c,a) [ \gamma ] &=& \app(c[ \gamma ], a[ \gamma ] )
 \end{eqnarray*}
-where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
+where $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$.
 \end{tiny}
 
 
@@ -1448,10 +1452,10 @@ Equation:
 {\U}_\Gamma [ \gamma ] &=& {\U}_\Delta\\
 \Ta(a) [ \gamma ] &=& \Ta(a[ \gamma ] )\\
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
-\Pi^0(a,b)[ \gamma ] &=& \Pi^0(a [ \gamma ], b[ \gamma^+ ])
+\Pi^0(a,b)[ \gamma ] &=& \Pi^0(a [ \gamma ], b[ \gamma^\dagger ])
 \end{eqnarray*}
 \end{tiny}
-%where $\gamma^+ = \tuple{\gamma \circ \p, \q}$.
+%where $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$.
 \bibliographystyle{plain}
 \bibliography{../refs}
 \end{document}
