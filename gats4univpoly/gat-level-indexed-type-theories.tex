@@ -717,6 +717,13 @@ We also have equations for commutativity of lifting and $\Pi$-codes with respect
 \Pi^{l,l'}(a,b)[ \gamma ] &=& \Pi^{l,l'}(a [ \gamma ], b[ \gamma^\dagger ])\\
 (\UU^l)_\Gamma[ \gamma ] &=&(\UU^l)_\Delta
 \end{eqnarray*}
+Moreover, we have laws that level substitution $\sigma$ commutes with the operator symbols for a universe.
+ \begin{eqnarray*}
+ (\U_{l})_\Gamma[\sigma] &=& (\U_{l[\sigma]})_{\Gamma[\sigma]}\\
+ \Ta_l(a) [ \sigma ] &=& \Ta_{l[\sigma]}(a[ \sigma ] )\\
+\Pi^{l,l'}(a,b)[ \sigma ] &=& \Pi^{l[ \sigma ] ,l'[ \sigma ] }(a [ \sigma ], b[ \sigma])\\
+(\UU^l)_\Gamma[ \sigma ] &=&(\UU^{l[ \sigma ]} )_{\Delta[ \sigma ]} 
+ \end{eqnarray*}
 
 
 \subsection{Adding cumulativity} 
@@ -738,20 +745,16 @@ The decoding equation for lifting of codes for universes is as follows:
 \begin{eqnarray*}
 n : \lctx, k, l, m : \ltm(n), k < l < m, \Gamma : \ctx(n) &\vdash& \Ta^m_l((\UU^l_k)_\Gamma) = (\UU^m_k)_\Gamma
 \end{eqnarray*}
-Equations for commutativity of lifting and substitution ($\gamma : \hom(\Delta,\Gamma)$):
+Equations for commutativity of lifting and term substitution ($\gamma : \hom(\Delta,\Gamma)$):
 \begin{eqnarray*}
 \Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
 %\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^\dagger ])
 \end{eqnarray*}
-
-Moreover, we have laws that level substitution $\sigma$ commutes with the operator symbols for a universe.
- \begin{eqnarray*}
- (\U_{l})_\Gamma[\sigma] &=& (\U_{l[\sigma]})_{\Gamma[\sigma]}\\
- \Ta_l(a) [ \sigma ] &=& \Ta_{l[\sigma]}(a[ \sigma ] )\\
-\Pi^{l,l'}(a,b)[ \sigma ] &=& \Pi^{l[ \sigma ] ,l'[ \sigma ] }(a [ \sigma ], b[ \sigma])\\
-(\UU^l)_\Gamma[ \sigma ] &=&(\UU^{l[ \sigma ]} )_{\Delta[ \sigma ]} 
- \end{eqnarray*}
+and level substitution
+\begin{eqnarray*}
+\Ta^m_l(a) [ \sigma ] &=& \Ta^m_{l[\sigma]}(a[ \sigma ] )
+\end{eqnarray*}
 %Check that this is right. Cf comment by intern.
 
 \subsection{Syntax and inference rules as an initial model} 
@@ -979,10 +982,6 @@ Equations (omitting the context and type of the equalities):
 where $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$.
 
 %We also need to add rules for level-indexed $\Pi$
-
-\subsection{Level-indexed universes}   
-
-Check whether some operator symbols and equations were left out.
 
 %\begin{itemize}
 %\item
