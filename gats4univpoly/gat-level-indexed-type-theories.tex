@@ -862,7 +862,8 @@ We will in this appendix display the gat for ucwf-indexed cwfs with extra struct
 
 \subsection{The ucwf of levels}
 
-We already listed the sort symbols and operator symbols. The equations are
+We already listed the sort symbols and operator symbols.
+\paragraph{Equations.}
 \begin{eqnarray*}
 \lid_{n} \circ \sigma &=& \sigma \\
  \sigma \circ \lid_{n} &=& \sigma \\
@@ -886,13 +887,15 @@ l[\sigma\circ\tau] &=& l[\sigma][\tau]\\
 \tuple{}_{n}\circ\sigma &=& \tuple{}_{m}\\
 \lp_n \circ \tuple{\sigma,l} &=& \sigma\\
 \lq_n [\tuple{\sigma,l}] &=& l\\
+\tuple{\sigma,l} \circ \tau &=& \tuple{\sigma \circ \tau,l[\tau]}\\
 \lid_{\s(n)} &=& \tuple{\lp_n,\lq_n}\\
-\tuple{\sigma,l} \circ \tau &=& \tuple{\sigma \circ \tau,l[\tau]}
 \end{eqnarray*}
 
 \subsection{The level-indexed cwf of small types}
 
-We already listed the sort symbols. The operator symbols are
+We already listed the sort symbols. 
+
+\paragraph{Operator symbols.} \footnote{Check whether implicit arguments are systematic.}
 %We have the following sort symbols:
 %\begin{eqnarray*}
 %n : \lctx &\vdash& \ctx_n\\
@@ -907,11 +910,19 @@ A[\gamma] : \ty_n(\Delta)\\
 n : \lctx, \Gamma,\Delta : \ctx_n, A:\ty_n(\Gamma), \gamma : \Hom_n(\Delta,\Gamma), a:\tm_n(\Gamma,A) &\vdash&  a[\gamma] : \tm_n(\Delta,A[\gamma])\\
 n : \lctx &\vdash& 1_n : \ctx_n\\
 n : \lctx, \Gamma : \ctx_n &\vdash& \tuple{}_{n,\Gamma} : \Hom_n(\Gamma,1_n)\\
-&\vdots&\\
+n : \lctx, \Gamma : \ctx_n, A:\ty_n (\Gamma) &\vdash& \Gamma \cext A : \ctx_n \\
+n : \lctx, \Gamma,\Delta : \ctx_n , A:\ty_n (\Gamma), \gamma : \Hom_n (\Delta,\Gamma), a:\tm_n (\Delta,A[\gamma]) &\vdash& \tuple{\gamma,a} : \Hom_n (\Delta,\Gamma\cext A)\\
+n : \lctx, \Gamma : \ctx_n , A:\ty_n (\Gamma) &\vdash& \p_{n,\Gamma,A}: \Hom_n (\Gamma\cext A,\Gamma)\\
+n : \lctx, \Gamma : \ctx_n , A:\ty_n (\Gamma) &\vdash& \q_{n,\Gamma,A}: \tm_n (\Gamma\cext A,A[\p])
 \end{eqnarray*}
-We need to add operator symbols for context comprehension.
+Operator symbols for level-indexed $\Pi$-types (should we decorate $\lambda$ and $\app$ with type information?):
+\begin{eqnarray*}
+n : \lctx, \Gamma : \ctx_n, A : \ty_n(\Gamma), B : \ty_n(\Gamma.A)&\vdash& \Pi(A,B) : \ty_n(\Gamma)\\
+n : \lctx, \Gamma : \ctx_n, A : \ty_n(\Gamma), B : \ty_n(\Gamma.A), b : \tm_n(\Gamma.A, B) &\vdash& \lambda(b) : \tm(\Gamma,\Pi(A,B))\\
+n : \lctx, \Gamma : \ctx_n, A : \ty_n(\Gamma), B : \ty_n(\Gamma.A), c :  \tm_n(\Gamma,\Pi(A,B)), a : \tm_n(\Gamma, A) &\vdash& \app(c,a) : \tm(\Gamma, B[\tuple{\id,a}])
+\end{eqnarray*}
 
-The equations are
+\paragraph{Equations.}
 \begin{eqnarray*}
 \id_{n,\Gamma} \circ \gamma &=& \gamma \\
  \gamma \circ \id_{n,\Delta} &=& \gamma \\
@@ -938,17 +949,36 @@ a[\gamma\circ\delta] &=& a[\gamma][\delta]
 %: \Hom_n(1_n,1_n)
 \\
 %\Gamma,\Delta : \ctx_n , \gamma : \Hom_n (\Delta,\Gamma) &\vdash&
-\tuple{}_{n,\Gamma\circ\gamma} &=& \tuple{}_{n,\Delta}% : \Hom_n (\Delta,1_n )
+\tuple{}_{n,\Gamma}\circ\gamma &=& \tuple{}_{n,\Delta}% : \Hom_n (\Delta,1_n )
 \\
-&\vdots&
+%\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& 
+\p_{n,\Gamma,A}\circ\tuple{\gamma,a} &=& \gamma : \Hom(\Delta,\Gamma)\\
+%\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash&  
+\q_{n,\Gamma,A}[\tuple{\gamma,a}] &=& a : \tm(\Delta,A[\gamma]) \\
+%\Gamma,\Delta,\Xi : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]), \delta : \Hom(\Xi,\Delta) &\vdash&
+\tuple{\gamma,a} \circ \delta &=& \tuple{\gamma\circ\delta,a[\delta]} \\
+%:
+%\Hom(\Xi,\Gamma\cext A) \\
+%\Gamma : \ctx, A:\ty(\Gamma) &\vdash&
+\id_{n,\Gamma\cext A} &=& \tuple{\p_{n,\Gamma,A},\q_{n,\Gamma,A}} : \Hom(\Gamma\cext A,\Gamma\cext A)
 \end{eqnarray*}
-We need to add equations for context comprehension.
-
 \footnote{MB, check. Perhaps better to describe how to modify \ref{sec:gatPiU}:
 prefix every rule with $n:\lctx$ and add index $n$ to every occurrence
 of $\ctx,\ty,\tm$.}
+Equations (omitting the context and type of the equalities):
+ \begin{eqnarray*}
+ \app(\lambda(b),a) &=& b[\tuple{\id,a}]\\
+ \lambda(\app(c[\p],\q)) &=& c
+ \end{eqnarray*}
+ Equations for commutativity of operator symbols wrt substitution:
+ \begin{eqnarray*}
+\Pi(A,B)[ \gamma ] &=& \Pi(A [ \gamma ], B[ \gamma^\dagger ])\\
+\lambda(b) [ \gamma ] &=& \lambda(b[\gamma^\dagger ])\\
+\app(c,a) [ \gamma ] &=& \app(c[ \gamma ], a[ \gamma ] )
+\end{eqnarray*}
+where $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$.
 
-We also need to add rules for level-indexed $\Pi$
+%We also need to add rules for level-indexed $\Pi$
 
 \subsection{Level-indexed universes}   
 
