@@ -1,0 +1,30 @@
+\section{Set-theoretic models}
+
+\subsection{The system with internal levels but no constraints.}
+Assume we have a model in set theory with a hierarchy of universes of type theory with an external hierarchy of universes. The corresponding cwf has the components
+ $$
+(\Ctx, \Hom, \Ty, \Tm)
+ $$
+Let’s first consider the system with internal levels (as in our paper) but without constraints. We can now build a corresponding ucwf-indexed cwf (with the appropriate extra structure)
+ $$
+T : \L^{\op} \to \CwF
+$$
+where $\L$ is the ucwf with $\Ctx_\L = \N$ and $\Tm_\L(n) = \N^n \to \N$, that is, level expressions in $n$ level variables are interpreted as $n$-place set theoretic functions on $\N$. This has the appropriate sup/+ - structure with $\max$ and $\mathrm{succ}$ on $N$. Now
+ $$
+T(n) = (\Ctx_n, \Hom_n, \Ty_n, \Tm_n)
+ $$
+is a cwf modelling type theory with $n$ universe level variables. We have e g
+ $$
+\Ctx_n = \N^n \to \Ctx
+ $$
+that maps an assignment of external levels (as numbers) to the $n$ variables. $T$ can be extended to a functor.
+ 
+\subsection{The system with constraints.}
+If we then consider the system with constraints, we let the scwf $C(n)$ of constraints (in $n$ level variables) be the poset $\{0,1\}$, where 0 is the empty set and 1 is the singleton set. We interpret $\leq(l,l’) = 1$ iff $l = l’ : \Tm_\L(n)$ in the ucwf of levels.
+ 
+If $\psi$ is a context in $C(n)$, that is, a sequence of level identities in $n$ level variables, then we can define a doubly indexed cwf $T(n, \psi)$ assigning external levels to the $n$ variables, that is, provided this assignment is valid in the sense that all the level identities in $\psi$ are satisfied.
+ 
+Instead of starting with the ucwf of levels as natural numbers we can start with any $\sup/+$ lattice $L$.  We can still model the scwf of constraints in the same way and interpret $\leq(l,l’) = 1$ iff $ l = l’ : Tm(n)$.
+ 
+It is part of the indexed cwf-structure that $T(L) \to T(L’)$ for any map $L’ \to L$ of ucwfs with sup+ structure.
+

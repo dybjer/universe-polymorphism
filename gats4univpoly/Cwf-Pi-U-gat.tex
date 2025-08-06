@@ -1,0 +1,159 @@
+\section{The gat of cwfs with $\Pi$-types and a single universe closed under them}\label{sec:gatPiU}
+
+\paragraph{The gat of categories.}
+\begin{tiny}
+Sort symbols:
+\begin{eqnarray*}
+&\vdash& \Obj\\
+\Delta, \Gamma : \Obj &\vdash& \Hom(\Delta,\Gamma)\\
+\end{eqnarray*}
+
+Operator symbols:
+\begin{eqnarray*}
+\Gamma : \Obj &\vdash& \id_\Gamma : \Hom(\Gamma,\Gamma)\\
+\Xi,\Delta,\Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta) &\vdash&
+\gamma \circ \delta : \Hom(\Xi,\Gamma)
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+\Delta, \Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma) &\vdash& \id_\Gamma \circ \gamma = \gamma : \Hom(\Delta,\Gamma)\\
+\Delta, \Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma) &\vdash& \gamma \circ \id_\Delta = \gamma : \Hom(\Delta,\Gamma)\\
+\Theta, \Xi,\Delta,\Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta), \xi : \Hom(\Theta,\Xi) &\vdash&
+(\gamma \circ \delta) \circ \xi = \gamma \circ (\delta \circ \xi): \Hom(\Theta,\Gamma)
+\end{eqnarray*}
+Note: officially $\circ$ has five arguments rather than two.
+\end{tiny}
+
+\paragraph{Adding a family valued functor}
+
+\begin{tiny}
+Sort symbols ($\ctx = \Obj$):
+\begin{eqnarray*}
+\Gamma : \ctx &\vdash& \ty(\Gamma)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \tm(\Gamma,A)
+\end{eqnarray*}
+
+Operator symbols:
+\begin{eqnarray*}
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma) &\vdash&
+A[\gamma] : \ty(\Delta)\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Gamma,A) &\vdash&  a[\gamma] : \tm(\Delta,A[\gamma])
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& A[\id_\Gamma] = A : \ty(\Gamma)\\
+\Gamma : \ctx, A:\ty(\Gamma), a:\tm(\Gamma,A) &\vdash& a[\id_\Gamma] = a : \tm(\Gamma,A)\\
+\Xi,\Delta,\Gamma : \ctx, \delta : \Hom(\Xi,\Delta), \gamma : \Hom(\Delta,\Gamma),
+A:\ty(\Gamma) &\vdash& A[\gamma\circ\delta] = A[\gamma][\delta]: \ty(\Xi)\\
+\Xi,\Delta,\Gamma : \ctx, \delta : \Hom(\Xi,\Delta), \gamma : \Hom(\Delta,\Gamma),
+A:\ty(\Gamma), a:\tm(\Gamma,A) &\vdash&
+a[\gamma\circ\delta] = a[\gamma][\delta]: \tm(\Xi,A[\gamma\circ\delta])
+\end{eqnarray*}
+We have dropped some of the official arguments here too, and will do so in the following as well.
+\end{tiny}
+
+
+\paragraph{Adding a terminal object}
+
+\begin{tiny}
+%Sort symbols: none
+Operator symbols:
+\begin{eqnarray*}
+&\vdash& 1 : \ctx\\
+\Gamma : \ctx &\vdash& \tuple{}_\Gamma : \Hom(\Gamma,1)
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+ &\vdash& \id_1 = \tuple{}_1 : \Hom(1,1)\\
+\Gamma,\Delta : \ctx, \gamma : \Hom(\Delta,\Gamma) &\vdash&
+\tuple{}_\Gamma\circ\gamma = \tuple{}_\Delta : \Hom(\Delta,1)
+\end{eqnarray*}
+\end{tiny}
+
+
+%(The latter two equations are better for term rewriting than the
+%obvious single one expressing the uniqueness of $\tuple{}_\Gamma$.)
+
+\paragraph{Adding context comprehension}
+
+%No new sorts are added.
+\begin{tiny}
+Operator symbols:
+\begin{eqnarray*}
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \Gamma\cext A : \ctx\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \tuple{\gamma,a} : \Hom(\Delta,\Gamma\cext A)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \p: \Hom(\Gamma\cext A,\Gamma)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \q: \tm(\Gamma\cext A,A[\p])
+\end{eqnarray*}
+
+Equations:
+\begin{eqnarray*}
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \p\circ\tuple{\gamma,a} = \gamma : \Hom(\Delta,\Gamma)\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \q[\tuple{\gamma,a}] = a : \tm(\Delta,A[\gamma]) \\
+\Gamma,\Delta,\Xi : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]), \delta : \Hom(\Xi,\Delta) &\vdash&
+\tuple{\gamma,a} \circ \delta = \tuple{\gamma\circ\delta,a[\delta]} :
+\Hom(\Xi,\Gamma\cext A) \\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash&
+\id_{\Gamma\cext A} = \tuple{\p,\q} : \Hom(\Gamma\cext A,\Gamma\cext A)
+\end{eqnarray*}
+\end{tiny}
+
+
+\paragraph{Adding $\Pi$-types}
+%We add three operator symbols in addition to the operator symbols for cwfs in Section 5.2 and 5.3:
+\begin{tiny}
+Operator symbols:
+\begin{eqnarray*}
+\Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A)&\vdash& \Pi(A,B) : \ty(\Gamma)\\
+\Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A), b : \tm(\Gamma.A, B) &\vdash& \lambda(b) : \tm(\Gamma,\Pi(A,B))\\
+\Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A), c :  \tm(\Gamma,\Pi(A,B)), a : \tm(\Gamma, A) &\vdash& \app(c,a) : \tm(\Gamma, B[\tuple{\id,a}])
+\end{eqnarray*}
+Equations (omitting the context and type of the equalities):
+ \begin{eqnarray*}
+ \app(\lambda(b),a) &=& b[\tuple{\id,a}]\\
+ \lambda(\app(c[\p],\q)) &=& c
+ \end{eqnarray*}
+ Equations for commutativity of operator symbols wrt substitution:
+ \begin{eqnarray*}
+\Pi(A,B)[ \gamma ] &=& \Pi(A [ \gamma ], B[ \gamma^\dagger ])\\
+\lambda(b) [ \gamma ] &=& \lambda(b[\gamma^\dagger ])\\
+\app(c,a) [ \gamma ] &=& \app(c[ \gamma ], a[ \gamma ] )
+\end{eqnarray*}
+where $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$.
+\end{tiny}
+
+
+\paragraph{Adding a universe closed under $\Pi$}
+
+\footnote{PD: for comparison only. Should we remove it?}
+\begin{tiny}
+Operator symbols:
+\begin{eqnarray*}
+\Gamma : \ctx &\vdash& \U_\Gamma : \ty(\Gamma)\\
+\Gamma : \ctx, a : \tm(\Gamma,\U_\Gamma) &\vdash& {\Ta}(a) : \ty(\Gamma)\\
+%\Gamma : \ctx &\vdash& (\N^0)_\Gamma : \tm(\Gamma,\U_\Gamma) \\
+\Gamma : \ctx,
+a : \tm(\Gamma,\U_\Gamma),
+b :  \tm(\Gamma \cdot \Ta(a), \U_\Gamma))
+&\vdash&
+ \Pi^0(a,b) : \tm(\Gamma,\U_\Gamma)
+\end{eqnarray*}
+%$\U_\Gamma$ is the universe (a type) relative to the context $\Gamma$; $\Ta$ is the decoding operation mapping a term in the universe to the corresponding type; $\N^0$ is the code for $\N$ in the universe, and $\Pi^0$ forms codes for $\Pi$-types in the universe. (Note that we have dropped the context argument of $\Ta$ and $\Pi^0$.)
+
+Equation:
+\begin{eqnarray*}
+%\Ta(\N^0_\Gamma) &=& \N_\Gamma\\
+\Ta(\Pi^0(a,b)) &=& \Pi(\Ta(a),\Ta(b))
+\end{eqnarray*}
+ Equations for commutativity of operator symbols wrt substitution:
+ \begin{eqnarray*}
+{\U}_\Gamma [ \gamma ] &=& {\U}_\Delta\\
+\Ta(a) [ \gamma ] &=& \Ta(a[ \gamma ] )\\
+%\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
+\Pi^0(a,b)[ \gamma ] &=& \Pi^0(a [ \gamma ], b[ \gamma^\dagger ])
+\end{eqnarray*}
+\end{tiny}
+%where $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$.
