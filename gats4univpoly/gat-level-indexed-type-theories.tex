@@ -878,7 +878,7 @@ $\forall_\l(B[ \sigma^{\dagger}]) : \ty_m(\Gamma[\sigma])$.
 
 \section{Conclusion and further research}
 
-We have shown how to capture Martin-Löf type theory with explicit universe polymorphism as a gat. The list of sort symbols, operator symbols, and equations may seem long but not as long as the list of inference rules rules for the syntactic theory. (In the versions with implicit substitutions we should include the substitution lemmas.) Moreover, the gat formalizes the high-level structure of ucwf-indexed cwfs with extra structure: the $\vee$-semilattice with an inflationary operation $(-)^+$, and adjoint-like structures for $\Pi$-types and other type formers. Also context comprehension in cwfs is an adjoint-like structure. The relationship with adjoints in the sense of ordinary cartesian closed categories is worked out in the case of contextual cwfs with extensional equality types, $\Sigma$-types and $\Pi$-types by Clairambault and Dybjer \cite{clairambault:warsaw,clairambault:mscs} and for some other structures in Castellan et al \cite{castellan:lambek}.
+We have shown how to capture Martin-Löf type theory with explicit universe polymorphism as a gat. The list of sort symbols, operator symbols, and equations may seem long but not as long as the list of inference rules rules for the syntactic theory. (In the versions with implicit substitutions we should include the substitution lemmas.) Moreover, the gat formalizes the high-level structure of ucwf-indexed cwfs with extra structure: the $\vee$-semilattice with an inflationary operation $(-)^+$, and adjoint-like structures for $\Pi$-types and other type formers. Also context comprehension in cwfs is an adjoint-like structure. The relationship with adjoints in the sense of ordinary cartesian closed categories is worked out in the case of contextual cwfs with extensional equality types, $\Sigma$-types and $\Pi$-types by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} and for some other structures in Castellan et al \cite{castellan:lambek}.
 
 A key novelty is the need for level equality sorts $\leq_n(l,l')$. The main recipe for a gat corresponding to Martin-Löf type theory is that equality judgments are formalized as judgmental equalities in gats. For example, the judgment 
 $$
@@ -888,7 +888,7 @@ expressing that $A$ is a well-formed type in the context $\Gamma$, corresponds t
 $$
 A : \ty(\Gamma)
 $$
-in the gat. However, the 
+in the gat, but
 $$
 \Gamma \vdash A = A'
 $$
@@ -896,17 +896,16 @@ corresponds to an equality
 $$
 A = A' : \ty(\Gamma)
 $$
-and we do not need a new sort symbol corresponding to type equality judgments. However, this principle breaks down when formalizing the principle that any universe has a code in any larger universe. This is because larger than $l < l'$ is defined as the level equality $l^+ \vee l' = l'$ and level equalities are not allowed in contexts in gats. Hence we need to add a sort $\leq_n(l,l')$ for level equality.
+Hence, we do not need a new sort symbol corresponding to type equality judgments. However, this principle breaks down when formalizing the principle that any universe has a code in any larger universe. This is because $l < l'$ is defined as the level equality $l^+ \vee l' = l'$ and level equalities are not allowed in contexts in gats. To resolve this issue we add a sort $\leq_n(l,l')$ for level equality.
 
-In a forthcoming article we will explain how to capture the theory of explicit universe polymorphism with equational constraints \cite{BezemCDE22} as a gat. This also makes essential use of level equality sorts $\leq_n(l,l')$.
+In a forthcoming article we will explain how to capture the theory of explicit universe polymorphism with equational constraints \cite{BezemCDE22} as a gat. This will also make essential use of level equality sorts $\leq_n(l,l')$.
 
+While we have a generic construction of initial gats as a term model for an explicit substitution calculi, we are still relying on ad hoc proofs for the more standard implicit substitution calculi. However, also the latter seem to arise systematically from gats of cwfs. It seems that we can define variables as projections $\q[\p^n]$ in and implicit substitutions (arising from the arrow part of the family valued functor for example) can be defined by induction on the structure of types and terms. Related work in this direction has been done by Fiore and coworkers.
 
-\begin{itemize}
-\item More rigorous proofs of initiality of type theory with explicit polymorphism and implicit substitution. Mechanization would be a big project although not too big if one could build on Brunerie and de Boer.
-\item It would be interesting to have a generic proof of initiality of type theories with implicit substitution. The operator symbols that are defined implicitly in the model can already be specified on the gat-level.
-\item Finish the section on the gat for constraints.
-\item Work on gat for dependently typed predicate logic using cwf-indexed scwfs. Compare with Palmgren's work on hyperdoctrines above a cwf, and his discussion of the systems of Makkai, Gambino-Aczel, and Belo.
-\end{itemize}
+We mentioned in the introduction that untyped predicate logic is captured by ucwf-indexed scwfs, typed predicate logic by scwf-indexed scwfs, and dependently typed predicate logic by cwf-indexed scwfs (all with extra structure). Palmgren has already analyzed dependently typed predicate logic as hyperdoctrines above cwfs \cite{Palmgren19}. In the quest for uniform categorical logic it would be interesting to recast this work in terms of cwf-indexed scwfs. 
+
+As related work we would also like to mention the quotient inductive-inductive types of Altenkirch, Kaposi, and Kov{\'{a}}cs
+\cite{kaposi:qiits}.
 As related work we might want to mention qiits. Qiits are inductively defined (initial) gats inside dependent type theory. Unlike gats they have elimination rules. We have the sequence: inductive type, inductive family, inductive-inductive type, quotient inductive-inductive type. In the work of Kaposi, Kovacs, and Altenkirch there are various classes of qiits. The correspondence between these and the class of gats has not been investigated.
 
 In principle we should also survey other approaches to the initiality conjecture, like Uemura.
