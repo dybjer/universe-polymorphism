@@ -313,7 +313,7 @@ We shall show that a cwf indexed by (the base category of) a ucwf $\L$ of univer
 We also outline how modified versions of the theories presented in Bezem et al  \cite{BezemCDE22} form initial models of the gats. 
 %Rigorous proofs are however beyond the scope of this paper. 
 
-Moreover, further variations of indexed cwfs extend the scope of gat and cwf-based uniform categorical logic. For example, untyped predicate logic can be captured by ucwf-indexed scwfs with extra structure for the logical constants. Moreover, typed predicate logic can be captured by scwf-indexed scwfs, and dependently typed predicate logic by cwf-indexed scwfs, both with suitable extra structure for type formers and logical constants. Different versions of dependently typed predicate logic have been studied by Makkai \cite{makkai:folds}, Gambino and Aczel \cite{gambino-aczel}, Belo \cite{belo}, and Palmgren \cite{Palmgren19}.
+Moreover, further variations of indexed cwfs extend the scope of gat and cwf-based uniform categorical logic even more\footnote{Think of formulation.}. For example, untyped predicate logic can be captured by ucwf-indexed scwfs with extra structure for the logical constants. Moreover, typed predicate logic can be captured by scwf-indexed scwfs, and dependently typed predicate logic by cwf-indexed scwfs, both with suitable extra structure for type formers and logical constants. Various versions of dependently typed predicate logic have been studied by Makkai \cite{makkai:folds}, Gambino and Aczel \cite{gambino-aczel}, Belo \cite{belo}, and Palmgren \cite{Palmgren19}.
 
 \paragraph{Universe polymorphism.} We refer to our previous paper on explicit universe polymorphism \cite{BezemCDE22} for a presentation of the inference rules of Martin-Löf type theory with explicit universe polymorphism. There the reader can also find motivation and examples. Here we only give a brief overview. 
 
@@ -462,14 +462,17 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
  We omit the equations for the cumulative case, see instead the cumulative case for level-indexing.
 
 \subsection{Syntax and inference rules as an initial model}\label{initiality-external}
-As already mentioned, the grammar and inference rules for an initial model can be obtained by a general construction for finitary gats \cite{bezem:hofmann} and this construction can be extended to infinitary gats. The recipe is to build the judgment structure of the theory from the sort symbols of the gat, and the syntax of raw terms, types, contexts and context morphisms from untyped versions of the cwf-combinators and the operator symbols of the gat. Then one defines a system of inference rules from the typings of the cwf-combinators and the operator symbols of the gat. This yields an explicit substitution calculus for dependent type theory quite similar to Martin-Löf's \cite{martinlof:gbg92,tasistro:lic} but with named variables replaced by projections of the form $\q[\p^n]$. 
+As already mentioned, the grammar and inference rules for an initial model can be obtained by a general construction for finitary gats \cite{bezem:hofmann} and this construction can be extended to some non-finitary gats \cite{bezem:hofmann}
+\footnote{From 5.7 in that paper: Our treatment can be adapted
+to some non finitely presented gats. If we have an increasing sequence of signatures $\Sigma_n$ we
+can consider their union}. The recipe is to build the judgment structure of the theory from the sort symbols of the gat, and the syntax of raw terms, types, contexts and context morphisms from untyped versions of the cwf-combinators and the operator symbols of the gat. Then one defines a system of inference rules from the typings of the cwf-combinators and the operator symbols of the gat. This yields an explicit substitution calculus for dependent type theory quite similar to Martin-Löf's \cite{martinlof:gbg92,tasistro:lic} but with named variables replaced by projections of the form $\q[\p^n]$. 
 
 We could also build an initial model by adapting the proof by Brunerie and de Boer \cite{Brunerie:initiality,deBoer:lic} that Martin-Löf type theory with an external tower of universes is an initial contextual category with appropriate extra structure for the type formers. Their version of Martin-Löf type theory is more traditional with implicit substitutions, that is, substitution is not a term constructor, but an operation defined by induction on the structure of terms. 
 
 To adapt their construction to yield a model of our gat we would first need to replace their contextual categories by cwfs. Contextual categories are closely related to contextual cwfs, that is, cwfs where each context has a finite length \cite{castellan:lambek}. We expect that the implementation could be adapted accordingly, since initial cwfs are contextual. (We also remark that several equivalences and embeddings between categorical notions of models including cwfs have been implemented in UniMath by Ahrens, Lumsdaine, and Voevodsky \cite{AhrensLV18}.)
 Moreover, Brunerie and de Boer's rules for universes are not the same as ours. They just have the rule $\UU_l : \UU_{l+1}$ and only consider the non-cumulative case, while we have $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$ and consider both the non-cumulative and cumulative cases. We expect that it would be a modest amount of effort to adapt their construction to our universes.
 
-There are also some differences between Brunerie and de Boer's version of Martin-Löf type theory and ours \cite{BezemCDE22} on the syntactic side. Firstly, they work with decorated terms following Streicher \cite{streicher:thesis} and we would need to do the same. Another difference is that they have a Russell-style tower while we have a Tarski-style. Note that the Russell versus Tarski distinction is not reflected in the gat but only different options for the syntactic type theories.
+There are also some differences between Brunerie and de Boer's version of Martin-Löf type theory and ours \cite{BezemCDE22} on the syntactic side. Firstly, they work with decorated terms following Streicher \cite{streicher:thesis} and we would need to do decorate ours too. Another difference is that they have a Russell-style tower while we have a Tarski-style. Note that the Russell versus Tarski formulations are only different options for the syntactic type theories, but gats are intrinsically Tarski-style since we have an operator $\Ta$ that converts a term to a type.
 
 \subsection{Internalization (* Remove? *)}
 One might be tempted to internalize the externally indexed tower of universes by indexing universes by internal natural numbers: 
@@ -594,7 +597,7 @@ The operator symbols $\vee$ and $+$ commute with level substitution:
  l^+[\sigma] &=&  l[\sigma]^+
 \end{eqnarray*}
 %\end{tiny}
-\paragraph{Lawvere theories.} We remark that uwfs are closely related to Lawvere theories, but closer to the usual syntax based on $n$-place functions. One can prove that the latter are equivalent to contextual ucwfs, that is, ucwfs where each context has a length \cite{castellan:lambek}.
+\paragraph{Lawvere theories.} We remark that ucwfs are closely related to Lawvere theories, but ucwfs are closer to the usual syntax based on $n$-place functions. One can prove that Lawvere theories are equivalent to contextual ucwfs, that is, ucwfs where each context has a length \cite{castellan:lambek}.
 
 \paragraph{Remark} on finitely presented semilattices and constraints?
 
@@ -716,7 +719,7 @@ n : \lctx, l, m : \ltm(n), p : l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_{p,\Gamma
 \end{eqnarray*}
 In the sequel we will suppress the proof $p : l < m$ as an argument to this operator symbol and just write $(\UU^m_l)_{\Gamma}$.
 
-\paragraph{Level equality.} The sort symbol $\leq$ is analogous to the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, proofs of level equality can only be constructed from reflexivity and general reasoning available in all gats.%\footnote{How to say this rigorously? We can of course use general reasoning available in any initial gat, including reasoning about judgmental level equality.}
+\paragraph{Level equality.} The sort symbol $\leq$ resembles the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, proofs of level equality can only be constructed from reflexivity and general reasoning available in all gats.%\footnote{How to say this rigorously? We can of course use general reasoning available in any initial gat, including reasoning about judgmental level equality.}
 
 \paragraph{Equations.}
 The decoding equations for $\Ta_l$ and the equations for commutativity of operator symbols with substitution can be obtained by a straightforward internalization of the corresponding equations for the external tower. This means that the decoding equations are now relative to internal level contexts and level terms, as well as to terms. For example the decoding equation for $\Pi$ 
@@ -766,7 +769,7 @@ Moreover, we have laws that level substitution $\sigma$ commutes with the operat
 \paragraph{Operator symbol.}
 Adding an operator symbol for cumulativity is obtained by internalizing the lifting operations in the external tower:
 \begin{eqnarray*}
-n : \lctx, l,m : \ltm(n), l < m, \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
+n : \lctx, l,m : \ltm(n), p : l < m, \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
 \end{eqnarray*}
 where again $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. However, unlike for the external tower of universes, we need double superscripts on codes $\Pi^{l,l'}$ also in the cumulative case. 
 %This is because, unlike in the external case, we to the greater in general.
@@ -779,7 +782,7 @@ We have the following decoding equation for lifting of codes for $\Pi$:
 where $n, \lctx,l',m,m' : \ltm(n), l < m, l' < m', \Gamma : \ctx_n, a : \tm_n(\Gamma,(\UU_l)_\Gamma), b : \tm_n(\Gamma.\Ta_l(a),(\UU_{l'})_\Gamma)$.
 The decoding equation for lifting of codes for universes is as follows:
 \begin{eqnarray*}
-n : \lctx, k, l, m : \ltm(n), k < l < m, \Gamma : \ctx(n) &\vdash& \Ta^m_l((\UU^l_k)_\Gamma) = (\UU^m_k)_\Gamma
+n : \lctx, k, l, m : \ltm(n), p : k < l < m, \Gamma : \ctx(n) &\vdash& \Ta^m_l((\UU^l_k)_\Gamma) = (\UU^m_k)_\Gamma
 \end{eqnarray*}
 Equations for commutativity of lifting and term substitution ($\gamma : \hom(\Delta,\Gamma)$):
 \begin{eqnarray*}
