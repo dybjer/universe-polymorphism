@@ -160,6 +160,7 @@
 
 \newcommand{\II}{\mathbb{I}}
 \newcommand{\refl}{\mathsf{r}}
+\newcommand{\MB}[1]{{\color{red}{#1}}}
 %\newcommand{\mkbox}[1]{\ensuremath{#1}}
 
 
@@ -266,7 +267,7 @@ with Explicit Universe Polymorphism\\ as an Initial Model of a Generalized Algeb
 \maketitle
 
 \begin{abstract}
-We present generalized algebraic theories corresponding to slightly modified versions of some of the theories in our paper 
+We present generalized algebraic theories corresponding to slightly modified versions of some of the type theories in our paper 
 {\em Type Theory with Explicit Universe Polymorphism}. We first consider Martin-Löf type theory with an external tower of universes. Its models are categories with families with extra structure for the small type formers and the tower of universes. We then consider Martin-Löf type theory with explicit universe polymorphism, where we have universe level judgments and internally indexed universes. Its models are level-indexed categories with families, again with appropriate extra structure.
 % (* Finally, we extend the theory with universe level constraints. Its models are doubly indexed categories with families with extra structure. *) 
 In this way we get abstract syntax definitions of our theories as initial models of certain indexed categories with families with extra structure. We thus abstract from details of the grammar and inference rules of the type theories and highlight their high-level structure.
@@ -295,14 +296,14 @@ Constructions with a “decorated” application operation this conjecture was p
 of the general version of the conjecture and of proving this general version will be the
 subject of future work.
 \end{quotation}
-Such initiality proofs may seem straightforward superficially, but depend on subtle details in the formulation of grammar and inference rules. This is why Voevodsky insisted on calling such theorems ``conjectures'' until proven rigorously and ideally implemented in a proof assistant.
+On the surface such initiality proofs may seem straightforward, but they depend on subtle details in the formulation of grammar and inference rules. This is why Voevodsky insisted on calling such theorems ``conjectures'' until proven rigorously and ideally implemented in a proof assistant.
 
 An example is Brunerie and de Boer's \cite{Brunerie:initiality,deBoer:lic} proof in Agda that a version of Martin-Löf type theory with an external tower of universes is an initial contextual category \cite{cartmell:phd,cartmell:apal} with appropriate extra structure. %Theversion of type theory with de Bruijn variables and implicit substitutions. 
 
 A possible approach to Voevodsky's project is based on Cartmell's notion of a {\em generalized algebraic theory (gat)} \cite{cartmell:phd,cartmell:apal}. The most basic rules of dependent type theory can be captured by the gat of categories with families (cwfs) \cite{dybjer:torino}. Moreover, as shown in our paper {\em On generalized algebraic theories and categories with families} \cite{bezem:hofmann} there is a generic construction of an initial model of an arbitrary finitary gat. 
 Maybe an approach to a general notion of dependent type theory is as an initial model of an extension of the gat of cwfs? The reason for focusing on the gat of cwfs is that it occupies an intermediate place between dependent type theories defined by a grammar and inference rules and notions of model based on more mainstream categorical constructions. In particular, the gat of cwfs resembles Martin-Löf's substitution calculus for dependent type theory \cite{martinlof:gbg92,tasistro:lic}.
 
-Furthermore, as shown by Castellan, Clairambault, and Dybjer \cite{castellan:lambek}, by considering simply typed cwfs (scwfs) and unityped cwfs (ucwfs) we can also capture various simply typed and untyped logical systems as gats and thus widening the scope of {\em uniform categorical logic} based on gats and cwfs. 
+Furthermore, as shown by Castellan, Clairambault, and Dybjer \cite{castellan:lambek}, by considering simply typed cwfs (scwfs) and unityped cwfs (ucwfs) we can also capture various simply typed and untyped logical systems as gats and thus widening the scope of {\em uniform categorical logic} based on gats and cwfs. \MB{Cf. logical frameworks?}
 
 In this article we introduce the notion of an indexed cwf, that is, a base category $\C$ and a cwf-valued presheaf
 $$
@@ -464,15 +465,15 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
 \subsection{Syntax and inference rules as an initial model}\label{initiality-external}
 As already mentioned, the grammar and inference rules for an initial model can be obtained by a general construction for finitary gats \cite{bezem:hofmann} and this construction can be extended to some non-finitary gats \cite{bezem:hofmann}
 \footnote{From 5.7 in that paper: Our treatment can be adapted
-to some non finitely presented gats. If we have an increasing sequence of signatures $\Sigma_n$ we
-can consider their union}. The recipe is to build the judgment structure of the theory from the sort symbols of the gat, and the syntax of raw terms, types, contexts and context morphisms from untyped versions of the cwf-combinators and the operator symbols of the gat. Then one defines a system of inference rules from the typings of the cwf-combinators and the operator symbols of the gat. This yields an explicit substitution calculus for dependent type theory quite similar to Martin-Löf's \cite{martinlof:gbg92,tasistro:lic} but with named variables replaced by projections of the form $\q[\p^n]$. 
+to some non-finitely presented gats. If we have an increasing sequence of signatures $\Sigma_n$ we
+can consider their union \MB{TBD}}. The recipe is to build the judgment structure of the theory from the sort symbols of the gat, and the syntax of raw terms, types, contexts and context morphisms from untyped versions of the cwf-combinators and the operator symbols of the gat. Then one defines a system of inference rules from the typings of the cwf-combinators and the operator symbols of the gat. This yields an explicit substitution calculus for dependent type theory quite similar to Martin-Löf's \cite{martinlof:gbg92,tasistro:lic} but with named variables replaced by projections of the form $\q[\p^n]$. 
 
 We could also build an initial model by adapting the proof by Brunerie and de Boer \cite{Brunerie:initiality,deBoer:lic} that Martin-Löf type theory with an external tower of universes is an initial contextual category with appropriate extra structure for the type formers. Their version of Martin-Löf type theory is more traditional with implicit substitutions, that is, substitution is not a term constructor, but an operation defined by induction on the structure of terms. 
 
 To adapt their construction to yield a model of our gat we would first need to replace their contextual categories by cwfs. Contextual categories are closely related to contextual cwfs, that is, cwfs where each context has a finite length \cite{castellan:lambek}. We expect that the implementation could be adapted accordingly, since initial cwfs are contextual. (We also remark that several equivalences and embeddings between categorical notions of models including cwfs have been implemented in UniMath by Ahrens, Lumsdaine, and Voevodsky \cite{AhrensLV18}.)
 Moreover, Brunerie and de Boer's rules for universes are not the same as ours. They just have the rule $\UU_l : \UU_{l+1}$ and only consider the non-cumulative case, while we have $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$ and consider both the non-cumulative and cumulative cases. We expect that it would be a modest amount of effort to adapt their construction to our universes.
 
-There are also some differences between Brunerie and de Boer's version of Martin-Löf type theory and ours \cite{BezemCDE22} on the syntactic side. Firstly, they work with decorated terms following Streicher \cite{streicher:thesis} and we would need to do decorate ours too. Another difference is that they have a Russell-style tower while we have a Tarski-style. Note that the Russell versus Tarski formulations are only different options for the syntactic type theories, but gats are intrinsically Tarski-style since we have an operator $\Ta$ that converts a term to a type.
+There are also some differences between Brunerie and de Boer's version of Martin-Löf type theory and ours \cite{BezemCDE22} on the syntactic side. Firstly, they work with decorated terms following Streicher \cite{streicher:thesis} and we would need to decorate ours too. Another difference is that they have a Russell-style tower while we have a Tarski-style one. Note that the Russell versus Tarski formulations are only different options for the syntactic type theories, but gats are intrinsically Tarski-style since we have an operator $\Ta$ that converts a term to a type.
 
 \subsection{Internalization (* Remove? *)}
 One might be tempted to internalize the externally indexed tower of universes by indexing universes by internal natural numbers: 
@@ -537,7 +538,7 @@ m,n : \lctx, \sigma : \lhom(n,m), l:\ltm(n) &\vdash& \tuple{\sigma,l} : \lhom(n,
 m : \lctx &\vdash& \lp_m: \lhom(\s(m),m)\\
 m : \lctx &\vdash& \lq_m: \ltm(\s(m))
 \end{eqnarray*}
-Note that we no longer need an operator symbol for substitution in types but only for level terms. We also change the notation to suggest that these are operations on levels. For example, we use $\sigma$ and $\tau$ to range over level substitutions to distinguish them from term substitutions $\gamma$ and $\delta$. However, we keep the notation $\circ$ for composition of level substitutions, for level substitution in level terms $l[\sigma]$, for the empty level context morphism $\tuple{}_m$ and for context morphism extension $\tuple{\sigma,l}$. The notation for level contexts suggests that we have an initial ucwf where $n : \lctx$ is a natural number that records the number of available level variables. Thus $0 : \lctx$ is the terminal object in the ucwf.
+Note that we no longer need an operator symbol for substitution in types but only for level terms. We also change the notation to suggest that these are operations on levels. For example, we use $\sigma$ and $\tau$ to range over level substitutions to distinguish them from term substitutions $\gamma$ and $\delta$. However, we keep the notation $\circ$ for composition of level substitutions, $l[\sigma]$ for level substitution in level terms, $\tuple{}_m$ for the empty level context morphism and $\tuple{\sigma,l}$ for context morphism extension. The notation for level contexts suggests that we have an initial ucwf where $n : \lctx$ is a natural number that records the number of available level variables. Thus $0 : \lctx$ is the terminal object in the ucwf.
 
 The ucwf of levels also has operator symbols for next level and for the join of two levels:
 \begin{eqnarray*}
@@ -597,7 +598,7 @@ The operator symbols $\vee$ and $+$ commute with level substitution:
  l^+[\sigma] &=&  l[\sigma]^+
 \end{eqnarray*}
 %\end{tiny}
-\paragraph{Lawvere theories.} We remark that ucwfs are closely related to Lawvere theories, but ucwfs are closer to the usual syntax based on $n$-place functions. One can prove that Lawvere theories are equivalent to contextual ucwfs, that is, ucwfs where each context has a length \cite{castellan:lambek}.
+\paragraph{Lawvere theories.} We remark that ucwfs are related to Lawvere theories, but ucwfs are closer to the usual syntax based on $n$-place functions. One can prove that Lawvere theories are equivalent to contextual ucwfs, that is, ucwfs where each context has a length \cite{castellan:lambek}.
 
 \paragraph{Remark} on finitely presented semilattices and constraints?
 
@@ -642,16 +643,16 @@ n,n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma), a :
 &\vdash& 
 a[\sigma] : \tm_{n}(A[\sigma],\Gamma[\sigma]) 
 \end{eqnarray*}
-\footnote{MB, check.}
 \paragraph{Equations.}
-The functor laws give us the following equations:
+The functor laws give us the following equations:\footnote{%
+We should give more information here. The $p$ below is unexplained.}
 \begin{eqnarray*}
 \Gamma[\lid_n] &=& \Gamma\\
 \Gamma[\sigma \circ \tau] &=& \Gamma[\sigma][\tau]\\
 \gamma[\lid_n] &=& \gamma\\
 \gamma[\sigma \circ \tau] &=& \gamma[\sigma][\tau]\\
 A[\lid_n] &=& A\\
-A[\sigma \circ \tau] &=& A[\sigma][\tau]: \ty_p(\Gamma[\sigma \circ \tau])\footnote{We should give more information here.}\\
+A[\sigma \circ \tau] &=& A[\sigma][\tau]: \ty_p(\Gamma[\sigma \circ \tau])\\
 a[\lid_n] &=& a\\
 a[\sigma \circ \tau] &=& a[\sigma][\tau]: \tm_p(A[\sigma \circ \tau],\Gamma[\sigma \circ \tau])
 \end{eqnarray*}
@@ -700,17 +701,19 @@ Note that if we can derive
 \begin{eqnarray*}
 n : \lctx, l, l'  : \ltm(n) &\vdash& l = l' : \ltm(n)
 \end{eqnarray*}
-in the initial model, then we can also derive
+in the initial model \MB{or: in the lattice}, then we can also derive
 \begin{eqnarray*}
 n : \lctx, l,l' : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l')
 \end{eqnarray*}
-by preservation of equality which is available in all gats.
+by preservation of equality which is available in the gats.
 \footnote{Can we prove the following:
 If we have derivations
 \begin{eqnarray*}
 \vdash n : \lctx, \vdash l,l' : \ltm(n), \vdash p :  \leq_n(l,l')
 \end{eqnarray*}
-then $\vdash p = \refl(l) : \leq(l,l')$ and $\vdash l = l' : \ltm(n)$.
+then $\vdash p = \refl(l) : \leq(l,l')$ and $\vdash l = l' : \ltm(n)$?
+\MB{Canonicity? Closed level context is natural number. Closed $l:\ltm(n)$ in
+closed context is a lattice term ... $p$ is more difficult. }
 }
 
 We now redefine $l < m$ as $\leq_n(l^+ \vee m, m)$ and get a proper typing of the operator symbol $\UU^m_l$:
@@ -719,7 +722,7 @@ n : \lctx, l, m : \ltm(n), p : l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_{p,\Gamma
 \end{eqnarray*}
 In the sequel we will suppress the proof $p : l < m$ as an argument to this operator symbol and just write $(\UU^m_l)_{\Gamma}$.
 
-\paragraph{Level equality.} The sort symbol $\leq$ resembles the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, proofs of level equality can only be constructed from reflexivity and general reasoning available in all gats.%\footnote{How to say this rigorously? We can of course use general reasoning available in any initial gat, including reasoning about judgmental level equality.}
+\paragraph{Level equality.} The sort symbol $\leq$ resembles the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, proofs of level equality can only be constructed from reflexivity and reasoning available in the gat \MB{for the level ucwf}.%\footnote{How to say this rigorously? We can of course use general reasoning available in any initial gat, including reasoning about judgmental level equality.}
 
 \paragraph{Equations.}
 The decoding equations for $\Ta_l$ and the equations for commutativity of operator symbols with substitution can be obtained by a straightforward internalization of the corresponding equations for the external tower. This means that the decoding equations are now relative to internal level contexts and level terms, as well as to terms. For example the decoding equation for $\Pi$ 
@@ -779,7 +782,7 @@ We have the following decoding equation for lifting of codes for $\Pi$:
 \begin{eqnarray*}
 \Ta^{m \vee m'}_{l \vee l'}(\Pi^{l,l'}(a,b)) = \Pi^{m,m'}(\Ta^m_l(a),\Ta^{m'}_{l'}(b)) &:& \tm_n(\Gamma,(\UU_{l \vee l'})_\Gamma)
 \end{eqnarray*}
-where $n, \lctx,l',m,m' : \ltm(n), l < m, l' < m', \Gamma : \ctx_n, a : \tm_n(\Gamma,(\UU_l)_\Gamma), b : \tm_n(\Gamma.\Ta_l(a),(\UU_{l'})_\Gamma)$.
+where $n: \lctx,l',m,m' : \ltm(n), p: l < m, p': l' < m', \Gamma : \ctx_n, a : \tm_n(\Gamma,(\UU_l)_\Gamma), b : \tm_n(\Gamma.\Ta_l(a),(\UU_{l'})_\Gamma)$.
 The decoding equation for lifting of codes for universes is as follows:
 \begin{eqnarray*}
 n : \lctx, k, l, m : \ltm(n), p : k < l < m, \Gamma : \ctx(n) &\vdash& \Ta^m_l((\UU^l_k)_\Gamma) = (\UU^m_k)_\Gamma
@@ -817,7 +820,7 @@ $$
 % If $n = (\alpha_n, \ldots, \alpha_1)$ and $\s(n) =  (\alpha_n, \ldots, \alpha_1, \alpha_0)$ are lists of distinct level variables, then $\lp_n = (\alpha_n, \ldots, \alpha_1) : \lhom(\s(n),n)$ and $\lq_n = \alpha_0 : \ltm(\s(n))$ are the projections.
 \end{itemize}
 
-The next step is construct the initial of the gat for level-indexed cwfs with small types. For the initiality construction it is convenient to work with contexts of the form $n,\Gamma$, where $n$ is the number of level variables, and $\Gamma$ is a context which depends on these $n$ level variables. Note that in Bezem et al both level variables and term variables are named and may appear in an arbitrary order in a context. (We could actually follow Brunerie and de Boer rather closely, and then it is a little different.)
+The next step is construct the initial of the gat for level-indexed cwfs with small types. For the initiality construction it is convenient to work with contexts of the form $n,\Gamma$, where $n$ is the number of level variables, and $\Gamma$ is a context which depends on these $n$ level variables. Note that in Bezem et al both level variables and term variables are named and may appear in an arbitrary order in a context. (We could actually follow Brunerie and de Boer rather closely, and then it is a little different. \MB{Weird sentence})
 \begin{itemize}
 \item We define $\ty_n(\Gamma)$ as the set of equivalence classes of raw types $A$ such that $n, \Gamma \vdash A$ is a type and $A.A'$ are equivalent provided $n, \Gamma \vdash A = A'$.
 \item We define $\tm_n(\Gamma,A)$ as the set of equivalence classes of raw terms $a$ such that $n, \Gamma \vdash a : A$ and $a.a'$ are equivalent provided $n, \Gamma \vdash A = A'$.
@@ -826,7 +829,7 @@ The next step is construct the initial of the gat for level-indexed cwfs with sm
 \item The level equality sort $p : \leq_n(l,l')$ is interpreted as a one element sort provided $l = l' : \ltm(n)$.
 \end{itemize}
  
-The final part of the proof is about the arrow part of the level-indexed cwf with small types and level-indexed universes. In $\TTUP$ the different forms of level substitution and composition (in levels, level morphisms, contexts, context morphisms, types and terms) are all defined implicitly by induction on the respective syntactic categories. It follows directly that such level substitution satisfy the appropriate gat-equations, and that they are the unique operations doing so.
+The final part of the proof is about the arrow part of the level-indexed cwf with small types and level-indexed universes. In $\TTUP$ \MB{explain} the different forms of level substitution and composition (in levels, level morphisms, contexts, context morphisms, types and terms) are all defined implicitly by induction on the respective syntactic categories. It follows directly that such level substitution satisfy the appropriate gat-equations, and that they are the unique operations doing so.
 
 %In our old paper have the following introduction rule for cumulative universes with its decoding equation:
 %$$
