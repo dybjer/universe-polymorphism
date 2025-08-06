@@ -878,6 +878,29 @@ $\forall_\l(B[ \sigma^{\dagger}]) : \ty_m(\Gamma[\sigma])$.
 
 \section{Conclusion and further research}
 
+We have shown how to capture Martin-Löf type theory with explicit universe polymorphism as a gat. The list of sort symbols, operator symbols, and equations may seem long but not as long as the list of inference rules rules for the syntactic theory. (In the versions with implicit substitutions we should include the substitution lemmas.) Moreover, the gat formalizes the high-level structure of ucwf-indexed cwfs with extra structure: the $\vee$-semilattice with an inflationary operation $(-)^+$, and adjoint-like structures for $\Pi$-types and other type formers. Also context comprehension in cwfs is an adjoint-like structure. The relationship with adjoints in the sense of ordinary cartesian closed categories is worked out in the case of contextual cwfs with extensional equality types, $\Sigma$-types and $\Pi$-types by Clairambault and Dybjer \cite{clairambault:warsaw,clairambault:mscs} and for some other structures in Castellan et al \cite{castellan:lambek}.
+
+A key novelty is the need for level equality sorts $\leq_n(l,l')$. The main recipe for a gat corresponding to Martin-Löf type theory is that equality judgments are formalized as judgmental equalities in gats. For example, the judgment 
+$$
+\Gamma \vdash A
+$$
+expressing that $A$ is a well-formed type in the context $\Gamma$, corresponds to elements
+$$
+A : \ty(\Gamma)
+$$
+in the gat. However, the 
+$$
+\Gamma \vdash A = A'
+$$
+corresponds to an equality
+$$
+A = A' : \ty(\Gamma)
+$$
+and we do not need a new sort symbol corresponding to type equality judgments. However, this principle breaks down when formalizing the principle that any universe has a code in any larger universe. This is because larger than $l < l'$ is defined as the level equality $l^+ \vee l' = l'$ and level equalities are not allowed in contexts in gats. Hence we need to add a sort $\leq_n(l,l')$ for level equality.
+
+In a forthcoming article we will explain how to capture the theory of explicit universe polymorphism with equational constraints \cite{BezemCDE22} as a gat. This also makes essential use of level equality sorts $\leq_n(l,l')$.
+
+
 \begin{itemize}
 \item More rigorous proofs of initiality of type theory with explicit polymorphism and implicit substitution. Mechanization would be a big project although not too big if one could build on Brunerie and de Boer.
 \item It would be interesting to have a generic proof of initiality of type theories with implicit substitution. The operator symbols that are defined implicitly in the model can already be specified on the gat-level.
