@@ -275,7 +275,7 @@ In this way we get abstract syntax definitions of our theories as initial models
 
 \section{Introduction}
 
-The aim of Voevodsky's  {\em Initiality Conjecture project} is to provide a definition of a general class of dependent type theories and to develop generic metatheory for theories in this class. We quote from the introduction of an extended abstract where Voevodsky \cite{voevodsky:initiality} motivates his project:
+The aim of Voevodsky's  {\em Initiality Conjecture project} is to define a general class of dependent type theories and to develop generic metatheory for theories in this class. We quote from the introduction of an extended abstract where Voevodsky \cite{voevodsky:initiality} motivates his project:
 \begin{quotation}
 The first few steps in all approaches to the set-theoretic semantics of dependent
 type theories remain insuﬃciently understood. The constructions which have been
@@ -334,7 +334,7 @@ Furthermore, we presented an extension where equational constraints between univ
 %(* In Section 4 we present the generalized algebraic theory of cwfs with extra structure doubly indexed by levels and level constraints *). (* In Section 5 we discuss models *).
 In Section 6 we discuss related and further research. There is also an appendix with operator symbols and equations for level-indexed type theory that were not included in Section 3.
 
-\paragraph{Dedication.} We dedicate this article to professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend, colleague, and coauthor, who spent the winter 1993 and spring 1994 in the type theory group in Göteborg. He has made fundamental contributions to type theory and constructivity and in particular to the understanding of the constructive content of classical logic.
+\paragraph{Dedication.} We dedicate this article to professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend, colleague, and coauthor, who spent the winter and spring 1993 - 94 in the type theory group in Göteborg. He has made fundamental contributions to type theory and constructivity and in particular to the understanding of the constructive content of classical logic and the constructive analysis of impredicativity.
 
 \section{Type theory with an external tower of universes}
 
@@ -463,6 +463,13 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
  We omit the equations for the cumulative case, see instead the cumulative case for level-indexing.
 
 \subsection{Syntax and inference rules as an initial model}\label{initiality-external}
+
+In our paper {\em On generalized algebraic theories and categories with families} \cite{bezem:hofmann} we define the notion of a correct {\em presentation} (a finite list of sort symbols, operator symbols, and equations) $\Sigma$ of a gat and the associated category of models $\CwF_\Sigma$ of cwfs with a $\Sigma$-structure. We then construct an initial object $\T_\Sigma$ in $\CwF_\Sigma$ as a type theory defined in terms of a grammar and inference rules. This type theory is a calculus of explicit substitutions based on untyped cwf-combinators and untyped versions of the operator symbols. 
+
+In the present section we have presented the {\em infinitary} gat of cwfs with extra structure for the small type formers and a tower of universes, while the above construction of an initial model applies only to {\em finitary} gats. However, as explained in Section 5.7 of Bezem et al  \cite{bezem:hofmann}, we can generalize our construction to some non-finitely presented gats. If we have an increasing sequence of signatures $\Sigma_n$ we can build the initial model of their union in successive stages. In this way we can build an initial model by letting $\Sigma_n$ be the gat of cwfs with extra structure for the small type formers and a tower of $n$ universes.
+
+
+
 As already mentioned, the grammar and inference rules for an initial model can be obtained by a general construction for finitary gats \cite{bezem:hofmann} and this construction can be extended to some non-finitary gats \cite{bezem:hofmann}
 \footnote{From 5.7 in that paper: Our treatment can be adapted
 to some non-finitely presented gats. If we have an increasing sequence of signatures $\Sigma_n$ we
