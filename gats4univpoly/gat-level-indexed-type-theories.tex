@@ -334,7 +334,7 @@ Furthermore, we presented an extension where equational constraints between univ
 %(* In Section 4 we present the generalized algebraic theory of cwfs with extra structure doubly indexed by levels and level constraints *). (* In Section 5 we discuss models *).
 In Section 6 we discuss related and further research. There is also an appendix with operator symbols and equations for level-indexed type theory that were not included in Section 3.
 
-\paragraph{Dedication.} We dedicate this article to professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend, colleague, and coauthor, who spent the autumn of 1994 (check?) in the type theory group in Göteborg. He has made fundamental contributions to type theory and constructivity, in particular to the understanding of the constructive content of classical logic.
+\paragraph{Dedication.} We dedicate this article to professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend, colleague, and coauthor, who spent the winter 1993 and spring 1994 in the type theory group in Göteborg. He has made fundamental contributions to type theory and constructivity and in particular to the understanding of the constructive content of classical logic.
 
 \section{Type theory with an external tower of universes}
 
@@ -713,7 +713,13 @@ If we have derivations
 \end{eqnarray*}
 then $\vdash p = \refl(l) : \leq(l,l')$ and $\vdash l = l' : \ltm(n)$?
 \MB{Canonicity? Closed level context is natural number. Closed $l:\ltm(n)$ in
-closed context is a lattice term ... $p$ is more difficult. }
+closed context is a lattice term ... $p$ is more difficult.}
+
+PD: Yes, each level term has a normal form 
+$
+\alpha_1^{+^{p_1}} \vee \cdots \vee \alpha_m^{+^{p_m}}
+$ 
+for $p_i \geq 0$ for $1 \le i \le m \le n$ and distinct level variables (de Bruijn indices) $\alpha_1,\ldots,\alpha_m$. Hence we have an initial ucwf of levels where the elements of $\ltm(n)$ are such normal forms and $l = l' : \ltm(n)$ iff $l$ and $l'$ are identical.  Hence, if we extend the gat with a new sort $\leq$ and a new operator symbol $\refl$ for reflexivity, we can extend the initial model with sets $\leq_n(l,l')$ that contain a single element $\refl(l)$ iff $l = l' : \ltm(n)$ and is otherwise empty.
 }
 
 We now redefine $l < m$ as $\leq_n(l^+ \vee m, m)$ and get a proper typing of the operator symbol $\UU^m_l$:
