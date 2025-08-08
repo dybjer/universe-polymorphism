@@ -252,11 +252,15 @@
 \def\W{\mathsf{W}}
 
 \def\TTUP{\mathbf{MLTT^{\UU_l}}}
+\def\Sigmaext{\Sigma^\mathrm{ext}}
+\def\Sigmaint{\Sigma^\mathrm{int}}
+\def\TText{\mathbf{TT}^\mathrm{ext}}
+\def\TTint{\mathbf{TT}^\mathrm{int}}
 
 \begin{document}
 
 \title{Type Theory
-with Explicit Universe Polymorphism\\ as an Initial Model of a Generalized Algebraic Theory
+with Explicit Universe Polymorphism\\ as a Generalized Algebraic Theory
 %\footnote{Alternative title: Categorical Models of Type Theory or Type Theory
 %with Explicit Universe PolymorphismGeneralised Algebraic Theories of Type Theories with Explicit Universe Polymorphism?}
 }
@@ -912,31 +916,36 @@ $\forall_\l(B[ \sigma^{\dagger}]) : \ty_m(\Gamma[\sigma])$.
 
 \section{Conclusion and further research}
 
-We have shown how to capture Martin-Löf type theory with explicit universe polymorphism as a gat. The list of sort symbols, operator symbols, and equations may seem long but not as long as the list of inference rules rules for the syntactic theory. (In the versions with implicit substitutions we should include the substitution lemmas.) Moreover, the gat formalizes the high-level structure of ucwf-indexed cwfs with extra structure: the $\vee$-semilattice with an inflationary operation $(-)^+$, and adjoint-like structures for $\Pi$-types and other type formers. Also context comprehension in cwfs is an adjoint-like structure. The relationship with adjoints in the sense of ordinary cartesian closed categories is worked out in the case of contextual cwfs with extensional equality types, $\Sigma$-types and $\Pi$-types by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} and for some other structures in Castellan et al \cite{castellan:lambek}.
+We have shown how to present an infinitary gat $\Sigmaext$ for Martin-Löf type theory with an external tower of universes and a finitary gat $\Sigmaint$ for Martin-Löf type theory with internally level-indexed universes. We have also shown how to construct initial models $\T_{\Sigmaext}$ and $\T_{\Sigmaint}$ as instances of a general construction of initial models of gats in 
+Bezem et al \cite{bezem:hofmann}. These models are initial in the categories $\CwF_{\Sigmaext}$ and $\CwF_{\Sigmaint}$ of cwfs with an internal cwf with extra structure. 
+As such they are encodings of the syntactic theories $\TText$ and $\TTint$ rather than the syntactic theories themselves. 
+The relationship between the encoded and the original theories is an important question for further research. The situation is somewhat similar to the encoding of theories in logical frameworks, where an answer for the encoding of Martin-Löf type theory was provided by Hofmann \cite{hofmann:cambridge} as a conservativity theorem. 
 
-A key novelty is the need for level equality sorts $\leq_n(l,l')$. The main recipe for a gat corresponding to Martin-Löf type theory is that equality judgments are formalized as judgmental equalities in gats. For example, the judgment 
-$$
-\Gamma \vdash A
-$$
-expressing that $A$ is a well-formed type in the context $\Gamma$, corresponds to elements
-$$
-A : \ty(\Gamma)
-$$
-in the gat, but
-$$
-\Gamma \vdash A = A'
-$$
-corresponds to an equality
-$$
-A = A' : \ty(\Gamma)
-$$
-Hence, we do not need a new sort symbol corresponding to type equality judgments. However, this principle breaks down when formalizing the principle that any universe has a code in any larger universe. This is because $l < l'$ is defined as the level equality $l^+ \vee l' = l'$ and level equalities are not allowed in contexts in gats. To resolve this issue we add a sort $\leq_n(l,l')$ for level equality.
+%We have shown how to capture Martin-Löf type theory with explicit universe polymorphism as a gat. The list of sort symbols, operator symbols, and equations may seem long but not as long as the list of inference rules rules for the syntactic theory. (In the versions with implicit substitutions we should include the substitution lemmas.) Moreover, the gat formalizes the high-level structure of ucwf-indexed cwfs with extra structure: the $\vee$-semilattice with an inflationary operation $(-)^+$, and adjoint-like structures for $\Pi$-types and other type formers. Also context comprehension in cwfs is an adjoint-like structure. The relationship with adjoints in the sense of ordinary cartesian closed categories is worked out in the case of contextual cwfs with extensional equality types, $\Sigma$-types and $\Pi$-types by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} and for some other structures in Castellan et al \cite{castellan:lambek}.
+%
+%A key novelty is the need for level equality sorts $\leq_n(l,l')$. The main recipe for a gat corresponding to Martin-Löf type theory is that equality judgments are formalized as judgmental equalities in gats. For example, the judgment 
+%$$
+%\Gamma \vdash A
+%$$
+%expressing that $A$ is a well-formed type in the context $\Gamma$, corresponds to elements
+%$$
+%A : \ty(\Gamma)
+%$$
+%in the gat, but
+%$$
+%\Gamma \vdash A = A'
+%$$
+%corresponds to an equality
+%$$
+%A = A' : \ty(\Gamma)
+%$$
+%Hence, we do not need a new sort symbol corresponding to type equality judgments. However, this principle breaks down when formalizing the principle that any universe has a code in any larger universe. This is because $l < l'$ is defined as the level equality $l^+ \vee l' = l'$ and level equalities are not allowed in contexts in gats. To resolve this issue we add a sort $\leq_n(l,l')$ for level equality.
 
-In a forthcoming article we will explain how to capture the theory of explicit universe polymorphism with equational constraints \cite{BezemCDE22} as a gat. This will also make essential use of level equality sorts $\leq_n(l,l')$.
+Another topic for further research is how to capture the theory of explicit universe polymorphism with equational constraints \cite{BezemCDE22} as a gat. %We plan to show how level equality sorts $\leq_n(l,l')$.
 
-While we have a generic construction of initial gats as a term model for an explicit substitution calculi, we are still relying on ad hoc proofs for the more standard implicit substitution calculi. However, also the latter seem to arise systematically from gats of cwfs. It seems that we can define variables as projections $\q[\p^n]$ in and implicit substitutions (arising from the arrow part of the family valued functor for example) can be defined by induction on the structure of types and terms. \footnote{Related work in this direction has been done by Fiore and coworkers.}
-
-We mentioned in the introduction that untyped predicate logic is captured by ucwf-indexed scwfs, typed predicate logic by scwf-indexed scwfs, and dependently typed predicate logic by cwf-indexed scwfs (all with extra structure). Palmgren has already analyzed dependently typed predicate logic as hyperdoctrines above cwfs \cite{Palmgren19}. In the quest for uniform categorical logic it would be interesting to recast this work in terms of cwf-indexed scwfs. 
+%While we have a generic construction of initial gats as a term model for an explicit substitution calculi, we are still relying on ad hoc proofs for the more standard implicit substitution calculi. However, also the latter seem to arise systematically from gats of cwfs. It seems that we can define variables as projections $\q[\p^n]$ in and implicit substitutions (arising from the arrow part of the family valued functor for example) can be defined by induction on the structure of types and terms. \footnote{Related work in this direction has been done by Fiore and coworkers.}
+%
+It would also be interesting to develop other examples of gats for various logical systems. We already of mentioned in the introduction that untyped predicate logic is captured by ucwf-indexed scwfs, typed predicate logic by scwf-indexed scwfs, and dependently typed predicate logic by cwf-indexed scwfs (all with extra structure). Palmgren has already analyzed dependently typed predicate logic as hyperdoctrines above cwfs \cite{Palmgren19}. In the quest for uniform categorical logic it would be interesting to recast this work in terms of cwf-indexed scwfs. 
 
 (* Very rough formulation *) The idea of uniform categorical logic is akin to the idea of implementing logics on top of logical frameworks, such as Edinburgh LF, Isabelle, and Deducti. Such logical frameworks are based on dependent type theory with $\Pi$-types and one or more universes. The aim is to encode other logics by adding constants and equations to the logical framework. The approach based on gats is based on a ``logical framework'' based only on the most basic rules of dependent type theory, but without $\Pi$-types and a universe. The idea is to encode other logic by adding constants (sort and operator symbols) and equations to this basic dependent type theory.
 
