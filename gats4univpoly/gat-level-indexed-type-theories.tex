@@ -477,7 +477,7 @@ We remark that when $\Sigma$ presents cwfs (with extra structure for $\Sigma$), 
 Can we construct an initial object in $\CwF_\Sigma$ based on the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}? This theory is a more standard version of Martin-Löf type theory with implicit substitutions, where substitution is an operation defined by induction on types and terms. As we state in that paper, to prove initiality we would need to modify our syntax and work with decorated terms; for example, we need to decorate application with type information. In this way we expect to be able to construct an initial cwf with extra structure for the small type formers and the tower of universes. However, it would take extra work to construct an initial object in $\CwF_\Sigma$, which requires us to construct the cwf with extra structure that is internal to cwfs, as explained above.
 
 The construction of an initial with extra structure for the small type formers and the tower of universes based on the theory in Bezem et al \cite{BezemCDE22} would be similar to Brunerie and de Boer's \cite{Brunerie:initiality,deBoer:lic} construction of an initial contextual category with extra structure for a slightly different version of Martin-Löf type theory with an external tower of universes. Both theories are more standard version of Martin-Löf type theory with implicit substitutions, except that terms such as applications are decorated with type information. The rules for universes are also different. Brunerie and de Boer just have the rule $\UU_l : \UU_{l+1}$ and only consider the non-cumulative case, while we have $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$ and consider both the non-cumulative and cumulative cases.
-Moreover, their universes are \`a la Russell, while we show rules for versions \`a la Tarski and \`a la Russell. Inevitably, there are also other differences between the two systems of inference rules but it would lead too far give a complete account. On the semantic side their notion of model is that of a contextual category (with extra structure) while ours is a cwf (with extra structure). These are closely related notions, taking into account that initial cwfs are contextual in the sense that each context has a length \cite{ClairambaultD11,ClairambaultD14}. We also remark that several equivalences and embeddings between categorical notions of models including cwfs have been implemented in UniMath by Ahrens, Lumsdaine, and Voevodsky \cite{AhrensLV18}.
+Moreover, their universes are \`a la Russell, while we show rules for versions \`a la Tarski and \`a la Russell. Inevitably, there are also other differences between the two systems of inference rules but it would lead too far give a complete account. On the semantic side their notion of model is that of a contextual category (with extra structure) while ours is a cwf (with extra structure). These are closely related notions, taking into account that initial cwfs are contextual in the sense that each context has a length \cite{ClairambaultD11,ClairambaultD14}. We finally remark that several equivalences and embeddings between categorical notions of models including cwfs have been implemented in UniMath by Ahrens, Lumsdaine, and Voevodsky \cite{AhrensLV18}.
 
 
 %\paragraph{Our version of Martin-Löf type theory with an external tower of universes.} Like Brunerie and de Boer's version, ours is based on a more standard version of Martin-Löf type theory with implicit substitutions. However, while they consider Russell-style universes we show both Tarski-style and Russell-style ones. Note that the Russell versus Tarski formulations are only different options for the syntactic type theories, but gats are intrinsically Tarski-style since we have an operator $\Ta$ that converts a term to a type.
@@ -496,12 +496,12 @@ Moreover, their universes are \`a la Russell, while we show rules for versions \
 
 \subsection{Internalization (* Remove? *)}
 One might be tempted to internalize the externally indexed tower of universes by indexing universes by internal natural numbers: 
-$$\Gamma : \ctx, l : \tm(\Gamma,\N) \vdash (\UU_l) : \ty(\Gamma)$$
+$$\Gamma : \ctx, l : \tm(\Gamma,\N) \vdash (\UU_l)_\Gamma : \ty(\Gamma)$$
 %However, this would mean that we could build large types such as $\Pi l : \N.\U_l$ and $\Sigma l : \N.\U_l$ which increase the proof theoretic strength of type theory. 
 Note that $l$ here depends on variables in the context $\Gamma$. 
 A more cautious alternative would be to only
 allow universes indexed by constant internal natural numbers:
-$$ l : \tm(1,\N), \Gamma : \ctx \vdash (\UU_l) : \ty(\Gamma)$$
+$$ l : \tm(1,\N), \Gamma : \ctx \vdash \UU_l : \ty(\Gamma)$$
 
 Similarly, Agda has a type $\Level$ of universe levels with a level 0 and a next level operation $(-)^+$, but also has an operation $\vee$ on levels. Moreover, levels satisfy the same equality judgments as our theory.
 
@@ -824,10 +824,12 @@ and level substitution
 \end{eqnarray*}
 %Check that this is right. Cf comment by intern.
 
-\subsection{Syntax and inference rules as an initial model} 
-Here we can directly use the general construction of an initial model for finitary gats \cite{bezem:hofmann} yielding an explicit substitution calculus for dependent type theory with level judgments.
+\subsection{Syntax and inference rules as an initial model}\label{initiality-internal}
 
-(* Rewrite in a similar way as 2.3 * ) An alternative is again to use Brunerie and de Boer's construction of an initial model of Martin-Löf type theory with an external tower of universes \cite{Brunerie:initiality,deBoer:lic} as a starting point. In Section \ref{initiality-external} we discussed how to modify their construction to yield an initial model of our gat for Martin-Löf type theory with an external tower of universes. To turn this construction into one for level-indexed Martin-Löf type theory we need to extend the grammar with level terms, and add inference rules for level judgments. Then we need to show (i) how to organize the level terms and level judgments into an initial ucwf of levels; (ii) how to construct a level-indexed cwf of small types \ref{level-indexed-cwf} by modifying the construction of a cwf of small types; and (iii) how to construct an initial model of the level-indexed universes by modifying the construction of an initial model of the externally indexed universes.
+\paragraph{A generic construction based on explicit substitutions.} Since the gat for Martin-Löf type theory with level-indexed universes is finitary, the construction of an initial model is an instance of the general construction in Bezem et al
+\cite{bezem:hofmann}. This construction yields an explicit substitution calculus for Martin-Löf type theory with level-indexed universes.
+
+\paragraph{A construction based on implicit substitutions.} Can we construct an initial model based on the type theory with level judgments and level-indexed universes presented in Bezem et al \cite{BezemCDE22}? As in Section \ref{initiality-external} we would first need to use a decorated version of the terms. To turn this construction into one for level-indexed Martin-Löf type theory we need to extend the grammar with level terms, and add inference rules for level judgments. Then we need to show (i) how to organize the level terms and level judgments into an initial ucwf of levels; (ii) how to construct a level-indexed cwf of small types by modifying the construction of a cwf of small types; and (iii) how to construct an initial model of the level-indexed universes by modifying the construction of an initial model of the externally indexed universes.
 
 We first explain how to construct a ucwf of levels by extending Brilakis' construction in Agda of the equivalence between two initial ucwfs: one with explicit substitutions and one with implicit substitution and de Bruijn variables \cite{Brilakis18}. Since the ucwf with explicit substitutions is constructed directly from the operator symbols of ucwfs, Brilakis' proof is essentially the same as proving the initiality of the ucwf with implicit substutions. To prove the initiality of the ucwf of levels, we only need to extend Brilakis' proof with the the extra structure for $\vee$ and $(-)^+$.
 \begin{itemize}
@@ -836,7 +838,7 @@ We first explain how to construct a ucwf of levels by extending Brilakis' constr
 $$
 \Gamma \vdash l\ \level
 $$
-and $\Gamma$ contains $n$ level variables. Two terms $l, l' : \ltm(n)$ are equivalent provided
+where $\Gamma$ contains $n$ level variables. Two terms $l, l' : \ltm(n)$ are equivalent provided
 $$
 \Gamma \vdash l = l'
 $$
@@ -845,7 +847,7 @@ $$
 % If $n = (\alpha_n, \ldots, \alpha_1)$ and $\s(n) =  (\alpha_n, \ldots, \alpha_1, \alpha_0)$ are lists of distinct level variables, then $\lp_n = (\alpha_n, \ldots, \alpha_1) : \lhom(\s(n),n)$ and $\lq_n = \alpha_0 : \ltm(\s(n))$ are the projections.
 \end{itemize}
 
-The next step is construct the initial of the gat for level-indexed cwfs with small types. For the initiality construction it is convenient to work with contexts of the form $n,\Gamma$, where $n$ is the number of level variables, and $\Gamma$ is a context which depends on these $n$ level variables. Note that in Bezem et al both level variables and term variables are named and may appear in an arbitrary order in a context. (We could actually follow Brunerie and de Boer rather closely, and then it is a little different. \MB{Weird sentence})
+The next step is construct the initial of the gat for level-indexed cwfs with small types. In Bezem et al \cite{BezemCDE22} level variables and term variables may appear in arbitrary order in a context. For the construction of the initial model \footnote{PD: maybe it's better to say "term model" here and in some other places?} it is convenient to separate level contexts and term contexts and thus work with contexts of the form $n,\Gamma$, where $n$ is the number of level variables, and $\Gamma$ is a context which depends on these $n$ level variables. Note that 
 \begin{itemize}
 \item We define $\ty_n(\Gamma)$ as the set of equivalence classes of raw types $A$ such that $n, \Gamma \vdash A$ is a type and $A.A'$ are equivalent provided $n, \Gamma \vdash A = A'$.
 \item We define $\tm_n(\Gamma,A)$ as the set of equivalence classes of raw terms $a$ such that $n, \Gamma \vdash a : A$ and $a.a'$ are equivalent provided $n, \Gamma \vdash A = A'$.
@@ -854,7 +856,8 @@ The next step is construct the initial of the gat for level-indexed cwfs with sm
 \item The level equality sort $p : \leq_n(l,l')$ is interpreted as a one element sort provided $l = l' : \ltm(n)$.
 \end{itemize}
  
-The final part of the proof is about the arrow part of the level-indexed cwf with small types and level-indexed universes. In $\TTUP$ \MB{explain} the different forms of level substitution and composition (in levels, level morphisms, contexts, context morphisms, types and terms) are all defined implicitly by induction on the respective syntactic categories. It follows directly that such level substitution satisfy the appropriate gat-equations, and that they are the unique operations doing so.
+The final part of the proof is about the arrow part of the level-indexed cwf with small types and level-indexed universes. In $\mathbf{TTUP}$ \MB{explain} \footnote{PD: Should we introduce abbreviations for the gats and the type theories? For example, 
+$\Sigma^\mathrm{ext}$ for the (presentation of) the gat for an external tower of universes and $\Sigma^\mathrm{int}$ for the level-indexed versions, and $\mathbf{TT^\mathrm{ext}}$ and $\mathbf{TT^\mathrm{int}}$ for the two versions of type theory in our old paper?} the different forms of level substitution and composition (in levels, level morphisms, contexts, context morphisms, types and terms) are all defined implicitly by induction on the respective syntactic categories. It follows directly that such level substitution satisfy the appropriate gat-equations, and that they are the unique operations doing so.
 
 %In our old paper have the following introduction rule for cumulative universes with its decoding equation:
 %$$
