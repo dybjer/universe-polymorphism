@@ -334,7 +334,7 @@ in addition to the usual judgment forms of type theory. Moreover, all judgments 
 
 Furthermore, we presented an extension where equational constraints between universe levels can be declared \cite{BezemCDE22}, building on a proposal by Voevodsky \cite{VV}. This extension can also be described by a gat, but we postpone this topic to a forthcoming paper.
 
-\paragraph{Plan of the paper.} In Section 2 we present the infinitary gat of cwfs with extra structure for the type formers and an externally indexed tower of universes. We consider both cumulative and non-cumulative universes. In Section 3 we present the finitary gat of ucwf-indexed cwfs with extra structure for the type formers and an internally indexed tower of universes. An interesting feature here is the need for an extra sort of level equality needed for expressing equational constraints.
+\paragraph{Plan of the paper.} In Section 2 we present the infinitary gat $\Sigmaext$ of cwfs with extra structure for the type formers and an externally indexed tower of universes. We consider both cumulative and non-cumulative universes. In Section 3 we present the finitary gat $\Sigmaint$ of ucwf-indexed cwfs with extra structure for the type formers and an internally indexed tower of universes. An interesting feature here is the need for an extra sort of level equality needed for expressing equational constraints.
 %(* In Section 4 we present the generalized algebraic theory of cwfs with extra structure doubly indexed by levels and level constraints *). (* In Section 5 we discuss models *).
 In Section 4 we discuss related and further research. There is also an appendix with operator symbols and equations for level-indexed type theory that were not included in Section 3.
 
@@ -403,7 +403,7 @@ However, it is a very important variable expressing
 the condition under which $a=a'$ holds and must not be omitted.
 %We will meet a similar case for reflection on equality on level terms.
 
-We refer to Bezem et al \cite{bezem:hofmann} for the remaining cwf-equations. The reader may also consult the appendix where the equations for level-indexed cwfs are displayed.
+We refer to Bezem et al \cite{bezem:hofmann} for the remaining cwf-equations. The reader may also consult the appendix where the equations for level-indexed cwfs are displayed. 
 
 
 \subsection{The gat of cwfs with an external tower of universes}
@@ -464,12 +464,13 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
  \Pihat^{l}(a,b) : \tm(\Gamma,(\U_{l})_\Gamma)
  \end{eqnarray*}
  We omit the equations for the cumulative case, see instead the cumulative case for level-indexing.
+ This concludes the presentation $\Sigmaext$ of a gat for cwfs with small type formers and an external tower of universes.
 
 \subsection{Syntax and inference rules as an initial model}\label{initiality-external}
 
 \paragraph{A generic construction based on explicit substitutions.} In our paper {\em On generalized algebraic theories and categories with families} \cite{bezem:hofmann} we define the notion of a correct {\em presentation} $\Sigma$ (a finite list of sort symbols, operator symbols, and equations) of a gat and the associated category of models $\CwF_\Sigma$ of cwfs with a $\Sigma$-structure. We then construct an initial object $\T_\Sigma$ in $\CwF_\Sigma$ as a type theory defined in terms of a grammar and inference rules. This type theory is a calculus of explicit substitutions based on untyped cwf-combinators and untyped versions of the operator symbols. 
 
-In the current section we have presented the {\em infinitary} gat of cwfs with extra structure for the small type formers and a tower of universes. However, the above construction of an initial model applies only to {\em finitary} gats. Nevertheless, as explained in Section 5.7 of Bezem et al  \cite{bezem:hofmann}, we can generalize our construction to some non-finitely presented gats. If we have an increasing sequence of signatures $\Sigma_n$ we can build the initial model $\T_\Sigma$ of their union $\Sigma$ in stages. In this way we can build an initial model by letting $\Sigma_n$ be the gat of cwfs with extra structure for the small type formers and a truncated tower of $n$ universes. 
+In the current section we have presented the {\em infinitary} gat $\Sigmaext$ of cwfs with extra structure for the small type formers and a tower of universes. However, the above construction of an initial model applies only to {\em finitary} gats. Nevertheless, as explained in Section 5.7 of Bezem et al  \cite{bezem:hofmann}, we can generalize our construction to some non-finitely presented gats. If we have an increasing sequence of signatures $\Sigma_n$ we can build the initial model $\T_\Sigma$ of their union $\Sigma$ in stages. In this way we can build an initial model of $\Sigmaext$ as a union of $\Sigma_n$ -- the gats of cwfs with extra structure for the small type formers and a truncated tower of $n$ universes. 
 
 We remark that when $\Sigma$ presents cwfs (with extra structure for $\Sigma$), $\CwF_\Sigma$ is the category of cwfs with an {\em internal} cwf (with extra structure) and $\T_\Sigma$ is a cwf with an internal cwf (with extra structure). Since any gat is built on top of a basic framework of dependent types, its models are cwfs with extra structure. In particular, when $\Sigma$ presents the gat of cwfs, the extra structure is that of an internal cwf.
 
