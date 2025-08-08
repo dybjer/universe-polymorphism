@@ -477,7 +477,27 @@ We remark that when $\Sigma$ presents cwfs (with extra structure for $\Sigma$), 
 % The recipe is to build the judgment structure of the theory from the sort symbols of the gat, and the syntax of raw terms, types, contexts and context morphisms from untyped versions of the cwf-combinators and the operator symbols of the gat. Then one defines a system of inference rules from the typings of the cwf-combinators and the operator symbols of the gat. This yields an explicit substitution calculus for dependent type theory quite similar to Martin-Löf's \cite{martinlof:gbg92,tasistro:lic} but with named variables replaced by projections of the form $\q[\p^n]$. 
 
 \paragraph{Constructions based on implicit substitutions.} 
-Can we construct an initial object in $\CwF_\Sigma$ based on the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}? This theory is a more standard version of Martin-Löf type theory with implicit substitutions, where substitution is an operation defined by induction on types and terms. As we state in that paper, to prove initiality we would need to modify our syntax and work with decorated terms; for example, we need to decorate application with type information. In this way we expect to be able to construct an initial cwf with extra structure for the small type formers and the tower of universes. However, it would take extra work to construct an initial object in $\CwF_\Sigma$, which requires us to construct the cwf with extra structure that is internal to cwfs, as explained above.
+Can we construct an initial object in $\CwF_{\Sigmaext}$ based on the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}? This theory is a more standard version of Martin-Löf type theory with implicit substitutions, where substitution is an operation defined by induction on types and terms. As we state in that paper, to prove initiality we would need to modify our syntax and work with decorated terms; for example, we need to decorate application with type information. In this way we expect to be able to construct an initial cwf with extra structure for the small type formers and the tower of universes. However, it would take extra work to construct an initial object in $\CwF_\Sigmaext$, which requires us to construct the cwf with extra structure that is internal to cwfs, as explained above.
+\footnote{To build an initial object in $\CwF_{\Sigmaext}$, we need to build an internal cwf with extra structure. We interpret the sort symbols in terms of the judgment forms of $\TText$:
+\begin{itemize}
+\item $\Gamma : \ctx$ is defined as $\Gamma \vdash$ quotiented by the equivalence relation $\Gamma = \Gamma'$ defined as $\Gamma = \Gamma' \vdash$;
+\item $A : \ty(\Gamma)$ is defined as $\Gamma \vdash A$ quotiented by the equivalence relation $\Gamma \vdash A = A' \Gamma'$;
+\item $a : \tm(\Gamma,A)$ is defined as $\Gamma \vdash a : A$ quotiented by the equivalence relation $\Gamma \vdash a = a' : A$;
+\item $\gamma : \hom(\Delta,\Gamma)$ is defined as $\ldots$
+\end{itemize}
+Moreover, we interpret the operator symbols corresponding to constructors as follows:
+\begin{itemize}
+\item $ 1 : \ctx$ is defined as (the equivalence class of) the empty context.
+\item $\Gamma.A : \ctx$ ...
+\end{itemize}
+and the operator symbols corresponding to implicit operations.
+\begin{itemize}
+\item $A[\gamma]$ is substitution in types defined by induction on the structure of $A$
+\item $a[\gamma]$ is substitution in terms defined by induction on the structure of $a$
+\item etc
+\end{itemize}
+We then need to check the equations.
+}
 
 The construction of an initial cwf with extra structure for the small type formers and the tower of universes based on the theory in Bezem et al \cite{BezemCDE22} would be similar to Brunerie and de Boer's \cite{Brunerie:initiality,deBoer:lic} construction of an initial contextual category with extra structure for a slightly different version of Martin-Löf type theory with an external tower of universes. Both theories are more standard version of Martin-Löf type theory with implicit substitutions, except that terms such as applications are decorated with type information. The rules for universes are also different. Brunerie and de Boer just have the rule $\UU_l : \UU_{l+1}$ and only consider the non-cumulative case, while we have $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$ and consider both the non-cumulative and cumulative cases.
 Moreover, their universes are \`a la Russell, while we consider both \`a la Tarski and \`a la Russell. Inevitably, there are other differences between the two systems of inference rules but it would lead too far give a complete account. On the semantic side their notion of model is that of a contextual category (with extra structure) while ours is a cwf (with extra structure). These are closely related notions, taking into account that initial cwfs are contextual in the sense that each context has a length \cite{ClairambaultD11,ClairambaultD14}. We finally remark that several equivalences and embeddings between categorical notions of models including cwfs have been implemented in UniMath by Ahrens, Lumsdaine, and Voevodsky \cite{AhrensLV18}.
@@ -742,7 +762,7 @@ PD: Yes, each level term has a normal form
 $
 \alpha_1^{+^{p_1}} \vee \cdots \vee \alpha_m^{+^{p_m}}
 $ 
-for $p_i \geq 0$ for $1 \le i \le m \le n$ and distinct level variables (de Bruijn indices) $\alpha_1,\ldots,\alpha_m$. Hence we have an initial ucwf of levels where the elements of $\ltm(n)$ are such normal forms and $l = l' : \ltm(n)$ iff $l$ and $l'$ are identical.  Hence, if we extend the gat with a new sort $\leq$ and a new operator symbol $\refl$ for reflexivity, we can extend the initial model with sets $\leq_n(l,l')$ that contain a single element $\refl(l)$ iff $l = l' : \ltm(n)$ and is otherwise empty.
+for $p_i \geq 0$ for $1 \le i \le m \le n$ and level variables (de Bruijn indices) $\alpha_1 < \ldots < \alpha_m$. We construct an initial ucwf of levels where the elements of $\ltm(n)$ are such normal forms and $l = l' : \ltm(n)$ iff $l$ and $l'$ are identical.  If we extend the gat with a new sort $\leq$ and a new operator symbol $\refl$ for reflexivity, we can extend the initial model with sets $\leq_n(l,l')$ that contain a single element $\refl(l)$ iff $l = l' : \ltm(n)$ and is otherwise empty.
 }
 
 We now redefine $l < m$ as $\leq_n(l^+ \vee m, m)$ and get a proper typing of the operator symbol $\UU^m_l$:
