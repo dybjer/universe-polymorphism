@@ -317,9 +317,9 @@ We shall propose that cwfs indexed by the category of contexts of a ucwf $\L$ of
 
 %We also discuss the relationship between the gat $\Sigmaint$ and the type theories $\TTint$ presented in Bezem et al  \cite{BezemCDE22} and also between the gat $\Sigmaext$ for Martin-Löf type theory and an externally indexed tower of universes and the corresponding type theory $\TText$.
 
-Variations of indexed cwfs capture various logical systems and can be formalized as gats. For example, untyped predicate logic can be captured by ucwf-indexed scwfs with extra structure for the logical constants. Moreover, typed predicate logic can be captured by scwf-indexed scwfs, and dependently typed predicate logic by cwf-indexed scwfs, both with suitable extra structure for type formers and logical constants. Various versions of dependently typed predicate logic have been studied by Makkai \cite{makkai:folds}, Gambino and Aczel \cite{gambino-aczel}, Belo \cite{belo}, and Palmgren \cite{Palmgren19}.
+Variations of indexed cwfs also capture various other logical systems and can be formalized as gats. For example, untyped predicate logic can be captured by ucwf-indexed scwfs with extra structure for the logical constants. Moreover, typed predicate logic can be captured by scwf-indexed scwfs and dependently typed predicate logic by cwf-indexed scwfs, both with suitable extra structure for type formers and logical constants. Various versions of dependently typed predicate logic have been studied by Makkai \cite{makkai:folds}, Gambino and Aczel \cite{gambino-aczel}, Belo \cite{belo}, and Palmgren \cite{Palmgren19}.
 
-\paragraph{Universe polymorphism.} We refer to our previous paper on explicit universe polymorphism \cite{BezemCDE22} for a presentation of the inference rules of Martin-Löf type theory with explicit universe polymorphism. There the reader can also find motivation, examples, and a discussion on related work. Here we only give a brief overview. 
+\paragraph{Universe polymorphism.} We refer to our previous paper on explicit universe polymorphism \cite{BezemCDE22} for a presentation of the inference rules of Martin-Löf type theory with explicit universe polymorphism. There the reader can also find motivation, examples, and a discussion of related work. Here we only give a brief overview. 
 
 An implicit form of universe polymorphism in dependent type theory was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Coq (Rocq) \cite{coq:general}. Alternatively, Agda \cite{agda-wiki} and Lean \cite{moura:lean} employ versions of universe polymorphism, where universe levels are explicitly declared. 
 
@@ -340,19 +340,19 @@ Furthermore, we presented an extension where equational constraints between univ
 %
 %\paragraph{Important notions.}
 
-In Bezem, Coquand, Dybjer, and Escard\'o \cite{bezem:hofmann} we defined the notion of a correct presentation $\Sigma$ of a gat and its category of models $\CwF_\Sigma$ of cwfs with a $\Sigma$-structure. We also constructed a term model $\T_\Sigma$ and prove that it is initial in $\CwF_\Sigma$.
+In Bezem, Coquand, Dybjer, and Escard\'o \cite{bezem:hofmann} we defined the notion of a correct presentation $\Sigma$ of a gat and its category of models $\CwF_\Sigma$ of cwfs with a $\Sigma$-structure. We also constructed a term model $\T_\Sigma$ and proved that it is initial in $\CwF_\Sigma$.
 
-In the present paper we shall refer to the following two versions of Martin-Löf type theory with universes presented by Bezem, Coquand, Dybjer, and Escard\'o \cite{BezemCDE22}:
+In the present paper we shall discuss the following two versions of Martin-Löf type theory with universes presented by Bezem, Coquand, Dybjer, and Escard\'o \cite{BezemCDE22}:
 \begin{itemize}
-\item In Section 2 and 3 of that paper we presented a version with an external tower of universes closed under the standard small type formers. In order to prove initiality we shall here consider a modified version of this theory where some terms (such as applications) are decorated with type information. We shall refer to the modified theory as $\TText$.
-\item In Section 4 of that paper we presented a version of Martin-Löf type theory with explicit universe polymorphism. This theory has universe level judgments, internally level-indexed universes, and level-indexed products of types $[\alpha]A$. We again consider a version with decorated terms and refer to it as $\TTint$ for ``type theory with universe polymorphism''. 
+\item In Section 2 and 3 of that paper we presented a version with an external tower of universes closed under the standard small type formers. In order to prove initiality we shall here consider a modified version of this theory where some terms (such as applications) are decorated with type information. We refer to the modified theory as $\TText$.
+\item In Section 4 of that paper we presented a version of Martin-Löf type theory with explicit universe polymorphism. This theory has universe level judgments, internally level-indexed universes, and level-indexed products of types. We again consider a version with decorated terms and refer to it as $\TTint$ for ``type theory with universe polymorphism''. 
 \end{itemize}
 In this article we present the corresponding gats:
 \begin{itemize}
-\item in Section 2 we present the gat $\Sigmaext$ of cwfs with an external tower of universes closed under the standard small type formers.
-\item In Section 3 we present the gat $\Sigmaint$ of level-indexed cwfs with extra structure for the standard small type formers, level-indexed universes closed under them, and level-indexed $\Pi$-types.
+\item in Section 2 we present the gat $\Sigmaext$ of cwfs with an external tower of universes closed under the standard small type formers. We also discuss the construction of initial models including the conjecture that a term model based on $\TText$ is initial in $\CwF_\Sigmaext$.
+\item In Section 3 we present the gat $\Sigmaint$ of level-indexed cwfs with extra structure for the standard small type formers, level-indexed universes closed under them, and level-indexed $\Pi$-types. (Some of the operator symbols and equations are relegated to the appendix.) We also discuss the construction of initial models including the conjecture that a term model based on $\TTint$ is initial in $\CwF_\Sigmaint$.
 \end{itemize}
-In Section 4 we discuss related and further research. There is also an appendix with operator symbols and equations for level-indexed type theory that were not included in Section 3.
+In Section 4 we discuss related and further research. 
 
 \paragraph{Dedication.} We dedicate this article to professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend, colleague, and coworker, who spent the winter and spring 1993 - 94 in the type theory group in Göteborg. He has made fundamental contributions to type theory and constructivity and in particular to the understanding of the constructive content of classical logic and the constructive analysis of impredicativity.
 
