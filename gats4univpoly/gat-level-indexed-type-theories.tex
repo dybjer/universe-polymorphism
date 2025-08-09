@@ -344,13 +344,13 @@ In Bezem, Coquand, Dybjer, and Escard\'o \cite{bezem:hofmann} we define the noti
 
 In the present paper we shall refer to the following two versions of Martin-Löf type theory with universes presented by Bezem, Coquand, Dybjer, and Escard\'o \cite{BezemCDE22}:
 \begin{itemize}
-\item in Section 2 and 3 of that paper we presented a version with an external tower of universes closed under the standard small type formers. In order to prove initiality we consider a modified version of this theory where some terms (such as applications) are decorated with type information. We shall refer to the modified theory as $\TText$.
-\item In Section 4 of that paper we presented a version of Martin-Löf type theory explicit universe polymorphism. This theory has universe level judgments and internally level-indexed universes. We also included level-indexed products of types $[\alpha]A$ in this theory. We again consider a version of this theory with decorated terms and refer to it as $\TTint$ for ``type theory with universe polymorphism''. 
+\item in Section 2 and 3 of that paper we presented a version with an external tower of universes closed under the standard small type formers. In order to prove initiality we shall here consider a modified version of this theory where some terms (such as applications) are decorated with type information. We shall refer to the modified theory as $\TText$.
+\item In Section 4 of that paper we presented a version of Martin-Löf type theory with explicit universe polymorphism. This theory has universe level judgments, internally level-indexed universes, and level-indexed products of types $[\alpha]A$. We again consider a version with decorated terms and refer to it as $\TTint$ for ``type theory with universe polymorphism''. 
 \end{itemize}
 In this article we present the corresponding gats:
 \begin{itemize}
 \item in Section 2 we present the gat $\Sigmaext$ of cwfs with an external tower of universes closed under the standard small type formers.
-\item In Section 3 we present the gat $\Sigmaint$ of level-indexed cwfs with extra structure for the standard small type formers and level-indexed universes closed under them. We also include extra structure for level-indexed $\Pi$-types.
+\item In Section 3 we present the gat $\Sigmaint$ of level-indexed cwfs with extra structure for the standard small type formers, level-indexed universes closed under them, and level-indexed $\Pi$-types.
 \end{itemize}
 In Section 4 we discuss related and further research. There is also an appendix with operator symbols and equations for level-indexed type theory that were not included in Section 3.
 
@@ -500,7 +500,7 @@ To build an internal cwf with extra structure for the small type formers and a t
 \item $\Gamma : \ctx$ is defined as $\Gamma \vdash$ quotiented by the equivalence relation $\Gamma = \Gamma'$ defined as $\Gamma = \Gamma' \vdash$;
 \item $A : \ty(\Gamma)$ is defined as $\Gamma \vdash A$ quotiented by the equivalence relation $\Gamma \vdash A = A'$;
 \item $a : \tm(\Gamma,A)$ is defined as $\Gamma \vdash a : A$ quotiented by the equivalence relation $\Gamma \vdash a = a' : A$;
-\item $\gamma : \hom(\Delta,\Gamma)$ is defined as $\ldots$
+\item $\gamma : \hom(\Delta,\Gamma)$ is defined as sequences of equivalence classes of terms. Etc.
 \end{itemize}
 Moreover, we interpret the operator symbols corresponding to constructors as follows:
 \begin{itemize}
@@ -513,7 +513,7 @@ and the operator symbols corresponding to implicit operations.
 \item $a[\gamma]$ is substitution in terms defined by induction on the structure of $a$
 \item etc
 \end{itemize}
-We then need to check the equations.
+To prove that this defines an object in $\CwF_\Sigmaext$, we need to check the gat-equations. Then we need to show that there is a unique morphism in $\CwF_\Sigmaext$ to any other object.
 
 We would also like to make a few comments on the relationship between our construction and Brunerie and de Boer's \cite{Brunerie:initiality,deBoer:lic} construction of an initial contextual category with extra structure for a slightly different version of Martin-Löf type theory with an external tower of universes? Although there are several similarities, most importantly that their construction is also based on a more standard version with implicit substituion. However, a principal difference is that their notion of model (contextual category with extra structure) is not expressed as a gat and they do not construct an {\em internal} cwf with extra structure, although it should be possible to modify their construction to this end. There are also several minor differences. For example, they just have the rule $\UU_l : \UU_{l+1}$ and only consider the non-cumulative case, while we have $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$ and consider both the non-cumulative and cumulative cases.
 Moreover, their universes are \`a la Russell, while we consider both \`a la Tarski and \`a la Russell. Inevitably, there are other differences between the two systems of inference rules but it would lead too far give a complete account. 
@@ -545,7 +545,7 @@ A more cautious alternative would be to only
 allow universes indexed by constant internal natural numbers:
 $$ l : \tm(1,\N), \Gamma : \ctx \vdash \UU_l : \ty(\Gamma)$$
 
-Similarly, Agda has a type $\Level$ of universe levels with a level 0 and a next level operation $(-)^+$, but also has an operation $\vee$ on levels. Moreover, levels satisfy the same equality judgments as our theory. Agda has recently included an option {\tt -- level-universe} that restricts the use of universe levels and seems similar to our theory with level judgments.
+Similarly, Agda has a type $\Level$ of universe levels with a level 0 and a next level operation $(-)^+$, but also has an operation $\vee$ on levels. Moreover, levels satisfy the same equality judgments as our theory. Agda has recently included an option {\tt --level-universe} that restricts the use of universe levels in a similar way as in our theory with level judgments.
 
 What is the best argument for not indexing by natural numbers?? Parametricity??
 
@@ -867,6 +867,38 @@ and level substitution
 \end{eqnarray*}
 %Check that this is right. Cf comment by intern.
 
+\subsection{Level-indexed products of types}
+%We add three operator symbols in addition to the operator symbols for cwfs in Section 5.2 and 5.3:
+\def\l{\mathrm{l}}
+%\begin{tiny}
+In Bezem et al \cite{BezemCDE22} we also introduced 
+universal level quantification with level abstraction and application of a term to a level. The corresponding operator symbols are
+\begin{eqnarray*}
+n : \lctx, \Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp])&\vdash& \forall_\l(B) : \ty_n(\Gamma)\\
+n : \lctx, \Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp]), b : \tm_{\s(n)}(\Gamma[\lp], B) &\vdash& \lambda_\l(b) : \tm_n(\Gamma,\forall_\l(B))\\
+n : \lctx, \Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp]), c :  \tm_n(\Gamma,\forall_\l(B)), l : \ltm(n) &\vdash& \app_\l(c,l) : \tm_n(\Gamma, B[\tuple{\lid,l}])
+\end{eqnarray*}
+Equations ($\beta$ and $\eta$ for level abstraction and application):
+ \begin{eqnarray*}
+ \app_\l(\lambda_\l(b),l) &=& b[\tuple{\lid,l}]\\
+ \lambda_\l(\app_\l(c[\lp],\lq)) &=& c
+ \end{eqnarray*}
+ Equations for commutativity of operator symbols with respect to level substitution
+ \begin{eqnarray*}
+ \forall_\l(B)[ \gamma ] &=& \forall_\l(B[ \gamma[\lp]])\\
+ \lambda_\l(B)[ \gamma ] &=& \lambda_\l(B[ \gamma[\lp]])\\
+ \app_\l(c,l)[ \gamma ] &=& \app_\l(c[ \gamma ] ,l[ \gamma ] )\\
+ \forall_\l(B)[ \sigma ] &=& \forall_\l(B[ \sigma^{\dagger}])\\
+ \lambda_\l(B)[ \sigma ] &=& \lambda_\l(B[ \sigma^{\dagger}])\\
+\app_\l(c,l)[ \sigma ] &=& \app_\l(c[ \sigma ] ,l[ \sigma ] )
+\end{eqnarray*}
+where $\gamma : \hom_n(\Delta,\Gamma)$ is a term substitution, and $\sigma : \lhom(m,n)$ is a level substitutuion with $\sigma^\dagger = \tuple{\sigma \circ \lp, \lq}$. 
+To check the type of the equation
+$$ \forall_\l(B)[ \sigma ] = \forall_\l(B[ \sigma^{\dagger}])$$ we assume $\Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp])$. It follows that $B[\sigma^\dagger] : \ty_{s(m)}(\Gamma[\lp][\sigma^\dagger]) = \ty_{s(m)}(\Gamma[\sigma][\lp])$. Hence 
+$\forall_\l(B[ \sigma^{\dagger}]) : \ty_m(\Gamma[\sigma])$.
+
+\paragraph{Remark on universal quantification in predicate logic.} In the introduction we mentioned that untyped predicate logic can be captured by ucwf-indexed scwfs. (This gives a proof-relevant notion of model, like Lawvere's hyperdoctrines \cite{lawvere:hyperdoctrines}.) We note that the operator symbols and equations for universal quantification in untyped predicate logic are the same as those for universal level quantification above, except the difference between scwfs and cwfs: propositions in predicate logic do not depend on proofs.
+
 \subsection{Syntax and inference rules as an initial model}\label{initiality-internal}
 
 \paragraph{A generic construction based on explicit substitutions.} Since the gat for Martin-Löf type theory with level-indexed universes is finitary, the construction of an initial model is an instance of the general construction in Bezem et al
@@ -921,37 +953,6 @@ $\Sigma^\mathrm{ext}$ for the (presentation of) the gat for an external tower of
 %$$ 
 %provided $p_i < q_i$ for $1 \le i \le m \le m' \le n$.} 
 
-\subsection{Level-indexed products of types}
-%We add three operator symbols in addition to the operator symbols for cwfs in Section 5.2 and 5.3:
-\def\l{\mathrm{l}}
-%\begin{tiny}
-In Bezem et al \cite{BezemCDE22} we also introduced 
-universal level quantification with level abstraction and application of a term to a level. The corresponding operator symbols are
-\begin{eqnarray*}
-n : \lctx, \Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp])&\vdash& \forall_\l(B) : \ty_n(\Gamma)\\
-n : \lctx, \Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp]), b : \tm_{\s(n)}(\Gamma[\lp], B) &\vdash& \lambda_\l(b) : \tm_n(\Gamma,\forall_\l(B))\\
-n : \lctx, \Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp]), c :  \tm_n(\Gamma,\forall_\l(B)), l : \ltm(n) &\vdash& \app_\l(c,l) : \tm_n(\Gamma, B[\tuple{\lid,l}])
-\end{eqnarray*}
-Equations ($\beta$ and $\eta$ for level abstraction and application):
- \begin{eqnarray*}
- \app_\l(\lambda_\l(b),l) &=& b[\tuple{\lid,l}]\\
- \lambda_\l(\app_\l(c[\lp],\lq)) &=& c
- \end{eqnarray*}
- Equations for commutativity of operator symbols with respect to level substitution
- \begin{eqnarray*}
- \forall_\l(B)[ \gamma ] &=& \forall_\l(B[ \gamma[\lp]])\\
- \lambda_\l(B)[ \gamma ] &=& \lambda_\l(B[ \gamma[\lp]])\\
- \app_\l(c,l)[ \gamma ] &=& \app_\l(c[ \gamma ] ,l[ \gamma ] )\\
- \forall_\l(B)[ \sigma ] &=& \forall_\l(B[ \sigma^{\dagger}])\\
- \lambda_\l(B)[ \sigma ] &=& \lambda_\l(B[ \sigma^{\dagger}])\\
-\app_\l(c,l)[ \sigma ] &=& \app_\l(c[ \sigma ] ,l[ \sigma ] )
-\end{eqnarray*}
-where $\gamma : \hom_n(\Delta,\Gamma)$ is a term substitution, and $\sigma : \lhom(m,n)$ is a level substitutuion with $\sigma^\dagger = \tuple{\sigma \circ \lp, \lq}$. 
-To check the type of the equation
-$$ \forall_\l(B)[ \sigma ] = \forall_\l(B[ \sigma^{\dagger}])$$ we assume $\Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp])$. It follows that $B[\sigma^\dagger] : \ty_{s(m)}(\Gamma[\lp][\sigma^\dagger]) = \ty_{s(m)}(\Gamma[\sigma][\lp])$. Hence 
-$\forall_\l(B[ \sigma^{\dagger}]) : \ty_m(\Gamma[\sigma])$.
-
-\paragraph{Universal quantification in predicate logic.} In the introduction we mentioned that untyped predicate logic can be captured by ucwf-indexed scwfs. (This gives a proof-relevant logic, just like Lawvere's hyperdoctrines \cite{lawvere:hyperdoctrines}.) We note that the operator symbols and equations for universal quantification in untyped predicate logic are the same as those for universal level quantification above, except the difference between scwfs and cwfs: propositions in predicate logic do not depend on proofs.
 
 \section{Conclusion and further research}
 
