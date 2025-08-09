@@ -253,10 +253,10 @@
 \def\W{\mathsf{W}}
 
 %\def\TTUP{\mathbf{MLTT^{\UU_l}}}
-\def\Sigmaext{\Sigma^\mathrm{ext}}
-\def\Sigmaint{\Sigma^\mathrm{up}}
-\def\TText{\mathbf{TT}^\mathrm{ext}}
-\def\TTint{\mathbf{TT}^\mathrm{up}}
+\def\Sigmaext{{\Sigma^\mathrm{ext}}}
+\def\Sigmaint{{\Sigma^\mathrm{up}}}
+\def\TText{{\mathbf{TT}^\mathrm{ext}}}
+\def\TTint{{\mathbf{TT}^\mathrm{up}}}
 
 \begin{document}
 
@@ -314,12 +314,11 @@ In this article we introduce the notion of an indexed cwf, that is, a base categ
 $$
 P : \C^\op \to \CwF
 $$
-We shall propose that cwfs indexed by the category of contexts of a ucwf $\L$ of universe levels is a suitable notion of model of Martin-Löf type theory with explicit universe polymorphism as dispayed in our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22}. The benefit is twofold. First, it is a case study for our approach to the Initiality Conjecture project. Type theory with explicit universe polymorphism is an example of a dependent type theory, and cwfs indexed by a ucwf of universe levels can be presented by a gat. We argue that presenting type theory by a gat of cwfs is a higher-level and more ``objective'' notion than one presented by grammar and inference rules. This is because the gat only records the ``important" rules and highlights categorical structure. When building initial models in terms of grammar and inference rules we also need to include various bookkeeping rules, such as general rules of equality reasoning, and there will be a multitude of options. Without a common high level abstraction it will be hard to prove the equivalence between different options and to claim that there is a unique abstract notion. 
+Cwfs indexed by the category of contexts of a ucwf $\L$ of universe levels is a suitable notion of model of Martin-Löf type theory with explicit universe polymorphism presented in our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22}. The benefit is twofold. First, it is a case study for our approach to the Initiality Conjecture project. Type theory with explicit universe polymorphism is an example of a dependent type theory, and cwfs indexed by a ucwf of universe levels can be presented by a gat. We argue that presenting type theory by a gat of cwfs is a higher-level and more ``objective'' notion than one presented by grammar and inference rules. This is because the gat only records the ``important" rules and highlights categorical structure. When building initial models in terms of grammar and inference rules we need to include various bookkeeping rules, such as general rules of equality, and there will be a multitude of options. Without a common high level abstraction it will be hard to prove equivalence between different options and to claim that there is a unique abstract notion. 
 
 %We also discuss the relationship between the gat $\Sigmaint$ and the type theories $\TTint$ presented in Bezem et al  \cite{BezemCDE22} and also between the gat $\Sigmaext$ for Martin-Löf type theory and an externally indexed tower of universes and the corresponding type theory $\TText$.
 
-Variations of indexed cwfs also capture various other logical systems and can be formalized as gats. For example, untyped predicate logic can be captured by ucwf-indexed scwfs with extra structure for the logical constants. Moreover, typed predicate logic can be captured by scwf-indexed scwfs and dependently typed predicate logic by cwf-indexed scwfs, both with suitable extra structure for type formers and logical constants. Various versions of dependently typed predicate logic have been studied by Makkai \cite{makkai:folds}, Gambino and Aczel \cite{gambino-aczel}, Belo \cite{belo}, and Palmgren \cite{Palmgren19}.
-
+Variations of indexed cwfs also capture various other logical systems and can be formalized as gats. For example, untyped predicate logic can be captured by ucwf-indexed scwfs with extra structure for the logical constants. Typed predicate logic can be captured by scwf-indexed scwfs and dependently typed predicate logic (Makkai \cite{makkai:folds}, Gambino and Aczel \cite{gambino-aczel}, Belo \cite{belo}, and Palmgren \cite{Palmgren19}) by cwf-indexed scwfs, both with suitable extra structure for type formers and logical constants. 
 \paragraph{Universe polymorphism.} We refer to our previous paper on explicit universe polymorphism \cite{BezemCDE22} for a presentation of the inference rules of Martin-Löf type theory with explicit universe polymorphism. There the reader can also find motivation, examples, and a discussion of related work. Here we only give a brief overview. 
 
 An implicit form of universe polymorphism in dependent type theory was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Coq (Rocq) \cite{coq:general}. Alternatively, Agda \cite{agda-wiki} and Lean \cite{moura:lean} employ versions of universe polymorphism, where universe levels are explicitly declared. 
@@ -355,7 +354,7 @@ In this article we present the corresponding gats:
 \end{itemize}
 In Section 4 we discuss related and further research. 
 
-\paragraph{Dedication.} We dedicate this article to professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend, colleague, and coworker, who spent the winter and spring 1993 - 94 in the type theory group in Göteborg. He has made fundamental contributions to type theory and constructivity and in particular to the understanding of the constructive content of classical logic and the constructive analysis of impredicativity.
+\paragraph{Dedication.} We dedicate this article to professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend, colleague, and coworker, who spent the winter and spring 1993 - 94 in the type theory group in Göteborg. He has made fundamental contributions to type theory and constructivity and in particular to understanding the constructive content of classical logic and to the constructive analysis of impredicativity.
 
 \section{Type theory with an external tower of universes}
 
@@ -833,7 +832,7 @@ Moreover, we have laws that level substitution $\sigma$ commutes with the operat
  \end{eqnarray*}
 
 
-\subsection{Adding cumulativity} 
+\subsection{Cumulativity} 
 \paragraph{Operator symbol.}
 An operator symbol for cumulativity is obtained by internalizing the operator symbols for cumulativity in the external tower:
 \begin{eqnarray*}
@@ -960,7 +959,7 @@ We presented an infinitary gat $\Sigmaext$ for Martin-Löf type theory with an e
 Bezem et al \cite{bezem:hofmann}. 
 
 An alternative approach would be to construct initial objects in categories of cwfs with extra structure for the small type formers and universes $\CwF^\mathrm{ext}$ (for the externally indexed universes) and $\CwF^\mathrm{up}$ (for the level-indexed ones). %(This would be analogous to Brunerie's and de Boer's setting.) 
-The need for constructing initial objects in the categories with internal cwfs $\CwF_\Sigmaext$ and  $\CwF_\Sigmaint$ comes about since we define the model notions in terms of gats and these are themselves interpreted as cwfs.
+The need for constructing initial objects in the categories with internal cwfs $\CwF_{\Sigmaext}$ and  $\CwF_{\Sigmaint}$ comes about since we define the model notions in terms of gats and these are themselves interpreted as cwfs.
 
 %We have shown how to capture Martin-Löf type theory with explicit universe polymorphism as a gat. The list of sort symbols, operator symbols, and equations may seem long but not as long as the list of inference rules rules for the syntactic theory. (In the versions with implicit substitutions we should include the substitution lemmas.) Moreover, the gat formalizes the high-level structure of ucwf-indexed cwfs with extra structure: the $\vee$-semilattice with an inflationary operation $(-)^+$, and adjoint-like structures for $\Pi$-types and other type formers. Also context comprehension in cwfs is an adjoint-like structure. The relationship with adjoints in the sense of ordinary cartesian closed categories is worked out in the case of contextual cwfs with extensional equality types, $\Sigma$-types and $\Pi$-types by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} and for some other structures in Castellan et al \cite{castellan:lambek}.
 %
@@ -982,20 +981,21 @@ The need for constructing initial objects in the categories with internal cwfs $
 %$$
 %Hence, we do not need a new sort symbol corresponding to type equality judgments. However, this principle breaks down when formalizing the principle that any universe has a code in any larger universe. This is because $l < l'$ is defined as the level equality $l^+ \vee l' = l'$ and level equalities are not allowed in contexts in gats. To resolve this issue we add a sort $\leq_n(l,l')$ for level equality.
 
-A key ingredient in the gat $\Sigmaint$ is the sort symbol for level equality $\leq$. In a forthcoming article we plan to show how level equality sorts can be employed for representing equational constraints and present a gat for Martin-Löf type theory with level-indexed universes and equational constraints as presented in Section 5 in Bezem et al \cite{BezemCDE22}. 
-
-Other approaches to defining a general notion of dependent type theory inspired by Voevodsky's initiality conjecture project have been proposed by Bauer, Haselwarter, and Lumsdaine \cite{BauerHL20} and Uemura \cite{Uemura23}. 
+A key ingredient in the gat $\Sigmaint$ is the sort symbol for level equality $\leq$. In a forthcoming article we plan to show how level equality sorts can be employed for representing equational constraints. This will enable us to extend $\Sigmaint$ with new sort symbols and equations for the extension of $\TTint$ with equational constraints presented in Section 5 in Bezem et al \cite{BezemCDE22}. 
 
 %While we have a generic construction of initial gats as a term model for an explicit substitution calculi, we are still relying on ad hoc proofs for the more standard implicit substitution calculi. However, also the latter seem to arise systematically from gats of cwfs. It seems that we can define variables as projections $\q[\p^n]$ in and implicit substitutions (arising from the arrow part of the family valued functor for example) can be defined by induction on the structure of types and terms. \footnote{Related work in this direction has been done by Fiore and coworkers.}
 %
-It would also be interesting to develop other examples of gats for various logical systems. We already of mentioned in the introduction that untyped predicate logic is captured by ucwf-indexed scwfs, typed predicate logic by scwf-indexed scwfs, and dependently typed predicate logic by cwf-indexed scwfs (all with extra structure). Palmgren has already analyzed dependently typed predicate logic as hyperdoctrines above cwfs \cite{Palmgren19}. In the quest for uniform categorical logic it would be interesting to recast this work in terms of cwf-indexed scwfs. 
+%It would also be interesting to develop other examples of gats for various logical systems. We already of mentioned in the introduction that untyped predicate logic is captured by ucwf-indexed scwfs, typed predicate logic by scwf-indexed scwfs, and dependently typed predicate logic by cwf-indexed scwfs (all with extra structure). Palmgren has already analyzed dependently typed predicate logic as hyperdoctrines above cwfs \cite{Palmgren19}. In the quest for uniform categorical logic it would be interesting to recast this work in terms of cwf-indexed scwfs. 
+%
 
-(* Very rough formulation *) The idea of uniform categorical logic is akin to the idea of implementing logics on top of logical frameworks, such as Edinburgh LF, Isabelle, and Deducti. Such logical frameworks are based on dependent type theory with $\Pi$-types and one or more universes. The aim is to encode other logics by adding constants and equations to the logical framework. The approach based on gats is based on a ``logical framework'' based only on the most basic rules of dependent type theory, but without $\Pi$-types and a universe. The idea is to encode other logic by adding constants (sort and operator symbols) and equations to this basic dependent type theory.
 
-As related work we would also like to mention the quotient inductive-inductive types (qiits) of Kaposi, Kov{\'{a}}cs, and Altenkirch
-\cite{kaposi:qiits,kovacs:phd}. Although formal details may be slightly different, qiits are initial gats considered as data types in dependent type theory. Sort symbols correspond to data type constructors and operator symbols correspond to term constructors. These should be considered up to an equivalence relation generated by the equations. The notion of qiit is the latest extension in the sequence inductive type, inductive family, inductive-recursive type inductive-inductive type, quotient inductive-inductive type. Since qiits are inductively generated, they have an elimination principle. 
+\paragraph{Related research.}
+Other approaches to defining a general notion of dependent type theory inspired by Voevodsky's initiality conjecture project have been proposed by Bauer, Haselwarter, and Lumsdaine \cite{BauerHL20} and Uemura \cite{Uemura23}. 
 
-\footnote{In principle we should also survey other approaches to the initiality conjecture, like Uemura.}
+Another related idea is that of representing logics in a {Logical Framework}, such as Edinburgh LF \cite{harper-honsell-plotkin} and Dedukti \cite{dowek-dedukti}. These are based on dependent type theories with $\Pi$-types and one or more universes. The aim is to encode other logics by adding constants and equations to the logical framework. We can contrast this with gats which are based on dependent types {\em without} $\Pi$-types and universes. Logics are then encoded by adding sort symbols, operator symbols, and equations to the basic theory of dependent types.
+
+Related to gats are the quotient inductive-inductive types (qiits) of Kaposi, Kov{\'{a}}cs, and Altenkirch
+\cite{kaposi:qiits,kovacs:phd}. Although formal details may differ, qiits are roughly initial gats considered as data types in dependent type theory. Sort symbols correspond to data type constructors; operator symbols correspond to term constructors; and equations between terms can also be declared. Since qiits are inductively generated, they have an elimination principle. Qiit is he latest in the sequence of novel inductive notions in dependent type theory: inductive type, inductive family, inductive-recursive type inductive-inductive type, quotient inductive-inductive type. 
 
 %and $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$??
 %\end{tiny}
