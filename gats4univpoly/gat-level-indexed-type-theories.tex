@@ -253,9 +253,9 @@
 
 %\def\TTUP{\mathbf{MLTT^{\UU_l}}}
 \def\Sigmaext{\Sigma^\mathrm{ext}}
-\def\Sigmaint{\Sigma^\mathrm{int}}
+\def\Sigmaint{\Sigma^\mathrm{up}}
 \def\TText{\mathbf{TT}^\mathrm{ext}}
-\def\TTint{\mathbf{TT}^\mathrm{int}}
+\def\TTint{\mathbf{TT}^\mathrm{up}}
 
 \begin{document}
 
@@ -333,8 +333,25 @@ in addition to the usual judgment forms of type theory. Moreover, all judgments 
 
 Furthermore, we presented an extension where equational constraints between universe levels can be declared \cite{BezemCDE22}, building on a proposal by Voevodsky \cite{VV}. This extension can also be described by a gat, but we postpone this topic to a forthcoming paper.
 
-\paragraph{Plan of the paper.} In Section 2 we present the infinitary gat $\Sigmaext$ of cwfs with extra structure for the type formers and an externally indexed tower of universes. We consider both cumulative and non-cumulative universes. In Section 3 we present the finitary gat $\Sigmaint$ of ucwf-indexed cwfs with extra structure for the type formers and an internally indexed tower of universes. An interesting feature here is the need for an extra sort of level equality needed for expressing equational constraints.
-%(* In Section 4 we present the generalized algebraic theory of cwfs with extra structure doubly indexed by levels and level constraints *). (* In Section 5 we discuss models *).
+\paragraph{Plan of the paper.} 
+%In Section 2 we present the infinitary gat $\Sigmaext$ of cwfs with extra structure for the type formers and an externally indexed tower of universes. We consider both cumulative and non-cumulative universes. In Section 3 we present the finitary gat $\Sigmaint$ of ucwf-indexed cwfs with extra structure for the type formers and an internally indexed tower of universes. An interesting feature here is the need for an extra sort of level equality needed for expressing equational constraints.
+%%(* In Section 4 we present the generalized algebraic theory of cwfs with extra structure doubly indexed by levels and level constraints *). (* In Section 5 we discuss models *).
+%In Section 4 we discuss related and further research. There is also an appendix with operator symbols and equations for level-indexed type theory that were not included in Section 3.
+%
+%\paragraph{Important notions.}
+
+In Bezem, Coquand, Dybjer, and Escard\'o \cite{bezem:hofmann} we define the notion of a correct presentation $\Sigma$ of a gat and its category of models $\CwF_\Sigma$ of cwfs with a $\Sigma$-structure. We also construct a term model $\T_\Sigma$ and prove that it is initial in $\CwF_\Sigma$.
+
+In the present paper we shall refer to the following two versions of Martin-Löf type theory with universes presented by Bezem, Coquand, Dybjer, and Escard\'o \cite{BezemCDE22}:
+\begin{itemize}
+\item in Section 2 and 3 of that paper we presented a version with an external tower of universes closed under the standard small type formers. In order to prove initiality we consider a modified version of this theory where some terms (such as applications) are decorated with type information. We shall refer to the modified theory as $\TText$.
+\item In Section 4 of that paper we presented a version of Martin-Löf type theory explicit universe polymorphism. This theory has universe level judgments and internally level-indexed universes. We also included level-indexed products of types $[\alpha]A$ in this theory. We again consider a version of this theory with decorated terms and refer to it as $\TTint$ for ``type theory with universe polymorphism''. 
+\end{itemize}
+In this article we present the corresponding gats:
+\begin{itemize}
+\item in Section 2 we present the gat $\Sigmaext$ of cwfs with an external tower of universes closed under the standard small type formers.
+\item In Section 3 we present the gat $\Sigmaint$ of level-indexed cwfs with extra structure for the standard small type formers and level-indexed universes closed under them. We also include extra structure for level-indexed $\Pi$-types.
+\end{itemize}
 In Section 4 we discuss related and further research. There is also an appendix with operator symbols and equations for level-indexed type theory that were not included in Section 3.
 
 \paragraph{Dedication.} We dedicate this article to professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend, colleague, and coworker, who spent the winter and spring 1993 - 94 in the type theory group in Göteborg. He has made fundamental contributions to type theory and constructivity and in particular to the understanding of the constructive content of classical logic and the constructive analysis of impredicativity.
@@ -475,8 +492,8 @@ As explained in Bezem et al \cite{bezem:hofmann}, $\CwF_\Sigmaext$ is the catego
 %As already mentioned, the grammar and inference rules for an initial model can be obtained by a general construction for finitary gats \cite{bezem:hofmann} and this construction can be extended to some non-finitary gats \cite{bezem:hofmann}
 % The recipe is to build the judgment structure of the theory from the sort symbols of the gat, and the syntax of raw terms, types, contexts and context morphisms from untyped versions of the cwf-combinators and the operator symbols of the gat. Then one defines a system of inference rules from the typings of the cwf-combinators and the operator symbols of the gat. This yields an explicit substitution calculus for dependent type theory quite similar to Martin-Löf's \cite{martinlof:gbg92,tasistro:lic} but with named variables replaced by projections of the form $\q[\p^n]$. 
 
-\paragraph{A construction based on implicit substitutions.} 
-We shall now outline an alternative construction of an initial object in $\CwF_{\Sigmaext}$ from $\TText$ -- the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}. This theory is a more standard version of Martin-Löf type theory with implicit substitutions, where substitution is an operation defined by induction on types and terms. As we state in that paper, we first need to modify our syntax and work with decorated terms; for example, we need to decorate application with type information. 
+\paragraph{A construction based on implicit substitutions (initiality conjecture).} 
+We shall now outline how to construct an initial object in $\CwF_{\Sigmaext}$ based on $\TText$ -- the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}. As we state in that paper, we first need to modify our syntax and work with decorated terms; for example, we need to decorate application with type information. 
 
 To build an internal cwf with extra structure for the small type formers and a tower of universes, we interpret the sort symbols in terms of the judgment forms of $\TText$:
 \begin{itemize}
@@ -528,7 +545,7 @@ A more cautious alternative would be to only
 allow universes indexed by constant internal natural numbers:
 $$ l : \tm(1,\N), \Gamma : \ctx \vdash \UU_l : \ty(\Gamma)$$
 
-Similarly, Agda has a type $\Level$ of universe levels with a level 0 and a next level operation $(-)^+$, but also has an operation $\vee$ on levels. Moreover, levels satisfy the same equality judgments as our theory.
+Similarly, Agda has a type $\Level$ of universe levels with a level 0 and a next level operation $(-)^+$, but also has an operation $\vee$ on levels. Moreover, levels satisfy the same equality judgments as our theory. Agda has recently included an option {\tt -- level-universe} that restricts the use of universe levels and seems similar to our theory with level judgments.
 
 What is the best argument for not indexing by natural numbers?? Parametricity??
 
@@ -855,7 +872,7 @@ and level substitution
 \paragraph{A generic construction based on explicit substitutions.} Since the gat for Martin-Löf type theory with level-indexed universes is finitary, the construction of an initial model is an instance of the general construction in Bezem et al
 \cite{bezem:hofmann}. This construction yields an explicit substitution calculus for Martin-Löf type theory with level-indexed universes.
 
-\paragraph{A construction based on implicit substitutions.} Can we construct an initial model based on the type theory with level judgments and level-indexed universes presented in Bezem et al \cite{BezemCDE22}? As in Section \ref{initiality-external} we would first need to use a decorated version of the terms. To turn this construction into one for level-indexed Martin-Löf type theory we need to extend the grammar with level terms, and add inference rules for level judgments. Then we need to show (i) how to organize the level terms and level judgments into an initial ucwf of levels; (ii) how to construct a level-indexed cwf of small types by modifying the construction of a cwf of small types; and (iii) how to construct an initial model of the level-indexed universes by modifying the construction of an initial model of the externally indexed universes.
+\paragraph{A construction based on implicit substitutions (initiality conjecture).} Can we construct an initial model based on the type theory with level judgments and level-indexed universes presented in Bezem et al \cite{BezemCDE22}? As in Section \ref{initiality-external} we would first need to use a decorated version of the terms. To turn this construction into one for level-indexed Martin-Löf type theory we need to extend the grammar with level terms, and add inference rules for level judgments. Then we need to show (i) how to organize the level terms and level judgments into an initial ucwf of levels; (ii) how to construct a level-indexed cwf of small types by modifying the construction of a cwf of small types; and (iii) how to construct an initial model of the level-indexed universes by modifying the construction of an initial model of the externally indexed universes.
 
 We first explain how to construct a ucwf of levels by extending Brilakis' construction in Agda of the equivalence between two initial ucwfs: one with explicit substitutions and one with implicit substitution and de Bruijn variables \cite{Brilakis18}. Since the ucwf with explicit substitutions is constructed directly from the operator symbols of ucwfs, Brilakis' proof is essentially the same as proving the initiality of the ucwf with implicit substutions. To prove the initiality of the ucwf of levels, we only need to extend Brilakis' proof with the the extra structure for $\vee$ and $(-)^+$.
 \begin{itemize}
