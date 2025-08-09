@@ -308,7 +308,7 @@ An example of an implemented proof is Brunerie and de Boer's \cite{Brunerie:init
 A possible approach to Voevodsky's project is based on Cartmell's notion of a {\em generalized algebraic theory (gat)} \cite{cartmell:phd,cartmell:apal}. The most basic rules of dependent type theory can be captured by the gat of categories with families (cwfs) \cite{dybjer:torino}. Moreover, as shown in our paper {\em On generalized algebraic theories and categories with families} \cite{bezem:hofmann} there is a generic construction of an initial model of an arbitrary finitary gat. 
 Maybe an approach to a general notion of dependent type theory is as an initial model of an extension of the gat of cwfs? The reason for focusing on the gat of cwfs is that it occupies an intermediate place between dependent type theories defined by grammar and inference rules and notions of model based on more mainstream categorical constructions. In particular, the gat of cwfs resembles Martin-Löf's substitution calculus for dependent type theory \cite{martinlof:gbg92,tasistro:lic}.
 
-Furthermore, as shown by Castellan, Clairambault, and Dybjer \cite{castellan:lambek}, by considering simply typed cwfs (scwfs) and unityped cwfs (ucwfs) we can also capture various simply typed and untyped logical systems as gats and thus widening the scope of {\em uniform categorical logic} based on gats and cwfs. \MB{MB: Cf. logical frameworks? PD: I have written something preliminary in the related work section.}
+Furthermore, as shown by Castellan, Clairambault, and Dybjer \cite{castellan:lambek}, by considering simply typed cwfs (scwfs) and unityped cwfs (ucwfs) we can also capture various simply typed and untyped logical systems as gats and thus widening the scope of {\em uniform categorical logic} based on gats and cwfs.
 
 In this article we introduce the notion of an indexed cwf, that is, a base category $\C$ and a cwf-valued presheaf
 $$
@@ -333,20 +333,22 @@ in addition to the usual judgment forms of type theory. Moreover, all judgments 
 
 Furthermore, we presented an extension where equational constraints between universe levels can be declared \cite{BezemCDE22}, building on a proposal by Voevodsky \cite{VV}. This extension can also be described by a gat, but we postpone this topic to a forthcoming paper.
 
-\paragraph{Plan of the paper.} 
+\paragraph{Background.} 
 %In Section 2 we present the infinitary gat $\Sigmaext$ of cwfs with extra structure for the type formers and an externally indexed tower of universes. We consider both cumulative and non-cumulative universes. In Section 3 we present the finitary gat $\Sigmaint$ of ucwf-indexed cwfs with extra structure for the type formers and an internally indexed tower of universes. An interesting feature here is the need for an extra sort of level equality needed for expressing equational constraints.
 %%(* In Section 4 we present the generalized algebraic theory of cwfs with extra structure doubly indexed by levels and level constraints *). (* In Section 5 we discuss models *).
 %In Section 4 we discuss related and further research. There is also an appendix with operator symbols and equations for level-indexed type theory that were not included in Section 3.
 %
 %\paragraph{Important notions.}
 
-In Bezem, Coquand, Dybjer, and Escard\'o \cite{bezem:hofmann} we defined the notion of a correct presentation $\Sigma$ of a gat and its category of models $\CwF_\Sigma$ of cwfs with a $\Sigma$-structure. We also constructed a term model $\T_\Sigma$ and proved that it is initial in $\CwF_\Sigma$.
+In Bezem, Coquand, Dybjer, and Escard\'o \cite{bezem:hofmann} we defined the notion of a correct presentation $\Sigma$ of a gat and its category of models $\CwF_\Sigma$ of cwfs with a $\Sigma$-structure. (Gats are based on the basic rules for dependent types, and hence they are modelled by cwfs with extra structure.) We also constructed a term model $\T_\Sigma$ and proved that it is initial in $\CwF_\Sigma$.
 
 In the present paper we shall discuss the following two versions of Martin-Löf type theory with universes presented by Bezem, Coquand, Dybjer, and Escard\'o \cite{BezemCDE22}:
 \begin{itemize}
 \item In Section 2 and 3 of that paper we presented a version with an external tower of universes closed under the standard small type formers. In order to prove initiality we shall here consider a modified version of this theory where some terms (such as applications) are decorated with type information. We refer to the modified theory as $\TText$.
 \item In Section 4 of that paper we presented a version of Martin-Löf type theory with explicit universe polymorphism. This theory has universe level judgments, internally level-indexed universes, and level-indexed products of types. We again consider a version with decorated terms and refer to it as $\TTint$ for ``type theory with universe polymorphism''. 
 \end{itemize}
+
+\paragraph{Plan of the paper.} 
 In this article we present the corresponding gats:
 \begin{itemize}
 \item in Section 2 we present the gat $\Sigmaext$ of cwfs with an external tower of universes closed under the standard small type formers. We also discuss the construction of initial models including the conjecture that a term model based on $\TText$ is initial in $\CwF_\Sigmaext$.
@@ -953,7 +955,7 @@ This concludes the construction of an object of $\CwF_\Sigmaint$. Finally, we ne
 %provided $p_i < q_i$ for $1 \le i \le m \le m' \le n$.} 
 
 
-\section{Conclusion and further research}
+\section{Conclusion}
 
 We presented an infinitary gat $\Sigmaext$ for Martin-Löf type theory with an external tower of universes and a finitary gat $\Sigmaint$ for Martin-Löf type theory with internally level-indexed universes and level-indexed products. We have also explained that the models $\T_{\Sigmaext}$ and $\T_{\Sigmaint}$ are instances of general constructions of initial models of gats in 
 Bezem et al \cite{bezem:hofmann}. 
@@ -992,10 +994,10 @@ A key ingredient in the gat $\Sigmaint$ is the sort symbol for level equality $\
 \paragraph{Related research.}
 Other approaches to defining a general notion of dependent type theory inspired by Voevodsky's initiality conjecture project have been proposed by Bauer, Haselwarter, and Lumsdaine \cite{BauerHL20} and Uemura \cite{Uemura23}. 
 
-Another related idea is that of representing logics in a {Logical Framework}, such as Edinburgh LF \cite{harper-honsell-plotkin} and Dedukti \cite{dowek-dedukti}. These are based on dependent type theories with $\Pi$-types and one or more universes. The aim is to encode other logics by adding constants and equations to the logical framework. We can contrast this with gats which are based on dependent types {\em without} $\Pi$-types and universes. Logics are then encoded by adding sort symbols, operator symbols, and equations to the basic theory of dependent types.
+Another related idea is that of representing logics in a {Logical Framework}, such as Edinburgh LF \cite{harper-honsell-plotkin} or Dedukti \cite{dowek-dedukti}. These are based on dependent type theories with $\Pi$-types and one or more universes. The aim is to encode other logics by adding constants and equations to the logical framework. We contrast this to gats which are based on dependent types {\em without} $\Pi$-types and universes. Logics are then encoded by adding sort symbols, operator symbols, and equations to the basic theory of dependent types.
 
 Related to gats are the quotient inductive-inductive types (qiits) of Kaposi, Kov{\'{a}}cs, and Altenkirch
-\cite{kaposi:qiits,kovacs:phd}. Although formal details may differ, qiits are roughly initial gats considered as data types in dependent type theory. Sort symbols correspond to data type constructors; operator symbols correspond to term constructors; and equations between terms can also be declared. Since a qiit is inductively generated, it has an elimination principle. It is the latest in the sequence of novel inductive notions in dependent type theory: inductive type, inductive family, inductive-recursive type inductive-inductive type, quotient inductive-inductive type. 
+\cite{kaposi:qiits,kovacs:phd}. Although formal details may differ, qiits are roughly initial gats considered as data types in dependent type theory. Sort symbols correspond to data type constructors; operator symbols correspond to term constructors; and equations between terms can be declared. Since a qiit is inductively generated, it has an elimination principle. It is the latest in the sequence of novel inductive notions in dependent type theory: inductive type, inductive family, inductive-recursive type inductive-inductive type, quotient inductive-inductive type. 
 
 %and $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$??
 %\end{tiny}
