@@ -20,10 +20,11 @@
 \usepackage{proof}
 \usepackage{latexsym}
 %\usepackage{mytheorems}
+\theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}{Lemma}[theorem]
-\newtheorem{proposition}{Proposition}[theorem]
+\newtheorem*{proposition*}{Proposition}%[theorem]
 \theoremstyle{definition}
 %\newtheorem{definition}[theorem]{Definition}
 %\newtheorem{remark}{Remark}[theorem]
@@ -552,7 +553,8 @@ What is the best argument for not indexing by natural numbers?? Parametricity??
 
 \section{Level-indexed type theory}
 
-\subsection{The ucwf of levels} As already mentioned in the introduction, in Bezem et al \cite{BezemCDE22} we added special universe level {\em judgments}:
+\subsection{The ucwf of levels}\label{ucwf-levels}
+ As already mentioned in the introduction, in Bezem et al \cite{BezemCDE22} we added special universe level {\em judgments}:
 $$
 l\ \level
 \hspace{5em}
@@ -657,9 +659,61 @@ The operator symbols $\vee$ and $+$ commute with level substitution:
  l^+[\sigma] &=&  l[\sigma]^+
 \end{eqnarray*}
 %\end{tiny}
-\paragraph{Lawvere theories.} We remark that ucwfs are related to Lawvere theories, but ucwfs are closer to the usual syntax based on $n$-place functions. One can prove that Lawvere theories are equivalent to contextual ucwfs, that is, ucwfs where each context has a length \cite{castellan:lambek}.
+\paragraph{Lawvere theories.} We remark that ucwfs are related to Lawvere theories, but ucwfs are closer to the usual syntax based on $n$-place functions. One can prove that Lawvere theories are equivalent to contextual ucwfs, that is, ucwfs where each context has a length \cite{ClairambaultD11,castellan:lambek}.
 
-\footnote{Move stuff about $\leq$ here, including ucwf of normal forms?}
+\paragraph{Level equality sorts.}
+When we encode type theory in gats, the principle is to introduce one sort for each main form of judgment. For example, $l : \ltm(n)$ represents the judgment $n \vdash l\ \level$. Equality judgments are then represented by equalities: $l = l' : \ltm(n)$ represents $n \vdash l = l'$.
+
+However, as we shall see in the next subsection, there are cases where we would like to have equalities in contexts and this is not allowed in gats. This issue can be resolved by introducing a new sort symbol for level equality:
+\begin{eqnarray*}
+n : \lctx, l, l'  : \ltm(n) &\vdash& \leq_n(l,l')
+\end{eqnarray*}
+and an operator symbol for reflexivity:
+\begin{eqnarray*}
+n : \lctx, l : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l)
+\end{eqnarray*}
+Note that if $l =  l' : \ltm(n)$ in the initial model, that is, if $l = l'$ can be derived by equational reasoning from the laws for $\vee$ and $(-)^+$, then $\refl(l) :  \leq_n(l,l')$
+%\begin{eqnarray*}
+%n : \lctx, l, l'  : \ltm(n) &\vdash& l = l' : \ltm(n)
+%\end{eqnarray*}
+%in the initial model, that is, if $l = l'$ can be derived by equational reasoning from the laws for $\vee$ and $(-)^+$ , then we can also derive
+%\begin{eqnarray*}
+%n : \lctx, l,l' : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l')
+%\end{eqnarray*}
+by preservation of equality, a principle available in all gats. In the opposite direction we have the following:
+\begin{proposition*}
+If $n : \lctx, l, l' : \ltm(n),$ and $p :  \leq_n(l,l')$ in the initial model, 
+then $p = \refl(l) : \leq(l,l')$ and $l = l' : \ltm(n)$. 
+\end{proposition*} 
+
+This can be proved by a normal form argument. As remarked by Bezem and Coquand \cite{bezem-coquand:lattices}
+each level term has a normal form 
+$
+\alpha_1^{+^{p_1}} \vee \cdots \vee \alpha_m^{+^{p_m}}
+$ 
+for $p_i \geq 0$ for $1 \le i \le m \le n$ and level variables (de Bruijn indices) $\alpha_1 < \ldots < \alpha_m$. 
+We can construct an initial ucwf with $\vee$ and $(-)^+$, where the elements of $\ltm(n)$ are normal forms and $l = l' : \ltm(n)$ iff $l$ and $l'$ are identical normal forms.  If we extend the gat with a new sort $\leq$ and a new operator symbol $\refl$ for reflexivity, we can extend the initial ucwf with sets $\leq_n(l,l')$ that contain a single element $\refl(l)$ iff $l = l' : \ltm(n)$ and is otherwise empty.
+
+\paragraph{Remark on identity types.} The sort symbol $\leq$ for level equality resembles the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, level equality proofs are limited and, as shown above, can only be obtained by equational reasoning from the laws for $\vee$ and $(-)^+$.
+
+%\footnote{Can we prove the following:
+%If we have derivations
+%\begin{eqnarray*}
+%\vdash n : \lctx, \vdash l,l' : \ltm(n), \vdash p :  \leq_n(l,l')
+%\end{eqnarray*}
+%then $\vdash p = \refl(l) : \leq(l,l')$ and $\vdash l = l' : \ltm(n)$?
+%\MB{Canonicity? Closed level context is natural number. Closed $l:\ltm(n)$ in
+%closed context is a lattice term ... $p$ is more difficult.}
+%
+%PD: Yes, each level term has a normal form 
+%$
+%\alpha_1^{+^{p_1}} \vee \cdots \vee \alpha_m^{+^{p_m}}
+%$ 
+%for $p_i \geq 0$ for $1 \le i \le m \le n$ and level variables (de Bruijn indices) $\alpha_1 < \ldots < \alpha_m$. We construct an initial ucwf of levels where the elements of $\ltm(n)$ are such normal forms and $l = l' : \ltm(n)$ iff $l$ and $l'$ are identical.  If we extend the gat with a new sort $\leq$ and a new operator symbol $\refl$ for reflexivity, we can extend the initial model with sets $\leq_n(l,l')$ that contain a single element $\refl(l)$ iff $l = l' : \ltm(n)$ and is otherwise empty.
+%}
+
+
+
 \footnote{Remark on finitely presented semilattices and constraints?}
 
 
@@ -749,46 +803,13 @@ However, when we try to internalize the operator symbols $\UU^m_l$ for universes
 \begin{eqnarray*}
 n : \lctx, l, m : \ltm(n), l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_\Gamma: \tm_n(\Gamma,(\UU_{m})_\Gamma)
 \end{eqnarray*}
-where $l < m$ is defined as $l^+ \vee m = m$, does not work since equations are not allowed in argument types in gats. This issue can be resolved by introducing a new sort symbol for level equality:
-\begin{eqnarray*}
-n : \lctx, l, l'  : \ltm(n) &\vdash& \leq_n(l,l')
-\end{eqnarray*}
-and an operator symbol for reflexivity:
-\begin{eqnarray*}
-n : \lctx, l : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l)
-\end{eqnarray*}
-Note that if we can derive 
-\begin{eqnarray*}
-n : \lctx, l, l'  : \ltm(n) &\vdash& l = l' : \ltm(n)
-\end{eqnarray*}
-in the initial model \MB{or: in the lattice}\footnote{PD: in the initial model is more precis; this means deriving the $l = l'$ by equational reasoning and the lattice equations.}, then we can also derive
-\begin{eqnarray*}
-n : \lctx, l,l' : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l')
-\end{eqnarray*}
-by preservation of equality which is available in the gats.
-\footnote{Can we prove the following:
-If we have derivations
-\begin{eqnarray*}
-\vdash n : \lctx, \vdash l,l' : \ltm(n), \vdash p :  \leq_n(l,l')
-\end{eqnarray*}
-then $\vdash p = \refl(l) : \leq(l,l')$ and $\vdash l = l' : \ltm(n)$?
-\MB{Canonicity? Closed level context is natural number. Closed $l:\ltm(n)$ in
-closed context is a lattice term ... $p$ is more difficult.}
-
-PD: Yes, each level term has a normal form 
-$
-\alpha_1^{+^{p_1}} \vee \cdots \vee \alpha_m^{+^{p_m}}
-$ 
-for $p_i \geq 0$ for $1 \le i \le m \le n$ and level variables (de Bruijn indices) $\alpha_1 < \ldots < \alpha_m$. We construct an initial ucwf of levels where the elements of $\ltm(n)$ are such normal forms and $l = l' : \ltm(n)$ iff $l$ and $l'$ are identical.  If we extend the gat with a new sort $\leq$ and a new operator symbol $\refl$ for reflexivity, we can extend the initial model with sets $\leq_n(l,l')$ that contain a single element $\refl(l)$ iff $l = l' : \ltm(n)$ and is otherwise empty.
-}
-
-We now redefine $l < m$ as $\leq_n(l^+ \vee m, m)$ and get a proper typing of the operator symbol $\UU^m_l$:
+where $l < m$ is defined as $l^+ \vee m = m$, does not work since equations are not allowed in argument types in gats.
+However, this issue can be resolved by instead using equality sorts as introduced above in Section
+\ref{ucwf-levels} and redefine $l < m$ as $\leq_n(l^+ \vee m, m)$. This yields the following proper typing of the operator symbol $\UU^m_l$:
 \begin{eqnarray*}
 n : \lctx, l, m : \ltm(n), p : l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_{p,\Gamma} : \tm_n(\Gamma,(\UU_{m})_\Gamma)
 \end{eqnarray*}
 In the sequel we will suppress the proof $p : l < m$ as an argument to this operator symbol and just write $(\UU^m_l)_{\Gamma}$.
-
-\paragraph{Level equality.} The sort symbol $\leq$ resembles the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, proofs of level equality can only be constructed from reflexivity and reasoning available in the gat \MB{for the level ucwf}\footnote{PD: It would be better to move this, and other discussion about $\leq$, to 3.1 to make it clear that it is only an issue for the ucwf of levels.}
 
 \paragraph{Equations.}
 The decoding equations for $\Ta_l$ and the equations for commutativity of operator symbols with substitution can be obtained by a straightforward internalization of the corresponding equations for the external tower. This means that the decoding equations are now relative to internal level contexts and level terms, as well as to terms. For example the decoding equation for $\Pi$ 
