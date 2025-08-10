@@ -357,7 +357,7 @@ In this article we present the corresponding gats:
 \end{itemize}
 In Section 4 we discuss related and further research. 
 
-\paragraph{Dedication.} We dedicate this article to professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a valued friend, colleague, and coworker, who spent the winter and spring 1993 - 94 in the type theory group in Göteborg. He has made fundamental contributions to type theory and constructivity and in particular to understanding the constructive content of classical logic and to the constructive analysis of impredicativity.
+\paragraph{Dedication.} We dedicate this article to professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a friend, colleague, and coworker, who spent the winter and spring 1993 - 94 in the type theory group in Göteborg. He has made fundamental contributions to type theory and constructivity and in particular to understanding the constructive content of classical logic and to the constructive analysis of impredicativity.
 
 \section{Type theory with an external tower of universes}
 
@@ -505,19 +505,22 @@ To build an internal cwf with extra structure for the small type formers and a t
 \item $a : \tm(\Gamma,A)$ is defined as $\Gamma \vdash a : A$ quotiented by the equivalence relation $\Gamma \vdash a = a' : A$;
 \item $\gamma : \hom(\Delta,\Gamma)$ is defined as sequences of equivalence classes of terms. Etc.
 \end{itemize}
-Moreover, we interpret the operator symbols corresponding to constructors as follows:
+We then need to define the operator symbols on equivalence classes. First we consider those that give rise to constructors of raw syntax. For example:
 \begin{itemize}
-\item $ 1 : \ctx$ is defined as (the equivalence class of) the empty context.
-\item $\Gamma.A : \ctx$ ...
+\item The empty context is a constructor of raw contexts. We define $1 : \ctx$ is defined as the equivalence class of the empty context.
+\item Context extension is also a constructor of raw contexts. If we overload notation and use the same symbol for the the syntax and the model we have $[\Gamma].[A] = [\Gamma.A]: \ctx$. We need to show that this operation preserves equivalence classes. 
+\item Similarly for the constructors of raw cwf-morphisms $\tuple{}$ and $\tuple{-,-}$.
+\item The operator symbols for the type formers, such as $\Pi, \lambda, \app$ for $\Pi$-types and $\U_l, \Ta_l, \U^m_l$ and $\Ta^m_l$ are also constructors of raw syntax.
 \end{itemize}
+Then we consider the operator symbols that correspond to implicit operations. For example:
 \begin{itemize}
-\item To define substitution in types of equivalence classes $[A][[\gamma]]$, we first define substitution in raw types $A[\gamma]$ by induction on $A$ and then take equivalence classes.
-\item Similarly for substitution in terms of equivalence classes $[a][[\gamma]]$.
-\item etc
+\item If $A$ is a raw type and $\gamma$ is a raw substitution, we first define the result $A[\gamma]$ of substituting $\gamma$ in $A$ by induction on the structure of the latter. Then we raise this operation to equivalence classes by proving that equality of types is preserved.
+\item Similarly, if $a$ is a raw term and $\gamma$ is a raw substitution, we first define the result $a[\gamma]$ of substituting $\gamma$ in $a$ by induction on the structure of the latter. Then we raise this operation to equivalence classes by proving that equality of terms is preserved. 
+\item Similarly for the other implicit operations $\id, \circ, \p, \q$.
 \end{itemize}
 To prove that we construct an object in $\CwF_\Sigmaext$, we need to check the gat-equations. Then we need to show that there is a unique morphism in $\CwF_\Sigmaext$ to any other object.
 
-We would also like to make a few comments on the relationship between our construction and Brunerie and de Boer's \cite{Brunerie:initiality,deBoer:lic} construction of an initial contextual category with extra structure for a slightly different version of Martin-Löf type theory with an external tower of universes? Although there are several similarities, most importantly that their construction is also based on a more standard version with implicit substituion. However, a principal difference is that their notion of model (contextual category with extra structure) is not expressed as a gat and they do not construct an {\em internal} cwf with extra structure, although it should be possible to modify their construction to this end. There are also several minor differences. For example, they just have the rule $\UU_l : \UU_{l+1}$ and only consider the non-cumulative case, while we have $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$ and consider both the non-cumulative and cumulative cases.
+We would also like to make a few comments on the relationship between our construction and Brunerie and de Boer's \cite{Brunerie:initiality,deBoer:lic} construction of an initial contextual category with extra structure for a slightly different version of Martin-Löf type theory with an external tower of universes? Although there are several similarities, most importantly that their construction is also based on a more standard version with implicit substitutions. However, a principal difference is that their notion of model (contextual category with extra structure) is not expressed as a gat and they do not construct an {\em internal} cwf (or contextual category) with extra structure. There are also several minor differences. For example, they just have the rule $\UU_l : \UU_{l+1}$ and only consider the non-cumulative case, while we have $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$ and consider both the non-cumulative and cumulative cases.
 Moreover, their universes are \`a la Russell, while we consider both \`a la Tarski and \`a la Russell. Inevitably, there are other differences between the two systems of inference rules but it would lead too far give a complete account. 
 
 %The construction of an initial cwf with extra structure for the small type formers and the tower of universes based on the theory in Bezem et al \cite{BezemCDE22} would be similar to Brunerie and de Boer's \cite{Brunerie:initiality,deBoer:lic} construction of an initial contextual category with extra structure for a slightly different version of Martin-Löf type theory with an external tower of universes. Both theories are more standard version of Martin-Löf type theory with implicit substitutions, except that terms such as applications are decorated with type information. The rules for universes are also different. Brunerie and de Boer just have the rule $\UU_l : \UU_{l+1}$ and only consider the non-cumulative case, while we have $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$ and consider both the non-cumulative and cumulative cases.
