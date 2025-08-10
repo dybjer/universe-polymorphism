@@ -496,7 +496,7 @@ As explained in Bezem et al \cite{bezem:hofmann}, $\CwF_{\Sigmaext}$ is the cate
 % The recipe is to build the judgment structure of the theory from the sort symbols of the gat, and the syntax of raw terms, types, contexts and context morphisms from untyped versions of the cwf-combinators and the operator symbols of the gat. Then one defines a system of inference rules from the typings of the cwf-combinators and the operator symbols of the gat. This yields an explicit substitution calculus for dependent type theory quite similar to Martin-Löf's \cite{martinlof:gbg92,tasistro:lic} but with named variables replaced by projections of the form $\q[\p^n]$. 
 
 \paragraph{A construction based on implicit substitutions (initiality conjecture).} 
-We shall outline how to construct an initial object in $\CwF_{\Sigmaext}$ based on $\TText$ -- the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}. However, as we explained in the introduction, we need to modify our syntax and work with decorated terms; for example, we need to decorate application with type information. We also add context equality judgments that are not stated explicitly in loc.cit.
+We shall outline how to construct an initial object in $\CwF_{\Sigmaext}$ based on $\TText$ -- the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}. However, as we explained in the introduction, we need to modify our syntax and work with decorated terms; for example, we need to decorate application with type information. (Context equality judgments that are not stated explicitly in loc.cit.)
 
 To build an internal cwf with extra structure for the small type formers and a tower of universes, we interpret the sort symbols in terms of the judgment forms of $\TText$ as follows:
 \begin{itemize}
@@ -949,13 +949,13 @@ The next step is to construct the sort symbols, operator symbols, and equations 
 \begin{itemize}
 \item $\ty_n(\Gamma)$ is the set of equivalence classes of raw types $A$ such that $n, \Gamma \vdash A$ is a type and $A.A'$ are equivalent provided $n, \Gamma \vdash A = A'$.
 \item $\tm_n(\Gamma,A)$ is the set of equivalence classes of raw terms $a$ such that $n, \Gamma \vdash a : A$ and $a.a'$ are equivalent provided $n, \Gamma \vdash A = A'$.
-\item $\ctx_n$ is the set of equivalence classes of raw contexts $\Gamma$ such that $n, \Gamma \vdash$ under the equivalence relation $n, \Gamma, \Gamma' \vdash$. (We remark that context equality judgments are not explicitly listed in Bezem et al \cite{BezemCDE22}.)
+\item $\ctx_n$ is the set of equivalence classes of raw contexts $\Gamma$ such that $n, \Gamma \vdash$ under the equivalence relation $n, \Gamma = \Gamma' \vdash$. (Context equality judgments are not explicitly listed in Bezem et al \cite{BezemCDE22}.)
 \item $\hom_n(\Delta,\Gamma)$ is the set of lists of equivalence classes of terms. Etc.
 \item The level equality sort $\leq_n(l,l')$ is a one element set iff $l = l' : \ltm(n)$.
 \end{itemize}
 We then need to define all the operator symbols in this structure and check the equations. We omit the details which are similar to the construction of a model based on $\TText$.
 
-The final part of the construction is to interpret the operator symbols for level substitution and composition (in levels, level morphisms, contexts, context morphisms, types and terms) that correspond to the arrow part of the level-indexed cwf with extra structure. These are all defined implicitly by induction on the respective syntactic categories. It follows directly that such level substitutions satisfy the appropriate equations, and that they are the unique operations doing so. 
+The final part of the construction is to interpret the operator symbols for level substitution and composition (in levels, level morphisms, contexts, context morphisms, types and terms) that correspond to the arrow part of the level-indexed cwf with extra structure. These are all defined implicitly by induction on the raw syntax. 
 
 This concludes the construction of an object of $\CwF_\Sigmaint$. Finally, we need to construct a morphism to any other object in $\CwF_\Sigmaint$ and prove that this is unique.
 
