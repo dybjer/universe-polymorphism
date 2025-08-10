@@ -507,7 +507,7 @@ To build an internal cwf with extra structure for the small type formers and a t
 \end{itemize}
 We then need to define the operator symbols on equivalence classes. First we consider those that give rise to constructors of raw syntax. For example:
 \begin{itemize}
-\item The empty context is a constructor of raw contexts. We define $1 : \ctx$ is defined as the equivalence class of the empty context.
+\item The empty context is a constructor of raw contexts. We define $1 : \ctx$ as the equivalence class of the empty context.
 \item Context extension is also a constructor of raw contexts. If we overload notation and use the same symbol for the the syntax and the model we have $[\Gamma].[A] = [\Gamma.A]: \ctx$. We need to show that this operation preserves equivalence classes. 
 \item Similarly for the constructors of raw cwf-morphisms $\tuple{}$ and $\tuple{-,-}$.
 \item The operator symbols for the type formers, such as $\Pi, \lambda, \app$ for $\Pi$-types and $\U_l, \Ta_l, \U^m_l$ and $\Ta^m_l$ are also constructors of raw syntax.
