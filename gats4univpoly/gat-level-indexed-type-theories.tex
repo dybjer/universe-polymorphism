@@ -563,7 +563,8 @@ l\ \level
 \hspace{5em}
 l = l'
 $$
-to the usual judgment forms of Martin-Löf type theory. Moreover, universe level variables as well as ordinary term variables can be declared in a context. As in Agda, we have a next level operation $(-)^+$ and an operation $\vee$ for join of levels. However, as in Bezem et al \cite{BezemCDE22}, we have no level 0 for the first universe. It follows that all universes are polymorphic.
+to the usual judgment forms of Martin-Löf type theory. Moreover, universe level variables as well as ordinary term variables can be declared in any order a context, but to simplify the correspondence with the gat formalization, we will in the sequel assume that contexts have the form $n, \Gamma$, where $n$ is the number of (de Bruijn) level variables, and $\Gamma$ is an ordinary context that depends on these $n$ level variables.
+As in Agda, we have a next level operation $(-)^+$ and an operation $\vee$ for join of levels. However, as in Bezem et al \cite{BezemCDE22}, we have no level 0 for the first universe. It follows that all universes are polymorphic.
 Levels form an upper semilattice with respect to $\vee$ and $(-)^+$ is an inflationary operation, see below.
 
 %\footnote{
