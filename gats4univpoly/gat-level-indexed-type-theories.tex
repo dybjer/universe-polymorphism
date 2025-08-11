@@ -690,7 +690,7 @@ If $n : \lctx, l, l' : \ltm(n),$ and $p :  \leq_n(l,l')$ in the initial model,
 then $p = \refl(l) : \leq(l,l')$ and $l = l' : \ltm(n)$. 
 \end{proposition*} 
 
-This can be proved by a normal form argument. As remarked by Bezem and Coquand \cite{bezem-coquand:lattices}
+This can be proved by a normal form argument. As remarked by Bezem and Coquand \cite{bezem-coquand:lattices},
 each level term has a normal form 
 $
 \alpha_1^{+^{p_1}} \vee \cdots \vee \alpha_m^{+^{p_m}}
@@ -1058,8 +1058,8 @@ n : \lctx, \Gamma : \ctx_n , A:\ty_n (\Gamma) &\vdash& \q_{n,\Gamma,A}: \tm_n (\
 Operator symbols for level-indexed $\Pi$-types (should we decorate $\lambda$ and $\app$ with type information?):
 \begin{eqnarray*}
 n : \lctx, \Gamma : \ctx_n, A : \ty_n(\Gamma), B : \ty_n(\Gamma.A)&\vdash& \Pi(A,B) : \ty_n(\Gamma)\\
-n : \lctx, \Gamma : \ctx_n, A : \ty_n(\Gamma), B : \ty_n(\Gamma.A), b : \tm_n(\Gamma.A, B) &\vdash& \lambda(b) : \tm(\Gamma,\Pi(A,B))\\
-n : \lctx, \Gamma : \ctx_n, A : \ty_n(\Gamma), B : \ty_n(\Gamma.A), c :  \tm_n(\Gamma,\Pi(A,B)), a : \tm_n(\Gamma, A) &\vdash& \app(c,a) : \tm(\Gamma, B[\tuple{\id,a}])
+n : \lctx, \Gamma : \ctx_n, A : \ty_n(\Gamma), B : \ty_n(\Gamma.A), b : \tm_n(\Gamma.A, B) &\vdash& \lambda(b) : \tm_n(\Gamma,\Pi(A,B))\\
+n : \lctx, \Gamma : \ctx_n, A : \ty_n(\Gamma), B : \ty_n(\Gamma.A), c :  \tm_n(\Gamma,\Pi(A,B)), a : \tm_n(\Gamma, A) &\vdash& \app(c,a) : \tm_n(\Gamma, B[\tuple{\id,a}])
 \end{eqnarray*}
 
 \paragraph{Equations.}
