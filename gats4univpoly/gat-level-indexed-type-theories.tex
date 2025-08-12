@@ -273,11 +273,8 @@ with Explicit Universe Polymorphism
 \maketitle
 
 \begin{abstract}
-(* Rewrite *)
 We present generalized algebraic theories corresponding to slightly modified versions of some of the type theories in our paper 
-{\em Type Theory with Explicit Universe Polymorphism}. We first consider Martin-Löf type theory with an external tower of universes. Its models are categories with families with extra structure for the small type formers and the tower of universes. We then consider Martin-Löf type theory with explicit universe polymorphism, where we have universe level judgments and internally indexed universes. Its models are level-indexed categories with families, again with appropriate extra structure.
-% (* Finally, we extend the theory with universe level constraints. Its models are doubly indexed categories with families with extra structure. *) 
-In this way we get abstract syntax definitions of our theories as initial models of certain indexed categories with families with extra structure. We thus abstract from details of the grammar and inference rules of the type theories and highlight their high-level structure.
+{\em Type Theory with Explicit Universe Polymorphism}. We first present a generalized algebraic theory for categories with families with extra strucure corresponding to Martin-Löf type theory with an external tower of universes. We then present a generalized algebraic theory for level-indexed categories with families with extra structure corresponding to Martin-Löf type theory with explicit universe polymorphism. This theory has universe level judgments and internally indexed universes. In this way we get abstract syntax definitions of the two theories as initial models of certain generalized algebraic theories. We thus abstract from details of the grammar and inference rules of the type theories and highlight their high-level structure. (* Add something about the construction of initial models by explicit and implicit substitutions *)
 \end{abstract}
 
 \section{Introduction}
@@ -992,9 +989,10 @@ This concludes the construction of an object of $\CwF_\Sigmaint$. Finally, we ne
 We presented an infinitary gat $\Sigmaext$ for Martin-Löf type theory with an external tower of universes and a finitary gat $\Sigmaint$ for Martin-Löf type theory with internally level-indexed universes and level-indexed products. We have also explained that the models $\T_{\Sigmaext}$ and $\T_{\Sigmaint}$ are instances of general constructions of initial models of gats in 
 Bezem et al \cite{bezem:hofmann}. 
 
-An alternative approach would be to construct initial objects in categories of cwfs with extra structure for the small type formers and and an external tower of universes $\CwF^\mathrm{ext}$ and $\CwF^\mathrm{up}$ for level-indexed universes. %(This would be analogous to Brunerie's and de Boer's setting.) 
-The need for constructing initial objects in the categories with internal cwfs $\CwF_{\Sigmaext}$ and  $\CwF_{\Sigmaint}$ comes about since we define the model notions in terms of gats and these are themselves interpreted as cwfs.
-
+(* Remove? 
+We contrast this to the construction of initial objects in categories of cwfs with extra structure for the small type formers and and an external tower of universes $\CwF^\mathrm{ext}$ and $\CwF^\mathrm{up}$ for level-indexed universes. %(This would be analogous to Brunerie's and de Boer's setting.) 
+The price we pay for working on top of the framework of gats, is that we need two levels of cwfs in $\CwF_{\Sigmaext}$ and  $\CwF_{\Sigmaint}$: the ``metalevel'' cwf needed for modelling the basic dependent type theory underlying gats, 
+and the ``object level" internal cwfs (and ucwf-indexed cwfs) needed for modelling our type theories. *)
 %We have shown how to capture Martin-Löf type theory with explicit universe polymorphism as a gat. The list of sort symbols, operator symbols, and equations may seem long but not as long as the list of inference rules rules for the syntactic theory. (In the versions with implicit substitutions we should include the substitution lemmas.) Moreover, the gat formalizes the high-level structure of ucwf-indexed cwfs with extra structure: the $\vee$-semilattice with an inflationary operation $(-)^+$, and adjoint-like structures for $\Pi$-types and other type formers. Also context comprehension in cwfs is an adjoint-like structure. The relationship with adjoints in the sense of ordinary cartesian closed categories is worked out in the case of contextual cwfs with extensional equality types, $\Sigma$-types and $\Pi$-types by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} and for some other structures in Castellan et al \cite{castellan:lambek}.
 %
 %A key novelty is the need for level equality sorts $\leq_n(l,l')$. The main recipe for a gat corresponding to Martin-Löf type theory is that equality judgments are formalized as judgmental equalities in gats. For example, the judgment 
