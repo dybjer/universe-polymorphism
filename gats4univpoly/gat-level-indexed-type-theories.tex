@@ -274,7 +274,7 @@ with Explicit Universe Polymorphism
 
 \begin{abstract}
 We present generalized algebraic theories corresponding to slightly modified versions of some of the type theories in our paper 
-{\em Type Theory with Explicit Universe Polymorphism}. We first present a generalized algebraic theory for categories with families with extra strucure corresponding to Martin-Löf type theory with an external tower of universes. We then present a generalized algebraic theory for level-indexed categories with families with extra structure corresponding to Martin-Löf type theory with explicit universe polymorphism. This theory has universe level judgments and internally indexed universes. In this way we get abstract syntax definitions of the two theories as initial models of certain generalized algebraic theories. We thus abstract from details of the grammar and inference rules of the type theories and highlight their high-level structure. (* Add something about the construction of initial models by explicit and implicit substitutions *)
+{\em Type Theory with Explicit Universe Polymorphism}. We first present a generalized algebraic theory for categories with families with extra strucure corresponding to Martin-Löf type theory with an external tower of universes. We then present a generalized algebraic theory for level-indexed categories with families with extra structure corresponding to Martin-Löf type theory with explicit universe polymorphism. This theory has universe level judgments and internally indexed universes. In this way we get abstract syntax definitions of the two theories as initial models of certain generalized algebraic theories. We thus abstract from details of the grammar and inference rules of the type theories and highlight their high-level structure. (* Add something about the construction of initial models by explicit and implicit substitutions? Add something about level equality sorts? *)
 \end{abstract}
 
 \section{Introduction}
@@ -954,8 +954,9 @@ The next step is to construct the sort symbols, operator symbols, and equations 
 \begin{itemize}
 \item $\ty_n(\Gamma)$ is the set of equivalence classes of raw types $A$ such that $n, \Gamma \vdash A$ is a type and $A.A'$ are equivalent provided $n, \Gamma \vdash A = A'$.
 \item $\tm_n(\Gamma,A)$ is the set of equivalence classes of raw terms $a$ such that $n, \Gamma \vdash a : A$ and $a.a'$ are equivalent provided $n, \Gamma \vdash A = A'$.
-\item $\ctx_n$ is the set of equivalence classes of raw contexts $\Gamma$ such that $n, \Gamma \vdash$ under the equivalence relation $n, \Gamma = \Gamma' \vdash$. (Context equality judgments are not explicitly listed in Bezem et al \cite{BezemCDE22}.)
-\item $\hom_n(\Delta,\Gamma)$ is the set of lists of equivalence classes of terms. Etc.
+\item $\ctx_n$ is the set of equivalence classes of raw contexts $\Gamma$ such that $n, \Gamma \vdash$ under the equivalence relation $n, \Gamma = \Gamma' \vdash$. 
+%(Context equality judgments are not explicitly listed in Bezem et al \cite{BezemCDE22}.)
+\item $\hom_n(\Delta,\Gamma)$ is the set of equivalence classes of raw context morphisms. 
 \item The level equality sort $\leq_n(l,l')$ is a one element set iff $l = l' : \ltm(n)$.
 \end{itemize}
 We then need to define all the operator symbols in this structure and check the equations. We omit the details which are similar to the construction of a model based on $\TText$.
