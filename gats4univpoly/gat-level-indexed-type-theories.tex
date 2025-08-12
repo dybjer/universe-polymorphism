@@ -273,6 +273,7 @@ with Explicit Universe Polymorphism
 \maketitle
 
 \begin{abstract}
+(* Rewrite *)
 We present generalized algebraic theories corresponding to slightly modified versions of some of the type theories in our paper 
 {\em Type Theory with Explicit Universe Polymorphism}. We first consider Martin-Löf type theory with an external tower of universes. Its models are categories with families with extra structure for the small type formers and the tower of universes. We then consider Martin-Löf type theory with explicit universe polymorphism, where we have universe level judgments and internally indexed universes. Its models are level-indexed categories with families, again with appropriate extra structure.
 % (* Finally, we extend the theory with universe level constraints. Its models are doubly indexed categories with families with extra structure. *) 
@@ -302,12 +303,15 @@ Constructions with a “decorated” application operation this conjecture was p
 of the general version of the conjecture and of proving this general version will be the
 subject of future work.
 \end{quotation}
-On the surface such initiality proofs may seem straightforward, but they depend on subtle details in the formulation of grammar and inference rules. This is why Voevodsky insisted on calling such theorems ``conjectures'' until proven rigorously and ideally implemented in a proof assistant.
+On the surface such initiality proofs may seem straightforward, but they depend on subtle details in the formulation of grammar and inference rules. This is why Voevodsky insisted on calling such theorems ``conjectures'' until proven rigorously and, ideally, implemented in a proof assistant.
 
 An example of an implemented proof is Brunerie and de Boer's \cite{Brunerie:initiality,deBoer:lic} proof in Agda that a version of Martin-Löf type theory with an external tower of universes is an initial contextual category \cite{cartmell:phd,cartmell:apal} with appropriate extra structure. %Theversion of type theory with de Bruijn variables and implicit substitutions. 
 
-A possible approach to Voevodsky's project is based on Cartmell's {\em generalized algebraic theories (gats)} \cite{cartmell:phd,cartmell:apal}. These generalize many sorted algebraic theories by allowing sort symbols and operator symbols to have dependent types. The most basic rules of dependent types can be captured by the gat of categories with families (cwfs) \cite{dybjer:torino}. Moreover, as shown in our paper {\em On generalized algebraic theories and categories with families} \cite{bezem:hofmann} there is a generic construction of an initial model of an arbitrary finitary gat. 
-Maybe an approach to a general notion of dependent type theory is as an initial model of an extension of the gat of cwfs? The reason for focusing on the gat of cwfs is that it occupies an intermediate place between dependent type theories defined by grammar and inference rules and notions of model based on more mainstream categorical constructions. In particular, the gat of cwfs resembles Martin-Löf's substitution calculus for dependent type theory \cite{martinlof:gbg92,tasistro:lic}.
+A possible approach to Voevodsky's project is based on Cartmell's {\em generalized algebraic theories (gats)} \cite{cartmell:phd,cartmell:apal}. These generalize many sorted algebraic theories by allowing sort symbols and operator symbols to have dependent types. Moreover, as shown in our paper {\em On generalized algebraic theories and categories with families} \cite{bezem:hofmann} for each finite presentation $\Sigma$ of a gat, there is a general construction of a term model $\T_\Sigma$, which is initial in the category $\CwF_\Sigma$ of categories with families (cwfs) \cite{dybjer:torino} with a $\Sigma$-structure. Cwfs are models of the basic rules of dependent type theory (context formation, context morphism formation, substitutions in types and terms, projection morphism, assumption) and thus appropriate for modelling gats. Cwfs also model Martin-Löf type theory provided we equip them with extra structure for the type formers ($\Pi, \Sigma, \ldots$).
+
+Moreover, cwfs can themselves be presented as a gat $\Sigma_\CwF$, and so can cwfs with extra structure for the type formers. It follows that we can construct the initial model $\T_{\Sigma_\CwF}$ of cwfs with an {\em internal cwf} as a special case of the general construction of an initial model for any gat. Similarly, we can construct the initial model of cwfs with extra structure for the type formers of Martin-Löf type theory. The reason for focusing on the gat of cwfs is that it occupies an intermediate place between dependent type theories defined by grammar and inference rules and notions of model based on more mainstream categorical constructions. In particular, the gat of cwfs resembles Martin-Löf's substitution calculus for dependent type theory \cite{martinlof:gbg92,tasistro:lic}.
+
+To sum up
 
 Furthermore, as shown by Castellan, Clairambault, and Dybjer \cite{castellan:lambek}, by considering simply typed cwfs (scwfs) and unityped cwfs (ucwfs) we can also capture various simply typed and untyped logical systems as gats and thus widening the scope of {\em uniform categorical logic} based on gats and cwfs.
 
@@ -496,14 +500,14 @@ As explained in Bezem et al \cite{bezem:hofmann}, $\CwF_{\Sigmaext}$ is the cate
 % The recipe is to build the judgment structure of the theory from the sort symbols of the gat, and the syntax of raw terms, types, contexts and context morphisms from untyped versions of the cwf-combinators and the operator symbols of the gat. Then one defines a system of inference rules from the typings of the cwf-combinators and the operator symbols of the gat. This yields an explicit substitution calculus for dependent type theory quite similar to Martin-Löf's \cite{martinlof:gbg92,tasistro:lic} but with named variables replaced by projections of the form $\q[\p^n]$. 
 
 \paragraph{A construction based on implicit substitutions (initiality conjecture).} 
-We shall outline how to construct an initial object in $\CwF_{\Sigmaext}$ based on $\TText$ -- the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}. However, as we explained in the introduction, we need to modify our syntax and work with decorated terms; for example, we need to decorate application with type information. (Context equality judgments that are not stated explicitly in loc.cit.)
+We shall outline how to construct an initial object in $\CwF_{\Sigmaext}$ based on $\TText$ -- the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}. However, as we explained in the introduction, we need to modify our syntax and work with decorated terms; for example, we need to decorate application with type information.
 
 To build an internal cwf with extra structure for the small type formers and a tower of universes, we interpret the sort symbols in terms of the judgment forms of $\TText$ as follows:
 \begin{itemize}
-\item $\Gamma : \ctx$ is defined as $\Gamma \vdash$ quotiented by the equivalence relation $\Gamma = \Gamma'$ defined as $\Gamma = \Gamma' \vdash$;
-\item $A : \ty(\Gamma)$ is defined as $\Gamma \vdash A$ quotiented by the equivalence relation $\Gamma \vdash A = A'$;
-\item $a : \tm(\Gamma,A)$ is defined as $\Gamma \vdash a : A$ quotiented by the equivalence relation $\Gamma \vdash a = a' : A$;
-\item $\gamma : \hom(\Delta,\Gamma)$ is defined as sequences of equivalence classes of terms. Etc.
+\item $\Gamma : \ctx$ is defined as $\Gamma \vdash$ quotiented by the equivalence relation of context equality $\Gamma = \Gamma' \vdash$. This is not stated explicitly in loc.cit. but can easily be added.
+\item $A : \ty(\Gamma)$ is defined as $\Gamma \vdash A$ quotiented by the equivalence relation $\Gamma \vdash A = A'$.
+\item $a : \tm(\Gamma,A)$ is defined as $\Gamma \vdash a : A$ quotiented by the equivalence relation $\Gamma \vdash a = a' : A$.
+\item There are no explicit judgments $\Delta \vdash \gamma : \Gamma$ and $\Delta \vdash \gamma = \gamma' : \Gamma$  in loc.cit, but these can be defined in terms of $\Delta \vdash a : A$ and $\Delta \vdash a = a' : A$. Then $\gamma : \hom(\Delta,\Gamma)$ can be defined as $\Delta \vdash \gamma : \Gamma$ quotiented by the equivalence relation $\Delta \vdash  \gamma = \gamma' : \Gamma$.
 \end{itemize}
 We then need to define the operator symbols on equivalence classes. First we consider those that give rise to constructors of raw syntax. For example:
 \begin{itemize}
