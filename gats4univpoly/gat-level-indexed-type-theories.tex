@@ -308,7 +308,7 @@ A possible approach to Voevodsky's project is based on Cartmell's {\em generaliz
 
 Moreover, cwfs can themselves be presented as a gat $\Sigma_\CwF$, and so can cwfs with extra structure for the type formers. It follows that we can construct the initial model $\T_{\Sigma_\CwF}$ of cwfs with an {\em internal cwf} as a special case of the general construction of an initial model for any gat. Similarly, we can construct the initial model of cwfs with extra structure for the type formers of Martin-Löf type theory. The reason for focusing on the gat of cwfs is that it occupies an intermediate place between dependent type theories defined by grammar and inference rules and notions of model based on more mainstream categorical constructions. In particular, the gat of cwfs resembles Martin-Löf's substitution calculus for dependent type theory \cite{martinlof:gbg92,tasistro:lic}.
 
-This sums up our approach to Voevodsky's project. We define dependent type theories as initial models of gats of cwfs with extra structure or as, as we shall see below, gats of variations of cwfs. In this way we get a generic construction of a term model, and can also study alternative constructions of the initial model. In fact, this approach extends beyond dependent type theory. As shown by Castellan, Clairambault, and Dybjer \cite{castellan:lambek}, by considering simply typed cwfs (scwfs) and unityped cwfs (ucwfs) we can also capture various simply typed and untyped logical systems as gats and thus widening the scope of {\em uniform categorical logic} based on gats and cwfs.
+This sums up our approach to Voevodsky's project. We define dependent type theories as initial models of gats of cwfs with extra structure or, as we shall see below, gats of variations of cwfs. In this way we get a generic construction of a term model, and can also study alternative constructions of the initial model. In fact, this approach extends beyond dependent type theory. As shown by Castellan, Clairambault, and Dybjer \cite{castellan:lambek}, by considering simply typed cwfs (scwfs) and unityped cwfs (ucwfs) we can also capture various simply typed and untyped logical systems as gats and thus widening the scope of {\em uniform categorical logic} based on gats and cwfs.
 
 In this article we introduce the notion of an indexed cwf, that is, a base category $\C$ and a cwf-valued presheaf
 $$
@@ -610,9 +610,9 @@ m,n : \lctx, \sigma : \lhom(n,m), l:\ltm(n) &\vdash& \tuple{\sigma,l} : \lhom(n,
 m : \lctx &\vdash& \lp_m: \lhom(\s(m),m)\\
 m : \lctx &\vdash& \lq_m: \ltm(\s(m))
 \end{eqnarray*}
-Note that we no longer need an operator symbol for substitution in types but only in level terms. We also change the notation to suggest that these are operations on levels. For example, we use $\sigma$ and $\tau$ to range over level substitutions to distinguish them from term substitutions $\gamma$ and $\delta$. However, we keep the notation $\circ$ for composition of level substitutions, $l[\sigma]$ for level substitution in level terms, $\tuple{}_m$ for the empty level context morphism and $\tuple{\sigma,l}$ for context morphism extension. The notation for level contexts suggests that we have an initial ucwf where $n : \lctx$ is a natural number that records the number of available level variables. Thus $0 : \lctx$ is the terminal object in the ucwf.
+Note that we no longer need an operator symbol for substitution in types but only in level terms. We also change the notation to suggest that these are operations on levels. For example, we use $\sigma$ and $\tau$ to range over level substitutions to distinguish them from term substitutions $\gamma$ and $\delta$. However, we keep the notation $\circ$ for composition of level substitutions, $l[\sigma]$ for level substitution in level terms, $\tuple{}_m$ for the empty level context morphism and $\tuple{\sigma,l}$ for level context morphism extension. The notation for level contexts suggests that we have an initial ucwf where $n : \lctx$ is a natural number that records the number of available level variables. Thus $0 : \lctx$ is the terminal object in the ucwf.
 
-The ucwf of levels also has operator symbols for next level and for the join of two levels:
+The ucwf of levels also has operator symbols for next level and join of two levels:
 \begin{eqnarray*}
 m : \lctx, l : \ltm(m) &\vdash& l^+ : \ltm(m)\\
 m : \lctx, l,l' : \ltm(m) &\vdash& l \vee l' : \ltm(m)
@@ -648,7 +648,7 @@ l[\sigma\circ\tau] &=& l[\sigma][\tau]\\
 \lp_n \circ \tuple{\sigma,l} &=& \sigma\\
 \lq_n [\tuple{\sigma,l}] &=& l\\
 \tuple{\sigma,l} \circ \tau &=& \tuple{\sigma \circ \tau,l[\tau]}\\
-\lid_{\s(n)} &=& \tuple{\lp_n,\lq_n}\\
+\lid_{\s(n)} &=& \tuple{\lp_n,\lq_n}
 \end{eqnarray*}
 The semi-lattice equations for $l \vee l'$ are:
 \begin{eqnarray*}
@@ -702,7 +702,7 @@ $
 for $p_i \geq 0$ for $1 \le i \le m \le n$ and level variables (de Bruijn indices) $\alpha_1 < \ldots < \alpha_m$. 
 We can construct an initial ucwf with $\vee$ and $(-)^+$, where the elements of $\ltm(n)$ are normal forms and $l = l' : \ltm(n)$ iff $l$ and $l'$ are identical normal forms.  If we extend the gat with a new sort $\leq$ and a new operator symbol $\refl$ for reflexivity, we can extend the initial ucwf with sets $\leq_n(l,l')$ that contain a single element $\refl(l)$ iff $l = l' : \ltm(n)$ and is otherwise empty.
 
-\paragraph{Remark on identity types.} The sort symbol $\leq$ for level equality resembles the identity type former $\Id$ in Martin-Löf type theory. We can think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id(A,a,a')$ can make use of advanced logical reasoning, level equality proofs are limited and, as shown above, can only be obtained by equational reasoning from the laws for $\vee$ and $(-)^+$.
+\paragraph{Remark on identity types.} The sort symbol $\leq$ for level equality resembles the identity type former $\Id$ in Martin-Löf type theory. We think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id_A(a,a')$ can make use of advanced logical reasoning, level equality proofs are limited and, as shown above, can only be obtained by equational reasoning from the laws for $\vee$ and $(-)^+$.
 
 %\footnote{Can we prove the following:
 %If we have derivations
@@ -910,7 +910,7 @@ Equations ($\beta$ and $\eta$ for level abstraction and application):
  \app_\l(\lambda_\l(b),l) &=& b[\tuple{\lid,l}]\\
  \lambda_\l(\app_\l(c[\lp],\lq)) &=& c
  \end{eqnarray*}
- Equations for commutativity of operator symbols with respect to level substitution
+ Equations for commutativity of operator symbols with respect to term and level substitution:
  \begin{eqnarray*}
  \forall_\l(B)[ \gamma ] &=& \forall_\l(B[ \gamma[\lp]])\\
  \lambda_\l(B)[ \gamma ] &=& \lambda_\l(B[ \gamma[\lp]])\\
@@ -932,7 +932,7 @@ In the introduction we mentioned that untyped predicate logic can be captured by
 
 \paragraph{A generic construction based on explicit substitutions.} The gat $\Sigmaint$ for cwfs with level-indexed universes and level-indexed products is finitary. Hence we can directly instantiate the construction of the term model $\T_{\Sigmaint}$ \cite{bezem:hofmann} and the proof that it is initial in $\CwF_{\Sigmaint}$.
 
-\paragraph{A construction based on implicit substitutions (initiality conjecture).} We shall outline how to construct an initial object in $\CwF_{\Sigmaint}$ based on $\TTint$, the decorated version of our type theory with explicit universe polymorphism \cite{BezemCDE22}. In this theory level variables and ordinary term variables can appear in any order. However, to facilitate the construction of an initial model, we consider, without loss of generality, a version of $\TTint$ where level variables precede ordinary term variables (both using de Bruijn indices). In this theory every context has the form $n,\Gamma$, where $n$ is the number of available level variables, and $\Gamma$ is a context of term variables that may depend on those $n$ level variables. We then need to show (i) how to organize the level terms and level judgments into a ucwf of levels; (ii) how to construct a level-indexed cwf of small types by modifying the construction of a cwf of small types; and (iii) how to construct an model of the level-indexed universes by modifying the construction of a model of the externally indexed universes based on $\TText$.
+\paragraph{A construction based on implicit substitutions (initiality conjecture).} We shall outline how to construct an initial object in $\CwF_{\Sigmaint}$ based on $\TTint$, the decorated version of our type theory with explicit universe polymorphism \cite{BezemCDE22}. In this theory level variables and ordinary term variables can appear in any order. As already mentioned we consider, without loss of generality, a version of $\TTint$ where level variables precede ordinary term variables (both using de Bruijn indices). In this theory every context has the form $n,\Gamma$, where $n$ is the number of available level variables, and $\Gamma$ is a context of term variables that may depend on those $n$ level variables. We then need to show (i) how to organize the level terms and level judgments into a ucwf of levels; (ii) how to construct a level-indexed cwf of small types by modifying the construction of a cwf of small types; and (iii) how to construct a model of the level-indexed universes by modifying the construction of a model of the externally indexed universes based on $\TText$.
 
 We first explain how to construct a ucwf of levels by referring to Brilakis'  \cite{Brilakis18} construction in Agda of the equivalence between two initial ucwfs: one with explicit substitutions and one with implicit substitution and de Bruijn variables. Since the ucwf with explicit substitutions is constructed directly from the operator symbols of ucwfs, Brilakis' proof is essentially the same as proving the initiality of the ucwf with implicit substutions. To prove the initiality of the ucwf of levels, we only need to extend Brilakis' proof with the extra structure for $\vee$ and $(-)^+$.
 \begin{itemize}
@@ -959,7 +959,7 @@ The next step is to construct the sort symbols, operator symbols, and equations 
 \item $\hom_n(\Delta,\Gamma)$ is the set of equivalence classes of raw context morphisms. 
 \item The level equality sort $\leq_n(l,l')$ is a one element set iff $l = l' : \ltm(n)$.
 \end{itemize}
-We then need to define all the operator symbols in this structure and check the equations. We omit the details which are similar to the construction of a model based on $\TText$.
+We then define all the operator symbols in this structure and check the equations. We omit the details which are similar to the construction of a model based on $\TText$.
 
 The final part of the construction is to interpret the operator symbols for level substitution and composition (in levels, level morphisms, contexts, context morphisms, types and terms) that correspond to the arrow part of the level-indexed cwf with extra structure. These are all defined implicitly by induction on the raw syntax. 
 
