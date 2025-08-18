@@ -7,6 +7,7 @@
 %\usepackage{diagrams}
 
 %\usepackage[all]{xy}
+\usepackage{todonotes}
 \usepackage{url}
 \usepackage[utf8]{inputenc}
 \usepackage{verbatim}
@@ -274,7 +275,7 @@ with Explicit Universe Polymorphism
 
 \begin{abstract}
 We present generalized algebraic theories corresponding to slightly modified versions of some of the type theories in our paper
-{\em Type Theory with Explicit Universe Polymorphism}. We first present a generalized algebraic theory for categories with families with extra strucure corresponding to Martin-Löf type theory with an external tower of universes. We then present a generalized algebraic theory for level-indexed categories with families with extra structure corresponding to Martin-Löf type theory with explicit universe polymorphism. This theory has universe level judgments and internally indexed universes. In this way we get abstract syntax definitions of the two theories as initial models of certain generalized algebraic theories. We thus abstract from details of the grammar and inference rules of the type theories and highlight their high-level structure. (* Add something about the construction of initial models by explicit and implicit substitutions? Add something about level equality sorts? *)
+{\em Type Theory with Explicit Universe Polymorphism}. We first present a generalized algebraic theory for categories with families with extra strucure corresponding to Martin-Löf type theory with an external tower of universes. We then present a generalized algebraic theory for level-indexed categories with families with extra structure corresponding to Martin-Löf type theory with explicit universe polymorphism. This theory has universe level judgments and internally indexed universes. In this way we get abstract syntax definitions of the two theories as initial models of certain generalized algebraic theories. We thus abstract from details of the grammar and inference rules of the type theories and highlight their high-level structure. \todo[inline]{Add something about the construction of initial models by explicit and implicit substitutions? Add something about level equality sorts?}
 \end{abstract}
 
 \section{Introduction}
@@ -384,7 +385,7 @@ The gat of cwfs has four sort symbols:
 corresponding to the objects and morphisms of the category of contexts, and the family of terms indexed by types in a given context, respectively. The notation states that $\ctx$ is a constant sort symbol, that $\hom$ is a binary sort symbol depending on arguments $\Delta, \Gamma : \ctx$, that $\ty$ is a unary sort symbol depending on the argument $\Gamma : \ctx$, and $\tm$ is a binary sort symbol depending on arguments $\Gamma : \ctx, A : \ty(\Gamma)$.
 
 \paragraph{Operator symbols.}
-The gat of cwfs has operator symbols for the basic operations of cwfs (identity and composition of context morphisms, substitution in types and terms, empty context and context morphism, context extension and context morphism extension, projection morphism, last variable term)\footnote{MB: should we separate them into four groups: structure for the base category, for the arrow part of the family valued functor, for the terminal object, and for context comprehension?}:
+The gat of cwfs has operator symbols for the basic operations of cwfs (identity and composition of context morphisms, substitution in types and terms, empty context and context morphism, context extension and context morphism extension, projection morphism, last variable term)\todo{MB: should we separate them into four groups: structure for the base category, for the arrow part of the family valued functor, for the terminal object, and for context comprehension?}:
 \begin{eqnarray*}
 \Gamma : \ctx &\vdash& \id_{\Gamma} : \Hom(\Gamma,\Gamma)\\
 \Xi,\Delta,\Gamma : \ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta) &\vdash&
@@ -726,7 +727,7 @@ We can construct an initial ucwf with $\vee$ and $(-)^+$, where the elements of 
 
 
 
-\footnote{Remark on finitely presented semilattices and constraints?}
+\todo[inline]{Remark on finitely presented semilattices and constraints?}
 
 
 \subsection{The level-indexed cwf of small types}\label{lcwf-sort}.
@@ -770,7 +771,7 @@ n,n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma), a :
 a[\sigma] : \tm_{n}(A[\sigma],\Gamma[\sigma])
 \end{eqnarray*}
 \paragraph{Equations.}
-The functor laws give us the following equations:\footnote{%
+The functor laws give us the following equations:\todo{%
 We should give more information here. The $p$ below is unexplained.}
 \begin{eqnarray*}
 \Gamma[\lid_n] &=& \Gamma\\
@@ -800,7 +801,7 @@ Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm
 We finally add the operator symbols and equations for level-indexed universes.
 Each $T(n)$ has extra structure for level-indexed universes $\UU_l$ with decodings $\Ta_l$, where $l$ is a level term that depends on level variables in $n$. These universes are closed under the small type formers and contain smaller universes $\UU_{l'}$ for $l' < l$.
 
-The operator symbols are obtained by internalizating the corresponding rules for the externally indexed universes. As before, we only show closure under $\Pi$. \footnote{PD: Should we factor out common premises $n : \lctx, l : \ltm(n), \Gamma : \ctx_n$?}
+The operator symbols are obtained by internalizating the corresponding rules for the externally indexed universes. As before, we only show closure under $\Pi$. \todo{PD: Should we factor out common premises $n : \lctx, l : \ltm(n), \Gamma : \ctx_n$?}
 \begin{eqnarray*}
 n : \lctx, l : \ltm(n), \Gamma : \ctx_n &\vdash& (\U_{l})_\Gamma : \ty_n(\Gamma)\\
 n : \lctx, l : \ltm(n), \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta_{l}}(a) : \ty_n(\Gamma)\\
@@ -1112,7 +1113,7 @@ a[\gamma\circ\delta] &=& a[\gamma][\delta]
 %\Gamma : \ctx, A:\ty(\Gamma) &\vdash&
 \id_{n,\Gamma\cext A} &=& \tuple{\p_{n,\Gamma,A},\q_{n,\Gamma,A}} : \Hom(\Gamma\cext A,\Gamma\cext A)
 \end{eqnarray*}
-\footnote{MB, check. Perhaps better to describe how to modify \ref{sec:gatPiU}:
+\todo{MB, check. Perhaps better to describe how to modify \ref{sec:gatPiU}:
 prefix every rule with $n:\lctx$ and add index $n$ to every occurrence
 of $\ctx,\ty,\tm$.}
 Equations (omitting the context and type of the equalities):
