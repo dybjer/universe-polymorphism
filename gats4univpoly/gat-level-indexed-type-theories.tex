@@ -505,6 +505,8 @@ As explained in Bezem et al \cite{bezem:hofmann}, $\CwF_{\Sigmaext}$ is the cate
 We shall outline how to construct an initial object in $\CwF_{\Sigmaext}$ based on $\TText$ -- the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}. However, as we explained in the introduction, we need to modify our syntax and work with decorated terms; for example, we need to decorate application with type information. We refer to this as the {\em raw syntax}, that is, expressions that are not necessary well-typed. In the raw syntax we include raw context morphisms, although such are not mentioned in loc.cit. These are lists of raw terms, where $\tuple{}$ denotes the empty list, and $\tuple{\gamma,a}$ denotes the list $\gamma$ extended by a new term $a$.
 
 To build an internal cwf with extra structure for the small type formers and a tower of universes, we interpret the sort symbols in terms of the judgment forms of $\TText$ as follows:
+
+\todo[inline]{The following needs to be revised}
 \begin{itemize}
 \item $\Gamma : \ctx$ is defined as $\Gamma \vdash$ quotiented by the equivalence relation of context equality $\Gamma = \Gamma' \vdash$. The latter is not stated explicitly in loc.cit. but can easily be added.
 \item $A : \ty(\Gamma)$ is defined as $\Gamma \vdash A$ quotiented by the equivalence relation $\Gamma \vdash A = A'$.
