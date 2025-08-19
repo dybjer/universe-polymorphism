@@ -199,11 +199,11 @@
 \def\Ordo{\mathcal{O}}
 \def\Pihat{\Pi}
 
-\def\Ctx{\mathrm{ctx}}
-\def\Ty{\mathrm{ty}}
-\def\Tm{\mathrm{tm}}
+%\def\Ctx{\mathrm{ctx}}
+%\def\Ty{\mathrm{ty}}
+%\def\Tm{\mathrm{tm}}
 \def\Obj{\mathrm{obj}}
-\def\Hom{\mathrm{hom}}
+\def\sub{\mathrm{hom}}
 \def\id{\mathrm{id}}
 \def\lHom{\mathrm{lhom}}
 \def\lctx{\mathrm{lctx}}
@@ -225,10 +225,10 @@
 \def\chom{\mathrm{chom}}
 
 \newcommand{\ctx}{\mathrm{ctx}}
-\newcommand{\sub}{\mathrm{sub}}
+%\newcommand{\sub}{\mathrm{sub}}
 \newcommand{\ty}{\mathrm{ty}}
 \newcommand{\tm}{\mathrm{tm}}
-%\newcommand{\hom}{\mathrm{hom}}
+%\newcommand{\sub}{\mathrm{hom}}
 \newcommand{\tuple}[1]{\langle #1 \rangle}
 \def\CComega{\mathrm{CC}^\omega}
 \newcommand{\cext}{.}
@@ -379,37 +379,37 @@ The gat of cwfs with extra structure for $\Pi$-types, a notion of model of Marti
 The gat of cwfs has four sort symbols:
 \begin{eqnarray*}
 &\vdash& \ctx\\
-\Delta, \Gamma : \ctx&\vdash& \hom(\Delta,\Gamma)\\
+\Delta, \Gamma : \ctx&\vdash& \sub(\Delta,\Gamma)\\
 \Gamma : \ctx&\vdash& \ty(\Gamma)\\
 \Gamma : \ctx, A : \ty(\Gamma)&\vdash& \tm(\Gamma,A)
 \end{eqnarray*}
-corresponding to the objects and morphisms of the category of contexts, and the family of terms indexed by types in a given context, respectively. The notation states that $\ctx$ is a constant sort symbol, that $\hom$ is a binary sort symbol depending on arguments $\Delta, \Gamma : \ctx$, that $\ty$ is a unary sort symbol depending on the argument $\Gamma : \ctx$, and $\tm$ is a binary sort symbol depending on arguments $\Gamma : \ctx, A : \ty(\Gamma)$.
+corresponding to the objects and morphisms of the category of contexts, and the family of terms indexed by types in a given context, respectively. The notation states that $\ctx$ is a constant sort symbol, that $\sub$ is a binary sort symbol depending on arguments $\Delta, \Gamma : \ctx$, that $\ty$ is a unary sort symbol depending on the argument $\Gamma : \ctx$, and $\tm$ is a binary sort symbol depending on arguments $\Gamma : \ctx, A : \ty(\Gamma)$.
 
 \paragraph{Operator symbols.}
 The gat of cwfs has operator symbols for the basic operations of cwfs (identity and composition of context morphisms, substitution in types and terms, empty context and context morphism, context extension and context morphism extension, projection morphism, last variable term)\todo{MB: should we separate them into four groups: structure for the base category, for the arrow part of the family valued functor, for the terminal object, and for context comprehension?}:
 \begin{eqnarray*}
-\Gamma : \ctx &\vdash& \id_{\Gamma} : \Hom(\Gamma,\Gamma)\\
-\Xi,\Delta,\Gamma : \ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta) &\vdash&
-\gamma \circ \delta : \Hom(\Xi,\Gamma)\\
-\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma) &\vdash&
+\Gamma : \ctx &\vdash& \id_{\Gamma} : \sub(\Gamma,\Gamma)\\
+\Xi,\Delta,\Gamma : \ctx, \gamma : \sub(\Delta,\Gamma), \delta : \sub(\Xi,\Delta) &\vdash&
+\gamma \circ \delta : \sub(\Xi,\Gamma)\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \sub(\Delta,\Gamma) &\vdash&
 A[\gamma] : \ty(\Delta)\\
-\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Gamma,A) &\vdash&  a[\gamma] : \tm(\Delta,A[\gamma])\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \sub(\Delta,\Gamma), a:\tm(\Gamma,A) &\vdash&  a[\gamma] : \tm(\Delta,A[\gamma])\\
 &\vdash& 1 : \ctx\\
-\Gamma : \ctx &\vdash& \tuple{}_\Gamma : \Hom(\Gamma,1)\\
+\Gamma : \ctx &\vdash& \tuple{}_\Gamma : \sub(\Gamma,1)\\
 \Gamma : \ctx, A:\ty(\Gamma) &\vdash& \Gamma\cext A : \ctx\\
-\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \tuple{\gamma,a} : \Hom(\Delta,\Gamma\cext A)\\
-\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \p_{\Gamma,A}: \Hom(\Gamma\cext A,\Gamma)\\
+\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \sub(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash& \tuple{\gamma,a} : \sub(\Delta,\Gamma\cext A)\\
+\Gamma : \ctx, A:\ty(\Gamma) &\vdash& \p_{\Gamma,A}: \sub(\Gamma\cext A,\Gamma)\\
 \Gamma : \ctx, A:\ty(\Gamma) &\vdash& \q_{\Gamma,A}: \tm(\Gamma\cext A,A[\p])
 \end{eqnarray*}
-The first line states that identity is a unary operator symbol with argument $\Gamma : \ctx$. The second line states that $\circ$ is a binary operator symbol with five arguments $\Xi,\Delta,\Gamma : \ctx, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta)$ and result sort $\Hom(\Xi,\Gamma)$. Note that only two of the five official arguments are explicit. To alleviate notation, we often suppress arguments of operator symbols. Note also that we overload notation for type and term substitution $A[\gamma]$ and $a[\gamma]$. Moreover, we sometimes drop further arguments and write $\id, \tuple{},\p,\q$ without the arguments in index position.
+The first line states that identity is a unary operator symbol with argument $\Gamma : \ctx$. The second line states that $\circ$ is a binary operator symbol with five arguments $\Xi,\Delta,\Gamma : \ctx, \gamma : \sub(\Delta,\Gamma), \delta : \sub(\Xi,\Delta)$ and result sort $\sub(\Xi,\Gamma)$. Note that only two of the five official arguments are explicit. To alleviate notation, we often suppress arguments of operator symbols. Note also that we overload notation for type and term substitution $A[\gamma]$ and $a[\gamma]$. Moreover, we sometimes drop further arguments and write $\id, \tuple{},\p,\q$ without the arguments in index position.
 
 \paragraph{Equations.}
 The gat of cwfs has 13 equations. We illustrate the notation by showing one of the laws for identity morphisms:\begin{eqnarray*}
-\Delta, \Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma) &\vdash& \id_\Gamma \circ \gamma = \gamma : \Hom(\Delta,\Gamma)
+\Delta, \Gamma : \Obj, \gamma : \sub(\Delta,\Gamma) &\vdash& \id_\Gamma \circ \gamma = \gamma : \sub(\Delta,\Gamma)
 %\\
-%\Delta, \Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma) &\vdash& \gamma \circ \id_\Delta = \gamma : \Hom(\Delta,\Gamma)\\
-%\Theta, \Xi,\Delta,\Gamma : \Obj, \gamma : \Hom(\Delta,\Gamma), \delta : \Hom(\Xi,\Delta), \xi : \Hom(\Theta,\Xi) &\vdash&
-%(\gamma \circ \delta) \circ \xi = \gamma \circ (\delta \circ \xi): \Hom(\Theta,\Gamma)
+%\Delta, \Gamma : \Obj, \gamma : \sub(\Delta,\Gamma) &\vdash& \gamma \circ \id_\Delta = \gamma : \sub(\Delta,\Gamma)\\
+%\Theta, \Xi,\Delta,\Gamma : \Obj, \gamma : \sub(\Delta,\Gamma), \delta : \sub(\Xi,\Delta), \xi : \sub(\Theta,\Xi) &\vdash&
+%(\gamma \circ \delta) \circ \xi = \gamma \circ (\delta \circ \xi): \sub(\Theta,\Gamma)
 \end{eqnarray*}
 In the official notation both argument and result types are explicit. However, to alleviate notation we often drop them and only write:
 \begin{eqnarray*}
@@ -473,7 +473,7 @@ Moreover, the operator symbols commute with term substitution:
 \Pi^{l,l'}(a,b)[ \gamma ] &=& \Pi^{l,l'}(a [ \gamma ], b[ \gamma^\dagger ])\\
 (\UU^m_l)_\Gamma[ \gamma ] &=&(\UU^m_l)_\Delta
 \end{eqnarray*}
-where $\gamma : \Hom(\Delta,\Gamma)$ and $\gamma^\dagger = \langle \gamma \circ \p_{\Delta,\Ta_l(a[\gamma])}, \q_{\Delta,\Ta_l(a[\gamma])}\rangle : \Hom(\Delta.\Ta_l(a[\gamma]),\Gamma.\Ta_l(a))$.
+where $\gamma : \sub(\Delta,\Gamma)$ and $\gamma^\dagger = \langle \gamma \circ \p_{\Delta,\Ta_l(a[\gamma])}, \q_{\Delta,\Ta_l(a[\gamma])}\rangle : \sub(\Delta.\Ta_l(a[\gamma]),\Gamma.\Ta_l(a))$.
 %\paragraph{Adding cumulativity.}
 
 If we want a cumulative tower of universes we add operator symbols that lift elements in the $l$th universe to the $m$th universe for $l < m$:
@@ -508,11 +508,21 @@ To build an internal cwf with extra structure for the small type formers and a t
 
 \todo[inline]{The following needs to be revised}
 \begin{itemize}
-\item $\Gamma : \ctx$ is defined as $\Gamma \vdash$ quotiented by the equivalence relation of context equality $\Gamma = \Gamma' \vdash$. The latter is not stated explicitly in loc.cit. but can easily be added.
-\item $A : \ty(\Gamma)$ is defined as $\Gamma \vdash A$ quotiented by the equivalence relation $\Gamma \vdash A = A'$.
-\item $a : \tm(\Gamma,A)$ is defined as $\Gamma \vdash a : A$ quotiented by the equivalence relation $\Gamma \vdash a = a' : A$.
-\item There are no explicit judgments $\Delta \vdash \gamma : \Gamma$ and $\Delta \vdash \gamma = \gamma' : \Gamma$  in loc.cit, but these can be defined in terms of $\Delta \vdash a : A$ and $\Delta \vdash a = a' : A$. Then $\gamma : \hom(\Delta,\Gamma)$ can be defined as $\Delta \vdash \gamma : \Gamma$ quotiented by the equivalence relation $\Delta \vdash  \gamma = \gamma' : \Gamma$.
+\item $\Gamma : \ctx$ (should be $\Gamma \in \Tm(1,\ctx)$) is defined as $\Gamma \vdash$ quotiented by the equivalence relation of context equality $\Gamma = \Gamma' \vdash$. The latter is not stated explicitly in loc.cit. but can easily be added.
+\item $A :\ty(\Gamma)$ (should be $A \in \Tm(1,\ty[\tuple{\Gamma}]$) is defined as $\Gamma \vdash A$ quotiented by the equivalence relation $\Gamma \vdash A = A'$.
+\item $a : \tm(\Gamma,A)$ (should be $a \in \Tm(1,\tm[\tuple{\Gamma,A}]$) is defined as $\Gamma \vdash a : A$ quotiented by the equivalence relation $\Gamma \vdash a = a' : A$.
+\item There are no explicit judgments $\Delta \vdash \gamma : \Gamma$ and $\Delta \vdash \gamma = \gamma' : \Gamma$  in loc.cit, but these can be defined in terms of $\Delta \vdash a : A$ and $\Delta \vdash a = a' : A$. Then $\gamma : \sub(\Delta,\Gamma)$ (should be
+$\gamma \in \Tm(1,\sub[\tuple{\Delta,\Gamma}]$) can be defined as $\Delta \vdash \gamma : \Gamma$ quotiented by the equivalence relation $\Delta \vdash  \gamma = \gamma' : \Gamma$.
 \end{itemize}
+\footnote{Before that we need to define the types of the cwf corresponding to the sorts.
+\begin{itemize}
+\item $\ctx \in \Ty(1)$
+\item $\sub \in \Ty(1.\ctx.\ctx[\p])$
+\item $\ty \in \Ty(1.\ctx)$
+\item $\tm \in \Ty(1.\ctx.\ty)$
+\end{itemize}
+
+}
 We then need to define the operator symbols on equivalence classes. First we consider those that give rise to constructors of raw syntax. For example:
 \begin{itemize}
 \item The empty context is a constructor of raw contexts. We define $1 : \ctx$ as the equivalence class of the empty context.
@@ -640,18 +650,18 @@ for the special case that there is only one type, so that all type equations are
 %A[\id_{n}] &=& A \\
 %a:\tm_n(\sigma,A) &\vdash&
 l[\lid_{n}] &=& l \\
-%n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \delta : \Hom_n(\Xi,\Delta), \gamma : \Hom_n(\Delta,\Gamma),
+%n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \delta : \sub_n(\Xi,\Delta), \gamma : \sub_n(\Delta,\Gamma),
 %&\vdash&
 %A[\gamma\circ\delta] &=&A[\gamma][\delta]\\
 %: \ty_n(\Xi)\\
-%n : \lctx, \Xi,\Delta, : \ctx_n, \delta : \Hom_n(\Xi,\Delta), \gamma : \Hom_n(\Delta,\Gamma),
+%n : \lctx, \Xi,\Delta, : \ctx_n, \delta : \sub_n(\Xi,\Delta), \gamma : \sub_n(\Delta,\Gamma),
 %a:\tm_n(\Gamma,A) &\vdash&
 l[\sigma\circ\tau] &=& l[\sigma][\tau]\\
 %: \tm_n(\Xi,A[\gamma\circ\delta])\\
 %n : \lctx &\vdash&
 \lid_{0} &=& \tuple{}_{0}\\
- %: \Hom_n(1_n,1_n)\\
-%\Gamma,\Delta : \ctx_n , \gamma : \Hom_n (\Delta,\Gamma) &\vdash&
+ %: \sub_n(1_n,1_n)\\
+%\Gamma,\Delta : \ctx_n , \gamma : \sub_n (\Delta,\Gamma) &\vdash&
 \tuple{}_{n}\circ\sigma &=& \tuple{}_{m}\\
 \lp_n \circ \tuple{\sigma,l} &=& \sigma\\
 \lq_n [\tuple{\sigma,l}] &=& l\\
@@ -751,7 +761,7 @@ $T(\sigma) : T(m) \to T(n)$ substitutes the $m$ level variables by the respectiv
 \paragraph{Sort symbols.} The gat for the level-indexed cwf of small types has the following sort symbols in addition to those of the gat of levels:
 \begin{eqnarray*}
 n : \lctx &\vdash& \ctx_n\\
-n : \lctx, \Delta, \Gamma : \ctx_n &\vdash& \Hom_n(\Delta,\Gamma)\\
+n : \lctx, \Delta, \Gamma : \ctx_n &\vdash& \sub_n(\Delta,\Gamma)\\
 n : \lctx, \Gamma : \ctx_n &\vdash& \ty_n(\Gamma)\\
 n : \lctx, \Gamma : \ctx_n, A:\ty_n(\Gamma) &\vdash& \tm_n(\Gamma,A)
 \end{eqnarray*}
@@ -763,9 +773,9 @@ The arrow part of the level-indexed cwf of small types axiomatizes level substit
 \begin{eqnarray*}
 n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'} &\vdash&
 \Gamma[\sigma] : \ctx_n\\
-n, n' : \lctx , \sigma : \lhom(n,n'), \Delta,\Gamma : \ctx_{n'}, \gamma : \Hom_{n'}(\Delta,\Gamma)
+n, n' : \lctx , \sigma : \lhom(n,n'), \Delta,\Gamma : \ctx_{n'}, \gamma : \sub_{n'}(\Delta,\Gamma)
 &\vdash&
-\gamma[\sigma] : \Hom_{n}(\Delta[\sigma],\Gamma[\sigma]) \\
+\gamma[\sigma] : \sub_{n}(\Delta[\sigma],\Gamma[\sigma]) \\
 n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma)
 &\vdash&
 A[\sigma]: \ty_n(\Gamma[\sigma])\\
@@ -852,7 +862,7 @@ Equations for commutativity of operator symbols wrt substitution:
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
 \Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^\dagger ])
 \end{eqnarray*}
- where $\gamma : \hom(\Delta,\Gamma)$.
+ where $\gamma : \sub(\Delta,\Gamma)$.
 
 We also have equations for commutativity of lifting and $\Pi$-codes with respect to term substitution $\gamma$:
  \begin{eqnarray*}
@@ -890,7 +900,7 @@ The decoding equation for lifting of codes for universes is as follows:
 \begin{eqnarray*}
 n : \lctx, k, l, m : \ltm(n), p : k < l, q : l < m, \Gamma : \ctx(n) &\vdash& \Ta^m_l((\UU^l_k)_\Gamma) = (\UU^m_k)_\Gamma
 \end{eqnarray*}
-Equations for commutativity of lifting and term substitution ($\gamma : \hom(\Delta,\Gamma)$):
+Equations for commutativity of lifting and term substitution ($\gamma : \sub(\Delta,\Gamma)$):
 \begin{eqnarray*}
 \Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
@@ -927,7 +937,7 @@ Equations ($\beta$ and $\eta$ for level abstraction and application):
  \lambda_\l(B)[ \sigma ] &=& \lambda_\l(B[ \sigma^{\dagger}])\\
 \app_\l(c,l)[ \sigma ] &=& \app_\l(c[ \sigma ] ,l[ \sigma ] )
 \end{eqnarray*}
-where $\gamma : \hom_n(\Delta,\Gamma)$ is a term substitution, and $\sigma : \lhom(m,n)$ is a level substitutuion with $\sigma^\dagger = \tuple{\sigma \circ \lp, \lq}$.
+where $\gamma : \sub_n(\Delta,\Gamma)$ is a term substitution, and $\sigma : \lhom(m,n)$ is a level substitutuion with $\sigma^\dagger = \tuple{\sigma \circ \lp, \lq}$.
 To check the type of the equation
 $$ \forall_\l(B)[ \sigma ] = \forall_\l(B[ \sigma^{\dagger}])$$ we assume $\Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp])$. It follows that $B[\sigma^\dagger] : \ty_{s(m)}(\Gamma[\lp][\sigma^\dagger]) = \ty_{s(m)}(\Gamma[\sigma][\lp])$. Hence
 $\forall_\l(B[ \sigma^{\dagger}]) : \ty_m(\Gamma[\sigma])$.
@@ -964,7 +974,7 @@ The next step is to construct the sort symbols, operator symbols, and equations 
 \item $\tm_n(\Gamma,A)$ is the set of equivalence classes of raw terms $a$ such that $n, \Gamma \vdash a : A$ and $a.a'$ are equivalent provided $n, \Gamma \vdash A = A'$.
 \item $\ctx_n$ is the set of equivalence classes of raw contexts $\Gamma$ such that $n, \Gamma \vdash$ under the equivalence relation $n, \Gamma = \Gamma' \vdash$.
 %(Context equality judgments are not explicitly listed in Bezem et al \cite{BezemCDE22}.)
-\item $\hom_n(\Delta,\Gamma)$ is the set of equivalence classes of raw context morphisms.
+\item $\sub_n(\Delta,\Gamma)$ is the set of equivalence classes of raw context morphisms.
 \item The level equality sort $\leq_n(l,l')$ is a one element set iff $l = l' : \ltm(n)$.
 \end{itemize}
 We then define all the operator symbols in this structure and check the equations. We omit the details which are similar to the construction of a model based on $\TText$.
@@ -1056,20 +1066,20 @@ We already listed the sort symbols in \ref{lcwf-sort}
 %We have the following sort symbols:
 %\begin{eqnarray*}
 %n : \lctx &\vdash& \ctx_n\\
-%n : \lctx, \Delta, \Gamma : \ctx_n &\vdash& \Hom_n(\Delta,\Gamma)\\
+%n : \lctx, \Delta, \Gamma : \ctx_n &\vdash& \sub_n(\Delta,\Gamma)\\
 %\end{eqnarray*}
 \begin{eqnarray*}
-n : \lctx, \Gamma : \ctx_n &\vdash& \id_{n,\Gamma} : \Hom_n(\Gamma,\Gamma)\\
-n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \gamma : \Hom_n(\Delta,\Gamma), \delta : \Hom_n(\Xi,\Delta) &\vdash&
-\gamma \circ \delta : \Hom_n(\Xi,\Gamma)\\
-n : \lctx, \Gamma,\Delta : \ctx_n, A:\ty_n(\Gamma), \gamma : \Hom_n(\Delta,\Gamma) &\vdash&
+n : \lctx, \Gamma : \ctx_n &\vdash& \id_{n,\Gamma} : \sub_n(\Gamma,\Gamma)\\
+n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \gamma : \sub_n(\Delta,\Gamma), \delta : \sub_n(\Xi,\Delta) &\vdash&
+\gamma \circ \delta : \sub_n(\Xi,\Gamma)\\
+n : \lctx, \Gamma,\Delta : \ctx_n, A:\ty_n(\Gamma), \gamma : \sub_n(\Delta,\Gamma) &\vdash&
 A[\gamma] : \ty_n(\Delta)\\
-n : \lctx, \Gamma,\Delta : \ctx_n, A:\ty_n(\Gamma), \gamma : \Hom_n(\Delta,\Gamma), a:\tm_n(\Gamma,A) &\vdash&  a[\gamma] : \tm_n(\Delta,A[\gamma])\\
+n : \lctx, \Gamma,\Delta : \ctx_n, A:\ty_n(\Gamma), \gamma : \sub_n(\Delta,\Gamma), a:\tm_n(\Gamma,A) &\vdash&  a[\gamma] : \tm_n(\Delta,A[\gamma])\\
 n : \lctx &\vdash& 1_n : \ctx_n\\
-n : \lctx, \Gamma : \ctx_n &\vdash& \tuple{}_{n,\Gamma} : \Hom_n(\Gamma,1_n)\\
+n : \lctx, \Gamma : \ctx_n &\vdash& \tuple{}_{n,\Gamma} : \sub_n(\Gamma,1_n)\\
 n : \lctx, \Gamma : \ctx_n, A:\ty_n (\Gamma) &\vdash& \Gamma \cext A : \ctx_n \\
-n : \lctx, \Gamma,\Delta : \ctx_n , A:\ty_n (\Gamma), \gamma : \Hom_n (\Delta,\Gamma), a:\tm_n (\Delta,A[\gamma]) &\vdash& \tuple{\gamma,a} : \Hom_n (\Delta,\Gamma\cext A)\\
-n : \lctx, \Gamma : \ctx_n , A:\ty_n (\Gamma) &\vdash& \p_{n,\Gamma,A}: \Hom_n (\Gamma\cext A,\Gamma)\\
+n : \lctx, \Gamma,\Delta : \ctx_n , A:\ty_n (\Gamma), \gamma : \sub_n (\Delta,\Gamma), a:\tm_n (\Delta,A[\gamma]) &\vdash& \tuple{\gamma,a} : \sub_n (\Delta,\Gamma\cext A)\\
+n : \lctx, \Gamma : \ctx_n , A:\ty_n (\Gamma) &\vdash& \p_{n,\Gamma,A}: \sub_n (\Gamma\cext A,\Gamma)\\
 n : \lctx, \Gamma : \ctx_n , A:\ty_n (\Gamma) &\vdash& \q_{n,\Gamma,A}: \tm_n (\Gamma\cext A,A[\p])
 \end{eqnarray*}
 Operator symbols for level-indexed $\Pi$-types (should we decorate $\lambda$ and $\app$ with type information?):
@@ -1091,33 +1101,33 @@ A[\id_{n,\Gamma}] &=& A
 %a:\tm_n(\Gamma,A) &\vdash&
 a[\id_{n,\Gamma}] &=& a% : \tm_n(\Gamma,A)
 \\
-%n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \delta : \Hom_n(\Xi,\Delta), \gamma : \Hom_n(\Delta,\Gamma),
+%n : \lctx, \Xi,\Delta,\Gamma : \ctx_n, \delta : \sub_n(\Xi,\Delta), \gamma : \sub_n(\Delta,\Gamma),
 %&\vdash&
 A[\gamma\circ\delta] &=& A[\gamma][\delta]
 %: \ty_n(\Xi)
 \\
-%n : \lctx, \Xi,\Delta, : \ctx_n, \delta : \Hom_n(\Xi,\Delta), \gamma : \Hom_n(\Delta,\Gamma),
+%n : \lctx, \Xi,\Delta, : \ctx_n, \delta : \sub_n(\Xi,\Delta), \gamma : \sub_n(\Delta,\Gamma),
 %a:\tm_n(\Gamma,A) &\vdash&
 a[\gamma\circ\delta] &=& a[\gamma][\delta]
 %: \tm_n(\Xi,A[\gamma\circ\delta])
 \\
 %n : \lctx &\vdash&
 \id_{n,1_n} &=& \tuple{}_{n,1_n}
-%: \Hom_n(1_n,1_n)
+%: \sub_n(1_n,1_n)
 \\
-%\Gamma,\Delta : \ctx_n , \gamma : \Hom_n (\Delta,\Gamma) &\vdash&
-\tuple{}_{n,\Gamma}\circ\gamma &=& \tuple{}_{n,\Delta}% : \Hom_n (\Delta,1_n )
+%\Gamma,\Delta : \ctx_n , \gamma : \sub_n (\Delta,\Gamma) &\vdash&
+\tuple{}_{n,\Gamma}\circ\gamma &=& \tuple{}_{n,\Delta}% : \sub_n (\Delta,1_n )
 \\
-%\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash&
-\p_{n,\Gamma,A}\circ\tuple{\gamma,a} &=& \gamma : \Hom(\Delta,\Gamma)\\
-%\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash&
+%\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \sub(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash&
+\p_{n,\Gamma,A}\circ\tuple{\gamma,a} &=& \gamma : \sub(\Delta,\Gamma)\\
+%\Gamma,\Delta : \ctx, A:\ty(\Gamma), \gamma : \sub(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]) &\vdash&
 \q_{n,\Gamma,A}[\tuple{\gamma,a}] &=& a : \tm(\Delta,A[\gamma]) \\
-%\Gamma,\Delta,\Xi : \ctx, A:\ty(\Gamma), \gamma : \Hom(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]), \delta : \Hom(\Xi,\Delta) &\vdash&
+%\Gamma,\Delta,\Xi : \ctx, A:\ty(\Gamma), \gamma : \sub(\Delta,\Gamma), a:\tm(\Delta,A[\gamma]), \delta : \sub(\Xi,\Delta) &\vdash&
 \tuple{\gamma,a} \circ \delta &=& \tuple{\gamma\circ\delta,a[\delta]} \\
 %:
-%\Hom(\Xi,\Gamma\cext A) \\
+%\sub(\Xi,\Gamma\cext A) \\
 %\Gamma : \ctx, A:\ty(\Gamma) &\vdash&
-\id_{n,\Gamma\cext A} &=& \tuple{\p_{n,\Gamma,A},\q_{n,\Gamma,A}} : \Hom(\Gamma\cext A,\Gamma\cext A)
+\id_{n,\Gamma\cext A} &=& \tuple{\p_{n,\Gamma,A},\q_{n,\Gamma,A}} : \sub(\Gamma\cext A,\Gamma\cext A)
 \end{eqnarray*}
 \todo{MB, check. Perhaps better to describe how to modify \ref{sec:gatPiU}:
 prefix every rule with $n:\lctx$ and add index $n$ to every occurrence
