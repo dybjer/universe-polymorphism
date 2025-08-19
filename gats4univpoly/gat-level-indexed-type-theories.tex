@@ -514,14 +514,13 @@ To build an internal cwf with extra structure for the small type formers and a t
 \item There are no explicit judgments $\Delta \vdash \gamma : \Gamma$ and $\Delta \vdash \gamma = \gamma' : \Gamma$  in loc.cit, but these can be defined in terms of $\Delta \vdash a : A$ and $\Delta \vdash a = a' : A$. Then $\gamma : \sub(\Delta,\Gamma)$ (should be
 $\gamma \in \Tm(1,\sub[\tuple{\Delta,\Gamma}]$) can be defined as $\Delta \vdash \gamma : \Gamma$ quotiented by the equivalence relation $\Delta \vdash  \gamma = \gamma' : \Gamma$.
 \end{itemize}
-\footnote{Before that we need to define the types of the cwf corresponding to the sorts.
+\footnote{Before that we need to define the types of the cwf corresponding to the sorts. We should be able to conclude
 \begin{itemize}
 \item $\ctx \in \Ty(1)$
 \item $\sub \in \Ty(1.\ctx.\ctx[\p])$
 \item $\ty \in \Ty(1.\ctx)$
 \item $\tm \in \Ty(1.\ctx.\ty)$
 \end{itemize}
-
 }
 We then need to define the operator symbols on equivalence classes. First we consider those that give rise to constructors of raw syntax. For example:
 \begin{itemize}
