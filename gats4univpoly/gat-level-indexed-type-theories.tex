@@ -282,39 +282,39 @@ We present generalized algebraic theories corresponding to slightly modified ver
 
 The aim of Voevodsky's  {\em Initiality Conjecture project} is to define a general class of dependent type theories and to develop generic metatheory for theories in this class. We quote from the introduction of an extended abstract where Voevodsky \cite{voevodsky:initiality} motivates his project:
 \begin{quotation}
-The first few steps in all approaches to the set-theoretic semantics of dependent
+\emph{The first few steps in all approaches to the set-theoretic semantics of dependent
 type theories remain insuﬃciently understood. The constructions which have been
 worked out in detail in the case of a few particular type systems by dedicated authors
 are being extended to the wide variety of type systems under consideration today by
 analogy. This is not acceptable in mathematics. Instead we should be able to obtain
 the required results for new type systems by specialization of general theorems and
 constructions formulated for abstract objects the instances of which combine together
-to produce a given type system.
+to produce a given type system.}
 \end{quotation}
-\todo[inline]{Perhaps italicize the direct quotations.}
 In particular, one would like a generic construction showing that theories in this class are initial in corresponding categories of models. We quote Voevodsky \cite{voevodsky:initiality} again:
 \begin{quotation}
-A crucial component of this approach is the expected result that for a particular
+\emph{A crucial component of this approach is the expected result that for a particular
 class of inference rules the term model is an initial object in the category of models.
 This is known as the Initiality Conjecture. In the case of the pure Calculus of
 Constructions with a “decorated” application operation this conjecture was proved in
 1988 by Thomas Streicher \cite{streicher:thesis}. The problem of finding an appropriate formulation
 of the general version of the conjecture and of proving this general version will be the
-subject of future work.
+subject of future work.}
 \end{quotation}
 On the surface such initiality proofs may seem straightforward, but they depend on subtle details in the formulation of grammar and inference rules. This is why Voevodsky insisted on calling such theorems ``conjectures'' until proven rigorously and, ideally, implemented in a proof assistant.
 
-An example of an implemented proof is Brunerie and de Boer's\todo{Perhaps name in alphabetical order?} \cite{Brunerie:initiality,deBoer:lic} proof in Agda that a version of Martin-Löf type theory with an external tower of universes is an initial contextual category \cite{cartmell:phd,cartmell:apal} with appropriate extra structure. %Theversion of type theory with de Bruijn variables and implicit substitutions.
+An example of an implemented proof is Brunerie and de Boer's \cite{Brunerie:initiality,deBoer:lic} proof in Agda that a version of Martin-Löf type theory with an external tower of universes is an initial contextual category \cite{cartmell:phd,cartmell:apal} with appropriate extra structure. %Theversion of type theory with de Bruijn variables and implicit substitutions.
 
-A possible approach to Voevodsky's project is based on Cartmell's {\em generalized algebraic theories (gats)} \cite{cartmell:phd,cartmell:apal}. These generalize many sorted algebraic theories by allowing sort symbols and operator symbols to have dependent types. Moreover, as shown in our paper {\em On generalized algebraic theories and categories with families} \cite{bezem:hofmann} for each\todo{Perhaps add a comma before ``for each''} finite presentation $\Sigma$ of a gat, there is a general construction of a term model $\T_\Sigma$ and this is initial in the category $\CwF_\Sigma$ of categories with families (cwfs) \cite{dybjer:torino} with a $\Sigma$-structure. The idea is to try to capture a logical theory $\T$ by a corresponding gat $\Sigma$ such that $\T$  is initial in $\CwF_\Sigma$. It follows that $\T$ is isomorphic to the generic term model $\T_\Sigma$.
+A possible approach to Voevodsky's project is based on Cartmell's {\em generalized algebraic theories (gats)} \cite{cartmell:phd,cartmell:apal}. These generalize many sorted algebraic theories by allowing sort symbols and operator symbols to have dependent types. Moreover, as shown in our paper {\em On generalized algebraic theories and categories with families} \cite{bezem:hofmann}, for each finite presentation $\Sigma$ of a gat, there is a general construction of a term model $\T_\Sigma$ and this is initial in the category $\CwF_\Sigma$ of categories with families (cwfs) \cite{dybjer:torino} with a $\Sigma$-structure. The idea is to try to capture a logical theory $\T$ by a corresponding gat $\Sigma$ such that $\T$  is initial in $\CwF_\Sigma$. It follows that $\T$ is isomorphic to the generic term model $\T_\Sigma$.
 
-In this paper we carry out a case study for this approach. We consider slightly modified versions of two of the type theories in our paper {\em Type Theory with Explicit Universe Polymorphism}: Martin-Löf type theory with an external tower of universes $\TText$ and Martin-Löf type theory with\todo{The end of this sentence reads funny} explicit universe polymorphism, $\TTint$, with universe level judgments, internally indexed universes, and level-indexed. We present two gats, $\Sigmaext$ and $\Sigmaint$ and outline proofs that $\TText$ and $\TTint$ are initial in the respective categories $\CwF_\Sigmaext$ and $\CwF_\Sigmaint$. To provide full rigorous (even implemented) proofs of these initiality conjectures are outside the scope of the paper.
-\todo[inline]{We invoke Voevodky to justify our paper, but then we say we are not going to be rigorous in the above sentence.}
+In this paper we carry out a case study for this approach. We consider slightly modified versions of two of the type theories in our paper {\em Type Theory with Explicit Universe Polymorphism}: Martin-Löf type theory with an external tower of universes $\TText$ and Martin-Löf type theory with explicit universe polymorphism, $\TTint$, with universe level judgments, internally indexed universes, and level-indexed products. We present two gats, $\Sigmaext$ and $\Sigmaint$ and outline proofs that $\TText$ and $\TTint$ are initial in the respective categories $\CwF_\Sigmaext$ and $\CwF_\Sigmaint$. We intend our approach to lead to uniform rigorous proofs of initiality for a wide class of mathematical theories.
 
-Cwfs are models of the basic rules of dependent type theory (context formation, context morphism formation, substitutions in types and terms, projection morphism, assumption). They are thus suitable for modelling both gats and Martin-Löf type theory provided they are equipped with appropriate extra structure: $\Sigma$-structure for modelling a gat presented by $\Sigma$ and structure for the type formers ($\Pi, \Sigma, \N, \UU, \ldots$) for modelling Martin-Löf type theory.  (Note that we use $\Sigma$ both for $\Sigma$-types and to denote the presentation of a gat. \todo{``which one is meant'' would perhaps be better.} It should be clear from the context what is meant.)
+% To provide full rigorous (even implemented) proofs of these
+% initiality conjectures are outside the scope of the paper.
 
-Cwfs can themselves be presented as a gat $\Sigma^\CwF$, and we can extend this gat with operator symbols and equations for the type formers of Martin-Löf type theory with an external tower of universe yielding the gat $\Sigmaext$. Although this gat is infinitary, it has an initial model $\T_{\Sigmaext}$  obtained by extending the general construction of an initial model for finitary gats.
-\todo[inline]{Is this extension something done in this paper, or is this in the literature?}
+Cwfs are models of the basic rules of dependent type theory (context formation, context morphism formation, substitutions in types and terms, projection morphism, assumption). They are thus suitable for modelling both gats and Martin-Löf type theory provided they are equipped with appropriate extra structure: $\Sigma$-structure for modelling a gat presented by $\Sigma$ and structure for the type formers ($\Pi, \Sigma, \N, \UU, \ldots$) for modelling Martin-Löf type theory.  (Note that we use $\Sigma$ both for $\Sigma$-types and to denote the presentation of a gat. It should be clear from the context which one is meant.)
+
+Cwfs can themselves be presented as a gat $\Sigma^\CwF$, and we can extend this gat with operator symbols and equations for the type formers of Martin-Löf type theory with an external tower of universe yielding the gat $\Sigmaext$. Although this gat is infinitary, it has an initial model $\T_{\Sigmaext}$  obtained by extending the general construction of an initial model for finitary gats~\cite[Section 5.7]{bezem:hofmann}.
 
 This sums up our approach to Voevodsky's project. We characterize dependent type theories as initial models of gats of cwfs with extra structure or, as we shall see below, gats of variations of cwfs. In this way we have generic constructions of term models but can also study alternative constructions of initial models. The reason for focusing on gats of cwfs (with extra structure) is that they occupy an intermediate place between dependent type theories defined by grammar and inference rules and notions of model based on more mainstream categorical constructions. In particular, the gat of cwfs resembles Martin-Löf's substitution calculus for dependent type theory \cite{martinlof:gbg92,tasistro:lic}.
 In fact, our approach to Voevodsky's project extends beyond dependent type theory. For example, as shown by Castellan, Clairambault, and Dybjer \cite{castellan:lambek}, by considering simply typed cwfs (scwfs) and unityped cwfs (ucwfs) we can also capture various simply typed and untyped logical systems as gats and thus widening the scope of {\em uniform categorical logic} based on gats and cwfs.
@@ -323,8 +323,9 @@ In this article we introduce the notion of an indexed cwf, that is, a base categ
 $$
 P : \C^\op \to \CwF
 $$
-Cwfs indexed by the category of contexts of a ucwf $\L$ of universe levels is a suitable notion of model of Martin-Löf type theory with explicit universe polymorphism presented in our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22} provided we equip it with appropriate extra structure. As we show in Section \ref{level-indexed-tt}, this notion can be presented as a gat $\Sigmaint$. This yields a structured high-level definition of the theory $\TTint$. Presenting type theory by a gat of cwfs is a higher-level and more ``objective'' notion than one presented by grammar and inference rules. This is because the gat only records the ``important" rules and highlights categorical structure. When building initial models in terms of grammar and inference rules we need to include various bookkeeping rules, such as general rules of equality, and there will be a multitude of options. Without a common high level abstraction it will be hard to prove equivalence between different options and to claim that there is a unique abstract notion.
-\todo[inline]{The last sentence of the above paragraphs begs for a conclusion.}
+Cwfs indexed by the category of contexts of a ucwf $\L$ of universe levels is a suitable notion of model of Martin-Löf type theory with explicit universe polymorphism presented in our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22} provided we equip it with appropriate extra structure. As we show in Section \ref{level-indexed-tt}, this notion can be presented as a gat $\Sigmaint$. This yields a structured high-level definition of the theory $\TTint$. Presenting type theory by a gat of cwfs is a higher-level and more objective notion than one presented by grammar and inference rules. This is because the gat only records the important rules and highlights categorical structure. When building initial models in terms of grammar and inference rules, we need to include various bookkeeping rules, such as general rules of equality, and there will be a multitude of options. We hope that our common high level of abstraction will allow to prove equivalence between different options and claim that there is indeed a unique abstract notion of the mathematical theory under consideration.
+
+% Without such a common high level abstraction, it will be hard to prove equivalence between different options and to claim that there is a unique abstract notion of the appropriate mathematical theory under consideration.
 
 %We also discuss the relationship between the gat $\Sigmaint$ and the type theories $\TTint$ presented in Bezem et al  \cite{BezemCDE22} and also between the gat $\Sigmaext$ for Martin-Löf type theory and an externally indexed tower of universes and the corresponding type theory $\TText$.
 
@@ -334,15 +335,13 @@ We remark that variations of indexed cwfs capture various other logical systems 
 
 An implicit form of universe polymorphism in dependent type theory was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Coq (Rocq) \cite{coq:general}. Alternatively, Agda \cite{agda-wiki} and Lean \cite{moura:lean} employ versions of universe polymorphism, where universe levels are explicitly declared.
 
-In our paper we followed Courant's approach \cite{Courant02} to explicit universe polymorphism and\todo{The meaning of this ``and'' is ambiguous} introduced special universe level {\em judgments}:
+In our paper we followed Courant's approach \cite{Courant02} to explicit universe polymorphism with universe level {\em judgments}:
 $$
 l\ \level
 \hspace{5em}
 l = l'
 $$
-in addition to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variables declared in the context. We emphasized that, unlike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms (since then, Agda has introduced, in version 2.6.4, an option for disabling universe levels forming a type).  Nevertheless, we added level-indexed products $[\alpha]A$ of a families of types $A\ (\alpha\ \level)$ to our theory.
-\todo[inline]{Add a reference for \url{https://hackage.haskell.org/package/Agda-2.6.4/changelog}.}
-
+in addition to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variables declared in the context. We emphasized that, unlike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms (since then, Agda has introduced, in version 2.6.4, an option for disabling universe levels forming a type~\cite{agda:leveluniv}).  Nevertheless, we added level-indexed products $[\alpha]A$ of a families of types $A\ (\alpha\ \level)$ to our theory.
 
 Furthermore, we presented an extension where equational constraints between universe levels can be declared \cite{BezemCDE22}, building on a proposal by Voevodsky \cite{VV}. This extension can also be described by a gat, but we postpone this topic to a forthcoming paper.
 
