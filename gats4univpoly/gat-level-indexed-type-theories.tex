@@ -506,14 +506,16 @@ We shall outline how to construct an initial object in $\CwF_{\Sigmaext}$ based 
 
 To build an internal cwf with extra structure for the small type formers and a tower of universes, we interpret the sort symbols in terms of the judgment forms of $\TText$ as follows:
 
-\todo[inline]{The following needs to be revised}
+\todo[inline]{The following is incomplete and under revision}
+
+The term model should have the following properties:
 \begin{itemize}
-\item $\Gamma : \ctx$ (should be $\Gamma \in \Tm(1,\ctx)$) is defined as $\Gamma \vdash$ quotiented by the equivalence relation of context equality $\Gamma = \Gamma' \vdash$. The latter is not stated explicitly in loc.cit. but can easily be added.
-\item $A :\ty(\Gamma)$ (should be $A \in \Tm(1,\ty[\tuple{\Gamma}]$) is defined as $\Gamma \vdash A$ quotiented by the equivalence relation $\Gamma \vdash A = A'$.
-\item $a : \tm(\Gamma,A)$ (should be $a \in \Tm(1,\tm[\tuple{\Gamma,A}]$) is defined as $\Gamma \vdash a : A$ quotiented by the equivalence relation $\Gamma \vdash a = a' : A$.
-\item There are no explicit judgments $\Delta \vdash \gamma : \Gamma$ and $\Delta \vdash \gamma = \gamma' : \Gamma$  in loc.cit, but these can be defined in terms of $\Delta \vdash a : A$ and $\Delta \vdash a = a' : A$. Then $\gamma : \sub(\Delta,\Gamma)$ (should be
-$\gamma \in \Tm(1,\sub[\tuple{\Delta,\Gamma}]$) can be defined as $\Delta \vdash \gamma : \Gamma$ quotiented by the equivalence relation $\Delta \vdash  \gamma = \gamma' : \Gamma$.
+\item $\Gamma \in \Tm(1,\ctx)$) iff $\Gamma \vdash$ quotiented by the equivalence relation of context equality $\Gamma = \Gamma' \vdash$. The latter is not stated explicitly in loc.cit. but can easily be added.
+\item $A \in \Tm(1,\ty[\tuple{\Gamma}]$ iff $\Gamma \vdash A$ quotiented by the equivalence relation $\Gamma \vdash A = A'$.
+\item $a \in \Tm(1,\tm[\tuple{\Gamma,A}]$) iff $\Gamma \vdash a : A$ quotiented by the equivalence relation $\Gamma \vdash a = a' : A$.
+\item There are no explicit judgments $\Delta \vdash \gamma : \Gamma$ and $\Delta \vdash \gamma = \gamma' : \Gamma$  in loc.cit, but these can be defined in terms of $\Delta \vdash a : A$ and $\Delta \vdash a = a' : A$. Then $\gamma \in \Tm(1,\sub[\tuple{\Delta,\Gamma}]$) iff $\Delta \vdash \gamma : \Gamma$ quotiented by the equivalence relation $\Delta \vdash  \gamma = \gamma' : \Gamma$.
 \end{itemize}
+However, how do we define $\Tm(\Delta,\mathbf{A})$ for a general ``meta-context''$\Delta$ and sort (``meta-type") $\mathbf{A}$?
 \footnote{Before that we need to define the types of the cwf corresponding to the sorts. We should be able to conclude
 \begin{itemize}
 \item $\ctx \in \Ty(1)$
@@ -522,10 +524,11 @@ $\gamma \in \Tm(1,\sub[\tuple{\Delta,\Gamma}]$) can be defined as $\Delta \vdash
 \item $\tm \in \Ty(1.\ctx.\ty)$
 \end{itemize}
 }
+
 We then need to define the operator symbols on equivalence classes. First we consider those that give rise to constructors of raw syntax. For example:
 \begin{itemize}
-\item The empty context is a constructor of raw contexts. We define $1 : \ctx$ (should be $1 \in \Tm(1,\ctx)$, the latter "1" is the empty meta-context) as the equivalence class of the empty context.
-\item Context extension is also a constructor of raw contexts. If we overload notation and use the same symbol for the the syntax and the model we have $[\Gamma].[A] = [\Gamma.A]: \ctx$. We need to show that this operation preserves equivalence classes.
+\item The empty context is a constructor of raw contexts. $1 \in \Tm(1,\ctx)$, where the latter "1" is the empty meta-context, is the equivalence class of the empty context.
+\item Context extension is also a constructor of raw contexts. If we overload notation and use the same symbol for the the syntax and the model we have $[\Gamma].[A] = [\Gamma.A] \in \Tm(1,\ctx)$. We need to show that this operation preserves equivalence classes.
 \item Similarly for the constructors of raw cwf-morphisms $\tuple{}$ and $\tuple{-,-}$.
 \item The operator symbols for the type formers, such as $\Pi, \lambda, \app$ for $\Pi$-types and $\U_l, \Ta_l, \U^m_l$ and $\Ta^m_l$ are also constructors of raw syntax.
 \end{itemize}
