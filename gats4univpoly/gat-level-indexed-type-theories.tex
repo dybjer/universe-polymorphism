@@ -249,6 +249,8 @@
 \def\L{{\mathcal{L}}}
 \def\F{\mathcal{C}}
 \def\CwF{\mathrm{CwF}}
+\def\CwFext{\mathrm{CwF^{ext}}}
+\def\CwFint{\mathrm{CwF^{up}}}
 \def\Fam{\mathrm{Fam}}
 \def\SCwF{\mathrm{SCwF}}
 \def\C{\mathcal{C}}
@@ -279,6 +281,72 @@ We present generalized algebraic theories corresponding to slightly modified ver
 \end{abstract}
 
 \section{Introduction}
+
+In our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22} we proposed several extensions of Martin-Löf type theory with universe polymorphism. We followed Courant's approach \cite{Courant02} and added universe level {\em judgments}:
+$$
+l\ \level
+\hspace{5em}
+l = l'
+$$
+to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variables declared in the context. We emphasized that, unlike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms (since then, Agda has introduced, in version 2.6.4, an option for disabling universe levels forming a type~\cite{agda:leveluniv}).  Nevertheless, we added level-indexed products $[\alpha]A$ of families of types $A\ (\alpha\ \level)$ to our theory.
+
+In this paper we provide alternative presentations to two of the theories in the above-mentioned paper: Martin-Löf type theory with an external tower of universes $\TText$ and Martin-Löf type theory with explicit universe polymorphism $\TTint$ as outlined in the previous paragraph. We present corresponding {\em generalized algebraic theories (gats)} $\Sigmaext$ and $\Sigmaint$. Gats were introduce by Cartmell \cite{cartmell:phd,cartmell:apal} as a generalization of many sorted algebraic theories where sort symbols and operator symbols may have dependent types. The connection between the two modes of presentation is that 
+$\TText$ and $\TTint$ are initial models of $\Sigmaext$ and $\Sigmaint$ respectively. To achieve this we need to consider modified version of $\TText$ and $\TTint$ where some terms (such as applications) are decorated with types.
+
+$\Sigmaext$ is the (infinitary) gat of categories with families (cwfs)  \cite{dybjer:torino} with extra structure for the small type formers $\Pi, \Sigma, \N_0, \N_1, \N, \W$ of Martin-Löf type theory and also for the tower of universes $\U_l$ indexed by external natural numbers $l \in \NN$. (Note that we use $\Sigma$ both for $\Sigma$-types and to denote (presentations of) gats. It should be clear from the context which one is meant.)
+Cwfs are models of the basic rules of dependent type theory (context formation, context morphism formation, substitutions in types and terms, projection morphism, assumption). They are thus suitable for modelling both gats and Martin-Löf type theory provided they are equipped with appropriate extra structure: $\Sigma$-structure for modelling a gat presented by $\Sigma$ and structure for the type formers ($\Pi, \Sigma, \N, \UU, \ldots$) for modelling Martin-Löf type theory.   
+
+\footnote{To set the stage we quote Voevodsky (notes from a talk in 2010 \cite{voevodsky:cmu2010}):
+\begin{quotation}
+\emph{
+I will speak about type systems. It is diﬃcult for a mathematician since
+a type system is not a mathematical notion. I will spend a little time
+explaining how I see ”type systems” mathematically.
+}
+\end{quotation}
+\begin{quotation}
+\emph{
+”Type systems” are formal deduction systems of particular ”flavor”. So let
+me start with the following:
+}
+\end{quotation}
+}
+\footnote{Lawvere 2006, introduction to reprint of an article from 1969 \cite{lawvere:tac-adjointness}:
+My 1963 observation (referred to by Eilenberg and Kelly in La Jolla, 1965), that cartesian closed categories serve as a common abstraction of type theory and propositional
+logic, permits an invariant algebraic treatment of the essential problem of proof theory,
+though most of the later work by proof theorists still relies on presentation-dependent
+formulations. ... The strategy to interpret proofs themselves as structures had
+been discussed by Kreisel; however, the influential “realizers” of Kleene are not yet the
+usual mathematical sort of structures.}
+\footnote{
+\begin{quotation}
+\emph{Thesis 0. Any formal deduction system can be specified in the form of a
+quasi-equational theory.
+$$\vdots$$
+}
+\end{quotation}
+}
+\footnote{
+\begin{quotation}
+\emph{Fact 1. Any quasi-equational theory has an initial model.}
+\end{quotation}
+and 
+\begin{quotation}
+\emph{This view of formal deduction systems has many advantages. One is that it
+suggests a uniform approach to the formal description of various deductive
+systems. Another one is that ”interpretations” of the deductive system are
+directly connected with the models of the corresponding quasi-equational
+theory.}
+\end{quotation}
+}
+
+In this paper we shall pursue a variation of Voevodsky's ideas. We propose to specify a variety of formal systems as initial models of Cartmell's generalized algebraic theories \cite{cartmell:phd,cartmell:apal}. 
+These generalize many sorted algebraic theories by allowing sort symbols and operator symbols to have dependent types. In this paper we carry out a case study for this approach. We consider slightly modified versions of two of the type theories in our paper {\em Type Theory with Explicit Universe Polymorphism}: Martin-Löf type theory with an external tower of universes $\TText$ and Martin-Löf type theory with explicit universe polymorphism, $\TTint$, with universe level judgments, internally indexed universes, and level-indexed products. We present two gats, $\Sigmaext$ and $\Sigmaint$ and outline proofs that $\TText$ and $\TTint$ are initial in the respective categories $\CwFext$ of cwfs with extra structure for the small type former and an external tower of universes and $\CwFint$ of level-indexed cwfs for with extra structure for the small type formers and level-indexed universes for explicit universe polymorphism.
+
+****
+OLD STUFF
+****
+
 
 The aim of Voevodsky's  {\em Initiality Conjecture project} is to define a general class of dependent type theories and to develop generic metatheory for theories in this class. We quote from the introduction of an extended abstract where Voevodsky \cite{voevodsky:initiality} motivates his project:
 \begin{quotation}
@@ -1022,6 +1090,9 @@ Bezem et al \cite{bezem:hofmann}.
 We contrast this to the construction of initial objects in categories of cwfs with extra structure for the small type formers and and an external tower of universes $\CwF^\mathrm{ext}$ and $\CwF^\mathrm{up}$ for level-indexed universes. %(This would be analogous to Brunerie's and de Boer's setting.)
 The price we pay for working on top of the framework of gats, is that we need two levels of cwfs in $\CwF_{\Sigmaext}$ and  $\CwF_{\Sigmaint}$: the ``metalevel'' cwf needed for modelling the basic dependent type theory underlying gats,
 and the ``object level" internal cwfs (and ucwf-indexed cwfs) needed for modelling our type theories. *)
+
+\footnote{PD: Is it feasible to have a generic construction of initial models with implicit substitutions for some class of gats? We note that in cwfs (and scwfs, ucwfs, and indexed cwfs) substitution is modelled by the arrow part of a functor. Under certain conditions we can define the corresponding substitution combinators in the term model by induction. This relies on identifying variables (projections) as a special subclass of the terms in a cwf (and the like). It seems that in this way we get a uniform way of constructing term models for various type theories and predicate logics which are close to the standard presentations.}
+
 %We have shown how to capture Martin-Löf type theory with explicit universe polymorphism as a gat. The list of sort symbols, operator symbols, and equations may seem long but not as long as the list of inference rules rules for the syntactic theory. (In the versions with implicit substitutions we should include the substitution lemmas.) Moreover, the gat formalizes the high-level structure of ucwf-indexed cwfs with extra structure: the $\vee$-semilattice with an inflationary operation $(-)^+$, and adjoint-like structures for $\Pi$-types and other type formers. Also context comprehension in cwfs is an adjoint-like structure. The relationship with adjoints in the sense of ordinary cartesian closed categories is worked out in the case of contextual cwfs with extensional equality types, $\Sigma$-types and $\Pi$-types by Clairambault and Dybjer \cite{ClairambaultD11,ClairambaultD14} and for some other structures in Castellan et al \cite{castellan:lambek}.
 %
 %A key novelty is the need for level equality sorts $\leq_n(l,l')$. The main recipe for a gat corresponding to Martin-Löf type theory is that equality judgments are formalized as judgmental equalities in gats. For example, the judgment
