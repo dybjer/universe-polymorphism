@@ -293,9 +293,9 @@ to the usual judgment forms of type theory. Moreover, all judgments may depend o
 In this paper we provide alternative presentations of two of the theories in the above-mentioned paper: Martin-Löf type theory with an external tower of universes $\TText$ and Martin-Löf type theory with explicit universe polymorphism $\TTint$ as outlined in the previous paragraph. We present corresponding {\em generalized algebraic theories (gats)} $\Sigmaext$ and $\Sigmaint$. Gats were introduce by Cartmell \cite{cartmell:phd,cartmell:apal} as a generalization of many sorted algebraic theories where sort symbols and operator symbols may have dependent types. Our aim is to show that 
 $\TText$ and $\TTint$ (suitably modified) yield initial models of $\Sigmaext$ and $\Sigmaint$ respectively. To achieve this we need to consider versions of $\TText$ and $\TTint$ where some terms (such as applications) are decorated with types.
 
-The gat $\Sigmaext$ is the infinitary gat of categories with families (cwfs)  \cite{dybjer:torino} with extra structure for the small type formers ($\Pi, \Sigma, \N_0, \N_1, \N, \W$) of Martin-Löf type theory and for the tower of universes $\U_l$ indexed by external natural numbers $l \in \NN$. Cwfs are models of the basic rules of dependent type theory (context formation, context morphism formation, substitutions in types and terms, projection morphism, assumption).  (Note that we use $\Sigma$ both for $\Sigma$-types and to denote (presentations of) gats. It should be clear from the context which one is meant.)
+In Section \ref{sigmaext} we will present $\Sigmaext$ is the infinitary gat of categories with families (cwfs)  \cite{dybjer:torino} with extra structure for the small type formers ($\Pi, \Sigma, \N_0, \N_1, \N, \W$) of Martin-Löf type theory and for the tower of universes $\U_l$ indexed by external natural numbers $l \in \NN$. Cwfs are models of the basic rules of dependent type theory (context formation, context morphism formation, substitutions in types and terms, projection morphism, assumption).  (Note that we use $\Sigma$ both for $\Sigma$-types and to denote (presentations of) gats. It should be clear from the context which one is meant.)
 
-The gat $\Sigmaint$ is the finitary gat of level-indexed cwfs with extra structure for the small type formers of Martin-Löf type theory and for level-indexed universes. An indexed cwf consists of a base category $\C$ and a cwf-valued presheaf
+In Section \ref{level-indexed-tt} we will present the gat $\Sigmaint$ is the finitary gat of level-indexed cwfs with extra structure for the small type formers of Martin-Löf type theory and for level-indexed universes. An indexed cwf consists of a base category $\C$ and a cwf-valued presheaf
 $$
 P : \C^\op \to \CwF
 $$
@@ -377,7 +377,10 @@ We remark that variations of indexed cwfs capture various other logical systems 
 
 An implicit form of universe polymorphism in dependent type theory was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Coq (Rocq) \cite{coq:general}. Alternatively, Agda \cite{agda-wiki} and Lean \cite{moura:lean} employ versions of universe polymorphism, where universe levels are explicitly declared.
 
-\todo[inline]{After the reorganization, we can end the introduction here, except pointing out that we haven't mentioned the calculus with constraints. And we should of course keep the dedication to Stefano. We could add references to Section 2 and 3 higher up.}
+There are numerous paper on universe polymorphism \cite{}, and as already mentioned, we followed Courant's approach \cite{Courant02} to explicit universe polymorphism with universe level judgments. Furthermore, we presented an extension where equational constraints between universe levels can be declared \cite{BezemCDE22}, building on a proposal by Voevodsky \cite{VV}. This extension can also be described by a gat, but we postpone this topic to a forthcoming paper.
+
+
+\todo[inline]{After the reorganization, we can end the introduction here.}
  In our paper we followed Courant's approach \cite{Courant02} to explicit universe polymorphism with universe level {\em judgments}:
 $$
 l\ \level
@@ -414,7 +417,7 @@ In Section 4 we discuss related and further research.
 
 \paragraph{Dedication.} We dedicate this article to professor Stefano Berardi, the University of Torino, on the occasion of his 60th birthday. Stefano is a friend, colleague, and coauthor, who spent the winter and spring 1993/94 in the type theory group in Göteborg. He has made fundamental contributions to type theory and constructivity and in particular to understanding the constructive content of classical logic and to the constructive analysis of impredicativity.
 
-\section{Type theory with an external tower of universes}
+\section{Type theory with an external tower of universes}\label{sigmaext}
 
 \subsection{The gat of cwfs} A cwf consists of a base category $\C$ of contexts and context morphisms (substitutions), a family-valued presheaf
 $$
