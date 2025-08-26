@@ -253,8 +253,10 @@
 \def\L{{\mathcal{L}}}
 \def\F{\mathcal{C}}
 \def\CwF{\mathrm{CwF}}
-\def\CwFext{\mathrm{CwF^{ext}}}
-\def\CwFint{\mathrm{CwF^{up}}}
+\def\CwFextSigma{\mathrm{CwF^{ext}_\Sigma}}
+\def\CwFintSigma{\mathrm{CwF^{up}_\Sigma}}
+\def\CwFext{\mathrm{CwF^{ext}_\Sigma}}
+\def\CwFint{\mathrm{CwF^{up}_\Sigma}}
 \def\Fam{\mathrm{Fam}}
 \def\SCwF{\mathrm{SCwF}}
 \def\C{\mathcal{C}}
@@ -571,16 +573,16 @@ where $\tuple{a} = \tuple{\tuple{}, a}$ and $\tuple{a,b} = \tuple{\tuple{\tuple{
 \gamma \circ^* \delta &=&\\
 &\vdots&
 \end{eqnarray*}
-Similarly, we can externalize morphisms in $\CwF_{\Sigmaext}$ and get the externalized category $\CwFext$.
+Similarly, we can externalize morphisms in $\CwF_{\Sigmaext}$ and get the externalized category of cwfs with a $\Sigma$-structure $\CwF^*_\Sigma$.
 
 
 \paragraph{A construction based on implicit substitutions (initiality conjecture).} 
-We shall outline an alternative construction of an initial object $\Text$ in $\CwFext$ based on $\TText$ -- the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}. In contrast to the construction of an initial object in $\CwF_{\Sigmaext}$ the category of cwfs with an internal cwf (with extra structure) we now construct an initial object in $\CwFext$, the category of cwfs (with extra structure).
-\todo[inline]{We not only need to contrast $\CwFext$ and $\CwF_{\Sigmaext}$, but explain what $\CwFext$ is.}
+We shall outline an alternative construction of an initial object $\T_\Sigma$ in $\CwFextSigma$ based on $\TText$ -- the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}. In contrast to the construction of an initial object in $\CwF_{\Sigmaext}$ the category of cwfs with an internal cwf (with extra structure) we now construct an initial object in $\CwFext$, the category of cwfs (with extra structure).
+%\todo[inline]{We not only need to contrast $\CwFext$ and $\CwF_{\Sigmaext}$, but explain what $\CwFext$ is.}
 
 As we explained in the introduction, we need to modify our syntax and work with decorated terms; for example, we need to decorate application with type information. We refer to this as the {\em raw syntax}, that is, expressions that are not necessary well-typed. In the raw syntax we include raw context morphisms, although such are not mentioned in loc.cit. These are lists of raw terms, where $\tuple{}$ denotes the empty list, and $\tuple{\gamma,a}$ denotes the list $\gamma$ extended by a new term $a$.
 
-We build this initial cwf with extra structure for the small type formers and a tower of universes as the following term model $\Text = (\Ctx,\Sub,\Ty,\Tm)$, we interpret the sort symbols in terms of the judgment forms of $\TText$ as follows:
+We build this initial cwf with extra structure for the small type formers and a tower of universes as the following term model $\T_\Sigma = (\Ctx,\Sub,\Ty,\Tm)$, we interpret the sort symbols in terms of the judgment forms of $\TText$ as follows:
 \begin{itemize}
 \item $\Gamma \in \Ctx$ is defined as $\Gamma \vdash$ quotiented by the equivalence relation of context equality $\Gamma = \Gamma' \vdash$. The latter is not stated explicitly in loc.cit. but can easily be added.
 \item $A \in \Ty(\Gamma)$ is defined as $\Gamma \vdash A$ quotiented by the equivalence relation $\Gamma \vdash A = A'$.
