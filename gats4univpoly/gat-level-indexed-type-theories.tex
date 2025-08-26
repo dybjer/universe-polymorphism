@@ -298,7 +298,7 @@ l = l'
 $$
 to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variables declared in the context. We emphasized that, unlike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms (since then, Agda has introduced, in version 2.6.4, an option for disabling universe levels forming a type~\cite{agda:leveluniv}).  To regain some of the lost strength of this move, we added level-indexed products $[\alpha]A$ of families of types $A\ (\alpha\ \level)$ to our theory.
 
-In this paper we provide alternative presentations of (slightly modified versions of) two of the theories in the above-mentioned paper: Martin-Löf type theory with an external tower of universes $\TText$ and Martin-Löf type theory with explicit universe polymorphism $\TTint$ as outlined in the previous paragraph. We present the corresponding {\em generalized algebraic theories (gats)} $\Sigmaext$ and $\Sigmaint$. Gats were introduce by Cartmell \cite{cartmell:phd,cartmell:apal} as a generalization of many sorted algebraic theories where sort symbols and operator symbols may have dependent types. Our aim is to show that 
+In this paper we provide alternative presentations of (slightly modified versions of) two of the theories in the above-mentioned paper: Martin-Löf type theory with an external tower of universes $\TText$ and Martin-Löf type theory with explicit universe polymorphism $\TTint$ as outlined in the previous paragraph. We present the corresponding {\em generalized algebraic theories (gats)} $\Sigmaext$ and $\Sigmaint$. Gats were introduce by Cartmell \cite{cartmell:phd,cartmell:apal} as a generalization of many sorted algebraic theories where sort symbols and operator symbols may have dependent types. Our aim is to show that
 $\TText$ and $\TTint$ yield initial models of $\Sigmaext$ and $\Sigmaint$ respectively, provided we decorate some terms (such as applications) with types.
 
 In Section \ref{sigmaext} we will present $\Sigmaext$, the infinitary gat of categories with families (cwfs)  \cite{dybjer:torino} with extra structure for the small type formers ($\Pi, \Sigma, \N_0, \N_1, \N, \W$) of Martin-Löf type theory and for the tower of universes $\U_l$ indexed by external natural numbers $l \in \NN$. Cwfs are models of the basic rules of dependent type theory: context formation, context morphism formation, substitutions in types and terms, projection morphism, assumption.  (Note that we use $\Sigma$ both for $\Sigma$-types and to denote (presentations of) gats. It should be clear from the context which one is meant.)
@@ -307,7 +307,7 @@ In Section \ref{level-indexed-tt} we will present $\Sigmaint$, the finitary gat 
 $$
 P : \C^\op \to \CwF
 $$
-We get a model for universe polymorphism by letting $\C$ be the category of contexts of a unityped cwf (ucwf) of levels and by equipping $\CwF$ with extra structure for the small type formers. We then add extra structure for level-indexed universes and level-indexed products of types. 
+We get a model for universe polymorphism by letting $\C$ be the category of contexts of a unityped cwf (ucwf) of levels and by equipping $\CwF$ with extra structure for the small type formers. We then add extra structure for level-indexed universes and level-indexed products of types.
 
 A presentation of type theory by a gat of cwfs is a higher-level and more objective notion than a presentation by grammar and inference rules. This is because the gat only records the important rules and highlights categorical structure. When building initial models in terms of grammar and inference rules, we need to include various bookkeeping rules, such as general rules of equality, and there will be a multitude of options. We hope that our common high level of abstraction will allow to prove equivalence between different options and claim that there is indeed a unique abstract notion of the mathematical theory under consideration.
 
@@ -340,10 +340,10 @@ systems. Another one is that ”interpretations” of the deductive system are
 directly connected with the models of the corresponding quasi-equational
 theory.}
 \end{quotation}
-\todo[inline]{Already here we could say: we pursue a variant of Voevodsky's approach: we will use gats rather than quasi-equational theories, and we will use cwfs rather than the C-systems (contextual categories). Gats and cwfs are intimately connected ... cwfs (and variants) are suitable for a uniform approach to deductive logical systems. 
+\todo[inline]{Already here we could say: we pursue a variant of Voevodsky's approach: we will use gats rather than quasi-equational theories, and we will use cwfs rather than the C-systems (contextual categories). Gats and cwfs are intimately connected ... cwfs (and variants) are suitable for a uniform approach to deductive logical systems.
 After mentioning the initiality conjecture project we could mention our generic construction of an initial model of a gat.}
 
-Voevodsky considered these issues important for the development of his Univalent Foundations of Mathematics based on dependent type theory. To advance the state 
+Voevodsky considered these issues important for the development of his Univalent Foundations of Mathematics based on dependent type theory. To advance the state
 of the art he proposed the {\em Initiality Conjecture project} the goal of which is to define a general class of dependent type theories and to develop generic metatheory for theories in this class. We quote from the introduction of an extended abstract where Voevodsky \cite{voevodsky:initiality} motivates his project:
 \begin{quotation}
 \emph{The first few steps in all approaches to the set-theoretic semantics of dependent
@@ -563,7 +563,7 @@ In the current section we have presented the {\em infinitary} gat $\Sigmaext$ of
 As explained in Bezem et al \cite{bezem:hofmann}, $\CwF_{\Sigmaext}$ is the category of cwfs with an {\em internal} cwf with extra structure for the small type formers and a tower of universes. However, this internal cwf $(\Ctx,\Sub,\Ty,\Tm,\ctx,\sub,\ty,\tm)$ can be externalized yielding a corresponding external cwf $(\Ctx^*,\Sub^*,\Ty^*,\Tm^*)$:
 \begin{eqnarray*}
 \Ctx^* &=& \Tm(1,\ctx)\\
-\Sub^*(\Delta,\Gamma) &=& \Tm(1,\hom[\tuple{\Delta,\Gamma[\p]}])\\
+\Sub^*(\Delta,\Gamma) &=& \Tm(1,\hom[\tuple{\Delta,\Gamma}])\\
 \Ty^*(\Gamma) &=& \Tm(1,\ty[\tuple{\Gamma}])\\
 \Tm^*(\Gamma,A) &=& \Tm(1,\tm[\tuple{\Gamma,A}])
 \end{eqnarray*}
@@ -576,7 +576,7 @@ where $\tuple{a} = \tuple{\tuple{}, a}$ and $\tuple{a,b} = \tuple{\tuple{\tuple{
 Similarly, we can externalize morphisms in $\CwF_{\Sigmaext}$ and get the externalized category of cwfs with a $\Sigma$-structure $\CwF^*_\Sigma$.
 
 
-\paragraph{A construction based on implicit substitutions (initiality conjecture).} 
+\paragraph{A construction based on implicit substitutions (initiality conjecture).}
 We shall outline an alternative construction of an initial object $\T_\Sigma$ in $\CwFextSigma$ based on $\TText$ -- the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}. In contrast to the construction of an initial object in $\CwF_{\Sigmaext}$ the category of cwfs with an internal cwf (with extra structure) we now construct an initial object in $\CwFext$, the category of cwfs (with extra structure).
 %\todo[inline]{We not only need to contrast $\CwFext$ and $\CwF_{\Sigmaext}$, but explain what $\CwFext$ is.}
 
@@ -592,7 +592,7 @@ We build this initial cwf with extra structure for the small type formers and a 
 We then need to define the operator symbols on equivalence classes. First we consider those that give rise to constructors of raw syntax. For example:
 \begin{itemize}
 \item The empty context is a constructor of raw contexts. We define $1 \in \Ctx$ as the equivalence class of the empty context.
-\item Context extension is also a constructor of raw contexts. If we overload notation and use the same symbol for the the syntax and the model we have $[\Gamma].[A] = [\Gamma.A]: \ctx$. We need to show that this operation preserves equivalence classes. 
+\item Context extension is also a constructor of raw contexts. If we overload notation and use the same symbol for the the syntax and the model we have $[\Gamma].[A] = [\Gamma.A]: \ctx$. We need to show that this operation preserves equivalence classes.
 \item Similarly for the constructors of raw cwf-morphisms $\tuple{}$ and $\tuple{-,-}$.
 \item The operator symbols for the type formers, such as $\Pi, \lambda, \app$ for $\Pi$-types and $\U_l, \Ta_l, \U^m_l$ and $\Ta^m_l$ are also constructors of raw syntax.
 \end{itemize}
@@ -600,12 +600,12 @@ Then we consider the operator symbols that correspond to implicit operations. Fo
 \begin{itemize}
 \item If $A$ is a raw type and $\gamma$ is a raw substitution, we first define the result $A[\gamma]$ of substituting $\gamma$ in $A$ by induction on the structure of the latter. Then we raise this operation to equivalence classes by proving that equality of types and equality of context morphisms is preserved.
 \item Similarly for substitution in raw terms.
-%if $a$ is a raw term and $\gamma$ is a raw substitution, we first define the result $a[\gamma]$ of substituting $\gamma$ in $a$ by induction on the structure of the latter. Then we raise this operation to equivalence classes by proving that equality of terms is preserved. 
+%if $a$ is a raw term and $\gamma$ is a raw substitution, we first define the result $a[\gamma]$ of substituting $\gamma$ in $a$ by induction on the structure of the latter. Then we raise this operation to equivalence classes by proving that equality of terms is preserved.
 \item Similarly for the other implicit operations $\id, \circ, \p, \q$.
 \end{itemize}
 To prove that we construct an object in $\CwFext$, we need to check the gat-equations. Then we need to show that there is a unique morphism in $\CwFext$ to any other object.
 
-It is worthwhile looking at the differences between the initiality proof outlined above and the proof implemented in Agda by Brunerie and de Boer \cite{Brunerie:initiality,deBoer:lic}. After all, their proof is about a version of type theory with an external tower of universes similar to ours. One difference is that their universes are \`a la Russell, while we present both versions \`a la Tarski and \`a la Russell. Moreover, they just have the rule $\UU_l : \UU_{l+1}$ and only consider the non-cumulative case, while we have $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$ and consider both the non-cumulative and cumulative cases. On the categorical side, there is the relatively minor difference between contextual categories and cwfs, where we note that initial cwfs (with extra structure) are contextual \cite{ClairambaultD11,castellan:lambek}. However, their notion of model is not expressed explicitly as a gat. 
+It is worthwhile looking at the differences between the initiality proof outlined above and the proof implemented in Agda by Brunerie and de Boer \cite{Brunerie:initiality,deBoer:lic}. After all, their proof is about a version of type theory with an external tower of universes similar to ours. One difference is that their universes are \`a la Russell, while we present both versions \`a la Tarski and \`a la Russell. Moreover, they just have the rule $\UU_l : \UU_{l+1}$ and only consider the non-cumulative case, while we have $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$ and consider both the non-cumulative and cumulative cases. On the categorical side, there is the relatively minor difference between contextual categories and cwfs, where we note that initial cwfs (with extra structure) are contextual \cite{ClairambaultD11,castellan:lambek}. However, their notion of model is not expressed explicitly as a gat.
 
 \section{Level-indexed type theory}\label{level-indexed-tt}
 
@@ -988,7 +988,7 @@ In this theory level variables and ordinary term variables can appear in any ord
 We first explain how to construct a ucwf $(\Lctx,\Lsub,\Ltm)$ of levels by referring to Brilakis'  \cite{Brilakis18} construction in Agda of the equivalence between two initial ucwfs: one with explicit substitutions and one with implicit substitution and de Bruijn variables. Since the ucwf with explicit substitutions is constructed directly from the operator symbols of ucwfs, Brilakis' proof is essentially the same as proving the initiality of the ucwf with implicit substutions. To prove the initiality of the ucwf of levels, we only need to extend Brilakis' proof with the extra structure for $\vee$ and $(-)^+$.
 \begin{itemize}
 \item An element $n \in \Lctx$ is the number of available level variables.
-\item An element of $\Ltm(n)$ is an equivalence class of level terms generated by $\vee$ and $(-)^+$ from $n$ level variables with respect to the equivalence relation generated by the equations for $\vee$ and $(-)^+$. In our type theory with explicit substitution \cite{BezemCDE22} this corresponds to the level terms $l$ such that 
+\item An element of $\Ltm(n)$ is an equivalence class of level terms generated by $\vee$ and $(-)^+$ from $n$ level variables with respect to the equivalence relation generated by the equations for $\vee$ and $(-)^+$. In our type theory with explicit substitution \cite{BezemCDE22} this corresponds to the level terms $l$ such that
 $$
 n \vdash l\ \level
 $$
@@ -1005,15 +1005,15 @@ The next step is to construct the sort symbols, operator symbols, and equations 
 \begin{itemize}
 \item $\Ty_n(\Gamma)$ is the set of equivalence classes of raw types $A$ such that $n, \Gamma \vdash A$ is a type and $A.A'$ are equivalent provided $n, \Gamma \vdash A = A'$.
 \item $\Tm_n(\Gamma,A)$ is the set of equivalence classes of raw terms $a$ such that $n, \Gamma \vdash a : A$ and $a.a'$ are equivalent provided $n, \Gamma \vdash A = A'$.
-\item $\Ctx_n$ is the set of equivalence classes of raw contexts $\Gamma$ such that $n, \Gamma \vdash$ under the equivalence relation $n, \Gamma = \Gamma' \vdash$. 
+\item $\Ctx_n$ is the set of equivalence classes of raw contexts $\Gamma$ such that $n, \Gamma \vdash$ under the equivalence relation $n, \Gamma = \Gamma' \vdash$.
 %(Context equality judgments are not explicitly listed in Bezem et al \cite{BezemCDE22}.)
-\item $\Sub_n(\Delta,\Gamma)$ is the set of equivalence classes of raw context morphisms. 
+\item $\Sub_n(\Delta,\Gamma)$ is the set of equivalence classes of raw context morphisms.
 \item The level equality sort $\leq_n(l,l')$ is a one element set iff $l = l' : \ltm(n)$.
 \end{itemize}
 We then define all the operator symbols in this structure and check the equations. We omit the details which are similar to the construction of a model based on $\TText$.
 \todo{Be systematic with using superscripts and subscripts!}
 
-The final part of the construction is to interpret the operator symbols for level substitution and composition (in levels, level morphisms, contexts, context morphisms, types and terms) that correspond to the arrow part of the level-indexed cwf with extra structure. These are all defined implicitly by induction on the raw syntax. 
+The final part of the construction is to interpret the operator symbols for level substitution and composition (in levels, level morphisms, contexts, context morphisms, types and terms) that correspond to the arrow part of the level-indexed cwf with extra structure. These are all defined implicitly by induction on the raw syntax.
 
 This concludes the construction of an object of $\CwFint$. Finally, we need to construct a morphism to any other object in $\CwFint$ and prove that this is unique.
 
@@ -1027,8 +1027,8 @@ A key ingredient in the gat $\Sigmaint$ is the sort symbol for level equality $\
 
 Two questions for further research:
 \begin{itemize}
-\item Is there a generic construction of an initial {\em external} cwf with extra structure for a gat? 
-\item Is there a generic construction of cwfs with {\em implicit} substitutions for some class of gats? 
+\item Is there a generic construction of an initial {\em external} cwf with extra structure for a gat?
+\item Is there a generic construction of cwfs with {\em implicit} substitutions for some class of gats?
  We note that in cwfs (and scwfs, ucwfs, and indexed cwfs) substitution is modelled by the arrow part of a functor. Under certain conditions we can define the corresponding substitution combinators in the term model by induction. This relies on identifying variables (projections) as a special subclass of the terms in a cwf (and the like). It seems that in this way we get a uniform way of constructing term models for various type theories and predicate logics which are close to the standard presentations.
  \end{itemize}
 
