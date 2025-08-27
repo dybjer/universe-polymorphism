@@ -567,14 +567,33 @@ As explained in Bezem et al \cite{bezem:hofmann}, $\CwF_{\Sigmaext}$ is the cate
 \Ty^*(\Gamma) &=& \Tm(1,\ty[\tuple{\Gamma}])\\
 \Tm^*(\Gamma,A) &=& \Tm(1,\tm[\tuple{\Gamma,A}])
 \end{eqnarray*}
-where $\tuple{a} = \tuple{\tuple{}, a}$ and $\tuple{a,b} = \tuple{\tuple{\tuple{}, a}, b}$. The operator symbols become
+where $\tuple{a} = \tuple{\tuple{}, a}$ and $\tuple{a,b} = \tuple{\tuple{\tuple{}, a}, b}$. Note that $\Delta,\Gamma \in \Tm(1,\ctx)$ are internal contexts, and not external ones $\Delta,\Gamma \in \Ctx$.
+
+The operator symbols become
 \begin{eqnarray*}
 \id^*_\Gamma &=& \id_1[{\tuple{\Gamma}}]\\
-\gamma \circ^* \delta &=&\\
+\gamma \circ^* \delta &=&\circ[ \tuple{\gamma,\delta[\p]?} ]\\
 &\vdots&
 \end{eqnarray*}
-Similarly, we can externalize morphisms in $\CwF_{\Sigmaext}$ and get the externalized category of cwfs with a $\Sigma$-structure $\CwF^*_\Sigma$.
-
+Case of monoids: one sort symbol and two operator symbols:
+\begin{eqnarray*}
+&\vdash& m\\
+&\vdash& e : m\\
+a, b : m &\vdash& a + b : m
+\end{eqnarray*}
+In the initial cwf with an internal monoid:
+\begin{eqnarray*}
+m &\in& \Ty(1)\\
+e &\in& \Tm(1,m)\\
++ &\in& \Tm(1.m.m[\p],m)
+\end{eqnarray*}
+The externalized version. We get the external monoid $(m^*,e^*,+^*)$:
+\begin{eqnarray*}
+m^* &=&\Tm(1,m)\\
+e^* &=& e\\
++^*(a, b) &=& +[ \tuple{a,b} ]
+\end{eqnarray*}
+Note that $a,b \in \Tm(1,m)$ while $a,b$ in $a, b : m \vdash a + b : m$ are named variables for a readable presentation of the typing of an operator symbol with interpretation $+ \in \Tm(1.m.m[\p],m)$ in the cwf.
 
 \paragraph{A construction based on implicit substitutions (initiality conjecture).}
 We shall outline an alternative construction of an initial object $\T_\Sigma$ in $\CwFextSigma$ based on $\TText$ -- the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}. In contrast to the construction of an initial object in $\CwF_{\Sigmaext}$ the category of cwfs with an internal cwf (with extra structure) we now construct an initial object in $\CwFext$, the category of cwfs (with extra structure).
