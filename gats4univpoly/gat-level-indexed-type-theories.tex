@@ -255,8 +255,10 @@
 \def\CwF{\mathrm{CwF}}
 \def\CwFextSigma{\mathrm{CwF^{ext}_\Sigma}}
 \def\CwFintSigma{\mathrm{CwF^{up}_\Sigma}}
-\def\CwFext{\mathrm{CwF^{ext}_\Sigma}}
-\def\CwFint{\mathrm{CwF^{up}_\Sigma}}
+\def\CwFext{\mathrm{CwF_{ext}}}
+\def\CwFint{\mathrm{CwF_{up}}}
+\def\LCwF{\mathrm{LCwF}}
+\def\LCwFint{\LCwF_{\mathrm{up}}}
 \def\Fam{\mathrm{Fam}}
 \def\SCwF{\mathrm{SCwF}}
 \def\C{\mathcal{C}}
@@ -265,8 +267,8 @@
 %\def\TTUP{\mathbf{MLTT^{\UU_l}}}
 \def\Sigmaext{{\Sigma^\mathrm{ext}}}
 \def\Sigmaint{{\Sigma^\mathrm{up}}}
-\def\TText{{\mathbf{TT}^\mathrm{ext}}}
-\def\TTint{{\mathbf{TT}^\mathrm{up}}}
+\def\TText{{\mathbf{TT}_\mathrm{ext}}}
+\def\TTint{{\mathbf{TT}_\mathrm{up}}}
 \def\Text{\T_\mathrm{ext}}
 \def\Tint{\T_\mathrm{up}}
 
@@ -448,7 +450,7 @@ The gat of cwfs has four sort symbols:
 \end{eqnarray*}
 corresponding to the objects and morphisms of the category of contexts, and the family of terms indexed by types in a given context, respectively. Thus $\ctx$ is a constant sort symbol, $\sub$ is a binary sort symbol depending on arguments $\Delta, \Gamma : \ctx$, $\ty$ is a unary sort symbol depending on the argument $\Gamma : \ctx$, and $\tm$ is a binary sort symbol depending on arguments $\Gamma : \ctx, A : \ty(\Gamma)$. 
 
-Sort symbols will be interpreted as types in the term model cwf. We have $\ctx \in \Ty(1), \sub \in \Ty(1.\ctx.\ctx[\p])$, etc. Hence, in the term model, $\sub(\Delta,\Gamma)$ is shorthand for $\sub[\tuple{\Delta,\Gamma}]$, where $\tuple{\Delta,\Gamma} = \tuple{\tuple{\tuple{},\Delta},\Gamma}$. Etc.
+Sort symbols will be interpreted as types in the term model cwf. We have $\ctx \in \Ty(1), \sub \in \Ty(1.\ctx.\ctx[\p])$, etc. Hence, in the term model, $\sub(\Delta,\Gamma)$ is shorthand for $\sub[\tuple{\Delta,\Gamma}]$, where $\tuple{a} = \tuple{\tuple{}, a}$ and $\tuple{a,b} = \tuple{\tuple{a}, b}$.
 
 \paragraph{Operator symbols.}
 %The gat of cwfs has operator symbols for the basic operations of cwfs (identity and composition of context morphisms, substitution in types and terms, empty context and context morphism, context extension and context morphism extension, projection morphism, last variable term)\todo{MB: should we separate them into four groups: structure for the base category, for the arrow part of the family valued functor, for the terminal object, and for context comprehension? PD: done.}:
@@ -470,7 +472,7 @@ A[\gamma] : \ty(\Delta)\\
 \Gamma : \ctx, A:\ty(\Gamma) &\vdash& \q_{\Gamma,A}: \tm(\Gamma\cext A,A[\p])
 \end{eqnarray*}
 The first line states that identity is a unary operator symbol with argument $\Gamma : \ctx$.
-Operator symbols will be interpreted as terms in the term model cwf. For example, $\id : \Tm(1.\ctx,\ty)$ and $\id_\Gamma$ is a more readable version $\id[\tuple{\tuple{},\Gamma}]$. 
+Operator symbols will be interpreted as terms in the term model cwf. For example, $\id \in \Tm(1.\ctx,\ty)$ and $\id_\Gamma$ is a more readable version $\id[\tuple{\tuple{},\Gamma}]$. 
 
  The second line states that $\circ$ is a binary operator symbol with five arguments $\Xi,\Delta,\Gamma : \ctx, \gamma : \sub(\Delta,\Gamma), \delta : \sub(\Xi,\Delta)$ and result sort $\sub(\Xi,\Gamma)$. Note that only two of the five official arguments are explicit. To alleviate notation, we often suppress arguments of operator symbols. Note also that we overload notation for type and term substitution $A[\gamma]$ and $a[\gamma]$. Moreover, we sometimes drop further arguments and write $\id, \tuple{},\p,\q$ without the arguments in index position.
 
@@ -569,14 +571,13 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
 
 In the current section we have presented the {\em infinitary} gat $\Sigmaext$ of cwfs with extra structure for the small type formers and a tower of universes. However, the above construction of an initial model applies to {\em finitary} gats. Nevertheless, as explained in Section 5.7 of Bezem et al  \cite{bezem:hofmann}, we can generalize our construction to some non-finitely presented gats. If we have an increasing sequence of signatures $\Sigma_n$ we can build the initial model $\T_\Sigma$ of their union $\Sigma$ in stages. In this way we can build an initial model of $\Sigmaext$ as a union of $\Sigma_n$ -- the gats of cwfs with extra structure for the small type formers and a truncated tower of $n$ universes.
 
-As explained in Bezem et al \cite{bezem:hofmann}, $\CwF_{\Sigmaext}$ is the category of cwfs with an {\em internal} cwf with extra structure for the small type formers and a tower of universes. However, this internal cwf $(\Ctx,\Sub,\Ty,\Tm,\ctx,\sub,\ty,\tm)$ determines an ``external" cwf $(\Ctx^*,\Sub^*,\Ty^*,\Tm^*)$:
+As explained in Bezem et al \cite{bezem:hofmann}, $\CwF_{\Sigmaext}$ is the category of cwfs with an {\em internal} cwf with extra structure for the small type formers and a tower of universes. In contrast to this we have the category of cwfs with extra structure for the small type formers and a tower of universes $\CwFext$. A cwf with an internal cwf $(\Ctx,\Sub,\Ty,\Tm,\ctx,\sub,\ty,\tm)$ in $\CwF_{\Sigmaext}$ determines such an ``external" cwf with extra structure for the small type formers and a tower of universe $(\Ctx^*,\Sub^*,\Ty^*,\Tm^*)$ in $\CwFext$ as follows:
 \begin{eqnarray*}
 \Ctx^* &=& \Tm(1,\ctx)\\
 \Sub^*(\Delta,\Gamma) &=& \Tm(1,\hom[\tuple{\Delta,\Gamma}])\\
 \Ty^*(\Gamma) &=& \Tm(1,\ty[\tuple{\Gamma}])\\
 \Tm^*(\Gamma,A) &=& \Tm(1,\tm[\tuple{\Gamma,A}])
-\end{eqnarray*}
-where $\tuple{a} = \tuple{\tuple{}, a}$ and $\tuple{a,b} = \tuple{\tuple{\tuple{}, a}, b}$. Note that $\Delta,\Gamma \in \Tm(1,\ctx)$ are internal contexts, and not external ones $\Delta,\Gamma \in \Ctx$. We leave the verification of this construction to future work.
+\end{eqnarray*} Note that $\Delta,\Gamma \in \Tm(1,\ctx)$ are internal contexts, and not external ones $\Delta,\Gamma \in \Ctx$. We leave the verification of this construction to future work.
 \todo[inline]{PD: Thierry and I discussed it and it seems important. The verification doesn't seem difficult. Nevertheless, it's too late to include it. Should we skip this whole comment?}
 %
 %The operator symbols become
@@ -606,12 +607,13 @@ where $\tuple{a} = \tuple{\tuple{}, a}$ and $\tuple{a,b} = \tuple{\tuple{\tuple{
 %Note that $a,b \in \Tm(1,m)$ while $a,b$ in $a, b : m \vdash a + b : m$ are named variables for a readable presentation of the typing of an operator symbol with interpretation $+ \in \Tm(1.m.m[\p],m)$ in the cwf.
 
 \paragraph{A construction based on implicit substitutions (initiality conjecture).}
-We shall outline an alternative construction of an initial object $\T_\Sigma$ in $\CwFextSigma$ based on $\TText$ -- the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}. In contrast to the construction of an initial object in $\CwF_{\Sigmaext}$ the category of cwfs with an internal cwf (with extra structure) we now construct an initial object in $\CwFext$, the category of cwfs (with extra structure).
+We shall outline an alternative construction of an initial object in $\CwFext$ based on $\TText$ -- the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}. 
+%In contrast to the construction of an initial object in $\CwF_{\Sigmaext}$ the category of cwfs with an internal cwf (with extra structure) we now construct an initial object in $\CwFext$, the category of cwfs (with extra structure).
 %\todo[inline]{We not only need to contrast $\CwFext$ and $\CwF_{\Sigmaext}$, but explain what $\CwFext$ is.}
 
-As we explained in the introduction, we need to modify our syntax and work with decorated terms; for example, we need to decorate application with type information. We refer to this as the {\em raw syntax}, that is, expressions that are not necessary well-typed. In the raw syntax we include raw context morphisms, although such are not mentioned in loc.cit. These are lists of raw terms, where $\tuple{}$ denotes the empty list, and $\tuple{\gamma,a}$ denotes the list $\gamma$ extended by a new term $a$.
+As already explained use decorated expressions; for example, we decorate application with type information. We refer to this as the {\em raw syntax}, that is, expressions that are not necessary well-typed. In the raw syntax we include raw context morphisms, although such are not mentioned in loc.cit. These are lists of raw terms, where $\tuple{}$ denotes the empty list, and $\tuple{\gamma,a}$ denotes the list $\gamma$ extended by a new term $a$.
 
-We build this initial cwf with extra structure for the small type formers and a tower of universes as the following term model $\T_\Sigma = (\Ctx,\Sub,\Ty,\Tm)$. We interpret the sort symbols in terms of the judgment forms of $\TText$ as follows:
+We build an object $(\Ctx,\Sub,\Ty,\Tm)$ of $\CwFext$ based on the type theory with implicit substitutions $\TText$ as follows. First, we interpret the sort symbols in terms of the judgment forms of $\TText$ as follows:
 \begin{itemize}
 \item $\Gamma \in \Ctx$ is defined as $\Gamma \vdash$ quotiented by the equivalence relation of context equality $\Gamma = \Gamma' \vdash$. The latter is not stated explicitly in loc.cit. but can easily be added.
 \item $A \in \Ty(\Gamma)$ is defined as $\Gamma \vdash A$ quotiented by the equivalence relation $\Gamma \vdash A = A'$.
@@ -621,7 +623,7 @@ We build this initial cwf with extra structure for the small type formers and a 
 We then need to define the operator symbols on equivalence classes. First there are the operator symbols that construct raw syntax: the basic cwf-combinators $1, -.-, \tuple{}, \tuple{-,-}$,  $\Pi, \lambda, \app$ for $\Pi$-types, and similarly for the other small type formers, and $\U_l, \Ta_l, \U^m_l$ and $\Ta^m_l$ for the tower of universes. We just give two examples.
 \begin{itemize}
 \item The empty context $1$ is a constructor of raw contexts and we define the terminal object in the term model as the equivalence class $[1] \in \Ctx$ of the empty context.
-\item Context extension is also a constructor of raw contexts. We define the extension of $[\Gamma] \in \Ctx$ with $[A] \in \Ty([\Gamma])$ as $[\Gamma.A] \in Ctx$ and show that this operation preserves equivalence classes.
+\item Context extension is also a constructor of raw contexts. We define the extension of $[\Gamma] \in \Ctx$ with $[A] \in \Ty([\Gamma])$ as $[\Gamma.A] \in \Ctx$ and show that this operation preserves equivalence classes.
 %\item Similarly for the constructors of raw cwf-morphisms $\tuple{}$ and $\tuple{-,-}$.
 %\item The operator symbols for the type formers, such as $\Pi, \lambda, \app$ for $\Pi$-types and $\U_l, \Ta_l, \U^m_l$ and $\Ta^m_l$ are also constructors of raw syntax.
 \end{itemize}
@@ -1011,10 +1013,9 @@ In the introduction we mentioned that untyped predicate logic can be captured by
 
 \subsection{Syntax and inference rules as an initial model}\label{initiality-internal}
 
-\paragraph{A generic construction based on explicit substitutions.} The gat $\Sigmaint$ for cwfs with level-indexed universes and level-indexed products is finitary. Hence we can directly instantiate the construction of the term model $\T_{\Sigmaint}$ \cite{bezem:hofmann} and the proof that it is initial in $\CwF_{\Sigmaint}$, the category of cwfs with an {\em internal} level-indexed cwfs with extra structure.
+\paragraph{A generic construction based on explicit substitutions.} The gat $\Sigmaint$ for level-indexed cwfs, explicit universe polymorphism, and level-indexed products is finitary. Hence we can directly instantiate the construction of the term model $\T_{\Sigmaint}$ \cite{bezem:hofmann} and the proof that it is initial in $\CwF_{\Sigmaint}$, the category of cwfs with an {\em internal} level-indexed cwfs with extra structure. In a similar way as we showed in Section \ref{initiality-internal} an object in $\CwF_{\Sigmaint}$ can be externalized yielding an object in the category $\LCwFint$ of level-indexed cwfs with extra structure for explicit universe polymorphism, and level-indexed products.
 
-\paragraph{A construction based on implicit substitutions (initiality conjecture).} We shall outline how to construct an initial object $\Tint$ in $\CwFint  = (\Lctx,\Lsub,\Ltm,\Ctx,\Sub,\Ty,\Tm)$ based on $\TTint$, the decorated version of our type theory with explicit universe polymorphism \cite{BezemCDE22}. Note again that this is the category of \emph{external} level-indexed cwfs with extra structure, as opposed to the internal ones in the previous paragraph.\todo[inline]{Say something more about $\CwFint$ and contrast it with $\CwF_{\Sigmaint}$}
-
+\paragraph{A construction based on implicit substitutions (initiality conjecture).} We shall outline how to construct an initial object $\Tint = (\Lsub,\Ltm,\Ctx,\Sub,\Ty,\Tm)$ in $\CwFint$ based on $\TTint$, the decorated version of our type theory with explicit universe polymorphism \cite{BezemCDE22}. 
 %In this theory level variables and ordinary term variables can appear in any order. As already mentioned we consider, without loss of generality, a version of $\TTint$ where level variables precede ordinary term variables (both using de Bruijn indices). In this theory every context has the form $n,\Gamma$, where $n$ is the number of available level variables, and $\Gamma$ is a context of term variables that may depend on those $n$ level variables. 
 We need to show (i) how to organize the level terms and level judgments into a ucwf of levels; (ii) how to construct a level-indexed cwf of small types by modifying the construction of a cwf of small types; and (iii) how to construct a model of the level-indexed universes by modifying the construction of a model of the externally indexed universes based on $\TText$.
 
