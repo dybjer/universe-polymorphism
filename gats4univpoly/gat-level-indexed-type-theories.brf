@@ -2,7 +2,7 @@
 \backcite {Courant02}{{1}{1}{section.1}}
 \backcite {agda:leveluniv}{{1}{1}{section.1}}
 \backcite {cartmell:phd,cartmell:apal}{{1}{1}{section.1}}
-\backcite {dybjer:torino}{{1}{1}{section.1}}
+\backcite {dybjer:torino}{{2}{1}{section.1}}
 \backcite {lawvere:tac-adjointness}{{2}{1}{section.1}}
 \backcite {voevodsky:cmu2010}{{2}{1}{section.1}}
 \backcite {voevodsky:initiality}{{3}{1}{section*.2}}
@@ -28,10 +28,10 @@
 \backcite {Courant02}{{4}{1}{section*.3}}
 \backcite {BezemCDE22}{{4}{1}{section*.3}}
 \backcite {VV}{{4}{1}{section*.3}}
-\backcite {dybjer:torino}{{4}{2.1}{subsection.2.1}}
-\backcite {hofmann:cambridge}{{4}{2.1}{subsection.2.1}}
-\backcite {castellan:lambek}{{4}{2.1}{subsection.2.1}}
-\backcite {dybjer:torino}{{4}{2.1}{subsection.2.1}}
+\backcite {dybjer:torino}{{5}{2.1}{subsection.2.1}}
+\backcite {hofmann:cambridge}{{5}{2.1}{subsection.2.1}}
+\backcite {castellan:lambek}{{5}{2.1}{subsection.2.1}}
+\backcite {dybjer:torino}{{5}{2.1}{subsection.2.1}}
 \backcite {bezem:hofmann}{{5}{2.1}{subsection.2.1}}
 \backcite {martinlof:hannover}{{6}{2.1}{section*.9}}
 \backcite {bezem:hofmann}{{6}{2.1}{section*.9}}
@@ -43,7 +43,7 @@
 \backcite {BezemCDE22}{{8}{2.3}{section*.13}}
 \backcite {Brunerie:initiality,deBoer:lic}{{9}{2.3}{section*.13}}
 \backcite {ClairambaultD11,castellan:lambek}{{9}{2.3}{section*.13}}
-\backcite {BezemCDE22}{{9}{3.1}{subsection.3.1}}
+\backcite {BezemCDE22}{{10}{3.1}{subsection.3.1}}
 \backcite {BezemCDE22}{{10}{3.1}{subsection.3.1}}
 \backcite {dybjer:torino}{{11}{3.1}{section*.16}}
 \backcite {BezemCDE22}{{11}{3.1}{section*.16}}
