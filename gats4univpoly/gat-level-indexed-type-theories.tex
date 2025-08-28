@@ -1058,12 +1058,9 @@ Bezem et al \cite{bezem:hofmann}. Moroever, we outlined the constructions of the
 
 A key ingredient in the gat $\Sigmaint$ is the sort symbol for level equality $\leq$. In a forthcoming article we plan to show how level equality sorts can be employed for representing equational constraints. This will enable us to extend $\Sigmaint$ with new sort symbols and equations for the extension of $\TTint$ with equational constraints presented in Section 5 in Bezem et al \cite{BezemCDE22}.
 
-Two questions for further research:
-\begin{itemize}
-\item Spell out the externalization process mentioned in Section \ref{initiality-external} mapping a cwf with a $\Sigma$-structure to a $\Sigma$-structure. 
-\item Is there a generic construction of cwfs with {\em implicit} substitutions for some class of gats?
- We note that in cwfs (and scwfs, ucwfs, and indexed cwfs) substitution is modelled by the arrow part of a functor. Under certain conditions we can define the corresponding substitution combinators in the term model by induction. This relies on identifying variables (projections) as a special subclass of the terms in a cwf (and the like). It seems that in this way we get a uniform way of constructing term models for various type theories and predicate logics which are close to the standard presentations.
- \end{itemize}
+We would also like to spell out the externalization process mentioned in Section \ref{initiality-external} mapping for example a cwf with an internal cwf to the corresponding cwf, and uniformly for other gats.
+
+We note that in cwfs (and scwfs, ucwfs, and indexed cwfs) substitution is modelled by the arrow part of a functor. Under certain conditions we can define the corresponding substitution combinators in the term model by induction. This relies on identifying variables (projections) as a special subclass of the terms in a cwf (and the like). It seems that in this way we get a uniform way of constructing term models for various type theories and predicate logics which are close to the standard presentations. This is also a topic for future research.
 
 \paragraph{Related research.}
 Other approaches to defining a general notion of dependent type theory inspired by Voevodsky's initiality conjecture project have been proposed by Bauer, Haselwarter, and Lumsdaine \cite{BauerHL20} and Uemura \cite{Uemura23}.
@@ -1087,7 +1084,8 @@ Related to gats are the quotient inductive-inductive types (qiits) of Kaposi, Ko
 
 We already listed the sort symbols in \ref{lcwf-sort}
 
-\paragraph{Operator symbols.} \footnote{Check whether implicit arguments are systematic.}
+\paragraph{Operator symbols.} 
+%\footnote{Check whether implicit arguments are systematic.}
 %We have the following sort symbols:
 %\begin{eqnarray*}
 %n : \lctx &\vdash& \ctx_n\\
