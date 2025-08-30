@@ -451,7 +451,7 @@ The gat of cwfs has four sort symbols:
 \end{eqnarray*}
 corresponding to the objects and morphisms of the category of contexts, and the family of terms indexed by types in a given context, respectively. Thus $\ctx$ is a constant sort symbol, $\sub$ is a binary sort symbol depending on arguments $\Delta, \Gamma : \ctx$, $\ty$ is a unary sort symbol depending on the argument $\Gamma : \ctx$, and $\tm$ is a binary sort symbol depending on arguments $\Gamma : \ctx, A : \ty(\Gamma)$. 
 
-Sort symbols will be interpreted as types in the term model cwf. We have $\ctx \in \Ty(1), \sub \in \Ty(1.\ctx.\ctx[\p])$, etc. Hence, in the term model \cite{bezem:hofmann}, $\sub(\Delta,\Gamma)$ is shorthand for $\sub[\tuple{\q[\p],\q}]$, where $\tuple{a,b} = \tuple{\tuple{a}, b}$ and $\tuple{a} = \tuple{\tuple{}, a}$.
+Sort symbols will be interpreted as types in the term model cwf \cite{bezem:hofmann}. This is a calculus of explicit substitutions based on cwf-combinators. We have $\ctx \in \Ty(1), \sub \in \Ty(1.\ctx.\ctx[\p])$, etc., and use $\sub(\Delta,\Gamma)$ as shorthand for $\sub[\tuple{\q[\p],\q}]$, where $\tuple{a,b} = \tuple{\tuple{a}, b}$ and $\tuple{a} = \tuple{\tuple{}, a}$.
 
 \paragraph{Operator symbols.}
 %The gat of cwfs has operator symbols for the basic operations of cwfs (identity and composition of context morphisms, substitution in types and terms, empty context and context morphism, context extension and context morphism extension, projection morphism, last variable term)\todo{MB: should we separate them into four groups: structure for the base category, for the arrow part of the family valued functor, for the terminal object, and for context comprehension? PD: done.}:
@@ -473,7 +473,7 @@ A[\gamma] : \ty(\Delta)\\
 \Gamma : \ctx, A:\ty(\Gamma) &\vdash& \q_{\Gamma,A}: \tm(\Gamma\cext A,A[\p])
 \end{eqnarray*}
 The first line states that identity is a unary operator symbol with argument $\Gamma : \ctx$.
-Operator symbols will be interpreted as terms in the term model cwf. For example, $\id \in \Tm(1.\ctx,\ty)$ and $\id_\Gamma$ is a more readable version $\id[\tuple{\tuple{},\Gamma}]$. 
+Operator symbols will be interpreted as terms in the term model cwf. For example, $\id \in \Tm(1.\ctx,\ty)$ and $\id_\Gamma$ is shorthand for $\id[\tuple{\Gamma}]$. 
 
  The second line states that $\circ$ is a binary operator symbol with five arguments $\Xi,\Delta,\Gamma : \ctx, \gamma : \sub(\Delta,\Gamma), \delta : \sub(\Xi,\Delta)$ and result sort $\sub(\Xi,\Gamma)$. Note that only two of the five official arguments are explicit. To alleviate notation, we often suppress arguments of operator symbols. Note also that we overload notation for type and term substitution $A[\gamma]$ and $a[\gamma]$. Moreover, we sometimes drop further arguments and write $\id, \tuple{},\p,\q$ without the arguments in index position.
 
@@ -922,28 +922,26 @@ n : \lctx, l, m : \ltm(n), p : l < m
 $$
 where again $l < m$ is defined as $\leq_n(l^+ \vee m, m)$.
 
-Equations for commutativity of operator symbols wrt substitution:
-\begin{eqnarray*}
-\Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )\\
-%\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
-\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^\dagger ])
-\end{eqnarray*}
- where $\gamma : \sub(\Delta,\Gamma)$.
-
-We also have equations for commutativity of lifting and $\Pi$-codes with respect to term substitution $\gamma$:
+Equations for commutativity of operator symbols wrt term substitution $\gamma : \sub(\Delta,\Gamma)$:
+%\begin{eqnarray*}
+%\Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )\\
+%%\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
+%\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^\dagger ])
+%\end{eqnarray*}
+% where $\gamma : \sub(\Delta,\Gamma)$.
  \begin{eqnarray*}
 (\U_l)_\Gamma [ \gamma ] &=& (\U_l)_\Delta\\
 \Ta_l(a) [ \gamma ] &=& \Ta_l(a[ \gamma ] )\\
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
 \Pi^{l,l'}(a,b)[ \gamma ] &=& \Pi^{l,l'}(a [ \gamma ], b[ \gamma^\dagger ])\\
-(\UU^l)_\Gamma[ \gamma ] &=&(\UU^l)_\Delta
+(\UU^m_l)_\Gamma[ \gamma ] &=&(\UU^m_l)_\Delta
 \end{eqnarray*}
-Moreover, we have laws that level substitution $\sigma$ commutes with the operator symbols for a universe.
- \begin{eqnarray*}
+
+Equations for commutativity of operator symbols wrt level substitution $\sigma: \lhom(n,n')$:  \begin{eqnarray*}
  (\U_{l})_\Gamma[\sigma] &=& (\U_{l[\sigma]})_{\Gamma[\sigma]}\\
  \Ta_l(a) [ \sigma ] &=& \Ta_{l[\sigma]}(a[ \sigma ] )\\
 \Pi^{l,l'}(a,b)[ \sigma ] &=& \Pi^{l[ \sigma ] ,l'[ \sigma ] }(a [ \sigma ], b[ \sigma])\\
-(\UU^l)_\Gamma[ \sigma ] &=&(\UU^{l[ \sigma ]} )_{\Delta[ \sigma ]}
+(\UU^m_l)_\Gamma[ \sigma ] &=&(\UU^{m[\sigma]}_{l[ \sigma ]} )_{\Gamma[ \sigma ]}
  \end{eqnarray*}
 
 
@@ -966,13 +964,13 @@ The decoding equation for lifting of codes for universes is as follows:
 \begin{eqnarray*}
 n : \lctx, k, l, m : \ltm(n), p : k < l, q : l < m, \Gamma : \ctx(n) &\vdash& \Ta^m_l((\UU^l_k)_\Gamma) = (\UU^m_k)_\Gamma
 \end{eqnarray*}
-Equations for commutativity of lifting and term substitution ($\gamma : \sub(\Delta,\Gamma)$):
+Equations for commutativity of lifting and term substitution $\gamma : \sub(\Delta,\Gamma)$:
 \begin{eqnarray*}
 \Ta^m_l(a) [ \gamma ] &=& \Ta^m_l(a[ \gamma ] )
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
 %\Pi^{l}(a,b)[ \gamma ] &=& \Pi^{l}(a [ \gamma ], b[ \gamma^\dagger ])
 \end{eqnarray*}
-and level substitution ($\sigma : \lhom(n,n')$)
+and level substitution $\sigma : \lhom(n,n')$:
 \begin{eqnarray*}
 \Ta^m_l(a) [ \sigma ] &=& \Ta^m_{l[\sigma]}(a[ \sigma ] )
 \end{eqnarray*}
@@ -1060,10 +1058,10 @@ Bezem et al \cite{bezem:hofmann}. Moroever, we outlined the constructions of the
 
 A key ingredient in the gat $\Sigmaint$ is the sort symbol for level equality $\leq$. In a forthcoming article we plan to show how level equality sorts can be employed for representing equational constraints. This will enable us to extend $\Sigmaint$ with new sort symbols and equations for the extension of $\TTint$ with equational constraints presented in Section 5 in Bezem et al \cite{BezemCDE22}.
 
-We would also like to spell out the externalization process mentioned in Section \ref{initiality-external} mapping for example a cwf with an internal cwf to the corresponding cwf, and uniformly for other gats.
+%We would also like to spell out the externalization process mentioned in Section \ref{initiality-external} mapping for example a cwf with an internal cwf to the corresponding cwf, and uniformly for other gats.
 
-We note that in cwfs (and scwfs, ucwfs, and indexed cwfs) substitution is modelled by the arrow part of a functor. Under certain conditions we can define the corresponding substitution combinators in the term model by induction. This relies on identifying variables (projections) as a special subclass of the terms in a cwf (and the like). It seems that in this way we get a uniform way of constructing term models for various type theories and predicate logics which are close to the standard presentations. This is also a topic for future research.
-
+%We note that in cwfs (and scwfs, ucwfs, and indexed cwfs) substitution is modelled by the arrow part of a functor. Under certain conditions we can define the corresponding substitution combinators in the term model by induction. This relies on identifying variables (projections) as a special subclass of the terms in a cwf (and the like). It seems that in this way we get a uniform way of constructing term models for various type theories and predicate logics which are close to the standard presentations. This is also a topic for future research.
+%
 \paragraph{Related research.}
 Other approaches to defining a general notion of dependent type theory inspired by Voevodsky's initiality conjecture project have been proposed by Bauer, Haselwarter, and Lumsdaine \cite{BauerHL20} and Uemura \cite{Uemura23}.
 
