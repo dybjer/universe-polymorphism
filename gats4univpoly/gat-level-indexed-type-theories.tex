@@ -1011,7 +1011,7 @@ To check the type of the equation
 $$ \forall_\l(B)[ \sigma ] = \forall_\l(B[ \sigma^{\dagger}])$$ we assume $\Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp])$. It follows that $B[\sigma^\dagger] : \ty_{s(m)}(\Gamma[\lp][\sigma^\dagger]) = \ty_{s(m)}(\Gamma[\sigma][\lp])$. Hence
 $\forall_\l(B[ \sigma^{\dagger}]) : \ty_m(\Gamma[\sigma])$.
 
-This concludes the presentation of the gat $\Sigmaint$.
+We refer the reader to the appendix for the remaining rules of $\Sigmaint$.
 
 \paragraph{Remark on universal quantification in predicate logic.}
 
@@ -1041,21 +1041,21 @@ $$
 % If $n = (\alpha_n, \ldots, \alpha_1)$ and $\s(n) =  (\alpha_n, \ldots, \alpha_1, \alpha_0)$ are lists of distinct level variables, then $\lp_n = (\alpha_n, \ldots, \alpha_1) : \lhom(\s(n),n)$ and $\lq_n = \alpha_0 : \ltm(\s(n))$ are the projections.
 \end{itemize}
 
-The next step is to construct the sort symbols, operator symbols, and equations for cwfs indexed by $n : \lctx$. The sort symbols are defined as follows.
+The next step is to construct the level-indexed cwfs (with extra structure) $(\Ctx_n,\Sub_n,\Ty_n,\Tm_n)$ for $n \in \Lctx$:
 \begin{itemize}
 \item $\Ty_n(\Gamma)$ is the set of equivalence classes of raw types $A$ such that $n, \Gamma \vdash A$ is a type and $A.A'$ are equivalent provided $n, \Gamma \vdash A = A'$.
 \item $\Tm_n(\Gamma,A)$ is the set of equivalence classes of raw terms $a$ such that $n, \Gamma \vdash a : A$ and $a.a'$ are equivalent provided $n, \Gamma \vdash A = A'$.
 \item $\Ctx_n$ is the set of equivalence classes of raw contexts $\Gamma$ such that $n, \Gamma \vdash$ under the equivalence relation $n, \Gamma = \Gamma' \vdash$.
 %(Context equality judgments are not explicitly listed in Bezem et al \cite{BezemCDE22}.)
 \item $\Sub_n(\Delta,\Gamma)$ is the set of equivalence classes of raw context morphisms.
-\item The level equality sort $\leq_n(l,l')$ is a one element set iff $l = l' : \ltm(n)$.
 \end{itemize}
-We then define all the operator symbols in this structure and check the equations. We omit the details which are similar to the construction of a model based on $\TText$.
+We then define all the operator symbols in this structure and check the equations. 
+%The details are similar to the construction of a model based on $\TText$.
 %\todo{Be systematic with using superscripts and subscripts!}
 
 The final part of the construction is to interpret the operator symbols for level substitution and composition (in levels, level morphisms, contexts, context morphisms, types and terms) that correspond to the arrow part of the level-indexed cwf with extra structure. These are all defined implicitly by induction on the raw syntax.
 
-This concludes the construction of an object of $\CwFint$. Finally, we need to construct a morphism to any other object in $\CwFint$ and prove that this is unique.
+This concludes the outline of the construction of an object of $\CwFint$. Finally, we need to construct a morphism to any other object in $\CwFint$ and prove that this is unique.
 
 
 \section{Conclusion}
@@ -1072,7 +1072,7 @@ A key ingredient in the gat $\Sigmaint$ is the sort symbol for level equality $\
 \paragraph{Related research.}
 Other approaches to defining a general notion of dependent type theory inspired by Voevodsky's initiality conjecture project have been proposed by Bauer, Haselwarter, and Lumsdaine \cite{BauerHL20} and Uemura \cite{Uemura23}.
 
-Another related idea is that of representing logics in a {Logical Framework}, such as Edinburgh LF \cite{harper-honsell-plotkin} or Dedukti \cite{dowek-dedukti}. These are based on dependent type theories with $\Pi$-types and one or more universes. The aim is to encode other logics by adding constants and equations to the logical framework. We contrast this to gats which are based on dependent types {\em without} $\Pi$-types and universes. Logics are then encoded by adding sort symbols, operator symbols, and equations to the basic theory of dependent types.
+A related idea is that of representing logics in a {Logical Framework}, such as Edinburgh LF \cite{harper-honsell-plotkin} or Dedukti \cite{dowek-dedukti}. These are based on dependent type theories with $\Pi$-types and one or more universes. The aim is to encode other logics by adding constants and equations to the logical framework. We contrast this to gats which are based on dependent types {\em without} $\Pi$-types and universes. Logics are then encoded by adding sort symbols, operator symbols, and equations to the basic theory of dependent types.
 
 Related to gats are the quotient inductive-inductive types (qiits) of Kaposi, Kov{\'{a}}cs, and Altenkirch
 \cite{kaposi:qiits,kovacs:phd}. Although formal details may differ, qiits are roughly initial gats considered as data types in dependent type theory. Sort symbols correspond to data type constructors; operator symbols correspond to term constructors; and equations between terms can be declared. Since a qiit is inductively generated, it has an elimination principle. It is an addition to the sequence of inductive notions in dependent type theory: inductive type, inductive family, inductive-recursive type, inductive-inductive type, quotient inductive-inductive type; and in homotopy type theory also higher inductive type.
@@ -1112,7 +1112,8 @@ n : \lctx, \Gamma,\Delta : \ctx_n , A:\ty_n (\Gamma), \gamma : \sub_n (\Delta,\G
 n : \lctx, \Gamma : \ctx_n , A:\ty_n (\Gamma) &\vdash& \p_{n,\Gamma,A}: \sub_n (\Gamma\cext A,\Gamma)\\
 n : \lctx, \Gamma : \ctx_n , A:\ty_n (\Gamma) &\vdash& \q_{n,\Gamma,A}: \tm_n (\Gamma\cext A,A[\p])
 \end{eqnarray*}
-Operator symbols for level-indexed $\Pi$-types (should we decorate $\lambda$ and $\app$ with type information?):
+Operator symbols for level-indexed $\Pi$-types 
+%(should we decorate $\lambda$ and $\app$ with type information?):
 \begin{eqnarray*}
 n : \lctx, \Gamma : \ctx_n, A : \ty_n(\Gamma), B : \ty_n(\Gamma.A)&\vdash& \Pi(A,B) : \ty_n(\Gamma)\\
 n : \lctx, \Gamma : \ctx_n, A : \ty_n(\Gamma), B : \ty_n(\Gamma.A), b : \tm_n(\Gamma.A, B) &\vdash& \lambda(b) : \tm_n(\Gamma,\Pi(A,B))\\
@@ -1159,9 +1160,9 @@ a[\gamma\circ\delta] &=& a[\gamma][\delta]
 %\Gamma : \ctx, A:\ty(\Gamma) &\vdash&
 \id_{n,\Gamma\cext A} &=& \tuple{\p_{n,\Gamma,A},\q_{n,\Gamma,A}} : \sub(\Gamma\cext A,\Gamma\cext A)
 \end{eqnarray*}
-\todo{MB, check. Perhaps better to describe how to modify \ref{sec:gatPiU}:
+\todo{MB: check. Perhaps better to describe how to modify \ref{sec:gatPiU}:
 prefix every rule with $n:\lctx$ and add index $n$ to every occurrence
-of $\ctx,\ty,\tm$.}
+of $\ctx,\ty,\tm$. PD: we didn't spell all of this out in  \ref{sec:gatPiU}. This is here, since we want to have a complete definition of $\Sigmaint$.}
 Equations (omitting the context and type of the equalities):
  \begin{eqnarray*}
  \app(\lambda(b),a) &=& b[\tuple{\id,a}]\\
