@@ -314,7 +314,7 @@ We get a model for universe polymorphism by letting $\C$ be the category of cont
 
 A presentation of type theory by a gat of cwfs is a higher-level and more objective notion than a presentation by grammar and inference rules. This is because the gat only records the important rules and highlights categorical structure. When building initial models in terms of grammar and inference rules, we need to make various syntactic choices and to include numerous bookkeeping rules, such as general rules of equality, and there will be a multitude of options. We hope that our common high level of abstraction will allow to prove equivalence between different options and claim that there is indeed a unique abstract notion of the mathematical theory under consideration.
 
-The present work can be viewed more broadly as a case study for categorical logic based on gats and cwfs. The idea to replace traditional deductive systems by more regular mathematical notions go back to the early days of categorical logic, as expressed by Lawvere \cite{lawvere:tac-adjointness}:
+The present work can be viewed more broadly as a case study for categorical logic based on gats and cwfs. The idea to replace traditional deductive systems by more regular mathematical notions goes back to the early days of categorical logic, as envisaged by Lawvere \cite{lawvere:tac-adjointness}:
 \begin{quotation}
 \emph{
 My 1963 observation (referred to by Eilenberg and Kelly in La Jolla, 1965), that cartesian closed categories serve as a common abstraction of type theory and propositional
@@ -434,7 +434,7 @@ As already mentioned, we followed Courant's approach \cite{Courant02} with unive
 $$
 T : \C^\op \to \Fam
 $$
-and a notion of context comprehension. Here $\Fam$ is the category of indexed families of sets $(A,B)$, where $A$ is an index set and $B$ is a family of sets indexed by $A$. The object part of the presheaf $T$ maps a context to the family of terms indexed by a type. The arrow part represents substitution in types and terms. The reader is referred to Dybjer \cite{dybjer:torino}, Hofmann \cite{hofmann:cambridge}, and Castellan et al \cite{castellan:lambek} for a full definition and further information about cwfs.
+and a notion of context comprehension. Here $\Fam$ is the category of indexed families of sets $(A,B)$, where $A$ is an index set and $B$ is a family of sets indexed by $A$. The object part of the presheaf $T$ maps a context to the family of terms indexed by a type. The arrow part represents substitution in types and terms. We often refer to a cwf as a quadruple $(\Ctx,\Sub,\Ty,\Tm)$, where $(\Ctx,\Sub)$ are the objects and arrows of the category of contexts $\C$, and $(\Ty,\Tm)$ refer to the family $T$ of terms indexed by a types. The reader is referred to Dybjer \cite{dybjer:torino}, Hofmann \cite{hofmann:cambridge}, and Castellan et al \cite{castellan:lambek} for a full definition and further information about cwfs.
 
 The gat of cwfs with extra structure for $\Pi$-types, a notion of model of Martin-Löf type theory with $\Pi$-types, was presented by Dybjer \cite{dybjer:torino}. The extra operator symbols and equations needed for the natural number type and one universe can for example be found in Bezem et al \cite{bezem:hofmann}. We will use the same notation for gats as in the latter paper.
 
@@ -475,7 +475,7 @@ A[\gamma] : \ty(\Delta)\\
 \Gamma : \ctx, A:\ty(\Gamma) &\vdash& \q_{\Gamma,A}: \tm(\Gamma\cext A,A[\p])
 \end{eqnarray*}
 The first line states that identity is a unary operator symbol with argument $\Gamma : \ctx$.
-Operator symbols will be interpreted as terms in the term model cwf. For example, $\id \in \Tm(1.\ctx,\ty)$ and $\id_\Gamma$ is shorthand for $\id[\tuple{\Gamma}]$. 
+Operator symbols will be interpreted as terms in the term model cwf. For example, $\id \in \Tm(1.\ctx,\sub(\q,\q))$ and $\id_\Gamma$ is shorthand for $\id[\tuple{\Gamma}]$. 
 
  The second line states that $\circ$ is a binary operator symbol with five arguments $\Xi,\Delta,\Gamma : \ctx, \gamma : \sub(\Delta,\Gamma), \delta : \sub(\Xi,\Delta)$ and result sort $\sub(\Xi,\Gamma)$. Note that only two of the five official arguments are explicit. To alleviate notation, we often suppress arguments of operator symbols. Note also that we overload notation for type and term substitution $A[\gamma]$ and $a[\gamma]$. Moreover, we sometimes drop further arguments and write $\id, \tuple{},\p,\q$ without the arguments in index position.
 
@@ -645,7 +645,7 @@ We can compare the initiality proof outlined above and the proof implemented in 
 \section{Level-indexed type theory}\label{level-indexed-tt}
 
 \subsection{The ucwf of levels}\label{ucwf-levels}
- As already mentioned in the introduction, in Bezem et al \cite{BezemCDE22} we added universe level {\em judgments}:
+ As already mentioned in the introduction, in Bezem et al \cite{BezemCDE22} we added universe level {\em judgments}
 $$
 l\ \level
 \hspace{5em}
