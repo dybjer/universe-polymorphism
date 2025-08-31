@@ -451,9 +451,9 @@ The gat of cwfs has four sort symbols:
 \end{eqnarray*}
 corresponding to the objects and morphisms of the category of contexts, and the family of terms indexed by types in a given context, respectively. Thus $\ctx$ is a constant sort symbol, $\sub$ is a binary sort symbol depending on arguments $\Delta, \Gamma : \ctx$, $\ty$ is a unary sort symbol depending on the argument $\Gamma : \ctx$, and $\tm$ is a binary sort symbol depending on arguments $\Gamma : \ctx, A : \ty(\Gamma)$. 
 
-Sort symbols will be interpreted as types in the term model cwf \cite{bezem:hofmann}. This is a calculus of explicit substitutions based on cwf-combinators. We have $\ctx \in \Ty(1), \sub \in \Ty(1.\ctx.\ctx[\p])$, etc., and use $\sub(\Delta,\Gamma)$ as shorthand for 
+Sort symbols will be interpreted as types in the term model cwf \cite{bezem:hofmann}. This is a calculus of explicit substitutions based on cwf-combinators. We have $\ctx \in \Ty(1), \sub \in \Ty(1.\ctx.\ctx[\p])$ and use $\sub(\Delta,\Gamma)$ as shorthand for 
 %$\sub[\tuple{\q[\p],\q}]$, 
-$\sub[\tuple{\Delta,\Gamma}]$, where $\tuple{a,b} = \tuple{\tuple{a}, b}$ and $\tuple{a} = \tuple{\tuple{}, a}$.
+$\sub[\tuple{\Delta,\Gamma}]$, where $\tuple{a,b} = \tuple{\tuple{a}, b}$ and $\tuple{a} = \tuple{\tuple{}, a}$. Etc.
 
 \paragraph{Operator symbols.}
 %The gat of cwfs has operator symbols for the basic operations of cwfs (identity and composition of context morphisms, substitution in types and terms, empty context and context morphism, context extension and context morphism extension, projection morphism, last variable term)\todo{MB: should we separate them into four groups: structure for the base category, for the arrow part of the family valued functor, for the terminal object, and for context comprehension? PD: done.}:
@@ -492,7 +492,7 @@ Moreover, we often drop argument and result types in equations:
 \begin{eqnarray*}
 \id_\Gamma \circ \gamma = \gamma
 \end{eqnarray*}
-Note that there are specific cases where it is essential to keep them. Assume that we add an operator symbol for the identity type former $\Id$ in Martin-Löf type theory:
+Note that there are specific cases where it is essential to keep the context explicit. Assume that we add an operator symbol for the identity type former $\Id$ in Martin-Löf type theory:
 \begin{eqnarray*}
 \Gamma : \ctx, A : \ty(\Gamma), a, a' : \tm(\Gamma, A) &\vdash \Id_{\Gamma,A}(a,a'): \ty(\Gamma)
 \end{eqnarray*}
@@ -514,13 +514,13 @@ In Bezem et al \cite{BezemCDE22} we began by displaying the inference rules for 
 We assume that we already have defined the gat of cwfs with the extra structure for the standard small type formers $\Pi, \Sigma, \N_0, \N_1, \N_2, \N, \W$, and $\Id$, and we wish to define a tower of universes closed under those. To save space, we shall however only display the operator symbols and equations for closure under $\Pi$-types, since it is straightforward to add similar operator symbols for closure under the other small type formers. We shall use the same convention throughout the paper.
 
 \paragraph{Operator symbols.}
-The operator symbol for $\Pi$-types is
+The operator symbol for $\Pi$-formation is
 \begin{eqnarray*}
 \Gamma : \ctx, A : \ty(\Gamma), B : \ty(\Gamma.A) &\vdash& \Pi(A,B) : \ty(\Gamma)
 \end{eqnarray*}
-and refer to Bezem et al \cite{bezem:hofmann} for the operator symbols for abstraction and application, equations for the $\beta$ and $\eta$ rule, and equations expressing that $\Pi$, abstraction, and application commute with term substitution. We also refer to the appendix for the level-indexed version.
+and we refer to Bezem et al \cite{bezem:hofmann} for the operator symbols for abstraction and application, equations for the $\beta$ and $\eta$ rule, and equations expressing that $\Pi$, abstraction, and application commute with term substitution. We also refer to the appendix for the level-indexed version.
 
-In the gat for externally indexed universes we have the following families of operator symbols (the universes $\UU_l$, the decoding maps $\Ta_l$, codes for $\Pi$, and codes for $\UU_l$ in $\UU_m$ for $l, l' , m \in \Nbb$ with $l < m$):
+In the gat for externally indexed universes we have the following families of operator symbols (the universes $\UU_l$, the decoding maps $\Ta_l$, codes for $\Pi$, and codes $\UU_l^m$ for $\UU_l$ in $\UU_m$ for $l, l' , m \in \Nbb$ with $l < m$):
 \begin{eqnarray*}
 \Gamma : \ctx &\vdash& (\U_{l})_\Gamma : \ty(\Gamma)\\
 \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta_{l}}(a) : \ty(\Gamma)\\
@@ -542,7 +542,7 @@ We have the following decoding equations:
 \Ta_{l \vee l'}(\Pi^{l,l'}(a,b)) &=& \Pi(\Ta_l(a),\Ta_{l'}(b))\\
 \Ta_{m}((\UU^m_l)_\Gamma) &=& (\UU_l)_\Gamma
 \end{eqnarray*}
-Moreover, the operator symbols commute with term substitution:
+The operator symbols commute with term substitution:
 \begin{eqnarray*}
 (\U_l)_\Gamma [ \gamma ] &=& (\U_l)_\Delta\\
 \Ta_l(a) [ \gamma ] &=& \Ta_l(a[ \gamma ] )\\
@@ -565,7 +565,8 @@ b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
 &\vdash&
  \Pihat^{l}(a,b) : \tm(\Gamma,(\U_{l})_\Gamma)
  \end{eqnarray*}
- We omit the equations for the cumulative case, see instead the cumulative case for level-indexing.
+We do not display the equations for the cumulative case here and refer to the analogous equations level-indexed universes in \ref{cumulativity}.
+
  This concludes the presentation $\Sigmaext$ of a gat for cwfs with small type formers and an external tower of universes.
 
 \subsection{Syntax and inference rules as an initial model}\label{initiality-external}
@@ -577,11 +578,11 @@ In the current section we have presented the {\em infinitary} gat $\Sigmaext$ of
 As explained in Bezem et al \cite{bezem:hofmann}, $\CwF_{\Sigmaext}$ is the category of cwfs with an {\em internal} cwf with extra structure for the small type formers and a tower of universes. In contrast to this we have the category of cwfs with extra structure for the small type formers and a tower of universes $\CwFext$. A cwf with an internal cwf $(\Ctx,\Sub,\Ty,\Tm,\ctx,\sub,\ty,\tm)$ in $\CwF_{\Sigmaext}$ determines such an ``external" cwf with extra structure for the small type formers and a tower of universe $(\Ctx^*,\Sub^*,\Ty^*,\Tm^*)$ in $\CwFext$ as follows:
 \begin{eqnarray*}
 \Ctx^* &=& \Tm(1,\ctx)\\
-\Sub^*(\Delta,\Gamma) &=& \Tm(1,\hom[\tuple{\Delta,\Gamma}])\\
-\Ty^*(\Gamma) &=& \Tm(1,\ty[\tuple{\Gamma}])\\
-\Tm^*(\Gamma,A) &=& \Tm(1,\tm[\tuple{\Gamma,A}])
+\Sub^*(\Delta,\Gamma) &=& \Tm(1,\hom(\Delta,\Gamma))\\
+\Ty^*(\Gamma) &=& \Tm(1,\ty(\Gamma))\\
+\Tm^*(\Gamma,A) &=& \Tm(1,\tm(\Gamma,A))
 \end{eqnarray*} Note that $\Delta,\Gamma \in \Tm(1,\ctx)$ are internal contexts, and not external ones $\Delta,\Gamma \in \Ctx$. We leave the verification of this construction to future work.
-\todo[inline]{PD: Thierry and I discussed it and it seems important. The verification doesn't seem difficult. Nevertheless, it's too late to include it. Should we skip this whole comment?}
+%\todo[inline]{PD: Thierry and I discussed it and it seems important. The verification doesn't seem difficult. Nevertheless, it's too late to include it. Should we skip this whole comment?}
 %
 %The operator symbols become
 %\begin{eqnarray*}
@@ -614,7 +615,7 @@ We shall outline an alternative construction of an initial object in $\CwFext$ b
 %In contrast to the construction of an initial object in $\CwF_{\Sigmaext}$ the category of cwfs with an internal cwf (with extra structure) we now construct an initial object in $\CwFext$, the category of cwfs (with extra structure).
 %\todo[inline]{We not only need to contrast $\CwFext$ and $\CwF_{\Sigmaext}$, but explain what $\CwFext$ is.}
 
-As already explained use decorated expressions; for example, we decorate application with type information. We refer to this as the {\em raw syntax}, that is, expressions that are not necessary well-typed. In the raw syntax we include raw context morphisms, although such are not mentioned in loc.cit. These are lists of raw terms, where $\tuple{}$ denotes the empty list, and $\tuple{\gamma,a}$ denotes the list $\gamma$ extended by a new term $a$.
+As already mentioned we use decorated expressions; for example, we decorate application with type information. We refer to this as the {\em raw syntax}, that is, expressions that are not necessary well-typed. In the raw syntax we include raw context morphisms, although such are not mentioned in loc.cit. These are lists of raw terms, where $\tuple{}$ denotes the empty list, and $\tuple{\gamma,a}$ denotes the list $\gamma$ extended by a new term $a$.
 
 We build an object $(\Ctx,\Sub,\Ty,\Tm)$ of $\CwFext$ based on the type theory with implicit substitutions $\TText$ as follows. First, we interpret the sort symbols in terms of the judgment forms of $\TText$ as follows:
 \begin{itemize}
@@ -625,14 +626,14 @@ We build an object $(\Ctx,\Sub,\Ty,\Tm)$ of $\CwFext$ based on the type theory w
 \end{itemize}
 We then need to define the operator symbols on equivalence classes. First there are the operator symbols that construct raw syntax: the basic cwf-combinators $1, -.-, \tuple{}, \tuple{-,-}$,  $\Pi, \lambda, \app$ for $\Pi$-types, and similarly for the other small type formers, and $\U_l, \Ta_l, \U^m_l$ and $\Ta^m_l$ for the tower of universes. We just give two examples.
 \begin{itemize}
-\item The empty context $1$ is a constructor of raw contexts and we define the terminal object in the term model as the equivalence class $[1] \in \Ctx$ of the empty context.
+\item The empty context $1$ is a constructor of raw contexts and we define the terminal object in the term model as the equivalence class of the empty context $[1] \in \Ctx$.
 \item Context extension is also a constructor of raw contexts. We define the extension of $[\Gamma] \in \Ctx$ with $[A] \in \Ty([\Gamma])$ as $[\Gamma.A] \in \Ctx$ and show that this operation preserves equivalence classes.
 %\item Similarly for the constructors of raw cwf-morphisms $\tuple{}$ and $\tuple{-,-}$.
 %\item The operator symbols for the type formers, such as $\Pi, \lambda, \app$ for $\Pi$-types and $\U_l, \Ta_l, \U^m_l$ and $\Ta^m_l$ are also constructors of raw syntax.
 \end{itemize}
 Then we consider the operator symbols that correspond to implicit operations. We first define the substitution in types and terms in the model:
 \begin{itemize}
-\item If $A$ is a raw type and $\gamma$ is a raw substitution, we first define the result $A[\gamma]$ of substituting $\gamma$ in $A$ by induction on the structure of $A$. We need to show that this operation preserves equivalence classes
+\item If $A$ is a raw type and $\gamma$ is a raw substitution, we first define the result $A[\gamma]$ of substituting $\gamma$ in $A$ by induction on the structure of $A$. We need to show that this operation preserves equivalence classes.
 \item Substitution in raw terms is defined similarly.
 %if $a$ is a raw term and $\gamma$ is a raw substitution, we first define the result $a[\gamma]$ of substituting $\gamma$ in $a$ by induction on the structure of the latter. Then we raise this operation to equivalence classes by proving that equality of terms is preserved.
 \item We can also define the other implicit operations $\id, \circ, \p, \q$.
@@ -751,12 +752,12 @@ The operator symbols $\vee$ and $+$ commute with level substitution:
  l^+[\sigma] &=&  l[\sigma]^+
 \end{eqnarray*}
 %\end{tiny}
-\paragraph{Lawvere theories.} We remark that ucwfs are related to Lawvere theories, but are closer to the usual syntax based on $n$-place functions. One can prove that Lawvere theories are equivalent to contextual ucwfs, that is, ucwfs where each context has a length \cite{ClairambaultD11,castellan:lambek}.
+\paragraph{Lawvere theories.} We remark that ucwfs are similar to Lawvere theories, but are closer to the usual syntax based on $n$-place functions. One can prove that Lawvere theories are equivalent to contextual ucwfs, that is, ucwfs where each context has a length \cite{ClairambaultD11,castellan:lambek}.
 
 \paragraph{Level equality sorts.}
 When we encode type theory in gats, the principle is to introduce one sort for each main form of judgment. For example, $l : \ltm(n)$ represents the judgment $n \vdash l\ \level$. Equality judgments are then represented by equalities: $l = l' : \ltm(n)$ represents $n \vdash l = l'$.
 
-However, as we shall see in the next subsection, there are cases where we need equalities in contexts and this is not allowed in gats. This can be achieved by adding a new sort symbol for level equality:
+However, as we shall see in the next subsection, when typing the codes $\UU_l^m$ for universes $\UU_l$ in $\UU_m$ we need to express the constraint that $l < m$ which is defined as $\leq_n(l^+ \vee m, m)$. However, level equalities are not allowed in gats. Therefore, we add a new sort symbol for level equality:
 \begin{eqnarray*}
 n : \lctx, l, l'  : \ltm(n) &\vdash& \leq_n(l,l')
 \end{eqnarray*}
@@ -764,7 +765,7 @@ and an operator symbol for reflexivity:
 \begin{eqnarray*}
 n : \lctx, l : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l)
 \end{eqnarray*}
-Note that if $l =  l' : \ltm(n)$ in the initial model, that is, if $l = l'$ can be derived by equational reasoning from the laws for $\vee$ and $(-)^+$, then $\refl(l) :  \leq_n(l,l')$
+Note that if $l =  l' : \ltm(n)$ in the term model, that is, if $l = l'$ can be derived by equational reasoning from the laws for $\vee$ and $(-)^+$, then $\refl(l) :  \leq_n(l,l')$
 %\begin{eqnarray*}
 %n : \lctx, l, l'  : \ltm(n) &\vdash& l = l' : \ltm(n)
 %\end{eqnarray*}
@@ -835,7 +836,7 @@ These are the same as the sort symbols of the gat of cwfs, except that they are 
 
 \paragraph{Operator symbols.} Similarly, the operator symbols are the same as for cwfs (with extra structure for the small type formers), except that they are also indexed by $n : \lctx$. The equations are modified accordingly. See the appendix.
 
-The arrow part of the level-indexed cwf of small types axiomatizes level substitution. There is one operator symbol for each component of the level-indexed cwf, but we overload notation:
+The arrow part of the level-indexed cwf of small types axiomatizes level substitution. There is one operator symbol for each component of the level-indexed cwf. We overload notation:
 \begin{eqnarray*}
 n, n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'} &\vdash&
 \Gamma[\sigma] : \ctx_n\\
@@ -850,8 +851,9 @@ n,n' : \lctx , \sigma : \lhom(n,n'), \Gamma : \ctx_{n'}, A:\ty_{n'}(\Gamma), a :
 a[\sigma] : \tm_{n}(A[\sigma],\Gamma[\sigma])
 \end{eqnarray*}
 \paragraph{Equations.}
-The functor laws give us the following equations:\todo{%
-We should give more information here. The $p$ below is unexplained. PD: I have uncommented the type information. Although it is useful to check this, we can leave this to the reader.}
+The functor laws give us the following equations:
+%\todo{
+%We should give more information here. The $p$ below is unexplained. PD: I have uncommented the type information. Although it is useful to check this, we can leave this to the reader.}
 \begin{eqnarray*}
 \Gamma[\lid_n] &=& \Gamma\\
 \Gamma[\sigma \circ \tau] &=& \Gamma[\sigma][\tau]\\
@@ -893,17 +895,18 @@ b :  \tm_n(\Gamma \cdot \Ta_{l}(a), (\U_{l'})_\Gamma)
 &\vdash&
  \Pihat^{l,l'}(a,b) : \tm_n(\Gamma,(\U_{l \vee l'})_\Gamma)
 \end{eqnarray*}
-However, when we try to internalize the operator symbols $\UU^m_l$ for universes $\UU^l$ in larger universes $\UU^m$, where $l < m$, we encounter a problem. The following attempt
-\begin{eqnarray*}
-n : \lctx, l, m : \ltm(n), l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_\Gamma: \tm_n(\Gamma,(\UU_{m})_\Gamma)
-\end{eqnarray*}
-where $l < m$ is defined as $l^+ \vee m = m$, does not work since equations are not allowed in argument types in gats.
-However, this issue can be resolved by instead using equality sorts as introduced above in Section
-\ref{ucwf-levels} and redefine $l < m$ as $\leq_n(l^+ \vee m, m)$. This yields the following proper typing of the operator symbol $\UU^m_l$:
+As mentioned in Section \ref{ucwf-levels} we use level equality sorts when typing the operator symbols $\UU^m_l$ for universes $\UU_l$ in larger universes $\UU_m$:
+% The following attempt
+%\begin{eqnarray*}
+%n : \lctx, l, m : \ltm(n), l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_\Gamma: \tm_n(\Gamma,(\UU_{m})_\Gamma)
+%\end{eqnarray*}
+%where $l < m$ is defined as $l^+ \vee m = m$, does not work since equations are not allowed in argument types in gats.
+%However, this issue can be resolved by instead using equality sorts as introduced above in Section
+%\ref{ucwf-levels} and redefine $l < m$ as $\leq_n(l^+ \vee m, m)$. This yields the following proper typing of the operator symbol $\UU^m_l$:
 \begin{eqnarray*}
 n : \lctx, l, m : \ltm(n), p : l < m, \Gamma : \ctx_n&\vdash&(\UU^m_l)_{p,\Gamma} : \tm_n(\Gamma,(\UU_{m})_\Gamma)
 \end{eqnarray*}
-In the sequel we will suppress the proof $p : l < m$ as an argument to this operator symbol and just write $(\UU^m_l)_{\Gamma}$.
+where $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. In the sequel we will suppress the proof $p : l < m$ as an argument to this operator symbol and just write $(\UU^m_l)_{\Gamma}$.
 
 \paragraph{Equations.}
 The decoding equations for $\Ta_l$ and the equations for commutativity of operator symbols with substitution can be obtained by a straightforward internalization of the corresponding equations for the external tower. This means that the decoding equations are now relative to internal level contexts and level terms, as well as to terms. For example the decoding equation for $\Pi$
@@ -947,7 +950,7 @@ Equations for commutativity of operator symbols wrt level substitution $\sigma: 
  \end{eqnarray*}
 
 
-\subsection{Cumulativity}
+\subsection{Cumulativity}\label{cumulativity}
 \paragraph{Operator symbol.}
 An operator symbol for cumulativity is obtained by internalizing the operator symbols for cumulativity in the external tower:
 \begin{eqnarray*}
@@ -959,9 +962,9 @@ where again $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. However, unlike for t
 \paragraph{Equations.}
 We have the following decoding equation for lifting of codes for $\Pi$:
 \begin{eqnarray*}
-\Ta^{m \vee m'}_{l \vee l'}(\Pi^{l,l'}(a,b)) = \Pi^{m,m'}(\Ta^m_l(a),\Ta^{m'}_{l'}(b)) &:& \tm_n(\Gamma,(\UU_{l \vee l'})_\Gamma)
+\Ta^{m \vee m'}_{l \vee l'}(\Pi^{l,l'}(a,b)) = \Pi^{m,m'}(\Ta^m_l(a),\Ta^{m'}_{l'}(b)) &:& \tm_n(\Gamma,(\UU_{m \vee m'})_\Gamma)
 \end{eqnarray*}
-where $n: \lctx,l',m,m' : \ltm(n), p: l < m, p': l' < m', \Gamma : \ctx_n, a : \tm_n(\Gamma,(\UU_l)_\Gamma), b : \tm_n(\Gamma.\Ta_l(a),(\UU_{l'})_\Gamma)$.
+where $n: \lctx,l,l',m,m' : \ltm(n), p: l < m, p': l' < m', \Gamma : \ctx_n, a : \tm_n(\Gamma,(\UU_l)_\Gamma), b : \tm_n(\Gamma.\Ta_l(a),(\UU_{l'})_\Gamma)$.
 The decoding equation for lifting of codes for universes is as follows:
 \begin{eqnarray*}
 n : \lctx, k, l, m : \ltm(n), p : k < l, q : l < m, \Gamma : \ctx(n) &\vdash& \Ta^m_l((\UU^l_k)_\Gamma) = (\UU^m_k)_\Gamma
@@ -1008,6 +1011,8 @@ To check the type of the equation
 $$ \forall_\l(B)[ \sigma ] = \forall_\l(B[ \sigma^{\dagger}])$$ we assume $\Gamma : \ctx_n, B : \ty_{\s(n)}(\Gamma[\lp])$. It follows that $B[\sigma^\dagger] : \ty_{s(m)}(\Gamma[\lp][\sigma^\dagger]) = \ty_{s(m)}(\Gamma[\sigma][\lp])$. Hence
 $\forall_\l(B[ \sigma^{\dagger}]) : \ty_m(\Gamma[\sigma])$.
 
+This concludes the presentation of the gat $\Sigmaint$.
+
 \paragraph{Remark on universal quantification in predicate logic.}
 
 In the introduction we mentioned that untyped predicate logic can be captured by ucwf-indexed scwfs. (This gives a proof-relevant notion of model, like Lawvere's hyperdoctrines \cite{lawvere:hyperdoctrines}.) We note that the operator symbols and equations for universal quantification in untyped predicate logic are the same as those for universal level quantification above, except the difference between scwfs and cwfs: propositions in predicate logic do not depend on proofs.
@@ -1016,7 +1021,7 @@ In the introduction we mentioned that untyped predicate logic can be captured by
 
 \paragraph{A generic construction based on explicit substitutions.} The gat $\Sigmaint$ for level-indexed cwfs, explicit universe polymorphism, and level-indexed products is finitary. Hence we can directly instantiate the construction of the term model $\T_{\Sigmaint}$ \cite{bezem:hofmann} and the proof that it is initial in $\CwF_{\Sigmaint}$, the category of cwfs with an {\em internal} level-indexed cwfs with extra structure. In a similar way as we showed in Section \ref{initiality-internal} an object in $\CwF_{\Sigmaint}$ can be externalized yielding an object in the category $\LCwFint$ of level-indexed cwfs with extra structure for explicit universe polymorphism, and level-indexed products.
 
-\paragraph{A construction based on implicit substitutions (initiality conjecture).} We shall outline how to construct an initial object $\Tint = (\Lsub,\Ltm,\Ctx,\Sub,\Ty,\Tm)$ in $\CwFint$ based on $\TTint$, the decorated version of our type theory with explicit universe polymorphism \cite{BezemCDE22}. 
+\paragraph{A construction based on implicit substitutions (initiality conjecture).} We shall outline how to construct an initial object $\Tint = (\Lctx,\Lsub,\Ltm,\Ctx,\Sub,\Ty,\Tm)$ in $\CwFint$ based on $\TTint$, the decorated version of our type theory with explicit universe polymorphism \cite{BezemCDE22}. 
 %In this theory level variables and ordinary term variables can appear in any order. As already mentioned we consider, without loss of generality, a version of $\TTint$ where level variables precede ordinary term variables (both using de Bruijn indices). In this theory every context has the form $n,\Gamma$, where $n$ is the number of available level variables, and $\Gamma$ is a context of term variables that may depend on those $n$ level variables. 
 We need to show (i) how to organize the level terms and level judgments into a ucwf of levels; (ii) how to construct a level-indexed cwf of small types by modifying the construction of a cwf of small types; and (iii) how to construct a model of the level-indexed universes by modifying the construction of a model of the externally indexed universes based on $\TText$.
 
