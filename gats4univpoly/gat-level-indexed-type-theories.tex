@@ -7,7 +7,7 @@
 %\usepackage{diagrams}
 
 %\usepackage[all]{xy}
-\usepackage{todonotes}
+\usepackage[disable]{todonotes}
 \usepackage{url}
 \usepackage[utf8]{inputenc}
 \usepackage{verbatim}
@@ -280,14 +280,21 @@ with Explicit Universe Polymorphism
 %with Explicit Universe PolymorphismGeneralised Algebraic Theories of Type Theories with Explicit Universe Polymorphism?}
 }
 
-\author{Marc Bezem, Thierry Coquand, Peter Dybjer, Mart\'{\i}n Escard\'o}
+\author{Marc Bezem\\University of Bergen\\\texttt{Marc.Bezem@uib.no}\\
+\and Thierry Coquand\\University of Gothenburg\\
+\texttt{Thierry.Coquand@cse.gu.se}\\ 
+\and Peter Dybjer\\Chalmers University of Technology\\
+\texttt{peterd@chalmers.se}\\ 
+\and Mart\'{\i}n Escard\'o\\University of Birmingham\\
+\texttt{m.escardo@bham.ac.uk}\\
+}
 
-\date{(draft)}
+\date{31 August 2025}
 \maketitle
 
 \begin{abstract}
 We present generalized algebraic theories corresponding to slightly modified versions of two of the type theories in our paper
-{\em Type Theory with Explicit Universe Polymorphism}. We first present a generalized algebraic theory for categories with families with extra strucure corresponding to Martin-Löf type theory with an external tower of universes. We then present a generalized algebraic theory for level-indexed categories with families with extra structure corresponding to Martin-Löf type theory with explicit universe polymorphism, a theory with universe level judgments, internally indexed universes, and level-indexed products. In this way we get abstract definitions of the two theories as initial models of their respective generalized algebraic theories. We thus abstract from details of the grammar and inference rules of the type theories and highlight their high-level structure. More broadly, the present work can be viewed as a case study of a uniform approach to categorical logic based on generalized algebraic theories and categories with families. We also discuss the relevance to Voevodsky's initiality conjecture project. \todo[inline]{PD: Add something about level equality sorts? Maybe this is too specific to be mentioned in the abstract? It could be "an interesting feature of the gat for explicit universe polymorphism is that we employ level equality sorts for encoding an equational constraint in the type of codes for universes"? }
+{\em Type Theory with Explicit Universe Polymorphism}. We first present a generalized algebraic theory for categories with families with extra strucure corresponding to Martin-Löf type theory with an external tower of universes. We then present a generalized algebraic theory for level-indexed categories with families with extra structure corresponding to Martin-Löf type theory with explicit universe polymorphism, a theory with universe level judgments, internally indexed universes, and level-indexed products. In this way we get abstract characterizations of the two theories as initial models of their respective generalized algebraic theories. We thus abstract from details of the grammar and inference rules of the type theories and highlight their high-level structure. More broadly, the present work can be viewed as a case study of a uniform approach to categorical logic based on generalized algebraic theories and categories with families. We also discuss the relevance to Voevodsky's initiality conjecture project. \todo[inline]{PD: Add something about level equality sorts? Maybe this is too specific to be mentioned in the abstract? It could be "an interesting feature of the gat for explicit universe polymorphism is that we employ level equality sorts for encoding an equational constraint in the type of codes for universes"? }
 \end{abstract}
 
 \section{Introduction}
@@ -298,7 +305,7 @@ l\ \level
 \hspace{5em}
 l = l'
 $$
-to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variables declared in the context. We emphasized that, unlike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms (since then, Agda has introduced, in version 2.6.4, an option for disabling universe levels forming a type~\cite{agda:leveluniv}).  To regain some of the lost strength, we added level-indexed products $[\alpha]A$ of families of types $A\ (\alpha\ \level)$ to our theory.
+to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variables declared in the context. We emphasized that, unlike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms (since then, Agda has introduced, in version 2.6.4, an option for disabling universe levels forming a type~\cite{agda:leveluniv}).  To regain some of the lost expressivity (in a controlled way), we added level-indexed products $[\alpha]A$ of families of types $A\ (\alpha\ \level)$ to our theory.
 
 In this paper we provide alternative presentations of (slightly modified versions of) two of the theories in the above-mentioned paper: Martin-Löf type theory with an external tower of universes $\TText$ and Martin-Löf type theory with explicit universe polymorphism $\TTint$ as outlined in the previous paragraph. We present the corresponding {\em generalized algebraic theories (gats)} $\Sigmaext$ and $\Sigmaint$. Gats were introduce by Cartmell \cite{cartmell:phd,cartmell:apal} as a generalization of many sorted algebraic theories where sort symbols and operator symbols may have dependent types. 
 %Our aim is to characterize
@@ -312,7 +319,7 @@ P : \C^\op \to \CwF
 $$
 We get a model for universe polymorphism by letting $\C$ be the category of contexts of a unityped cwf (ucwf) of levels and by equipping $\CwF$ with extra structure for the small type formers. We then add extra structure for level-indexed universes and level-indexed products of types.
 
-A presentation of type theory by a gat of cwfs is a higher-level and more objective notion than a presentation by grammar and inference rules. This is because the gat only records the important rules and highlights categorical structure. When building initial models in terms of grammar and inference rules, we need to make various syntactic choices and to include numerous bookkeeping rules, such as general rules of equality, and there will be a multitude of options. We hope that our common high level of abstraction will allow to prove equivalence between different options and claim that there is indeed a unique abstract notion of the mathematical theory under consideration.
+A presentation of type theory by a gat of cwfs is a higher-level and more objective notion than a presentation by grammar and inference rules. This is because the gat only records the important rules and highlights categorical structure. When building initial models in terms of grammar and inference rules, we need to make various syntactic choices and to include numerous bookkeeping rules, such as general rules of equality, and there will be a multitude of options. We hope that our high level of abstraction will allow to prove equivalence between different options and claim that there is indeed a unique abstract notion of the mathematical theory under consideration.
 
 The present work can be viewed more broadly as a case study for categorical logic based on gats and cwfs. The idea to replace traditional deductive systems by more regular mathematical notions goes back to the early days of categorical logic, as envisaged by Lawvere \cite{lawvere:tac-adjointness}:
 \begin{quotation}
@@ -386,7 +393,7 @@ Moreover, variations of indexed cwfs capture various other logical systems and c
 
 \paragraph{Universe polymorphism.} We refer to our previous paper on explicit universe polymorphism \cite{BezemCDE22} for a presentation of the inference rules of Martin-Löf type theory with explicit universe polymorphism, where the reader can also find motivation, examples, and a discussion of related work. Here we only give a brief overview.
 
-An implicit form of universe polymorphism was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Coq (Rocq) \cite{coq:general}. Alternatively, Agda \cite{agda-wiki} and Lean \cite{moura:lean} employ versions of universe polymorphism, where universe levels are explicitly declared.
+An implicit form of universe polymorphism was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Rocq (Coq) \cite{rocq:general}. Alternatively, Agda \cite{agda-wiki} and Lean \cite{moura:lean} employ versions of universe polymorphism, where universe levels are explicitly declared.
 
 As already mentioned, we followed Courant's approach \cite{Courant02} with universe level judgments. We also presented an extension where equational constraints between universe levels can be declared \cite{BezemCDE22}, building on a proposal by Voevodsky \cite{VV}. This extension can also be described by a gat, but we postpone this topic to a forthcoming paper.
 
@@ -573,7 +580,7 @@ We do not display the equations for the cumulative case here and refer to the an
 
 \paragraph{A generic construction based on explicit substitutions.} In our paper {\em On generalized algebraic theories and categories with families} \cite{bezem:hofmann} we define the notion of a correct {\em presentation} $\Sigma$ (a finite list of sort symbols, operator symbols, and equations) of a gat and the associated category of models $\CwF_\Sigma$ of cwfs with a $\Sigma$-structure. We then construct for each $\Sigma$ an initial object $\T_\Sigma$ in $\CwF_\Sigma$ as a type theory defined in terms of a grammar and inference rules. This type theory is a calculus of explicit substitutions based on untyped cwf-combinators and untyped versions of the operator symbols.
 
-In the current section we have presented the {\em infinitary} gat $\Sigmaext$ of cwfs with extra structure for the small type formers and a tower of universes. However, the above construction of an initial model applies to {\em finitary} gats. Nevertheless, as explained in Section 5.7 of Bezem et al  \cite{bezem:hofmann}, we can generalize our construction to some non-finitely presented gats. If we have an increasing sequence of signatures $\Sigma_n$ we can build the initial model $\T_\Sigma$ of their union $\Sigma$ in stages. In this way we can build an initial model of $\Sigmaext$ as a union of $\Sigma_n$ -- the gats of cwfs with extra structure for the small type formers and a truncated tower of $n$ universes.
+In the current section we have presented the {\em infinitary} gat $\Sigmaext$ of cwfs with extra structure for the small type formers and a tower of universes. However, the above construction of an initial model applies to {\em finitary} gats. Nevertheless, as explained in Section 5.7 of Bezem et al  \cite{bezem:hofmann}, we can generalize our construction to some non-finitely presented gats. If we have an increasing sequence of finite signatures $\Sigma_n$ we can build the initial model $\T_\Sigma$ of their union $\Sigma$ in stages. In this way we can build an initial model of $\Sigmaext$ as a union of $\Sigma_n$ -- the gats of cwfs with extra structure for the small type formers and a truncated tower of $n$ universes.
 
 As explained in Bezem et al \cite{bezem:hofmann}, $\CwF_{\Sigmaext}$ is the category of cwfs with an {\em internal} cwf with extra structure for the small type formers and a tower of universes. In contrast to this we have the category of cwfs with extra structure for the small type formers and a tower of universes $\CwFext$. A cwf with an internal cwf $(\Ctx,\Sub,\Ty,\Tm,\ctx,\sub,\ty,\tm)$ in $\CwF_{\Sigmaext}$ determines such an ``external" cwf with extra structure for the small type formers and a tower of universe $(\Ctx^*,\Sub^*,\Ty^*,\Tm^*)$ in $\CwFext$ as follows:
 \begin{eqnarray*}
@@ -785,7 +792,7 @@ $
 \alpha_1^{+^{p_1}} \vee \cdots \vee \alpha_m^{+^{p_m}}
 $
 for $p_i \geq 0$ for $1 \le i \le m \le n$ and level variables (de Bruijn indices) $\alpha_1 < \ldots < \alpha_m$.
-We can construct an initial ucwf with $\vee$ and $(-)^+$, where the elements of $\ltm(n)$ are normal forms and $l = l' : \ltm(n)$ iff $l$ and $l'$ are identical normal forms.  If we extend the gat with a new sort $\leq$ and a new operator symbol $\refl$ for reflexivity, we can extend the initial ucwf with sets $\leq_n(l,l')$ that contain a single element $\refl(l)$ iff $l = l' : \ltm(n)$ and is otherwise empty.
+We can construct an initial ucwf with $\vee$ and $(-)^+$, where the elements of $\ltm(n)$ are normal forms and $l = l' : \ltm(n)$ iff $l$ and $l'$ are identical normal forms.  If we extend the gat with a new sort $\leq$ and a new operator symbol $\refl$ for reflexivity, we can extend the initial ucwf with sets $\leq_n(l,l')$ that contain a single element $\refl(l)$ if $l = l' : \ltm(n)$ and are otherwise empty.
 
 \paragraph{Remark on identity types.} The sort symbol $\leq$ for level equality resembles the identity type former $\Id$ in Martin-Löf type theory. We think of $\leq_n(l,l')$ as propositional level equality and its elements $p : \leq_n(l,l')$ as proofs of propositional level equality. However, while proofs $p : \Id_A(a,a')$ can make use of advanced logical reasoning, level equality proofs are limited and, as shown above, can only be obtained by equational reasoning from the laws for $\vee$ and $(-)^+$.
 
@@ -1019,7 +1026,7 @@ In the introduction we mentioned that untyped predicate logic can be captured by
 
 \subsection{Syntax and inference rules as an initial model}\label{initiality-internal}
 
-\paragraph{A generic construction based on explicit substitutions.} The gat $\Sigmaint$ for level-indexed cwfs, explicit universe polymorphism, and level-indexed products is finitary. Hence we can directly instantiate the construction of the term model $\T_{\Sigmaint}$ \cite{bezem:hofmann} and the proof that it is initial in $\CwF_{\Sigmaint}$, the category of cwfs with an {\em internal} level-indexed cwfs with extra structure. In a similar way as we showed in Section \ref{initiality-internal} an object in $\CwF_{\Sigmaint}$ can be externalized yielding an object in the category $\LCwFint$ of level-indexed cwfs with extra structure for explicit universe polymorphism, and level-indexed products.
+\paragraph{A generic construction based on explicit substitutions.} The gat $\Sigmaint$ for level-indexed cwfs, explicit universe polymorphism, and level-indexed products is finitary. Hence we can directly instantiate the construction of the term model $\T_{\Sigmaint}$ from \cite{bezem:hofmann} and the proof that it is initial in $\CwF_{\Sigmaint}$, the category of cwfs with an {\em internal} level-indexed cwfs with extra structure. In a similar way as we showed in Section \ref{initiality-internal} an object in $\CwF_{\Sigmaint}$ can be externalized yielding an object in the category $\LCwFint$ of level-indexed cwfs with extra structure for explicit universe polymorphism, and level-indexed products.
 
 \paragraph{A construction based on implicit substitutions (initiality conjecture).} We shall outline how to construct an initial object $\Tint = (\Lctx,\Lsub,\Ltm,\Ctx,\Sub,\Ty,\Tm)$ in $\CwFint$ based on $\TTint$, the decorated version of our type theory with explicit universe polymorphism \cite{BezemCDE22}. 
 %In this theory level variables and ordinary term variables can appear in any order. As already mentioned we consider, without loss of generality, a version of $\TTint$ where level variables precede ordinary term variables (both using de Bruijn indices). In this theory every context has the form $n,\Gamma$, where $n$ is the number of available level variables, and $\Gamma$ is a context of term variables that may depend on those $n$ level variables. 
