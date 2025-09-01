@@ -267,8 +267,8 @@
 %\def\TTUP{\mathbf{MLTT^{\UU_l}}}
 \def\Sigmaext{{\Sigma^\mathrm{ext}}}
 \def\Sigmaint{{\Sigma^\mathrm{up}}}
-\def\TText{{\mathbf{TT}_\mathrm{ext}}}
-\def\TTint{{\mathbf{TT}_\mathrm{up}}}
+\def\TText{{\mathbf{TT}^\mathrm{ext}}}
+\def\TTint{{\mathbf{TT}^\mathrm{up}}}
 \def\Text{\T_\mathrm{ext}}
 \def\Tint{\T_\mathrm{up}}
 
@@ -393,7 +393,7 @@ Moreover, variations of indexed cwfs capture various other logical systems and c
 
 \paragraph{Universe polymorphism.} We refer to our previous paper on explicit universe polymorphism \cite{BezemCDE22} for a presentation of the inference rules of Martin-Löf type theory with explicit universe polymorphism, where the reader can also find motivation, examples, and a discussion of related work. Here we only give a brief overview.
 
-An implicit form of universe polymorphism was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Rocq (Coq) \cite{rocq:general}. Alternatively, Agda \cite{agda-wiki} and Lean \cite{moura:lean} employ versions of universe polymorphism, where universe levels are explicitly declared.
+An implicit form of universe polymorphism was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Rocq (Coq) \cite{rocq:general}. Alternatively, Agda \cite{agda-wiki} and Lean \cite{moura:lean} employ versions of universe polymorphism where universe levels are declared explicitly.
 
 As already mentioned, we followed Courant's approach \cite{Courant02} with universe level judgments. We also presented an extension where equational constraints between universe levels can be declared \cite{BezemCDE22}, building on a proposal by Voevodsky \cite{VV}. This extension can also be described by a gat, but we postpone this topic to a forthcoming paper.
 
@@ -540,7 +540,7 @@ b :  \tm(\Gamma . \Ta_{l}(a), (\U_{l'})_\Gamma)
  \Gamma : \ctx&\vdash&(\UU^m_l)_\Gamma: \tm(\Gamma,(\UU_{m})_\Gamma)
 \end{eqnarray*}
 Note that codes for $\Pi$ are doubly indexed and $l \vee l' = \max(l,l')$.
-We have again left some arguments to operator symbols implicit. For example, the decoding operators $\Ta_l$ are binary operators with official notation $\Ta_l(\Gamma,a)$. However, in the notation above we omit $\Gamma$ and write $\Ta_l(a)$.
+We have again left some arguments to operator symbols implicit. For example, the decoding operators $\Ta_l$ are binary operators with official notation $\Ta_l(\Gamma,a)$, but above we omitted $\Gamma$ and wrote $\Ta_l(a)$.
 
 \paragraph{Equations.}
 We have the following decoding equations:
@@ -580,7 +580,7 @@ We do not display the equations for the cumulative case here and refer to the an
 
 \paragraph{A generic construction based on explicit substitutions.} In our paper {\em On generalized algebraic theories and categories with families} \cite{bezem:hofmann} we define the notion of a correct {\em presentation} $\Sigma$ (a finite list of sort symbols, operator symbols, and equations) of a gat and the associated category of models $\CwF_\Sigma$ of cwfs with a $\Sigma$-structure. We then construct for each $\Sigma$ an initial object $\T_\Sigma$ in $\CwF_\Sigma$ as a type theory defined in terms of a grammar and inference rules. This type theory is a calculus of explicit substitutions based on untyped cwf-combinators and untyped versions of the operator symbols.
 
-In the current section we have presented the {\em infinitary} gat $\Sigmaext$ of cwfs with extra structure for the small type formers and a tower of universes. However, the above construction of an initial model applies to {\em finitary} gats. Nevertheless, as explained in Section 5.7 of Bezem et al  \cite{bezem:hofmann}, we can generalize our construction to some non-finitely presented gats. If we have an increasing sequence of finite signatures $\Sigma_n$ we can build the initial model $\T_\Sigma$ of their union $\Sigma$ in stages. In this way we can build an initial model of $\Sigmaext$ as a union of $\Sigma_n$ -- the gats of cwfs with extra structure for the small type formers and a truncated tower of $n$ universes.
+In the current section we have presented the {\em infinitary} gat $\Sigmaext$ of cwfs with extra structure for the small type formers and a tower of universes. However, the above construction of an initial model applies to {\em finitary} gats. Nevertheless, as explained in Section 5.7 of Bezem et al  \cite{bezem:hofmann}, we can generalize our construction to some non-finitely presented gats. If we have an increasing sequence of finite presenations $\Sigma_n$ we can build the initial model $\T_\Sigma$ of their union $\Sigma$ in stages. In this way we can build an initial model of $\Sigmaext$ as a union of $\Sigma_n$ -- the gats of cwfs with extra structure for the small type formers and a truncated tower of $n$ universes.
 
 As explained in Bezem et al \cite{bezem:hofmann}, $\CwF_{\Sigmaext}$ is the category of cwfs with an {\em internal} cwf with extra structure for the small type formers and a tower of universes. In contrast to this we have the category of cwfs with extra structure for the small type formers and a tower of universes $\CwFext$. A cwf with an internal cwf $(\Ctx,\Sub,\Ty,\Tm,\ctx,\sub,\ty,\tm)$ in $\CwF_{\Sigmaext}$ determines such an ``external" cwf with extra structure for the small type formers and a tower of universe $(\Ctx^*,\Sub^*,\Ty^*,\Tm^*)$ in $\CwFext$ as follows:
 \begin{eqnarray*}
@@ -764,7 +764,7 @@ The operator symbols $\vee$ and $+$ commute with level substitution:
 \paragraph{Level equality sorts.}
 When we encode type theory in gats, the principle is to introduce one sort for each main form of judgment. For example, $l : \ltm(n)$ represents the judgment $n \vdash l\ \level$. Equality judgments are then represented by equalities: $l = l' : \ltm(n)$ represents $n \vdash l = l'$.
 
-However, as we shall see in the next subsection, when typing the codes $\UU_l^m$ for universes $\UU_l$ in $\UU_m$ we need to express the constraint that $l < m$ which is defined as $\leq_n(l^+ \vee m, m)$. However, level equalities are not allowed in gats. Therefore, we add a new sort symbol for level equality:
+However, as we shall see in the next subsection, when typing the codes $\UU_l^m$ for universes $\UU_l$ in $\UU_m$ we need to express the constraint that $l < m$ which is defined as $l^+ \vee m = m$. However, level equalities are not allowed in gats. Therefore, we add a new sort symbol for level equality:
 \begin{eqnarray*}
 n : \lctx, l, l'  : \ltm(n) &\vdash& \leq_n(l,l')
 \end{eqnarray*}
@@ -772,7 +772,7 @@ and an operator symbol for reflexivity:
 \begin{eqnarray*}
 n : \lctx, l : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l)
 \end{eqnarray*}
-Note that if $l =  l' : \ltm(n)$ in the term model, that is, if $l = l'$ can be derived by equational reasoning from the laws for $\vee$ and $(-)^+$, then $\refl(l) :  \leq_n(l,l')$
+Now we can express the constraint $l < m$ by assuming $p : \leq_n(l^+ \vee m, m)$. Note that if $l =  l' : \ltm(n)$ in the term model, that is, if $l = l'$ can be derived by equational reasoning from the laws for $\vee$ and $(-)^+$, then $\refl(l) :  \leq_n(l,l')$
 %\begin{eqnarray*}
 %n : \lctx, l, l'  : \ltm(n) &\vdash& l = l' : \ltm(n)
 %\end{eqnarray*}
