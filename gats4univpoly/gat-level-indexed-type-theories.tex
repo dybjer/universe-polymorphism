@@ -565,14 +565,7 @@ If we want a cumulative tower of universes we add operator symbols that lift ele
 \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
 \end{eqnarray*}
 In the presence of cumulativity it suffices that codes for $\Pi$ have one superscript rather than two:
-\begin{eqnarray*}
-\Gamma : \ctx,
-a : \tm(\Gamma,(\U_{l})_\Gamma),
-b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
-&\vdash&
- \Pihat^{l}(a,b) : \tm(\Gamma,(\U_{l})_\Gamma)
- \end{eqnarray*}
-We do not display the equations for the cumulative case here and refer to the analogous equations level-indexed universes in \ref{cumulativity}.
+ do not display the equations for the cumulative case here and refer to the analogous equations level-indexed universes in \ref{cumulativity}.
 
  This concludes the presentation $\Sigmaext$ of a gat for cwfs with small type formers and an external tower of universes.
 
@@ -963,15 +956,20 @@ An operator symbol for cumulativity is obtained by internalizing the operator sy
 \begin{eqnarray*}
 n : \lctx, l,m : \ltm(n), p : l < m, \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm_n(\Gamma,(\U_{m})_\Gamma))
 \end{eqnarray*}
-where again $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. However, unlike for the external tower of universes, we need double superscripts on codes $\Pi^{l,l'}$ also in the cumulative case.
-%This is because, unlike in the external case, we to the greater in general.
-
-\paragraph{Equations.}
-We have the following decoding equation for lifting of codes for $\Pi$:
+where again $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. In the presence of cumulativity we can replace the doubly indexed codes for $\Pi$ with the following singly indexed version:
 \begin{eqnarray*}
-\Ta^{m \vee m'}_{l \vee l'}(\Pi^{l,l'}(a,b)) = \Pi^{m,m'}(\Ta^m_l(a),\Ta^{m'}_{l'}(b)) &:& \tm_n(\Gamma,(\UU_{m \vee m'})_\Gamma)
+\Gamma : \ctx,
+a : \tm(\Gamma,(\U_{l})_\Gamma),
+b :  \tm(\Gamma \cdot \Ta_{l}(a), (\U_{l})_\Gamma))
+&\vdash&
+ \Pihat^{l}(a,b) : \tm(\Gamma,(\U_{l})_\Gamma)
+ \end{eqnarray*}
+\paragraph{Equations.}
+We have the following decoding equation:
+\begin{eqnarray*}
+\Ta^{m}_{l}(\Pi^{l}(a,b)) = \Pi^{m}(\Ta^m_l(a),\Ta^{m}_{l}(b)) &:& \tm_n(\Gamma,(\UU_{m})_\Gamma)
 \end{eqnarray*}
-where $n: \lctx,l,l',m,m' : \ltm(n), p: l < m, p': l' < m', \Gamma : \ctx_n, a : \tm_n(\Gamma,(\UU_l)_\Gamma), b : \tm_n(\Gamma.\Ta_l(a),(\UU_{l'})_\Gamma)$.
+where $n: \lctx,l,m : \ltm(n), p: l < m, \Gamma : \ctx_n, a : \tm_n(\Gamma,(\UU_l)_\Gamma), b : \tm_n(\Gamma.\Ta_l(a),(\UU_{l})_\Gamma)$.
 The decoding equation for lifting of codes for universes is as follows:
 \begin{eqnarray*}
 n : \lctx, k, l, m : \ltm(n), p : k < l, q : l < m, \Gamma : \ctx(n) &\vdash& \Ta^m_l((\UU^l_k)_\Gamma) = (\UU^m_k)_\Gamma
