@@ -564,6 +564,16 @@ If we want a cumulative tower of universes we add operator symbols that lift ele
 \begin{eqnarray*}
 \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
 \end{eqnarray*}
+\footnote{PD: We also need the equation
+\begin{eqnarray*}
+\Ta^m_{l}(a)[\gamma] &=& \Ta^m_{l}(a[\gamma])
+\end{eqnarray*}
+and the equation
+\begin{eqnarray*}
+\Ta_m(\Ta^m_{l}(a)) &=& \Ta_l(a)
+\end{eqnarray*}
+mentioned by Jon Stirling with reference to Meven Lennon-Bertrand.
+}
 In the presence of cumulativity it suffices that codes for $\Pi$ have one superscript rather than two. However, we
  do not display this simplification here but refer to section  \ref{cumulativity} on cumulativity for level-indexed universes.
 
@@ -773,7 +783,8 @@ Now we can express the constraint $l < m$ by assuming $p : \leq_n(l^+ \vee m, m)
 %\begin{eqnarray*}
 %n : \lctx, l,l' : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l')
 %\end{eqnarray*}
-by preservation of equality, a principle available in all gats. In the opposite direction we have the following:
+by preservation of equality, a principle available in all gats. In the opposite direction we have the following:\footnote{Discussion between Peter and Marc 250930: We should have the construction of the initial ucwf of levels already here. We also need to immediately interpret level equality sorts. Then we have the means to prove the following proposition.
+We should discuss both the model with quotients and the model of normal forms.}
 \begin{proposition*}
 If $n : \lctx, l, l' : \ltm(n),$ and $p :  \leq_n(l,l')$ in the initial model,
 then $p = \refl(l) : \leq(l,l')$ and $l = l' : \ltm(n)$.
