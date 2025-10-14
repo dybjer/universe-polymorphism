@@ -1,0 +1,66 @@
+Discussion between Martin, Marc, Peter 251014
+
+Type system of Martin-Löf 1986 (published in Nordström, Petersson and Smith book e g)
+
+Set type
+
+A : Set
+-----
+A type
+
+		(x : A)
+A  type     B type
+-------------
+(x : A) -> B type
+(x : A) x B type
+
+Then we add constants
+
+N : Set                          N type
+0 : N           		    0 : N
+s : N ->N
+				    n : N
+				    ----
+				    s n : N
+
+R : (C : N -> Set) -> C 0 -> ... -> (n : N) -> C n
+R C d e 0 = d
+R C d e (s n) = ...
+
+C 0 = N0 : Set
+C 1 = N1 : Set
+										    (x : A)
+Sigma : (A : Set) -> (A ->Set) -> Set            A type     B type
+                                                                     --------------
+								     (Sigma x : A)B type
+
+W : (A : Set) -> (A ->Set) -> Set
+
+U : Set                                                           U type
+T : U -> Set                                                   a : U
+                                                                      -----
+								      T(a) type
+
+U1, U2, ... : Set
+T1 : U1 -> Set
+T2 : U2 -> Set
+
+Group =             
+(A : Set) x
+(id : A) x
+(o : A -> A -> A) x
+(inv : A -> A) x
+equations using Id
+
+In our polymorphic system
+
+Group =             
+(A : U_l) x
+(id : T_l A) x
+(o : A -> A -> A) x
+(inv : A -> A) x
+equations using Id
+
+(X : Set) x N1
+(X : Set) -> N1
+
