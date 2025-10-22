@@ -29,10 +29,10 @@ R C d e (s n) = ...
 
 C 0 = N0 : Set
 C 1 = N1 : Set
-										    (x : A)
+							   (x : A)
 Sigma : (A : Set) -> (A ->Set) -> Set            A type     B type
-                                                                     --------------
-								     (Sigma x : A)B type
+                                                 --------------
+					         (Sigma x : A)B type
 
 W : (A : Set) -> (A ->Set) -> Set
 
