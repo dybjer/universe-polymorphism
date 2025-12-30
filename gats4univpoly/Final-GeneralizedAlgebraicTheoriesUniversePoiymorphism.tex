@@ -281,15 +281,15 @@ with Explicit Universe Polymorphism
 }
 
 \author{Marc Bezem\\University of Bergen\\\texttt{Marc.Bezem@uib.no}\\
-\and Thierry Coquand\\University of Gothenburg\\
+\and Thierry Coquand\\Chalmers University of Technology\\ and University of Gothenburg\\
 \texttt{Thierry.Coquand@cse.gu.se}\\ 
-\and Peter Dybjer\\Chalmers University of Technology\\
+\and Peter Dybjer\\Chalmers University of Technology\\ and University of Gothenburg\\
 \texttt{peterd@chalmers.se}\\ 
 \and Mart\'{\i}n Escard\'o\\University of Birmingham\\
 \texttt{m.escardo@bham.ac.uk}\\
 }
 
-\date{31 August 2025}
+\date{\today}
 \maketitle
 
 \begin{abstract}
@@ -591,34 +591,35 @@ As explained in Bezem et al \cite{bezem:hofmann}, $\CwF_{\Sigmaext}$ is the cate
 \Sub^*(\Delta,\Gamma) &=& \Tm(1,\hom(\Delta,\Gamma))\\
 \Ty^*(\Gamma) &=& \Tm(1,\ty(\Gamma))\\
 \Tm^*(\Gamma,A) &=& \Tm(1,\tm(\Gamma,A))
-\end{eqnarray*} Note that $\Delta,\Gamma \in \Tm(1,\ctx)$ are internal contexts, and not external ones $\Delta,\Gamma \in \Ctx$. We leave the verification of this construction to future work.
-%\todo[inline]{PD: Thierry and I discussed it and it seems important. The verification doesn't seem difficult. Nevertheless, it's too late to include it. Should we skip this whole comment?}
-%
-%The operator symbols become
-%\begin{eqnarray*}
-%\id^*_\Gamma &=& \id_1[{\tuple{\Gamma}}]\\
-%\gamma \circ^* \delta &=&\circ[ \tuple{\gamma,\delta[\p]?} ]\\
-%&\vdots&
-%\end{eqnarray*}
-%Case of monoids: one sort symbol and two operator symbols:
-%\begin{eqnarray*}
-%&\vdash& m\\
-%&\vdash& e : m\\
-%a, b : m &\vdash& a + b : m
-%\end{eqnarray*}
-%In the initial cwf with an internal monoid:
-%\begin{eqnarray*}
-%m &\in& \Ty(1)\\
-%e &\in& \Tm(1,m)\\
-%+ &\in& \Tm(1.m.m[\p],m[p^2])
-%\end{eqnarray*}
-%The externalized version. We get the external monoid $(m^*,e^*,+^*)$:
-%\begin{eqnarray*}
-%m^* &=&\Tm(1,m)\\
-%e^* &=& e\\
-%+^*(a, b) &=& +[ \tuple{a,b} ]
-%\end{eqnarray*}
-%Note that $a,b \in \Tm(1,m)$ while $a,b$ in $a, b : m \vdash a + b : m$ are named variables for a readable presentation of the typing of an operator symbol with interpretation $+ \in \Tm(1.m.m[\p],m)$ in the cwf.
+\end{eqnarray*} 
+Note that $\Delta,\Gamma \in \Tm(1,\ctx)$ are internal contexts, and not external ones $\Delta,\Gamma \in \Ctx$. We leave the verification of this construction to future work.
+\footnote{PD: Thierry and I discussed the externalization process before we submitted the paper in August. The verification doesn't seem difficult, but relies on the definitions in the paper about gats and cwfs. We decided not to include it. 
+
+The operator symbols become
+\begin{eqnarray*}
+\id^*_\Gamma &=& \id_1[{\tuple{\Gamma}}]\\
+\gamma \circ^* \delta &=&\circ[ \tuple{\gamma,\delta[\p]?} ]\\
+&\vdots&
+\end{eqnarray*}
+Case of monoids: one sort symbol and two operator symbols:
+\begin{eqnarray*}
+&\vdash& m\\
+&\vdash& e : m\\
+a, b : m &\vdash& a + b : m
+\end{eqnarray*}
+In the initial (?) cwf with an internal monoid:
+\begin{eqnarray*}
+m &\in& \Ty(1)\\
+e &\in& \Tm(1,m)\\
++ &\in& \Tm(1.m.m[\p],m[p^2])
+\end{eqnarray*}
+The externalized version. We get the external monoid $(m^*,e^*,+^*)$:
+\begin{eqnarray*}
+m^* &=&\Tm(1,m)\\
+e^* &=& e\\
++^*(a, b) &=& +[ \tuple{a,b} ]
+\end{eqnarray*}
+Note that $a,b \in \Tm(1,m)$ while $a,b$ in $a, b : m \vdash a + b : m$ are named variables for a readable presentation of the typing of an operator symbol with interpretation $+ \in \Tm(1.m.m[\p],m)$ in the cwf.}
 
 \paragraph{A construction based on implicit substitutions (initiality conjecture).}
 We shall outline an alternative construction of an initial object in $\CwFext$ based on $\TText$ -- the type theory with an external tower of universes presented in Bezem et al \cite{BezemCDE22}. 
