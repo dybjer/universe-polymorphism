@@ -327,9 +327,10 @@ The present work can be viewed more broadly as a case study for categorical logi
 My 1963 observation (referred to by Eilenberg and Kelly in La Jolla, 1965), that cartesian closed categories serve as a common abstraction of type theory and propositional
 logic, permits an invariant algebraic treatment of the essential problem of proof theory,
 though most of the later work by proof theorists still relies on presentation-dependent
-formulations. ... The strategy to interpret proofs themselves as structures had
-been discussed by Kreisel; however, the influential “realizers” of Kleene are not yet the
-usual mathematical sort of structures.
+formulations. ... 
+%The strategy to interpret proofs themselves as structures had
+%been discussed by Kreisel; however, the influential “realizers” of Kleene are not yet the
+%usual mathematical sort of structures.
 }
 \end{quotation}
 A similar view was expressed by Voevodsky \cite{voevodsky:cmu2010}:
@@ -353,7 +354,7 @@ theory.}
 %\todo[inline]{Already here we could say: we pursue a variant of Voevodsky's approach: we will use gats rather than quasi-equational theories, and we will use cwfs rather than the C-systems (contextual categories). Gats and cwfs are intimately connected ... cwfs (and variants) are suitable for a uniform approach to deductive logical systems.
 %After mentioning the initiality conjecture project we could mention our generic construction of an initial model of a gat.}
 
-Voevodsky considered these issues important for the development of his Univalent Foundations of Mathematics based on dependent type theory. To advance the state
+Voevodsky considered these issues important for the development of his Univalent Foundations of Mathematics. To advance the state
 of the art he proposed the {\em Initiality Conjecture project} the goal of which is to define a general class of dependent type theories and to develop generic metatheory for theories in this class. We quote from the introduction of an extended abstract where Voevodsky \cite{voevodsky:initiality} motivates his project:
 \begin{quotation}
 \emph{The first few steps in all approaches to the set-theoretic semantics of dependent
@@ -395,7 +396,7 @@ Moreover, variations of indexed cwfs capture various other logical systems and c
 
 An implicit form of universe polymorphism was introduced by Huet \cite{Huet87} and is an essential feature of the proof assistant Rocq (Coq) \cite{rocq:general}. Alternatively, Agda \cite{agda-wiki} and Lean \cite{moura:lean} employ versions of universe polymorphism where universe levels are declared explicitly.
 
-As already mentioned, we followed Courant's approach \cite{Courant02} with universe level judgments. We also presented an extension where equational constraints between universe levels can be declared \cite{BezemCDE22}, building on a proposal by Voevodsky \cite{VV}. This extension can also be described by a gat, but we postpone this topic to a forthcoming paper.
+As already mentioned, we followed Courant's approach \cite{Courant02} with universe level judgments. We also presented further extension where equational constraints between universe levels can be declared \cite{BezemCDE22}, building on a proposal by Voevodsky \cite{VV}. This extension can also be described by a gat, but we postpone this topic to a forthcoming paper.
 
 
 %\todo[inline]{After the reorganization, we can end the introduction here.}
@@ -508,12 +509,11 @@ In extensional Martin-Löf type theory \cite{martinlof:hannover} we have the rul
 \Gamma : \ctx, A : \ty(\Gamma), a, a' : \tm(\Gamma, A),p :  \tm(\Gamma,\Id_{\Gamma,A}(a,a'))&\vdash& a = a' : \tm(\Gamma,A)
 \end{eqnarray*}
 Note that the variable $p$ does not occur on the right hand side.
-However, it is a very important variable expressing
+However, it is an important variable expressing
 the condition under which $a=a'$ holds and must not be omitted.
 %We will meet a similar case for reflection on equality on level terms.
 
 We refer to Bezem et al \cite{bezem:hofmann} for the remaining cwf-equations. The reader may also consult the appendix where the equations for level-indexed cwfs are displayed.
-
 
 \subsection{The gat of cwfs with an external tower of universes}
 In Bezem et al \cite{BezemCDE22} we began by displaying the inference rules for Martin-Löf type theory with an external tower of universes $\UU_l$, where $l \in \Nbb$ is an external natural number. Here we show the operator symbols and equations for the corresponding gat.
@@ -663,7 +663,7 @@ l\ \level
 \hspace{5em}
 l = l'
 $$
-to the usual judgment forms of Martin-Löf type theory. Moreover, universe level variables as well as ordinary term variables can be declared in any order a context. To simplify the correspondence with the gat formalization, we will in the sequel assume that contexts have the form $n, \Gamma$, where $n$ is the number of (de Bruijn) level variables, and $\Gamma$ is an ordinary context that depends on these $n$ level variables.
+to the usual judgment forms of Martin-Löf type theory. Moreover, universe level variables and ordinary term variables can be declared in any order a context. To simplify the correspondence with the gat formalization, we will in the sequel assume that contexts have the form $n, \Gamma$, where $n$ is the number of (de Bruijn) level variables, and $\Gamma$ is an ordinary context that depends on these $n$ level variables.
 As in Agda, we have a next level operation $(-)^+$ and an operation $\vee$ for join of levels. However, as in Bezem et al \cite{BezemCDE22}, we have no level 0 for the first universe. It follows that all universes are polymorphic.
 Levels form an upper semilattice with respect to $\vee$ and $(-)^+$ is an inflationary operation, see below.
 
@@ -824,7 +824,9 @@ We can construct an initial ucwf with $\vee$ and $(-)^+$, where the elements of 
 
 \subsection{The level-indexed cwf of small types}\label{lcwf-sort}.
 
-We now define the gat of ucwf-indexed cwfs with extra structure for the small type formers $\Pi,\Sigma,\N_0,\N_1,\N_2,\N,\W,\Id$. This is the theory of presheaves
+We now define the gat of ucwf-indexed cwfs with extra structure for the small type formers $\Pi,\Sigma,\N_0,\N_1,\N_2,\N,\W,\Id$. 
+
+Let $\L$ be the category of contexts in the ucwf of levels. We need to add sort symbols, operator symbols, and equations for the theory of presheaves 
 $$
 T : \L^\mathrm{op} \to \CwF^{\Pi,\Sigma,\N_0,\N_1,\N_2,\N,\W,\Id}
 $$
@@ -896,7 +898,7 @@ Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm
 We finally add the operator symbols and equations for level-indexed universes.
 Each $T(n)$ has extra structure for level-indexed universes $\UU_l$ with decodings $\Ta_l$, where $l$ is a level term that depends on level variables in $n$. These universes are closed under the small type formers and contain smaller universes $\UU_{l'}$ for $l' < l$.
 
-The operator symbols are obtained by internalizing the corresponding rules for the externally indexed universes. As before, we only show closure under $\Pi$. (We leave out the common premise $n : \lctx$).
+The operator symbols are obtained by internalizing the corresponding rules for the externally indexed universes. 
 \begin{eqnarray*}
 l : \ltm(n), \Gamma : \ctx_n &\vdash& (\U_{l})_\Gamma : \ty_n(\Gamma)\\
 l : \ltm(n), \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta_{l}}(a) : \ty_n(\Gamma)\\
@@ -907,6 +909,8 @@ b :  \tm_n(\Gamma \cdot \Ta_{l}(a), (\U_{l'})_\Gamma)
 &\vdash&
  \Pihat^{l,l'}(a,b) : \tm_n(\Gamma,(\U_{l \vee l'})_\Gamma)
 \end{eqnarray*}
+where we, as before, we have only showed closure under $\Pi$. Moreover, we have omitted the common premise $n : \lctx$ in each of the typings above.
+
 As mentioned in Section \ref{ucwf-levels} we use level equality sorts when typing the operator symbols $\UU^m_l$ for universes $\UU_l$ in larger universes $\UU_m$:
 % The following attempt
 %\begin{eqnarray*}
@@ -1036,7 +1040,7 @@ In the introduction we mentioned that untyped predicate logic can be captured by
 
 \subsection{Syntax and inference rules as an initial model}\label{initiality-internal}
 
-\paragraph{A generic construction based on explicit substitutions.} The gat $\Sigmaint$ for level-indexed cwfs, explicit universe polymorphism, and level-indexed products is finitary. Hence we can directly instantiate the construction of the term model $\T_{\Sigmaint}$ from \cite{bezem:hofmann} and the proof that it is initial in $\CwF_{\Sigmaint}$, the category of cwfs with an {\em internal} level-indexed cwfs with extra structure. In a similar way as we showed in Section \ref{initiality-internal} an object in $\CwF_{\Sigmaint}$ can be externalized yielding an object in the category $\LCwFint$ of level-indexed cwfs with extra structure for explicit universe polymorphism, and level-indexed products.
+\paragraph{A generic construction based on explicit substitutions.} The gat $\Sigmaint$ for level-indexed cwfs, explicit universe polymorphism, and level-indexed products is finitary. Hence we can directly instantiate the construction of the term model $\T_{\Sigmaint}$ from \cite{bezem:hofmann} and the proof that it is initial in $\CwF_{\Sigmaint}$, the category of cwfs with an {\em internal} level-indexed cwfs with extra structure. In a similar way as we showed in Section \ref{initiality-external} an object in $\CwF_{\Sigmaint}$ can be externalized yielding an object in the category $\LCwFint$ of level-indexed cwfs with extra structure for explicit universe polymorphism, and level-indexed products.
 
 \paragraph{A construction based on implicit substitutions (initiality conjecture).} We shall outline how to construct an initial object $\Tint = (\Lctx,\Lsub,\Ltm,\Ctx,\Sub,\Ty,\Tm)$ in $\CwFint$ based on $\TTint$, the decorated version of our type theory with explicit universe polymorphism \cite{BezemCDE22}. 
 %In this theory level variables and ordinary term variables can appear in any order. As already mentioned we consider, without loss of generality, a version of $\TTint$ where level variables precede ordinary term variables (both using de Bruijn indices). In this theory every context has the form $n,\Gamma$, where $n$ is the number of available level variables, and $\Gamma$ is a context of term variables that may depend on those $n$ level variables. 
@@ -1091,8 +1095,8 @@ Other approaches to defining a general notion of dependent type theory inspired 
 
 A related idea is that of representing logics in a {Logical Framework}, such as Edinburgh LF \cite{harper-honsell-plotkin} or Dedukti \cite{dowek-dedukti}. These are based on dependent type theories with $\Pi$-types and one or more universes. The aim is to encode other logics by adding constants and equations to the logical framework. We contrast this to gats which are based on dependent types {\em without} $\Pi$-types and universes. Logics are then encoded by adding sort symbols, operator symbols, and equations to the basic theory of dependent types.
 
-Related to gats are the quotient inductive-inductive types (qiits) of Kaposi, Kov{\'{a}}cs, and Altenkirch
-\cite{kaposi:qiits,kovacs:phd}. Although formal details may differ, qiits are roughly initial gats considered as data types in dependent type theory. Sort symbols correspond to data type constructors; operator symbols correspond to term constructors; and equations between terms can be declared. Since a qiit is inductively generated, it has an elimination principle. It is an addition to the sequence of inductive notions in dependent type theory: inductive type, inductive family, inductive-recursive type, inductive-inductive type, quotient inductive-inductive type; and in homotopy type theory also higher inductive type.
+Moreoever, the quotient inductive-inductive types (qiits) of Kaposi, Kov{\'{a}}cs, and Altenkirch
+\cite{kaposi:qiits,kovacs:phd} are closely related to gats. Although formal details may differ, qiits are roughly initial gats considered as data types in dependent type theory. Sort symbols correspond to data type constructors; operator symbols correspond to term constructors; and equations between terms can be declared. Since a qiit is inductively generated, it has an elimination principle. It is one of the variety of inductive notions that have been introducted in dependent type theory: inductive type, inductive family, inductive-recursive type, inductive-inductive type, quotient inductive-inductive type; and higher inductive type.
 
 %and $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$??
 %\end{tiny}
