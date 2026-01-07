@@ -289,14 +289,15 @@ with Explicit Universe Polymorphism
 \texttt{m.escardo@bham.ac.uk}\\
 }
 
-\date{\today}
+%Hej, ska ni ut och åka pulka idag också? Det står en pulka i cykelstället utanför mitt hus, om ni vill låna den. Vet inte om den är bättre än de ni har. Här i Båstad är det en underbar vinterdag men kallt -5 grader.
+\date{}
 \maketitle
 
 \begin{abstract}
 We present generalized algebraic theories corresponding to slightly modified versions of two of the type theories in our paper
 {\em Type Theory with Explicit Universe Polymorphism}. We first present a generalized algebraic theory for categories with families with extra structure corresponding to Martin-Löf type theory with an external tower of universes. We then present a generalized algebraic theory for level-indexed categories with families with extra structure corresponding to Martin-Löf type theory with explicit universe polymorphism, a theory with universe level judgments, internally indexed universes, and level-indexed products. In this way we get abstract characterizations of the two theories as initial models of their respective generalized algebraic theories. We thus abstract from details of the grammar and inference rules of the type theories and highlight their high-level structure. More broadly, the present work can be viewed as a case study of a uniform approach to categorical logic based on generalized algebraic theories and categories with families. We also discuss the relevance to Voevodsky's initiality conjecture project. \todo[inline]{PD: Add something about level equality sorts? Maybe this is too specific to be mentioned in the abstract? It could be "an interesting feature of the gat for explicit universe polymorphism is that we employ level equality sorts for encoding an equational constraint in the type of codes for universes"? }
 \end{abstract}
-
+%
 %\section{Introduction}
 
 In our paper {\em Type Theory with Explicit Universe Polymorphism} \cite{BezemCDE22} we proposed several extensions of Martin-Löf type theory with universe polymorphism. We followed Courant's approach \cite{Courant02} and added universe level {\em judgments}:
@@ -307,19 +308,24 @@ l = l'
 $$
 to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variables declared in the context. We emphasized that, unlike in Agda, universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms (since then, Agda has introduced, in version 2.6.4, an option for disabling universe levels forming a type~\cite{agda:leveluniv}).  To regain some of the lost expressivity (in a controlled way), we added level-indexed products $[\alpha]A$ of families of types $A\ (\alpha\ \level)$ to our theory.
 
-In this paper we provide alternative presentations of (slightly modified versions of) two of the theories in the above-mentioned paper: Martin-Löf type theory with an external tower of universes $\TText$ and Martin-Löf type theory with explicit universe polymorphism $\TTint$ as outlined in the previous paragraph. We present the corresponding {\em generalized algebraic theories (gats)} $\Sigmaext$ and $\Sigmaint$. Gats were introduce by Cartmell \cite{cartmell:phd,cartmell:apal} as a generalization of many sorted algebraic theories where sort symbols and operator symbols may have dependent types. 
+In this talk we provide alternative presentations of (slightly modified versions of) two of the theories in the above-mentioned paper: Martin-Löf type theory with an external tower of universes $\TText$ and Martin-Löf type theory with explicit universe polymorphism $\TTint$ as outlined in the previous paragraph. We present the corresponding {\em generalized algebraic theories (gats)} $\Sigmaext$ and $\Sigmaint$. Gats were introduce by Cartmell \cite{cartmell:phd,cartmell:apal} as a generalization of many sorted algebraic theories where sort symbols and operator symbols may have dependent types. 
+
 %Our aim is to characterize
 %$\TText$ and $\TTint$ as initial models of $\Sigmaext$ and $\Sigmaint$ respectively, provided we decorate some terms (such as applications) with types.
 
-We will first present $\Sigmaext$, the infinitary gat of categories with families (cwfs)  \cite{dybjer:torino} with extra structure for the small type formers ($\Pi, \Sigma, \N_0, \N_1, \N, \W, \Id$) of Martin-Löf type theory and for the tower of universes $\U_l$ indexed by external natural numbers $l \in \NN$. Cwfs are models of the basic rules of dependent type theory: context formation, context morphism formation, substitutions in types and terms, projection morphism, assumption.  (Note that we use $\Sigma$ both for $\Sigma$-types and to denote (presentations of) gats. It should be clear from the context which one is meant.)
+We first present $\Sigmaext$, the infinitary gat of categories with families (cwfs)  \cite{dybjer:torino} with extra structure for the small type formers ($\Pi, \Sigma, \N_0, \N_1, \N, \W, \Id$) of Martin-Löf type theory and a tower of universes $\U_l$ indexed by external natural numbers $l \in \NN$. (We use the letter $\Sigma$ both for $\Sigma$-types and for (presentations of) gats.)
 
-We will then present $\Sigmaint$, the finitary gat of level-indexed cwfs with extra structure for the small type formers of Martin-Löf type theory and for level-indexed universes. An indexed cwf consists of a base category $\C$ and a cwf-valued presheaf
+We then present $\Sigmaint$, the finitary gat of level-indexed cwfs with extra structure for the small type formers of Martin-Löf type theory and for level-indexed universes. An indexed cwf consists of a base category $\C$ and a cwf-valued presheaf
 $$
 P : \C^\op \to \CwF
 $$
 We get a model for universe polymorphism by letting $\C$ be the category of contexts of a unityped cwf (ucwf) of levels and by equipping $\CwF$ with extra structure for the small type formers. We then add extra structure for level-indexed universes and level-indexed products of types.
 
-A presentation of type theory by a gat of cwfs is a higher-level and more objective notion than a presentation by grammar and inference rules. This is because the gat only records the important rules and highlights categorical structure. When building initial models in terms of grammar and inference rules, we need to make various syntactic choices and to include numerous bookkeeping rules, such as general rules of equality, and there will be a multitude of options. We hope that our high level of abstraction will allow to prove equivalence between different options and claim that there is indeed a unique abstract notion of the mathematical theory under consideration.
+As shown in our paper {\em On generalized algebraic theories and categories with families} \cite{bezem:hofmann}, for each finite presentation $\Sigma$ of a gat, there is a general construction of a term model $\T_\Sigma$ and this is initial in the category $\CwF_\Sigma$ of categories with families (cwfs) with a $\Sigma$-structure. The idea is to capture a logical theory $\T$ by a corresponding gat $\Sigma$ such that the term model based on $\T$ is isomorphic to (the externalization of) $\T_\Sigma$. The general construction of an initial term model can be extended to some infinitary gats, such as  $\Sigmaext$~\cite[Section 5.7]{bezem:hofmann}.
+
+A presentation of type theory by a gat of cwfs 
+%is a higher-level and more objective notion than a presentation by grammar and inference rules. This is because the gat 
+only records the important rules and highlights categorical structure. When building initial models in terms of grammar and inference rules, we make various syntactic choices and include numerous bookkeeping rules and there will be a multitude of options. Our aim is that our high level of abstraction will make it possible to prove equivalence between different options and claim that there is indeed a unique abstract notion of the mathematical theory under consideration.
 
 The present work can be viewed more broadly as a case study for categorical logic based on gats and cwfs. The idea to replace traditional deductive systems by more regular mathematical notions goes back to the early days of categorical logic, as envisaged by Lawvere \cite{lawvere:tac-adjointness}.
 %\begin{quotation}
@@ -382,18 +388,9 @@ On the surface such initiality proofs may seem straightforward, but they depend 
 
 %An example of an implemented initiality proof is Brunerie and de Boer's \cite{Brunerie:initiality,deBoer:lic} proof in Agda that a version of Martin-Löf type theory with an external tower of universes is an initial contextual category \cite{cartmell:phd,cartmell:apal} with appropriate extra structure. %Theversion of type theory with de Bruijn variables and implicit substitutions.
 
-In this article we propose an approach to Voevodsky's project based on gats and cwfs. As shown in our paper {\em On generalized algebraic theories and categories with families} \cite{bezem:hofmann}, for each finite presentation $\Sigma$ of a gat, there is a general construction of a term model $\T_\Sigma$ and this is initial in the category $\CwF_\Sigma$ of categories with families (cwfs) with a $\Sigma$-structure. The idea is to capture a logical theory $\T$ by a corresponding gat $\Sigma$ such that $\T$ is isomorphic to (the externalization of) $\T_\Sigma$. 
-%The externalization process is explained in Section \ref{initiality-external}.
-
-Gats and cwfs are intimately connected. Cwfs can themselves be presented as a gat $\Sigma^\CwF$, and we can extend this gat with operator symbols and equations for the type formers of Martin-Löf type theory with an external tower of universe yielding the gat $\Sigmaext$. Although this gat is infinitary, it has an initial model $\T_{\Sigmaext}$  obtained by extending the general construction of an initial model for finitary gats~\cite[Section 5.7]{bezem:hofmann}.
-
-This sums up our approach to Voevodsky's project. We characterize dependent type theories as initial models of gats of cwfs with extra structure or, as we shall see below, gats of variations of cwfs. In this way we have generic constructions of term models but can also study alternative constructions of initial models. The reason for focusing on gats of cwfs (with extra structure) is that they occupy an intermediate place between dependent type theories defined by grammar and inference rules and notions of model based on more mainstream categorical constructions. In particular, the gat of cwfs resembles Martin-Löf's substitution calculus for dependent type theory \cite{martinlof:gbg92,tasistro:lic}.
-
-Our approach to Voevodsky's project extends beyond dependent type theory. For example, by considering simply typed cwfs (scwfs) and unityped cwfs (ucwfs) we can also capture various simply typed and untyped logical systems as gats and thus widening the scope of {\em uniform categorical logic} based on gats and cwfs, see Castellan, Clairambault, and Dybjer \cite{castellan:lambek}.
-
+In this article we propose an approach to Voevodsky's project based on gats and cwfs, and our approach actually extends beyond dependent type theory. By considering simply typed cwfs (scwfs) and unityped cwfs we can also capture various simply typed and untyped logical systems as gats and thus widening the scope of {\em uniform categorical logic} based on gats and cwfs, see Castellan, Clairambault, and Dybjer \cite{castellan:lambek}.
 %We also discuss the relationship between the gat $\Sigmaint$ and the type theories $\TTint$ presented in Bezem et al  \cite{BezemCDE22} and also between the gat $\Sigmaext$ for Martin-Löf type theory and an externally indexed tower of universes and the corresponding type theory $\TText$.
-
-Moreover, variations of indexed cwfs capture various other logical systems and can be formalized as gats. For example, untyped predicate logic can be captured by ucwf-indexed scwfs with extra structure for the logical constants. Typed predicate logic can be captured by scwf-indexed scwfs and dependently typed predicate logic (Makkai \cite{makkai:folds}, Gambino and Aczel \cite{gambino-aczel}, Belo \cite{belo}, and Palmgren \cite{Palmgren19}) by cwf-indexed scwfs, both with suitable extra structure for type formers and logical constants.
+Moreover, variations of indexed cwfs capture various further logical systems and can be formalized as gats. Untyped predicate logic can be captured by ucwf-indexed scwfs with extra structure for the logical constants. Typed predicate logic can be captured by scwf-indexed scwfs and dependently typed predicate logic (Makkai \cite{makkai:folds}, Gambino and Aczel \cite{gambino-aczel}, Belo \cite{belo}, and Palmgren \cite{Palmgren19}) by cwf-indexed scwfs, both with suitable extra structure for type formers and logical constants.
 
 %\paragraph{Universe polymorphism.} We refer to our previous paper on explicit universe polymorphism \cite{BezemCDE22} for a presentation of the inference rules of Martin-Löf type theory with explicit universe polymorphism, where the reader can also find motivation, examples, and a discussion of related work. Here we only give a brief overview.
 %
