@@ -442,7 +442,8 @@ The operator symbols commute with term substitution:
 \Ta_l(a) [ \gamma ] &=& \Ta_l(a[ \gamma ] )\\
 %\N^0_\Gamma [ \gamma ] &=&\N^0_\Delta\\
 \Pi^{l,l'}(a,b)[ \gamma ] &=& \Pi^{l,l'}(a [ \gamma ], b[ \gamma^\dagger ])\\
-(\UU^m_l)_\Gamma[ \gamma ] &=&(\UU^m_l)_\Delta
+(\UU^m_l)_\Gamma[ \gamma ] &=&(\UU^m_l)_\Delta\\
+\Ta^m_{l}(a)[\gamma] &=& \Ta^m_{l}(a[\gamma])
 \end{eqnarray*}
 where $\gamma : \sub(\Delta,\Gamma)$ and $\gamma^\dagger = \langle \gamma \circ \p_{\Delta,\Ta_l(a[\gamma])}, \q_{\Delta,\Ta_l(a[\gamma])}\rangle : \sub(\Delta.\Ta_l(a[\gamma]),\Gamma.\Ta_l(a))$.
 %\paragraph{Adding cumulativity.}
@@ -451,16 +452,15 @@ If we want a cumulative tower of universes we add operator symbols that lift ele
 \begin{eqnarray*}
 \Gamma : \ctx, a : \tm(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm(\Gamma,(\U_{m})_\Gamma))
 \end{eqnarray*}
-\footnote{PD: We also need the equation
-\begin{eqnarray*}
-\Ta^m_{l}(a)[\gamma] &=& \Ta^m_{l}(a[\gamma])
-\end{eqnarray*}
-and the equation
+with the decoding
 \begin{eqnarray*}
 \Ta_m(\Ta^m_{l}(a)) &=& \Ta_l(a)
 \end{eqnarray*}
-mentioned by Jon Stirling with reference to Meven Lennon-Bertrand.
-}
+It commutes with substitution:
+\begin{eqnarray*}
+\Ta^m_{l}(a)[\gamma] &=& \Ta^m_{l}(a[\gamma])
+\end{eqnarray*}
+
 In the presence of cumulativity it suffices that codes for $\Pi$ have one superscript rather than two. However, we
  do not display this simplification here but refer to section  \ref{cumulativity} on cumulativity for level-indexed universes.
 
@@ -479,41 +479,41 @@ Furthermore, $\CwF_{\Sigmaext}$ is the category of cwfs with an {\em internal} c
 \Ty^*(\Gamma) &=& \Tm(1,\ty(\Gamma))\\
 \Tm^*(\Gamma,A) &=& \Tm(1,\tm(\Gamma,A))
 \end{eqnarray*} 
-Note that $\Delta,\Gamma \in \Tm(1,\ctx)$ are internal contexts, and not external ones $\Delta,\Gamma \in \Ctx$. We leave the verification of this construction to future work.
-\footnote{PD: Thierry and I discussed the externalization process before we submitted the paper in August. The verification doesn't seem difficult, but relies on the definitions in the paper about gats and cwfs. We decided not to include it. 
+%Note that $\Delta,\Gamma \in \Tm(1,\ctx)$ are internal contexts, and not external ones $\Delta,\Gamma \in \Ctx$. We leave the verification of this construction to future work.
+%\footnote{PD: Thierry and I discussed the externalization process before we submitted the paper in August. The verification doesn't seem difficult, but relies on the definitions in the paper about gats and cwfs. We decided not to include it. 
+%
+%The operator symbols become
+%\begin{eqnarray*}
+%\id^*_\Gamma &=& \id_1[{\tuple{\Gamma}}]\\
+%\gamma \circ^* \delta &=&\circ[ \tuple{\gamma,\delta[\p]?} ]\\
+%&\vdots&
+%\end{eqnarray*}
+%Case of monoids: one sort symbol and two operator symbols:
+%\begin{eqnarray*}
+%&\vdash& m\\
+%&\vdash& e : m\\
+%a, b : m &\vdash& a + b : m
+%\end{eqnarray*}
+%In the initial (?) cwf with an internal monoid:
+%\begin{eqnarray*}
+%m &\in& \Ty(1)\\
+%e &\in& \Tm(1,m)\\
+%+ &\in& \Tm(1.m.m[\p],m[p^2])
+%\end{eqnarray*}
+%The externalized version. We get the external monoid $(m^*,e^*,+^*)$:
+%\begin{eqnarray*}
+%m^* &=&\Tm(1,m)\\
+%e^* &=& e\\
+%+^*(a, b) &=& +[ \tuple{a,b} ]
+%\end{eqnarray*}
+%Note that $a,b \in \Tm(1,m)$ while $a,b$ in $a, b : m \vdash a + b : m$ are named variables for a readable presentation of the typing of an operator symbol with interpretation $+ \in \Tm(1.m.m[\p],m)$ in the cwf.}
 
-The operator symbols become
-\begin{eqnarray*}
-\id^*_\Gamma &=& \id_1[{\tuple{\Gamma}}]\\
-\gamma \circ^* \delta &=&\circ[ \tuple{\gamma,\delta[\p]?} ]\\
-&\vdots&
-\end{eqnarray*}
-Case of monoids: one sort symbol and two operator symbols:
-\begin{eqnarray*}
-&\vdash& m\\
-&\vdash& e : m\\
-a, b : m &\vdash& a + b : m
-\end{eqnarray*}
-In the initial (?) cwf with an internal monoid:
-\begin{eqnarray*}
-m &\in& \Ty(1)\\
-e &\in& \Tm(1,m)\\
-+ &\in& \Tm(1.m.m[\p],m[p^2])
-\end{eqnarray*}
-The externalized version. We get the external monoid $(m^*,e^*,+^*)$:
-\begin{eqnarray*}
-m^* &=&\Tm(1,m)\\
-e^* &=& e\\
-+^*(a, b) &=& +[ \tuple{a,b} ]
-\end{eqnarray*}
-Note that $a,b \in \Tm(1,m)$ while $a,b$ in $a, b : m \vdash a + b : m$ are named variables for a readable presentation of the typing of an operator symbol with interpretation $+ \in \Tm(1.m.m[\p],m)$ in the cwf.}
-
-\paragraph{A construction based on implicit substitutions (initiality conjecture).}
+\paragraph{A construction based on implicit substitution (initiality conjecture).}
 We shall outline an alternative construction of an initial object in $\CwFext$ based on $\TText$ -- the type theory with an external tower of universes presented in \cite[Section 3]{BezemCDE22}. 
 
 As already mentioned we use decorated expressions; for example, we decorate application with type information. We refer to this as the {\em raw syntax}, that is, expressions that are not necessary well-typed. In the raw syntax we include raw context morphisms, although such are not mentioned in loc.cit. These are lists of raw terms, where $\tuple{}$ denotes the empty list, and $\tuple{\gamma,a}$ denotes the list $\gamma$ extended by a new term $a$.
 
-We build an object $(\Ctx,\Sub,\Ty,\Tm)$ of $\CwFext$ based on the type theory with implicit substitutions $\TText$ as follows. First, we interpret the sort symbols in terms of the judgment forms of $\TText$ as follows:
+We build an object $(\Ctx,\Sub,\Ty,\Tm)$ of $\CwFext$ based on the type theory with implicit substitution $\TText$ as follows. First, we interpret the sort symbols in terms of the judgment forms of $\TText$ as follows:
 \begin{itemize}
 \item $\Gamma \in \Ctx$ is defined as $\Gamma \vdash$ quotiented by the equivalence relation of context equality $\Gamma = \Gamma' \vdash$. The latter is not stated explicitly in loc.cit. but can easily be added.
 \item $A \in \Ty(\Gamma)$ is defined as $\Gamma \vdash A$ quotiented by the equivalence relation $\Gamma \vdash A = A'$.
@@ -679,9 +679,9 @@ We can construct an initial ucwf with $\vee$ and $(-)^+$, where the elements of 
 \ERASER{TC: Remark on finitely presented semilattices and constraints?}
 
 
-\subsection{The level-indexed cwf of small types}\label{lcwf-sort}.
+\subsection{The level-indexed cwf of small types}\label{lcwf-sort}
 
-We now define the gat of ucwf-indexed cwfs with extra structure for the small type formers $\Pi,\Sigma,\N_0,\N_1,\N_2,\N,\W,\Id$. 
+We now define the gat of ucwf-indexed cwfs with extra structure for the small type formers $\Pi,\Sigma,\N_0,\N_1,\newline \N_2,\N,\W,\Id$. 
 
 Let $\L$ be the category of contexts in the ucwf of levels. We need to add sort symbols, operator symbols, and equations for the theory of presheaves 
 $$
@@ -826,7 +826,12 @@ An operator symbol for cumulativity is obtained by internalizing the operator sy
 \begin{eqnarray*}
 n : \lctx, l,m : \ltm(n), p : l < m, \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta^m_{l}}(a) : \tm_n(\Gamma,(\U_{m})_\Gamma))
 \end{eqnarray*}
-where again $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. In the presence of cumulativity we can replace the doubly indexed codes for $\Pi$ with the following singly indexed version:
+where again $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. We have the equations:
+\begin{eqnarray*}
+\Ta_m(\Ta^m_{l}(a)) &=& \Ta_l(a)\\
+\Ta^m_{l}(a)[\gamma] &=& \Ta^m_{l}(a[\gamma])
+\end{eqnarray*}
+In the presence of cumulativity we can replace the doubly indexed codes for $\Pi$ with the following singly indexed version:
 \begin{eqnarray*}
 \Gamma : \ctx,
 a : \tm(\Gamma,(\U_{l})_\Gamma),
@@ -912,7 +917,7 @@ $$
 n, \Gamma \vdash l = l'
 $$
 \item An element of $\Lsub(m,n)$ is an equivalence class of sequences of level terms.
-\item We refer to Brilakis for the definition of the ucwf-operations. Note that level substitution $l[\sigma]$ is an implicit operation defined by induction on $l$. The definition of $\vee$ and $(-)^+$ on equivalence classes of levels is immediate.
+\item We refer to Brilakis for the definition of the ucwf-operations. Note that level substitution $l[\sigma]$ is defined by induction on $l$. The definition of $\vee$ and $(-)^+$ on equivalence classes of levels is immediate.
 % If $n = (\alpha_n, \ldots, \alpha_1)$ and $\s(n) =  (\alpha_n, \ldots, \alpha_1, \alpha_0)$ are lists of distinct level variables, then $\lp_n = (\alpha_n, \ldots, \alpha_1) : \lhom(\s(n),n)$ and $\lq_n = \alpha_0 : \ltm(\s(n))$ are the projections.
 \end{itemize}
 
