@@ -1,8 +1,7 @@
-\documentclass[11pt,a4paper]{article}
-%\documentclass[a4paper]{easychair}
+\documentclass[a4paper]{easychair}
 %\ifx\pdfpageheight\undefined\PassOptionsToPackage{dvips}{graphicx}\else%
 %\PassOptionsToPackage{pdftex}{graphicx}
-\PassOptionsToPackage{pdftex}{color}
+%\PassOptionsToPackage{pdftex}{color}
 %\fi
 
 %\usepackage{diagrams}
@@ -13,6 +12,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{verbatim}
 \usepackage{latexsym}
+\usepackage{fancyhdr}
 \usepackage{amssymb,amstext,amsmath,amsthm}
 \usepackage{epsf}
 \usepackage{epsfig}
@@ -44,27 +44,27 @@
 %%%%%%%%%copied from SymmetryBook by Marc
 
 % hyperref should be the package loaded last
-\usepackage[backref=page,
-            colorlinks,
-            citecolor=linkcolor,
-            linkcolor=linkcolor,
-            urlcolor=linkcolor,
-            unicode,
-            pdfauthor={BCDE},
-            pdftitle={Universes},
-            pdfsubject={Mathematics},
-            pdfkeywords={type theory, universes}]{hyperref}
+%\usepackage[backref=page,
+%            colorlinks,
+%            citecolor=linkcolor,
+%            linkcolor=linkcolor,
+%            urlcolor=linkcolor,
+%            unicode,
+%            pdfauthor={BCDE},
+%            pdftitle={Universes},
+%            pdfsubject={Mathematics},
+%            pdfkeywords={type theory, universes}]{hyperref}
 % - except for cleveref!
-\usepackage[capitalize,noabbrev]{cleveref}
+%usepackage[capitalize,noabbrev]{cleveref}
 %\usepackage{xifthen}
-\usepackage{xcolor}
-\definecolor{linkcolor}{rgb}{0,0,0.5}
+%\usepackage{xcolor}
+%\definecolor{linkcolor}{rgb}{0,0,0.5}
 
 %%%%%%%%%
-\def\oge{\leavevmode\raise
-.3ex\hbox{$\scriptscriptstyle\langle\!\langle\,$}}
-\def\feg{\leavevmode\raise
-.3ex\hbox{$\scriptscriptstyle\,\rangle\!\rangle$}}
+%\def\oge{\leavevmode\raise
+%.3ex\hbox{$\scriptscriptstyle\langle\!\langle\,$}}
+%\def\feg{\leavevmode\raise
+%.3ex\hbox{$\scriptscriptstyle\,\rangle\!\rangle$}}
 
 %%%%%%%%%
 
@@ -276,22 +276,30 @@
 \begin{document}
 
 \title{A Generalized Algebraic Theory\\ for Type Theory
-with Explicit Universe Polymorphism
-%\footnote{Alternative title: Categorical Models of Type Theory or Type Theory
-%with Explicit Universe PolymorphismGeneralised Algebraic Theories of Type Theories with Explicit Universe Polymorphism?}
+with Explicit Universe Polymorphism}
+\author{
+	Marc Bezem\inst{1}
+\and Thierry Coquand\inst{2}
+\and Peter Dybjer\inst{3}
+\and Mart\'{\i}n Escard\'o\inst{4}
 }
 
-\author{Marc Bezem\\University of Bergen\\\texttt{Marc.Bezem@uib.no}\\
-\and Thierry Coquand\\Chalmers University of Technology\\ and University of Gothenburg\\
-\texttt{Thierry.Coquand@cse.gu.se}\\ 
-\and Peter Dybjer\\Chalmers University of Technology\\ and University of Gothenburg\\
-\texttt{peterd@chalmers.se}\\ 
-\and Mart\'{\i}n Escard\'o\\University of Birmingham\\
-\texttt{m.escardo@bham.ac.uk}\\
+\institute{
+University of Bergen\\
+\email{Marc.Bezem@uib.no}
+\and 
+Chalmers University of Technology and University of Gothenburg\\
+\email{Thierry.Coquand@cse.gu.se}
+\and
+Chalmers University of Technology and University of Gothenburg\\
+\email{peterd@chalmers.se}
+\and
+University of Birmingham\\
+\email{m.escardo@bham.ac.uk}
 }
-
-%Hej, ska ni ut och åka pulka idag också? Det står en pulka i cykelstället utanför mitt hus, om ni vill låna den. Vet inte om den är bättre än de ni har. Här i Båstad är det en underbar vinterdag men kallt -5 grader.
-\date{}
+\authorrunning{Bezem, Coquand, Dybjer and Escard\'o}
+\titlerunning{Gats for Universe Polymorphism}
+%\date{}
 \maketitle
 
 \begin{abstract}
