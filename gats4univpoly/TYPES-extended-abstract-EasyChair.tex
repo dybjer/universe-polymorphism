@@ -1,70 +1,6 @@
-\documentclass[a4paper]{easychair}
-%\ifx\pdfpageheight\undefined\PassOptionsToPackage{dvips}{graphicx}\else%
-%\PassOptionsToPackage{pdftex}{graphicx}
-%\PassOptionsToPackage{pdftex}{color}
-%\fi
+\documentclass{easychair}
 
-%\usepackage{diagrams}
-
-%\usepackage[all]{xy}
 \usepackage[disable]{todonotes}
-\usepackage{url}
-\usepackage[utf8]{inputenc}
-\usepackage{verbatim}
-\usepackage{latexsym}
-\usepackage{fancyhdr}
-\usepackage{amssymb,amstext,amsmath,amsthm}
-\usepackage{epsf}
-\usepackage{epsfig}
-\usepackage{float}
-\usepackage{a4wide}
-\usepackage{verbatim}
-\usepackage{proof}
-\usepackage{latexsym}
-%\usepackage{mytheorems}
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{corollary}{Corollary}[theorem]
-\newtheorem{lemma}{Lemma}[theorem]
-\newtheorem*{proposition*}{Proposition}%[theorem]
-\theoremstyle{definition}
-%\newtheorem{definition}[theorem]{Definition}
-%\newtheorem{remark}{Remark}[theorem]
-\newtheorem{TODO}{TODO}[theorem]
-\newtheorem{remark}{Remark}
-\newtheorem{definition}{Definition}
-\newtheorem{example}{Example}
-\newtheorem{conjecture}{Conjecture}
-
-\usepackage{float}
-\floatstyle{boxed}
-\restylefloat{figure}
-
-
-%%%%%%%%%copied from SymmetryBook by Marc
-
-% hyperref should be the package loaded last
-%\usepackage[backref=page,
-%            colorlinks,
-%            citecolor=linkcolor,
-%            linkcolor=linkcolor,
-%            urlcolor=linkcolor,
-%            unicode,
-%            pdfauthor={BCDE},
-%            pdftitle={Universes},
-%            pdfsubject={Mathematics},
-%            pdfkeywords={type theory, universes}]{hyperref}
-% - except for cleveref!
-%usepackage[capitalize,noabbrev]{cleveref}
-%\usepackage{xifthen}
-%\usepackage{xcolor}
-%\definecolor{linkcolor}{rgb}{0,0,0.5}
-
-%%%%%%%%%
-%\def\oge{\leavevmode\raise
-%.3ex\hbox{$\scriptscriptstyle\langle\!\langle\,$}}
-%\def\feg{\leavevmode\raise
-%.3ex\hbox{$\scriptscriptstyle\,\rangle\!\rangle$}}
 
 %%%%%%%%%
 
@@ -106,22 +42,7 @@
 \newcommand{\Rfapp}[2]{\sapp{\refl}{#1,#2}}
 \newcommand{\Japp}[6]{\sapp{\JJ}{#1,#2,#3,#4,#5,#6}}
 \newcommand{\RR}{\mathsf{R}}
-%\newcommand{\Set}{\mathsf{Set}}
-\newcommand{\Group}{\mathsf{Group}}
-%\newcommand{\El}{\mathsf{El}}
-%\newcommand{\T}{\mathsf{T}}
-%\newcommand{\Usuper}{\UU_{\mathrm{super}}}
-%\newcommand{\Tsuper}{\T_{\mathrm{super}}}
-%\newcommand{\idtoeq}{\mathsf{idtoeq}}
-%\newcommand{\isEquiv}{\mathsf{isEquiv}}
-%\newcommand{\Equiv}{\mathsf{Equiv}}
-\newcommand{\isContr}{\mathsf{isContr}}
-%\newcommand{\ua}{\mathsf{ua}}
-%\newcommand{\UA}{\mathsf{UA}}
-%\newcommand{\natrec}{\mathsf{natrec}}
-%\newcommand{\set}[1]{\{#1\}}
-%\newcommand{\sct}[1]{[\![#1]\!]}
-%\newcommand{\refl}{\mathsf{refl}}
+
 \newcommand{\ttt}[1]{\text{\tt #1}}
 
 \newcommand{\Constraint}{\mathsf{Constraint}}
@@ -139,42 +60,9 @@
 \newcommand{\op}{\mathrm{op}}
 
 \newcommand{\CComega}{\mathrm{CC}^\omega}
-\setlength{\oddsidemargin}{0in} % so, left margin is 1in
-\setlength{\textwidth}{6.27in} % so, right margin is 1in
-\setlength{\topmargin}{0in} % so, top margin is 1in
-\setlength{\headheight}{0in}
-\setlength{\headsep}{0in}
-\setlength{\textheight}{9.19in} % so, foot margin is 1.5in
-\setlength{\footskip}{.8in}
 
-% Definition of \placetitle
-% Want to do an alternative which takes arguments
-% for the names, authors etc.
-
-\newcommand\myfrac[2]{
- \begin{array}{c}
- #1 \\
- \hline \hline
- #2
-\end{array}}
-
-\def\levelctx{\mathrm{lctx}}
-\def\lhom{\mathrm{lhom}}
-\def\psiab{\psi_{\alpha\beta}}
-
-\newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}}%
-\newcommand*{\Resize}[2]{\resizebox{#1}{!}{$#2$}}
-
-\newcommand{\II}{\mathbb{I}}
-\newcommand{\refl}{\mathsf{r}}
 \newcommand{\MB}[1]{{\color{red}{#1}}}
-%\newcommand{\mkbox}[1]{\ensuremath{#1}}
 
-
-%\newcommand{\Id}{\mathsf{Id}}
-%\newcommand{\conv}{=}
-%\newcommand{\conv}{\mathsf{conv}}
-%\newcommand{\lam}[2]{{\langle}#1{\rangle}#2}
 \def\NN{\mathsf{N}}
 \def\Nbb{\mathbb{N}}
 \def\UU{\mathsf{U}}
@@ -191,11 +79,9 @@
 \newcommand{\N}{\mathsf{N}}
 \newcommand{\Set}{\mathsf{Set}}
 \newcommand{\El}{\mathsf{El}}
-%\newcommand{\U}{\mathsf{U}} clashes with def's in new packages
 \newcommand{\T}{\mathsf{T}}
 \newcommand{\Usuper}{\UU_{\mathrm{super}}}
 \newcommand{\Tsuper}{\T_{\mathrm{super}}}
-%\newcommand{\conv}{\mathrm{conv}}
 \newcommand{\idtoeq}{\mathsf{idtoeq}}
 \newcommand{\isEquiv}{\mathsf{isEquiv}}
 \newcommand{\ua}{\mathsf{ua}}
@@ -276,7 +162,7 @@
 \begin{document}
 
 \title{A Generalized Algebraic Theory\\ for Type Theory
-with Explicit Universe Polymorphism}
+with Explicit Universe Polymorphism\\(extended abstract)}
 \author{
 	Marc Bezem\inst{1}
 \and Thierry Coquand\inst{2}
