@@ -396,16 +396,16 @@ the condition under which $a=a'$ holds and must not be omitted.
 
 We refer to \cite{bezem:hofmann} for the remaining cwf-equations. The reader may also consult Appendix A where the equations for level-indexed cwfs are displayed.
 
-Sort symbols will be interpreted as types in the term model cwf, see \cite{bezem:hofmann}. We have $\ctx \in \Ty(1), \sub \in \Ty(1.\ctx.\ctx[\p])$ and use $\sub(\Delta,\Gamma)$ as shorthand for 
-$\sub[\tuple{\Delta,\Gamma}]$, where $\tuple{a,b} = \tuple{\tuple{a}, b}$ and $\tuple{a} = \tuple{\tuple{}, a}$. Etc.
+\paragraph{Interpretation in the term model.} Sort symbols are interpreted as types in the term model cwf, see \cite{bezem:hofmann}. We have $\ctx \in \Ty(1), \sub \in \Ty(1.\ctx.\ctx[\p])$ and use $\sub(\Delta,\Gamma)$ as shorthand for 
+$\sub[\tuple{\Delta,\Gamma}]$, where $\tuple{a,b}$ abbreviates $\tuple{\tuple{a}, b}$, $\tuple{a}$ abbreviates $\tuple{\tuple{}, a}$, etc.
 
-Operator symbols will be interpreted as terms in the term model cwf. For example, $\id \in \Tm(1.\ctx,\sub(\q,\q))$ and $\id_\Gamma$ is shorthand for $\id[\tuple{\Gamma}]$. 
+Operator symbols are interpreted as terms in the term model. For example, $\id \in \Tm(1.\ctx,\sub(\q,\q))$ and $\id_\Gamma$ is shorthand for $\id[\tuple{\Gamma}]$. 
 
 
 \subsection{The gat of cwfs with an external tower of universes}
 In \cite[Section 3]{BezemCDE22} we displayed the inference rules for Martin-Löf type theory with an external tower of universes $\UU_l$, where $l \in \Nbb$ is an external natural number. Here we show the operator symbols and equations for the corresponding gat.
 
-We assume that we already have defined the gat of cwfs with the extra structure for the standard small type formers $\Pi, \Sigma, \N_0, \N_1, \N_2, \N, \W$, and $\Id$, and we wish to define a tower of universes closed under those. To save space, we shall however only display the operator symbols and equations for closure under $\Pi$-types, since it is straightforward to add similar operator symbols for closure under the other small type formers. We shall use the same convention throughout the paper.
+We assume that we already have defined the gat of cwfs with the extra structure for the standard small type formers $\Pi, \Sigma, \N_0, \N_1, \N_2, \N, \W$, and $\Id$, and we wish to define a tower of universes closed under those. To save space, we shall only display the operator symbols and equations for closure under $\Pi$-types, since it is straightforward to add similar operator symbols for closure under the other small type formers. We shall use the same convention throughout the paper.
 
 \paragraph{Operator symbols.}
 The operator symbol for $\Pi$-formation is
@@ -468,11 +468,11 @@ This concludes the presentation $\Sigmaext$ of a gat for cwfs with small type fo
 
 \subsection{Syntax and inference rules as an initial model}\label{initiality-external}
 
-\paragraph{A generic construction based on explicit substitutions.} In our note  \cite{bezem:hofmann} on gats and cwfs we defined the notion of a correct {\em presentation} $\Sigma$ (a finite list of sort symbols, operator symbols, and equations) of a gat and the associated category of models $\CwF_\Sigma$ of cwfs with a $\Sigma$-structure. We then construct for each $\Sigma$ an initial object $\T_\Sigma$ in $\CwF_\Sigma$ as a type theory defined in terms of a grammar and inference rules. This type theory is a calculus of explicit substitutions based on untyped cwf-combinators and untyped versions of the operator symbols.
+\paragraph{A generic construction based on explicit substitutions.} In our note  \cite{bezem:hofmann} on gats and cwfs we defined the notion of a correct {\em presentation} $\Sigma$ (a finite list of sort symbols, operator symbols, and equations) of a gat and the associated category of models $\CwF_\Sigma$ of cwfs with a $\Sigma$-structure. We then constructed for each $\Sigma$ an initial object $\T_\Sigma$ in $\CwF_\Sigma$ as a type theory defined in terms of a grammar and inference rules. This type theory is a calculus of explicit substitutions, where raw expressions are formed by untyped cwf-combinators and untyped versions of the operator symbols.
 
 In the current section we have presented the {\em infinitary} gat $\Sigmaext$ of cwfs with extra structure for the small type formers and a tower of universes. However, the above construction of an initial model applies to {\em finitary} gats. Nevertheless, as explained in \cite[Section 5.7]{bezem:hofmann}, we can generalize our construction to some non-finitely presented gats. If we have an increasing sequence of finite presentations $\Sigma_n$ we can build the initial model $\T_\Sigma$ of their union $\Sigma$ in stages. In this way we can build an initial model of $\Sigmaext$ as a union of $\Sigma_n$ -- the gats of cwfs with extra structure for the small type formers and a truncated tower of $n$ universes.
 
-Furthermore, $\CwF_{\Sigmaext}$ is the category of cwfs with an {\em internal} cwf with extra structure for the small type formers and a tower of universes. In contrast to this we have the category of cwfs with extra structure for the small type formers and a tower of universes $\CwFext$. A cwf with an internal cwf $(\Ctx,\Sub,\Ty,\Tm,\ctx,\sub,\ty,\tm)$ in $\CwF_{\Sigmaext}$ determines such an ``external" cwf with extra structure for the small type formers and a tower of universe $(\Ctx^*,\Sub^*,\Ty^*,\Tm^*)$ in $\CwFext$ as follows:
+Furthermore, $\CwF_{\Sigmaext}$ is the category of cwfs with an {\em internal} cwf with extra structure for the small type formers and a tower of universes. In contrast to this we have the category of cwfs with extra structure for the small type formers and a tower of universes $\CwFext$. A cwf with an internal cwf $(\Ctx,\Sub,\Ty,\Tm,\ctx,\sub,\ty,\tm)$ in $\CwF_{\Sigmaext}$ determines an {\em external} cwf $(\Ctx^*,\Sub^*,\Ty^*,\Tm^*)$ in $\CwFext$ with extra structure for the small type formers and a tower of universe  as follows:
 \begin{eqnarray*}
 \Ctx^* &=& \Tm(1,\ctx)\\
 \Sub^*(\Delta,\Gamma) &=& \Tm(1,\hom(\Delta,\Gamma))\\
