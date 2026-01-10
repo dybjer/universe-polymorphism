@@ -520,7 +520,7 @@ We build an object $(\Ctx,\Sub,\Ty,\Tm)$ of $\CwFext$ based on the type theory w
 \item $a \in \Tm(\Gamma,A)$ is defined as $\Gamma \vdash a : A$ quotiented by the equivalence relation $\Gamma \vdash a = a' : A$.
 \item There are no explicit judgments $\Delta \vdash \gamma : \Gamma$ and $\Delta \vdash \gamma = \gamma' : \Gamma$  in loc.cit, but these can be defined in terms of $\Delta \vdash a : A$ and $\Delta \vdash a = a' : A$. Then $\gamma \in \Sub(\Delta,\Gamma)$ can be defined as $\Delta \vdash \gamma : \Gamma$ quotiented by the equivalence relation $\Delta \vdash  \gamma = \gamma' : \Gamma$.
 \end{itemize}
-We then need to define the operator symbols on equivalence classes. First there are the operator symbols that construct raw syntax: the basic cwf-combinators $1, -.-, \tuple{}, \tuple{-,-}$,  $\Pi, \lambda, \app$ for $\Pi$-types, and similarly for the other small type formers, and $\U_l, \Ta_l, \U^m_l$ and $\Ta^m_l$ for the tower of universes. We just give two examples.
+We then define the operator symbols on equivalence classes. First there are the operator symbols that construct raw syntax: the basic cwf-combinators $1, -.-, \tuple{}, \tuple{-,-}$,  $\Pi, \lambda, \app$ for $\Pi$-types, and similarly for the other small type formers, and $\U_l, \Ta_l, \U^m_l$ and $\Ta^m_l$ for the tower of universes. We just give two examples.
 \begin{itemize}
 \item The empty context $1$ is a constructor of raw contexts and we define the terminal object in the term model as the equivalence class of the empty context $[1] \in \Ctx$.
 \item Context extension is also a constructor of raw contexts. We define the extension of $[\Gamma] \in \Ctx$ with $[A] \in \Ty([\Gamma])$ as $[\Gamma.A] \in \Ctx$ and show that this operation respects the equivalence,
@@ -528,7 +528,7 @@ so that it extends to the equivalence classes.
 %\item Similarly for the constructors of raw cwf-morphisms $\tuple{}$ and $\tuple{-,-}$.
 %\item The operator symbols for the type formers, such as $\Pi, \lambda, \app$ for $\Pi$-types and $\U_l, \Ta_l, \U^m_l$ and $\Ta^m_l$ are also constructors of raw syntax.
 \end{itemize}
-Then we consider the operator symbols that correspond to implicit operations. We first define the substitution in types and terms in the model:
+Then we consider the operator symbols that correspond to operations defined by induction on the structure of raw expressions. We first define the substitution in types and terms in the model:
 \begin{itemize}
 \item If $A$ is a raw type and $\gamma$ is a raw substitution, we first define the result $A[\gamma]$ of substituting $\gamma$ in $A$ by induction on the structure of $A$. We need to show that this operation preserves equivalence classes.
 \item Substitution in raw terms is defined similarly.
@@ -642,7 +642,7 @@ The operator symbols $\vee$ and $+$ commute with level substitution:
 \paragraph{Level equality sorts.}
 When we encode type theory in gats, the principle is to introduce one sort for each main form of judgment. For example, $l : \ltm(n)$ represents the judgment $n \vdash l\ \level$. Equality judgments are then represented by equalities: $l = l' : \ltm(n)$ represents $n \vdash l = l'$.
 
-As we shall see in the next subsection, when typing the codes $\UU_l^m$ for universes $\UU_l$ in $\UU_m$ we need to express the constraint that $l < m$ which is defined as $l^+ \vee m = m$. However, level equalities are not allowed in gats. Therefore, we add a new sort symbol for level equality:
+As we shall see in the next subsection, when typing the codes $\UU_l^m$ for universes $\UU_l$ in $\UU_m$ we need to express the constraint that $l < m$ which is defined as $l^+ \vee m = m$. However, equalities are not allowed as assumptions in gats. Therefore, we add a new sort symbol for level equality:
 \begin{eqnarray*}
 n : \lctx, l, l'  : \ltm(n) &\vdash& \leq_n(l,l')
 \end{eqnarray*}
@@ -832,7 +832,7 @@ where again $l < m$ is defined as $\leq_n(l^+ \vee m, m)$. We have the equations
 \Ta_m(\Ta^m_{l}(a)) &=& \Ta_l(a)\\
 \Ta^m_{l}(a)[\gamma] &=& \Ta^m_{l}(a[\gamma])
 \end{eqnarray*}
-In the presence of cumulativity we can replace the doubly indexed codes for $\Pi$ with the following singly indexed version:
+In the presence of cumulativity we can replace the doubly indexed codes for $\Pi$ by the following singly indexed version:
 \begin{eqnarray*}
 \Gamma : \ctx,
 a : \tm(\Gamma,(\U_{l})_\Gamma),
@@ -900,16 +900,16 @@ In the introduction we mentioned that untyped predicate logic can be captured by
 
 \subsection{Syntax and inference rules as an initial model}\label{initiality-internal}
 
-\paragraph{A generic construction based on explicit substitutions.} The gat $\Sigmaint$ for level-indexed cwfs, explicit universe polymorphism, and level-indexed products is finitary. Hence we can directly instantiate the construction of the term model $\T_{\Sigmaint}$ from \cite{bezem:hofmann} and the proof that it is initial in $\CwF_{\Sigmaint}$, the category of cwfs with an {\em internal} level-indexed cwfs with extra structure. In a similar way as we showed in Section \ref{initiality-external} an object in $\CwF_{\Sigmaint}$ can be externalized yielding an object in the category $\LCwFint$ of level-indexed cwfs with extra structure for explicit universe polymorphism, and level-indexed products.
+\paragraph{A generic construction based on explicit substitutions.} The gat $\Sigmaint$ for level-indexed cwfs, explicit universe polymorphism, and level-indexed products is finitary. Hence we can directly instantiate the construction of the term model in \cite{bezem:hofmann} and get a proof that $\T_{\Sigmaint}$ is initial in $\CwF_{\Sigmaint}$, the category of cwfs with an {\em internal} level-indexed cwfs with extra structure. In a similar way as we showed in Section \ref{initiality-external} an object in $\CwF_{\Sigmaint}$ can be externalized yielding an object in the category $\LCwFint$ of level-indexed cwfs with extra structure for explicit universe polymorphism, and level-indexed products.
 
-\paragraph{A construction based on implicit substitution (initiality conjecture).} We shall outline how to construct an initial object $\Tint = (\Lctx,\Lsub,\Ltm,\Ctx,\Sub,\Ty,\Tm)$ in $\CwFint$ based on $\TTint$, the decorated version of our type theory with explicit universe polymorphism \cite[Section 4]{BezemCDE22}. 
+\paragraph{A construction based on implicit substitution (initiality conjecture).} We shall outline a construction of an initial object $\Tint = (\Lctx,\Lsub,\Ltm,\Ctx,\Sub,\Ty,\Tm)$ in $\CwFint$ based on $\TTint$, the decorated version of our type theory with explicit universe polymorphism \cite[Section 4]{BezemCDE22}. 
 %In this theory level variables and ordinary term variables can appear in any order. As already mentioned we consider, without loss of generality, a version of $\TTint$ where level variables precede ordinary term variables (both using de Bruijn indices). In this theory every context has the form $n,\Gamma$, where $n$ is the number of available level variables, and $\Gamma$ is a context of term variables that may depend on those $n$ level variables. 
 We need to show (i) how to organize the level terms and level judgments into a ucwf of levels; (ii) how to construct a level-indexed cwf of small types by modifying the construction of a cwf of small types; and (iii) how to construct a model of the level-indexed universes by modifying the construction of a model of the externally indexed universes based on $\TText$.
 
-We first construct a ucwf $(\Lctx,\Lsub,\Ltm)$ of levels. To this end we extend Brilakis'  \cite{Brilakis18} construction in Agda of the equivalence between two initial ucwfs: one with explicit substitutions and one with implicit substitution and de Bruijn variables. Since the ucwf with explicit substitutions is constructed directly from the operator symbols of ucwfs, Brilakis' proof is essentially the same as proving the initiality of the ucwf with implicit substutions. To prove the initiality of the ucwf of levels, we extend Brilakis' proof with the extra structure for $\vee$ and $(-)^+$.
+We first construct a ucwf $(\Lctx,\Lsub,\Ltm)$ of levels. To this end we extend Brilakis'  \cite{Brilakis18} construction in Agda of the equivalence between two initial ucwfs: one with explicit substitutions and one with implicit substitution (defined by recursion on terms) and de Bruijn variables. Since the ucwf with explicit substitutions is constructed directly from the operator symbols of ucwfs, Brilakis' proof is essentially the same as proving the initiality of the ucwf with implicit substutions. To prove the initiality of the ucwf of levels, we extend Brilakis' proof with the extra structure for $\vee$ and $(-)^+$.
 \begin{itemize}
 \item An element $n \in \Lctx$ is the number of available level variables.
-\item An element of $\Ltm(n)$ is an equivalence class of level terms generated by $\vee$ and $(-)^+$ from $n$ level variables with respect to the equivalence relation generated by the equations for $\vee$ and $(-)^+$. In our type theory with explicit substitution \cite{BezemCDE22} this corresponds to the level terms $l$ such that
+\item An element of $\Ltm(n)$ is an equivalence class of level terms generated by $\vee$ and $(-)^+$ from $n$ level variables with respect to the equivalence relation generated by the equations for $\vee$ and $(-)^+$. In our type theory with explicit universe polymorphism \cite{BezemCDE22} this corresponds to the level terms $l$ such that
 $$
 n, \Gamma \vdash l\ \level
 $$
@@ -941,7 +941,7 @@ This concludes the outline of the construction of an object of $\CwFint$. Finall
 We presented an infinitary gat $\Sigmaext$ for Martin-Löf type theory with an external tower of universes and a finitary gat $\Sigmaint$ for Martin-Löf type theory with internally level-indexed universes and level-indexed products. We have also explained that the models $\T_{\Sigmaext}$ and $\T_{\Sigmaint}$ are instances of general constructions of initial models of gats in our note
 \cite{bezem:hofmann}. Moreover, we outlined the constructions of the {\em external} cwfs $\Text$ and $\Tint$, initial in $\CwFext$ and $\CwFint$ respectively.
 
-A key ingredient in the gat $\Sigmaint$ is the sort symbol for level equality $\leq$. In a forthcoming article we plan to show how level equality sorts can be employed for representing equational constraints. This will enable us to extend $\Sigmaint$ with new sort symbols and equations for the extension of $\TTint$ with equational constraints presented in \cite[Section 5]{BezemCDE22}.
+A key ingredient of the gat $\Sigmaint$ is the sort symbol for level equality $\leq$. In a forthcoming article we plan to show how level equality sorts can be employed for representing equational constraints. This will enable us to extend $\Sigmaint$ with new sort symbols and equations for the extension of $\TTint$ with equational constraints presented in \cite[Section 5]{BezemCDE22}.
 
 %We would also like to spell out the externalization process mentioned in Section \ref{initiality-external} mapping for example a cwf with an internal cwf to the corresponding cwf, and uniformly for other gats.
 
@@ -953,7 +953,7 @@ Other approaches to defining a general notion of dependent type theory inspired 
 A related idea is that of representing logics in a {Logical Framework}, such as Edinburgh LF \cite{harper-honsell-plotkin} or Dedukti \cite{dowek-dedukti}. These are based on dependent type theories with $\Pi$-types and one or more universes. The aim is to encode other logics by adding constants and equations to the logical framework. We contrast this to gats which are based on dependent types {\em without} $\Pi$-types and universes. Logics are then encoded by adding sort symbols, operator symbols, and equations to the basic theory of dependent types.
 
 Moreoever, the quotient inductive-inductive types (qiits) of Kaposi, Kov{\'{a}}cs, and Altenkirch
-\cite{kaposi:qiits,kovacs:phd} are closely related to gats. Although formal details may differ, qiits are roughly initial gats considered as data types in dependent type theory. Sort symbols correspond to data type constructors; operator symbols correspond to term constructors; and equations between terms can be declared. Since a qiit is inductively generated, it has an elimination principle. It is one of the variety of inductive notions that have been introducted in dependent type theory: inductive type, inductive family, inductive-recursive type, inductive-inductive type, quotient inductive-inductive type; and higher inductive type.
+\cite{kaposi:qiits,kovacs:phd} are closely related to gats. Although formal details may differ, qiits are roughly initial gats considered as data types in dependent type theory. Sort symbols correspond to data type constructors; operator symbols correspond to term constructors; and equations between terms can be declared. Since a qiit is inductively generated, it has an elimination principle. It is the latest in the following sequence of more and more general inductive notions in dependent type theory: inductive type, inductive family, inductive-inductive type, and quotient inductive-inductive type.
 
 %and $\gamma^\dagger = \tuple{\gamma \circ \p, \q}$??
 %\end{tiny}
