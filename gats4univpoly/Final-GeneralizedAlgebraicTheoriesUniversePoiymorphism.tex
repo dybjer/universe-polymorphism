@@ -642,7 +642,7 @@ The operator symbols $\vee$ and $+$ commute with level substitution:
 \paragraph{Level equality sorts.}
 When we encode type theory in gats, the principle is to introduce one sort for each main form of judgment. For example, $l : \ltm(n)$ represents the judgment $n \vdash l\ \level$. Equality judgments are then represented by equalities: $l = l' : \ltm(n)$ represents $n \vdash l = l'$.
 
-However, as we shall see in the next subsection, when typing the codes $\UU_l^m$ for universes $\UU_l$ in $\UU_m$ we need to express the constraint that $l < m$ which is defined as $l^+ \vee m = m$. However, level equalities are not allowed in gats. Therefore, we add a new sort symbol for level equality:
+As we shall see in the next subsection, when typing the codes $\UU_l^m$ for universes $\UU_l$ in $\UU_m$ we need to express the constraint that $l < m$ which is defined as $l^+ \vee m = m$. However, level equalities are not allowed in gats. Therefore, we add a new sort symbol for level equality:
 \begin{eqnarray*}
 n : \lctx, l, l'  : \ltm(n) &\vdash& \leq_n(l,l')
 \end{eqnarray*}
@@ -650,7 +650,7 @@ and an operator symbol for reflexivity:
 \begin{eqnarray*}
 n : \lctx, l : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l)
 \end{eqnarray*}
-Now we can express the constraint $l < m$ by assuming $p : \leq_n(l^+ \vee m, m)$. Note that if $l =  l' : \ltm(n)$ in the term model, that is, if $l = l'$ can be derived by equational reasoning from the laws for $\vee$ and $(-)^+$, then $\refl(l) :  \leq_n(l,l')$
+Now we can express the constraint $l < m$ by assuming $p : \leq_n(l^+ \vee m, m)$. Note that if $l =  l' : \ltm(n)$ in the term model (see section \ref{initiality-internal}), that is, if $l = l'$ can be derived by equational reasoning from the laws for $\vee$ and $(-)^+$, then $\refl(l) :  \leq_n(l,l')$
 %\begin{eqnarray*}
 %n : \lctx, l, l'  : \ltm(n) &\vdash& l = l' : \ltm(n)
 %\end{eqnarray*}
@@ -658,8 +658,9 @@ Now we can express the constraint $l < m$ by assuming $p : \leq_n(l^+ \vee m, m)
 %\begin{eqnarray*}
 %n : \lctx, l,l' : \ltm(n) &\vdash& \refl(l) :  \leq_n(l,l')
 %\end{eqnarray*}
-by preservation of equality, a principle available in all gats. In the opposite direction we have the following:\footnote{Discussion between Peter and Marc 250930: We should have the construction of the initial ucwf of levels already here. We also need to immediately interpret level equality sorts. Then we have the means to prove the following proposition.
-We should discuss both the model with quotients and the model of normal forms.}
+by preservation of equality, a principle available in all gats. In the opposite direction we have the following:
+%\footnote{Discussion between Peter and Marc 250930: We should have the construction of the initial ucwf of levels already here. We also need to immediately interpret level equality sorts. Then we have the means to prove the following proposition.
+%We should discuss both the model with quotients and the model of normal forms.}
 \begin{proposition*}
 If $n : \lctx, l, l' : \ltm(n),$ and $p :  \leq_n(l,l')$ in the initial model,
 then $p = \refl(l) : \leq(l,l')$ and $l = l' : \ltm(n)$.
