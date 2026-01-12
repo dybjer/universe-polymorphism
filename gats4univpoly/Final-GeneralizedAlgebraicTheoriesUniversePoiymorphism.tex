@@ -187,9 +187,9 @@
 \def\L{{\mathcal{L}}}
 \def\F{\mathcal{C}}
 \def\CwF{\mathrm{CwF}}
-\def\CwFextSigma{\mathrm{CwF^{ext}_\Sigma}}
+\def\CwFextSigma{\mathrm{CwF^{tower}_\Sigma}}
 \def\CwFintSigma{\mathrm{CwF^{up}_\Sigma}}
-\def\CwFext{\mathrm{CwF_{ext}}}
+\def\CwFext{\mathrm{CwF_{tower}}}
 \def\CwFint{\mathrm{CwF_{up}}}
 \def\LCwF{\mathrm{LCwF}}
 \def\LCwFint{\LCwF_{\mathrm{up}}}
@@ -199,11 +199,11 @@
 \def\W{\mathsf{W}}
 
 %\def\TTUP{\mathbf{MLTT^{\UU_l}}}
-\def\Sigmaext{{\Sigma^\mathrm{ext}}}
+\def\Sigmaext{{\Sigma^\mathrm{tower}}}
 \def\Sigmaint{{\Sigma^\mathrm{up}}}
-\def\TText{{\mathbf{TT}^\mathrm{ext}}}
+\def\TText{{\mathbf{TT}^\mathrm{tower}}}
 \def\TTint{{\mathbf{TT}^\mathrm{up}}}
-\def\Text{\T_\mathrm{ext}}
+\def\Text{\T_\mathrm{tower}}
 \def\Tint{\T_\mathrm{up}}
 
 
@@ -509,8 +509,8 @@ Furthermore, $\CwF_{\Sigmaext}$ is the category of cwfs with an {\em internal} c
 %\end{eqnarray*}
 %Note that $a,b \in \Tm(1,m)$ while $a,b$ in $a, b : m \vdash a + b : m$ are named variables for a readable presentation of the typing of an operator symbol with interpretation $+ \in \Tm(1.m.m[\p],m)$ in the cwf.}
 
-\paragraph{A construction based on implicit substitution (initiality conjecture).}
-We shall outline an alternative construction of an initial object in $\CwFext$ based on $\TText$ -- the type theory with an external tower of universes presented in \cite[Section 3]{BezemCDE22}. 
+\paragraph{A construction based on implicit substitution (initiality conjecture).} We contrast type theories with {\em implicit substitution}, where substitution is defined by structural induction, with type theories with {\em explicit substitution}, where substitution is a syntactic constructor of expressions.
+We shall outline an alternative construction of an initial object in $\CwFext$ based on $\TText$ -- the type theory with implicit substitution and an external tower of universes presented in \cite[Section 3]{BezemCDE22}. 
 
 As already mentioned we use decorated expressions; for example, we decorate application with type information. We refer to this as the {\em raw syntax}, that is, expressions that are not necessary well-typed. In the raw syntax we include raw context morphisms, although such are not mentioned in loc.cit. These are lists of raw terms, where $\tuple{}$ denotes the empty list, and $\tuple{\gamma,a}$ denotes the list $\gamma$ extended by a new term $a$.
 
