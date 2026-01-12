@@ -248,7 +248,8 @@ In Section \ref{level-indexed-tt} we will present $\Sigmaint$, the finitary gat 
 $$
 P : \C^\op \to \CwF
 $$
-We get a model for universe polymorphism by letting $\C$ be the category of contexts of a unityped cwf (ucwf) of levels and by equipping $\CwF$ with extra structure for the small type formers. We then add extra structure for level-indexed universes and level-indexed products of types.
+We get a model for universe polymorphism by letting $\C$ be the category of contexts of a unityped cwf (ucwf) of levels and by equipping $\CwF$ with extra structure for the small type formers. We then 
+add extra structure for level-indexed universes and level-indexed products of types.
 
 A presentation of type theory by a gat of cwfs is a higher-level
 %\footnote{PD: removed "and more objective"} 
@@ -398,10 +399,9 @@ the condition under which $a=a'$ holds and must not be omitted.
 
 We refer to \cite{bezem:hofmann} for the remaining cwf-equations. The reader may also consult Appendix A where the equations for level-indexed cwfs are displayed.
 
-\paragraph{Interpretation in the term model.} Sort symbols are interpreted as types in the term model cwf, see \cite{bezem:hofmann}. We have $\ctx \in \Ty(1), \sub \in \Ty(1.\ctx.\ctx[\p])$ and use $\sub(\Delta,\Gamma)$ as shorthand for 
-$\sub[\tuple{\Delta,\Gamma}]$, where $\tuple{a,b}$ abbreviates $\tuple{\tuple{a}, b}$, $\tuple{a}$ abbreviates $\tuple{\tuple{}, a}$, etc.
-
-Operator symbols are interpreted as terms in the term model. For example, $\id \in \Tm(1.\ctx,\sub(\q,\q))$ and $\id_\Gamma$ is shorthand for $\id[\tuple{\Gamma}]$. 
+\paragraph{Interpretation in cwfs.} 
+A model of a gat $\Sigma$ is an object in the category $\CwF_\Sigma$ of cwf with extra structure for the sort symbols and operator symbols in $\Sigma$ satisfying the equations \cite{bezem:hofmann}. For example, in the term model cwf of the gat for cwfs $\Sigma^\CwF$ we have $\ctx \in \Ty(1), \sub \in \Ty(1.\ctx.\ctx[\p])$ and use $\sub(\Delta,\Gamma)$ as shorthand for 
+$\sub[\tuple{\Delta,\Gamma}]$, where $\tuple{a,b}$ abbreviates $\tuple{\tuple{a}, b}$, $\tuple{a}$ abbreviates $\tuple{\tuple{}, a}$, etc. Operator symbols are interpreted as terms. For example, $\id \in \Tm(1.\ctx,\sub(\q,\q))$ and $\id_\Gamma$ is shorthand for $\id[\tuple{\Gamma}]$. We thus get a cwf with an internal cwf, see \cite{bezem:hofmann} for more information.
 
 
 \subsection{The gat of cwfs with an external tower of universes}
