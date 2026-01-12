@@ -212,7 +212,7 @@ with Explicit Universe Polymorphism}
 
 \author{Marc Bezem\institute{University of Bergen}\email{Marc.Bezem@uib.no}\\
 \and Thierry Coquand \quad\quad\quad\quad Peter Dybjer\institute{Chalmers University of Technology and University of Gothenburg}
-\email{Thierry.Coquand@cse.gu.se \quad\quad peterd@chalmers.se} 
+\email{Thierry.Coquand@cse.gu.se \quad\quad peterd@chalmers.se}
 \and Mart\'{\i}n Escard\'o\institute{University of Birmingham}
 \email{m.escardo@bham.ac.uk}
 }
@@ -238,7 +238,7 @@ l = l'
 $$
 to the usual judgment forms of type theory. Moreover, all judgments may depend on universe level variables as well as ordinary variables declared in the context. We emphasized that universe levels do {\em not} form a {\em type} in our setting, and instead we added the above judgment forms\footnote{In Agda universe levels form a type, although recently Agda has introduced, in version 2.6.4, an option for disabling universe levels forming a type~\cite{agda:leveluniv}). However, it is unclear whether this option results in the same theory as ours.}.  To regain some of the lost expressivity (in a controlled way), we added level-indexed products $[\alpha]A$ of families of types $A\ (\alpha\ \level)$ to our theory.
 
-In this paper we provide alternative presentations of (slightly modified versions of) two of the theories in the above-mentioned paper: Martin-Löf type theory with an external tower of universes $\TText$ and Martin-Löf type theory with explicit universe polymorphism $\TTint$ as outlined in the previous paragraph. We present the corresponding {\em generalized algebraic theories (gats)} $\Sigmaext$ and $\Sigmaint$. Gats were introduce by Cartmell \cite{cartmell:phd,cartmell:apal} as a generalization of many sorted algebraic theories where sort symbols and operator symbols may have dependent types. 
+In this paper we provide alternative presentations of (slightly modified versions of) two of the theories in the above-mentioned paper: Martin-Löf type theory with an external tower of universes $\TText$ and Martin-Löf type theory with explicit universe polymorphism $\TTint$ as outlined in the previous paragraph. We present the corresponding {\em generalized algebraic theories (gats)} $\Sigmaext$ and $\Sigmaint$. Gats were introduce by Cartmell \cite{cartmell:phd,cartmell:apal} as a generalization of many sorted algebraic theories where sort symbols and operator symbols may have dependent types.
 %Our aim is to characterize
 %$\TText$ and $\TTint$ as initial models of $\Sigmaext$ and $\Sigmaint$ respectively, provided we decorate some terms (such as applications) with types.
 
@@ -248,11 +248,11 @@ In Section \ref{level-indexed-tt} we will present $\Sigmaint$, the finitary gat 
 $$
 P : \C^\op \to \CwF
 $$
-We get a model for universe polymorphism by letting $\C$ be the category of contexts of a unityped cwf (ucwf) of levels and by equipping $\CwF$ with extra structure for the small type formers. We then 
+We get a model for universe polymorphism by letting $\C$ be the category of contexts of a unityped cwf (ucwf) of levels and by equipping $\CwF$ with extra structure for the small type formers. We then
 add extra structure for level-indexed universes and level-indexed products of types.
 
 A presentation of type theory by a gat of cwfs is a higher-level
-%\footnote{PD: removed "and more objective"} 
+%\footnote{PD: removed "and more objective"}
 notion than a presentation by grammar and inference rules. This is because the gat only records the important rules and highlights categorical structure. When building initial models in terms of grammar and inference rules, we need to make various syntactic choices and to include numerous bookkeeping rules, such as general rules of equality. There will be a multitude of options. We hope that our high level of abstraction will allow to prove equivalence between different options and claim that there is indeed a unique abstract notion of the mathematical theory under consideration.
 
 The present work can be viewed more broadly as a case study for categorical logic based on gats and cwfs. The idea to replace traditional deductive systems by more regular mathematical notions goes back to the early days of categorical logic, as envisaged by Lawvere \cite{lawvere:tac-adjointness}:
@@ -261,7 +261,7 @@ The present work can be viewed more broadly as a case study for categorical logi
 My 1963 observation (referred to by Eilenberg and Kelly in La Jolla, 1965), that cartesian closed categories serve as a common abstraction of type theory and propositional
 logic, permits an invariant algebraic treatment of the essential problem of proof theory,
 though most of the later work by proof theorists still relies on presentation-dependent
-formulations. ... 
+formulations. ...
 %The strategy to interpret proofs themselves as structures had
 %been discussed by Kreisel; however, the influential “realizers” of Kleene are not yet the
 %usual mathematical sort of structures.
@@ -353,7 +353,7 @@ The gat of cwfs has four sort symbols:
 \Gamma : \ctx&\vdash& \ty(\Gamma)\\
 \Gamma : \ctx, A : \ty(\Gamma)&\vdash& \tm(\Gamma,A)
 \end{eqnarray*}
-corresponding to the objects and morphisms of the category of contexts, and the family of terms indexed by types in a given context, respectively. Thus $\ctx$ is a constant sort symbol, $\sub$ is a binary sort symbol depending on arguments $\Delta, \Gamma : \ctx$, $\ty$ is a unary sort symbol depending on the argument $\Gamma : \ctx$, and $\tm$ is a binary sort symbol depending on arguments $\Gamma : \ctx, A : \ty(\Gamma)$. 
+corresponding to the objects and morphisms of the category of contexts, and the family of terms indexed by types in a given context, respectively. Thus $\ctx$ is a constant sort symbol, $\sub$ is a binary sort symbol depending on arguments $\Delta, \Gamma : \ctx$, $\ty$ is a unary sort symbol depending on the argument $\Gamma : \ctx$, and $\tm$ is a binary sort symbol depending on arguments $\Gamma : \ctx, A : \ty(\Gamma)$.
 
 \paragraph{Operator symbols.}
 \ERASER{The gat of cwfs has operator symbols for the basic operations of cwfs (identity and composition of context morphisms, substitution in types and terms, empty context and context morphism, context extension and context morphism extension, projection morphism, last variable term)}
@@ -399,8 +399,8 @@ the condition under which $a=a'$ holds and must not be omitted.
 
 We refer to \cite{bezem:hofmann} for the remaining cwf-equations. The reader may also consult Appendix A where the equations for level-indexed cwfs are displayed.
 
-\paragraph{Interpretation in cwfs.} 
-A model of a gat $\Sigma$ is an object in the category $\CwF_\Sigma$ of cwfs with extra structure for the sort symbols and operator symbols in $\Sigma$ satisfying the equations \cite{bezem:hofmann}. Sort symbols are interpreted as cwf-types and operator symbols are interpreted as cwf-terms, both in context. For example, in the term model cwf of the gat for cwfs $\Sigma^\CwF$ we have $\ctx \in \Ty(1), \sub \in \Ty(1.\ctx.\ctx[\p])$. Moreover, as an example of an operator symbol, $\id \in \Tm(1.\ctx,\sub(\q,\q))$ where $\sub(\Delta,\Gamma)$ is shorthand for 
+\paragraph{Interpretation in cwfs.}
+A model of a gat $\Sigma$ is an object in the category $\CwF_\Sigma$ of cwfs with extra structure for the sort symbols and operator symbols in $\Sigma$ satisfying the equations \cite{bezem:hofmann}. Sort symbols are interpreted as cwf-types and operator symbols are interpreted as cwf-terms, both in context. For example, in the term model cwf of the gat for cwfs $\Sigma^\CwF$ we have $\ctx \in \Ty(1), \sub \in \Ty(1.\ctx.\ctx[\p])$. Moreover, as an example of an operator symbol, $\id \in \Tm(1.\ctx,\sub(\q,\q))$ where $\sub(\Delta,\Gamma)$ is shorthand for
 $\sub[\tuple{\Delta,\Gamma}]$, $\tuple{a,b}$ abbreviates $\tuple{\tuple{a}, b}$, $\tuple{a}$ abbreviates $\tuple{\tuple{}, a}$, etc. We use $\id_\Gamma$ is shorthand for $\id[\tuple{\Gamma}]$, etc. An object in $\CwF_{\Sigma^\CwF}$ is a cwf with an internal cwf , see \cite{bezem:hofmann} for more information.
 
 \subsection{The gat of cwfs with an external tower of universes}
@@ -479,9 +479,9 @@ Furthermore, $\CwF_{\Sigmaext}$ is the category of cwfs with an {\em internal} c
 \Sub^*(\Delta,\Gamma) &=& \Tm(1,\hom(\Delta,\Gamma))\\
 \Ty^*(\Gamma) &=& \Tm(1,\ty(\Gamma))\\
 \Tm^*(\Gamma,A) &=& \Tm(1,\tm(\Gamma,A))
-\end{eqnarray*} 
+\end{eqnarray*}
 %Note that $\Delta,\Gamma \in \Tm(1,\ctx)$ are internal contexts, and not external ones $\Delta,\Gamma \in \Ctx$. We leave the verification of this construction to future work.
-%\footnote{PD: Thierry and I discussed the externalization process before we submitted the paper in August. The verification doesn't seem difficult, but relies on the definitions in the paper about gats and cwfs. We decided not to include it. 
+%\footnote{PD: Thierry and I discussed the externalization process before we submitted the paper in August. The verification doesn't seem difficult, but relies on the definitions in the paper about gats and cwfs. We decided not to include it.
 %
 %The operator symbols become
 %\begin{eqnarray*}
@@ -510,7 +510,7 @@ Furthermore, $\CwF_{\Sigmaext}$ is the category of cwfs with an {\em internal} c
 %Note that $a,b \in \Tm(1,m)$ while $a,b$ in $a, b : m \vdash a + b : m$ are named variables for a readable presentation of the typing of an operator symbol with interpretation $+ \in \Tm(1.m.m[\p],m)$ in the cwf.}
 
 \paragraph{A construction based on implicit substitution (initiality conjecture).} We contrast type theories with {\em implicit substitution}, where substitution is defined by structural induction, with type theories with {\em explicit substitution}, where substitution is a syntactic constructor of expressions.
-We shall outline an alternative construction of an initial object in $\CwFext$ based on $\TText$ -- the type theory with implicit substitution and an external tower of universes presented in \cite[Section 3]{BezemCDE22}. 
+We shall outline an alternative construction of an initial object in $\CwFext$ based on $\TText$ -- the type theory with implicit substitution and an external tower of universes presented in \cite[Section 3]{BezemCDE22}.
 
 As already mentioned we use decorated expressions; for example, we decorate application with type information. We refer to this as the {\em raw syntax}, that is, expressions that are not necessary well-typed. In the raw syntax we include raw context morphisms, although such are not mentioned in loc.cit. These are lists of raw terms, where $\tuple{}$ denotes the empty list, and $\tuple{\gamma,a}$ denotes the list $\gamma$ extended by a new term $a$.
 
@@ -538,7 +538,7 @@ Then we consider the operator symbols that correspond to operations defined by i
 \end{itemize}
 To prove that we construct an object in $\CwFext$, we need to check the gat-equations. Then we need to show that there is a unique morphism in $\CwFext$ to any other object.
 
-We can compare the initiality proof outlined above and the proof implemented in Agda by Brunerie and de Boer \cite{Brunerie:initiality,deBoer:lic}, since their proof is of a version of type theory with an external tower of universes similar to ours. One difference is that their universes are \`a la Russell, while we present both versions \`a la Tarski and \`a la Russell. Moreover, they just have the rule $\UU_l : \UU_{l+1}$ and only consider the non-cumulative case, while we have $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$ and consider both the non-cumulative and cumulative cases. On the categorical side, there is the relatively minor difference between contextual categories and cwfs, where we note that initial cwfs (with extra structure) are contextual \cite{ClairambaultD11,castellan:lambek}. 
+We can compare the initiality proof outlined above and the proof implemented in Agda by Brunerie and de Boer \cite{Brunerie:initiality,deBoer:lic}, since their proof is of a version of type theory with an external tower of universes similar to ours. One difference is that their universes are \`a la Russell, while we present both versions \`a la Tarski and \`a la Russell. Moreover, they just have the rule $\UU_l : \UU_{l+1}$ and only consider the non-cumulative case, while we have $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$ and consider both the non-cumulative and cumulative cases. On the categorical side, there is the relatively minor difference between contextual categories and cwfs, where we note that initial cwfs (with extra structure) are contextual \cite{ClairambaultD11,castellan:lambek}.
 %However, their notion of model is not expressed explicitly as a gat.
 
 \section{Level-indexed type theory}\label{level-indexed-tt}
@@ -683,9 +683,9 @@ We can construct an initial ucwf with $\vee$ and $(-)^+$, where the elements of 
 
 \subsection{The level-indexed cwf of small types}\label{lcwf-sort}
 
-We now define the gat of ucwf-indexed cwfs with extra structure for the small type formers $\Pi,\Sigma,\N_0,\N_1,\newline \N_2,\N,\W,\Id$. 
+We now define the gat of ucwf-indexed cwfs with extra structure for the small type formers $\Pi,\Sigma,\N_0,\N_1,\newline \N_2,\N,\W,\Id$.
 
-Let $\L$ be the category of contexts in the ucwf of levels. We need to add sort symbols, operator symbols, and equations for the theory of presheaves 
+Let $\L$ be the category of contexts in the ucwf of levels. We need to add sort symbols, operator symbols, and equations for the theory of presheaves
 $$
 T : \L^\mathrm{op} \to \CwF^{\Pi,\Sigma,\N_0,\N_1,\N_2,\N,\W,\Id}
 $$
@@ -754,7 +754,7 @@ Moreover, if $b : \tm_n(\Gamma.A,B), c :  \tm_n(\Gamma,\Pi(A,B))$,  and $a : \tm
 We finally add the operator symbols and equations for level-indexed universes.
 Each $T(n)$ has extra structure for level-indexed universes $\UU_l$ with decodings $\Ta_l$, where $l$ is a level term that depends on level variables in $n$. These universes are closed under the small type formers and contain smaller universes $\UU_{l'}$ for $l' < l$.
 
-The operator symbols are obtained by internalizing the corresponding rules for the externally indexed universes. 
+The operator symbols are obtained by internalizing the corresponding rules for the externally indexed universes.
 \begin{eqnarray*}
 l : \ltm(n), \Gamma : \ctx_n &\vdash& (\U_{l})_\Gamma : \ty_n(\Gamma)\\
 l : \ltm(n), \Gamma : \ctx_n, a : \tm_n(\Gamma,(\U_{l})_\Gamma) &\vdash& {\Ta_{l}}(a) : \ty_n(\Gamma)\\
@@ -903,8 +903,8 @@ In the introduction we mentioned that untyped predicate logic can be captured by
 
 \paragraph{A generic construction based on explicit substitutions.} The gat $\Sigmaint$ for level-indexed cwfs, explicit universe polymorphism, and level-indexed products is finitary. Hence we can directly instantiate the construction of the term model in \cite{bezem:hofmann} and get a proof that $\T_{\Sigmaint}$ is initial in $\CwF_{\Sigmaint}$, the category of cwfs with an {\em internal} level-indexed cwfs with extra structure. In a similar way as we showed in Section \ref{initiality-external} an object in $\CwF_{\Sigmaint}$ can be externalized yielding an object in the category $\LCwFint$ of level-indexed cwfs with extra structure for explicit universe polymorphism, and level-indexed products.
 
-\paragraph{A construction based on implicit substitution (initiality conjecture).} We shall outline a construction of an initial object $\Tint = (\Lctx,\Lsub,\Ltm,\Ctx,\Sub,\Ty,\Tm)$ in $\CwFint$ based on $\TTint$, the decorated version of our type theory with explicit universe polymorphism \cite[Section 4]{BezemCDE22}. 
-%In this theory level variables and ordinary term variables can appear in any order. As already mentioned we consider, without loss of generality, a version of $\TTint$ where level variables precede ordinary term variables (both using de Bruijn indices). In this theory every context has the form $n,\Gamma$, where $n$ is the number of available level variables, and $\Gamma$ is a context of term variables that may depend on those $n$ level variables. 
+\paragraph{A construction based on implicit substitution (initiality conjecture).} We shall outline a construction of an initial object $\Tint = (\Lctx,\Lsub,\Ltm,\Ctx,\Sub,\Ty,\Tm)$ in $\CwFint$ based on $\TTint$, the decorated version of our type theory with explicit universe polymorphism \cite[Section 4]{BezemCDE22}.
+%In this theory level variables and ordinary term variables can appear in any order. As already mentioned we consider, without loss of generality, a version of $\TTint$ where level variables precede ordinary term variables (both using de Bruijn indices). In this theory every context has the form $n,\Gamma$, where $n$ is the number of available level variables, and $\Gamma$ is a context of term variables that may depend on those $n$ level variables.
 We need to show (i) how to organize the level terms and level judgments into a ucwf of levels; (ii) how to construct a level-indexed cwf of small types by modifying the construction of a cwf of small types; and (iii) how to construct a model of the level-indexed universes by modifying the construction of a model of the externally indexed universes based on $\TText$.
 
 We first construct a ucwf $(\Lctx,\Lsub,\Ltm)$ of levels. To this end we extend Brilakis'  \cite{Brilakis18} construction in Agda of the equivalence between two initial ucwfs: one with explicit substitutions and one with implicit substitution (defined by recursion on terms) and de Bruijn variables. Since the ucwf with explicit substitutions is constructed directly from the operator symbols of ucwfs, Brilakis' proof is essentially the same as proving the initiality of the ucwf with implicit substutions. To prove the initiality of the ucwf of levels, we extend Brilakis' proof with the extra structure for $\vee$ and $(-)^+$.
@@ -930,7 +930,7 @@ The next step is to construct the level-indexed cwfs (with extra structure) $(\C
 \item $\Ctx_n$ is the set of equivalence classes of raw contexts $\Gamma$ such that $n, \Gamma \vdash$ under the equivalence relation $n, \Gamma = \Gamma' \vdash$.
 \item $\Sub_n(\Delta,\Gamma)$ is the set of equivalence classes of raw context morphisms.
 \end{itemize}
-We then define all the operator symbols in this structure and check the equations. 
+We then define all the operator symbols in this structure and check the equations.
 
 The final part of the construction is to interpret the operator symbols for level substitution and composition (in levels, level morphisms, contexts, context morphisms, types and terms) that correspond to the arrow part of the level-indexed cwf with extra structure. These are all defined implicitly by induction on the raw syntax.
 
@@ -964,13 +964,13 @@ Moreoever, the quotient inductive-inductive types (qiits) of Kaposi, Kov{\'{a}}c
 %$$}
 
 \bibliographystyle{eptcs}
-\bibliography{../refs}
+\bibliography{../refs-with-doi}
 \appendix
 \section{Operator symbols and equations for level-indexed cwfs of small types}
 
 We already listed the sort symbols in \ref{lcwf-sort}.
 
-\paragraph{Operator symbols.} 
+\paragraph{Operator symbols.}
 %\footnote{Check whether implicit arguments are systematic.}
 %We have the following sort symbols:
 %\begin{eqnarray*}
@@ -991,7 +991,7 @@ n : \lctx, \Gamma,\Delta : \ctx_n , A:\ty_n (\Gamma), \gamma : \sub_n (\Delta,\G
 n : \lctx, \Gamma : \ctx_n , A:\ty_n (\Gamma) &\vdash& \p_{n,\Gamma,A}: \sub_n (\Gamma\cext A,\Gamma)\\
 n : \lctx, \Gamma : \ctx_n , A:\ty_n (\Gamma) &\vdash& \q_{n,\Gamma,A}: \tm_n (\Gamma\cext A,A[\p])
 \end{eqnarray*}
-Operator symbols for level-indexed $\Pi$-types 
+Operator symbols for level-indexed $\Pi$-types
 %(should we decorate $\lambda$ and $\app$ with type information?):
 \begin{eqnarray*}
 n : \lctx, \Gamma : \ctx_n, A : \ty_n(\Gamma), B : \ty_n(\Gamma.A)&\vdash& \Pi(A,B) : \ty_n(\Gamma)\\
