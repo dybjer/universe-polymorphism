@@ -314,7 +314,7 @@ On the surface such initiality proofs may seem straightforward, but they depend 
 
 An example of an implemented initiality proof is Brunerie and de Boer's \cite{Brunerie:initiality,deBoer:lic} proof in Agda that a version of Martin-Löf type theory with an external tower of universes is an initial contextual category \cite{cartmell:phd,cartmell:apal} with appropriate extra structure. %Theversion of type theory with de Bruijn variables and implicit substitutions.
 
-In this article we propose an approach to Voevodsky's project based on gats and cwfs. As shown in our note \cite{bezem:hofmann} on gats and cwfs, for each finite presentation $\Sigma$ of a gat, there is a general construction of a term model $\T_\Sigma$ and this is initial in the category $\CwF_\Sigma$ of categories with families (cwfs) with a $\Sigma$-structure. The idea is to capture a logical theory $\T$ by a corresponding gat $\Sigma$ such that (the term model of) $\T$ is isomorphic to (the externalization of) $\T_\Sigma$. Externalization is explained in Section \ref{initiality-external}.
+In this article we propose an approach to Voevodsky's project based on gats and cwfs. As shown in our article \cite{bezem:hofmann} on gats and cwfs, for each finite presentation $\Sigma$ of a gat, there is a general construction of a term model $\T_\Sigma$ and this is initial in the category $\CwF_\Sigma$ of categories with families (cwfs) with a $\Sigma$-structure. The idea is to capture a logical theory $\T$ by a corresponding gat $\Sigma$ such that (the term model of) $\T$ is isomorphic to (the externalization of) $\T_\Sigma$. Externalization is explained in Section \ref{initiality-external}.
 
 Gats and cwfs are intimately connected. Cwfs can themselves be presented as a gat $\Sigma^\CwF$, and we can extend this gat with operator symbols and equations for the type formers of Martin-Löf type theory with an external tower of universe yielding the gat $\Sigmaext$. Although this gat is infinitary, it has an initial model $\T_{\Sigmaext}$  obtained by extending the general construction of an initial model for finitary gats~\cite[Section 5.7]{bezem:hofmann}.
 
@@ -341,7 +341,7 @@ T : \C^\op \to \Fam
 $$
 and a notion of context comprehension. Here $\Fam$ is the category of indexed families of sets $(A,B)$, where $A$ is an index set and $B$ is a family of sets indexed by $A$. The object part of the presheaf $T$ maps a context to a family of terms indexed by a type. The arrow part represents substitution in types and terms. We often refer to a cwf as a quadruple $(\Ctx,\Sub,\Ty,\Tm)$, where $(\Ctx,\Sub)$ are the objects and arrows of the category of contexts $\C$, and $(\Ty,\Tm)$ refer to the family $T$ of terms indexed by types, both in context. The reader is referred to Dybjer \cite{dybjer:torino}, Hofmann \cite{hofmann:cambridge}, and Castellan et al.\ \cite{castellan:lambek} for a full definition and further information about cwfs.
 
-The gat of cwfs with extra structure for $\Pi$-types, a notion of model of Martin-Löf type theory with $\Pi$-types, was presented by Dybjer \cite{dybjer:torino}. The extra operator symbols and equations needed for the natural number type and one universe can be found in our note \cite{bezem:hofmann}. We will use the same notation for gats as in the latter paper.
+The gat of cwfs with extra structure for $\Pi$-types, a notion of model of Martin-Löf type theory with $\Pi$-types, was presented by Dybjer \cite{dybjer:torino}. The extra operator symbols and equations needed for the natural number type and one universe can be found in our article \cite{bezem:hofmann}. We will use the same notation for gats as in the latter paper.
 
 \ERASER{\todo[inline]{Add something about the general correspondence between gats and type theory: sort symbol = judgment form, operator symbol for formation, introduction, and elimination rules, equation for equality rules.}}
 
@@ -469,7 +469,7 @@ This concludes the presentation $\Sigmaext$ of a gat for cwfs with small type fo
 
 \subsection{Syntax and inference rules as an initial model}\label{initiality-external}
 
-\paragraph{A generic construction based on explicit substitutions.} In our note  \cite{bezem:hofmann} on gats and cwfs we defined the notion of a correct {\em presentation} $\Sigma$ (a finite list of sort symbols, operator symbols, and equations) of a gat and the associated category of models $\CwF_\Sigma$ of cwfs with a $\Sigma$-structure. We then constructed for each $\Sigma$ an initial object $\T_\Sigma$ in $\CwF_\Sigma$ as a type theory defined in terms of a grammar and inference rules. This type theory is a calculus of explicit substitutions, where raw expressions are formed by untyped cwf-combinators and untyped versions of the operator symbols.
+\paragraph{A generic construction based on explicit substitutions.} In our article  \cite{bezem:hofmann} on gats and cwfs we defined the notion of a correct {\em presentation} $\Sigma$ (a finite list of sort symbols, operator symbols, and equations) of a gat and the associated category of models $\CwF_\Sigma$ of cwfs with a $\Sigma$-structure. We then constructed for each $\Sigma$ an initial object $\T_\Sigma$ in $\CwF_\Sigma$ as a type theory defined in terms of a grammar and inference rules. This type theory is a calculus of explicit substitutions, where raw expressions are formed by untyped cwf-combinators and untyped versions of the operator symbols.
 
 In the current section we have presented the {\em infinitary} gat $\Sigmaext$ of cwfs with extra structure for the small type formers and a tower of universes. However, the above construction of an initial model applies to {\em finitary} gats. Nevertheless, as explained in \cite[Section 5.7]{bezem:hofmann}, we can generalize our construction to some non-finitely presented gats. If we have an increasing sequence of finite presentations $\Sigma_n$ we can build the initial model $\T_\Sigma$ of their union $\Sigma$ in stages. In this way we can build an initial model of $\Sigmaext$ as a union of $\Sigma_n$ -- the gats of cwfs with extra structure for the small type formers and a truncated tower of $n$ universes.
 
@@ -538,7 +538,7 @@ Then we consider the operator symbols that correspond to operations defined by i
 \end{itemize}
 To prove that we construct an object in $\CwFext$, we need to check the gat-equations. Then we need to show that there is a unique morphism in $\CwFext$ to any other object.
 
-We can compare the initiality proof outlined above and the proof implemented in Agda by Brunerie and de Boer \cite{Brunerie:initiality,deBoer:lic}, since their proof is of a version of type theory with an external tower of universes similar to ours. One difference is that their universes are \`a la Russell, while we present both versions \`a la Tarski and \`a la Russell. Moreover, they just have the rule $\UU_l : \UU_{l+1}$ and only consider the non-cumulative case, while we have $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$ and consider both the non-cumulative and cumulative cases. On the categorical side, there is the relatively minor difference between contextual categories and cwfs, where we note that initial cwfs (with extra structure) are contextual \cite{ClairambaultD11,castellan:lambek}.
+We can compare the initiality proof outlined above and the proof implemented in Agda by Brunerie and de Boer \cite{Brunerie:initiality,deBoer:lic}, since their proof is of a version of type theory with an external tower of universes similar to ours. One difference is that their universes are \`a la Russell, while we present both versions \`a la Tarski and \`a la Russell. Moreover, they just have the rule $\UU_l : \UU_{l+1}$ and only consider the non-cumulative case, while we have $\UU_l^m$ for $\UU_l$ in any larger universe $\UU_m$ and consider both the non-cumulative and cumulative cases. On the categorical side, there is the relatively minor difference between contextual categories and cwfs, where we note that initial cwfs (with extra structure) are contextual \cite{ClairambaultD14,castellan:lambek}.
 %However, their notion of model is not expressed explicitly as a gat.
 
 \section{Level-indexed type theory}\label{level-indexed-tt}
@@ -638,7 +638,7 @@ The operator symbols $\vee$ and $+$ commute with level substitution:
  l^+[\sigma] &=&  l[\sigma]^+
 \end{eqnarray*}
 %\end{tiny}
-\paragraph{Lawvere theories.} We remark that ucwfs are similar to Lawvere theories, but are closer to the usual syntax based on $n$-place functions. One can prove that Lawvere theories are equivalent to contextual ucwfs, that is, ucwfs where each context has a length \cite{ClairambaultD11,castellan:lambek}.
+\paragraph{Lawvere theories.} We remark that ucwfs are similar to Lawvere theories, but are closer to the usual syntax based on $n$-place functions. One can prove that Lawvere theories are equivalent to contextual ucwfs, that is, ucwfs where each context has a length \cite{ClairambaultD14,castellan:lambek}.
 
 \paragraph{Level equality sorts.}
 When we encode type theory in gats, the principle is to introduce one sort for each main form of judgment. For example, $l : \ltm(n)$ represents the judgment $n \vdash l\ \level$. Equality judgments are then represented by equalities: $l = l' : \ltm(n)$ represents $n \vdash l = l'$.
@@ -939,7 +939,7 @@ This concludes the outline of the construction of an object of $\CwFint$. Finall
 
 \section{Conclusion}
 
-We presented an infinitary gat $\Sigmaext$ for Martin-Löf type theory with an external tower of universes and a finitary gat $\Sigmaint$ for Martin-Löf type theory with internally level-indexed universes and level-indexed products. We have also explained that the models $\T_{\Sigmaext}$ and $\T_{\Sigmaint}$ are instances of general constructions of initial models of gats in our note
+We presented an infinitary gat $\Sigmaext$ for Martin-Löf type theory with an external tower of universes and a finitary gat $\Sigmaint$ for Martin-Löf type theory with internally level-indexed universes and level-indexed products. We have also explained that the models $\T_{\Sigmaext}$ and $\T_{\Sigmaint}$ are instances of general constructions of initial models of gats in our article
 \cite{bezem:hofmann}. Moreover, we outlined the constructions of the {\em external} cwfs $\Text$ and $\Tint$, initial in $\CwFext$ and $\CwFint$ respectively.
 
 A key ingredient of the gat $\Sigmaint$ is the sort symbol for level equality $\leq$. In a forthcoming article we plan to show how level equality sorts can be employed for representing equational constraints. This will enable us to extend $\Sigmaint$ with new sort symbols and equations for the extension of $\TTint$ with equational constraints presented in \cite[Section 5]{BezemCDE22}.
@@ -964,7 +964,7 @@ Moreoever, the quotient inductive-inductive types (qiits) of Kaposi, Kov{\'{a}}c
 %$$}
 
 \bibliographystyle{eptcs}
-\bibliography{../refs-with-doi}
+\bibliography{localrefs}
 \appendix
 \section{Operator symbols and equations for level-indexed cwfs of small types}
 
